@@ -1,0 +1,15 @@
+%h1= @world.name
+
+= button_to 'Activate World', [@world, :activate], method: :post, disabled: (current_user.active_world == @world)
+
+%h2 Admins
+%ul
+  - @world.admins.each do |admin|
+    %li
+      = image_tag admin.gravatar_url
+
+%h2 Players
+%ul
+  - @world.players.each do |player|
+    %li= player.username
+

@@ -1,0 +1,10 @@
+Yo! Signed in as #{current_user.username}
+
+%a{href: '/worlds/new'} Create world
+
+- if @worlds.empty?
+  %p No worlds :(
+- else
+  %ul
+    - @worlds.each do |world|
+      %li= world.name

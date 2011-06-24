@@ -1,0 +1,21 @@
+= form_for @user do |f|
+  %h2 Sign Up
+
+  %p
+    = f.label :username
+    = f.text_field :username
+
+  %p
+    = f.label :email
+    = f.text_field :email
+
+  %p
+    = f.label :password
+    = f.password_field :password
+
+  %p
+    = f.label :password_confirmation
+    = f.password_field :password_confirmation
+
+  %button Create an account
+
