@@ -13,11 +13,9 @@ gem 'mongo_mapper'
 # Templates
 gem 'haml'
 gem 'sass'
-gem 'uglifier'
 
-gem 'devise' #, path: '~/src/devise'
+gem 'devise'
 
-# HOLY SHIT 4 YEARS LATER I'M ACTUALLY USING IT
 gem 'gravtastic'
 
 group :development do

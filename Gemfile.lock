@@ -43,8 +43,6 @@ GEM
       warden (~> 1.0.3)
     erubis (2.7.0)
     eventmachine (0.12.10)
-    execjs (1.2.0)
-      multi_json (~> 1.0)
     gravtastic (3.1.0)
     haml (3.1.2)
     hike (1.1.0)
@@ -104,9 +102,6 @@ GEM
     treetop (1.4.9)
       polyglot (>= 0.3.1)
     tzinfo (0.3.28)
-    uglifier (1.0.0)
-      execjs (>= 0.3.0)
-      multi_json (>= 1.0.2)
     warden (1.0.4)
       rack (>= 1.0)
 
@@ -123,4 +118,3 @@ DEPENDENCIES
   rails (= 3.1.0.rc1)
   sass
   thin
-  uglifier
