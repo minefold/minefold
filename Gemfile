@@ -13,6 +13,7 @@ gem 'mongo_mapper'
 # Templates
 gem 'haml'
 gem 'sass'
+gem 'uglifier'
 
 gem 'devise' #, path: '~/src/devise'
 
