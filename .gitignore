@@ -3,4 +3,3 @@
 *.pid
 
 config/*.yml
-Gemfile.lock
