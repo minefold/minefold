@@ -7,8 +7,8 @@ class World
   key :player_ids, Array
   timestamps!
 
-  many :admins,  class_name: 'User', in: :admin_ids
-  many :players, class_name: 'User', in: :player_ids
+  many :admins,  :class => User, :in => :admin_ids
+  many :players, :class => User, :in => :player_ids
 
   ensure_index :slug
 

@@ -1,0 +1,26 @@
+= form_for @user do |f|
+  %h2 Please Note
+
+  .warning
+    %p Minefold is being actively developed. Things may break and the service may not work as advertised. Here be dragons.
+    %p If you create an account you agree to keep your experience with Minefold confidential until we launch. Thanks!
+
+  = f.hidden_field :invite_id
+
+  %p
+    = f.label :username, 'Minecraft Username'
+    = f.text_field :username
+
+  %p
+    = f.label :email
+    = f.text_field :email
+
+  %p
+    = f.label :password
+    = f.password_field :password
+
+  %p
+    = f.label :password_confirmation
+    = f.password_field :password_confirmation
+
+  %button Create account

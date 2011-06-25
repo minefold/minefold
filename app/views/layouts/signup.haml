@@ -13,9 +13,8 @@
       %h1
         %a{href: root_url} Minefold
 
-    %h2#comingsoon
-      Coming soon.
+    #content
+      = yield
 
     %footer
-      %strong
-        &copy; #{Time.now.year}.
+      &copy; #{Time.now.year} Minefold.

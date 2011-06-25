@@ -5,8 +5,7 @@ class HomeController < ApplicationController
       @worlds = World.all
       render :dashboard
     else
-      @user = User.new
-      render :index
+      render :index, :layout => nil
     end
   end
 

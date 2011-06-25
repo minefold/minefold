@@ -1,10 +1,11 @@
 Minefold::Application.routes.draw do
   root :to => 'home#index'
 
+  get '/signup/:token' => 'user#new', :as => :user_new
+
   post '/player' => 'user#create', :as => :users
 
   # resources :worlds
-
 
   devise_for :users, path: 'player'
 
