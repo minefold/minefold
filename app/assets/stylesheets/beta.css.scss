@@ -39,7 +39,7 @@ header {
 }
 
 h2#comingsoon {
-  font-size: 24px;
+  font-size: 18px;
   line-height: 48px;
   text-align: center;
   text-shadow: 0 1px 0 lighten($bg, 10%);
@@ -94,16 +94,17 @@ form {
 
     width: 100%;
 
-    background: #0FC;
     color: #FFF;
-    text-shadow: 0 -2px 0 darken(#0FC, 10%);
-    border-bottom: 2px solid darken(#0FC, 10%);
+    text-shadow: 0 -2px 0 darken(#0FC, 20%);
+    background: darken(#0FC, 10%);
+    border-bottom: 2px solid darken(#0FC, 20%);
+
 
     &:hover {
+      background: #0FC;
       color: #FFF;
-      text-shadow: 0 -2px 0 darken(#0FC, 20%);
-      background: darken(#0FC, 10%);
-      border-bottom: 2px solid darken(#0FC, 20%);
+      text-shadow: 0 -2px 0 darken(#0FC, 10%);
+      border-bottom: 2px solid darken(#0FC, 10%);
     }
 
     &:active {
