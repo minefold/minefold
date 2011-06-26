@@ -3,18 +3,24 @@ class UserController < ApplicationController
   def show
   end
 
-  layout 'signup', :only => :new
-
   def new
-    @invite = Invite.unclaimed.first(:token => params[:token])
-    raise MongoMapper::DocumentNotFound unless @invite
-
-    @user = User.new :invite_id => @invite.id
+    @user = User.new
   end
 
   def create
-    @user = User.create! params[:user]
-    redirect_to :root
+    invite = params[:user].delete(:invite)
+    @user = User.first(:invite => invite)
+    raise MongoMapper::DocumentNotFound unless @user
+
+    @user.set params[:user]
+
+    if @user.valid?
+      @user.save
+      redirect_to :root
+    else
+      flash[:errors] = @user.errors
+      render :new
+    end
   end
 
 end

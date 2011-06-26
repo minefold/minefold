@@ -14,8 +14,11 @@ gem 'mongo_mapper'
 gem 'haml'
 gem 'sass'
 
+# Auth
 gem 'devise'
 
+# Other
+gem 'stringex'
 gem 'gravtastic'
 
 group :development do

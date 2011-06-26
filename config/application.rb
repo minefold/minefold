@@ -15,6 +15,8 @@ module Minefold
 
     config.filter_parameters += [:password]
 
+    config.autoload_paths << config.root.join('lib')
+
     config.assets.enabled = true
   end
 end

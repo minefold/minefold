@@ -1,0 +1,24 @@
+#home_index {
+
+  #minecraft-username, #email {
+    float: left;
+  }
+
+  #minecraft-username input {
+    width: 120px - (6px * 2);
+  }
+
+  #email {
+    margin-left: 12px;
+    input {
+      width: 240px - (6px * 2);
+    }
+  }
+
+  button {
+    margin-top: 12px + 12px + 6px;
+    margin-left: 12px;
+    width: 80px;
+  }
+
+}

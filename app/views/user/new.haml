@@ -5,7 +5,9 @@
     %p Minefold is being actively developed. Things may break and the service may not work as advertised. Here be dragons.
     %p If you create an account you agree to keep your experience with Minefold confidential until we launch. Thanks!
 
-  = f.hidden_field :invite_id
+  %p
+    = f.label :invite
+    = f.text_field :invite, :size => 6
 
   %p
     = f.label :username, 'Minecraft Username'

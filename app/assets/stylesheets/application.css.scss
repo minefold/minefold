@@ -1,25 +1,21 @@
 //= require 'reset'
+//= require 'home/index'
 
 $paytone: 'Paytone One', Helvetica, Arial, 'sans-serif';
-$helvetica: Helvetica, Arial, sans-serif;
+$helvetica: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
-$w: 480px;
+$w: 560px;
 
-@mixin cramp {
-  width: $w;
-  margin-left: auto; margin-right: auto;
+$bg: #bde4fe;
+
+
+html {
+  background: #FFF;
 }
-
-.cramp {
-  @include cramp;
-}
-
-
-// --
 
 body {
-  color: #333;
-  font: 12px/2em $helvetica;
+  margin: 72px 0;
+  font: 14px/24px $helvetica;
 }
 
 header {
@@ -27,10 +23,11 @@ header {
   padding: 12px 0;
 
   h1 {
-    font: 700 24px/24px $paytone;
+    font: 700 18px/48px $paytone;
     text-transform: uppercase;
-    text-shadow: 0 2px 0 #00e0b4;
+    text-shadow: 0 2px 0 darken(#0FC, 20%);
     letter-spacing: 1px;
+    text-align: center;
     a {
       color: #0FC;
       text-decoration: none;
@@ -42,25 +39,43 @@ header {
   }
 }
 
-#content {
-  @include cramp;
-}
+form {
+  background: #FFF;
+  width: $w - (48px * 2); padding: 48px; margin: 0 auto;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 0 6px rgba(#000, 0.1);
 
-#home_index, .new {
   h2 {
+    font-size: 18px;
+    margin-bottom: 6px;
     font-weight: bold;
+    color: #000;
+  }
+
+  .warning {
+    margin-bottom: 24px;
+  }
+
+  p {
+    margin-bottom: 12px;
   }
 
   label {
     display: block;
     margin-top: 6px;
-    color: #666;
+    color: #999;
+    font-size: 12px;
   }
 
   input {
-    padding: 3px 3px;
+    padding: 4px 3px;
     font: 14px/18px $helvetica;
     margin: 0;
+  }
+
+  .field_with_errors input {
+    color: red;
+    -webkit-box-shadow: 0 0 3px red;
   }
 
   button {
@@ -68,38 +83,36 @@ header {
     margin: 0;
     border-radius: 3px;
     font: bold 14px/20px $helvetica;
-    padding: (2px + 3px) 12px 3px 12px;
+    padding: 5px 12px 4px 12px;
 
     cursor: pointer;
 
-    margin-top: 24px;
+    margin-top: 12px;
 
-    background: #666;
-    color: #FFF;
-    text-shadow: 0 -2px 0 #333;
-    border-bottom: 2px solid #333;
+    color: lighten(#0FC, 60%);
+    background: #0FC;
+    text-shadow: 0 -1px 0 darken(#0FC, 10%);
+    border-bottom: 1px solid darken(#0FC, 10%);
+
 
     &:hover {
+      background: lighten(#0FC, 40%);
       color: #FFF;
-      text-shadow: 0 -2px 0 #00e0b4;
-      background: #0FC;
-      border-bottom: 2px solid #00e0b4;
+      text-shadow: 0 -1px 0 #0FC;
+      border-bottom: 1px solid #0FC;
     }
 
     &:active {
-      margin-top: 25px;
-      border-bottom: 1px solid #00e0b4;
-      text-shadow: 0 -1px 0 #00e0b4;
+      margin-top: 12px + 1px;
+      border-bottom: none;
+      text-shadow: 0 -1px 0 darken(#0FC, 10%);
     }
   }
-
 }
 
 footer {
-  margin: 24px 0;
-  padding: 24px 0;
-  border-top: 2px solid #EEE;
+  margin: 48px 0;
+  text-align: center;
   color: #CCC;
-
-  @include cramp;
+  font: 11px/12px $helvetica;
 }

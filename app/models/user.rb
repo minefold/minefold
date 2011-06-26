@@ -3,6 +3,8 @@ class User
   extend Devise::Models
   include Gravtastic
 
+  TOKEN_LENGTH = 6
+
   devise :database_authenticatable
 
   gravtastic :secure => true, :rating => 'G'
@@ -10,27 +12,38 @@ class User
 
   # Schema
 
-  key :email, String, unique: true
-  key :username, String, unique: true
-  key :encrypted_password, String, length: 0..128
-
+  key :email, String
+  key :username, String
+  key :encrypted_password, String, :length => 0..128
   key :active_world, World
-
-  key :invite_id, ObjectId
-
   timestamps!
 
-  ensure_index :username
+  key :invite, String
+
+  ensure_index :username, :unique => true
+  ensure_index :invite, :unique => true
+
+  validates_uniqueness_of :email, :allow_nil => true
+  validates_uniqueness_of :username, :allow_nil => true
+
+  validates_presence_of :invite
+  validates_uniqueness_of :invite
 
   validates_confirmation_of :password
-  validates_presence_of :invite_id
 
-  before_create :claim_invite
 
-  def claim_invite
-    invite = Invite.find(invite_id)
-    invite.user_id = self.id
-    invite.save
+  before_validation :generate_invite, :on => :create
+
+  def generate_invite
+    begin
+      self.invite = self.class.random_token
+    end while self.class.exist?(:invite => invite)
+  end
+
+private
+
+  def self.random_token(length=TOKEN_LENGTH)
+    SecureRandom.random_number(36 ** length).to_s(36).upcase
   end
 
 end

@@ -10,17 +10,11 @@
 
   %body{page_css_selector}
     %header
-      .cramp
-        %h1
-          %a{href: root_url} Minefold
-        %h2 Social crafting
-
-    .notice= notice
-    .alert= alert
+      %h1
+        %a{href: root_url} Minefold
 
     #content
       = yield
 
     %footer
-      %strong
-        &copy; #{Time.now.year} Minefold.
+      &copy; #{Time.now.year} Minefold.

@@ -1,16 +1,23 @@
 Minefold::Application.routes.draw do
   root :to => 'home#index'
 
-  get '/signup/:token' => 'user#new', :as => :user_new
+  # Signup
+  get  '/signup' => 'user#new', :as => :new_user
+  post '/signup' => 'user#create', :as => :users
 
-  post '/player' => 'user#create', :as => :users
+  # Auth
+  get  '/signin' => 'devise/sessions#new', :as => :new_session
+  post '/signin' => 'devise/sessions#create'
+  get  '/signout' => 'devise/sessions#destroy', :as => :destroy_session
 
-  # resources :worlds
+  # Players
+  get  '/:username' => 'user#show'
+  get  '/:username/:world' => 'world#show'
 
-  devise_for :users, path: 'player'
+  # Worlds
+  # TODO: Private worlds
+  resources :worlds
 
-  get '/worlds/new' => 'worlds#new', :as => :world_new
-  post '/worlds' => 'worlds#create'
-  post '/:name/activate' => 'worlds#activate', :as => :world_activate
-  get  '/:name' => 'worlds#show', :as => :world
+  # TODO: Devise is the anti-christ. It is initialized from here…
+  devise_for :users
 end
