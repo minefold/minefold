@@ -16,9 +16,7 @@ class UserController < ApplicationController
     @user.update_attributes params[:user]
 
 
-    if @user.valid?
-      @user.save
-
+    if @user.valid? && @user.save
       env['warden'].set_user @user
 
       redirect_to :root

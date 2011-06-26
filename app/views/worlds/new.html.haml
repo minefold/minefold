@@ -1,3 +1,6 @@
+- if flash[:errors]
+  = flash[:errors].to_json
+
 = form_for @world do |f|
   %h2 Create a new world
 
