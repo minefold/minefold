@@ -7,7 +7,7 @@ Minefold::Application.routes.draw do
 
   # Signup
   get  '/signup' => 'user#new', :as => :new_user
-  post '/signup' => 'user#create', :as => :users
+  post '/signup' => 'user#create', :as => :user
 
   # Players
   # get  '/:username' => 'user#show'
