@@ -20,14 +20,13 @@ class World
 private
 
   # TODO: Allow slugs to be changed when name changes
-  before_validation :generate_slug, :on => :create
-
-  def generate_slug
+  before_create do
     base_slug = possible_slug = self.name.to_url
-    n = 1
+    n = 0
+
     while self.class.exist?(:slug => possible_slug)
-      possible_slug = "#{base_slug}-#{n}"
       n += 1
+      possible_slug = "#{base_slug}-#{n}"
     end
 
     self.slug = possible_slug

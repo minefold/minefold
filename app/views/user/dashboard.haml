@@ -1,0 +1,22 @@
+#session
+  = current_user.username
+  %a{href: '/signout'} Sign Out
+
+
+%h2 Worlds
+
+#worlds
+  - if @worlds.empty?
+    %p There are no active worlds
+  - else
+    %ul
+      - @worlds.each do |world|
+        %li
+          %strong= world.name
+          = button_to 'Activate', [:activate, world], :disabled => current_user.active_world == world
+
+= form_for @world do |f|
+  %h2 New World
+
+  = f.text_field :name, :placeholder => 'Name'
+  %button Create

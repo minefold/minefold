@@ -1,0 +1,13 @@
+%form{action: signin_path, method: 'post'}
+  %h2 Sign In
+
+  %p
+    %label{for: 'email'} Email
+    %input#email{type: 'text', name: 'user[email]'}
+
+  %p
+    %label{for: 'password'} Password
+    %input#email{type: 'password', name: 'user[password]'}
+
+  %p
+    %button Sign in

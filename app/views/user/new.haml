@@ -5,24 +5,25 @@
     %p Minefold is being actively developed. Things may break and the service may not work as advertised. Here be dragons.
     %p If you create an account you agree to keep your experience with Minefold confidential until we launch. Thanks!
 
-  %p
-    = f.label :invite
-    = f.text_field :invite, :size => 6
-
-  %p
-    = f.label :username, 'Minecraft Username'
-    = f.text_field :username
-
-  %p
+  %p#email
     = f.label :email
     = f.text_field :email
 
-  %p
+  %p#username
+    = f.label :username, 'Minecraft Username'
+    = f.text_field :username
+
+  %p#password
     = f.label :password
     = f.password_field :password
 
-  %p
+  %p#password_confirmation
     = f.label :password_confirmation
     = f.password_field :password_confirmation
 
-  %button Create account
+  %p#invite
+    = f.label :invite, 'Invitation Code'
+    = f.text_field :invite, :size => 6
+
+  %p
+    %button Create account

@@ -15,14 +15,14 @@ class WorldsController < ApplicationController
     @world.players << current_user
     @world.save
 
-    redirect_to @world
+    redirect_to root_path
   end
 
   def activate
-    @world = World.first :name => params[:name]
+    @world = World.first :slug => params[:id]
     current_user.active_world = @world
     current_user.save
-    redirect_to @world
+    redirect_to :back
   end
 
 end

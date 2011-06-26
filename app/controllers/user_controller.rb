@@ -1,6 +1,8 @@
 class UserController < ApplicationController
 
-  def show
+  def dashboard
+    @worlds = World.all
+    @world = World.new
   end
 
   def new
@@ -8,14 +10,17 @@ class UserController < ApplicationController
   end
 
   def create
-    invite = params[:user].delete(:invite)
-    @user = User.first(:invite => invite)
-    raise MongoMapper::DocumentNotFound unless @user
+    @user = User.first :invite => params[:user].delete(:invite)
+    raise User::InvalidInvite unless @user
+    @user.invite = nil
+    @user.update_attributes params[:user]
 
-    @user.set params[:user]
 
     if @user.valid?
       @user.save
+
+      env['warden'].set_user @user
+
       redirect_to :root
     else
       flash[:errors] = @user.errors

@@ -1,0 +1,45 @@
+#user_dashboard {
+
+  #session {
+    float: right;
+    color: #999;
+    font-size: 12px;
+    a {
+      margin-left: 6px;
+      color: #06C;
+      text-decoration: none;
+    }
+  }
+
+  #worlds {
+    margin-bottom: 24px;
+
+    li {
+      margin: 0 -48px; padding: 12px 48px;
+      display: block;
+      background: #EEE;
+      border-bottom: 1px solid #CCC;
+      overflow: auto;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      strong {
+        float: left;
+      }
+
+      input[type=submit] {
+        float: right;
+      }
+    }
+
+  }
+
+  form#new_world {
+    input {
+      width: 382px;
+    }
+  }
+
+}

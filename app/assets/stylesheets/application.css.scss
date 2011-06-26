@@ -1,5 +1,8 @@
 //= require 'reset'
-//= require 'home/index'
+//= require 'home/public'
+//= require 'user/new'
+//= require 'user/dashboard'
+
 
 $paytone: 'Paytone One', Helvetica, Arial, 'sans-serif';
 $helvetica: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -39,7 +42,7 @@ header {
   }
 }
 
-form {
+#content {
   background: #FFF;
   width: $w - (48px * 2); padding: 48px; margin: 0 auto;
   border-radius: 3px;
@@ -59,6 +62,9 @@ form {
   p {
     margin-bottom: 12px;
   }
+}
+
+form {
 
   label {
     display: block;
@@ -96,16 +102,16 @@ form {
 
 
     &:hover {
-      background: lighten(#0FC, 40%);
+      background: darken(#0FC, 20%);
       color: #FFF;
-      text-shadow: 0 -1px 0 #0FC;
-      border-bottom: 1px solid #0FC;
+      text-shadow: 0 -1px 0 darken(#0FC, 30%);
+      border-bottom: 1px solid darken(#0FC, 30%);
     }
 
     &:active {
       margin-top: 12px + 1px;
       border-bottom: none;
-      text-shadow: 0 -1px 0 darken(#0FC, 10%);
+      text-shadow: 0 -1px 0 darken(#0FC, 30%);
     }
   }
 }
