@@ -13,11 +13,10 @@ gem 'mongo_mapper', :git => 'https://github.com/jnunemaker/mongomapper.git'
 # Templates
 gem 'haml'
 gem 'sass-rails', '~> 3.1.0.rc'
-gem 'coffee-script'
-gem 'uglifier'
+# gem 'coffee-script'
+# gem 'uglifier'
 
 gem 'jquery-rails'
-
 
 # Auth
 gem 'devise'
