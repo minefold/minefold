@@ -1,0 +1,90 @@
+$paytone: 'Paytone One', Helvetica, Arial, 'sans-serif';
+$helvetica: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+$w: 620px;
+
+$bg: #06C;
+
+#home_public {
+
+  h2 {
+    color: #FFF;
+    font: 100 48px/48px $helvetica;
+    margin-bottom: 12px;
+  }
+
+  p {
+    color: rgba(#FFF, 0.6);
+    font: 14px/24px $helvetica;
+  }
+
+  form {
+    margin-top: 36px;
+    overflow: auto;
+  }
+
+  h3 {
+    color: darken($bg, 20%);
+    font: 600 16px/48px $helvetica;
+    text-shadow: 0 1px 0 rgba(#FFF, 0.1);
+  }
+
+  label {
+    color: darken($bg, 10%);
+    text-shadow: 0 1px 0 rgba(#FFF, 0.1);
+    font-weight: bold;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  input {
+    border-radius: 2px;
+    border: none;
+    outline: none;
+    font: 16px/24px $helvetica;
+    padding: 6px;
+
+    &:focus {
+      -webkit-box-shadow: 0 0 6px rgba(#000, 0.4);
+      padding: 6px - 2px;
+      border: 2px solid rgba($bg, 0.4);
+    }
+  }
+
+  .email, .username {
+    float: left;
+  }
+
+  .username, button {
+    margin-left: 10px;
+  }
+
+  button {
+    margin-top: 24px + 6px + 2px;
+    padding: 6px 12px;
+    font: 14px/24px $helvetica;
+    border: none;
+    background: #FE0;
+    border-radius: 2px;
+    color: darken($bg, 20%);
+    font-weight: bold;
+    cursor: pointer;
+    &:hover {
+      border: 2px solid #FFF;
+      -webkit-box-shadow: 0 0 6px rgba(#000, 0.4);
+      padding: 4px 10px;
+    }
+    &:active {
+      margin-top: 24px + 6px + 2px + 1px;
+      margin-bottom: -1px;
+    }
+  }
+
+  .email input {
+    width: 240px;
+  }
+
+  .username input {
+    width: 160px;
+  }
+}

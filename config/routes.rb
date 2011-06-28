@@ -1,7 +1,8 @@
 Minefold::Application.routes.draw do
 
   root to: 'user#dashboard',
-       constraints: ->(req){ req.env['warden'].authenticated? }
+       constraints: ->(req){ req.env['warden'].authenticated? },
+       as: :dashboard
 
   root :to => 'home#public'
 

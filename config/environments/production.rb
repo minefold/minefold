@@ -9,9 +9,11 @@ Minefold::Application.configure do
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_assets = true
 
+  # Compress JavaScripts and CSS
+  config.assets.compress = true
+
   # Compress both stylesheets and JavaScripts
-  # config.assets.js_compressor  = :uglifier
-  config.assets.css_compressor = :scss
+  config.assets.js_compressor  = :uglifier
 
   # Specifies the header that your server uses for sending files
   # (comment out if your front-end server doesn't support this)
@@ -47,6 +49,4 @@ Minefold::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
-
-  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 end

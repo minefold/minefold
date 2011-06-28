@@ -17,4 +17,9 @@
       = yield
 
     %footer
-      &copy; #{Time.now.year} Minefold.
+      %a{href: '//twitter.com/#!/minefold'} @minefold
+      .copyright
+        &copy; #{Time.now.year} Minefold.
+
+    - if Rails.env.production?
+      = render partial: 'shared/clicky'

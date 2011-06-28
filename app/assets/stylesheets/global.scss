@@ -1,0 +1,54 @@
+$paytone: 'Paytone One', Helvetica, Arial, 'sans-serif';
+$helvetica: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+$w: 620px;
+
+$bg: #06C;
+
+
+html {
+  background: $bg;
+}
+
+body {
+  margin: 0 auto; width: $w; padding: 0 20px;
+  font: 14px/24px $helvetica;
+}
+
+header {
+  margin: 90px 0 24px;
+
+  h1 {
+    font: 36px/36px $paytone;
+    text-transform: uppercase;
+    text-shadow: 0 2px 0 darken($bg, 20%);
+    letter-spacing: 1px;
+    a {
+      color: #FFF;
+      text-decoration: none;
+    }
+  }
+}
+
+footer {
+  margin: 48px 0;
+  color: lighten($bg, 20%);
+  font: 12px/24px $helvetica;
+  text-shadow: 0 -1px 0 rgba(#000, 0.4);
+
+  a {
+    font-size: 14px;
+    font-weight: bold;
+    color: rgba(#FFF, 0.8);
+    text-decoration: none;
+    &:hover {
+      color: #FFF;
+    }
+  }
+
+  .copyright {
+    display: inline;
+    margin-left: 20px;
+  }
+
+}
