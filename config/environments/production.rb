@@ -13,7 +13,7 @@ Minefold::Application.configure do
   config.assets.compress = true
 
   # Compress both stylesheets and JavaScripts
-  config.assets.js_compressor  = :uglifier
+  # config.assets.js_compressor  = :uglifier
 
   # Specifies the header that your server uses for sending files
   # (comment out if your front-end server doesn't support this)
