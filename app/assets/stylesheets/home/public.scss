@@ -1,21 +1,65 @@
-$paytone: 'Paytone One', Helvetica, Arial, 'sans-serif';
+$paytone:   'Paytone One', Helvetica, Arial, 'sans-serif';
 $helvetica: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 $w: 620px;
 
 $bg: #06C;
 
-#home_public {
+::selection {
+  background: #F60;
+  color: rgba(#FFF, 0.85);
+}
+
+#home_public #content {
 
   h2 {
     color: #FFF;
     font: 100 48px/48px $helvetica;
-    margin-bottom: 12px;
+    margin-bottom: 24px;
+    text-shadow: 0 1px 0 rgba(#000, .2);
   }
 
   p {
     color: rgba(#FFF, 0.6);
     font: 14px/24px $helvetica;
+  }
+
+  #features {
+    background: url('/div.png') top center no-repeat;
+    padding-top: 13px + 24px;
+    overflow: auto;
+    -webkit-font-smoothing: antialiased;
+    margin-top: -1px;
+
+    .feature {
+      float: left;
+      width: 290px;
+      margin-bottom: 24px;
+
+      &:nth-child(2n) {
+        margin-left: 40px;
+      }
+
+      h3 {
+        line-height: 32px;
+        font-weight: normal;
+        font-size: 18px;
+        color: #FFF;
+        text-shadow: 0 1px 0 rgba(#000, .2);
+      }
+
+      img {
+        float: left;
+        margin-right: 10px;
+      }
+
+      p {
+        color: lighten($bg, 40%);
+        margin-left: 36px + 10px;
+        font-size: 15px;
+      }
+    }
+
   }
 
   form {
@@ -69,7 +113,9 @@ $bg: #06C;
     color: darken($bg, 20%);
     font-weight: bold;
     cursor: pointer;
-    &:hover {
+    outline: none;
+
+    &:hover, &:focus {
       border: 2px solid #FFF;
       -webkit-box-shadow: 0 0 6px rgba(#000, 0.4);
       padding: 4px 10px;

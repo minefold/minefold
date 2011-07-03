@@ -4,9 +4,11 @@ class User
   key :email, String
   key :username, String
   key :encrypted_password, String, :length => 0..128
-  key :world, World
+  key :world_id, ObjectID
   key :invite, String
   timestamps!
+
+  belongs_to :world, :class => World
 
   ensure_index :username, :unique => true
   ensure_index :invite,   :unique => true

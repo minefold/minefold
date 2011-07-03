@@ -8,7 +8,8 @@ gem 'rails', '3.1.0.rc4'
 
 # ORM
 gem 'bson_ext'
-gem 'mongo_mapper', :git => 'https://github.com/jnunemaker/mongomapper.git'
+gem 'mongo_mapper',
+  git: 'https://github.com/jnunemaker/mongomapper.git'
 
 # Templates
 gem 'haml'
@@ -20,6 +21,8 @@ gem 'jquery-rails'
 
 # Auth
 gem 'devise'
+# gem 'devise-mongo_mapper',
+#   git: 'git://github.com/collectiveidea/devise-mongo_mapper'
 
 # Other
 gem 'stringex'
@@ -32,5 +35,6 @@ group :development do
 end
 
 group :test do
-  gem 'turn', :require => false
+  gem 'turn',
+    require: false
 end

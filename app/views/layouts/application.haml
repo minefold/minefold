@@ -18,8 +18,11 @@
 
     %footer
       %a{href: '//twitter.com/#!/minefold'} @minefold
-      .copyright
+      %p.designed
+        Designed in Sydney, Australia.
+      %p.copyright
         &copy; #{Time.now.year} Minefold.
+
 
     - if Rails.env.production?
       = render partial: 'shared/clicky'
