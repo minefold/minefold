@@ -21,8 +21,8 @@ class User
 
   # Authentication
 
-  extend Devise::Models
-  devise :database_authenticatable
+  # extend Devise::Models
+  # devise :database_authenticatable
 
 
   # Avatars

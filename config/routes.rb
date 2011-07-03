@@ -1,8 +1,8 @@
 Minefold::Application.routes.draw do
 
-  root to: 'user#dashboard',
-       constraints: ->(req){ req.env['warden'].authenticated? },
-       as: :dashboard
+  # root to: 'user#dashboard',
+  #      constraints: ->(req){ req.env['warden'].authenticated? },
+  #      as: :dashboard
 
   root :to => 'home#public'
 
@@ -19,9 +19,9 @@ Minefold::Application.routes.draw do
     post 'activate', :on => :member
   end
 
-  devise_for :user do
-    get  '/signin' => 'devise/sessions#new'
-    post '/signin' => 'devise/sessions#create'
-    get  '/signout' => 'devise/sessions#destroy'
-  end
+  # devise_for :user do
+  #   get  '/signin' => 'devise/sessions#new'
+  #   post '/signin' => 'devise/sessions#create'
+  #   get  '/signout' => 'devise/sessions#destroy'
+  # end
 end
