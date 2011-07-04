@@ -7,7 +7,7 @@ $bg: #06C;
 
 
 html {
-  background: -webkit-linear-gradient(top, lighten($bg, 10%), $bg 360px) fixed;
+  background: $bg -webkit-linear-gradient(top, lighten($bg, 10%), $bg 360px) repeat-x;
 }
 
 body {

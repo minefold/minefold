@@ -20,6 +20,7 @@ gem 'sass-rails', '~> 3.1.0.rc'
 gem 'jquery-rails'
 
 # Auth
+gem 'devise'
 # gem 'devise'
 # gem 'devise-mongo_mapper',
 #   git: 'git://github.com/collectiveidea/devise-mongo_mapper'
@@ -35,6 +36,5 @@ group :development do
 end
 
 group :test do
-  gem 'turn',
-    require: false
+  gem 'turn', require: false
 end
