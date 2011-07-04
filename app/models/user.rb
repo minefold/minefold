@@ -4,7 +4,7 @@ class User
   key :email, String
   key :username, String
   key :encrypted_password, String, :length => 0..128
-  key :world_id, ObjectID
+  key :world_id, ObjectId
   key :invite, String
   timestamps!
 
