@@ -1,3 +1,63 @@
-//= require reset
+//= require shared/reset
 //= require_self
 //= require_tree .
+
+@import 'shared/vars';
+
+html {
+  background: $bg -webkit-linear-gradient(top, lighten($bg, 10%), $bg 360px) repeat-x;
+}
+
+body {
+  margin: 0 auto; width: $w; padding: 0 20px;
+  font: 14px/24px $helvetica;
+}
+
+::selection {
+  background: #F60;
+  color: rgba(#FFF, 0.85);
+}
+
+header {
+  margin: 90px 0 24px;
+
+  h1 {
+    font: 36px/36px $paytone;
+    text-transform: uppercase;
+    text-shadow: 0 2px 0 darken($bg, 20%);
+    letter-spacing: 1px;
+    a {
+      color: #FFF;
+      text-decoration: none;
+    }
+  }
+}
+
+footer {
+  margin: 48px 0;
+  color: lighten($bg, 60%);
+  font: 14px/24px $helvetica;
+  text-shadow: 0 -1px 0 rgba(#000, 0.2);
+  -webkit-font-smoothing: antialiased;
+
+  a {
+    font-weight: bold;
+    color: #FFF;
+    text-decoration: none;
+    &:hover {
+      border-bottom: 1px solid lighten($bg, 40%);
+    }
+  }
+
+  p.designed {
+    display: inline;
+    margin-left: 10px;
+    color: lighten($bg, 40%);
+  }
+
+  p.copyright {
+    font-size: 11px;
+    color: lighten($bg, 30%);
+  }
+}
+

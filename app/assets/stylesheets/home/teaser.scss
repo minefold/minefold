@@ -1,16 +1,6 @@
-$paytone:   'Paytone One', Helvetica, Arial, 'sans-serif';
-$helvetica: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+@import 'shared/vars';
 
-$w: 620px;
-
-$bg: #06C;
-
-::selection {
-  background: #F60;
-  color: rgba(#FFF, 0.85);
-}
-
-#home_public #content {
+#home_teaser #content {
 
   h2 {
     color: #FFF;
