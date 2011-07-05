@@ -29,7 +29,15 @@ Minefold::Application.configure do
   # config.logger = SyslogLogger.new
 
   # Use a different cache store in production
-  # config.cache_store = :mem_cache_store
+  config.cache_store = :dalli_store
+
+  memcached_uri = URI::Generic.build scheme: 'memcached',
+                                       host: ENV['MEMCACHE_SERVERS']
+
+  config.middleware.use Rack::Cache,
+      metastore: memcached_uri.merge('/meta').to_s,
+    entitystore: memcached_uri.merge('/body').to_s,
+        verbose: true
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"

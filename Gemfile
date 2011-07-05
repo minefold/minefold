@@ -11,6 +11,9 @@ gem 'bson_ext'
 gem 'mongo_mapper',
   git: 'https://github.com/jnunemaker/mongomapper.git'
 
+# Caching
+gem 'rack-cache', require: 'rack/cache'
+
 # Templates
 gem 'haml'
 gem 'sass-rails'
@@ -34,4 +37,8 @@ end
 
 group :test do
   gem 'turn', require: false
+end
+
+group :production do
+  gem 'dalli'
 end

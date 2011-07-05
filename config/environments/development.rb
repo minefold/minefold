@@ -22,4 +22,10 @@ Minefold::Application.configure do
 
   # Do not compress assets
   config.assets.compress = false
+
+  config.middleware.use Rack::Cache,
+      metastore: 'file:tmp/cache/rack/meta',
+    entitystore: 'file:tmp/cache/rack/body',
+        verbose: true
+
 end
