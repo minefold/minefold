@@ -40,7 +40,7 @@ class User
   end
 
   attr_accessor :password_confirmation
-  # validates_confirmation_of :password, :if => :password
+  validates_confirmation_of :password, :if => :password
 
 # Avatars
 
