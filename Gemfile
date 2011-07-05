@@ -13,17 +13,13 @@ gem 'mongo_mapper',
 
 # Templates
 gem 'haml'
-gem 'sass-rails', '~> 3.1.0.rc'
-# gem 'coffee-script'
-# gem 'uglifier'
+gem 'sass-rails'
 
 gem 'jquery-rails'
 
 # Auth
-gem 'devise'
-# gem 'devise'
-# gem 'devise-mongo_mapper',
-#   git: 'git://github.com/collectiveidea/devise-mongo_mapper'
+gem 'rails_warden',
+  git: 'https://github.com/hassox/rails_warden.git'
 
 # Other
 gem 'stringex'
