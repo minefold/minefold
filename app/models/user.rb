@@ -16,28 +16,45 @@ class User
   validates_uniqueness_of :email, :allow_nil => true
   validates_uniqueness_of :username, :allow_nil => true
 
-  validates_confirmation_of :password
+  before_validation { self.email.try :downcase!}
+  before_validation { self.email.try :strip!}
 
+# Authentication
 
-  # Authentication
+  STRETCHES = 10
 
-  # extend Devise::Models
-  # devise :database_authenticatable
+  # TODO: Implement a constant-time comparison to prevent timing attacks
+  #       (see Devise.secure_compare).
+  def password
+    @password ||= if encrypted_password?
+      BCrypt::Password.new(encrypted_password)
+    else
+      nil
+    end
+  end
 
+  def password= new_password
+    self.encrypted_password = @password =
+      BCrypt::Password.create(new_password, cost: STRETCHES)
+      # BCrypt::Password.create([new_password, ENV['PEPPER']].join, cost: STRETCHES)
+  end
 
-  # Avatars
+  attr_accessor :password_confirmation
+  # validates_confirmation_of :password, :if => :password
+
+# Avatars
 
   include Gravtastic
   gravtastic :secure => true, :rating => 'G'
 
-
-  # Invitations
+# Invitations
 
   TOKEN_LENGTH = 6
 
   class InvalidInvite < StandardError; end
 
   before_validation :set_invite, :on => :create
+
   def set_invite
     begin
       self.invite = rand(36 ** TOKEN_LENGTH).
@@ -45,10 +62,6 @@ class User
                       rjust(TOKEN_LENGTH, '0').
                       upcase
     end while self.class.exist?(:invite => invite)
-  end
-
-  def self.find_by_invite! invite
-    first(:invite => invite) || raise(InvalidInvite)
   end
 
   def claim_invite

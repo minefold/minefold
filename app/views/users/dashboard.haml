@@ -1,6 +1,6 @@
 #session
   = current_user.username
-  %a{href: '/signout'} Sign Out
+  %a{href: '/sign_out'} Sign Out
 
 
 %h2 Worlds
@@ -13,7 +13,7 @@
       - @worlds.each do |world|
         %li
           %strong= world.name
-          = button_to 'Activate', [:activate, world], :disabled => current_user.active_world == world
+          = button_to 'Activate', [:activate, world], :disabled => current_user.world == world
 
 = form_for @world do |f|
   %h2 New World

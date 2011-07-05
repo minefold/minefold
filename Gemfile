@@ -20,6 +20,7 @@ gem 'jquery-rails'
 # Auth
 gem 'rails_warden',
   git: 'https://github.com/hassox/rails_warden.git'
+gem 'bcrypt-ruby', require: 'bcrypt'
 
 # Other
 gem 'stringex'

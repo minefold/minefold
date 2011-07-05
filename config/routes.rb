@@ -1,14 +1,14 @@
 Minefold::Application.routes.draw do
 
-  root to: 'user#dashboard',
+  root to: 'users#dashboard',
        constraints: ->(req){ req.env['warden'].authenticated? },
        as: :dashboard
 
   root :to => 'home#teaser'
 
   # Signup
-  get  '/signup' => 'user#new', :as => :user
-  post '/signup' => 'user#create', :as => :users
+  get  '/sign_up' => 'users#new'
+  post '/sign_up' => 'users#create', :as => :users
 
   # Players
   # get  '/:username' => 'user#show'
@@ -21,7 +21,8 @@ Minefold::Application.routes.draw do
 
   # Authentication
   get    '/sign_in'  => 'sessions#new'
-  post   '/sign_in'  => 'sessions#create'
+  post   '/sign_in'  => 'sessions#create', :as => :new_session
+  get    '/sign_out' => 'sessions#destroy'
   delete '/sign_out' => 'sessions#destroy'
 
   # Payment
@@ -29,5 +30,4 @@ Minefold::Application.routes.draw do
 
   get '/order/:id' => 'orders#show'
   put '/order/:id' => 'order#update'
-
 end
