@@ -1,2 +1,16 @@
 %header
   %h1 Dashboard
+
+= link_to 'Create new world', new_world_path
+
+#worlds
+  %h2 Worlds
+
+  - if @worlds.empty?
+    %p There are no active worlds
+  - else
+    %ul
+      - @worlds.each do |world|
+        %li
+          %strong
+            = link_to world.name, "/#{world.slug}"

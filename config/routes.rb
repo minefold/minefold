@@ -12,6 +12,11 @@ Minefold::Application.routes.draw do
   post '/sign_up' => 'users#create', :as => :users
 
 
+  # Worlds
+  resources :worlds, :only => [:new, :create] do
+    post 'activate', :on => :member
+  end
+
   # Authentication
   get    '/sign_in'  => 'sessions#new',  :as => :new_session
   post   '/sign_in'  => 'sessions#create',  :as => :sessions

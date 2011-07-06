@@ -1,5 +1,12 @@
 %header
-  %h1 The Shaft
+  %h1= world.name
+
+#stream
+  - 100.times do |i|
+    .entry
+      .author chrislloyd
+      .detail
+        So I told them I was Mike D. It was like "Gee, I don't know, he might be".
 
 - content_for :aside do
   %img{width: 240, height: 240, src: '/shadow.png'}
@@ -8,9 +15,12 @@
 
   %h2 Admins
 
-#stream
-  - 100.times do |i|
-    .entry
-      .author chrislloyd
-      .detail
-        So I told them I was Mike D. It was like "Gee, I don't know, he might be".
+  %ul
+    - world.admins.each do |admin|
+      %li
+        = image_tag admin.gravatar_url
+
+  %h2 Players
+  %ul
+    - world.players.each do |player|
+      %li= player.username
