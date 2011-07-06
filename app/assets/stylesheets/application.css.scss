@@ -1,63 +1,98 @@
 //= require shared/reset
 //= require_self
-//= require_tree .
+//= require_tree ./users
+//= require_tree ./worlds
 
 @import 'shared/vars';
 
-html {
-  background: $bg -webkit-linear-gradient(top, lighten($bg, 10%), $bg 360px) repeat-x;
-}
-
 body {
-  margin: 0 auto; width: $w; padding: 0 20px;
   font: 14px/24px $helvetica;
+
+  min-width: $w;
+
+  .container { width: $w; margin: 0 auto; }
 }
 
-::selection {
-  background: #F60;
-  color: rgba(#FFF, 0.85);
-}
+header#page_header {
+  padding: 12px 0 11px;
+  border-bottom: 1px solid #CCC;
 
-header {
-  margin: 90px 0 24px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  background: white;
+
+
+  .container {
+    width: $w - (2*$col);
+    padding: 0 $col;
+    overflow: hidden;
+  }
 
   h1 {
-    font: 36px/36px $paytone;
+    float: left;
+
+    font: 18px/24px $paytone;
     text-transform: uppercase;
-    text-shadow: 0 2px 0 darken($bg, 20%);
-    letter-spacing: 1px;
+    text-shadow: 0 1px 0 darken($blue, 10%);
+    letter-spacing: 0.15em;
+
     a {
-      color: #FFF;
+      color: $blue;
       text-decoration: none;
     }
+  }
+
+  aside {
+    float: right;
+  }
+}
+
+#content {
+  width: $w - (2 * $col);
+  margin: 48px auto 96px;
+  padding: 0 $col;
+
+  .container {
+    margin-left: 260px;
+    width: $w - (2*$col) - 260px - 20px;
+    border-left: 1px solid #EEE;
+    padding-left: $col - 1px;
+  }
+
+  aside {
+    float: left;
+    overflow: hidden;
+    width: 260px;
+  }
+
+  header {
+    h1 {
+      font-size: 28px;
+      line-height: 48px;
+    }
+    margin-bottom: 24px
   }
 }
 
 footer {
   margin: 48px 0;
-  color: lighten($bg, 60%);
+  color: #CCC;
   font: 14px/24px $helvetica;
-  text-shadow: 0 -1px 0 rgba(#000, 0.2);
   -webkit-font-smoothing: antialiased;
 
   a {
     font-weight: bold;
-    color: #FFF;
     text-decoration: none;
+    color: $blue;
     &:hover {
-      border-bottom: 1px solid lighten($bg, 40%);
     }
-  }
-
-  p.designed {
-    display: inline;
-    margin-left: 10px;
-    color: lighten($bg, 40%);
   }
 
   p.copyright {
     font-size: 11px;
-    color: lighten($bg, 30%);
   }
 }
 

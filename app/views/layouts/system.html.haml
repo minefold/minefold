@@ -6,11 +6,12 @@
 
     %title Minefold
     = stylesheet_link_tag 'http://fonts.googleapis.com/css?family=Paytone+One:regular&v1'
-    = stylesheet_link_tag    'application'
-    - #= javascript_include_tag 'application'
+    = stylesheet_link_tag 'system'
     = csrf_meta_tags
 
+    - # TODO: Write description
     %meta{name:'description', content:'Social Minecraft. Play with friends in the clouds.'}
+    - # TODO: Write tags
     %meta{name:'keywords', content:%w().join(',')}
 
     %link{rel:'shortcut icon', href:url_for('/favicon.ico'), type:'image/x-icon'}
@@ -20,9 +21,6 @@
     %meta{property:'og:type', content:'website'}
     %meta{property:'og:url', content:'http://www.minefold.com'}
     %meta{property:'og:site_name', content:'Minefold'}
-    - # %meta{property:'og:description', content:'Minefold'}
-    - # %meta{property:'fb:app_id', content:1234567}
-    - # %meta{property:'fb:admins', content:[1,2,3].join(',')}
 
   %body{page_css_selector}
     %header

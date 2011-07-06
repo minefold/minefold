@@ -1,0 +1,27 @@
+@import 'shared/vars';
+
+#worlds_show {
+
+  header#page_header {
+  }
+
+  #content {
+
+    aside img {
+      background: #EEE;
+    }
+
+
+    #stream {
+      .entry {
+        margin-bottom: 4 * $lh;
+        .author {
+          font-size: 12px;
+          color: #999;
+        }
+      }
+    }
+
+  }
+
+}

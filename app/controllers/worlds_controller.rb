@@ -1,5 +1,10 @@
 class WorldsController < ApplicationController
 
+  layout 'application'
+
+  def show
+  end
+
   def create
     @world = World.create_by current_user, params[:world]
 

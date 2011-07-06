@@ -7,7 +7,7 @@ class SignUpTest < ActionDispatch::IntegrationTest
 
     email, username = ['chris@minefold.com', 'chrislloyd']
 
-    post '/signup', user: {
+    post '/sign_up', user: {
                       email: email,
                       username: username,
                       password: 'password',

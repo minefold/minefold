@@ -6,28 +6,33 @@ Minefold::Application.routes.draw do
 
   root :to => 'home#teaser'
 
+
   # Signup
   get  '/sign_up' => 'users#new'
   post '/sign_up' => 'users#create', :as => :users
 
-  # Players
-  # get  '/:username' => 'user#show'
-  # get  '/:username/:world' => 'world#show'
-
-  # Worlds
-  resources :worlds do
-    post 'activate', :on => :member
-  end
 
   # Authentication
-  get    '/sign_in'  => 'sessions#new'
-  post   '/sign_in'  => 'sessions#create', :as => :new_session
-  get    '/sign_out' => 'sessions#destroy'
-  delete '/sign_out' => 'sessions#destroy'
+  get    '/sign_in'  => 'sessions#new',  :as => :new_session
+  post   '/sign_in'  => 'sessions#create',  :as => :sessions
+  delete '/sign_out' => 'sessions#destroy', :as => :session
+
 
   # Payment
-  post '/purchase' => 'orders#create'
+  # post '/purchase' => 'orders#create'
+  #
+  # get '/order/:id' => 'orders#show'
+  # put '/order/:id' => 'order#update'
 
-  get '/order/:id' => 'orders#show'
-  put '/order/:id' => 'order#update'
+
+  # Players
+  get  '/player/:username' => 'user#show'
+
+
+  # Worlds
+  get '/:slug' => 'worlds#show'
+
+
+  # Playground
+  get '/the-shaft' => 'worlds#show'
 end

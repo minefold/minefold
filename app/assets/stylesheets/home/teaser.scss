@@ -44,7 +44,7 @@
       }
 
       p {
-        color: lighten($bg, 40%);
+        color: lighten($blue, 40%);
         margin-left: 36px + 10px;
         font-size: 15px;
       }
@@ -58,13 +58,13 @@
   }
 
   h3 {
-    color: darken($bg, 20%);
+    color: darken($blue, 20%);
     font: 600 16px/48px $helvetica;
     text-shadow: 0 1px 0 rgba(#FFF, 0.1);
   }
 
   label {
-    color: darken($bg, 15%);
+    color: darken($blue, 15%);
     text-shadow: 0 1px 0 rgba(#FFF, 0.1);
     font-weight: bold;
     margin-bottom: 6px;
@@ -81,7 +81,7 @@
     &:focus {
       -webkit-box-shadow: 0 0 6px rgba(#000, 0.4);
       padding: 6px - 2px;
-      border: 2px solid rgba($bg, 0.4);
+      border: 2px solid rgba($blue, 0.4);
     }
   }
 
@@ -100,7 +100,7 @@
     border: none;
     background: #FE0;
     border-radius: 2px;
-    color: darken($bg, 20%);
+    color: darken($blue, 20%);
     font-weight: bold;
     cursor: pointer;
     outline: none;
