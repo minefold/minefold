@@ -1,14 +1,21 @@
 class WorldsController < ApplicationController
-
+  respond_to :html
+  
+  expose(:world) { 
+    if params[:slug]
+      World.find_by_slug!(params[:slug])
+    else 
+      World.new
+    end
+  }
+  
   def create
-    @world = World.create_by current_user, params[:world]
-
-    # if @world.valid? and @world.save
-
-    @world.admins << current_user
-    @world.players << current_user
-
-    redirect_to root_path
+    world = World.new params[:world]
+    world.admins << current_user
+    world.players << current_user
+    world.save!
+    
+    redirect_to "/#{world.slug}"
   end
 
   def activate

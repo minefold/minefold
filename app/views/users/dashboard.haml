@@ -2,6 +2,7 @@
   = current_user.username
   %a{href: '/sign_out'} Sign Out
 
+= link_to 'Create new world', new_world_path
 
 %h2 Worlds
 
@@ -12,11 +13,8 @@
     %ul
       - @worlds.each do |world|
         %li
-          %strong= world.name
-          = button_to 'Activate', [:activate, world], :disabled => current_user.world == world
+          %strong
+            = link_to world.name, "/#{world.slug}"
+          -# = button_to 'Activate', [:activate, world], :disabled => current_user.world == world
 
-= form_for @world do |f|
-  %h2 New World
 
-  = f.text_field :name, :placeholder => 'Name'
-  %button Create

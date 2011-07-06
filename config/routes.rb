@@ -15,7 +15,7 @@ Minefold::Application.routes.draw do
   # get  '/:username/:world' => 'world#show'
 
   # Worlds
-  resources :worlds do
+  resources :worlds, :only => [:new, :create] do
     post 'activate', :on => :member
   end
 
@@ -30,4 +30,7 @@ Minefold::Application.routes.draw do
 
   get '/order/:id' => 'orders#show'
   put '/order/:id' => 'order#update'
+  
+  # world
+  get '/:slug' => 'worlds#show'
 end
