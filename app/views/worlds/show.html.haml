@@ -11,16 +11,23 @@
 - content_for :aside do
   %img{width: 240, height: 240, src: '/shadow.png'}
 
-  %h2 Info
+  %section.info
+    %h2 Info
+    - [:host, :spawn_monsters, :spawn_animals, :allow_flight, :spawn_protection, :seed].each do |option|
+      .option
+        .key= option.to_s.humanize
+        .val=  world.send option
 
-  %h2 Admins
+  - if !world.admins.empty?
+    %section.admins
+      %h2 Admins
+      %ul
+        - world.admins.each do |admin|
+          %li= image_tag admin.gravatar_url
 
-  %ul
-    - world.admins.each do |admin|
-      %li
-        = image_tag admin.gravatar_url
-
-  %h2 Players
-  %ul
-    - world.players.each do |player|
-      %li= player.username
+  %section.players
+    %h2 Currently Playing
+    .count= world.players.count
+    %ul
+      - world.players.each do |player|
+        %li= player.username

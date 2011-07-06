@@ -6,12 +6,25 @@ class World
   key :player_ids, Array
   timestamps!
 
-  many :admins,  :class => User, :in => :admin_ids
-  many :players, :class => User, :in => :player_ids
+  many :admins,  class: User, in: :admin_ids
+  many :players, class: User, in: :player_ids
 
+  key :slug, String, unique: true
+  ensure_index :slug, unique: true
 
-  key :slug, String, :unique => true
-  ensure_index :slug, :unique => true
+  # Options
+
+  key :spawn_monsters, Boolean, default: true
+  key :spawn_animals, Boolean, default: true
+  key :allow_flight, Boolean, default: false
+  key :spawn_protection, Boolean, default: true
+  key :seed, String
+
+  key :location, String, default: 'United States East Coast'
+
+  def host
+    'usa1.minefold.com'
+  end
 
   def to_param
     slug

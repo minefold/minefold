@@ -1,27 +1,51 @@
 @import 'shared/vars';
 
-#worlds_show {
+#worlds_show #content {
 
-  header#page_header {
-  }
-
-  #content {
-
-    aside img {
+  aside {
+    img {
       background: #EEE;
     }
 
-
-    #stream {
-      .entry {
-        margin-bottom: 4 * $lh;
-        .author {
-          font-size: 12px;
-          color: #999;
-        }
-      }
+    h2 {
+      font-color: #999;
+      font-weight: bold;
     }
 
+    section {
+      margin-bottom: 2*$lh;
+      h2 {
+        float: left;
+      }
+      .count {
+        float: right;
+      }
+    }
+  }
+
+
+
+  .option {
+    clear: both;
+    overflow: auto;
+    .key {
+      float: left;
+    }
+    .val {
+      float: right;
+    }
+    margin-bottom: $lh;
+  }
+
+
+  #stream {
+    .entry {
+      margin-bottom: 4 * $lh;
+      .author {
+        font-size: 12px;
+        color: #999;
+      }
+    }
   }
 
 }

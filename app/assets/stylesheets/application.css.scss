@@ -65,7 +65,7 @@ header#page_header {
   aside {
     float: left;
     overflow: hidden;
-    width: 260px;
+    width: 240px;
   }
 
   header {
@@ -78,7 +78,7 @@ header#page_header {
 }
 
 footer {
-  margin: 48px 0;
+  margin: 96px 0 48px;
   color: #CCC;
   font: 14px/24px $helvetica;
   -webkit-font-smoothing: antialiased;
