@@ -4,6 +4,7 @@ class World
   key :name,       String,  unique: true
   key :admin_ids,  Array
   key :player_ids, Array
+  key :chat_messages, Array
   timestamps!
 
   many :admins,  class: User, in: :admin_ids
