@@ -5,7 +5,6 @@ class User
   key :username, String
   key :encrypted_password, String, :length => 0..128
   key :world_id, ObjectId
-  key :invite, String
   timestamps!
 
   belongs_to :world, :class => World
@@ -46,26 +45,5 @@ class User
 
   include Gravtastic
   gravtastic :secure => true, :rating => 'G'
-
-# Invitations
-
-  TOKEN_LENGTH = 6
-
-  class InvalidInvite < StandardError; end
-
-  before_validation :set_invite, :on => :create
-
-  def set_invite
-    begin
-      self.invite = rand(36 ** TOKEN_LENGTH).
-                      to_s(36).
-                      rjust(TOKEN_LENGTH, '0').
-                      upcase
-    end while self.class.exist?(:invite => invite)
-  end
-
-  def claim_invite
-    self.invite = nil
-  end
 
 end
