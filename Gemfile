@@ -27,7 +27,6 @@ gem 'bcrypt-ruby', require: 'bcrypt'
 
 # Other
 gem 'stringex'
-gem 'gravtastic'
 gem 'decent_exposure'
 
 group :development do

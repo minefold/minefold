@@ -1,0 +1,11 @@
+= form_for @user, :url => new_session_path do |f|
+  %h3 Wrong email or password.
+
+  %p
+    = f.email_field :email, placeholder: 'email@address.com'
+
+  %p
+    = f.password_field :password, placeholder: 'Password'
+
+  %p
+    %button Sign in

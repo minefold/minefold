@@ -1,13 +1,9 @@
 = form_for @user do |f|
   %h2 Please Note
 
-  .warning
-    %p Minefold is being actively developed. Things may break and the service may not work as advertised. Here be dragons.
-    %p If you create an account you agree to keep your experience with Minefold confidential until we launch. Thanks!
-
   %p#email
     = f.label :email
-    = f.text_field :email
+    = f.email_field :email
 
   %p#username
     = f.label :username, 'Minecraft Username'

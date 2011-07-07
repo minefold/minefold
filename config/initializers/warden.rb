@@ -20,7 +20,7 @@ Warden::Strategies.add(:password) do
     if validate(user) {|user| user.password == params[:user][:password]}
       success! user
     else
-      fail :invalid
+      fail! :invalid
     end
   end
 

@@ -5,6 +5,8 @@
 
 @import 'shared/vars';
 
+$w: 640px;
+
 html {
   background: $blue -webkit-linear-gradient(top, lighten($blue, 10%), $blue 360px) repeat-x;
 }

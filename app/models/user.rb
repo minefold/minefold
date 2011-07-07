@@ -40,10 +40,4 @@ class User
 
   attr_accessor :password_confirmation
   validates_confirmation_of :password, :if => :password
-
-# Avatars
-
-  include Gravtastic
-  gravtastic :secure => true, :rating => 'G'
-
 end

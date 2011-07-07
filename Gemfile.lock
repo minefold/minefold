@@ -62,7 +62,6 @@ GEM
     foreman (0.19.0)
       term-ansicolor (~> 1.0.5)
       thor (>= 0.13.6)
-    gravtastic (3.1.0)
     haml (3.1.2)
     heroku (2.3.6)
       launchy (>= 0.3.2)
@@ -150,7 +149,6 @@ DEPENDENCIES
   dalli
   decent_exposure
   foreman
-  gravtastic
   haml
   heroku
   jquery-rails

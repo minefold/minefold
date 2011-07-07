@@ -20,8 +20,10 @@ Minefold::Application.routes.draw do
   # Authentication
   get    '/sign_in'  => 'sessions#new',  :as => :new_session
   post   '/sign_in'  => 'sessions#create',  :as => :sessions
-  delete '/sign_out' => 'sessions#destroy', :as => :session
+  get    '/sign_out' => 'sessions#destroy', :as => :session
 
+
+  get '/unauthorized' => 'sessions#unauthorized'
 
   # Payment
   # post '/purchase' => 'orders#create'

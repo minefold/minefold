@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
 
+  layout 'application', only: [:dashboard]
+
   def dashboard
     @worlds = World.all
     @world = World.new
