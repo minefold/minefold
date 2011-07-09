@@ -1,5 +1,5 @@
 = form_for @user do |f|
-  %h2 Please Note
+  %h2 Sign Up
 
   %p#email
     = f.label :email
@@ -16,10 +16,6 @@
   %p#password_confirmation
     = f.label :password_confirmation
     = f.password_field :password_confirmation
-
-  %p#invite
-    = f.label :invite, 'Invitation Code'
-    = f.text_field :invite, :size => 6
 
   %p
     %button Create account

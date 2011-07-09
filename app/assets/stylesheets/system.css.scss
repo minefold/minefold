@@ -2,6 +2,7 @@
 //= require_self
 //= require_tree ./home
 //= require_tree ./sessions
+//= require ./users/new
 
 @import 'shared/vars';
 
@@ -32,6 +33,68 @@ header {
     a {
       color: #FFF;
       text-decoration: none;
+    }
+  }
+}
+
+#content {
+  h2 {
+    font-size: 36px;
+    line-height: 48px;
+    color: #FFF;
+    font-weight: 200;
+    text-shadow: 0 1px 0 darken($blue, 10%);
+    margin-bottom: 12px;
+  }
+
+  h3 {
+    color: #FFF;
+    margin-bottom: 24px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: $lh/2;
+    color: darken($blue, 20%);
+  }
+
+  input {
+    border-radius: 2px;
+    border: none;
+    outline: none;
+    font: 16px/24px $helvetica;
+    padding: 6px;
+    margin: 0;
+    margin-bottom: 6px;
+
+    &:focus {
+      -webkit-box-shadow: 0 0 6px rgba(#000, 0.4);
+      padding: 6px - 2px;
+      border: 2px solid rgba($blue, 0.4);
+    }
+  }
+
+  button {
+    margin: 0;
+    margin-top: 12px + 6px;
+    padding: 6px 12px;
+    font: 14px/24px $helvetica;
+    border: none;
+    background: #FE0;
+    border-radius: 2px;
+    color: darken($blue, 20%);
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+
+    &:hover, &:focus {
+      border: 2px solid #FFF;
+      -webkit-box-shadow: 0 0 6px rgba(#000, 0.4);
+      padding: 4px 10px;
+    }
+    &:active {
+      margin-top: 12px + 6px + 1px;
+      margin-bottom: -1px;
     }
   }
 }

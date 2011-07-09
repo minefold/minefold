@@ -1,7 +1,5 @@
 class UsersController < ApplicationController
 
-  layout 'application', only: [:dashboard]
-
   def dashboard
     @worlds = World.all
     @world = World.new
@@ -9,22 +7,23 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    render layout: 'system'
   end
 
   def create
-    @user = User.first invite: params[:user].delete(:invite)
-    raise User::InvalidInvite unless @user
+    @user = User.new params[:user]
 
-    @user.claim_invite
-
-    @user.update_attributes params[:user]
+    p @user
 
     if @user.valid? && @user.save
+
+      p @user
+
       warden.set_user @user
       redirect_to dashboard_path
     else
       flash[:errors] = @user.errors
-      render :new
+      render :new, layout: 'system'
     end
   end
 

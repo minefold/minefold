@@ -1,28 +1,2 @@
-#users_new {
-
-  #email input {
-    width: (140px * 2) + 12px - (2 * 6px);
-  }
-  #username input {
-    width: 140px - (2 * 6px);
-  }
-
-  #password, #password_confirmation {
-    float: left;
-    overflow: auto;
-    clear: none;
-
-    input {
-      width: 140px - (2 * 6px);
-    }
-  }
-
-  #password_confirmation {
-    margin-left: 12px;
-  }
-
-  p {
-    overflow: auto;
-    clear: both;
-  }
+#users_new #content {
 }

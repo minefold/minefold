@@ -1,0 +1,32 @@
+@import 'shared/vars';
+
+$w: 640px;
+
+body.sessions {
+
+  header {
+    text-align: center;
+  }
+
+  form {
+    background: url('/lock.png') top center no-repeat;
+    padding-top: 32px + 24px;
+    text-align: center;
+  }
+
+  #content {
+    width: $w;
+    margin: -1px auto 0 auto;
+    padding: (13px + 12px) 0 24px;
+
+    background: url('/shadow.png') top center no-repeat;
+    z-index: 100;
+
+  }
+
+  footer {
+    text-align: center;
+  }
+
+}
+
