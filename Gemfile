@@ -28,6 +28,7 @@ gem 'bcrypt-ruby', require: 'bcrypt'
 # Other
 gem 'stringex'
 gem 'decent_exposure'
+gem 'activemerchant'
 
 group :development do
   gem 'heroku'

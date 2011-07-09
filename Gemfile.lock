@@ -32,6 +32,10 @@ GEM
       rack-test (~> 0.6.0)
       sprockets (~> 2.0.0.beta.10)
       tzinfo (~> 0.3.27)
+    activemerchant (1.15.0)
+      activesupport (>= 2.3.8)
+      braintree (>= 2.0.0)
+      builder (>= 2.0.0)
     activemodel (3.1.0.rc4)
       activesupport (= 3.1.0.rc4)
       bcrypt-ruby (~> 2.1.4)
@@ -50,6 +54,8 @@ GEM
     ansi (1.3.0)
     arel (2.1.3)
     bcrypt-ruby (2.1.4)
+    braintree (2.10.1)
+      builder (>= 2.0.0)
     bson (1.3.1)
     bson_ext (1.3.1)
     builder (3.0.0)
@@ -144,6 +150,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activemerchant
   bcrypt-ruby
   bson_ext
   dalli

@@ -2,7 +2,7 @@
   %h1= world.name
 
 #stream
-  - 100.times do |i|
+  - world.chat_messages do |msg|
     .entry
       .author chrislloyd
       .detail
@@ -16,14 +16,14 @@
     - [:host, :spawn_monsters, :spawn_animals, :allow_flight, :spawn_protection, :seed].each do |option|
       .option
         .key= option.to_s.humanize
-        .val=  world.send option
+        .val=  world.options[option]
 
   - if !world.admins.empty?
     %section.admins
       %h2 Admins
       %ul
         - world.admins.each do |admin|
-          %li= image_tag admin.gravatar_url
+          %li= admin.username
 
   %section.players
     %h2 Currently Playing

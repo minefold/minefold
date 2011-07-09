@@ -4,6 +4,7 @@ class User
   key :email,              String, unique: true
   key :username,           String, unique: true
   key :encrypted_password, String, length: 0..128
+  key :credits,            Integer, default: 0
   key :world_id,           ObjectId
   timestamps!
 
@@ -16,6 +17,11 @@ class User
   def normalize_email
     email.try(:downcase!).try(:strip!)
   end
+
+  def add_credits n
+    increment credits: n
+  end
+
 
 
 # Authentication
@@ -44,7 +50,7 @@ class User
   end
 
   # TODO: Change Warden to use this abstraction (to help implementing peppers)
-  def check_password?(pw)
+  def check_password? pw
     password == pw
   end
 

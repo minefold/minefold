@@ -1,0 +1,34 @@
+= form_tag ENV['PAYPAL_URL'] do
+  = hidden_field_tag :cmd, '_s-xclick'
+
+  = hidden_field_tag :item_id, @order.id
+  = hidden_field_tag :custom,  @order.id
+
+  = hidden_field_tag :hosted_button_id, ENV['PAYPAL_BUTTON_ID']
+
+  = hidden_field_tag :notify_url, order_url
+  = hidden_field_tag :cancel_return, cancel_order_url
+
+  - if Rails.env.development?
+    = hidden_field_tag :return, order_url
+    = hidden_field_tag :rm, 2
+
+  - else
+    = hidden_field_tag :return, successful_order_url
+
+  %table
+    %tr
+      %td
+        %input{type: 'hidden', name: 'on0', value: 'Credits'}
+        Credits
+    %tr
+      %td
+        %select{name: 'os0'}
+          %option{value: 20} 20 $9.95
+          %option{value: 48} 48 $19.95
+
+  %input{type: 'image', src: 'https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif', border: 0, name: 'submit', alt: 'PayPal - The safer, easier way to pay online!'}
+
+  -# TODO: Investigate wether this is needed
+  %img{alt: '', border: 0, src: 'https://www.paypalobjects.com/en_AU/i/scr/pixel.gif', width: 1, height: 1}
+

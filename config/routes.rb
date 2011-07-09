@@ -30,7 +30,12 @@ Minefold::Application.routes.draw do
   #
   # get '/order/:id' => 'orders#show'
   # put '/order/:id' => 'order#update'
+  post '/order' => 'orders#create', :as => :paypal_notify
+  post '/order/success' => 'orders#success', :as => :order_success
+  get '/order/cancel' => 'orders#cancel', :as => :cancel_order
 
+  resource :order
+  # get '/purchase' => 'purchases#new'
 
   # Players
   get  '/player/:username' => 'user#show'
