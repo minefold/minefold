@@ -7,4 +7,8 @@ module ApplicationHelper
     }
   end
 
+  def hidden
+    {style: 'display:none'}
+  end
+
 end

@@ -26,7 +26,7 @@ class World
   ensure_index :slug, unique: true
 
   def host
-    'usa1.minefold.com'
+    'pluto.minefold.com'
   end
 
   def to_param

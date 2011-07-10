@@ -14,7 +14,7 @@ class Payment
   end
 
   def credits
-    params['option_selection1'].to_i
+    params['option_selection1'].to_i.hours / 1.minute
   end
 
 end

@@ -1,0 +1,26 @@
+@import 'shared/vars';
+
+#session {
+  overflow: auto;
+  font-size: 12px;
+
+  li {
+    float: left;
+    margin-left: $col/2;
+  }
+
+  .credits, .signout {
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .credits {
+    @include blue_button;
+    padding: 0 $col/4;
+  }
+
+  .signout {
+    @include button(#EEE, #333);
+    padding: 0 $col/2;
+  }
+}

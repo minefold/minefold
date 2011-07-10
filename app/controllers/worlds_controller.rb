@@ -1,16 +1,8 @@
 class WorldsController < ApplicationController
 
-  layout 'application'
-
-  respond_to :html
-
-  expose(:world) {
-    if params[:slug]
-      World.find_by_slug!(params[:slug])
-    else
-      World.new
-    end
-  }
+  def new
+    @world = World.new
+  end
 
   def create
     world = World.new params[:world]
@@ -21,11 +13,15 @@ class WorldsController < ApplicationController
     redirect_to "/#{world.slug}"
   end
 
+  def show
+    @world = World.find_by_slug! params[:id]
+  end
+
   def activate
     @world = World.first :slug => params[:id]
 
-    current_user.active_world = @world
-    current_user.save
-    redirect_to :back
+    current_user.set world_id: @world.id
+
+    redirect_to @world
   end
 end

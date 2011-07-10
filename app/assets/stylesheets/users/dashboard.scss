@@ -1,37 +1,47 @@
-#user_dashboard {
+@import 'shared/vars';
 
-  #session {
-    float: right;
-    color: #999;
-    font-size: 12px;
-    a {
-      margin-left: 6px;
-      color: #06C;
-      text-decoration: none;
-    }
-  }
+#users_dashboard #content {
+  margin-top: 24px;
 
-  #worlds {
-    margin-bottom: 24px;
+  ul#worlds {
+    overflow: auto;
 
     li {
-      margin: 0 -48px; padding: 12px 48px;
-      display: block;
-      background: #EEE;
-      border-bottom: 1px solid #CCC;
-      overflow: auto;
+      float: left;
 
-      &:last-child {
-        border-bottom: none;
+      a {
+        display: block;
+        width: 120px;
+        height: 120px;
+        background: #EEE url('/world-default-small.png') center no-repeat;
+        margin-right: $col;
+        border-radius: 3px;
+        padding: 0;
+        text-decoration: none;
+        position: relative;
+
+        span {
+          background: rgba(black, 0.6);
+          color: #FFF;
+          padding: 0 5px;
+          top: 6px;
+          margin: 0 5px;
+          position: absolute;
+          font-size: 14px; line-height: 24px;
+          border-radius: 3px;
+          overflow: hidden;
+          max-height: 120px - 6px - 6px;
+        }
+        &:hover {
+          background-color: #CCC;
+        }
       }
 
-      strong {
-        float: left;
+      &.new a {
+        @include blue_button;
+        font: 700 60px/100px $helvetica;
       }
 
-      input[type=submit] {
-        float: right;
-      }
     }
 
   }

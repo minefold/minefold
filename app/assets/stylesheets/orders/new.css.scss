@@ -1,0 +1,73 @@
+@import 'shared/vars';
+
+#orders_new #content {
+  margin-top: 24px;
+
+  h2 {
+    text-align: center;
+    font: 700 36px/60px $helvetica;
+    color: #CCC;
+  }
+
+  form {
+    text-align: center;
+  }
+
+  #products {
+    margin: 24px auto;
+    width: 3 * 180px + 1px + 1px;
+    display: block;
+    overflow: auto;
+
+    li {
+      @include button(#EEE, $blue);
+      float: left;
+      border-radius: 0;
+      margin-right: 1px;
+      width: 180px;
+
+      &:first-child {
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+      }
+
+      &:last-child {
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+        margin-right: 0;
+      }
+
+      // Label has cursor defaults
+      label { cursor: pointer; }
+
+      .credits, .time, .cost {
+        padding: 0 2*$col;
+      }
+
+      .credits {
+        padding-top: 12px; padding-bottom: 12px;
+        font-size: 18px;
+      }
+
+      .time {
+        padding-top: 12px; padding-bottom: 12px;
+        font-size: 36px; line-height: 48px;
+      }
+
+      .cost {
+        padding-top: 6px; padding-bottom: 24px;
+        font-size: 24px; line-height: 24px;
+      }
+
+      span {
+        display: block;
+        color: rgba(black, 0.4);
+        font-size: 12px; line-height: 12px;
+      }
+
+      &:hover span {
+        text-shadow: 0 1px 0 rgba(white, 0.2);
+      }
+    }
+  }
+}

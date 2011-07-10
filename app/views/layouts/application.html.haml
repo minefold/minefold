@@ -23,19 +23,20 @@
     %meta{property:'og:site_name', content:'Minefold'}
 
   %body{page_css_selector}
-    %header#page_header
+    %header#global_header
       .container
         %h1
           %a{href: root_url} Minefold
+          %span.beta Beta
         %aside
           = render template: 'sessions/show'
 
     #content
+      .container= yield
+
       %aside
         = yield(:aside)
         = render partial: 'shared/footer'
-
-      .container= yield
 
     - if Rails.env.production?
       = render partial: 'shared/clicky'

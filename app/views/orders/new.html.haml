@@ -1,3 +1,6 @@
+%h2
+  You have #{pluralize user.credits, 'minute', 'minutes'} left.
+
 = form_tag ENV['PAYPAL_URL'] do
   = hidden_field_tag :cmd, '_s-xclick'
 
@@ -16,16 +19,45 @@
   - else
     = hidden_field_tag :return, successful_order_url
 
-  %table
-    %tr
-      %td
-        %input{type: 'hidden', name: 'on0', value: 'Credits'}
-        Credits
-    %tr
-      %td
-        %select{name: 'os0'}
-          %option{value: 20} 20 $9.95
-          %option{value: 48} 48 $19.95
+  = hidden_field_tag :on0, 'Credits'
+
+  %ul#products
+    %li
+      %label{for: 'os0-24'}
+        .credits
+          24
+          %span credits
+        .time
+          = 24.hours / 1.minute
+          %span minutes
+        .cost $12
+
+      %input#os0-24{type: 'radio', name: 'os0', value: 24, style: 'display:none'}
+
+    %li
+      %label{for: 'os0-48'}
+        .credits
+          48
+          %span credits
+        .time
+          = 48.hours / 1.minute
+          %span minutes
+        .cost $22
+
+      %input#os0-48{type: 'radio', name: 'os0', value: 48, style: 'display:none'}
+
+    %li
+      %label{for: 'os0-72'}
+        .credits
+          72
+          %span credits
+        .time
+          = 72.hours / 1.minute
+          %span minutes
+        .cost $30
+
+      %input#os0-72{type: 'radio', name: 'os0', value: 72, style: 'display:none'}
+
 
   %input{type: 'image', src: 'https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif', border: 0, name: 'submit', alt: 'PayPal - The safer, easier way to pay online!'}
 

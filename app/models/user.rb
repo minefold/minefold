@@ -1,6 +1,8 @@
 class User
   include MongoMapper::Document
 
+  class Unauthenticated < StandardError; end
+
   key :email,              String, unique: true
   key :username,           String, unique: true
   key :encrypted_password, String, length: 0..128
@@ -21,6 +23,11 @@ class User
   def add_credits n
     increment credits: n
   end
+
+  def hours
+    credits.minutes / 1.hour
+  end
+  alias_method :hour, :hours
 
 
 

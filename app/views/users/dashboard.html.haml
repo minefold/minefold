@@ -1,0 +1,11 @@
+%ul#worlds
+  - @worlds.each do |world|
+    %li
+      = link_to world do
+        %span
+          / A really really really long name
+          = world.name
+
+  %li.new
+    = link_to new_world_path do
+      +

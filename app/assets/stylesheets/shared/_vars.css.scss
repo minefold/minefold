@@ -11,3 +11,28 @@ $lh:        6px;
 $blue:      #06C;
 $yellow:    #FE0;
 $red:       #F60;
+
+
+// Mixins
+
+@mixin button($base, $hover) {
+  border-radius: 3px;
+  background: $base;
+  color: darken($base, 30%);
+  font-weight: 700;
+  text-align: center;
+  text-shadow: 0 1px 0 lighten($base, 10%);
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    background: $hover;
+    color: #FFF;
+    text-shadow: 0 -1px 0 darken($hover, 10%);
+  }
+}
+
+@mixin blue_button {
+  @include button(lighten($blue, 20%), $blue);
+}

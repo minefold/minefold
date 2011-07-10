@@ -1,6 +1,8 @@
 class OrdersController < ApplicationController
   include ActiveMerchant::Billing::Integrations
 
+  prepend_before_filter :require_authentication, only: [:new]
+
   def new
     @order = Order.create!(user: user)
   end
@@ -8,7 +10,7 @@ class OrdersController < ApplicationController
   def create
     notification = Paypal::Notification.new(request.raw_post)
 
-    order = Order.find(params[:custom])
+    order = Order.find params[:custom]
 
     payment = Payment.create params: params,
                              status: params[:payment_status],

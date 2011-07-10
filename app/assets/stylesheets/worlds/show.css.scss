@@ -2,9 +2,39 @@
 
 #worlds_show #content {
 
+  .container {
+    width: $w - (2*$col) - 260px - 20px;
+    float: right;
+  }
+
   aside {
-    img {
+    float: left;
+    overflow: hidden;
+    width: 240px;
+  }
+
+  header {
+    h1 {
+      font-size: 28px;
+      line-height: 48px;
+      margin: 12px 0;
+    }
+    margin-bottom: 24px;
+
+    .status {
+      padding: 6px 10px;
+      margin: 0 -10px;
       background: #EEE;
+      border-radius: 3px;
+    }
+  }
+
+  aside {
+    .avatar {
+      background: #EEE url('/world-default-big.png') center no-repeat;
+      width: 240px; height: 240px;
+      border-radius: 3px;
+      margin-bottom: 12px;
     }
 
     h2 {
@@ -23,11 +53,11 @@
     }
   }
 
-
-
   .option {
     clear: both;
     overflow: auto;
+    font-size: 12px;
+    line-height: 12px;
     .key {
       float: left;
     }
@@ -40,10 +70,17 @@
 
   #stream {
     .entry {
-      margin-bottom: 4 * $lh;
+      margin-bottom: $lh;
+      overflow: auto;
       .author {
+        color: #CCC;
+        margin-right: 10px;
+        line-height: 12px;
+
         font-size: 12px;
-        color: #999;
+      }
+      .msg {
+        color: #333;
       }
     }
   }

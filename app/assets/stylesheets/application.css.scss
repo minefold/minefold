@@ -2,6 +2,8 @@
 //= require_self
 //= require_tree ./users
 //= require_tree ./worlds
+//= require_tree ./orders
+//= require_tree ./sessions
 
 @import 'shared/vars';
 
@@ -13,17 +15,9 @@ body {
   .container { width: $w; margin: 0 auto; }
 }
 
-header#page_header {
-  padding: 12px 0 11px;
+header#global_header {
+  padding: 12px 0 (12px - 1px);
   border-bottom: 1px solid #CCC;
-
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-  background: white;
-
 
   .container {
     width: $w - (2*$col);
@@ -32,16 +26,27 @@ header#page_header {
   }
 
   h1 {
+    font: 700 24px/24px $helvetica;
     float: left;
-
-    font: 18px/24px $paytone;
-    text-transform: uppercase;
-    text-shadow: 0 1px 0 darken($blue, 10%);
-    letter-spacing: 0.15em;
+    font-family: $helvetica;
+    font-weight: 700;
 
     a {
-      color: $blue;
+      color: #333;
+      font: 24px/24px $paytone;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
       text-decoration: none;
+
+      &:hover {
+        color: #999;
+      }
+    }
+
+    .beta {
+      color: #CCC;
+      font-size: 14px;
+      line-height: 14px;
     }
   }
 
@@ -52,29 +57,8 @@ header#page_header {
 
 #content {
   width: $w - (2 * $col);
-  margin: 48px auto 96px;
+  margin: 0 auto 96px;
   padding: 0 $col;
-
-  .container {
-    margin-left: 260px;
-    width: $w - (2*$col) - 260px - 20px;
-    border-left: 1px solid #EEE;
-    padding-left: $col - 1px;
-  }
-
-  aside {
-    float: left;
-    overflow: hidden;
-    width: 240px;
-  }
-
-  header {
-    h1 {
-      font-size: 28px;
-      line-height: 48px;
-    }
-    margin-bottom: 24px
-  }
 }
 
 footer {
