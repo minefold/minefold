@@ -43,14 +43,14 @@ class User
   end
 
   # TODO: Implement peppers
-  def password= new_password
+  def password=(new_password)
     self.encrypted_password = @password =
       BCrypt::Password.create(new_password, cost: STRETCHES)
       # BCrypt::Password.create([new_password, ENV['PEPPER']].join, cost: STRETCHES)
   end
 
   # TODO: Change Warden to use this abstraction (to help implementing peppers)
-  def check_password? pw
+  def check_password?(pw)
     password == pw
   end
 

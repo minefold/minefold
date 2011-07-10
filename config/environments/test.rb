@@ -34,4 +34,6 @@ Minefold::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  ActiveMerchant::Billing::Base.mode = :test
 end

@@ -26,16 +26,12 @@ Minefold::Application.routes.draw do
   get '/unauthorized' => 'sessions#unauthorized'
 
   # Payment
-  # post '/purchase' => 'orders#create'
-  #
-  # get '/order/:id' => 'orders#show'
-  # put '/order/:id' => 'order#update'
-  post '/order' => 'orders#create', :as => :paypal_notify
-  post '/order/success' => 'orders#success', :as => :order_success
-  get '/order/cancel' => 'orders#cancel', :as => :cancel_order
+  get  '/order' => 'orders#new', :as => :orders
+  post '/order' => 'orders#create', :as => :order
+  get  '/order/success' => 'orders#success', :as => :successful_order
+  get  '/order/cancel' => 'orders#cancel', :as => :cancel_order
 
-  resource :order
-  # get '/purchase' => 'purchases#new'
+
 
   # Players
   get  '/player/:username' => 'user#show'

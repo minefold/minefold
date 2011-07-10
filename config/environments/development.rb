@@ -28,4 +28,5 @@ Minefold::Application.configure do
   #   entitystore: 'file:tmp/cache/rack/body',
   #       verbose: true
 
+  ActiveMerchant::Billing::Base.mode = :test
 end

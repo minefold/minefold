@@ -1,10 +1,10 @@
 = form_tag ENV['PAYPAL_URL'] do
   = hidden_field_tag :cmd, '_s-xclick'
 
-  = hidden_field_tag :item_id, @order.id
-  = hidden_field_tag :custom,  @order.id
-
   = hidden_field_tag :hosted_button_id, ENV['PAYPAL_BUTTON_ID']
+
+  = hidden_field_tag :item_number, @order.id
+  = hidden_field_tag :custom,      @order.id
 
   = hidden_field_tag :notify_url, order_url
   = hidden_field_tag :cancel_return, cancel_order_url
