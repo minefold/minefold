@@ -38,8 +38,19 @@
         margin-right: 0;
       }
 
+      &.active {
+        background: lighten($blue, 20%);
+        .credits, .time, .cost {
+          color: darken($blue, 10%);
+          text-shadow: 0 1px 0 lighten($blue, 30%);
+        }
+      }
+
       // Label has cursor defaults
-      label { cursor: pointer; }
+      label {
+        cursor: pointer;
+        width: 100%;
+      }
 
       .credits, .time, .cost {
         padding: 0 (2 * $gutter);
