@@ -1,5 +1,8 @@
-%h2
-  You have #{pluralize user.credits, 'minute', 'minutes'} left.
+%header
+  %h1
+    You have
+    %strong= pluralize user.credits, 'minute', 'minutes'
+    left.
 
 = form_tag ENV['PAYPAL_URL'] do
   = hidden_field_tag :cmd, '_s-xclick'

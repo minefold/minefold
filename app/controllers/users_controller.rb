@@ -1,8 +1,7 @@
 class UsersController < ApplicationController
 
   def dashboard
-    @worlds = World.all
-    @world = World.new
+    @worlds = World.recently_active.limit(3 * 4)
   end
 
   def new
@@ -13,12 +12,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new params[:user]
 
-    p @user
-
     if @user.valid? && @user.save
-
-      p @user
-
       warden.set_user @user
       redirect_to dashboard_path
     else

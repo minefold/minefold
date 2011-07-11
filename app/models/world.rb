@@ -12,9 +12,9 @@ class World
 
 
   key :name,          String, unique: true
-  key :slug,          String, unique: true
+  key :slug,          String, unique: true, index: true
   key :options,       Hash,   default: default_options
-  key :location,      String, default: 'USA1s'
+  key :location,      String, default: 'USA1'
   key :admin_ids,     Array
   key :player_ids,    Array
   key :chat_messages, Array
@@ -23,7 +23,9 @@ class World
   many :admins,  class: User, in: :admin_ids
   many :players, class: User, in: :player_ids
 
-  ensure_index :slug, unique: true
+  def self.recently_active
+    sort(:updated_at.desc)
+  end
 
   def host
     'pluto.minefold.com'

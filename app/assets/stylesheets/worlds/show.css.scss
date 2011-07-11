@@ -2,87 +2,62 @@
 
 #worlds_show #content {
 
-  .container {
-    width: $w - (2*$col) - 260px - 20px;
+  #content-body {
+    // TODO: Find a way of abstracting this equation
+    width: ($cols - 4) * ($col + (2 * $gutter)) - (2 * $gutter);
     float: right;
+  }
+
+  header {
+    h1 {
+      font-size: 24px;
+      line-height: 48px;
+    }
+  }
+
+  #stream {
+    .entry {
+      margin-bottom: $baseline;
+    }
   }
 
   aside {
     float: left;
     overflow: hidden;
-    width: 240px;
-  }
+    width: 4 * ($col + (2 * $gutter)) - (2 * $gutter);
 
-  header {
-    h1 {
-      font-size: 28px;
-      line-height: 48px;
-      margin: 12px 0;
-    }
-    margin-bottom: 24px;
-
-    .status {
-      padding: 6px 10px;
-      margin: 0 -10px;
-      background: #EEE;
-      border-radius: 3px;
-    }
-  }
-
-  aside {
     .avatar {
-      background: #EEE url('/world-default-big.png') center no-repeat;
-      width: 240px; height: 240px;
-      border-radius: 3px;
+      background: white url('/world-default-big.png') center no-repeat;
+      width: 100%;
+      height: 4 * ($col + (2 * $gutter)) - (2 * $gutter);
+      border-radius: $radius;
       margin-bottom: 12px;
+
+      img {
+        border-radius: $radius;
+      }
     }
 
     h2 {
-      font-color: #999;
       font-weight: bold;
+      line-height: 24px;
+      margin-bottom: $baseline;
     }
 
     section {
-      margin-bottom: 2*$lh;
-      h2 {
+      margin-bottom: 2 * $baseline;
+    }
+
+    dl {
+      overflow: auto;
+
+      dt {
         float: left;
+        clear: both;
       }
-      .count {
+      dd {
         float: right;
       }
     }
   }
-
-  .option {
-    clear: both;
-    overflow: auto;
-    font-size: 12px;
-    line-height: 12px;
-    .key {
-      float: left;
-    }
-    .val {
-      float: right;
-    }
-    margin-bottom: $lh;
-  }
-
-
-  #stream {
-    .entry {
-      margin-bottom: $lh;
-      overflow: auto;
-      .author {
-        color: #CCC;
-        margin-right: 10px;
-        line-height: 12px;
-
-        font-size: 12px;
-      }
-      .msg {
-        color: #333;
-      }
-    }
-  }
-
 }

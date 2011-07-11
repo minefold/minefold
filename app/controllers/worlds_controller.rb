@@ -7,7 +7,6 @@ class WorldsController < ApplicationController
   def create
     world = World.new params[:world]
     world.admins << current_user
-    world.players << current_user
     world.save!
 
     redirect_to "/#{world.slug}"
