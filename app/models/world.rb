@@ -3,7 +3,7 @@ class World
 
   def self.default_options
     {
-      spawn_monsters:   true,
+ spawn_monsters:   true,
       spawn_animals:    true,
       allow_flight:     false,
       spawn_protection: true
@@ -11,17 +11,18 @@ class World
   end
 
 
-  key :name,          String, unique: true
-  key :slug,          String, unique: true, index: true
-  key :options,       Hash,   default: default_options
-  key :location,      String, default: 'USA1'
-  key :admin_ids,     Array
-  key :player_ids,    Array
-  key :chat_messages, Array
+  key :name, String, unique: true
+  key :slug, String, unique: true, index: true
+  key :options, Hash, default: default_options
+  key :location, String, default: 'USA1'
+  many :admins, class: User
+  many :players, class: User
+
+  many :wall_items, as: :wall,
+                    sort: :updated_at.desc
+
   timestamps!
 
-  many :admins,  class: User, in: :admin_ids
-  many :players, class: User, in: :player_ids
 
   def self.recently_active
     sort(:updated_at.desc)
@@ -39,6 +40,7 @@ private
 
   before_validation :generate_slug
 
+  # TODO: This is shit
   def generate_slug
     return unless name_changed? and name.present?
 

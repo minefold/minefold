@@ -31,13 +31,16 @@ Minefold::Application.routes.draw do
 
 
   # Worlds
-  resources :worlds, :only => [:new, :create] do
-    post 'activate', :on => :member
-  end
+  # resources :worlds, :only => [:new, :create, :show], :path => '/' do
+  #   post 'activate', :on => :member
+  #   post 'post', :on => :member
+  # end
 
-  get '/:id' => 'worlds#show', :as => :world
 
+  get  '/worlds/new' => 'worlds#new', :as => :new_world
+  post '/worlds' => 'worlds#create', :as => :worlds
+  post '/:id/activate' => 'worlds#activate', :as => :activate_world
+  post '/:id/post' => 'worlds#post', :as => :post_world
+  get  '/:id' => 'worlds#show', :as => :world
 
-  # Playground
-  get '/the-shaft' => 'worlds#show'
 end

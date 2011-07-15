@@ -1,36 +1,39 @@
 class User
   include MongoMapper::Document
 
-  class Unauthenticated < StandardError; end
-
   key :email,              String, unique: true
   key :username,           String, unique: true
   key :encrypted_password, String, length: 0..128
+
   key :credits,            Integer, default: 0
-  key :world_id,           ObjectId
+
+  belongs_to :world
+
+  many :wall_items, as: :wall
+
   timestamps!
 
-  belongs_to :world,       class: World
 
-  ensure_index :username, unique: true
-
-  before_validation :normalize_email
-
-  def normalize_email
+  # Normalize email
+  before_validation do
     email.try(:downcase!).try(:strip!)
   end
 
-  def add_credits n
-    increment credits: n
+
+  # Credits
+  CREDIT_UNITS = 1.minute
+
+  def credit n
+    increment credits: (n / CREDIT_UNITS)
   end
 
   def hours
-    credits.minutes / 1.hour
+    (credits * CREDIT_UNITS) / 1.hour
   end
-  alias_method :hour, :hours
-
 
 # Authentication
+
+  class Unauthenticated < StandardError; end
 
   STRETCHES = 10
 

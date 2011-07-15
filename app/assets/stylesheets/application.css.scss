@@ -87,6 +87,14 @@ footer.global {
   background: white;
   font: 14px/18px $helvetica;
   padding: $baseline 0;
+  color: #CCC;
+
+  nav {
+    margin: (2 * $baseline) (-$gutter);
+    a{
+      margin: 0 $gutter;
+    }
+  }
 
   a {
     font-weight: bold;

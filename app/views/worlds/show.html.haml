@@ -8,14 +8,20 @@
     - else
       = button_to 'Spawn here', [:activate, @world]
 
+#foo
+  = form_for [:post, @world], :method => :post do
+    %p
+      = text_area :post, :message, rows: 2
+    %button Post
+
 #stream
-  - @world.chat_messages do |msg|
+  - @world.wall_items.each do |post|
     .entry
       .author
-        = msg[:username]
+        = post.user.username
         / chrislloyd
       .msg
-        = msg[:msg]
+        = post.message
         / So I told them I was Mike D. It was like "Gee, I don't know, he might be".
 
 - content_for :aside do

@@ -23,4 +23,14 @@ class WorldsController < ApplicationController
 
     redirect_to @world
   end
+
+  def post
+    @world = World.first :slug => params[:id]
+
+    @world.wall_items << Post.create(user: user, message: params[:post][:message])
+    @world.save
+
+    redirect_to @world
+  end
+
 end

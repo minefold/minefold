@@ -1,6 +1,4 @@
 class OrdersController < ApplicationController
-  include ActiveMerchant::Billing::Integrations
-
   prepend_before_filter :require_authentication, only: [:new]
 
   def new
@@ -8,19 +6,12 @@ class OrdersController < ApplicationController
   end
 
   def create
-    notification = Paypal::Notification.new(request.raw_post)
-
     order = Order.find params[:custom]
 
-    payment = Payment.create params: params,
-                             status: params[:payment_status],
-                             txn_id: params[:txn_id],
-                              order: order
-
     # TODO: MASSIVE security hole, needs to verify PayPal IPN.
-    if payment.complete?
-      order.receive_payment!(payment)
-    end
+    order.process_payment Payment.new(params: params,
+                                      status: params[:payment_status],
+                                      txn_id: params[:txn_id])
 
     if Rails.env.development?
       redirect_to successful_order_path

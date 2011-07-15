@@ -1,13 +1,9 @@
 class Payment
-  include MongoMapper::Document
+  include MongoMapper::EmbeddedDocument
 
   key :params
   key :status, String
   key :txn_id, String
-
-  key :order_id, ObjectId
-
-  belongs_to :order
 
   def complete?
     status == 'Completed'

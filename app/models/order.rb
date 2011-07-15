@@ -4,11 +4,9 @@ class Order
   belongs_to :user
   many :payments
 
-  def receive_payment!(payment)
+  def process_payment(payment)
     self.payments << payment
-
-    user.add_credits payment.credits
-    save
+    user.credit(payment.credits.hours) if payment.complete?
   end
 
   def status
