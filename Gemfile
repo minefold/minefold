@@ -8,7 +8,8 @@ gem 'rails', '3.1.0.rc4'
 
 # ORM
 gem 'bson_ext'
-gem "mongo_mapper", "~> 0.9.1"
+gem "mongo_mapper",
+  git: 'https://github.com/jnunemaker/mongomapper.git'
 
 # Caching
 gem 'rack-cache', require: 'rack/cache'
@@ -29,7 +30,7 @@ gem 'stringex'
 gem 'activemerchant'
 gem 's3_swf_upload',
   git: 'https://github.com/nathancolgate/s3-swf-upload-plugin'
-gem 'resque', :require => 'resque/server'
+gem 'resque'
 gem 'fog'
 
 group :development do

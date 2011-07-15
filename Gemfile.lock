@@ -6,6 +6,15 @@ GIT
       warden (>= 1.0.0)
 
 GIT
+  remote: https://github.com/jnunemaker/mongomapper.git
+  revision: 0bb4834ed2f26573019c3404264e5a62e218986a
+  specs:
+    mongo_mapper (0.9.0)
+      activemodel (~> 3.0)
+      activesupport (~> 3.0)
+      plucky (~> 0.3.8)
+
+GIT
   remote: https://github.com/nathancolgate/s3-swf-upload-plugin
   revision: 3d3aa9407eaf258561fa87c05440e01b2652ee14
   specs:
@@ -97,10 +106,6 @@ GEM
     mime-types (1.16)
     mongo (1.3.1)
       bson (>= 1.3.1)
-    mongo_mapper (0.9.1)
-      activemodel (~> 3.0)
-      activesupport (~> 3.0)
-      plucky (~> 0.3.8)
     multi_json (1.0.3)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
@@ -190,7 +195,7 @@ DEPENDENCIES
   haml
   heroku
   jquery-rails
-  mongo_mapper (~> 0.9.1)
+  mongo_mapper!
   rack-cache
   rails (= 3.1.0.rc4)
   rails_warden!
