@@ -34,7 +34,7 @@ Minefold::Application.routes.draw do
 
   resources :world_imports, :only => [:create]
 
-  match "/resque", :to => Resque::Server.new, :anchor => false
+  # match "/resque", :to => Resque::Server.new, :anchor => false
 
   get  '/worlds/new' => 'worlds#new', :as => :new_world
   post '/worlds' => 'worlds#create', :as => :worlds
