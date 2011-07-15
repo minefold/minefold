@@ -1,15 +1,15 @@
 GIT
-  remote: git://github.com/nathancolgate/s3-swf-upload-plugin
-  revision: 3d3aa9407eaf258561fa87c05440e01b2652ee14
-  specs:
-    s3_swf_upload (0.3.2)
-
-GIT
   remote: https://github.com/hassox/rails_warden.git
   revision: fe2472ac4cf9ad3788651001751f98bee0185fc8
   specs:
     rails_warden (0.5.5)
       warden (>= 1.0.0)
+
+GIT
+  remote: https://github.com/nathancolgate/s3-swf-upload-plugin
+  revision: 3d3aa9407eaf258561fa87c05440e01b2652ee14
+  specs:
+    s3_swf_upload (0.3.2)
 
 GEM
   remote: http://rubygems.org/

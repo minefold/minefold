@@ -27,7 +27,8 @@ gem 'bcrypt-ruby', require: 'bcrypt'
 # Other
 gem 'stringex'
 gem 'activemerchant'
-gem 's3_swf_upload', :git => 'git://github.com/nathancolgate/s3-swf-upload-plugin'
+gem 's3_swf_upload',
+  git: 'https://github.com/nathancolgate/s3-swf-upload-plugin'
 gem 'resque', :require => 'resque/server'
 gem 'fog'
 
