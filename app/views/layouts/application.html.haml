@@ -42,3 +42,8 @@
 
     - if Rails.env.production?
       = render partial: 'shared/clicky'
+
+    = javascript_include_tag 'application'
+    %script(type="text/javascript")
+      = yield :javascript
+    

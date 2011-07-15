@@ -1,18 +1,15 @@
 GIT
+  remote: git://github.com/nathancolgate/s3-swf-upload-plugin
+  revision: 3d3aa9407eaf258561fa87c05440e01b2652ee14
+  specs:
+    s3_swf_upload (0.3.2)
+
+GIT
   remote: https://github.com/hassox/rails_warden.git
   revision: fe2472ac4cf9ad3788651001751f98bee0185fc8
   specs:
     rails_warden (0.5.5)
       warden (>= 1.0.0)
-
-GIT
-  remote: https://github.com/jnunemaker/mongomapper.git
-  revision: 6caa8a6fcd6a713b36771e1e683f7a6f69774dab
-  specs:
-    mongo_mapper (0.9.0)
-      activemodel (~> 3.0)
-      activesupport (~> 3.0)
-      plucky (~> 0.3.8)
 
 GEM
   remote: http://rubygems.org/
@@ -64,9 +61,21 @@ GEM
     dalli (1.0.5)
     erubis (2.7.0)
     eventmachine (0.12.10)
+    excon (0.6.3)
+    fog (0.9.0)
+      builder
+      excon (~> 0.6.1)
+      formatador (>= 0.1.3)
+      json
+      mime-types
+      net-scp (>= 1.0.4)
+      net-ssh (>= 2.1.4)
+      nokogiri (>= 1.4.4)
+      ruby-hmac
     foreman (0.19.0)
       term-ansicolor (~> 1.0.5)
       thor (>= 0.13.6)
+    formatador (0.1.4)
     haml (3.1.2)
     heroku (2.3.6)
       launchy (>= 0.3.2)
@@ -77,6 +86,7 @@ GEM
     jquery-rails (1.0.12)
       railties (~> 3.0)
       thor (~> 0.14)
+    json (1.5.3)
     launchy (0.4.0)
       configuration (>= 0.0.5)
       rake (>= 0.8.1)
@@ -87,7 +97,15 @@ GEM
     mime-types (1.16)
     mongo (1.3.1)
       bson (>= 1.3.1)
+    mongo_mapper (0.9.1)
+      activemodel (~> 3.0)
+      activesupport (~> 3.0)
+      plucky (~> 0.3.8)
     multi_json (1.0.3)
+    net-scp (1.0.4)
+      net-ssh (>= 1.99.1)
+    net-ssh (2.1.4)
+    nokogiri (1.4.6)
     plucky (0.3.8)
       mongo (~> 1.3)
     polyglot (0.3.1)
@@ -117,19 +135,31 @@ GEM
       thor (~> 0.14.6)
     rake (0.9.2)
     rdoc (3.8)
+    redis (2.2.1)
+    redis-namespace (1.0.3)
+      redis (< 3.0.0)
+    resque (1.17.1)
+      json (>= 1.4.6, < 1.6)
+      redis-namespace (~> 1.0.2)
+      sinatra (>= 0.9.2)
+      vegas (~> 0.1.2)
     rest-client (1.6.3)
       mime-types (>= 1.16)
+    ruby-hmac (0.4.0)
     sass (3.1.4)
     sass-rails (3.1.0.rc.4)
       actionpack (~> 3.1.0.rc1)
       railties (~> 3.1.0.rc1)
       sass (>= 3.1.4)
       sprockets (>= 2.0.0.beta.9)
+    sinatra (1.2.6)
+      rack (~> 1.1)
+      tilt (>= 1.2.2, < 2.0)
     sprockets (2.0.0.beta.10)
       hike (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    stringex (1.2.1)
+    stringex (1.2.2)
     term-ansicolor (1.0.5)
     thin (1.2.11)
       daemons (>= 1.0.9)
@@ -142,6 +172,8 @@ GEM
     turn (0.8.2)
       ansi (>= 1.2.2)
     tzinfo (0.3.29)
+    vegas (0.1.8)
+      rack (>= 1.0.0)
     warden (1.0.4)
       rack (>= 1.0)
 
@@ -153,15 +185,18 @@ DEPENDENCIES
   bcrypt-ruby
   bson_ext
   dalli
+  fog
   foreman
   haml
   heroku
   jquery-rails
-  mongo_mapper!
+  mongo_mapper (~> 0.9.1)
   rack-cache
   rails (= 3.1.0.rc4)
   rails_warden!
   rake
+  resque
+  s3_swf_upload!
   sass-rails
   stringex
   thin
