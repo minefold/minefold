@@ -2,21 +2,33 @@
 $paytone:   'Paytone One', Helvetica, Arial, 'sans-serif';
 $helvetica: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
-// Spacing
-$w:         960px;
-$col:       20px;
-$lh:        6px;
+// Grid
+$width: 960px;
+
+$baseline: 6px;
+
+$gutter: 10px;
+$pad:    20px;
+$col:    $pad + 20px + $pad;
+$cols:   12;
+
+$radius: 3px;
+
 
 // Colors
-$blue:      #06C;
-$yellow:    #FE0;
-$red:       #F60;
+$bg:     #EDEDED;
+$blue:   #06C;
+$yellow: #FE0;
+$red:    #F60;
 
 
 // Mixins
 
+@mixin debug {
+  background: rgba(red, 0.2);
+}
+
 @mixin button($base, $hover) {
-  border-radius: 3px;
   background: $base;
   color: darken($base, 30%);
   font-weight: 700;

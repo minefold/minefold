@@ -1,5 +1,8 @@
-%h2
-  You have #{pluralize user.credits, 'minute', 'minutes'} left.
+%header
+  %h1
+    You have
+    %strong= pluralize user.credits, 'minute', 'minutes'
+    left.
 
 = form_tag ENV['PAYPAL_URL'] do
   = hidden_field_tag :cmd, '_s-xclick'
@@ -64,3 +67,12 @@
   -# TODO: Investigate wether this is needed
   %img{alt: '', border: 0, src: 'https://www.paypalobjects.com/en_AU/i/scr/pixel.gif', width: 1, height: 1}
 
+%script{src: 'https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js'}
+:javascript
+  var products = $('#products li');
+  products.click(function(e) {
+    var self = $(e.currentTarget);
+    products.removeClass('active');
+    self.addClass('active').find('input:radio').click();
+    e.preventDefault();
+  });

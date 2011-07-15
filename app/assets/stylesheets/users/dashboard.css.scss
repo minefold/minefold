@@ -1,0 +1,39 @@
+@import 'shared/vars';
+
+#users_dashboard {
+
+  ul#worlds {
+    overflow: auto;
+    margin: 0 (-$gutter) ((-2 * $baseline) + 24px) (-$gutter);
+
+    li {
+      float: left;
+      margin: 0 $gutter (2 * $baseline) $gutter;
+      background: white;
+      border-radius: 3px;
+      padding: $gutter;
+
+      a {
+        display: block;
+        width: 2 * ($col + $gutter) - (2 * $gutter);
+        height: 2 * ($col + $gutter) - (2 * $gutter);
+        background: #FFF url('/world-default-small.png') center no-repeat;
+        &:hover {
+          background-color: #CCC;
+        }
+      }
+
+      .info {
+        margin-top: $baseline;
+        width: 2 * ($col + $gutter) - (2 * $gutter);
+      }
+
+      &.new a {
+        @include blue_button;
+        font: 700 60px/100px $helvetica;
+      }
+
+    }
+
+  }
+}

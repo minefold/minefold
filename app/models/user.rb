@@ -30,7 +30,6 @@ class User
   alias_method :hour, :hours
 
 
-
 # Authentication
 
   STRETCHES = 10

@@ -1,5 +1,8 @@
-Woo hoo, thank you. Your account now has
+%header
+  %h1
+    %strong Hiigh five!
+    You can now play for
+    %strong= pluralize current_user.credits, 'minute', 'minutes'
+    \.
 
-%strong= current_user.minutes
-
-remaining.
+= button_to 'Back home', dashboard_path

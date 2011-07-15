@@ -6,6 +6,16 @@ class ApplicationController < ActionController::Base
 
 private
 
+  def self.tag(name, options)
+    before_filter(options) do
+      @tag = name
+    end
+  end
+
+  def self.title(title, options)
+    before_filter(options) { @title = title}
+  end
+
   def require_authentication
     raise User::Unauthenticated unless authenticated?
   end

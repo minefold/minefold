@@ -1,5 +1,6 @@
 %header
-  %h1= @world.name
+  %h1
+    %strong= @world.name
 
   .status
     - if user.world == @world
@@ -8,15 +9,14 @@
       = button_to 'Spawn here', [:activate, @world]
 
 #stream
-  -# @world.chat_messages do |msg|
-  - 20.times do |i|
+  - @world.chat_messages do |msg|
     .entry
       .author
-        / = msg[:username]
-        chrislloyd
+        = msg[:username]
+        / chrislloyd
       .msg
-        / = msg[:msg]
-        So I told them I was Mike D. It was like "Gee, I don't know, he might be".
+        = msg[:msg]
+        / So I told them I was Mike D. It was like "Gee, I don't know, he might be".
 
 - content_for :aside do
   .avatar
@@ -24,25 +24,22 @@
 
   %section.info
     %h2 Info
-    .option
-      .key Host
-      .val= @world.host
+    %dl
+      %dt Host
+      %dd= @world.host
 
-    - [:spawn_monsters, :spawn_animals, :allow_flight, :spawn_protection, :seed].each do |option|
-      .option
-        .key= option.to_s.humanize
-        .val= @world.options[option]
+      - [:spawn_monsters, :spawn_animals, :allow_flight, :spawn_protection, :seed].each do |option|
+        %dt= option.to_s.humanize
+        %dd= @world.options[option]
 
-  - if !@world.admins.empty?
-    %section.admins
-      %h2 Admins
-      %ul
-        - @world.admins.each do |admin|
-          %li= admin.username
+  %section.admins
+    %h2 Admins
+    %ul
+      - @world.admins.each do |admin|
+        %li= admin.username
 
   %section.players
     %h2 Currently Playing
-    .count= @world.players.count
     %ul
       - @world.players.each do |player|
         %li= player.username
