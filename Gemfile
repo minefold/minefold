@@ -30,7 +30,7 @@ gem 'stringex'
 gem 'activemerchant'
 gem 's3_swf_upload',
   git: 'https://github.com/nathancolgate/s3-swf-upload-plugin'
-gem 'resque'
+# gem 'resque'
 gem 'fog'
 
 group :development do
