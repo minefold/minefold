@@ -13,8 +13,8 @@ test:
   acl: public-read
   
 production:
-  bucket: 
-  access_key_id: 
-  secret_access_key: 
+  bucket: minefold.import
+  access_key_id: AKIAJPN5IJVEBB2QE35A
+  secret_access_key: 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
   max_file_size: 10485760
   acl: public-read
