@@ -46,3 +46,36 @@
     %ul
       - @world.players.each do |player|
         %li= player.username
+        
+  %section.actions
+    =raw s3_swf_upload_tag
+    .upload
+      %input(id="uploadWorld" type="button" value="Import World")
+    .uploading(style="display:none")
+      Uploading...
+
+- content_for :javascript do
+  :plain
+    $(function(){ 
+      var world_id = '#{@world.id}';
+      var currentFile;
+      $('#uploadWorld').click(function(){
+        $('section.actions .upload').hide();
+        $('section.actions .uploading').show();
+        s3_swf_1_object.startUploading();
+      });
+      
+      s3_swf_1_object.onFileAdd = function(file) {
+        currentFile = file;
+      };
+      
+      s3_swf_1_object.onUploadComplete = function(options, event) {
+        $('section.actions .uploading').hide();
+        $('section.actions .upload').show();
+        
+        $.post('/world_imports', {
+          world_import: { world_id: world_id, filename: currentFile.name }
+        });
+      };
+      
+    });

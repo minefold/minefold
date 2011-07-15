@@ -1,5 +1,7 @@
 Minefold::Application.routes.draw do
 
+  resources :s3_uploads
+
   root to: 'users#dashboard',
        constraints: ->(req){ req.env['warden'].authenticated? },
        as: :dashboard
@@ -25,19 +27,21 @@ Minefold::Application.routes.draw do
   get  '/order/cancel' => 'orders#cancel', :as => :cancel_order
 
 
-
   # Players
   get  '/player/:username' => 'user#show'
-
 
   # Worlds
   resources :worlds, :only => [:new, :create] do
     post 'activate', :on => :member
   end
+  
+  resources :world_imports, :only => [:create]
+
+  match "/resque", :to => Resque::Server.new, :anchor => false
 
   get '/:id' => 'worlds#show', :as => :world
 
-
   # Playground
   get '/the-shaft' => 'worlds#show'
+  
 end
