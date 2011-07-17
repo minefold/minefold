@@ -15,7 +15,7 @@ class World
   key :slug, String, unique: true, index: true
   key :options, Hash, default: default_options
   key :location, String, default: 'USA1'
-  key :status, String
+  key :status, String, default: ''
   many :admins, class: User
   many :players, class: User
 
