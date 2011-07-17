@@ -22,6 +22,8 @@
     %meta{property:'og:url', content:'//www.minefold.com'}
     %meta{property:'og:site_name', content:'Minefold'}
 
+    = javascript_include_tag 'application'
+
   %body{page_css_selector}
     %header.global
       .container
@@ -43,8 +45,6 @@
 
     - if Rails.env.production?
       = render partial: 'shared/clicky'
-
-    = javascript_include_tag 'application'
 
     / :javascript
     /   $.ajaxSetup({
