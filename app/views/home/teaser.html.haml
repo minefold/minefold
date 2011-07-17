@@ -23,18 +23,14 @@
     %p Create as many worlds as you like. If you don't like the terrain you were given just create another. For free.
 
 
-%form{action: 'http://minefold.createsend.com/t/r/s/qjhfu', method: 'post'}
+= form_for :user, url: subscribe_path do |f|
   %h3 Subscribe now for exclusive beta access
 
-  %p.email
-    %label{for: 'qjhfu-qjhfu'} Email address
-    %input#qjhfu-qjhfu{type: 'text', name: 'cm-qjhfu-qjhfu', size: 20}
+  - if flash[:email]
+    %p Thanks!
 
-  %p.username
-    %label{for: 'username'}
-      Minecraft username
-      %span (Optional)
+  %p
+    = f.text_field :email, size: 20, placeholder: 'email@example.com', value: flash[:email]
 
-    %input#username{type: 'text', name: 'cm-f-bidutk'}
-
-  %button Subscribe
+  %p
+    %button Subscribe

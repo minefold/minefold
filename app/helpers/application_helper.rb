@@ -1,10 +1,10 @@
 module ApplicationHelper
 
   def page_css_selector
-    {
-      id: "#{params[:controller]}_#{params[:action]}",
-      class: [params[:controller], params[:action]]
-    }
+    list = [params[:controller].gsub('/', '-').dasherize,
+          params[:action].dasherize]
+    { id: list.join('-'),
+      class: list }
   end
 
   def hidden

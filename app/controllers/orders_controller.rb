@@ -1,8 +1,8 @@
 class OrdersController < ApplicationController
-  prepend_before_filter :require_authentication, only: [:new]
+  prepend_before_filter :authenticate_user!, only: [:new, :success, :cancel]
 
   def new
-    @order = Order.create!(user: user)
+    @order = Order.create!(user: current_user)
   end
 
   def create

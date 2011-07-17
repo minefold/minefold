@@ -1,11 +1,11 @@
 %ul#worlds
   - @worlds.each do |world|
-    %li
+    %li{class: (current_user.world == world ? 'active' : nil)}
       = link_to '', world
       .info
         = world.name
 
-  - if user.special?
+  - if current_user.special?
     %li.new
       = link_to new_world_path do
         +

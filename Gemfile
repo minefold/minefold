@@ -8,7 +8,7 @@ gem 'rails', '3.1.0.rc4'
 
 # ORM
 gem 'bson_ext'
-gem "mongo_mapper",
+gem 'mongo_mapper',
   git: 'https://github.com/jnunemaker/mongomapper.git'
 
 # Caching
@@ -17,18 +17,18 @@ gem 'rack-cache', require: 'rack/cache'
 # Templates
 gem 'haml'
 gem 'sass-rails'
-
 gem 'jquery-rails'
-gem 'high_voltage'
 
 # Auth
-gem 'rails_warden',
-  git: 'https://github.com/hassox/rails_warden.git'
-gem 'bcrypt-ruby', require: 'bcrypt'
+gem 'devise'
+gem 'mm-devise', require: false
+
+# Payment
+gem 'activemerchant'
 
 # Other
 gem 'stringex'
-gem 'activemerchant'
+gem 'high_voltage'
 gem 's3_swf_upload',
   git: 'https://github.com/nathancolgate/s3-swf-upload-plugin'
 # gem 'resque'

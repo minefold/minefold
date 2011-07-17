@@ -1,9 +1,9 @@
 %header
   %h1= @world.name
 
-- if user && user.special?
+- if user_signed_in? && current_user.special?
   .info
-    - if user.world == @world
+    - if current_user.world == @world
       %p In Minecraft, please connect to <strong>#{@world.host}</strong>.
     - else
       = button_to 'Activate World', [:activate, @world]

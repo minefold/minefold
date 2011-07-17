@@ -7,6 +7,11 @@ class SessionsController < ApplicationController
 
   def create
     authenticate!
+    user.remember!
+
+    p user.remember_token
+
+    cookies.signed['remember_token'] = user.remember_token
     redirect_to dashboard_path
   end
 

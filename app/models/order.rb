@@ -6,7 +6,7 @@ class Order
 
   def process_payment(payment)
     self.payments << payment
-    user.credit(payment.credits.hours) if payment.complete?
+    user.increment_credits(payment.credits) if payment.complete?
   end
 
   def status

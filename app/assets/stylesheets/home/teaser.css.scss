@@ -1,6 +1,6 @@
 @import 'shared/vars';
 
-#home_teaser #content-body {
+#home-teaser #content-body {
   margin: 0 ($col + $gutter + $col + $gutter + $gutter);
 
   h2 {
@@ -60,73 +60,50 @@
     overflow: auto;
     text-align: center;
     width: 8 * ($col + $gutter + $gutter);
-  }
 
-  h3 {
-    color: darken($blue, 20%);
-    font: 600 16px/48px $helvetica;
-    text-shadow: 0 1px 0 rgba(#FFF, 0.1);
-  }
-
-  label {
-    color: darken($blue, 15%);
-    text-shadow: 0 1px 0 rgba(#FFF, 0.1);
-    font-weight: bold;
-    margin-bottom: 6px;
-    display: block;
-    text-align: left;
-
-    & span {
-      color: #999;
-      font-weight: normal;
-      font-size: 12px;
+    h3 {
+      color: darken($blue, 20%);
+      font: 600 16px/24px $helvetica;
+      text-shadow: 0 1px 0 rgba(#FFF, 0.1);
     }
-  }
 
-  input {
-    border-radius: 2px;
-    border: 2px solid $blue;
-    outline: none;
-    font: 16px/24px $helvetica;
-    padding: $baseline ($gutter - 2px);
-
-    &:focus {
-      border: 2px solid darken($blue, 20%);
+    h3, p {
+      margin-bottom: 2 * $baseline;
     }
-  }
 
-  .email, .username, button {
-    float: left;
-  }
 
-  .username, button {
-    margin-left: 10px;
-  }
+    input {
+      border-radius: 2px;
+      border: 2px solid darken(white, 10%);
+      outline: none;
+      font: 16px/24px $helvetica;
+      padding: $baseline ($gutter - 2px);
+      width: 4 * $col;
+      text-align: center;
 
-  button {
-    margin-top: 24px + 6px + 2px;
-    padding: $baseline $gutter;
-    font: 14px/24px $helvetica;
-    border: 2px solid $red;
-    background: $red;
-    border-radius: 2px;
-    color: white; //darken($blue, 30%);
-    font-weight: bold;
-    cursor: pointer;
-    outline: none;
-
-    width: 2 * $col;
-
-    &:hover, &:focus {
-      border-color: darken($red, 20%);
+      &:focus {
+        border: 2px solid $blue;
+      }
     }
-  }
 
-  .email input {
-    width: (3 * $col) + (2 * $gutter);
-  }
+    button {
+      padding: $baseline $gutter;
+      font: 14px/24px $helvetica;
+      border: 2px solid $red;
+      background: $red;
+      border-radius: 2px;
+      color: white; //darken($blue, 30%);
+      font-weight: bold;
+      cursor: pointer;
+      outline: none;
+      width: 2 * $col;
 
-  .username input {
-    width: (3 * $col) + (2 * $gutter);
+      &:hover, &:focus {
+        border-color: darken($red, 30%);
+      }
+      &:active {
+        background: darken($red, 30%);
+      }
+    }
   }
 }
