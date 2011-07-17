@@ -12,10 +12,12 @@
   a {
     color: $blue;
     text-decoration: none;
+    &:hover {
+      color: darken($blue, 20%);
+    }
   }
 
   .credits {
-    @include blue_button;
     font-weight: 700;
     text-align: center;
     border-radius: $radius;

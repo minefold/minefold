@@ -18,7 +18,7 @@
         width: 2 * ($col + $gutter) - (2 * $gutter);
         height: 2 * ($col + $gutter) - (2 * $gutter);
         background: #FFF url('/world-default-small.png') center no-repeat;
-        border: $gutter solid lighten($blue, 20%);
+        border: $gutter solid #EFEFEF;
         border-radius: $radius;
         &:hover {
           border-color: $blue;
@@ -31,8 +31,13 @@
       }
 
       &.new a {
-        @include blue_button;
+        background: #FFF;
+        color: #CCC;
+        text-decoration: none;
         font: 700 60px/100px $helvetica;
+        &:hover {
+          color: $blue;
+        };
       }
 
     }

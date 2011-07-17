@@ -21,7 +21,7 @@ $radius: 3px;
 
 $bg:     #EDEDED;
 $gray:   #8BC;
-$blue:   lighten(#0066cc, 0%);
+$blue:   #06C;
 $yellow: #FE0;
 $red:    #F33;
 
@@ -37,25 +37,4 @@ $red:    #F33;
   font-family: $paytone;
   letter-spacing: 0em;
   text-transform: uppercase;
-}
-
-@mixin button($base, $hover) {
-  background: $base;
-  color: darken($base, 30%);
-  font-weight: 700;
-  text-align: center;
-  text-shadow: 0 1px 0 lighten($base, 10%);
-  display: block;
-  text-decoration: none;
-  cursor: pointer;
-
-  &:hover {
-    background: $hover;
-    color: #FFF;
-    text-shadow: 0 -1px 0 darken($hover, 10%);
-  }
-}
-
-@mixin blue_button {
-  @include button(lighten($blue, 20%), $blue);
 }

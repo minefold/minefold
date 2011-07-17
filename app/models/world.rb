@@ -19,7 +19,8 @@ class World
   many :players, class: User
 
   many :wall_items, as: :wall,
-                    sort: :created_at.desc
+                    sort: :created_at.desc,
+                    limit: 20
 
   timestamps!
 

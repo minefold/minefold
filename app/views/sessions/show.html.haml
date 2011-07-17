@@ -1,10 +1,11 @@
 %ol#session
   - if user
     %li.username= user.username
-    %li
-      = link_to credits_path, class: 'credits' do
-        = number_with_delimiter user.hours
-        cr
+    - if user.special?
+      %li
+        = link_to credits_path, class: 'credits' do
+          = number_with_delimiter user.hours
+          cr
     %li= link_to 'Sign Out', session_path, method: :delete, class: 'signout'
   - else
     %li= link_to 'Sign In', new_session_path

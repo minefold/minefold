@@ -17,38 +17,30 @@
     }
   }
 
+  .info {
+    padding: $baseline $gutter;
+    background: #FFC;
+    border-radius: $radius;
+    margin: $baseline (-$gutter) (2 * $baseline) (-$gutter);
+    display: block;
+  }
+
   #stream {
     .item {
       margin-bottom: $baseline;
-      padding: $baseline $gutter;
-    }
-
-    .post {
-      background: #FFF;
-      border-radius: $radius;
-      padding: $baseline $gutter;
-
-      margin-left: $col;
-
-      box-shadow: 0 1px $radius darken($bg, 10%);
-
-      .author {
-        font-size: 12px;
-        .username {
-          font-weight: bold;
-        }
-      }
+      padding: $baseline 0;
     }
 
     .chat_message {
       overflow: auto;
       font-size: 12px;
+      font-family: monospace;
 
       .author {
         float: left;
         margin-right: $gutter;
         font-weight: bold;
-        color: #666;
+        color: #333;
       }
       .msg {
         float: left;

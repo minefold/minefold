@@ -1,80 +1,17 @@
 %header
   %h1= @world.name
 
-= form_for [:post, @world], method: :post do
-  %p
-    = text_area :post, :message, rows: 2
-  %button Post
+- if user && user.special?
+  .info
+    %p
+      Connect to
+      %strong= @world.host
+      in Minecraft.
 
 #stream
   - @world.wall_items.each do |post|
-    .item[post]
-      - case post
-      - when Post
-        / .date
-        /   = time_ago_in_words post.updated_at
-
-        .author
-          %span.username= post.user.username
-          said
-        .msg
-          = post.message
-      - when ChatMessage
+    - if post.is_a? ChatMessage
+      .item[post]
         .author
           %span.username #{post.username}:
         .msg= post.message
-
-- content_for :aside do
-  .avatar
-    / %img{width: 120, height: 120, src: '/world-default-big.png'}
-
-  %section.info
-    %h2 Info
-    %dl
-      %dt Host
-      %dd= @world.host
-
-      - [:spawn_monsters, :spawn_animals, :allow_flight, :spawn_protection, :seed].each do |option|
-        %dt= option.to_s.humanize
-        %dd= @world.options[option]
-
-  %section.admins
-    %h2 Admins
-    %ul
-      - @world.admins.each do |admin|
-        %li= admin.username
-
-  %section.players
-    %h2 Currently Playing
-    %ul
-      - @world.players.each do |player|
-        %li= player.username
-
-  / %section.actions
-  /   =raw s3_swf_upload_tag
-  /   .upload
-  /     %input(id="uploadWorld" type="button" value="Import World")
-  /   .uploading(style="display:none")
-  /     Uploading...
-
-:javascript
-  var world_id = '#{@world.id}';
-  var currentFile;
-  $('#uploadWorld').click(function(){
-    $('section.actions .upload').hide();
-    $('section.actions .uploading').show();
-    s3_swf_1_object.startUploading();
-  });
-
-  s3_swf_1_object.onFileAdd = function(file) {
-    currentFile = file;
-  };
-
-  s3_swf_1_object.onUploadComplete = function(options, event) {
-    $('section.actions .uploading').hide();
-    $('section.actions .upload').show();
-
-    $.post('/world_imports', {
-      world_import: { world_id: world_id, filename: currentFile.name }
-    });
-  };

@@ -5,6 +5,7 @@
       .info
         = world.name
 
-  %li.new
-    = link_to new_world_path do
-      +
+  - if user.special?
+    %li.new
+      = link_to new_world_path do
+        +
