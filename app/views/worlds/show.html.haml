@@ -3,15 +3,18 @@
 
 - if user && user.special?
   .info
-    %p
-      Connect to
-      %strong= @world.host
-      in Minecraft.
+    - if user.world == @world
+      %p In Minecraft, please connect to <strong>#{@world.host}</strong>.
+    - else
+      = button_to 'Activate World', [:activate, @world]
 
 #stream
-  - @world.wall_items.each do |post|
-    - if post.is_a? ChatMessage
-      .item[post]
-        .author
-          %span.username #{post.username}:
-        .msg= post.message
+  - if @world.wall_items.empty?
+    .empty No chat messages
+  - else
+    - @world.wall_items.each do |post|
+      - if post.is_a? ChatMessage
+        .item[post]
+          .author
+            %span.username #{post.username}:
+          .msg= post.message
