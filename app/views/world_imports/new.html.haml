@@ -1,0 +1,71 @@
+= flash[:errors].to_json if flash[:errors]
+
+- new_world_id = BSON::ObjectId.new
+
+%header
+  %h1 
+    %strong Upload
+    your world
+
+#import-world
+  #upload
+    =raw s3_swf_upload_tag
+  #uploading(style="display:none")
+    %p New world's name:
+    = form_for World.new do |f|
+      = f.hidden_field :_id, :value => new_world_id
+      = f.text_field :name, :placeholder => 'Name'
+      %p
+        = f.submit 'Create'
+    
+  %p.status
+    
+  
+- content_for :javascript do
+  :plain
+    $(function(){
+      var worldId = '#{new_world_id}';
+      var worldUploaded = false;
+      var worldInfoProvided = false;
+      
+      var $status = $('#import-world .status');
+      
+      var currentFile;
+      
+      function createWorldIfReady() {
+        if (worldUploaded && worldInfoProvided) {
+          $('#import-world #uploading form').submit();
+        }
+      }
+
+      s3_swf_1_object.onFileAdd = function(file) {
+        currentFile = file;
+        $('#import-world #uploading').show();
+        s3_swf_1_object.startUploading();
+        $status.text('Uploading...');
+      };
+
+      s3_swf_1_object.onUploadComplete = function(options, event) {
+        $('#import-world #upload').show();
+        $('#import-world #uploading').hide();
+        $status.text('Finished');
+
+        $.post('/world_imports', {
+          world_import: { world_id: worldId, filename: currentFile.name }
+        }, function(){
+          worldUploaded = true;
+          createWorldIfReady();
+        });
+      };
+      
+      $('#import-world #uploading form').submit(function(e){
+        e.preventDefault();
+        worldInfoProvided = true;
+        $('#import-world #uploading form input').attr('disabled', 'disabled');
+        
+        createWorldIfReady();
+      });
+      
+      
+
+    });
