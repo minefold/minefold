@@ -1,28 +1,28 @@
 %header
-  %h1
-    %strong= @world.name
+  %h1= @world.name
 
-  .status
-    - if user.world == @world
-      = button_to 'Spawning here', [:activate, @world], disabled: true
-    - else
-      = button_to 'Spawn here', [:activate, @world]
-
-#foo
-  = form_for [:post, @world], :method => :post do
-    %p
-      = text_area :post, :message, rows: 2
-    %button Post
+= form_for [:post, @world], method: :post do
+  %p
+    = text_area :post, :message, rows: 2
+  %button Post
 
 #stream
   - @world.wall_items.each do |post|
-    .entry
-      .author
-        = post.user.username
-        / chrislloyd
-      .msg
-        = post.message
-        / So I told them I was Mike D. It was like "Gee, I don't know, he might be".
+    .item[post]
+      - case post
+      - when Post
+        / .date
+        /   = time_ago_in_words post.updated_at
+
+        .author
+          %span.username= post.user.username
+          said
+        .msg
+          = post.message
+      - when ChatMessage
+        .author
+          %span.username #{post.username}:
+        .msg= post.message
 
 - content_for :aside do
   .avatar
@@ -49,36 +49,32 @@
     %ul
       - @world.players.each do |player|
         %li= player.username
-        
-  %section.actions
-    =raw s3_swf_upload_tag
-    .upload
-      %input(id="uploadWorld" type="button" value="Import World")
-    .uploading(style="display:none")
-      Uploading...
 
-- content_for :javascript do
-  :plain
-    $(function(){ 
-      var world_id = '#{@world.id}';
-      var currentFile;
-      $('#uploadWorld').click(function(){
-        $('section.actions .upload').hide();
-        $('section.actions .uploading').show();
-        s3_swf_1_object.startUploading();
-      });
-      
-      s3_swf_1_object.onFileAdd = function(file) {
-        currentFile = file;
-      };
-      
-      s3_swf_1_object.onUploadComplete = function(options, event) {
-        $('section.actions .uploading').hide();
-        $('section.actions .upload').show();
-        
-        $.post('/world_imports', {
-          world_import: { world_id: world_id, filename: currentFile.name }
-        });
-      };
-      
+  / %section.actions
+  /   =raw s3_swf_upload_tag
+  /   .upload
+  /     %input(id="uploadWorld" type="button" value="Import World")
+  /   .uploading(style="display:none")
+  /     Uploading...
+
+:javascript
+  var world_id = '#{@world.id}';
+  var currentFile;
+  $('#uploadWorld').click(function(){
+    $('section.actions .upload').hide();
+    $('section.actions .uploading').show();
+    s3_swf_1_object.startUploading();
+  });
+
+  s3_swf_1_object.onFileAdd = function(file) {
+    currentFile = file;
+  };
+
+  s3_swf_1_object.onUploadComplete = function(options, event) {
+    $('section.actions .uploading').hide();
+    $('section.actions .upload').show();
+
+    $.post('/world_imports', {
+      world_import: { world_id: world_id, filename: currentFile.name }
     });
+  };

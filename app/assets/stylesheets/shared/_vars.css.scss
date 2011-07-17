@@ -1,8 +1,10 @@
 // Fonts
+
 $paytone:   'Paytone One', Helvetica, Arial, 'sans-serif';
 $helvetica: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 // Grid
+
 $width: 960px;
 
 $baseline: 6px;
@@ -16,16 +18,25 @@ $radius: 3px;
 
 
 // Colors
+
 $bg:     #EDEDED;
-$blue:   #06C;
+$gray:   #8BC;
+$blue:   lighten(#0066cc, 0%);
 $yellow: #FE0;
-$red:    #F60;
+$red:    #F33;
 
 
 // Mixins
 
 @mixin debug {
   background: rgba(red, 0.2);
+}
+
+@mixin logo {
+  font-weight: 700;
+  font-family: $paytone;
+  letter-spacing: 0em;
+  text-transform: uppercase;
 }
 
 @mixin button($base, $hover) {

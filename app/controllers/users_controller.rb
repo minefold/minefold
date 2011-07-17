@@ -8,7 +8,6 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
-    render layout: 'system'
   end
 
   def create

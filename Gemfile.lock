@@ -90,6 +90,7 @@ GEM
       launchy (>= 0.3.2)
       rest-client (~> 1.6.1)
       term-ansicolor (~> 1.0.5)
+    high_voltage (1.0.0)
     hike (1.1.0)
     i18n (0.6.0)
     jquery-rails (1.0.12)
@@ -181,6 +182,7 @@ DEPENDENCIES
   foreman
   haml
   heroku
+  high_voltage
   jquery-rails
   mongo_mapper!
   rack-cache

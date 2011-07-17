@@ -19,7 +19,7 @@ class World
   many :players, class: User
 
   many :wall_items, as: :wall,
-                    sort: :updated_at.desc
+                    sort: :created_at.desc
 
   timestamps!
 

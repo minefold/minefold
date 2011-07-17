@@ -19,6 +19,7 @@ gem 'haml'
 gem 'sass-rails'
 
 gem 'jquery-rails'
+gem 'high_voltage'
 
 # Auth
 gem 'rails_warden',

@@ -7,18 +7,21 @@
 
     li {
       float: left;
-      margin: 0 $gutter (2 * $baseline) $gutter;
+      margin: 0 0 (2 * $baseline) 0;
       background: white;
       border-radius: 3px;
       padding: $gutter;
+      text-align: center;
 
       a {
         display: block;
         width: 2 * ($col + $gutter) - (2 * $gutter);
         height: 2 * ($col + $gutter) - (2 * $gutter);
         background: #FFF url('/world-default-small.png') center no-repeat;
+        border: $gutter solid lighten($blue, 20%);
+        border-radius: $radius;
         &:hover {
-          background-color: #CCC;
+          border-color: $blue;
         }
       }
 

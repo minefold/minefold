@@ -26,8 +26,10 @@
     %header.global
       .container
         %h1
-          %a{href: root_url} Minefold
-          %span.beta Beta
+          = link_to root_url do
+            Mine<span>fold</span>
+
+          / %span.beta Beta
         %aside
           = render template: 'sessions/show'
 
@@ -44,6 +46,3 @@
       = render partial: 'shared/clicky'
 
     = javascript_include_tag 'application'
-    %script(type="text/javascript")
-      = yield :javascript
-    

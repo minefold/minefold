@@ -36,6 +36,8 @@ Minefold::Application.routes.draw do
 
   # match "/resque", :to => Resque::Server.new, :anchor => false
 
+  get '/about' => 'high_voltage/pages#show', :id => 'about'
+
   get  '/worlds/new' => 'worlds#new', :as => :new_world
   post '/worlds' => 'worlds#create', :as => :worlds
   post '/:id/activate' => 'worlds#activate', :as => :activate_world

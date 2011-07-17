@@ -1,44 +1,66 @@
 @import 'shared/vars';
 
 #worlds_show #content {
+  padding: 12px 0;
 
   #content-body {
     // TODO: Find a way of abstracting this equation
     width: ($cols - 4) * ($col + (2 * $gutter)) - (2 * $gutter);
-    float: right;
+    float: left;
   }
 
   header {
     h1 {
-      font-size: 24px;
+      font-size: 30px;
       line-height: 48px;
+      color: #333;
     }
   }
-
-  #foo {
-    textarea {
-      width: 480px;
-      border: 1px solid #CCC;
-      outline: none;
-      margin: 0;
-      padding: 6px 5px;
-      font: 14px/18px $helvetica;
-      &:focus {
-        margin: -1px;
-        border: 2px solid $blue;
-      }
-    }
-  }
-
 
   #stream {
-    .entry {
+    .item {
       margin-bottom: $baseline;
+      padding: $baseline $gutter;
     }
+
+    .post {
+      background: #FFF;
+      border-radius: $radius;
+      padding: $baseline $gutter;
+
+      margin-left: $col;
+
+      box-shadow: 0 1px $radius darken($bg, 10%);
+
+      .author {
+        font-size: 12px;
+        .username {
+          font-weight: bold;
+        }
+      }
+    }
+
+    .chat_message {
+      overflow: auto;
+      font-size: 12px;
+
+      .author {
+        float: left;
+        margin-right: $gutter;
+        font-weight: bold;
+        color: #666;
+      }
+      .msg {
+        float: left;
+        color: #999;
+      }
+    }
+
+
   }
 
   aside {
-    float: left;
+    float: right;
     overflow: hidden;
     width: 4 * ($col + (2 * $gutter)) - (2 * $gutter);
 
