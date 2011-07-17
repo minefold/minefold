@@ -4,75 +4,79 @@
     %strong= pluralize user.credits, 'minute', 'minutes'
     left.
 
-= form_tag ENV['PAYPAL_URL'] do
-  = hidden_field_tag :cmd, '_s-xclick'
+- if user.special?
 
-  = hidden_field_tag :hosted_button_id, ENV['PAYPAL_BUTTON_ID']
+  %h2 Select how many credits you want to top up your account with.
 
-  = hidden_field_tag :item_number, @order.id
-  = hidden_field_tag :custom,      @order.id
+  = form_tag ENV['PAYPAL_URL'] do
+    = hidden_field_tag :cmd, '_s-xclick'
 
-  = hidden_field_tag :notify_url, order_url
-  = hidden_field_tag :cancel_return, cancel_order_url
+    = hidden_field_tag :hosted_button_id, ENV['PAYPAL_BUTTON_ID']
 
-  - if Rails.env.development?
-    = hidden_field_tag :return, order_url
-    = hidden_field_tag :rm, 2
+    = hidden_field_tag :item_number, @order.id
+    = hidden_field_tag :custom,      @order.id
 
-  - else
-    = hidden_field_tag :return, successful_order_url
+    = hidden_field_tag :notify_url, order_url
+    = hidden_field_tag :cancel_return, cancel_order_url
 
-  = hidden_field_tag :on0, 'Credits'
+    - if Rails.env.development?
+      = hidden_field_tag :return, order_url
+      = hidden_field_tag :rm, 2
 
-  %ul#products
-    %li
-      %label{for: 'os0-24'}
-        .credits
-          24
-          %span credits
-        .time
-          = 24.hours / 1.minute
-          %span minutes
-        .cost $12
+    - else
+      = hidden_field_tag :return, successful_order_url
 
-      %input#os0-24{type: 'radio', name: 'os0', value: 24, style: 'display:none'}
+    = hidden_field_tag :on0, 'Credits'
 
-    %li
-      %label{for: 'os0-48'}
-        .credits
-          48
-          %span credits
-        .time
-          = 48.hours / 1.minute
-          %span minutes
-        .cost $22
+    %ul#products
+      %li
+        %label{for: 'os0-24'}
+          .credits
+            24
+            %span credits
+          .time
+            = 24.hours / 1.minute
+            %span minutes
+          .cost $12
 
-      %input#os0-48{type: 'radio', name: 'os0', value: 48, style: 'display:none'}
+        %input#os0-24{type: 'radio', name: 'os0', value: 24, style: 'display:none'}
 
-    %li
-      %label{for: 'os0-72'}
-        .credits
-          72
-          %span credits
-        .time
-          = 72.hours / 1.minute
-          %span minutes
-        .cost $30
+      %li
+        %label{for: 'os0-48'}
+          .credits
+            48
+            %span credits
+          .time
+            = 48.hours / 1.minute
+            %span minutes
+          .cost $22
 
-      %input#os0-72{type: 'radio', name: 'os0', value: 72, style: 'display:none'}
+        %input#os0-48{type: 'radio', name: 'os0', value: 48, style: 'display:none'}
+
+      %li
+        %label{for: 'os0-72'}
+          .credits
+            72
+            %span credits
+          .time
+            = 72.hours / 1.minute
+            %span minutes
+          .cost $30
+
+        %input#os0-72{type: 'radio', name: 'os0', value: 72, style: 'display:none'}
 
 
-  %input{type: 'image', src: 'https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif', border: 0, name: 'submit', alt: 'PayPal - The safer, easier way to pay online!'}
+    %input{type: 'image', src: 'https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif', border: 0, name: 'submit', alt: 'PayPal - The safer, easier way to pay online!'}
 
-  -# TODO: Investigate wether this is needed
-  %img{alt: '', border: 0, src: 'https://www.paypalobjects.com/en_AU/i/scr/pixel.gif', width: 1, height: 1}
+    -# TODO: Investigate wether this is needed
+    %img{alt: '', border: 0, src: 'https://www.paypalobjects.com/en_AU/i/scr/pixel.gif', width: 1, height: 1}
 
-%script{src: 'https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js'}
-:javascript
-  var products = $('#products li');
-  products.click(function(e) {
-    var self = $(e.currentTarget);
-    products.removeClass('active');
-    self.addClass('active').find('input:radio').click();
-    e.preventDefault();
-  });
+  %script{src: 'https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js'}
+  :javascript
+    var products = $('#products li');
+    products.click(function(e) {
+      var self = $(e.currentTarget);
+      products.removeClass('active');
+      self.addClass('active').find('input:radio').click();
+      e.preventDefault();
+    });

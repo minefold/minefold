@@ -9,11 +9,14 @@
 
 #import-world
   #upload
-    =raw s3_swf_upload_tag
+    =raw s3_swf_upload_tag(keyPrefix: "#{new_world_id}-")
   #uploading(style="display:none")
     %p New world's name:
+    
     = form_for World.new do |f|
       = f.hidden_field :_id, :value => new_world_id
+      = f.hidden_field :status, :value => 'pending_import'
+      
       = f.text_field :name, :placeholder => 'Name'
       %p
         = f.submit 'Create'
@@ -34,6 +37,7 @@
       
       function createWorldIfReady() {
         if (worldUploaded && worldInfoProvided) {
+          $('#import-world #uploading form input').attr('disabled', false);
           $('#import-world #uploading form').submit();
         }
       }
@@ -47,7 +51,6 @@
 
       s3_swf_1_object.onUploadComplete = function(options, event) {
         $('#import-world #upload').show();
-        $('#import-world #uploading').hide();
         $status.text('Finished');
 
         $.post('/world_imports', {
@@ -58,14 +61,29 @@
         });
       };
       
-      $('#import-world #uploading form').submit(function(e){
+      s3_swf_1_object.onUploadError = function(file, e) {
+        $status.text('Error: ' + e);
+        console.log(e);
+      }
+      s3_swf_1_object.onUploadIOError = function(file, e) {
+        $status.text('IO Error: ' + e);
+        console.log(e);
+      }
+      s3_swf_1_object.onUploadProgress = function(file, progress) {
+        percentage = (progress.bytesLoaded / progress.bytesTotal).toFixed(2) * 100;
+        $status.text(percentage.toFixed(0) + '%')
+      }
+      
+      
+      
+      
+      $('#import-world #uploading form').one('submit', function(e){
         e.preventDefault();
         worldInfoProvided = true;
         $('#import-world #uploading form input').attr('disabled', 'disabled');
         
         createWorldIfReady();
       });
-      
       
 
     });

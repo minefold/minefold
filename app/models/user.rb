@@ -5,6 +5,8 @@ class User
   key :username,           String, unique: true
   key :encrypted_password, String, length: 0..128
 
+  key :special, Boolean, default: false
+
   key :credits,            Integer, default: 0
 
   belongs_to :world

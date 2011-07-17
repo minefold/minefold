@@ -1,8 +1,3 @@
-%header
-  %h1
-    %strong Hi #{user.username}.
-    These are the most active worlds.
-
 %ul#worlds
   - @worlds.each do |world|
     %li
@@ -10,6 +5,7 @@
       .info
         = world.name
 
-  %li.new
-    = link_to new_world_path do
-      +
+  - if user.special?
+    %li.new
+      = link_to new_world_path do
+        +

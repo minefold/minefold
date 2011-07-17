@@ -14,6 +14,8 @@ class WorldsController < ApplicationController
 
   def show
     @world = World.find_by_slug! params[:id]
+
+    render :action => @world.status unless @world.status.blank?
   end
 
   def activate

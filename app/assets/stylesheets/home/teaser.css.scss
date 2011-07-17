@@ -1,16 +1,16 @@
 @import 'shared/vars';
 
-#home_teaser #content {
+#home_teaser #content-body {
+  margin: 0 ($col + $gutter + $col + $gutter + $gutter);
 
   h2 {
-    color: #FFF;
-    font: 100 48px/48px $helvetica;
-    margin-bottom: 24px;
-    text-shadow: 0 1px 0 rgba(#000, .2);
+    font: 200 30px/48px $paytone;
+    margin: 24px 0 (24px + $baseline);
+    text-align: center;
+    color: darken($blue, 20%);
   }
 
   p {
-    color: rgba(#FFF, 0.6);
     font: 14px/24px $helvetica;
   }
 
@@ -21,9 +21,10 @@
     -webkit-font-smoothing: antialiased;
     margin-top: -1px;
 
+
     .feature {
       float: left;
-      width: 290px;
+      width: 5*$col;
       margin-bottom: 24px;
 
       &:nth-child(2n) {
@@ -31,21 +32,23 @@
       }
 
       h3 {
-        line-height: 32px;
+        line-height: 32px + (2 * $baseline);
         font-weight: normal;
         font-size: 18px;
-        color: #FFF;
-        text-shadow: 0 1px 0 rgba(#000, .2);
+        color: $blue;
       }
 
       img {
         float: left;
-        margin-right: 10px;
+        margin-right: $gutter;
+        padding: $baseline;
+        background: lighten(black, 90%);
+        border-radius: 32px + $baseline;
       }
 
       p {
-        color: lighten($blue, 40%);
-        margin-left: 36px + 10px;
+        color: #999;
+        margin-left: 32 + (2 * $baseline) + $gutter;
         font-size: 15px;
       }
     }
@@ -53,8 +56,10 @@
   }
 
   form {
-    margin-top: 36px;
+    margin: 24px auto;
     overflow: auto;
+    text-align: center;
+    width: 8 * ($col + $gutter + $gutter);
   }
 
   h3 {
@@ -69,23 +74,28 @@
     font-weight: bold;
     margin-bottom: 6px;
     display: block;
+    text-align: left;
+
+    & span {
+      color: #999;
+      font-weight: normal;
+      font-size: 12px;
+    }
   }
 
   input {
     border-radius: 2px;
-    border: none;
+    border: 2px solid $blue;
     outline: none;
     font: 16px/24px $helvetica;
-    padding: 6px;
+    padding: $baseline ($gutter - 2px);
 
     &:focus {
-      -webkit-box-shadow: 0 0 6px rgba(#000, 0.4);
-      padding: 6px - 2px;
-      border: 2px solid rgba($blue, 0.4);
+      border: 2px solid darken($blue, 20%);
     }
   }
 
-  .email, .username {
+  .email, .username, button {
     float: left;
   }
 
@@ -95,32 +105,28 @@
 
   button {
     margin-top: 24px + 6px + 2px;
-    padding: 6px 12px;
+    padding: $baseline $gutter;
     font: 14px/24px $helvetica;
-    border: none;
-    background: #FE0;
+    border: 2px solid $red;
+    background: $red;
     border-radius: 2px;
-    color: darken($blue, 20%);
+    color: white; //darken($blue, 30%);
     font-weight: bold;
     cursor: pointer;
     outline: none;
 
+    width: 2 * $col;
+
     &:hover, &:focus {
-      border: 2px solid #FFF;
-      -webkit-box-shadow: 0 0 6px rgba(#000, 0.4);
-      padding: 4px 10px;
-    }
-    &:active {
-      margin-top: 24px + 6px + 2px + 1px;
-      margin-bottom: -1px;
+      border-color: darken($red, 20%);
     }
   }
 
   .email input {
-    width: 240px;
+    width: (3 * $col) + (2 * $gutter);
   }
 
   .username input {
-    width: 160px;
+    width: (3 * $col) + (2 * $gutter);
   }
 }

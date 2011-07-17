@@ -1,52 +1,20 @@
 %header
-  %h1
-    %strong= @world.name
+  %h1= @world.name
 
-  .status
+- if user && user.special?
+  .info
     - if user.world == @world
-      = button_to 'Spawning here', [:activate, @world], disabled: true
+      %p In Minecraft, please connect to <strong>#{@world.host}</strong>.
     - else
-      = button_to 'Spawn here', [:activate, @world]
-
-#foo
-  = form_for [:post, @world], :method => :post do
-    %p
-      = text_area :post, :message, rows: 2
-    %button Post
+      = button_to 'Activate World', [:activate, @world]
 
 #stream
-  - @world.wall_items.each do |post|
-    .entry
-      .author
-        = post.user.username
-        / chrislloyd
-      .msg
-        = post.message
-        / So I told them I was Mike D. It was like "Gee, I don't know, he might be".
-
-- content_for :aside do
-  .avatar
-    / %img{width: 120, height: 120, src: '/world-default-big.png'}
-
-  %section.info
-    %h2 Info
-    %dl
-      %dt Host
-      %dd= @world.host
-
-      - [:spawn_monsters, :spawn_animals, :allow_flight, :spawn_protection, :seed].each do |option|
-        %dt= option.to_s.humanize
-        %dd= @world.options[option]
-
-  %section.admins
-    %h2 Admins
-    %ul
-      - @world.admins.each do |admin|
-        %li= admin.username
-
-  %section.players
-    %h2 Currently Playing
-    %ul
-      - @world.players.each do |player|
-        %li= player.username
-        
+  - if @world.wall_items.empty?
+    .empty No chat messages
+  - else
+    - @world.wall_items.each do |post|
+      - if post.is_a? ChatMessage
+        .item[post]
+          .author
+            %span.username #{post.username}:
+          .msg= post.message

@@ -9,19 +9,19 @@
     margin-left: $gutter;
   }
 
-  .credits, .signout {
-    font-weight: 700;
-    text-align: center;
-    border-radius: $radius;
+  a {
+    color: $blue;
+    text-decoration: none;
+    &:hover {
+      color: darken($blue, 20%);
+    }
   }
 
   .credits {
-    @include blue_button;
+    font-weight: 700;
+    text-align: center;
+    border-radius: $radius;
     padding: 0 $gutter/2;
   }
 
-  .signout {
-    @include button($bg, #666);
-    padding: 0 $gutter/2;
-  }
 }

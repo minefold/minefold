@@ -1,9 +1,10 @@
 //= require shared/reset
 //= require_self
-//= require_tree ./users
-//= require_tree ./worlds
+//= require_tree ./home
 //= require_tree ./orders
 //= require_tree ./sessions
+//= require_tree ./users
+//= require_tree ./worlds
 
 // 9, 10, 11, 12, 14, 16, 18, 21, 24, 30, 48, 60, 72 pts for type
 
@@ -12,11 +13,13 @@
 body {
   min-width: $width;
   font: 14px/18px $helvetica;
-  border-top: 2px solid lighten($blue, 20%);
+  border-top: 3px solid $blue;
+}
 
-  > :first-child {
-    border-top: 1px solid $blue;
-  }
+::selection {
+  background: $blue;
+  color: rgba(#FFF, 0.85);
+  text-shadow: none;
 }
 
 .container {
@@ -28,25 +31,31 @@ body {
 }
 
 header.global {
-  padding: 12px 0 (12px - 1px);
-  background: white;
+  padding: 6px 0;
 
-  border-bottom: 1px solid darken($bg, 10%);
+  background: white -webkit-linear-gradient(top,
+    white,
+    darken(white, 3%));
+
+  color: #333;
+  border-bottom: 1px solid darken(white, 10%);
 
   h1 {
     float: left;
-    height: 24px;
+    position: relative;
 
     a {
-      color: black;
-      font: 700 21px/24px $paytone;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
+      @include logo;
+      font-size: 21px;
+      line-height: 24px;
       text-decoration: none;
-    }
+      color: $blue;
 
-    .beta {
-      font: 700 14px/24px $helvetica;
+      display: block;
+
+      &:hover {
+        color: darken($blue, 10%);
+      }
     }
   }
 
@@ -56,12 +65,8 @@ header.global {
 }
 
 #content {
-  background: $bg url('/images/tile.png') 20%;
-  border-top: 1px solid lighten($bg, 5%);
-  padding: ($baseline - 1px) 0;
-  border-bottom: 1px solid darken($bg, 10%);
-
-  text-shadow: 0 1px 0 lighten($bg, 5%);
+  padding: $baseline 0 ($baseline - 1px);
+  border-bottom: 1px solid darken(white, 5%);
 
   header {
     margin: 2 * $gutter 0;
@@ -85,12 +90,13 @@ header.global {
 
 footer.global {
   background: white;
-  font: 14px/18px $helvetica;
-  padding: $baseline 0;
+  font: 12px/18px $helvetica;
+  padding: $baseline 0 (20 * $baseline);
   color: #CCC;
 
   nav {
-    margin: (2 * $baseline) (-$gutter);
+    margin: (4 * $baseline) (-$gutter) ($baseline);
+    font-size: 14px;
     a{
       margin: 0 $gutter;
     }
