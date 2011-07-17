@@ -27,8 +27,7 @@
 
   #stream {
     .item {
-      margin-bottom: $baseline;
-      padding: $baseline 0;
+      margin-bottom: 2 * $baseline;
     }
 
     .chat_message {
