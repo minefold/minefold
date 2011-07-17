@@ -27,7 +27,7 @@
 
       .info {
         margin-top: $baseline;
-        width: 2 * ($col + $gutter) - (2 * $gutter);
+        width: 2 * ($col + $gutter);
       }
 
       &.new a {
