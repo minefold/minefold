@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   def dashboard
-    @worlds = World.recently_active.limit(3 * 4)
+    @worlds = World.available_to_play.recently_active.limit(3 * 4)
 
     # @stream = user.world.wall_items
   end

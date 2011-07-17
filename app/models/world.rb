@@ -3,7 +3,7 @@ class World
 
   def self.default_options
     {
- spawn_monsters:   true,
+      spawn_monsters:   true,
       spawn_animals:    true,
       allow_flight:     false,
       spawn_protection: true
@@ -15,18 +15,26 @@ class World
   key :slug, String, unique: true, index: true
   key :options, Hash, default: default_options
   key :location, String, default: 'USA1'
+  key :status, String
   many :admins, class: User
   many :players, class: User
 
   many :wall_items, as: :wall,
                     sort: :created_at.desc,
                     limit: 20
+                    
+  validates_presence_of :name
+  validates_presence_of :slug
 
   timestamps!
 
 
   def self.recently_active
     sort(:updated_at.desc)
+  end
+  
+  def self.available_to_play
+    where(status:'')
   end
 
   def host

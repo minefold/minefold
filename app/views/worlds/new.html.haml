@@ -1,15 +1,19 @@
-%header
-  %h1
-    %strong World
-    Create
-
-
 = flash[:errors].to_json if flash[:errors]
 
-= form_for @world do |f|
-  %p
-    = f.label :name
-    = f.text_field :name
+%header.new-world
+  %h1 
+    %strong Create 
+    a new world
+  = form_for @world do |f|
+    = f.text_field :name, :placeholder => 'Name'
 
-  %p
-    = f.submit 'Create'
+    %p
+      = f.submit 'Create'
+
+%header.import-world
+  %h1
+    %a{:href => new_world_import_path }
+      %strong Import 
+      a world
+
+    

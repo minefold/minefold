@@ -27,9 +27,9 @@ Minefold::Application.routes.draw do
 
   # Worlds
 
-  resources :world_imports, :only => [:create]
+  resources :world_imports, :only => [:new, :create]
 
-  # match "/resque", :to => Resque::Server.new, :anchor => false
+  match "/resque", :to => Resque::Server.new, :anchor => false
 
   get '/about' => 'high_voltage/pages#show', :id => 'about'
 

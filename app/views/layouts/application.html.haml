@@ -29,7 +29,6 @@
           = link_to root_url do
             Mine<span>fold</span>
 
-          / %span.beta Beta
         %aside
           = render template: 'sessions/show'
 
@@ -47,3 +46,10 @@
 
     = javascript_include_tag 'application'
 
+    / :javascript
+    /   $.ajaxSetup({
+    /     beforeSend: function(xhr) {
+    /       xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+    /     }
+    /   });
+    /   = yield(:javascript)
