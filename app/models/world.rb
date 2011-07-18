@@ -22,7 +22,7 @@ class World
   many :wall_items, as: :wall,
                     sort: :created_at.desc,
                     limit: 20
-                    
+
   validates_presence_of :name
   validates_presence_of :slug
 
@@ -32,7 +32,7 @@ class World
   def self.recently_active
     sort(:updated_at.desc)
   end
-  
+
   def self.available_to_play
     where(status:'')
   end

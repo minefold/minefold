@@ -1,0 +1,32 @@
+@import 'shared/vars';
+
+#devise-registrations-new #content {
+  text-align: center;
+
+  h2 {
+    font-size: 14px;
+    line-height: 4 * $baseline;
+    font-weight: 600;
+    margin: $baseline 0 (2 * $baseline) 0;
+  }
+
+  p {
+    margin-bottom: 2 * $baseline;
+  }
+
+  input[type=email], input[type=password], input[type=text] {
+    font: 400 14px/18px $helvetica;
+    margin: $baseline ($gutter - 2px);
+    border: 2px solid darken(white, 10%);
+    border-radius: $radius;
+    outline: none;
+    &:focus {
+      border-color: $blue;
+    }
+  }
+
+
+  .remember-me label {
+    display: inline;
+  }
+}

@@ -1,10 +1,10 @@
 %header
   %h1
     You have
-    %strong= pluralize user.credits, 'minute', 'minutes'
+    %strong= pluralize current_user.credits, 'minute', 'minutes'
     left.
 
-- if user.special?
+- if current_user.special?
 
   %h2 Select how many credits you want to top up your account with.
 
@@ -71,12 +71,11 @@
     -# TODO: Investigate wether this is needed
     %img{alt: '', border: 0, src: 'https://www.paypalobjects.com/en_AU/i/scr/pixel.gif', width: 1, height: 1}
 
-  %script{src: 'https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js'}
-  :javascript
-    var products = $('#products li');
-    products.click(function(e) {
-      var self = $(e.currentTarget);
-      products.removeClass('active');
-      self.addClass('active').find('input:radio').click();
-      e.preventDefault();
-    });
+:javascript
+  var products = $('#products li');
+  products.click(function(e) {
+    var self = $(e.currentTarget);
+    products.removeClass('active');
+    self.addClass('active').find('input:radio').click();
+    e.preventDefault();
+  });

@@ -1,68 +1,41 @@
 class User
   include MongoMapper::Document
 
-  key :email,              String, unique: true
-  key :username,           String, unique: true
-  key :encrypted_password, String, length: 0..128
-
-  key :special, Boolean, default: false
-
-  key :credits,            Integer, default: 0
-
-  belongs_to :world
-
-  many :wall_items, as: :wall
-
-  timestamps!
-
-
-  # Normalize email
-  before_validation do
-    email.try(:downcase!).try(:strip!)
-  end
-
-
-  # Credits
   CREDIT_UNITS = 1.minute
 
-  def credit n
-    increment credits: (n / CREDIT_UNITS)
+  key :email,    String,  unique: true
+  key :username, String,  unique: true
+  key :special,  Boolean, default: true
+  key :credits,  Integer, default: (1.hour / CREDIT_UNITS)
+  many :wall_items, as: :wall
+  belongs_to :world
+  timestamps!
+
+  devise :registerable,
+         :database_authenticatable,
+         :recoverable,
+         :rememberable,
+         :trackable,
+         :validatable
+
+  attr_accessible :email, :username, :password, :password_confirmation
+
+  # Credits
+
+  def increment_credits n
+    increment credits: (n.hours / CREDIT_UNITS)
+    n
   end
 
-  def hours
+  def format_credits
     (credits * CREDIT_UNITS) / 1.hour
   end
 
-# Authentication
 
-  class Unauthenticated < StandardError; end
+protected
 
-  STRETCHES = 10
-
-  attr_accessor :password_confirmation
-
-  validates_confirmation_of :password, :if => :password
-
-  # TODO: Implement a constant-time comparison to prevent timing attacks
-  #       (see Devise.secure_compare).
-  def password
-    @password ||= if encrypted_password?
-      BCrypt::Password.new(encrypted_password)
-    else
-      nil
-    end
-  end
-
-  # TODO: Implement peppers
-  def password=(new_password)
-    self.encrypted_password = @password =
-      BCrypt::Password.create(new_password, cost: STRETCHES)
-      # BCrypt::Password.create([new_password, ENV['PEPPER']].join, cost: STRETCHES)
-  end
-
-  # TODO: Change Warden to use this abstraction (to help implementing peppers)
-  def check_password?(pw)
-    password == pw
+  def password_required?
+    false
   end
 
 end

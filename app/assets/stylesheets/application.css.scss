@@ -5,6 +5,7 @@
 //= require_tree ./sessions
 //= require_tree ./users
 //= require_tree ./worlds
+//= require_tree ./devise
 
 // 9, 10, 11, 12, 14, 16, 18, 21, 24, 30, 48, 60, 72 pts for type
 
@@ -76,6 +77,15 @@ header.global {
   strong {
     font-weight: 700;
   }
+
+  pre {
+    margin-bottom: 2*$baseline;
+  }
+
+  code {
+    font-family: monospace;
+  }
+
 
   form {
     label {

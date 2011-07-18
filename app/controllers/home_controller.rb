@@ -1,9 +1,13 @@
 class HomeController < ApplicationController
 
-  # layout 'system'
-
   def teaser
-    # expires_in 30.minutes, public: true
+  end
+
+  def subscribe
+    user = User.create email: params[:user][:email]
+    flash[:email] = user.email
+
+    redirect_to root_path
   end
 
 end

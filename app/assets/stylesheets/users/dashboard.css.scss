@@ -1,6 +1,6 @@
 @import 'shared/vars';
 
-#users_dashboard {
+#users-dashboard {
   ul#worlds {
     overflow: auto;
     margin: 0 (-$gutter) ((-2 * $baseline) + 24px) (-$gutter);
@@ -13,12 +13,16 @@
       padding: $gutter;
       text-align: center;
 
+      &.active a {
+        border-color: darken(white, 40%);
+      }
+
       a {
         display: block;
         width: 2 * ($col + $gutter) - (2 * $gutter);
         height: 2 * ($col + $gutter) - (2 * $gutter);
         background: #FFF url('/world-default-small.png') center no-repeat;
-        border: $gutter solid #EFEFEF;
+        border: $gutter solid darken(white, 10%);
         border-radius: $radius;
         &:hover {
           border-color: $blue;

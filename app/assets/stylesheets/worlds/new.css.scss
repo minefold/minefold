@@ -1,0 +1,28 @@
+@import 'shared/vars';
+
+#worlds-new #content {
+  .new-world {
+    float: right;
+    width: 4 * $col + 6 * $gutter;
+  }
+
+  .import-world {
+    float: left;
+    width: 8 * $col + 14 * $gutter;
+  }
+
+  p {
+    margin-bottom: 2 * $baseline;
+  }
+
+  input[type=email], input[type=password], input[type=text] {
+    font: 400 14px/18px $helvetica;
+    margin: $baseline 0;
+    border: 2px solid darken(white, 10%);
+    border-radius: $radius;
+    outline: none;
+    &:focus {
+      border-color: $blue;
+    }
+  }
+}

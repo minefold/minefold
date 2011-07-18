@@ -1,24 +1,21 @@
 Minefold::Application.routes.draw do
 
-  resources :s3_uploads
-
+  # TODO: Bug returning from remembered session
   root to: 'users#dashboard',
        constraints: ->(req){ req.env['warden'].authenticated? },
        as: :dashboard
 
+  resources :s3_uploads
+
   root :to => 'home#teaser'
-
-
-  # Signup
-  get  '/sign_up' => 'users#new'
-  post '/sign_up' => 'users#create', :as => :users
+  post '/subscribe' => 'home#subscribe', :as => :subscribe
 
 
   # Authentication
-  get    '/sign_in'  => 'sessions#new',  :as => :new_session
-  post   '/sign_in'  => 'sessions#create',  :as => :sessions
-  get    '/sign_out' => 'sessions#destroy', :as => :session
-  get    '/unauthorized' => 'sessions#unauthorized', :as => :unauthorized
+  devise_for :users, :path_names => {
+    sign_up: '/sign_up/s3kr1t'
+  }
+
 
   # Payment
   get  '/credits' => 'orders#new', :as => :credits
@@ -28,11 +25,11 @@ Minefold::Application.routes.draw do
 
 
   # Players
-  get  '/player/:username' => 'user#show'
+  # get  '/player/:username' => 'user#show'
 
   # Worlds
 
-  resources :world_imports, :only => [:new, :create]
+  resources :world_imports, :only => [:create]
 
   match "/resque", :to => Resque::Server.new, :anchor => false
 

@@ -22,6 +22,8 @@
     %meta{property:'og:url', content:'//www.minefold.com'}
     %meta{property:'og:site_name', content:'Minefold'}
 
+    = javascript_include_tag 'application'
+
   %body{page_css_selector}
     %header.global
       .container
@@ -29,7 +31,6 @@
           = link_to root_url do
             Mine<span>fold</span>
 
-          / %span.beta Beta
         %aside
           = render template: 'sessions/show'
 
@@ -45,13 +46,10 @@
     - if Rails.env.production?
       = render partial: 'shared/clicky'
 
-    = javascript_include_tag 'application'
-    %script(type="text/javascript")
-      :plain
-        $.ajaxSetup({
-          beforeSend: function(xhr) {
-            xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
-          }
-        });
-      = yield(:javascript)
-      
+    / :javascript
+    /   $.ajaxSetup({
+    /     beforeSend: function(xhr) {
+    /       xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+    /     }
+    /   });
+    /   = yield(:javascript)
