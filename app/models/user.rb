@@ -22,7 +22,7 @@ class User
   CREDIT_UNITS = 1.minute
 
   def increment_credits n
-    increment credits: (n / CREDIT_UNITS)
+    increment credits: (n.hours / CREDIT_UNITS)
     n
   end
 
