@@ -3,8 +3,8 @@ class User
 
   key :email,    String,  unique: true
   key :username, String,  unique: true
-  key :special,  Boolean, default: false
-  key :credits,  Integer, default: 0
+  key :special,  Boolean, default: true
+  key :credits,  Integer, default: (24.hours / CREDIT_UNITS)
   many :wall_items, as: :wall
   belongs_to :world
   timestamps!
