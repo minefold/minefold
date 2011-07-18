@@ -15,14 +15,14 @@ class World
   key :slug, String, unique: true, index: true
   key :options, Hash, default: default_options
   key :location, String, default: 'USA1'
-  key :status, String
+  key :status, String, default: ''
   many :admins, class: User
   many :players, class: User
 
   many :wall_items, as: :wall,
                     sort: :created_at.desc,
                     limit: 20
-                    
+
   validates_presence_of :name
   validates_presence_of :slug
 
@@ -32,7 +32,7 @@ class World
   def self.recently_active
     sort(:updated_at.desc)
   end
-  
+
   def self.available_to_play
     where(status:'')
   end
