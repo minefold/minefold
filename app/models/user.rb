@@ -1,6 +1,8 @@
 class User
   include MongoMapper::Document
 
+  CREDIT_UNITS = 1.minute
+
   key :email,    String,  unique: true
   key :username, String,  unique: true
   key :special,  Boolean, default: true
@@ -19,7 +21,6 @@ class User
   attr_accessible :email, :username, :password, :password_confirmation
 
   # Credits
-  CREDIT_UNITS = 1.minute
 
   def increment_credits n
     increment credits: (n.hours / CREDIT_UNITS)
