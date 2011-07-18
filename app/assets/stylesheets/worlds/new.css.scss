@@ -2,13 +2,13 @@
 
 #worlds-new #content {
   .new-world {
-    float: left;
-    width: 4 * $col + 8 * $gutter;
+    float: right;
+    width: 4 * $col + 6 * $gutter;
   }
 
   .import-world {
     float: left;
-    width: 5 * $col + 10 * $gutter;
+    width: 8 * $col + 14 * $gutter;
   }
 
   p {

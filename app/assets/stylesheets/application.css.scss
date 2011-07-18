@@ -78,6 +78,15 @@ header.global {
     font-weight: 700;
   }
 
+  pre {
+    margin-bottom: 2*$baseline;
+  }
+
+  code {
+    font-family: monospace;
+  }
+
+
   form {
     label {
       display: block;

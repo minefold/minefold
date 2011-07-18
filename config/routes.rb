@@ -17,7 +17,6 @@ Minefold::Application.routes.draw do
   }
 
 
-
   # Payment
   get  '/credits' => 'orders#new', :as => :credits
   post '/order' => 'orders#create', :as => :order

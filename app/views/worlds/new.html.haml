@@ -1,22 +1,9 @@
 = flash[:errors].to_json if flash[:errors]
 
-.new-world
-  %header
-    %h1
-      %strong Create
-      a new world
-
-  = form_for @world do |f|
-    = f.text_field :name, :placeholder => 'Name'
-
-    %p
-      = f.submit 'Create'
-
 .import-world
   %header
     %h1
-      or
-      %strong upload
+      %strong Upload
       an existing world
 
   = flash[:errors].to_json if flash[:errors]
@@ -38,6 +25,17 @@
           = f.submit 'Create'
 
     %p.status
+
+  %p
+    You need to create an archive of your world. Nagivate to
+  %pre
+    %code ~/Library/Application&nbsp;Support/minecraft/saves
+
+  %p
+    and right click on your world's folder and choose "Compress (world name)".
+    The zip file that is created is what you need to upload.
+
+  %img{src: '/images/compress.png'}
 
 :javascript
   $(function(){
@@ -101,3 +99,16 @@
 
 
   });
+
+.new-world
+  %header
+    %h1
+      or
+      %strong create
+      a new world
+
+  = form_for @world do |f|
+    = f.text_field :name, :placeholder => 'Name'
+
+    %p
+      = f.submit 'Create'
