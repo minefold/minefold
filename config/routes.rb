@@ -12,7 +12,10 @@ Minefold::Application.routes.draw do
 
 
   # Authentication
-  devise_for :users
+  devise_for :users, :path_names => {
+    sign_up: '/sign_up/s3kr1t'
+  }
+
 
 
   # Payment
@@ -23,11 +26,11 @@ Minefold::Application.routes.draw do
 
 
   # Players
-  get  '/player/:username' => 'user#show'
+  # get  '/player/:username' => 'user#show'
 
   # Worlds
 
-  resources :world_imports, :only => [:new, :create]
+  resources :world_imports, :only => [:create]
 
   match "/resque", :to => Resque::Server.new, :anchor => false
 
