@@ -26,6 +26,7 @@ class OrdersController < ApplicationController
   end
 
   def cancel
+    redirect_to order_path
   end
 
 end
