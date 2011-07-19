@@ -21,7 +21,7 @@ class World
 
   many :wall_items, as: :wall,
                     sort: :created_at.desc,
-                    limit: 20
+                    limit: 100
 
   validates_presence_of :name
   validates_presence_of :slug
