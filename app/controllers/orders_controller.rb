@@ -16,7 +16,7 @@ class OrdersController < ApplicationController
     if Rails.env.development?
       redirect_to successful_order_path
     else
-      render :nothing
+      render :nothing => true, :status => :success
     end
   end
 
