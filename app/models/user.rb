@@ -4,12 +4,14 @@ class User
   CREDIT_UNITS = 1.minute
 
   key :email,    String,  unique: true
-  key :username, String,  unique: true
+  key :username, String
   key :special,  Boolean, default: true
   key :credits,  Integer, default: (1.hour / CREDIT_UNITS)
   many :wall_items, as: :wall
   belongs_to :world
   timestamps!
+
+  validates_uniqueness_of :username, allow_nil: true
 
   devise :registerable,
          :database_authenticatable,
