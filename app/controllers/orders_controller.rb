@@ -13,6 +13,8 @@ class OrdersController < ApplicationController
                                       status: params[:payment_status],
                                       txn_id: params[:txn_id])
 
+    order.save
+
     if Rails.env.development?
       redirect_to successful_order_path
     else
