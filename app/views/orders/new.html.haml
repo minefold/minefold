@@ -29,7 +29,7 @@
     = hidden_field_tag :on0, 'Credits'
 
     %ul#products
-      %li
+      %li.active
         %label{for: 'os0-24'}
           .credits
             24
@@ -39,7 +39,7 @@
             %span minutes
           .cost $12
 
-        %input#os0-24{type: 'radio', name: 'os0', value: 24, style: 'display:none'}
+        %input#os0-24{type: 'radio', name: 'os0', value: 24, style: 'display:none', checked: true}
 
       %li
         %label{for: 'os0-48'}
@@ -66,7 +66,7 @@
         %input#os0-72{type: 'radio', name: 'os0', value: 72, style: 'display:none'}
 
 
-    %input{type: 'image', src: 'https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif', border: 0, name: 'submit', alt: 'PayPal - The safer, easier way to pay online!', disabled: true}
+    %input{type: 'image', src: 'https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif', border: 0, name: 'submit', alt: 'PayPal - The safer, easier way to pay online!'}
 
     -# TODO: Investigate wether this is needed
     %img{alt: '', border: 0, src: 'https://www.paypalobjects.com/en_AU/i/scr/pixel.gif', width: 1, height: 1}
@@ -75,7 +75,6 @@
   var products = $('#products li');
   products.click(function(e) {
     var self = $(e.currentTarget);
-    $('form input[type=image]').attr('disabled', false);
     products.removeClass('active');
     self.addClass('active').find('input:radio').click();
     e.preventDefault();
