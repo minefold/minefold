@@ -20,7 +20,18 @@
         = f.hidden_field :_id, :value => new_world_id
         = f.hidden_field :status, :value => 'pending_import'
 
-        = f.text_field :name, :placeholder => 'Name'
+
+        %p
+          = f.text_field :name, :placeholder => 'Name'
+
+        %p.cb
+          = check_box_tag 'world[options][pvp]', 'pvp', checked: @world.options['pvp']
+          = label_tag 'world[options][pvp]', 'PVP'
+
+        %p.cb
+          = check_box_tag 'world[options][spawn-monsters]', 'spawn-monsters', checked: @world.options['spawn-monsters']
+          = label_tag 'world[options][spawn-monsters]', 'Spawn Monsters'
+
         %p
           = f.submit 'Create'
 
@@ -109,6 +120,14 @@
 
   = form_for @world do |f|
     = f.text_field :name, :placeholder => 'Name'
+
+    %p.cb
+      = check_box_tag 'world[options][pvp]', 'pvp', checked: @world.options['pvp']
+      = label_tag 'world[options][pvp]', 'PVP'
+
+    %p.cb
+      = check_box_tag 'world[options][spawn-monsters]', 'spawn-monsters', checked: @world.options['spawn-monsters']
+      = label_tag 'world[options][spawn-monsters]', 'Spawn Monsters'
 
     %p
       = f.submit 'Create'

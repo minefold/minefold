@@ -13,6 +13,10 @@
 
   p {
     margin-bottom: 2 * $baseline;
+
+    &.cb label {
+      display: inline;
+    }
   }
 
   input[type=email], input[type=password], input[type=text] {

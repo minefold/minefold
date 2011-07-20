@@ -3,10 +3,8 @@ class World
 
   def self.default_options
     {
-      spawn_monsters:   true,
-      spawn_animals:    true,
-      allow_flight:     false,
-      spawn_protection: true
+      'spawn-monsters' => true,
+      'pvp' => true
     }
   end
 
@@ -39,6 +37,13 @@ class World
 
   def host
     'pluto.minefold.com'
+  end
+
+  # TODO: Ugly as sin.
+  def options=(hash)
+    super(self.class.default_options.each_with_object({}) do |(key, val), opts|
+      opts[key] = hash[key].present? || opts[key].present?
+    end)
   end
 
   def to_param
