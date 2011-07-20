@@ -1,5 +1,7 @@
 class User
   include MongoMapper::Document
+  include Gravtastic
+
 
   CREDIT_UNITS = 1.minute
 
@@ -19,6 +21,10 @@ class User
          :rememberable,
          :trackable,
          :validatable
+
+  gravtastic secure: true,
+             format: :png,
+             default: 'identicon'
 
   attr_accessible :email, :username, :password, :password_confirmation
 

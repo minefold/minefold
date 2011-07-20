@@ -33,6 +33,7 @@ gem 's3_swf_upload',
   git: 'https://github.com/nathancolgate/s3-swf-upload-plugin'
 gem 'resque'
 gem 'fog'
+gem 'gravtastic'
 
 group :development do
   gem 'heroku'

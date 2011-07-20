@@ -24,9 +24,6 @@ Minefold::Application.routes.draw do
   get  '/order/cancel' => 'orders#cancel', :as => :cancel_order
 
 
-  # Players
-  # get  '/player/:username' => 'user#show'
-
   # Worlds
 
   resources :world_imports, :only => [:create]
@@ -38,6 +35,6 @@ Minefold::Application.routes.draw do
   get  '/worlds/new' => 'worlds#new', :as => :new_world
   post '/worlds' => 'worlds#create', :as => :worlds
   post '/:id/activate' => 'worlds#activate', :as => :activate_world
-  post '/:id/post' => 'worlds#post', :as => :post_world
+  post '/:id/comment' => 'worlds#comment', :as => :comment_world
   get  '/:id' => 'worlds#show', :as => :world
 end

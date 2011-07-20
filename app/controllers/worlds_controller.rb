@@ -26,10 +26,13 @@ class WorldsController < ApplicationController
     redirect_to @world
   end
 
-  def post
+  def comment
     @world = World.first :slug => params[:id]
 
-    @world.wall_items << Post.create(user: user, message: params[:post][:message])
+    @world.wall_items << Comment.create(
+      user: current_user,
+      body: params[:body])
+
     @world.save
 
     redirect_to @world

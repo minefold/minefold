@@ -8,13 +8,27 @@
     - else
       = button_to 'Activate World', [:activate, @world]
 
+#share
+  = form_for [:comment, @world], method: :post do |f|
+    = text_area_tag :body, '', rows: 2
+    %p
+      %button Share
+
 #stream
   - if @world.wall_items.empty?
     .empty No chat messages
   - else
     - @world.wall_items.each do |post|
-      - if post.is_a? ChatMessage
-        .item[post]
+      .item[post]
+        - case post
+        - when ChatMessage
           .author
-            %span.username #{post.username}:
+            %span.username #{post.username}
           .msg= post.message
+        - when Comment
+          .avatar
+            = image_tag post.user.gravatar_url(size: 48), width: 48, height: 48
+          .author
+            %span.username #{post.user.username}
+          .msg= post.body
+
