@@ -27,15 +27,17 @@ class WorldsController < ApplicationController
   end
 
   def comment
-    @world = World.first :slug => params[:id]
+    world = World.first :slug => params[:id]
 
-    @world.wall_items << Comment.create(
-      user: current_user,
-      body: params[:body])
+    comment = Comment.create(user: current_user, body: params[:body])
 
-    @world.save
-
-    redirect_to @world
+    if comment.valid?
+      world.wall_items << comment
+      world.save
+      redirect_to world
+    else
+      render json: {errors: comment.errors}, status: :bad_request
+    end
   end
 
 end
