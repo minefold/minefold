@@ -79,7 +79,7 @@
       font-size: 12px;
       padding-left: 48px + $gutter;
 
-      .author {
+      .user {
         margin-right: $gutter;
         font-weight: bold;
         color: #666;
@@ -103,6 +103,26 @@
       }
       .msg {
         padding-left: 48px + $gutter;
+      }
+    }
+
+    .activity {
+      overflow: auto;
+      padding-left: (48px + $gutter);
+//      border-top: 1px solid darken(white, 10%);
+//      border-bottom: 1px solid darken(white, 10%);
+
+      font-size: 12px;
+      line-height: 18px;
+
+      color: #CCC;
+
+      .user {
+        display: inline;
+        font-weight: bold;
+      }
+      .action {
+        display: inline;
       }
     }
   }

@@ -18,17 +18,21 @@
   - if @world.wall_items.empty?
     .empty No chat messages
   - else
-    - @world.wall_items.each do |post|
-      .item[post]
-        - case post
+    - @world.wall_items.each do |item|
+      .item[item]
+        - case item
         - when ChatMessage
-          .author
-            %span.username #{post.username}
-          .msg= post.message
+          .user
+            %span.username #{item.username}
+          .msg= item.message
         - when Comment
           .avatar
-            = image_tag post.user.gravatar_url(size: 48), width: 48, height: 48
+            = image_tag item.user.gravatar_url(size: 48), width: 48, height: 48
           .author
-            %span.username #{post.user.username}
-          .msg= post.body
+            %span.username #{item.user.username}
+          .msg= item.body
+        - when Activity
+          .user
+            %span.username #{item.user.username}
+          .action= item.action
 

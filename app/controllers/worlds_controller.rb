@@ -1,5 +1,7 @@
 class WorldsController < ApplicationController
 
+  prepend_before_filter :authenticate_user!, except: :show
+
   def new
     @world = World.new
   end
@@ -29,9 +31,9 @@ class WorldsController < ApplicationController
   def comment
     world = World.first :slug => params[:id]
 
-    comment = Comment.create(user: current_user, body: params[:body])
+    comment = Comment.new(user: current_user, body: params[:body])
 
-    if comment.valid?
+    if comment.valid? and comment.save
       world.wall_items << comment
       world.save
       redirect_to world
