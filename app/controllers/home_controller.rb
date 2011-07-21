@@ -4,7 +4,7 @@ class HomeController < ApplicationController
   end
 
   def subscribe
-    user = User.create email: params[:user][:email]
+    user = BetaUser.create email: params[:beta_user][:email]
     flash[:email] = user.email
 
     redirect_to root_path
