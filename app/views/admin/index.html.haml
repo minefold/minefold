@@ -7,15 +7,17 @@
 %table
   %thead
     %tr
+      %td #
       %td ID
       %td Username
       %td Email
       %td Credits
       %td World
 
-  - @users.each do |user|
+  - @users.each_with_index do |user, i|
 
     %tr{class: (user.username? ? 'active' : nil)}
+      %td= i
       %td= user.id
       %td= user.username
       %td= user.email

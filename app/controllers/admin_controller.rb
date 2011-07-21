@@ -3,7 +3,7 @@ class AdminController < ApplicationController
   before_filter :authenticate
 
   def index
-    @users = User.all
+    @users = User.all(:sort => :created_at.asc)
     render :layout => false
   end
 
