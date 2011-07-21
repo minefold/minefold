@@ -1,11 +1,10 @@
 :css
+  body {
+    font-family: 12px/24px Helvetica;
+  }
   td {
-    line-height: 24px;
     border-bottom: 1px solid #EEE;
     margin-bottom: 5px;
-  }
-  .active {
-    background-color: #FFC;
   }
 
 %h1 Users
@@ -28,8 +27,8 @@
       %td= user.username
       %td= user.email
       %td
-        = user.format_credits
-        %strong= user.credits
+        %strong #{user.format_credits}cr
+        (#{user.credits})
       %td
         - if user.world?
           = link_to user.world.name, user.world
