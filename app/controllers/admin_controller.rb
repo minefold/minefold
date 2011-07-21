@@ -4,6 +4,7 @@ class AdminController < ApplicationController
 
   def index
     @users = User.all(:sort => :created_at.asc)
+    @beta_users = BetaUser.all(:sort => :created_at.asc)
     render :layout => false
   end
 

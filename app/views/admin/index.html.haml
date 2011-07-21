@@ -1,8 +1,14 @@
 :css
+  td {
+    line-height: 24px;
+    border-bottom: 1px solid #EEE;
+    margin-bottom: 5px;
+  }
   .active {
     background-color: #FFC;
   }
 
+%h1 Users
 
 %table
   %thead
@@ -16,7 +22,7 @@
 
   - @users.each_with_index do |user, i|
 
-    %tr{class: (user.username? ? 'active' : nil)}
+    %tr
       %td= i
       %td= user.id
       %td= user.username
@@ -27,3 +33,17 @@
       %td
         - if user.world?
           = link_to user.world.name, user.world
+
+%h1 Beta Users
+
+%table
+  %thead
+    %tr
+      %td #
+      %td Email
+
+  - @beta_users.each_with_index do |user, i|
+
+    %tr
+      %td= i
+      %td= user.email
