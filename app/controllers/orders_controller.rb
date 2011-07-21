@@ -12,11 +12,12 @@ class OrdersController < ApplicationController
     order = Order.find(params[:custom])
 
     if notify.acknowledge
-      payment = order.payments.find {|p| p.txn_id == notify.transaction_id}
+      payment = order.payments.find(notify.transaction_id)
 
       if payment.nil?
-        payment = Payment.new(params: params[params],
-                              txn_id: notify.transaction_id)
+        payment = Payment.new(id: notify.transaction_id,
+                          params: params)
+
         order.payments << payment
       end
 
@@ -33,6 +34,8 @@ class OrdersController < ApplicationController
         order.save
       end
     end
+
+    render nothing: true
   end
 
   def success
