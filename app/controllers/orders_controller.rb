@@ -9,7 +9,7 @@ class OrdersController < ApplicationController
 
   def create
     notify = Paypal::Notification.new(request.raw_post)
-    order = Order.find(notify.item_id)
+    order = Order.find(params[:custom])
 
     if notify.acknowledge
       payment = order.payments.find {|p| p.txn_id == notify.transaction_id}
