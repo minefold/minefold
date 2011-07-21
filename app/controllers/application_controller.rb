@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 private
 
   def not_found
-    render file: '404.html', status: 404
+    render text: "<strong>404</strong><br/>All that is here is a sad panda surrounded by the remains of his beautiful world and the omnious hiss of a creeper ringing in his ears. :(", status: :not_found
   end
 
 end
