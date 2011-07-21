@@ -1,24 +1,37 @@
 class OrdersController < ApplicationController
-  prepend_before_filter :authenticate_user!, only: [:new, :success, :cancel]
+  include ActiveMerchant::Billing::Integrations
+
+  prepend_before_filter :authenticate_user!, except: [:create]
 
   def new
     @order = Order.create!(user: current_user)
   end
 
   def create
-    order = Order.find params[:custom]
+    notify = Paypal::Notification.new(request.raw_post)
+    order = Order.find(notify.item_id)
 
-    # TODO: MASSIVE security hole, needs to verify PayPal IPN.
-    order.process_payment Payment.new(params: params,
-                                      status: params[:payment_status],
-                                      txn_id: params[:txn_id])
+    if notify.acknowledge
+      payment = order.payments.find {|p| p.txn_id == notify.transaction_id}
 
-    order.save
+      if payment.nil?
+        payment = Payment.new(params: params[params],
+                              txn_id: notify.transaction_id)
+        order.payments << payment
+      end
 
-    if Rails.env.development?
-      redirect_to successful_order_path
-    else
-      render :nothing => true
+      begin
+        if notify.complete?
+          payment.status = notify.status
+        else
+          logger.error("Failed to verify Paypal's notification, please investigate")
+        end
+      rescue => e
+        payment.status = 'Error'
+        raise
+      ensure
+        order.save
+      end
     end
   end
 

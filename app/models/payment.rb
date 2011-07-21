@@ -12,5 +12,4 @@ class Payment
   def credits
     params['option_selection1'].to_i
   end
-
 end

@@ -8,8 +8,6 @@ class Order
     if unfulfilled? and payment.complete?
       user.increment_credits(payment.credits)
     end
-
-    self.payments << payment
   end
 
   def fulfilled?

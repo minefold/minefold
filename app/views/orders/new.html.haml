@@ -19,12 +19,12 @@
     = hidden_field_tag :notify_url, order_url
     = hidden_field_tag :cancel_return, cancel_order_url
 
-    - if Rails.env.development?
-      = hidden_field_tag :return, order_url
-      = hidden_field_tag :rm, 2
+    / - if Rails.env.development?
+    /   = hidden_field_tag :return, order_url
+    /   = hidden_field_tag :rm, 2
 
-    - else
-      = hidden_field_tag :return, successful_order_url
+    / - else
+    = hidden_field_tag :return, successful_order_url
 
     = hidden_field_tag :on0, 'Credits'
 
