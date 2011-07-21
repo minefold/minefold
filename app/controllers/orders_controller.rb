@@ -24,6 +24,8 @@ class OrdersController < ApplicationController
       begin
         if notify.complete?
           payment.status = notify.status
+          order.process_payment(payment)
+          logger.info("Processed PayPal IPN")
         else
           logger.error("Failed to verify Paypal's notification, please investigate")
         end
@@ -33,6 +35,8 @@ class OrdersController < ApplicationController
       ensure
         order.save
       end
+    else
+      logger.info("Failed to authenticate PayPal IPN")
     end
 
     render nothing: true
