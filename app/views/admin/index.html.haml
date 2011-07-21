@@ -1,0 +1,27 @@
+:css
+  .active {
+    background-color: #FFC;
+  }
+
+
+%table
+  %thead
+    %tr
+      %td ID
+      %td Username
+      %td Email
+      %td Credits
+      %td World
+
+  - @users.each do |user|
+
+    %tr{class: (user.username? ? 'active' : nil)}
+      %td= user.id
+      %td= user.username
+      %td= user.email
+      %td
+        = user.format_credits
+        %strong= user.credits
+      %td
+        - if user.world?
+          = link_to user.world.name, user.world

@@ -10,6 +10,7 @@ Minefold::Application.routes.draw do
   root :to => 'home#teaser'
   post '/subscribe' => 'home#subscribe', :as => :subscribe
 
+  get '/admin' => 'admin#index', :as => :admin
 
   # Authentication
   devise_for :users, :path_names => {
