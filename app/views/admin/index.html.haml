@@ -33,6 +33,8 @@
         - if user.world?
           = link_to user.world.name, user.world
 
+%p= @users.map {|u| u.email}.join(', ')
+
 %h1 Beta Users
 
 %table
@@ -46,3 +48,5 @@
     %tr
       %td= i
       %td= user.email
+
+%p= @beta_users.map {|u| u.email}.join(', ')
