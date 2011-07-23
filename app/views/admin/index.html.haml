@@ -18,6 +18,7 @@
       %td Username
       %td Email
       %td Credits
+      %td Total Minutes
       %td World
 
   - @users.each_with_index do |user, i|
@@ -30,6 +31,7 @@
       %td
         = user.format_credits
         %strong= user.credits
+      %td= user.minutes_played
       %td
         - if user.world?
           = link_to user.world.name, user.world

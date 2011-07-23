@@ -5,10 +5,12 @@ class User
 
   CREDIT_UNITS = 1.minute
 
-  key :email,    String,  unique: true
-  key :username, String
-  key :special,  Boolean, default: true
-  key :credits,  Integer, default: (1.hour / CREDIT_UNITS)
+  key :email,           String,  unique: true
+  key :username,        String
+  key :special,         Boolean, default: true
+  key :credits,         Integer, default: (1.hour / CREDIT_UNITS)
+  key :minutes_played,  Integer, default: 0
+  
   many :wall_items, as: :wall
   belongs_to :world
   timestamps!
