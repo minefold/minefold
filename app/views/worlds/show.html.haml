@@ -1,3 +1,38 @@
+:javascript
+  // Enable pusher logging - don't include this in production
+  Pusher.log = function(message) {
+    if (window.console && window.console.log) window.console.log(message);
+  };
+
+  // Flash fallback logging - don't include this in production
+  WEB_SOCKET_DEBUG = true;
+
+  var pusher = new Pusher('b20fb5c5ee3849e01a40');
+  var channel = pusher.subscribe(#{@world.channel.name.to_json});
+  channel.bind('chat:create', displayChatMessage);
+
+  function displayChatMessage(data) {
+    $('#share textarea').val("");
+
+    stream = $('#stream');
+
+    item = $('<div/>').addClass('item').addClass('chat');
+
+    item.append(
+      $('<div/>').addClass('avatar').append(
+        $('<img/>').attr({'src': data['user']['gravatar_url'], width: 48, height: 48})
+      )
+    ).append(
+      $('<div/>').addClass('user').append(
+        $('<span/>').addClass('username').text(data['user']['username'])
+      )
+    ).append(
+      $('<div/>').addClass('msg').text(data['msg'])
+    );
+
+    stream.prepend(item);
+  }
+
 %header
   %h1= @world.name
 
@@ -8,31 +43,44 @@
     - else
       = button_to 'Activate World', [:activate, @world]
 
-#share
-  = form_for [:comment, @world], method: :post do |f|
-    = text_area_tag :body, '', rows: 2
-    %p
-      %button Share
+- if signed_in?
+  #share
+    = form_for [:chat, @world], method: :post do |f|
+      .avatar
+        = image_tag current_user.gravatar_url(size: 48), width: 48, height: 48
+
+      = text_area_tag :msg, '', rows: 2
+
+      %p
+        %button{disabled: true} Chat
+
+:javascript
+  var f = $('#share form');
+
+  f.submit(function(e){
+    e.preventDefault();
+    var msg = f.find('textarea').val();
+    $.post(f.attr('action'), {msg: msg});
+  });
+
+  setInterval(function() {
+    f.find('button').attr('disabled', f.find('textarea').val() == '');
+  }, 50);
 
 #stream
-  - if @world.wall_items.empty?
-    .empty No chat messages
-  - else
-    - @world.wall_items.each do |item|
-      .item[item]
-        - case item
-        - when ChatMessage
-          .user
-            %span.username #{item.username}
-          .msg= item.message
-        - when Comment
-          .avatar
-            = image_tag item.user.gravatar_url(size: 48), width: 48, height: 48
-          .author
-            %span.username #{item.user.username}
-          .msg= item.body
-        - when Activity
-          .user
-            %span.username #{item.user.username}
-          .action= item.action
+  - @world.wall_items.each do |item|
+    .item[item]
+      - case item
+      - when Chat
+        .avatar
+          = image_tag item.user.gravatar_url(size: 48), width: 48, height: 48
+        .user
+          %span.username #{item.user.username}
+        .msg
+          = item.msg
+      - when Activity
+        .user
+          %span.username #{item.user.username}
+        .action= item.action
 
+    - prev = item.user

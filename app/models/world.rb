@@ -39,6 +39,14 @@ class World
     'pluto.minefold.com'
   end
 
+  def channel
+    Pusher[channel_name]
+  end
+
+  def channel_name
+    [self.class.name.downcase, self.id.to_s].join(':')
+  end
+
   # TODO: Ugly as sin.
   def options=(hash)
     super(self.class.default_options.each_with_object({}) do |(key, val), opts|

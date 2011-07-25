@@ -35,6 +35,9 @@ gem 'resque'
 gem 'fog'
 gem 'gravtastic'
 
+gem 'em-http-request'
+gem 'pusher'
+
 group :development do
   gem 'heroku'
   gem 'foreman'

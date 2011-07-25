@@ -28,14 +28,12 @@ class WorldsController < ApplicationController
     redirect_to @world
   end
 
-  def comment
+  def chat
     world = World.first :slug => params[:id]
 
-    comment = Comment.new(user: current_user, body: params[:body])
+    comment = Chat.new(user: current_user, msg: params[:msg], wall: world)
 
     if comment.valid? and comment.save
-      world.wall_items << comment
-      world.save
       redirect_to world
     else
       render json: {errors: comment.errors}, status: :bad_request

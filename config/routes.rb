@@ -36,6 +36,6 @@ Minefold::Application.routes.draw do
   get  '/worlds/new' => 'worlds#new', :as => :new_world
   post '/worlds' => 'worlds#create', :as => :worlds
   post '/:id/activate' => 'worlds#activate', :as => :activate_world
-  post '/:id/comment' => 'worlds#comment', :as => :comment_world
+  post '/:id/chat' => 'worlds#chat', :as => :chat_world
   get  '/:id' => 'worlds#show', :as => :world
 end
