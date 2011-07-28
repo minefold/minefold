@@ -4,7 +4,9 @@ class AdminController < ApplicationController
 
   def index
     @users = User.all(:sort => :created_at.asc)
-    @beta_users = BetaUser.all(:sort => :created_at.asc)
+    @invites_claimed = Invite.claimed.count
+    @invites_unclaimed = Invite.unclaimed.count
+    @invites = Invite.unclaimed.order(:created_at.asc).all
     render :layout => false
   end
 

@@ -1,8 +1,19 @@
+- if signed_in?
+  = form_for Invite.new do |f|
+    = f.email_field :email, placeholder: 'Email', required: true
+    = f.submit 'Invite a friend', disabled: true
+
+    .error
+    %p
+      %span.count= current_user.invites
+      remaining
+
 %nav
-  -# link_to 'About/FAQ', '/about'
   %a{href: '//minefold.tumblr.com'} Blog
-  |
+  %span.pipe
+    |
   %a{href: '//twitter.com/#!/minefold'} @minefold
 
 %p
   Designed in Sydney, Australia. &copy; #{Time.now.year} Minefold.
+

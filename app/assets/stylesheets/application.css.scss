@@ -6,15 +6,20 @@
 //= require_tree ./users
 //= require_tree ./worlds
 //= require_tree ./devise
+//= require_tree ./registrations
 
 // 9, 10, 11, 12, 14, 16, 18, 21, 24, 30, 48, 60, 72 pts for type
 
+@import 'bourbon';
 @import 'shared/vars';
+
+html {
+  background: darken(white, 4%);
+}
 
 body {
   min-width: $width;
   font: 14px/18px $helvetica;
-  border-top: 3px solid $blue;
 }
 
 ::selection {
@@ -24,22 +29,82 @@ body {
 }
 
 .container {
-  width: $width - (2*$gutter);
+  width: $width - (2 * $gutter);
   margin-left: auto;
   margin-right: auto;
-  padding: 0 $gutter;
+  padding: 0 (2 * $gutter);
   overflow: hidden;
 }
 
+a {
+  cursor: pointer;
+}
+
+strong {
+  font-weight: 700;
+}
+
+pre {
+  margin-bottom: 2*$baseline;
+}
+
+code {
+  font-family: monospace;
+}
+
+
+form {
+  label {
+    display: block;
+  }
+
+  input, textarea {
+    font: 18px/24px $helvetica;
+    padding: $baseline $gutter/2;
+
+    padding: ($baseline - 2px) ($gutter - 2px);
+    border: 2px solid darken(white, 10%);
+    border-radius: $radius;
+    outline: none;
+    margin: 0;
+
+    font: 14px/18px $helvetica;
+
+    @include transition(border-color, 0.15s, ease-in-out);
+
+    &:focus {
+      border-color: $blue;
+    }
+  }
+
+  button, input[type=submit] {
+    margin: 0;
+    padding: $baseline $gutter;
+
+    background: darken($blue, 10%);
+    border: none;
+    color: white;
+    font: 14px/18px $helvetica;
+
+    cursor: pointer;
+    &:hover, &:focus {
+      background: $blue;
+    }
+
+    &:disabled {
+      background: darken(white, 10%);
+      &:hover, &:focus {
+        background: darken(white, 15%);
+      }
+    }
+  }
+}
+
+
 header.global {
-  padding: 6px 0;
-
-  background: white -webkit-linear-gradient(top,
-    white,
-    darken(white, 3%));
-
-  color: #333;
-  border-bottom: 1px solid darken(white, 10%);
+  padding: (2 * $baseline) 0 (2 * $baseline) - 1px;
+  background: darken($blue, 30%) url('/images/header.png') top center repeat-x;
+  color: white;
 
   h1 {
     float: left;
@@ -50,12 +115,13 @@ header.global {
       font-size: 21px;
       line-height: 24px;
       text-decoration: none;
-      color: $blue;
+      color: white;
+      text-shadow: 0 1px 0 black;
 
       display: block;
 
       &:hover {
-        color: darken($blue, 10%);
+        color: lighten($blue, 40%);
       }
     }
   }
@@ -66,48 +132,38 @@ header.global {
 }
 
 #content {
-  padding: $baseline 0 ($baseline - 1px);
-  border-bottom: 1px solid darken(white, 5%);
+  border-top: 1px solid white;
+  padding: ((2 * $baseline) - 1px) 0 0 0;
+
+  .container {
+    background: white;
+    border-radius: $radius;
+    @include box-shadow(0 0 12px darken(white, 12%));
+  }
 
   header {
-    margin: 2 * $gutter 0;
+    margin: (2 * $baseline) 0 (3 * $baseline) 0;
     font-size: 18px; line-height: 24px;
   }
 
-  strong {
-    font-weight: 700;
-  }
-
-  pre {
-    margin-bottom: 2*$baseline;
-  }
-
-  code {
-    font-family: monospace;
-  }
-
-
-  form {
-    label {
-      display: block;
-    }
-    input[type=text], input[type=email], input[type=password] {
-      font: 18px/24px $helvetica;
-      padding: $baseline $gutter/2;
-    }
+  aside {
+    float: left;
+    width: (3 * $col) + (4 * $gutter);
   }
 }
 
 footer.global {
-  background: white;
   font: 12px/18px $helvetica;
-  padding: $baseline 0 (20 * $baseline);
+  padding: ($baseline - 1px) 0 (20 * $baseline);
   color: #CCC;
+  text-shadow: 0 1px 0 white;
 
   nav {
-    margin: (4 * $baseline) (-$gutter) ($baseline);
+    margin: (4 * $baseline) 0 $baseline;
     font-size: 14px;
-    a{
+    line-height: 24px;
+
+    .pipe {
       margin: 0 $gutter;
     }
   }
@@ -115,7 +171,24 @@ footer.global {
   a {
     font-weight: bold;
     text-decoration: none;
-    color: $blue;
+    color: darken($blue, 10%);
+    text-shadow: 0 1px 0 white;
+    &:hover {
+      color: $blue;
+    }
+  }
+
+  p {
+    margin-bottom: $gutter;
+  }
+
+  form.new_invite {
+    float: right;
+    margin-top: (4 * $baseline) - 1px;
+
+    p {
+      margin-top: $baseline;
+      margin-left: $gutter;
+    }
   }
 }
-

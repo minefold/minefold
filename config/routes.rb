@@ -1,21 +1,34 @@
 Minefold::Application.routes.draw do
 
-  # TODO: Bug returning from remembered session
-  root to: 'users#dashboard',
-       constraints: ->(req){ req.env['warden'].authenticated? },
-       as: :dashboard
-
-  resources :s3_uploads
+  root :to => 'users#dashboard',
+       :as => :user_root,
+       :constraints => ->(req){req.env["warden"].authenticated?}
 
   root :to => 'home#teaser'
+
+#   # Authentication
+  devise_for :users, :controllers => {
+                       :registrations => :registrations
+                     },
+                     :path_names => {
+                       :sign_up => '/sign_up/:code'
+                     }
+
   post '/subscribe' => 'home#subscribe', :as => :subscribe
 
   get '/admin' => 'admin#index', :as => :admin
 
-  # Authentication
-  devise_for :users, :path_names => {
-    sign_up: '/sign_up/s3kr1t'
-  }
+  # resources :users
+
+
+  # devise_for :users
+
+  # get  '/users/sign_up/:code' => 'users#new'
+  # post '/users/sign_up' => 'users#create'
+
+  resources :invites, :only => [:create]
+
+  get '/users/sign_up/:code' => 'users#new', :as => :invite
 
 
   # Payment
@@ -24,6 +37,8 @@ Minefold::Application.routes.draw do
   get  '/order/success' => 'orders#success', :as => :successful_order
   get  '/order/cancel' => 'orders#cancel', :as => :cancel_order
 
+
+  resources :uploads, :only => :index
 
   # Worlds
 

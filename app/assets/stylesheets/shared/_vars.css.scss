@@ -21,7 +21,7 @@ $radius: 3px;
 
 $bg:     #EDEDED;
 $gray:   #8BC;
-$blue:   #06C;
+$blue:   #08D;
 $yellow: #FE0;
 $red:    #F33;
 
@@ -35,6 +35,7 @@ $red:    #F33;
 @mixin logo {
   font-weight: 700;
   font-family: $paytone;
-  letter-spacing: 0em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
+  margin-top: -1px;
 }

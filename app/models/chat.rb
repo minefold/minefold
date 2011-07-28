@@ -1,8 +1,6 @@
 class Chat < WallItem
   key :msg, String
 
-  key :source, String, default: 'web'
-
   after_create do
     deferrable = wall.channel.trigger_async('chat:create', {
       user: {

@@ -40,20 +40,14 @@
 
     #content
       .container
+        %aside.left= yield(:aside_left)
+
         #content-body= yield
 
-        %aside= yield(:aside)
+        %aside.right= yield(:aside_right)
 
     %footer.global
       .container= render partial: 'shared/footer'
 
     - if Rails.env.production?
       = render partial: 'shared/clicky'
-
-    / :javascript
-    /   $.ajaxSetup({
-    /     beforeSend: function(xhr) {
-    /       xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
-    /     }
-    /   });
-    /   = yield(:javascript)

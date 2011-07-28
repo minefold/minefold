@@ -16,37 +16,40 @@
       %td ID
       %td Username
       %td Email
-      %td Credits
+      %td Minutes
+      %td Minutes Played
       %td World
 
   - @users.each_with_index do |user, i|
-
     %tr
       %td= i
       %td= user.id
       %td= user.username
       %td= user.email
-      %td
-        %strong #{user.format_credits}cr
-        (#{user.credits})
+      %td= user.credits
+      %td= user.minutes_played
       %td
         - if user.world?
           = link_to user.world.name, user.world
 
+%h2 Email List
 %p= @users.map {|u| u.email}.join(', ')
 
-%h1 Beta Users
+%h1 Invites
 
 %table
   %thead
     %tr
       %td #
+      %td Invitee
       %td Email
 
-  - @beta_users.each_with_index do |user, i|
+  - @invites.each_with_index do |invite, i|
 
     %tr
       %td= i
-      %td= user.email
+      %td= invite.creator.username
+      %td= invite.email
 
-%p= @beta_users.map {|u| u.email}.join(', ')
+%h2 Email List
+%p= @invites.map {|i| i.email}.join(', ')

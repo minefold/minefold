@@ -1,16 +1,16 @@
 @import 'shared/vars';
+@import 'bourbon';
 
 #worlds-show #content {
 
   #content-body {
-    // TODO: Find a way of abstracting this equation
-    width: ($cols - 4) * ($col + (2 * $gutter)) - (2 * $gutter);
+    width: 6 * ($col + (2 * $gutter)) - (2 * $gutter);
     float: left;
   }
 
   header {
     h1 {
-      font-size: 30px;
+      font-size: 24px;
       line-height: 48px;
       color: #333;
     }
@@ -18,69 +18,62 @@
 
   .info {
     padding: $baseline $gutter;
-    background: darken(white, 4%);
     border-radius: $radius;
-    margin: $baseline (-$gutter) (2 * $baseline) (-$gutter);
     display: block;
+
+    margin-top: 96px;
+
+    input[type=submit] {
+      width: 100%;
+      padding: ($baseline - 2px) $gutter;
+      line-height: 24px;
+      border: none;
+      background: white;
+      font: 14px/24px $helvetica;
+      border: 2px solid #CCC;
+      border-radius: $radius;
+    }
   }
 
   #share {
     overflow: auto;
-    padding: (2 * $baseline) 0 (4 * $baseline) 0;
-    background: #FFF;
+    margin-bottom: 2 * $baseline;
 
-    .avatar {
-      float: left;
-      margin-right: $gutter;
+    form {
+      .avatar {
+        float: left;
+        margin: 0 $gutter;
+        width: $col - $gutter;
+        text-align: right;
 
-      img {
-        border-radius: $radius;
-      }
-    }
-
-    textarea {
-      width: (8 * $col) + (14 * $gutter) - (2 * $gutter) - 48px - $gutter;
-      padding: ($baseline - 2px) ($gutter - 2px);
-      border: 2px solid darken(white, 10%);
-      border-radius: $radius;
-      outline: none;
-      margin: 0;
-
-      resize: vertical;
-
-      font: 14px/18px $helvetica;
-
-      &:focus {
-        border-color: $blue;
-      }
-    }
-
-    button {
-      margin: 0;
-      margin-left: 48px + $gutter;
-
-      background: $blue;
-      border: 2px solid $blue;
-      border-radius: $radius;
-      color: white;
-      font: 14px/24px $helvetica;
-      padding: 0 $gutter;
-
-      cursor: pointer;
-      &:hover, &:focus {
-        border-color: darken($blue, 20%);
-      }
-
-      &:disabled {
-        background: darken(white, 10%);
-        border-color: darken(white, 10%);
-        &:hover, &:focus {
-          border-color: darken(white, 15%);
+        img {
+          border-radius: $radius;
         }
       }
 
-    }
+      textarea {
+        float: left;
+        @include box-sizing(border-box);
+        width: 6 * ($col + (2 * $gutter)) - (2 * $gutter) - (48px + $gutter) - (2 * $gutter);
 
+//              width: 100%;
+              resize: vertical;
+      }
+
+      .submit-advice {
+        clear: both;
+        margin-left: $gutter + $col + $gutter;
+        padding: 0;
+        font-size: 11px;
+        color: darken(white, 20%);
+
+        @include transition(opacity, 0.15s, ease-in-out);
+
+        &.hidden {
+          opacity: 0;
+        }
+      }
+    }
   }
 
   #stream {
@@ -96,24 +89,31 @@
       overflow: auto;
 
       .avatar {
+        display: none;
         float: left;
         margin-right: $gutter;
-        height: 48px;
+        height: 36px;
+        width: 36px;
         overflow: hidden;
         img {
+          height: 36px;
+          width: 36px;
           border-radius: $radius;
         }
       }
       .user {
-        font-weight: 600;
+        display: block;
+        float: left;
+        width: $col + $gutter;
+        text-align: right;
+        margin-right: $gutter;
+//        font-weight: 600;
+        color: #999;
+        font-size: 12px;
       }
       .msg {
-        padding-left: 48px + $gutter;
+        padding-left: 36px + $gutter;
       }
     }
   }
-}
-
-footer {
-  display: none;
 }

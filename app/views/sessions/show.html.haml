@@ -1,12 +1,11 @@
 %ol#session
   - if user_signed_in?
-    %li.username= current_user.username
-    - if current_user.special?
-      %li
-        = number_with_delimiter current_user.credits
-        minutes
-      %li
-        = link_to 'Buy credits', credits_path, class:'credits'
+    %li
+      = number_with_delimiter current_user.credits
+      minutes
+    %li= link_to 'Buy credits', credits_path, class:'credits'
+    %li.account
+      = image_tag current_user.gravatar_url(size: 18), width: 18, height: 18
     %li= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'signout'
   - else
     %li= link_to 'Sign In', new_user_session_path

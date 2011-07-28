@@ -58,6 +58,10 @@ class World
     slug
   end
 
+  def self.default
+    find_by_name 'Public'
+  end
+
 private
 
   before_validation :generate_slug
