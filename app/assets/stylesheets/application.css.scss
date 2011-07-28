@@ -59,11 +59,10 @@ form {
   }
 
   input, textarea {
-    font: 18px/24px $helvetica;
     padding: $baseline $gutter/2;
 
-    padding: ($baseline - 2px) ($gutter - 2px);
-    border: 2px solid darken(white, 10%);
+    padding: ($baseline - $border) ($gutter - $border - $border);
+    border: $border solid darken(white, 10%);
     border-radius: $radius;
     outline: none;
     margin: 0;
@@ -87,6 +86,7 @@ form {
     font: 14px/18px $helvetica;
 
     cursor: pointer;
+
     &:hover, &:focus {
       background: $blue;
     }
@@ -161,7 +161,7 @@ footer.global {
   nav {
     margin: (4 * $baseline) 0 $baseline;
     font-size: 14px;
-    line-height: 24px;
+    line-height: 30px;
 
     .pipe {
       margin: 0 $gutter;
@@ -184,10 +184,13 @@ footer.global {
 
   form.new_invite {
     float: right;
-    margin-top: (4 * $baseline) - 1px;
+    margin-top: (4 * $baseline);
 
     p {
-      margin-top: $baseline;
+      margin: $baseline 0 0 $gutter;
+    }
+
+    input[type=submit] {
       margin-left: $gutter;
     }
   }
