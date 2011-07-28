@@ -8,7 +8,7 @@ class Chat < WallItem
         email: user.email,
         gravatar_url: user.gravatar_url
       },
-      msg: msg
+      body: body
     }.to_json)
 
     deferrable.callback do
