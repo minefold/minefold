@@ -32,12 +32,11 @@
 %header
   %h1= @world.name
 
-- content_for(:aside) do
-  .info
-    - if current_user.world == @world
-      %p In Minecraft, please connect to <strong>#{@world.host}</strong>.
-    - else
-      = button_to 'Activate World', [:activate, @world]
+%ul#nav
+  %li Chat
+  %li Map
+  %li Stats
+  %li History
 
 #share
   = form_for [:chat, @world], method: :post do |f|
@@ -85,7 +84,7 @@
           = image_tag item.user.gravatar_url(size: 48), width: 48, height: 48
         .user
           %span.username= item.user.username
-        .msg
+        .body
           = item.body
       - when Activity
         .user
@@ -93,3 +92,10 @@
         .action= item.action
 
     - prev = item.user
+
+/ %aside.right
+/   .info
+/     - if current_user.world == @world
+/       %p In Minecraft, please connect to <strong>#{@world.host}</strong>.
+/     - else
+/       = button_to 'Activate World', [:activate, @world]

@@ -1,10 +1,10 @@
-%h2 Play Minecraft with friends.
+%h2 Play Minecraft with your friends.
 
 #features
   .feature
     %img{src: '/instant.png', width: 32, height: 32}
     %h3 Start playing instantly
-    %p Don't sweat the nerdy stuff: we'll take care of everything. Just a few clicks and you can start playing.
+    %p Don't sweat the nerdy stuff: we'll take care of everything. It's free to join.
 
   .feature
     %img{src: '/sharing.png', width: 32, height: 32}
@@ -20,11 +20,11 @@
   .feature
     %img{src: '/worlds.png', width: 32, height: 32}
     %h3 Unlimited Worlds
-    %p Create as many worlds as you like. If you don't like the terrain you were given just create another. For free.
+    %p Create as many worlds as you like. You can also upload all your single player worlds. For free.
 
 
 = form_tag 'http://minefold.createsend.com/t/r/s/qjhfu', method: :post do
-  %h3 Subscribe now for exclusive beta access
+  %h3 Pop your email down to be first in line
 
   %p
     = email_field_tag 'cm-qjhfu-qjhfu', nil, size: 20, placeholder: 'email@example.com', id: 'qjhfu-qjhfu'

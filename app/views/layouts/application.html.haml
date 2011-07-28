@@ -39,12 +39,8 @@
           = render template: 'sessions/show'
 
     #content
-      .container
-        %aside.left= yield(:aside_left)
-
-        #content-body= yield
-
-        %aside.right= yield(:aside_right)
+      #page.container
+        = yield
 
     %footer.global
       .container= render partial: 'shared/footer'

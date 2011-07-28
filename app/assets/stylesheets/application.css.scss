@@ -84,6 +84,8 @@ form {
     border: none;
     color: white;
     font: 14px/18px $helvetica;
+    font-weight: 600;
+    border-radius: $radius;
 
     cursor: pointer;
 
@@ -121,7 +123,7 @@ header.global {
       display: block;
 
       &:hover {
-        color: lighten($blue, 40%);
+        color: $green;
       }
     }
   }
@@ -134,32 +136,35 @@ header.global {
 #content {
   border-top: 1px solid white;
   padding: ((2 * $baseline) - 1px) 0 0 0;
+  margin-bottom: 2 * $baseline;
 
-  .container {
+  #page {
     background: white;
     border-radius: $radius;
     @include box-shadow(0 0 12px darken(white, 12%));
+    position: relative;
   }
 
   header {
-    margin: (2 * $baseline) 0 (3 * $baseline) 0;
+    margin: 0 (-2 * $gutter);
+    padding: (2 * $baseline) (2 * $gutter);
     font-size: 18px; line-height: 24px;
   }
 
   aside {
-    float: left;
+    float: right;
     width: (3 * $col) + (4 * $gutter);
   }
 }
 
 footer.global {
   font: 12px/18px $helvetica;
-  padding: ($baseline - 1px) 0 (20 * $baseline);
+  padding-bottom: 20 * $baseline;
   color: #CCC;
   text-shadow: 0 1px 0 white;
 
   nav {
-    margin: (4 * $baseline) 0 $baseline;
+    margin: (2 * $baseline) 0 $baseline;
     font-size: 14px;
     line-height: 30px;
 
@@ -184,7 +189,7 @@ footer.global {
 
   form.new_invite {
     float: right;
-    margin-top: (4 * $baseline);
+    margin-top: (2 * $baseline);
 
     p {
       margin: $baseline 0 0 $gutter;

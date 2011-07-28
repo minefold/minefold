@@ -1,14 +1,10 @@
 @import 'shared/vars';
 @import 'bourbon';
 
-#worlds-show #content {
-
-  #content-body {
-    width: 6 * ($col + (2 * $gutter)) - (2 * $gutter);
-    float: left;
-  }
+#worlds-show #page {
 
   header {
+    background: white;
     h1 {
       font-size: 24px;
       line-height: 48px;
@@ -16,23 +12,37 @@
     }
   }
 
-  .info {
-    padding: $baseline $gutter;
-    border-radius: $radius;
-    display: block;
+//  .info {
+//    padding: $baseline $gutter;
+//    border-radius: $radius;
+//    display: block;
+//
+//    margin-top: 96px;
+//
+//    input[type=submit] {
+//      width: 100%;
+//      padding: ($baseline - 2px) $gutter;
+//      line-height: 24px;
+//      border: none;
+//      background: white;
+//      font: 14px/24px $helvetica;
+//      border: 2px solid #CCC;
+//      border-radius: $radius;
+//    }
+//  }
 
-    margin-top: 96px;
+  #nav {
+    border-top: 1px solid lighten($blue, 45%);
+    background: lighten($blue, 50%);
+    margin: 0 (-2 * $gutter);
+    margin-bottom: 4 * $baseline;
+    padding: ($baseline - $border) (2 * $gutter) $baseline;
 
-    input[type=submit] {
-      width: 100%;
-      padding: ($baseline - 2px) $gutter;
-      line-height: 24px;
-      border: none;
-      background: white;
-      font: 14px/24px $helvetica;
-      border: 2px solid #CCC;
-      border-radius: $radius;
+    overflow: auto;
+    li {
+      float: left;
     }
+
   }
 
   #share {
@@ -54,7 +64,7 @@
       textarea {
         float: left;
         @include box-sizing(border-box);
-        width: 6 * ($col + (2 * $gutter)) - (2 * $gutter) - (48px + $gutter) - (2 * $gutter);
+        width: 8 * ($col + (2 * $gutter)) - (2 * $gutter) - (48px + $gutter) - (2 * $gutter);
 
 //              width: 100%;
               resize: vertical;
@@ -107,12 +117,11 @@
         width: $col + $gutter;
         text-align: right;
         margin-right: $gutter;
-//        font-weight: 600;
         color: #999;
         font-size: 12px;
       }
-      .msg {
-        padding-left: 36px + $gutter;
+      .body {
+        padding-left: $gutter + $col + $gutter;
       }
     }
   }
