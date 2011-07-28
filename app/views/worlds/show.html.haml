@@ -4,10 +4,7 @@
     if (window.console && window.console.log) window.console.log(message);
   };
 
-  // Flash fallback logging - don't include this in production
-  WEB_SOCKET_DEBUG = true;
-
-  var pusher = new Pusher('b20fb5c5ee3849e01a40');
+  var pusher = new Pusher('#{Pusher.key}');
   var channel = pusher.subscribe(#{@world.channel.name.to_json});
   channel.bind('chat:create', displayChatMessage);
 
@@ -26,7 +23,7 @@
         $('<span/>').addClass('username').text(data['user']['username'])
       )
     ).append(
-      $('<div/>').addClass('msg').text(data['msg'])
+      $('<div/>').addClass('body').text(data['body'])
     );
 
     stream.prepend(item);
