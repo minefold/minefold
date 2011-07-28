@@ -31,7 +31,7 @@ class WorldsController < ApplicationController
   def chat
     world = World.first :slug => params[:id]
 
-    comment = Chat.new(user: current_user, msg: params[:msg], wall: world)
+    comment = Chat.new(user: current_user, body: params[:body], wall: world)
 
     if comment.valid? and comment.save
       redirect_to world
