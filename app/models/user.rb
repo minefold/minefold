@@ -10,6 +10,7 @@ class User
   key :username, String
   key :special,  Boolean, default: true
   key :credits,  Integer, default: (FREE_HOURS / BILLING_INTERVAL)
+  key :minutes_played,  Integer, default: 0
 
   key :invites,  Integer, default: DEFAULT_INVITES
   belongs_to :invite

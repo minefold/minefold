@@ -4,7 +4,7 @@
     if (window.console && window.console.log) window.console.log(message);
   };
 
-  var pusher = new Pusher('#{Pusher.key}');
+  var pusher = new Pusher(#{Pusher.key.to_json});
   var channel = pusher.subscribe(#{@world.channel.name.to_json});
   channel.bind('chat:create', displayChatMessage);
 
@@ -23,7 +23,7 @@
         $('<span/>').addClass('username').text(data['user']['username'])
       )
     ).append(
-      $('<div/>').addClass('body').text(data['body'])
+      $('<div/>').addClass('bodyg').text(data['body'])
     );
 
     stream.prepend(item);
@@ -45,7 +45,7 @@
       = image_tag current_user.gravatar_url(size: 48), width: 48, height: 48
 
 
-    = text_area_tag :msg, '', rows: 2, autofocus: true
+    = text_area_tag :body, '', rows: 2, autofocus: true
 
     %p.submit-advice
       ENTER to submit, SHIFT-ENTER for a new line.
