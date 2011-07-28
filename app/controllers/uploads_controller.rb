@@ -16,8 +16,8 @@ class UploadsController < ApplicationController
           {bucket: 'minefold.import'},
           {key: params[:key]},
           {acl: acl},
-          {'Content-Type': params[:content_type]},
-          {'Content-Disposition': 'attachment'},
+          {'Content-Type' => params[:content_type]},
+          {'Content-Disposition' => 'attachment'},
           ['starts-with', '$Filename', ''],
           ['eq', '$success_action_status', '201']
         ]
