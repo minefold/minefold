@@ -17,7 +17,7 @@ Minefold::Application.configure do
 
   # Specifies the header that your server uses for sending files
   # (comment out if your front-end server doesn't support this)
-  config.action_dispatch.x_sendfile_header = "X-Sendfile" # Use 'X-Accel-Redirect' for nginx
+  config.action_dispatch.x_sendfile_header = nil
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
@@ -59,7 +59,7 @@ Minefold::Application.configure do
   config.active_support.deprecation = :notify
 
   config.action_mailer.default_url_options = { host: 'minefold.com' }
-  
+
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address:        'smtp.sendgrid.net',
@@ -69,5 +69,5 @@ Minefold::Application.configure do
     password:       ENV['SENDGRID_PASSWORD'],
     domain:         ENV['SENDGRID_DOMAIN']
   }
-  
+
 end
