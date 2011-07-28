@@ -11,15 +11,13 @@ class Chat < WallItem
       body: body
     }.to_json)
 
+    # TODO: Better error logging
     deferrable.callback do
       puts 'success'
-      # logger.info 'msg sent'
     end
 
     deferrable.errback do |err|
       puts err
-      # logger.error 'msg not send'
-      # logger.error(err)
     end
   end
 
