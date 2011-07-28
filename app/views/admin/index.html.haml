@@ -16,13 +16,8 @@
       %td ID
       %td Username
       %td Email
-<<<<<<< HEAD
       %td Minutes
       %td Minutes Played
-=======
-      %td Credits
-      %td Total Minutes
->>>>>>> b7ccb516c9e8d2d4223fbf9e9220400e24486bcc
       %td World
 
   - @users.each_with_index do |user, i|
@@ -31,13 +26,7 @@
       %td= user.id
       %td= user.username
       %td= user.email
-<<<<<<< HEAD
       %td= user.credits
-=======
-      %td
-        = user.format_credits
-        %strong= user.credits
->>>>>>> b7ccb516c9e8d2d4223fbf9e9220400e24486bcc
       %td= user.minutes_played
       %td
         - if user.world?
