@@ -58,7 +58,7 @@
     margin: 0 auto;
     margin-bottom: 8 * $baseline;
     overflow: auto;
-    width: (4 * $col) + (2 * $gutter) + $gutter + (2 * $col) + (2 * $gutter);
+    width: (4 * $col) + (2 * $gutter) + $gutter+ (2 * $col);
     padding: 0 $gutter;
 
     h3 {
@@ -72,8 +72,7 @@
       margin-bottom: 2 * $baseline;
     }
 
-
-    input {
+    input[type=email] {
       width: 4 * $col;
       font-size: 16px;
       line-height: 24px;
