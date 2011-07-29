@@ -31,12 +31,27 @@
 
 %header
   %h1= @world.name
+  %aside
+    .connection
+      - if current_user.world == @world
+        %p
+          Connect to
+          %strong= @world.host
+      - else
+        = button_to 'Join World', [:activate, @world]
+
 
 %ul#nav
-  %li Chat
-  %li Map
-  %li Stats
-  %li History
+  %li
+    %a Activity
+  %li
+    %a.disabled Map
+  %li
+    %a.disabled Photos
+  %li
+    %a.disabled Videos
+  %li
+    %a.disabled Stats
 
 #share
   = form_for [:chat, @world], method: :post do |f|
@@ -95,7 +110,4 @@
 
 / %aside.right
 /   .info
-/     - if current_user.world == @world
-/       %p In Minecraft, please connect to <strong>#{@world.host}</strong>.
-/     - else
-/       = button_to 'Activate World', [:activate, @world]
+/

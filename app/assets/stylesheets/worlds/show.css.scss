@@ -9,38 +9,41 @@
       font-size: 24px;
       line-height: 48px;
       color: #333;
+      float: left;
+    }
+
+    aside {
+      font-size: 14px;
+      float: right;
+      margin: (1.5 * $baseline) 0;
+      p {
+        line-height: (5 * $baseline);
+      }
     }
   }
 
-//  .info {
-//    padding: $baseline $gutter;
-//    border-radius: $radius;
-//    display: block;
-//
-//    margin-top: 96px;
-//
-//    input[type=submit] {
-//      width: 100%;
-//      padding: ($baseline - 2px) $gutter;
-//      line-height: 24px;
-//      border: none;
-//      background: white;
-//      font: 14px/24px $helvetica;
-//      border: 2px solid #CCC;
-//      border-radius: $radius;
-//    }
-//  }
-
   #nav {
-    border-top: 1px solid lighten($blue, 45%);
-    background: lighten($blue, 50%);
+    background: darken(white, 5%);
     margin: 0 (-2 * $gutter);
     margin-bottom: 4 * $baseline;
-    padding: ($baseline - $border) (2 * $gutter) $baseline;
-
+    padding: 0 (2 * $gutter);
     overflow: auto;
+
     li {
       float: left;
+
+      a {
+        display: block;
+        line-height: 24px;
+        font-weight: 600;
+        padding: $baseline $gutter;
+        color: darken($blue, 30%);
+
+        &.disabled {
+          color: darken(darken(white, 5%), 10%);
+          text-shadow: 0 1px 0 white;
+        }
+      }
     }
 
   }
@@ -88,8 +91,8 @@
 
   #stream {
     margin-bottom: 2 * $baseline;
-
     margin-bottom: 120px;
+    width: 8 * ($gutter + $col + $gutter) - (2 * $gutter);
 
     .item {
       margin-bottom: 2 * $baseline;

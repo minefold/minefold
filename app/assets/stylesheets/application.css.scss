@@ -61,7 +61,7 @@ form {
   input, textarea {
     padding: $baseline $gutter/2;
 
-    padding: ($baseline - $border) ($gutter - $border - $border);
+    padding: ($baseline - $border) ($gutter - $border);
     border: $border solid darken(white, 10%);
     border-radius: $radius;
     outline: none;
@@ -149,11 +149,7 @@ header.global {
     margin: 0 (-2 * $gutter);
     padding: (2 * $baseline) (2 * $gutter);
     font-size: 18px; line-height: 24px;
-  }
-
-  aside {
-    float: right;
-    width: (3 * $col) + (4 * $gutter);
+    overflow: auto;
   }
 }
 
