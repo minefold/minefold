@@ -2,6 +2,13 @@ class Chat < WallItem
   key :msg, String
 
   after_create do
+    push_chat_item
+    send_message_to_world
+  end
+  
+  protected
+  
+  def push_chat_item
     deferrable = wall.channel.trigger_async('chat:create', {
       user: {
         username: user.username,
@@ -20,5 +27,11 @@ class Chat < WallItem
       puts err
     end
   end
+  
+  def send_message_to_world
+    # TODO: make sure this was published on a world
+    REDIS.publish "world.#{wall.id}.input", "say [WEB] <#{user.username}> #{body}"
+  end
+  
 
 end
