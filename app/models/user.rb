@@ -13,7 +13,8 @@ class User
   key :minutes_played,  Integer, default: 0
 
   key :invites,  Integer, default: DEFAULT_INVITES
-  belongs_to :invite
+
+  one :invite
 
   many :wall_items, as: :wall
   belongs_to :world
@@ -32,7 +33,11 @@ class User
              format: :png,
              default: 'identicon'
 
-  attr_accessible :email, :username, :password, :password_confirmation
+  attr_accessible :email,
+                  :username,
+                  :password,
+                  :password_confirmation,
+                  :invite_code
 
 # Credits
 
@@ -52,18 +57,16 @@ class User
     invites > 0
   end
 
-  attr_accessor :invite_code
-
-  before_validation on: :create do
-    p invite_code
-    self.invite = Invite.unclaimed.find_by_code(invite_code)
+  def invite_code=(code)
+    self.invite = Invite.find_by_code(code.downcase)
   end
 
-  validate on: :create do
-    if invite_code && !Invite.unclaimed.exist?(invite_code)
-      errors.add(:invite, 'Invalid invite')
-    end
+  after_create do
+    self.invite.user = self
+    self.invite.save
   end
+
+  validates_presence_of :invite, on: :create
 
 protected
 

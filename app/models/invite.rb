@@ -8,7 +8,6 @@ class Invite
   key :creator_id, ObjectId
   belongs_to :creator, class: User
 
-  key :user_id, ObjectId
   belongs_to :user
 
   timestamps!

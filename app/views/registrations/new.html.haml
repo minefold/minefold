@@ -1,14 +1,10 @@
 %p= flash[:alert]
 %p= flash[:notice]
 
-%p= @user.errors.to_json
-
 = form_for @user, url: user_registration_path do |f|
   = f.hidden_field :invite_code, value: params[:code]
 
   %h2 Sign Up
-
-  / %p Invite #{@user.invite.code} sent by #{@invite.creator.username}
 
   %p#email
     = f.label :email
