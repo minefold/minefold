@@ -58,7 +58,7 @@ class User
   end
 
   def invite_code=(code)
-    self.invite = Invite.find_by_code(code.downcase)
+    self.invite = Invite.unclaimed.find_by_code(code.downcase)
   end
 
   after_create do
