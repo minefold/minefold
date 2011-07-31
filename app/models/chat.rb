@@ -30,7 +30,7 @@ class Chat < WallItem
   
   def send_message_to_world
     # TODO: make sure this was published on a world
-    REDIS.publish "world.#{wall.id}.input", "say [WEB] <#{user.username}> #{body}"
+    REDIS.publish "world.#{wall.id}.input", "say <#{user.username}> #{body}"
   end
   
 
