@@ -4,7 +4,6 @@
 #worlds-show #page {
 
   header {
-    background: white;
     h1 {
       font-size: 24px;
       line-height: 48px;
@@ -24,9 +23,9 @@
 
   #nav {
     background: darken(white, 5%);
-    margin: 0 (-2 * $gutter);
+    margin: 0 (-$pad);
     margin-bottom: 4 * $baseline;
-    padding: 0 (2 * $gutter);
+    padding: 0 ($gutter + $pad);
     overflow: auto;
 
     li {
@@ -48,83 +47,91 @@
 
   }
 
-  #share {
-    overflow: auto;
+  #stream {
     margin-bottom: 2 * $baseline;
+    width: 8 * ($gutter + $col + $gutter) - (2 * $gutter) - (2 * $pad);
+    padding: 0 $pad;
+
+    aside {
+      float: right;
+      width: 4 * ($gutter + $col + $gutter) - (2 * $gutter) - (2 * $pad);
+      margin-right: -(4 * ($gutter + $col + $gutter) + (2 * $gutter));
+      padding: 0 $pad;
+
+      h2 {
+        font-size: 18px;
+        line-height: 24px;
+      }
+
+      a {
+        @include box-sizing(border-box);
+        padding: $baseline 0;
+        width: 100%;
+        display: block;
+      }
+    }
+
+    form, .item {
+      margin-bottom: 2 * $baseline;
+      .username {
+        color: #999;
+      }
+    }
 
     form {
       .avatar {
         float: left;
-        margin: 0 $gutter;
-        width: $col - $gutter;
+        margin-right: 2 * $gutter;
         text-align: right;
 
         img {
           border-radius: $radius;
         }
       }
-
+      .user {
+        margin-bottom: $baseline;
+      }
       textarea {
-        float: left;
         @include box-sizing(border-box);
-        width: 8 * ($col + (2 * $gutter)) - (2 * $gutter) - (48px + $gutter) - (2 * $gutter);
-
-//              width: 100%;
-              resize: vertical;
+        width: 8 * ($gutter + $col + $gutter) - (2 * $pad);
+        margin: 0 (-$gutter);
+        resize: vertical;
       }
 
       .submit-advice {
-        clear: both;
-        margin-left: $gutter + $col + $gutter;
-        padding: 0;
+        float: right;
         font-size: 11px;
-        color: darken(white, 20%);
+        color: #666;
 
         @include transition(opacity, 0.15s, ease-in-out);
+
+        strong {
+          color: #000;
+        }
 
         &.hidden {
           opacity: 0;
         }
       }
     }
-  }
-
-  #stream {
-    margin-bottom: 2 * $baseline;
-    margin-bottom: 120px;
-    width: 8 * ($gutter + $col + $gutter) - (2 * $gutter);
 
     .item {
-      margin-bottom: 2 * $baseline;
-    }
+      &.chat {
+        overflow: auto;
 
-    .chat {
-      overflow: auto;
-
-      .avatar {
-        display: none;
-        float: left;
-        margin-right: $gutter;
-        height: 36px;
-        width: 36px;
-        overflow: hidden;
-        img {
+        .avatar {
+          display: none;
+          float: left;
+          margin-right: $gutter;
           height: 36px;
           width: 36px;
-          border-radius: $radius;
+          overflow: hidden;
+          img {
+            height: 36px;
+            width: 36px;
+            border-radius: $radius;
+          }
         }
-      }
-      .user {
-        display: block;
-        float: left;
-        width: $col + $gutter;
-        text-align: right;
-        margin-right: $gutter;
-        color: #999;
-        font-size: 12px;
-      }
-      .body {
-        padding-left: $gutter + $col + $gutter;
       }
     }
   }

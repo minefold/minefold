@@ -53,20 +53,46 @@
   %li
     %a.disabled Stats
 
-#share
-  = form_for [:chat, @world], method: :post do |f|
-    .avatar
-      = image_tag current_user.gravatar_url(size: 48), width: 48, height: 48
+#stream
+  %aside
+    %section
+      %h2 People online
+      %ul
+        %li
+          = link_to current_user.username, '/people/chrislloyd'
 
+  #share
+    = form_for [:chat, @world], method: :post do |f|
+      %p.submit-advice
+        %strong ENTER
+        to chat,
+        %strong SHIFT-ENTER
+        for a new line.
+      .user
+        %span.username= current_user.username
 
-    = text_area_tag :body, '', rows: 2, autofocus: true
+      = text_area_tag :body, '', rows: 2, autofocus: true
 
-    %p.submit-advice
-      ENTER to submit, SHIFT-ENTER for a new line.
+  - @world.wall_items.each do |item|
+    .item[item]
+      - case item
+      - when Chat
+        .avatar
+          = image_tag item.user.gravatar_url(size: 48), width: 48, height: 48
+        .user
+          %span.username= item.user.username
+        .body
+          = item.body
+      - when Activity
+        .user
+          %span.username
+        .action= item.action
+
+    - prev = item.user
 
 
 :javascript
-  var f = $('#share form');
+  var f = $('#stream form');
 
   f.submit(function(e){
     e.preventDefault();
@@ -87,27 +113,5 @@
       f.find('.submit-advice').removeClass('hidden');
     })
     .blur(function(){
-      f.find('.submit-advice').addClass('hidden');
-    });
-
-#stream
-  - @world.wall_items.each do |item|
-    .item[item]
-      - case item
-      - when Chat
-        .avatar
-          = image_tag item.user.gravatar_url(size: 48), width: 48, height: 48
-        .user
-          %span.username= item.user.username
-        .body
-          = item.body
-      - when Activity
-        .user
-          %span.username
-        .action= item.action
-
-    - prev = item.user
-
-/ %aside.right
-/   .info
-/
+        f.find('.submit-advice').addClass('hidden');
+      });
