@@ -10,7 +10,6 @@
 
 // 9, 10, 11, 12, 14, 16, 18, 21, 24, 30, 48, 60, 72 pts for type
 
-@import 'bourbon';
 @import 'shared/vars';
 
 html {
@@ -63,7 +62,7 @@ form {
 
     padding: ($baseline - $border) ($gutter - $border);
     border: $border solid darken(white, 10%);
-    border-radius: $radius;
+    @include border-radius($radius);
     outline: none;
     margin: 0;
 
@@ -85,7 +84,7 @@ form {
     color: white;
     font: 14px/18px $helvetica;
     font-weight: 600;
-    border-radius: $radius;
+    @include border-radius($radius);
 
     cursor: pointer;
 
@@ -139,7 +138,7 @@ header.global {
 
   #page {
     background: white;
-    border-radius: $radius;
+    @include border-radius($radius);
     @include box-shadow(0 0 12px darken(white, 12%));
     position: relative;
   }

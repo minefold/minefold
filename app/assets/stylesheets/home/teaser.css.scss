@@ -41,7 +41,7 @@
       img {
         padding: $baseline;
         background: lighten(black, 90%);
-        border-radius: 32px + (2 * $baseline);
+        @include border-radius(32px + (2 * $baseline));
         margin: 0 auto;
         width: 32px;
       }

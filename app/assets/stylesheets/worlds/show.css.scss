@@ -1,5 +1,4 @@
 @import 'shared/vars';
-@import 'bourbon';
 
 #worlds-show #page {
 
@@ -59,55 +58,84 @@
       padding: 0 $pad;
 
       h2 {
-        font-size: 18px;
+        font-size: 14px;
         line-height: 24px;
+        border-bottom: $border solid darken(white, 10%);
+        margin-bottom: $baseline - $border;
       }
 
       a {
         @include box-sizing(border-box);
-        padding: $baseline 0;
+        line-height: 24px;
+        padding: 0 $gutter;
         width: 100%;
         display: block;
+        overflow: auto;
+        text-decoration: none;
+        color: darken($blue, 10%);
+
+        &:hover {
+          background: $blue;
+          color: white;
+        }
+
+        .avatar {
+          float: left;
+          margin: 0;
+          background: white;
+          img {
+            margin: 0;
+            padding: 0;
+          }
+        }
       }
     }
 
     form, .item {
       margin-bottom: 2 * $baseline;
-      .username {
-        color: #999;
+      .avatar {
+        img {
+          border-radius: $radius;
+          background: white;
+        }
+      }
+      .user {
+        .username {
+          color: #999;
+        }
       }
     }
 
     form {
+      position: relative;
       .avatar {
-        float: left;
-        margin-right: 2 * $gutter;
-        text-align: right;
-
+        position: absolute;
+        top: 0px;
         img {
-          border-radius: $radius;
+          margin: -$border;
+          border: $border solid white;
+          @include border-radius(4 * $radius);
         }
       }
       .user {
         margin-bottom: $baseline;
+        margin-left: 36px + $gutter;
       }
       textarea {
         @include box-sizing(border-box);
+        background-color: transparent;
         width: 8 * ($gutter + $col + $gutter) - (2 * $pad);
         margin: 0 (-$gutter);
         resize: vertical;
+        padding-left: ($gutter - $border) + 36px + $gutter;
       }
 
       .submit-advice {
         float: right;
         font-size: 11px;
-        color: #666;
+        color: darken(white, 20%);
 
         @include transition(opacity, 0.15s, ease-in-out);
-
-        strong {
-          color: #000;
-        }
 
         &.hidden {
           opacity: 0;
@@ -120,17 +148,17 @@
         overflow: auto;
 
         .avatar {
-          display: none;
           float: left;
           margin-right: $gutter;
           height: 36px;
           width: 36px;
           overflow: hidden;
           img {
-            height: 36px;
-            width: 36px;
             border-radius: $radius;
           }
+        }
+        .body {
+          margin-left: 36px + $gutter;
         }
       }
     }

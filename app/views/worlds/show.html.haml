@@ -56,21 +56,25 @@
 #stream
   %aside
     %section
-      %h2 People online
+      %h2
+        %strong 7 people
+        are playing here now
       %ul
-        %li
-          = link_to current_user.username, '/people/chrislloyd'
+        - 7.times do |i|
+          %li
+            = link_to '/people/chrislloyd', do
+              .username
+                = current_user.username
+
 
   #share
     = form_for [:chat, @world], method: :post do |f|
-      %p.submit-advice
-        %strong ENTER
-        to chat,
-        %strong SHIFT-ENTER
-        for a new line.
+      %p.submit-advice ENTER to chat, SHIFT-ENTER for a new line.
       .user
         %span.username= current_user.username
 
+      .avatar
+        = image_tag current_user.gravatar_url(size: 36), width: 36, height: 36
       = text_area_tag :body, '', rows: 2, autofocus: true
 
   - @world.wall_items.each do |item|
@@ -78,7 +82,7 @@
       - case item
       - when Chat
         .avatar
-          = image_tag item.user.gravatar_url(size: 48), width: 48, height: 48
+          = image_tag item.user.gravatar_url(size: 36), width: 36, height: 36
         .user
           %span.username= item.user.username
         .body

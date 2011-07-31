@@ -34,7 +34,7 @@
 
     li {
       float: left;
-      border-radius: 0;
+      @include border-radius(none);
       margin-right: 1px;
       width: 180px;
 
