@@ -47,6 +47,14 @@ class World
     [self.class.name.downcase, self.id.to_s].join(':')
   end
 
+  def connected_players
+    User.find REDIS.smembers(redis_key(:connected_players))
+  end
+
+  def connected_players_count
+    REDIS.smembers(redis_key(:connected_players)).size
+  end
+
   # TODO: Ugly as sin.
   def options=(hash)
     super(self.class.default_options.each_with_object({}) do |(key, val), opts|
@@ -82,6 +90,10 @@ private
     while self.class.exist?(:slug => slug)
       self.slug = "#{guess}-#{n += 1}"
     end
+  end
+
+  def redis_key(*members)
+    [self.class.name.downcase, id, *members.map{|m| m.to_s}].join(':')
   end
 
 end

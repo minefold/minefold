@@ -7,19 +7,8 @@ class AdminController < ApplicationController
     @invites_claimed = Invite.claimed.count
     @invites_unclaimed = Invite.unclaimed.count
     @invites = Invite.unclaimed.order(:created_at.asc).all
-    
-    @world_players = []
-    worlds = World.find REDIS.smembers("world:running")
-    worlds.map do |world|
-      player_ids = REDIS.smembers "world:#{world.id}:connected_players"
-      if player_ids.size > 0
-        @world_players << {
-          world: world,
-          players: User.find(player_ids)
-        }
-      end
-    end
 
+    @running_worlds = World.find REDIS.smembers('world:running')
     render :layout => false
   end
 

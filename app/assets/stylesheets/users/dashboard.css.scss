@@ -2,44 +2,62 @@
 
 #users-dashboard {
 
+  .beta {
+    border-top: $border solid $red;
+    margin: 0 (-$gutter);
+    padding: $baseline ($gutter +$pad);
+
+    .notice {
+      margin: (4 * $baseline) 0;
+    }
+
+    p {
+      margin-bottom: 18px;
+    }
+
+  }
+
   ul#worlds {
     overflow: auto;
-    margin: 0 (-$gutter) ((-2 * $baseline) + 24px) (-$gutter);
+    margin: 0 (-($pad + $gutter));
 
     li {
       float: left;
-      margin: 0 0 (2 * $baseline) 0;
+      margin: 0 $gutter (2 * $baseline) $gutter;
       background: white;
-      border-radius: 3px;
-      padding: $gutter;
+      @include border-radius($radius);
       text-align: center;
 
       &.active a {
-        border-color: darken(white, 40%);
+        border-color: $green;
       }
 
       a {
         display: block;
-        width: 2 * ($col + $gutter) - (2 * $gutter);
-        height: 2 * ($col + $gutter) - (2 * $gutter);
-        background: #FFF url('/world-default-small.png') center no-repeat;
-        border: $gutter solid darken(white, 10%);
+        width: 2 * ($gutter + $col + $gutter) - (2 * $gutter) - (2 * $border);
+        padding: (2 * $baseline - (2 * $border)) 0;
+        line-height: 4 * $baseline;
+        border: $border solid darken(white, 10%);
         border-radius: $radius;
+        color: darken($blue, 10%);
+        font-weight: 600;
+        text-decoration: none;
         &:hover {
           border-color: $blue;
         }
-      }
 
-      .info {
-        margin-top: $baseline;
-        width: 2 * ($col + $gutter);
+        .players {
+          color: #333;
+          font-size: 12px;
+          font-weight: normal;
+        }
       }
 
       &.new a {
         background: #FFF;
         color: #CCC;
         text-decoration: none;
-        font: 700 60px/100px $helvetica;
+        padding: (4 * $baseline - (2 * $border)) 0;
         &:hover {
           color: $blue;
         };

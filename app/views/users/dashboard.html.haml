@@ -1,11 +1,17 @@
-%ul#worlds
-  - @worlds.each do |world|
-    %li{class: (current_user.world == world ? 'active' : nil)}
-      = link_to '', world
-      .info
-        = world.name
+.beta
+  .notice
+    %p
+      %strong Hey! Thanks for trying out Minefold.
+      Everything around here is still <em>really</em> beta so things may break and blow up.
 
-  - if current_user.special?
+  %ul#worlds
+    - @worlds.each do |world|
+      %li{class: (current_user.world == world ? 'active' : nil)}
+        = link_to world do
+          .info
+            = world.name
+            .players
+              (#{world.connected_players_count} players)
+
     %li.new
-      = link_to new_world_path do
-        +
+      = link_to 'Create a world', new_world_path

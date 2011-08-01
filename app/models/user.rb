@@ -8,7 +8,6 @@ class User
 
   key :email,    String,  unique: true
   key :username, String
-  key :special,  Boolean, default: true
   key :credits,  Integer, default: (FREE_HOURS / BILLING_INTERVAL)
   key :minutes_played,  Integer, default: 0
 

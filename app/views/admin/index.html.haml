@@ -7,14 +7,14 @@
     margin-bottom: 5px;
   }
 
-%h1 Players Online
+%h1 Running Worlds
 
 %ul
-  - @world_players.each do |wp|
+  - @running_worlds.each do |world|
     %li
-      = link_to wp[:world].name, wp[:world]
+      = link_to world.name, world
       %ul
-        - wp[:players].each do |player|
+        - world.connected_players.each do |player|
           %li= player.username
 
 %h1 Users
