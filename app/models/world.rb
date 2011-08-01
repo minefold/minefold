@@ -28,7 +28,7 @@ class World
 
 
   def self.recently_active
-    sort(:updated_at.desc)
+    sort(:name.asc)
   end
 
   def self.available_to_play
