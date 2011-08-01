@@ -26,10 +26,10 @@
   %aside
     %section
       %h2
-        %strong #{@world.connected_players_count} people
+        %strong= pluralize @world.connected_players_count, 'person', 'people'
         are playing here now
       %ul
-        - @world.connected_players do |player|
+        - @world.connected_players.each do |player|
           %li
             = link_to '#', do
               .username
