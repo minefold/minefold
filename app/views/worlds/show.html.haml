@@ -27,7 +27,7 @@
     %section
       %h2
         %strong= pluralize @world.connected_players_count, 'person', 'people'
-        are playing here now
+        playing here now
       %ul
         - @world.connected_players.each do |player|
           %li
