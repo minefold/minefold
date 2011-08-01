@@ -1,34 +1,3 @@
-:javascript
-  // Enable pusher logging - don't include this in production
-  Pusher.log = function(message) {
-    if (window.console && window.console.log) window.console.log(message);
-  };
-
-  var pusher = new Pusher(#{Pusher.key.to_json});
-  var channel = pusher.subscribe(#{@world.channel.name.to_json});
-  channel.bind('chat:create', displayChatMessage);
-
-  function displayChatMessage(data) {
-
-    stream = $('#stream');
-
-    item = $('<div/>').addClass('item').addClass('chat');
-
-    item.append(
-      $('<div/>').addClass('avatar').append(
-        $('<img/>').attr({'src': data['user']['gravatar_url'], width: 48, height: 48})
-      )
-    ).append(
-      $('<div/>').addClass('user').append(
-        $('<span/>').addClass('username').text(data['user']['username'])
-      )
-    ).append(
-      $('<div/>').addClass('bodyg').text(data['body'])
-    );
-
-    stream.prepend(item);
-  }
-
 %header
   %h1= @world.name
   %aside
@@ -57,14 +26,14 @@
   %aside
     %section
       %h2
-        %strong 7 people
+        %strong #{@world.connected_players_count} people
         are playing here now
       %ul
-        - 7.times do |i|
+        - @world.connected_players do |player|
           %li
-            = link_to '/people/chrislloyd', do
+            = link_to '#', do
               .username
-                = current_user.username
+                = player.username
 
 
   #share
@@ -119,3 +88,24 @@
     .blur(function(){
         f.find('.submit-advice').addClass('hidden');
       });
+
+
+  var pusher = new Pusher(#{Pusher.key.to_json});
+  var channel = pusher.subscribe(#{@world.channel.name.to_json});
+  channel.bind('chat:create', displayChatMessage);
+
+  function displayChatMessage(data) {
+    item = $('<div/>').addClass('item').addClass('chat');
+
+    item.append(
+      $('<div/>').addClass('avatar').append(
+        $('<img/>').attr({'src': data['user']['gravatar_url'], width: 36, height: 36})
+      )
+    ).append(
+      $('<div/>').addClass('user').append(
+        $('<span/>').addClass('username').text(data['user']['username'])
+      )
+    ).append(
+      $('<div/>').addClass('bodyg').text(data['body'])
+    ).insertAfter(f);
+  }
