@@ -11,7 +11,7 @@
           .info
             = world.name
             .players
-              (#{world.connected_players_count} players)
+              (#{pluralize world.connected_players_count, 'player', 'players'})
 
     %li.new
       = link_to 'Create a world', new_world_path
