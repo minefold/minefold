@@ -7,6 +7,16 @@
     margin-bottom: 5px;
   }
 
+%h1 Players Online
+
+%ul
+  - @world_players.each do |wp|
+    %li
+      = link_to wp[:world].name, wp[:world]
+      %ul
+        - wp[:players].each do |player|
+          %li= player.username
+
 %h1 Users
 
 %table
