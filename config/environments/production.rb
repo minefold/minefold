@@ -69,5 +69,8 @@ Minefold::Application.configure do
     password:       ENV['SENDGRID_PASSWORD'],
     domain:         ENV['SENDGRID_DOMAIN']
   }
-
+  
+  config.map_tiles_url = "http://s3.amazonaws.com/minefold.production.world-tiles"
 end
+
+

@@ -44,4 +44,7 @@ Minefold::Application.configure do
 
   config.action_mailer.raise_delivery_errors = true
 
+  config.map_tiles_url = "/maps"
 end
+
+
