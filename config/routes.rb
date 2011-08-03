@@ -53,4 +53,5 @@ Minefold::Application.routes.draw do
   post '/:id/activate' => 'worlds#activate', :as => :activate_world
   post '/:id/chat' => 'worlds#chat', :as => :chat_world
   get  '/:id' => 'worlds#show', :as => :world
+  get  '/:id/map' => 'worlds#map', :as => :world_map
 end
