@@ -1,0 +1,23 @@
+%header
+  %h1= @world.name
+  %aside
+    .connection
+      - if current_user.world == @world
+        %p
+          Connect to
+          %strong= @world.host
+      - else
+        = button_to 'Join World', [:activate, @world]
+
+
+%ul#nav
+  %li
+    = link_to 'Activity', world_path
+  %li
+    = link_to 'Map', world_map_path
+  %li
+    %a.disabled Photos
+  %li
+    %a.disabled Videos
+  %li
+    %a.disabled Stats
