@@ -7,8 +7,6 @@ if ENV["REDISTOGO_URL"]
   REDIS = Resque.redis = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
 end
 
-# Resque::Server.use Rack::Auth::Basic do |username, password|
-#   # NOTE: This is just an authentication for localhost:3000/resque
-#   username == "minefold"
-#   password == ENV["RESQUE_PASSWORD"] || "carlsmum"  # The later is for development mode.
-# end
+Resque::Server.use(Rack::Auth::Basic) do |user, password|
+  true
+end

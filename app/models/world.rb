@@ -12,7 +12,6 @@ class World
   key :name, String, unique: true
   key :slug, String, unique: true, index: true
   key :options, Hash, default: default_options
-  key :location, String, default: 'USA1'
   key :status, String, default: ''
   many :admins, class: User
   many :players, class: User
@@ -24,6 +23,7 @@ class World
   validates_presence_of :name
   validates_presence_of :slug
 
+  userstamps!
   timestamps!
 
 

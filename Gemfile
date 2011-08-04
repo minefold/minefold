@@ -7,11 +7,8 @@ gem 'bson_ext'
 gem 'mongo_mapper',
   git: 'https://github.com/jnunemaker/mongomapper.git'
 
-gem 'haml'
-
 gem 'devise'
-gem 'mm-devise',
-  require: false
+gem 'mm-devise', require: false
 
 gem 'activemerchant'
 gem 'stringex'
@@ -19,7 +16,7 @@ gem 'high_voltage'
 gem 's3_swf_upload',
   git: 'https://github.com/nathancolgate/s3-swf-upload-plugin'
 
-gem 'resque'
+gem 'resque', require: 'resque/server'
 gem 'fog'
 gem 'gravtastic'
 gem 'em-http-request'
@@ -35,6 +32,8 @@ group :assets, :development do
   gem 'backbone-rails'
 end
 
+gem 'haml'
+
 group :development do
   gem 'heroku'
   gem 'foreman'
@@ -42,6 +41,5 @@ group :development do
 end
 
 group :test do
-  gem 'turn',
-    require: false
+  gem 'turn', require: false
 end

@@ -44,13 +44,18 @@ Minefold::Application.routes.draw do
 
   resources :world_imports, :only => [:create]
 
-  match "/resque", :to => Resque::Server.new, :anchor => false
+  mount Resque::Server, :at => '/resque'
 
   get '/about' => 'high_voltage/pages#show', :id => 'about'
 
-  get  '/worlds/new' => 'worlds#new', :as => :new_world
-  post '/worlds' => 'worlds#create', :as => :worlds
-  post '/:id/activate' => 'worlds#activate', :as => :activate_world
-  post '/:id/chat' => 'worlds#chat', :as => :chat_world
-  get  '/:id' => 'worlds#show', :as => :world
+  resources :worlds do
+    resources :wall_items
+    post :activate, :on => :member
+  end
+
+  # get  '/worlds/new' => 'worlds#new', :as => :new_world
+  # post '/worlds' => 'worlds#create', :as => :worlds
+  # post '/:id/activate' => 'worlds#activate', :as => :activate_world
+  # post '/:id/chat' => 'worlds#chat', :as => :chat_world
+  # get  '/:id' => 'worlds#show', :as => :world
 end

@@ -13,6 +13,8 @@ module Minefold
     config.time_zone = 'UTC'
     config.encoding = 'utf-8'
 
+    config.autoload_paths << Rails.root.join('lib')
+
     config.filter_parameters += [:password]
 
     config.assets.enabled = true

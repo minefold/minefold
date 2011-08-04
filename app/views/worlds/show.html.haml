@@ -1,13 +1,18 @@
+:javascript
+  window.pusher = new Pusher(#{Pusher.key.to_json});
+  window.channel = pusher.subscribe(#{@world.channel.name.to_json});
+
 %header
   %h1= @world.name
   %aside
-    .connection
-      - if current_user.world == @world
-        %p
-          Connect to
-          %strong= @world.host
-      - else
-        = button_to 'Join World', [:activate, @world]
+    - if signed_in?
+      .connection
+        - if current_user.world == @world
+          %p
+            Connect to
+            %strong= @world.host
+        - else
+          = button_to 'Join World', [:activate, @world]
 
 
 %ul#nav
@@ -36,15 +41,16 @@
                 = player.username
 
 
-  #share
-    = form_for [:chat, @world], method: :post do |f|
-      %p.submit-advice ENTER to chat, SHIFT-ENTER for a new line.
-      .user
-        %span.username= current_user.username
+  - if signed_in?
+    #share
+      = form_tag world_wall_items_path(@world), method: :post do |f|
+        %p.submit-advice ENTER to chat, SHIFT-ENTER for a new line.
+        .user
+          %span.username= current_user.username
 
-      .avatar
-        = image_tag current_user.gravatar_url(size: 36), width: 36, height: 36
-      = text_area_tag :body, '', rows: 2, autofocus: true
+        .avatar
+          = image_tag current_user.gravatar_url(size: 36), width: 36, height: 36
+        = text_area_tag :body, '', rows: 1, autofocus: true
 
   - @world.wall_items.each do |item|
     .item[item]
@@ -60,52 +66,3 @@
         .user
           %span.username
         .action= item.action
-
-    - prev = item.user
-
-
-:javascript
-  var f = $('#stream form');
-
-  f.submit(function(e){
-    e.preventDefault();
-
-    var body = f.find('textarea').val();
-    $.post(f.attr('action'), {body: body});
-    f.find('textarea').val('');
-  });
-
-  f.find('textarea')
-    .keydown(function(e) {
-      if(e.keyCode == 13 && !e.shiftKey && !e.ctrlKey && !e.altKey) {
-        e.preventDefault();
-        f.submit();
-      }
-    })
-    .focus(function(){
-      f.find('.submit-advice').removeClass('hidden');
-    })
-    .blur(function(){
-        f.find('.submit-advice').addClass('hidden');
-      });
-
-
-  var pusher = new Pusher(#{Pusher.key.to_json});
-  var channel = pusher.subscribe(#{@world.channel.name.to_json});
-  channel.bind('chat:create', displayChatMessage);
-
-  function displayChatMessage(data) {
-    item = $('<div/>').addClass('item').addClass('chat');
-
-    item.append(
-      $('<div/>').addClass('avatar').append(
-        $('<img/>').attr({'src': data['user']['gravatar_url'], width: 36, height: 36})
-      )
-    ).append(
-      $('<div/>').addClass('user').append(
-        $('<span/>').addClass('username').text(data['user']['username'])
-      )
-    ).append(
-      $('<div/>').addClass('bodyg').text(data['body'])
-    ).insertAfter(f);
-  }
