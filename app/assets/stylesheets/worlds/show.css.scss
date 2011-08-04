@@ -36,6 +36,7 @@
         font-weight: 600;
         padding: $baseline $gutter;
         color: darken($blue, 30%);
+        text-decoration: none;
 
         &.disabled {
           color: darken(darken(white, 5%), 10%);
