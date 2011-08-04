@@ -51,11 +51,6 @@ Minefold::Application.routes.draw do
   resources :worlds do
     resources :wall_items
     post :activate, :on => :member
+    get  :map, :on => :member
   end
-
-  # get  '/worlds/new' => 'worlds#new', :as => :new_world
-  # post '/worlds' => 'worlds#create', :as => :worlds
-  # post '/:id/activate' => 'worlds#activate', :as => :activate_world
-  # post '/:id/chat' => 'worlds#chat', :as => :chat_world
-  # get  '/:id' => 'worlds#show', :as => :world
 end

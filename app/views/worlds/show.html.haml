@@ -1,31 +1,4 @@
-:javascript
-  window.pusher = new Pusher(#{Pusher.key.to_json});
-  window.channel = pusher.subscribe(#{@world.channel.name.to_json});
-
-%header
-  %h1= @world.name
-  %aside
-    - if signed_in?
-      .connection
-        - if current_user.world == @world
-          %p
-            Connect to
-            %strong= @world.host
-        - else
-          = button_to 'Join World', [:activate, @world]
-
-
-%ul#nav
-  %li
-    %a Activity
-  %li
-    %a.disabled Map
-  %li
-    %a.disabled Photos
-  %li
-    %a.disabled Videos
-  %li
-    %a.disabled Stats
+= render partial: 'header'
 
 #stream
   %aside
