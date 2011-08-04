@@ -1,10 +1,8 @@
 Minefold::Application.routes.draw do
 
-  root :to => 'users#dashboard',
-       :as => :user_root,
-       :constraints => ->(req){req.env["warden"].authenticated?}
+   root :to => 'home#teaser'
 
-  root :to => 'home#teaser'
+  get '/dshbrd' => 'users#dashboard', :as => :user_root
 
 #   # Authentication
   devise_for :users, :controllers => {
@@ -14,31 +12,15 @@ Minefold::Application.routes.draw do
                        :sign_up => '/sign_up/:code'
                      }
 
-  post '/subscribe' => 'home#subscribe', :as => :subscribe
-
-  get '/admin' => 'admin#index', :as => :admin
-
-  # resources :users
-
-
-  # devise_for :users
-
-  # get  '/users/sign_up/:code' => 'users#new'
-  # post '/users/sign_up' => 'users#create'
-
   resources :invites, :only => [:create]
 
-  get '/users/sign_up/:code' => 'users#new', :as => :invite
-
+  get '/admin' => 'admin#index', :as => :admin
 
   # Payment
   get  '/credits' => 'orders#new', :as => :credits
   post '/order' => 'orders#create', :as => :order
   get  '/order/success' => 'orders#success', :as => :successful_order
   get  '/order/cancel' => 'orders#cancel', :as => :cancel_order
-
-
-  resources :uploads, :only => :index
 
   # Worlds
 
@@ -53,4 +35,6 @@ Minefold::Application.routes.draw do
     post :activate, :on => :member
     get  :map, :on => :member
   end
+
+  resources :uploads, :only => :index
 end

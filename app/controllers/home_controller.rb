@@ -1,13 +1,7 @@
 class HomeController < ApplicationController
 
   def teaser
-  end
-
-  def subscribe
-    user = BetaUser.create email: params[:beta_user][:email]
-    flash[:email] = user.email
-
-    redirect_to root_path
+    redirect_to user_root_path if signed_in?
   end
 
 end
