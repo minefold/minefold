@@ -36,5 +36,7 @@ Minefold::Application.routes.draw do
     post :import
   end
 
+  get '/s3_uploads' => 'upload_policy#index', :format => :xml
+
   resources :uploads, :only => :index
 end

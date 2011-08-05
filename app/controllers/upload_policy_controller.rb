@@ -1,6 +1,6 @@
 require 'base64'
 
-class UploadsController < ApplicationController
+class UploadPolicyController < ApplicationController
 
   skip_before_filter :verify_authenticity_token
   include S3SwfUpload::Signature

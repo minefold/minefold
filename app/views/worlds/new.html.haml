@@ -8,16 +8,14 @@
 
   = flash[:errors].to_json if flash[:errors]
 
-  - new_world_id = BSON::ObjectId.new
-
   #import-world
     #upload
-      = raw s3_swf_upload_tag(keyPrefix: "#{new_world_id}-")
+      = raw s3_swf_upload_tag(keyPrefix: "#{@world.id}-")
     #uploading(style="display:none")
       %p New world's name:
 
       = form_for @world do |f|
-        = f.hidden_field :_id, :value => new_world_id
+        = f.hidden_field :_id, :value => @world.id
         = f.hidden_field :status, :value => 'pending_import'
 
         %p
@@ -95,9 +93,6 @@
       percentage = (progress.bytesLoaded / progress.bytesTotal).toFixed(2) * 100;
       $status.text(percentage.toFixed(0) + '%')
     }
-
-
-
 
     $('#import-world #uploading form').one('submit', function(e){
       e.preventDefault();
