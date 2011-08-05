@@ -16,6 +16,13 @@ class WorldsController < ApplicationController
     end
   end
 
+  def import
+    world_id = params[:world_import][:world_id]
+    filename = "#{world_id}-#{params[:world_import][:filename]}"
+    Resque.enqueue(Job::ImportWorld, world_id, s3_sanitize(filename))
+    render nothing: true
+  end
+
   def show
     @world = World.find_by_slug!(params[:id])
     render :action => @world.status unless @world.status.blank?
@@ -33,6 +40,13 @@ class WorldsController < ApplicationController
     else
       render json: {errors: current_user.errors}
     end
+  end
+
+
+protected
+
+  def s3_sanitize(filename)
+    filename.gsub /[ !'"]/, '_'
   end
 
 end

@@ -16,10 +16,9 @@
     #uploading(style="display:none")
       %p New world's name:
 
-      = form_for World.new do |f|
+      = form_for @world do |f|
         = f.hidden_field :_id, :value => new_world_id
         = f.hidden_field :status, :value => 'pending_import'
-
 
         %p
           = f.text_field :name, :placeholder => 'Name'
@@ -50,7 +49,7 @@
 
 :javascript
   $(function(){
-    var worldId = '#{new_world_id}';
+    var worldId = #{@world.id.to_json};
     var worldUploaded = false;
     var worldInfoProvided = false;
 
@@ -76,7 +75,7 @@
       $('#import-world #upload').show();
       $status.text('Finished');
 
-      $.post('/world_imports', {
+      $.post('/worlds/import', {
         world_import: { world_id: worldId, filename: currentFile.name }
       }, function(){
         worldUploaded = true;
@@ -107,8 +106,6 @@
 
       createWorldIfReady();
     });
-
-
   });
 
 .new-world

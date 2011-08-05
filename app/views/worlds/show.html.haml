@@ -23,7 +23,7 @@
 
         .avatar
           = image_tag current_user.gravatar_url(size: 36), width: 36, height: 36
-        = text_area_tag :body, '', rows: 1, autofocus: true
+        = text_area_tag :body, '', rows: 2, autofocus: true
 
   - @world.wall_items.each do |item|
     .item[item]

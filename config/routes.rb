@@ -24,8 +24,6 @@ Minefold::Application.routes.draw do
 
   # Worlds
 
-  resources :world_imports, :only => [:create]
-
   mount Resque::Server, :at => '/resque'
 
   get '/about' => 'high_voltage/pages#show', :id => 'about'
@@ -34,6 +32,8 @@ Minefold::Application.routes.draw do
     resources :wall_items
     post :activate, :on => :member
     get  :map, :on => :member
+
+    post :import
   end
 
   resources :uploads, :only => :index

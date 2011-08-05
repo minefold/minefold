@@ -125,10 +125,10 @@
       textarea {
         @include box-sizing(border-box);
         background-color: transparent;
-        width: 8 * ($gutter + $col + $gutter) - (2 * $pad);
+        width: 8 * ($gutter + $col + $gutter) - (2 * $pad) - (36px + $gutter);
         margin: 0 (-$gutter);
+        margin-left: 36px + $gutter;
         resize: vertical;
-        padding-left: ($gutter - $border) + 36px + $gutter;
       }
 
       .submit-advice {

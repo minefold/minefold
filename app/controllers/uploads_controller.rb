@@ -6,14 +6,14 @@ class UploadsController < ApplicationController
   include S3SwfUpload::Signature
 
   def index
-    bucket = 'minefold.import'
+    bucket = ['minefold', Rails.env, 'import'].join('.')
     acl    = 'public-read'
     expiration_date = 1.hour.from_now.utc
 
     policy = encode({
       expiration: expiration_date,
       conditions: [
-          {bucket: 'minefold.import'},
+          {bucket: bucket},
           {key: params[:key]},
           {acl: acl},
           {'Content-Type' => params[:content_type]},
