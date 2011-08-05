@@ -103,9 +103,11 @@ form {
 
 
 header.global {
-  padding: (2 * $baseline) 0 ((2 * $baseline) - 1px) 0;
+  padding: (2 * $baseline) 0 ((2 * $baseline) - 2px) 0;
   background: darken($blue, 30%) url('/images/header.png') top center repeat-x;
   color: white;
+
+  border-bottom: 1px solid black;
 
   h1 {
     float: left;

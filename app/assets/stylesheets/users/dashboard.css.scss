@@ -1,25 +1,46 @@
 @import 'shared/vars';
 
-#users-dashboard {
+#users-dashboard #page {
 
-  .beta {
-    border-top: $border solid $red;
-    margin: 0 (-$gutter);
-    padding: $baseline ($gutter +$pad);
+  .beta-notice {
+    margin: (2 * $baseline) 0 (4 * $baseline) 0;
+    text-align: center;
+    padding: (2 * $baseline) 0;
 
-    .notice {
-      margin: (4 * $baseline) 0;
+    h2, .heart {
+      color: $red;
+      text-shadow: 0 1px 0 darken($red, 20%);
+    }
+
+    .heart {
+      font: 30px/24px $helvetica;
+      margin-bottom: 2 * $baseline;
+    }
+
+    h2 {
+      font: 900 18px/48px $paytone;
+      font-weight: 1000;
+      text-transform: uppercase;
     }
 
     p {
       margin-bottom: 18px;
+      color: #999;
     }
 
+    a {
+      color: $blue;
+      text-decoration: none;
+
+      &:hover {
+        color: darken($blue, 20%);
+      }
+    }
   }
 
   ul#worlds {
     overflow: auto;
-    margin: 0 (-($pad + $gutter));
+    margin: (2 * $baseline) (-$gutter) ;
 
     li {
       float: left;

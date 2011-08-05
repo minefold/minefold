@@ -17,6 +17,17 @@
     }
   }
 
+  img {
+    margin-top: 0;
+    margin-bottom: -$baseline;
+
+    border-radius: $radius;
+    background: darken($blue, 30%);
+    border: 1px solid darken($blue, 30%);
+    border-top: 1px solid white;
+    border-bottom: 1px solid black;
+  }
+
   .credits {
     font-weight: 700;
     text-align: center;

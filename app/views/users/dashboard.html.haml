@@ -1,17 +1,19 @@
-.beta
-  .notice
+- if current_user.first_signin?
+  .beta-notice
+    %h2
+      Much love, homie
+    .heart &hearts;
     %p
-      %strong Hey! Thanks for trying out Minefold.
-      Everything around here is still <em>really</em> beta so things may break and blow up.
+      We are working super hard but things may still break. If something seems odd <a href='mailto:support@minefold.com'>shoot us an email</a> or <a href='tel:+61424121343'>give us a call</a>.
 
-  %ul#worlds
-    - @worlds.each do |world|
-      %li{class: (current_user.world == world ? 'active' : nil)}
-        = link_to world do
-          .info
-            = world.name
-            .players
-              (#{pluralize world.connected_players_count, 'player', 'players'})
+%ul#worlds
+  - @worlds.each do |world|
+    %li{class: (current_user.world == world ? 'active' : nil)}
+      = link_to world do
+        .info
+          = world.name
+          .players
+            (#{pluralize world.connected_players_count, 'player', 'players'})
 
-    %li.new
-      = link_to 'Create a world', new_world_path
+  %li.new
+    = link_to 'Create a world', new_world_path

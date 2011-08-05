@@ -38,6 +38,11 @@ class User
                   :password_confirmation,
                   :invite_code
 
+  def first_signin?
+    sign_in_count <= 1
+  end
+
+
 # Credits
 
   def increment_credits n
