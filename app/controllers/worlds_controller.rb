@@ -20,14 +20,19 @@ class WorldsController < ApplicationController
     @world = World.find_by_slug!(params[:id])
     render :action => @world.status unless @world.status.blank?
   end
-  
+
   def map
     @world = World.find_by_slug! params[:id]
   end
 
   def activate
     current_user.world = World.find_by_slug!(params[:id])
-    redirect_to current_user.world
+
+    if current_user.save
+      redirect_to current_user.world
+    else
+      render json: {errors: current_user.errors}
+    end
   end
 
 end
