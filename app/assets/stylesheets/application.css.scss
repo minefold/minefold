@@ -14,7 +14,6 @@
 @import 'shared/vars';
 
 html {
-  background: darken(white, 4%);
 }
 
 body {
@@ -138,9 +137,6 @@ header.global {
   margin-bottom: 2 * $baseline;
 
   #page {
-    background: white;
-    @include border-radius($radius);
-    @include box-shadow(0 0 12px darken(white, 12%));
     position: relative;
   }
 
