@@ -3,7 +3,7 @@
 //= require_tree ./home
 //= require_tree ./orders
 //= require_tree ./sessions
-//= require_tree ./users
+//= require_tree ./accounts
 //= require_tree ./worlds
 //= require_tree ./devise
 //= require_tree ./registrations
@@ -140,6 +140,8 @@ header.global {
 
   #page {
     position: relative;
+    width: $width - (2 * $gutter);
+    padding: 0 $gutter;
   }
 
   header {

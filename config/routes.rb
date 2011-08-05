@@ -2,8 +2,6 @@ Minefold::Application.routes.draw do
 
    root :to => 'home#teaser'
 
-  get '/dshbrd' => 'users#dashboard', :as => :user_root
-
 #   # Authentication
   devise_for :users, :controllers => {
                        :registrations => :registrations
@@ -11,6 +9,10 @@ Minefold::Application.routes.draw do
                      :path_names => {
                        :sign_up => '/sign_up/:code'
                      }
+
+  get '/dshbrd' => 'accounts#dashboard', :as => :user_root
+  resource :account
+
 
   resources :invites, :only => [:create]
 
@@ -37,6 +39,4 @@ Minefold::Application.routes.draw do
   end
 
   get '/s3_uploads' => 'upload_policy#index', :format => :xml
-
-  resources :uploads, :only => :index
 end

@@ -1,0 +1,25 @@
+@import 'shared/vars';
+
+#accounts-edit #page {
+
+  header {
+    h1 {
+      font-size: 24px;
+      line-height: 48px;
+      color: #333;
+      float: left;
+    }
+  }
+
+  form {
+    padding: (2 * $baseline) $pad;
+
+    label {
+      margin-bottom: $baseline;
+    }
+
+    section {
+      margin-bottom: 2 * $baseline;
+    }
+  }
+}
