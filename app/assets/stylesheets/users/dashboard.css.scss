@@ -38,9 +38,21 @@
     }
   }
 
-  ul#worlds {
-    overflow: auto;
-    margin: (2 * $baseline) (-$gutter) ;
+  #worlds {
+    h2 {
+      font-size: 24px;
+      line-height: 48px;
+      margin-bottom: 2 * $baseline;
+      color: #999;
+      strong {
+        color: #000;
+      }
+    }
+
+    ul {
+      overflow: auto;
+      margin: (2 * $baseline) (-$gutter);
+    }
 
     li {
       float: left;
@@ -58,27 +70,37 @@
         width: 2 * ($gutter + $col + $gutter) - (2 * $gutter) - (2 * $border);
         padding: (2 * $baseline - (2 * $border)) 0;
         line-height: 4 * $baseline;
-        border: $border solid darken(white, 10%);
+        text-shadow: 0 1px 0 darken($blue, 10%);
         border-radius: $radius;
-        color: darken($blue, 10%);
+        color: white;
         font-weight: 600;
+
+        background: $blue;
         text-decoration: none;
-        &:hover {
-          border-color: $blue;
-        }
 
         .players {
-          color: #333;
+          color: lighten($blue, 20%);
           font-size: 12px;
           font-weight: normal;
+          text-shadow: 0 -1px 0 darken($blue, 10%);
+        }
+
+        &:hover {
+          border-color: $blue;
+          background-color: lighten($blue, 10%);
+          .players {
+            color: lighten($blue, 30%);
+            text-shadow: 0 -1px 0 $blue;
+          }
         }
       }
 
       &.new a {
         background: #FFF;
-        color: #CCC;
+        color: lighten($blue, 20%);
         text-decoration: none;
         padding: (4 * $baseline - (2 * $border)) 0;
+        text-shadow: none;
         &:hover {
           color: $blue;
         };
