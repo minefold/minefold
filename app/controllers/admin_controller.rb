@@ -1,6 +1,6 @@
 class AdminController < ApplicationController
 
-  before_filter :authenticate
+  http_basic_authenticate_with name: 'admin', password: 'carlsmum'
 
   def index
     @users = User.all(:sort => :created_at.asc)
@@ -9,15 +9,7 @@ class AdminController < ApplicationController
     @invites = Invite.unclaimed.order(:created_at.asc).all
 
     @running_worlds = World.find REDIS.smembers('world:running')
-    render :layout => false
-  end
-
-protected
-
-  def authenticate
-    authenticate_or_request_with_http_basic do |username, password|
-      username == "admin" && password == "carlsmum"
-    end
+    render layout: false
   end
 
 end
