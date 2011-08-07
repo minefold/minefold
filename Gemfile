@@ -18,7 +18,7 @@ gem 's3_swf_upload',
 
 gem 'resque', require: 'resque/server'
 gem 'fog'
-gem "gravtastic", "~> 3.2.0"
+gem "gravtastic", git:'git://github.com/snappycode/gravtastic.git'
 gem 'em-http-request'
 gem 'pusher'
 gem 'sendgrid'
