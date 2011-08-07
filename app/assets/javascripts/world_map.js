@@ -11,10 +11,9 @@
       maxZoom:      4
     }, options);
 
-    var markerData=[
-    {"msg": "center of chunk (0,0) at sea level", "y": 64, "x": 8, "z": 8}
+    var markerData = [
+      {"msg": "center of chunk (0,0) at sea level", "y": 64, "x": 8, "z": 8}
     ]
-
 
     // our custom projection maps Latitude to Y, and Longitude to X as normal,
     // but it maps the range [0.0, 1.0] to [0, tileSize] in both directions
@@ -44,8 +43,7 @@
     //  here is also called "y" in both minecraft and pigmap
     // (the pigmap docs write coords in X,Z,Y order, so unfortunately
     //  confusion is still possible, but at least the *names* are the same)
-    function fromWorldToLatLng(x, y, z)
-    {
+    function fromWorldToLatLng(x, y, z) {
       // the width and height of all the highest-zoom tiles combined, inverted
       var perPixel = 1.0 / (config.tileSize * Math.pow(2, config.maxZoom));
 
@@ -78,7 +76,6 @@
     var MCMapOptions = {
       getTileUrl: function(tile, zoom) {
         var url = config.path;
-        console.log(url)
         if(tile.x < 0 || tile.x >= Math.pow(2, zoom) || tile.y < 0 || tile.y >= Math.pow(2, zoom)) {
           url += '/blank';
         } else if(zoom == 0) {
