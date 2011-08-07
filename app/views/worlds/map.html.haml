@@ -5,23 +5,26 @@
 - map_asset_path = "#{Rails.configuration.map_tiles_url}/#{@world.id}"
 
 %script(type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false")
-%script{type:"text/javascript", src:"#{map_asset_path}/overviewerConfig.js"}
-%script{type:"text/javascript", src:"#{map_asset_path}/overviewer.js"}
-%script{type:"text/javascript", src:"#{map_asset_path}/markers.js"}
-%script{type:"text/javascript", src:"#{map_asset_path}/regions.js"}
+-# %script{type:"text/javascript", src:"#{map_asset_path}/overviewerConfig.js"}
+-# %script{type:"text/javascript", src:"#{map_asset_path}/overviewer.js"}
+-# %script{type:"text/javascript", src:"#{map_asset_path}/markers.js"}
+-# %script{type:"text/javascript", src:"#{map_asset_path}/regions.js"}
 
 :javascript
   $(function(){
-    $.extend(overviewerConfig.CONST, {
-      mapDivId: 'mcmap',
-      image: {
-        defaultMarker: '#{map_asset_path}/signpost.png',
-        signMarker:    '#{map_asset_path}/signpost_icon.png',
-        compass:       '#{map_asset_path}/compass.png'
-      }
+    $.world_map({
+      path: '#{map_asset_path}'
     });
-    $.each(overviewerConfig.mapTypes, function(i, type) {
-      type.path = '#{map_asset_path}/' + type.path;
-    });
-    overviewer.util.initialize()
+  //   $.extend(overviewerConfig.CONST, {
+  //     mapDivId: 'mcmap',
+  //     image: {
+  //       defaultMarker: '#{map_asset_path}/signpost.png',
+  //       signMarker:    '#{map_asset_path}/signpost_icon.png',
+  //       compass:       '#{map_asset_path}/compass.png'
+  //     }
+  //   });
+  //   $.each(overviewerConfig.mapTypes, function(i, type) {
+  //     type.path = '#{map_asset_path}/' + type.path;
+  //   });
+  //   overviewer.util.initialize()
   });
