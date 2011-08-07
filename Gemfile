@@ -18,7 +18,7 @@ gem 's3_swf_upload',
 
 gem 'resque', require: 'resque/server'
 gem 'fog'
-gem 'gravtastic'
+gem 'gravtastic', :groups => [:default, :assets]
 gem 'em-http-request'
 gem 'pusher'
 gem 'sendgrid'
