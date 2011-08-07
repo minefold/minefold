@@ -18,6 +18,7 @@
     
     $.ajax({
       type:'GET',
+      dataType:'jsonp',
       url:'#{map_asset_path}/base.png',
       success: function() {
           $('#mcmap').show();
