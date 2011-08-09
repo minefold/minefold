@@ -8,7 +8,7 @@ class Payment
     status == 'Completed'
   end
 
-  def credits
+  def hours
     params['option_selection1'].to_i.hours
   end
 end

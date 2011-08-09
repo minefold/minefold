@@ -5,7 +5,7 @@ class Order
   many :payments
 
   def process_payment(payment)
-    user.increment_credits(payment.credits) if payment.complete?
+    user.add_credits(payment.hours) if payment.complete?
   end
 
   def fulfilled?

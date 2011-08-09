@@ -47,7 +47,7 @@ class User
 
 # Credits
 
-  def increment_credits n
+  def add_credits n
     increment credits: (n / BILLING_PERIOD)
     reload
     n
