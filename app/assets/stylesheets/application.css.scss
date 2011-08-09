@@ -73,6 +73,9 @@ form {
     &:focus {
       border-color: $blue;
     }
+    &[type=image] {
+      border: none;
+    }
   }
 
   button, input[type=submit] {
@@ -103,10 +106,9 @@ form {
 
 
 header.global {
-  padding: (2 * $baseline) 0 ((2 * $baseline) - 2px) 0;
+  padding: (2 * $baseline) 0 ((2 * $baseline) - 1px) 0;
   background: darken($blue, 30%) url('/images/header.png') top center repeat-x;
   color: white;
-
   border-bottom: 1px solid black;
 
   h1 {
@@ -140,15 +142,17 @@ header.global {
 
   #page {
     position: relative;
-    width: $width - (2 * $gutter);
-    padding: 0 $gutter;
   }
 
   header {
     margin: 0;
-    padding: (2 * $baseline) $pad;
+    padding: (2 * $baseline) 0;
     font-size: 18px; line-height: 24px;
     overflow: auto;
+
+    h1 {
+      font-size: 24px;
+    }
   }
 }
 
@@ -157,11 +161,6 @@ footer.global {
   padding-bottom: 20 * $baseline;
   color: #CCC;
   text-shadow: 0 1px 0 white;
-
-  .container {
-    width: $width - 2 * ($gutter + $pad);
-    padding: 0 ($gutter + $pad);
-  }
 
   nav {
     margin: (2 * $baseline) 0 $baseline;

@@ -1,0 +1,14 @@
+%header
+  %h1 Invite your friends to Minefold!
+
+  %p For every friend who joins and plays on Minefold we'll give you 6 hours and your friend 2 hours bonus time.
+
+= form_for @invite do |f|
+  = f.email_field :email, placeholder: 'Email', required: true
+  = f.submit 'Invite a friend', disabled: true
+
+  .error
+  / %p
+  /   %span.count= current_user.invites
+  /   remaining
+

@@ -1,14 +1,7 @@
-- if signed_in?
-  = form_for Invite.new do |f|
-    = f.email_field :email, placeholder: 'Email', required: true
-    = f.submit 'Invite a friend', disabled: true
-
-    .error
-    %p
-      %span.count= current_user.invites
-      remaining
-
 %nav
+  / =link_to 'Referrals', referrals_path
+  / %span.pipe
+  /   |
   %a{href: '//minefold.tumblr.com'} Blog
   %span.pipe
     |

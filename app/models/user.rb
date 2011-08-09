@@ -11,8 +11,6 @@ class User
   key :credits,  Integer, default: (FREE_HOURS / BILLING_PERIOD)
   key :minutes_played,  Integer, default: 0
 
-  key :invites,  Integer, default: DEFAULT_INVITES
-
   one :invite
 
   many :wall_items, as: :wall
@@ -42,18 +40,26 @@ class User
     sign_in_count <= 1
   end
 
+  before_create do
+    self.word = World.default
+  end
+
 
 # Credits
 
   def increment_credits n
-    increment credits: (n.hours / BILLING_PERIOD)
+    increment credits: (n / BILLING_PERIOD)
+    reload
     n
   end
 
-  def format_credits
+  def hours
     (credits * BILLING_PERIOD) / 1.hour
   end
 
+  def minutes
+    credits - (hours * (1.hour / BILLING_PERIOD))
+  end
 
 # Invites
 
@@ -80,10 +86,6 @@ protected
 
   def self.dave
     find_by_email 'dave@minefold.com'
-  end
-
-  def password_required?
-    false
   end
 
 end
