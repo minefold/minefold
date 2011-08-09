@@ -41,7 +41,6 @@
 
         &:hover {
           background: lighten($blue, 40%);
-//          color: lighten($blue, 40%);
         }
 
         &.disabled {
@@ -154,6 +153,9 @@
     }
 
     .item {
+      .timestamp {
+        color: #CCC;
+      }
       &.chat {
         overflow: auto;
 
