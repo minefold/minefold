@@ -4,11 +4,11 @@ class User
 
   BILLING_PERIOD = 1.minute
   DEFAULT_INVITES  = 10
-  FREE_HOURS  = 1.hour
+  FREE_HOURS  = 1
 
   key :email,    String,  unique: true
   key :username, String
-  key :credits,  Integer, default: (FREE_HOURS / BILLING_PERIOD)
+  key :credits,  Integer, default: (FREE_HOURS.hours / BILLING_PERIOD)
   key :minutes_played,  Integer, default: 0
 
   one :invite
