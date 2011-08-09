@@ -2,8 +2,9 @@
   %h1
     %strong Hiigh five!
     You can now play for
-    %strong= pluralize current_user.credits, 'minute', 'minutes'
+    %strong= pluralize current_user.hours, 'hour', 'hours'
+    and
+    %strong= pluralize current_user.minutes, 'minute', 'minutes'
     \.
 
-= button_to current_user.world
-  Back to #{current_user.world.name}
+= button_to "Back to #{current_user.world.name}", current_user.world
