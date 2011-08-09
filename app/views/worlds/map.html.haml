@@ -16,17 +16,13 @@
 :javascript
   $(function() {
     
-    $.ajax({
-      type:'GET',
-      url:'#{map_asset_path}/base.png',
-      success: function() {
-          $('#mcmap').show();
-          $.world_map({ path: '#{map_asset_path}' });
-        },
-      error: function() { 
-          $('#nomap').show();
-        }
-    });
+    var img = new Image();
+    $(img).load(function(){ 
+        $('#mcmap').show();
+        $.world_map({ path: '#{map_asset_path}' });
+      }).error(function() { 
+        $('#nomap').show();
+      }).attr('src', '#{map_asset_path}/base.png');
     
   //   $.extend(overviewerConfig.CONST, {
   //     mapDivId: 'mcmap',
