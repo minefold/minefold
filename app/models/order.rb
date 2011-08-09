@@ -5,9 +5,7 @@ class Order
   many :payments
 
   def process_payment(payment)
-    if unfulfilled? and payment.complete?
-      user.increment_credits(payment.credits)
-    end
+    user.increment_credits(payment.credits) if payment.complete?
   end
 
   def fulfilled?
