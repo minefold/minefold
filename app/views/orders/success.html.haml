@@ -1,3 +1,14 @@
+:css
+  a.button {
+    color: #08D;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 48px;
+  }
+  a.button:hover {
+    color: #06B;
+  }
+
 %header
   %h1
     %strong Hiigh five!
@@ -7,4 +18,5 @@
     %strong= pluralize current_user.minutes, 'minute', 'minutes'
     \.
 
-= button_to "Back to #{current_user.world.name}", current_user.world
+= link_to(current_user.world, class: 'button') do
+  &larr; Back to #{current_user.world.name}

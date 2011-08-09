@@ -90,6 +90,7 @@ form {
     @include border-radius($radius);
 
     cursor: pointer;
+    display: block;
 
     &:hover, &:focus {
       background: $blue;
