@@ -5,4 +5,5 @@
     %strong= pluralize current_user.credits, 'minute', 'minutes'
     \.
 
-= button_to 'Back home', dashboard_path
+= button_to current_user.world
+  Back to #{current_user.world.name}
