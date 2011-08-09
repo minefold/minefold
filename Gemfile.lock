@@ -97,7 +97,7 @@ GEM
       term-ansicolor (~> 1.0.5)
       thor (>= 0.13.6)
     formatador (0.2.0)
-    gravtastic (3.2.2)
+    gravtastic (3.2.4)
     haml (3.1.2)
     heroku (2.4.0)
       launchy (>= 0.3.2)
@@ -225,7 +225,7 @@ DEPENDENCIES
   em-http-request
   fog
   foreman
-  gravtastic (>= 3.2.2)
+  gravtastic (>= 3.2.4)
   haml
   heroku
   high_voltage
