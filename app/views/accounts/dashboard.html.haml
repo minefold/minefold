@@ -6,10 +6,13 @@
     %p
       We are working super hard but things may still break. If something seems odd <a href='mailto:support@minefold.com'>shoot us an email</a> or <a href='tel:+61424121343'>give us a call</a>.
 
-#worlds
-  %h2
+%header
+  %h1
     %strong Explore
     Worlds
+
+
+#worlds
   %ul
     - @worlds.each do |world|
       %li{class: (current_user.world == world ? 'active' : nil)}

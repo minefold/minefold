@@ -27,16 +27,20 @@
   }
 
   #products {
-    margin: 24px auto;
-    width: 3 * 180px + 1px + 1px;
+    margin: (24px - 2 * $border) auto;
+    width: 4 * ((2 * ($gutter + $col + $gutter)) + 1px) - 1px + (4 * $border);
     display: block;
     overflow: auto;
+    border: $border solid darken(white, 10%);
+    padding: $border;
+    @include border-radius($radius);
+    @include box-sizing(border-box);
 
     li {
       float: left;
       @include border-radius(none);
       margin-right: 1px;
-      width: 180px;
+      width: 2 * ($gutter + $col + $gutter);
 
       &:first-child {
         border-top-left-radius: 3px;
@@ -58,9 +62,18 @@
       }
 
       &.active {
-        background: #FFC;
-        &:hover, .credits, .time, .cost {
-          color: darken($blue, 10%);
+        background: $green;
+        .credits, .time, .cost {
+          color: white;
+          text-shadow: 0 1px 0 darken($green, 20%);
+        }
+
+        span {
+          text-shadow: 0 1px 0 lighten($green, 10%);
+        }
+
+        &:hover {
+          background: darken($green, 10%);
         }
       }
 
@@ -73,6 +86,7 @@
       .credits, .time, .cost {
         padding: 0 (2 * $gutter);
         color: #333;
+        text-shadow: 0 1px 0 white;
       }
 
       .credits {
@@ -83,11 +97,13 @@
       .time {
         padding-top: 12px; padding-bottom: 12px;
         font-size: 30px; line-height: 36px;
+        font-weight: 600;
       }
 
       .cost {
         padding-top: 6px; padding-bottom: 24px;
-        font-size: 24px; line-height: 24px;
+        font-size: 24px; line-height: 30px;
+        font-weight: 600;
       }
 
       span {

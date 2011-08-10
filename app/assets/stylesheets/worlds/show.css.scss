@@ -24,7 +24,7 @@
     background: darken(white, 5%);
     margin: 0 (-$pad);
     margin-bottom: 4 * $baseline;
-    padding: 0 ($gutter + $pad);
+    padding: 0 ($gutter);
     overflow: auto;
 
     li {
@@ -35,12 +35,20 @@
         line-height: 24px;
         font-weight: 600;
         padding: $baseline $gutter;
-        color: darken($blue, 30%);
+        color: darken($blue, 20%);
         text-decoration: none;
+        text-shadow: 0 1px 0 white;
+
+        &:hover {
+          background: lighten($blue, 40%);
+        }
 
         &.disabled {
           color: darken(darken(white, 5%), 10%);
-          text-shadow: 0 1px 0 white;
+          &:hover {
+            background: darken(darken(white, 5%), 5%);
+            color: darken(darken(darken(white, 5%), 10%), 5%);
+          }
         }
       }
     }
@@ -145,6 +153,9 @@
     }
 
     .item {
+      .timestamp {
+        color: #CCC;
+      }
       &.chat {
         overflow: auto;
 

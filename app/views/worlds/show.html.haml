@@ -33,6 +33,9 @@
           = image_tag item.user.gravatar_url(size: 36), width: 36, height: 36
         .user
           %span.username= item.user.username
+          %span.timestamp
+            = time_ago_in_words item.created_at
+            ago
         .body
           = item.body
       - when Activity

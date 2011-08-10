@@ -2,16 +2,14 @@ class User
   include MongoMapper::Document
   include Gravtastic
 
-  BILLING_INTERVAL = 1.minute
+  BILLING_PERIOD = 1.minute
   DEFAULT_INVITES  = 10
-  FREE_HOURS  = 1.hour
+  FREE_HOURS  = 1
 
   key :email,    String,  unique: true
   key :username, String
-  key :credits,  Integer, default: (FREE_HOURS / BILLING_INTERVAL)
+  key :credits,  Integer, default: (FREE_HOURS.hours / BILLING_PERIOD)
   key :minutes_played,  Integer, default: 0
-
-  key :invites,  Integer, default: DEFAULT_INVITES
 
   one :invite
 
@@ -42,18 +40,26 @@ class User
     sign_in_count <= 1
   end
 
+  before_create do
+    self.word = World.default
+  end
+
 
 # Credits
 
-  def increment_credits n
-    increment credits: (n.hours / BILLING_INTERVAL)
+  def add_credits n
+    increment credits: (n / BILLING_PERIOD)
+    reload
     n
   end
 
-  def format_credits
-    (credits * BILLING_INTERVAL) / 1.hour
+  def hours
+    (credits * BILLING_PERIOD) / 1.hour
   end
 
+  def minutes
+    credits - (hours * (1.hour / BILLING_PERIOD))
+  end
 
 # Invites
 
@@ -80,10 +86,6 @@ protected
 
   def self.dave
     find_by_email 'dave@minefold.com'
-  end
-
-  def password_required?
-    false
   end
 
 end

@@ -1,8 +1,22 @@
+:css
+  a.button {
+    color: #08D;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 48px;
+  }
+  a.button:hover {
+    color: #06B;
+  }
+
 %header
   %h1
     %strong Hiigh five!
     You can now play for
-    %strong= pluralize current_user.credits, 'minute', 'minutes'
+    %strong= pluralize current_user.hours, 'hour', 'hours'
+    and
+    %strong= pluralize current_user.minutes, 'minute', 'minutes'
     \.
 
-= button_to 'Back home', dashboard_path
+= link_to(current_user.world, class: 'button') do
+  &larr; Back to #{current_user.world.name}

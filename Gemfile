@@ -20,7 +20,7 @@ gem 'resque', require: 'resque/server'
 gem 'resque_mailer'
 
 gem 'fog'
-gem "gravtastic", git:'git://github.com/snappycode/gravtastic.git'
+gem 'gravtastic', '>= 3.2.4', groups: [:default, :assets]
 gem 'em-http-request'
 gem 'pusher'
 gem 'sendgrid'

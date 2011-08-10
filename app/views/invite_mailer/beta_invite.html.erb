@@ -1,6 +1,6 @@
 <p>Hi <%= @invite.email %>!</p>
 
-<p><%= @invite.creator.username %> has invited you to be one of the first beta-testers for Minefold, our Minecraft hosting company. We've been working really hard and can't wait share what we've done with you.</p>
+<p><%= @invite.creator.username %> has invited you to play Minecraft on Minefold. Minefold makes playing Minecraft with your friends super simple.</p>
 
 <p>To get started sign up at:</p>
 
@@ -8,14 +8,14 @@
 
 <p><small>(If you don't have a Minecraft username already, you can get one at <a href='http://minecraft.net'>http://minecraft.net</a>)</small></p>
 
-<p>You'll then be able to log in and view all the worlds. If you click on "<%= link_to @world.name, world_url(@world) %>" you can see our personal world. If you click "Join world" you'll be spawned there when you connect to "<%= @world.host %>" in Minecraft.</p>
+<p>You'll then be able to log in and view all the worlds. If you click on "<%= link_to @world.name, world_url(@world) %>" you can see our personal world. You'll be spawned there when you connect to "<%= @world.host %>" in Minecraft.</p>
 
-<p>If you've been playing single player you can import your world by pressing the big plus on the dashboard screen.</p>
+<p>If you've been playing single player you can import your own world when you create a new world from the dashboard.</p>
 
 <p>A few things to note:</p>
 
-<h3>Minefold is beta!</h3>
 
+<h3>Minefold is beta!</h3>
 <p>Things are bound to break. We'd appreciate it if you tell us about any problems, thoughts or suggestions you may have. Our contact details are:</p>
 
 <ul>
@@ -23,24 +23,20 @@
   <li>Chirs - <a href="chris@minefold.com">chris@minefold.com</a>,<a href="tel:+61424121343">04 2412 1343</a>, <a href="http://twitter.com/chrislloyd">@chrislloyd</a></li>
 </ul>
 
-<p>It may take a while (up to 2 minutes) to connect to your game. This is an known issue that we are working on and should be fixed soon.</p>
+<p>It may take a while (up to 2 minutes) to connect to your game. This is an known issue that we are working on.</p>
+
 
 <h3>Worlds are public</h3>
+<p>Everybody in the beta has access to any world you create. We aren't going to have any permissions whilst we are in beta, as we have a lot of trust in the community. Just please be nice and don't grief other people's worlds.</p>
 
-<p>Everybody in the beta has access to any world you create. We'll be implementing permissions shortly, but in the mean time please be nice and don't grief other people's worlds.</p>
 
 <h3>You'll need credits to play</h3>
-<p>In the upper right hand side of the screen you'll see a little "<%= User::FREE_HOURS %> cr" which means you can play for <%= pluralize(User::FREE_HOURS, 'hour', 'hours') %>. We are giving you an hour free to say thanks for trying out the beta. If you want to play longer you can buy packs of 24, 48 and 72 hours.</p>
-
-<p>When you pay with PayPal you'll notice that the account is "Chris Lloyd". Don't worry, he's not a nigerian scammer! It's me! We are trying to bootstrap the company and registered PayPal accounts are expensive so we are making do for the moment.</p>
-
-<h3>The beta is private</h3>
-<p>We'd appreciate it if you don't talk too much about Minefold. We'd love you to tell your friends but please don't post stuff to Reddit/Hacker News just yet. If you want to invite your own friends you can use the handy form at the bottom of the page.</p>
+<p>In the upper right hand side of the screen you'll see "<%= pluralize(User::FREE_HOURS, 'hour', 'hours') %>" which means you can play for <%= pluralize(User::FREE_HOURS, 'hour', 'hours') %> for free.</p>
 
 <p>And lastly…</p>
 
-<h3>Have fun and show us what you make!</h3>
 
+<h3>Have fun and show us what you make!</h3>
 <p>We'd love to see what you create, so let us know when you have something ready to show off.</p>
 
 <p>We are really excited about Minefold and hope it'll help make playing Minecraft with your friends super simple.</p>

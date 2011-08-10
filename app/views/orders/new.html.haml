@@ -1,10 +1,12 @@
 %header
   %h1
     You have
-    %strong= pluralize current_user.credits, 'minute', 'minutes'
+    %strong= pluralize current_user.hours, 'hour', 'hours'
+    and
+    %strong= pluralize current_user.minutes, 'minute', 'minutes'
     left.
 
-%h2 Select how many credits you want to top up your account with.
+%h2 Select how many hours you want to top up your account with.
 
 = form_tag ENV['PAYPAL_URL'] do
   = hidden_field_tag :cmd, '_s-xclick'
@@ -19,44 +21,52 @@
 
   = hidden_field_tag :return, successful_order_url
 
-  = hidden_field_tag :on0, 'Credits'
+  = hidden_field_tag :on0, 'Hours'
 
   %ul#products
     %li.active
-      %label{for: 'os0-24'}
-        .credits
-          24
-          %span credits
+      %label{for: 'os0-8'}
         .time
-          = 24.hours / 1.minute
-          %span minutes
-        .cost $12
+          +8
+          %span hours
+        .cost
+          $4
+          %span 50&cent; / hr
 
-      %input#os0-24{type: 'radio', name: 'os0', value: 24, style: 'display:none', checked: true}
+      %input#os0-8{type: 'radio', name: 'os0', value: 8, style: 'display:none', checked: true}
 
     %li
-      %label{for: 'os0-48'}
-        .credits
-          48
-          %span credits
+      %label{for: 'os0-20'}
         .time
-          = 48.hours / 1.minute
-          %span minutes
-        .cost $22
+          +20
+          %span hours
+        .cost
+          $8
+          %span 40&cent; / hr
 
-      %input#os0-48{type: 'radio', name: 'os0', value: 48, style: 'display:none'}
+      %input#os0-20{type: 'radio', name: 'os0', value: 20, style: 'display:none'}
 
     %li
-      %label{for: 'os0-72'}
-        .credits
-          72
-          %span credits
+      %label{for: 'os0-60'}
         .time
-          = 72.hours / 1.minute
-          %span minutes
-        .cost $30
+          +60
+          %span hours
+        .cost
+          $18
+          %span 30&cent; / hr
 
-      %input#os0-72{type: 'radio', name: 'os0', value: 72, style: 'display:none'}
+      %input#os0-60{type: 'radio', name: 'os0', value: 60, style: 'display:none'}
+
+    %li
+      %label{for: 'os0-160'}
+        .time
+          +160
+          %span hours
+        .cost
+          $40
+          %span 25&cent; / hr
+
+      %input#os0-160{type: 'radio', name: 'os0', value: 160, style: 'display:none'}
 
 
   %input{type: 'image', src: 'https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif', border: 0, name: 'submit', alt: 'PayPal - The safer, easier way to pay online!'}
