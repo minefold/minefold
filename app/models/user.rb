@@ -79,6 +79,12 @@ class User
     self.invite.save
   end
 
+  def verify!
+    add_credits 1.hour
+    invite.creator.add_credits 4.hours
+    invite.set claimed: true
+  end
+
   validates_presence_of :invite, on: :create
 
 protected
