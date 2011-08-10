@@ -1,2 +1,2 @@
 web: bundle exec rails server thin -p $PORT
-worker: QUEUE=mailer rake environment resque:work
+worker: bundle exec rake environment resque:work QUEUE=critical,mailer,high,low
