@@ -113,6 +113,7 @@ GEM
     json (1.5.3)
     launchy (2.0.4)
       addressable (~> 2.2.6)
+    looksee (1.0.2)
     mail (2.3.0)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
@@ -171,6 +172,9 @@ GEM
       redis-namespace (~> 1.0.2)
       sinatra (>= 0.9.2)
       vegas (~> 0.1.2)
+    resque_mailer (2.0.0)
+      actionmailer (>= 3.0.0)
+      resque (>= 1.2.3)
     rest-client (1.6.3)
       mime-types (>= 1.16)
     ruby-hmac (0.4.0)
@@ -232,12 +236,14 @@ DEPENDENCIES
   heroku
   high_voltage
   jquery-rails
+  looksee
   mm-devise
   mongo_mapper!
   pusher
   rails (~> 3.1.0.rc)
   rake
   resque
+  resque_mailer
   s3_swf_upload!
   sass-rails
   sendgrid
