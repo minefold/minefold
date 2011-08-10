@@ -5,6 +5,7 @@ class Invite
 
   key :email, required: true, unique: true
   key :code,  required: true, unique: true
+  key :claimed, default: false
   key :creator_id, ObjectId
   belongs_to :creator, class: User
 
@@ -16,8 +17,8 @@ class Invite
   ensure_index :code, unique: true
 
 
-  scope :unclaimed, :user_id => nil
-  scope :claimed,   :user_id.ne => nil
+  scope :claimed,   :claimed => true
+  scope :unclaimed, :claimed => false
 
 
   # Normalize email

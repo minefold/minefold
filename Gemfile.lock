@@ -69,6 +69,7 @@ GEM
     coffee-script-source (1.1.1)
     crack (0.1.8)
     daemons (1.1.4)
+    decent_exposure (1.0.1)
     devise (1.4.2)
       bcrypt-ruby (~> 2.1.2)
       orm_adapter (~> 0.0.3)
@@ -221,6 +222,7 @@ DEPENDENCIES
   bourbon
   bson_ext
   coffee-script
+  decent_exposure
   devise
   em-http-request
   fog

@@ -10,6 +10,7 @@ class User
   key :username, String
   key :credits,  Integer, default: (FREE_HOURS.hours / BILLING_PERIOD)
   key :minutes_played,  Integer, default: 0
+  key :last_played_at, Time
 
   one :invite
 
@@ -36,12 +37,16 @@ class User
                   :password_confirmation,
                   :invite_code
 
+  before_create do
+    self.word = World.default
+  end
+
   def first_signin?
     sign_in_count <= 1
   end
 
-  before_create do
-    self.word = World.default
+  def verified?
+    not last_played_at.nil?
   end
 
 
@@ -49,8 +54,6 @@ class User
 
   def add_credits n
     increment credits: (n / BILLING_PERIOD)
-    reload
-    n
   end
 
   def hours

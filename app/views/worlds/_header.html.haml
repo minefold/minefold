@@ -26,3 +26,6 @@
     %a.disabled Videos
   %li
     %a.disabled Stats
+  - if signed_in? and @world.creator == current_user
+    %li
+      = link_to 'Settings', [:edit, @world]

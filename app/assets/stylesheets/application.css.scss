@@ -14,6 +14,7 @@
 @import 'shared/vars';
 
 html {
+//  background: darken($blue, 30%);
 }
 
 body {
@@ -82,12 +83,12 @@ form {
     margin: 0;
     padding: $baseline $gutter;
 
-    background: darken($blue, 10%);
+    background: $blue;
     border: none;
     color: white;
     font: 14px/18px $helvetica;
     font-weight: 600;
-    @include border-radius($radius);
+//    @include border-radius($radius);
 
     cursor: pointer;
     display: block;
@@ -107,26 +108,25 @@ form {
 
 
 header.global {
-  padding: (2 * $baseline) 0 ((2 * $baseline) - 1px) 0;
-  background: darken($blue, 30%) url('/images/header.png') top center repeat-x;
-  color: white;
-  border-bottom: 1px solid black;
+  margin-bottom: -1px;
+  border-bottom: 1px solid darken(white, 5%);
 
   h1 {
     float: left;
-    position: relative;
+    padding: (2 * $baseline) 0;
 
     a {
       @include logo;
       font-size: 21px;
       line-height: 24px;
       text-decoration: none;
-      color: white;
-      text-shadow: 0 1px 0 black;
+      color: darken(white, 10%);
+      text-shadow: 0 1px 0 darken(white, 20%);
       display: block;
 
       &:hover {
-        color: $green;
+        color: $blue;
+        text-shadow: 0 1px 0 darken($blue, 20%);
       }
     }
   }
@@ -137,9 +137,12 @@ header.global {
 }
 
 #content {
-  border-top: 1px solid white;
-  padding: ((2 * $baseline) - 1px) 0 0 0;
   margin-bottom: 2 * $baseline;
+  padding: ((2 * $baseline) - 1px) 0 0 0;
+
+  .container {
+    background: white;
+  }
 
   #page {
     position: relative;

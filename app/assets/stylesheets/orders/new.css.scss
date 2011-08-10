@@ -33,7 +33,7 @@
     overflow: auto;
     border: $border solid darken(white, 10%);
     padding: $border;
-    @include border-radius($radius);
+    @include border-radius(2 * $radius);
     @include box-sizing(border-box);
 
     li {
@@ -73,7 +73,7 @@
         }
 
         &:hover {
-          background: darken($green, 10%);
+//          background: darken($green, 10%);
         }
       }
 

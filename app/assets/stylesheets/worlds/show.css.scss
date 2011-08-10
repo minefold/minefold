@@ -45,6 +45,7 @@
 
         &.disabled {
           color: darken(darken(white, 5%), 10%);
+          cursor: normal;
           &:hover {
             background: darken(darken(white, 5%), 5%);
             color: darken(darken(darken(white, 5%), 10%), 5%);
@@ -126,10 +127,12 @@
           @include border-radius(4 * $radius);
         }
       }
+
       .user {
         margin-bottom: $baseline;
         margin-left: 36px + $gutter;
       }
+
       textarea {
         @include box-sizing(border-box);
         background-color: transparent;

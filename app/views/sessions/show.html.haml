@@ -1,19 +1,23 @@
 %ol#session
   - if user_signed_in?
+    %li.credits
+      = pluralize current_user.hours, 'hr', 'hrs'
+      &nbsp;
+      = pluralize current_user.minutes, 'm', 'mins'
+
     %li.buy
-      = link_to credits_path do
-        .credits
-          = pluralize current_user.hours, 'hr', 'hrs'
-          &nbsp;
-          = pluralize current_user.minutes, 'm', 'mins'
-        Buy time
+      = link_to 'Buy Time', credits_path
 
     %li.account
       = link_to edit_account_path do
-        = image_tag current_user.gravatar_url(size: 22), width: 22, height: 22
-
-    %li.signout
-      = link_to 'Sign Out', destroy_user_session_path, method: :delete
+        = image_tag current_user.gravatar_url(size: 24), width: 24, height: 24
+      .tabs{hidden}
+        %svg{width: 8, height: 6, version: '1.1', xmlns: 'http://www.w3.org/2000/svg'}
+          %polygon{points: '0,6 4,1 8,6'}
+        %ol
+          / %li= link_to 'Your profile', '#'
+          %li= link_to 'Your account', '#'
+          %li= link_to 'Sign Out', destroy_user_session_path, method: :delete
 
   - else
     %li= link_to 'Sign In', new_user_session_path

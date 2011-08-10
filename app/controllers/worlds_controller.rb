@@ -28,6 +28,10 @@ class WorldsController < ApplicationController
     render :action => @world.status unless @world.status.blank?
   end
 
+  def edit
+    @world = World.find_by_slug! params[:id]
+  end
+
   def map
     @world = World.find_by_slug! params[:id]
   end

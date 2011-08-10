@@ -1,70 +1,95 @@
 @import 'shared/vars';
 
 #session {
-  overflow: auto;
   font-size: 12px; line-height: 24px;
+  padding: (2 * $baseline) 0;
 
   li {
     float: left;
     margin-left: $gutter;
-  }
 
-  a {
-    color: $blue;
-    text-decoration: none;
-    &:hover {
-      color: lighten($blue, 20%);
-    }
-  }
+    &.buy a {
+      font-weight: 700;
+      text-align: center;
+      border-radius: $radius;
+      padding: 0 $gutter/2;
+      background: $green;
+      color: #FFF;
+      line-height: 18px;
+      padding: ($baseline / 2) $gutter;
+      display: block;
+      text-shadow: 0 1px 0 darken($green, 20%);
 
-  img {
-    margin-top: 0;
-    margin-bottom: -$baseline;
-
-    border-radius: $radius;
-    background: darken($blue, 30%);
-    border: 1px solid darken($blue, 30%);
-    border-top: 1px solid white;
-    border-bottom: 1px solid black;
-  }
-
-  .buy a {
-    font-weight: 700;
-    text-align: center;
-    border-radius: $radius;
-    padding: 0 $gutter/2;
-    background: $green;
-    color: #FFF;
-    line-height: 18px;
-    padding: (($baseline / 2) - 1px) $gutter;
-    display: block;
-    text-shadow: 0 1px 0 darken($green, 20%);
-    border-top: 1px solid lighten($green, 10%);
-    border-bottom: 1px solid darken($green, 10%);
-
-    .credits {
-      @include inline-block;
-      background-color: lighten($blue, 20%);
-      text-shadow: 0 1px 0 $blue;
-      padding: (($baseline / 2) - 1px) $gutter;
-      padding-top: $baseline / 2;
-      margin: -3px 0;
-      margin-left: -$gutter;
-      margin-right: $gutter / 2;
-      @include border-radius($radius 0 0 $radius);
-      border-top: 1px solid lighten(lighten($blue, 20%), 10%);
-      border-bottom: 1px solid darken(lighten($blue, 20%), 10%);
+      &:hover {
+        background-color: darken($green, 10%);
+      }
     }
 
-    &:hover {
-      background-color: darken($green, 10%);
-      border-top-color: $green;
+    &.account {
+      img {
+        margin-bottom: -$baseline;
+        border-radius: $radius;
+        background: darken(white, 10%);
+      }
 
-      .credits {
-        background-color: darken(lighten($blue, 20%), 10%);
-        border-top-color: lighten($blue, 20%);
+      &:hover {
+        img {
+          border: 2px solid $blue;
+          margin: -2px; margin-bottom: -($baseline - 2px);
+        }
+      }
+
+      .tabs {
+        position: absolute;
+        z-index: 1;
+        width: 100px;
+        margin-left: -(100px - 24px);
+        margin-top: -2px;
+        svg {
+          position: absolute;
+          right: 0;
+          margin-right: 12px - 3px - 1px;
+          polygon {
+            fill: $blue;
+          }
+        }
+        ol {
+          background: $blue;
+          margin-top: 6px;
+
+          padding: $border 0;
+          overflow: auto;
+          @include border-radius($radius);
+          @include box-shadow(0 ($baseline/2) (2*$baseline) rgba(black, 0.2));
+
+          li {
+            margin: 0;
+            padding: 0 $border;
+            a {
+              color: white;
+              text-align: right;
+              display: block;
+              width: 100px - (2 * $border) - 2 * ($gutter - $border);
+              padding: 0 ($gutter - $border);
+              @include border-radius($radius);
+              font-weight: 600;
+              text-shadow: 0 1px darken($blue, 10%);
+              &:hover {
+                background: darken($blue, 20%);
+                text-shadow: 0 1px darken($blue, 30%);
+              }
+            }
+          }
+        }
       }
     }
   }
+
+  a {
+    text-decoration: none;
+  }
+
+
+
 
 }

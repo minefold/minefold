@@ -22,6 +22,7 @@ gem 'gravtastic', '>= 3.2.4', groups: [:default, :assets]
 gem 'em-http-request'
 gem 'pusher'
 gem 'sendgrid'
+gem 'decent_exposure'
 
 group :assets, :development do
   gem 'sass-rails'

@@ -11,6 +11,11 @@ every = (ms, fn) -> setInterval(fn, ms)
 
 $(document).ready ->
 
+  $('#session .account').hover(
+    (-> $(this).find('.tabs').show()),
+    (-> $(this).find('.tabs').hide()),
+  )
+
   inviteForm = $('form#new_invite')
   inviteForm.submit (e) ->
     $.post inviteForm.attr('action'), inviteForm.serialize(), (data) ->
