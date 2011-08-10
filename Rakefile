@@ -5,3 +5,6 @@ require File.expand_path('../config/application', __FILE__)
 namespace(:db){ namespace(:test) { task(:prepare)}}
 
 Minefold::Application.load_tasks
+
+require 'resque'
+require 'resque/tasks'

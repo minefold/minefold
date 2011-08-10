@@ -17,6 +17,8 @@ gem 's3_swf_upload',
   git: 'https://github.com/nathancolgate/s3-swf-upload-plugin'
 
 gem 'resque', require: 'resque/server'
+gem 'resque_mailer'
+
 gem 'fog'
 gem "gravtastic", git:'git://github.com/snappycode/gravtastic.git'
 gem 'em-http-request'
@@ -38,6 +40,7 @@ group :development do
   gem 'heroku'
   gem 'foreman'
   gem 'rake'
+  gem 'looksee'
 end
 
 group :test do
