@@ -38,7 +38,7 @@ class User
                   :invite_code
 
   before_create do
-    self.word = World.default
+    self.world = World.default
   end
 
   def first_signin?
