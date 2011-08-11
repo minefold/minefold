@@ -20,4 +20,8 @@ class Order
     payments.empty? ? 'incomplete' : payments.last.status
   end
 
+  def credits
+    payments.inject(0) {|total, payment| total + payment.hours} / User::BILLING_PERIOD
+  end
+
 end

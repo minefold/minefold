@@ -1,14 +1,15 @@
 %nav
+  = link_to 'About / FAQ', page_path(:about)
   / =link_to 'Referrals', referrals_path
-  / %span.pipe
-  /   |
+  %span.pipe
+    |
   %a{href: '//minefold.tumblr.com'} Blog
   %span.pipe
     |
   %a{href: '//twitter.com/#!/minefold'} @minefold
   %span.pipe
     |
-  %a{href: 'mailto:support@minefold.com'} Support
+  = link_to 'Help', page_path('help')
 
 %p
   Designed in Sydney, Australia. &copy; #{Time.now.year} Minefold.
