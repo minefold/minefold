@@ -175,6 +175,12 @@
         .body {
           margin-left: 36px + $gutter;
         }
+        
+        .media {
+          margin-left: 36px + $gutter;
+          .thumbnail { width: 100px; }
+        }
+        
       }
     }
   }

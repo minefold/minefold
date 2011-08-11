@@ -2,18 +2,18 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
 
-  test "invite is generated before validation" do
-    user = User.new
-    assert !user.invite.present?
-    user.valid?
-    assert user.invite.present?
-  end
+  # test "invite is generated before validation" do
+  #   user = User.new
+  #   assert !user.invite.present?
+  #   user.valid?
+  #   assert user.invite.present?
+  # end
 
-  test "invite is the right length" do
-    user = User.new
-    user.set_invite
-    assert_equal user.invite.length, User::TOKEN_LENGTH
-  end
+  # test "invite is the right length" do
+  #   user = User.new
+  #   user.set_invite
+  #   assert_equal user.invite.length, User::TOKEN_LENGTH
+  # end
 
 
   test "downcases #email when saving" do
