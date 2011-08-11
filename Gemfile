@@ -19,6 +19,9 @@ gem 's3_swf_upload',
 gem 'resque', require: 'resque/server'
 gem 'resque_mailer'
 
+gem 'rinku'
+gem 'embedly'
+
 gem 'fog'
 gem 'gravtastic', '>= 3.2.4', groups: [:default, :assets]
 gem 'em-http-request'

@@ -1,4 +1,6 @@
 ENV['RAILS_ENV'] = 'test'
+ENV['MONGOHQ_URL'] = 'mongodb://localhost/minefold_test'
+
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 

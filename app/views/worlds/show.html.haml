@@ -24,21 +24,44 @@
         .avatar
           = image_tag current_user.gravatar_url(size: 36), width: 36, height: 36
         = text_area_tag :body, '', rows: 2, autofocus: true
-
-  - @world.wall_items.each do |item|
-    .item[item]
-      - case item
-      - when Chat
-        .avatar
-          = image_tag item.user.gravatar_url(size: 36), width: 36, height: 36
-        .user
-          %span.username= item.user.username
-          %span.timestamp
-            = time_ago_in_words item.created_at
-            ago
-        .body
-          = item.body
-      - when Activity
-        .user
-          %span.username
-        .action= item.action
+    
+  #wall-items
+  
+- template 'chat-message' do
+  :plain
+    <div id="chat_{{id}}" class="chat item">
+      {{#user}}
+      <div class="avatar">
+        <img src="{{gravatar_url}}" />
+      </div>
+      <div class="user">
+        <span class="username">{{username}}</span>
+        {{/user}}
+        <span class="timestamp">{{created_ago}}</span>
+      </div>
+      <div class="body">{{{body}}}</div>
+      <div class="media">
+        {{#media}}
+        <a href="{{url}}"><img class="thumbnail" src="{{thumbnail_url}}" /></a>
+        {{/media}}
+      </div>
+    </div>
+        
+:javascript
+  $(function(){
+    var chatMessages = #{@world.wall_items.map{|wi| {
+        id: wi.id,
+        user: { username:wi.user.username, gravatar_url: wi.user.gravatar_url(size: 36) },
+        created_ago:time_ago_in_words(wi.created_at),
+        body: wi.html ? wi.html.html_safe : wi.raw,
+        media: wi.media
+      } }.to_json};
+    
+    $wallItems = $('#wall-items');
+    
+    $.each(chatMessages, function(){
+      $wallItems.append(Mustache.to_html(Mustache.templates['chat-message'], this));
+    });
+    
+  });
+  

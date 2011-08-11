@@ -1,6 +1,7 @@
 #= require jquery
 #= require jquery_ujs
 #= require json2
+#= require mustache
 #= require underscore
 #= require backbone
 #= require gravtastic
@@ -10,6 +11,10 @@ delay = (ms, fn) -> setTimeout(fn, ms)
 every = (ms, fn) -> setInterval(fn, ms)
 
 $(document).ready ->
+  Mustache.templates = {}
+  $('#templates script').each ->
+    name = $(@).attr('id').replace('template-', '')
+    Mustache.templates[name] = $(@).html()
 
   $('#session .account').hover(
     (-> $(this).find('.tabs').show()),
@@ -41,8 +46,15 @@ $(document).ready ->
   f.submit (e) ->
     e.preventDefault()
 
-    body = f.find('textarea').val()
-    $.post f.attr('action'), body: body
+    $.ajax
+      type: 'POST'
+      url: f.attr('action')
+      data: 
+        body: f.find('textarea').val()
+      success: (data) -> 
+        $('#wall-items').prepend Mustache.to_html(Mustache.templates['chat-message'], data)
+      dataType: 'json'
+
     f.find('textarea').val ''
 
 
@@ -60,19 +72,11 @@ $(document).ready ->
 
 
   channel.bind 'chat:create', (data) ->
-    item = $('<div/>').addClass('item').addClass('chat')
+    item = $('#chat_' + data.id)
+    console.log data, item
 
-    gravatarUrl = Gravtastic(data['user']['email'], size: 36)
-
-    item.append(
-      $('<div/>').addClass('avatar').append(
-        $('<img/>').attr(src: gravatarUrl, width: 36, height: 36)
-      )
-    ).append(
-      $('<div/>').addClass('user').append(
-        $('<span/>').addClass('username').text(data['user']['username'])
-      )
-    ).append(
-      $('<div/>').addClass('bodyg').text(data['body'])
-    ).insertAfter(f)
+    if item.length > 0
+      item.replaceWith(Mustache.to_html(Mustache.templates['chat-message'], data))
+    else
+      $('#wall-items').prepend(Mustache.to_html(Mustache.templates['chat-message'], data));
 
