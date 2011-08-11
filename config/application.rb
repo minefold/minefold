@@ -20,5 +20,9 @@ module Minefold
     config.filter_parameters += [:password]
 
     config.assets.enabled = true
+
+    config.buckets = %w( world_import ).each_with_object({}) do |name, buckets|
+      buckets[name.to_sym] = "minefold.#{Rails.env}.#{name}"
+    end
   end
 end

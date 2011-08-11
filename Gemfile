@@ -25,6 +25,7 @@ gem 'em-http-request'
 gem 'pusher'
 gem 'sendgrid'
 gem 'decent_exposure'
+gem 'rubyzip'
 
 group :assets, :development do
   gem 'sass-rails'
