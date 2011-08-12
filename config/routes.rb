@@ -25,7 +25,11 @@ Minefold::Application.routes.draw do
   get '/about' => 'high_voltage/pages#show', :id => 'about'
 
   resources :worlds do
-    resources :wall_items
+    resources :wall_items do
+      collection do
+        get 'page/:page' => 'wall_items#page'
+      end
+    end
     post :activate, :on => :member
     get  :map, :on => :member
 
@@ -34,8 +38,6 @@ Minefold::Application.routes.draw do
 
   get '/s3_uploads' => 'upload_policy#index', :format => :xml
 
-
   mount Resque::Server, :at => '/resque'
   get '/admin' => 'admin#index', :as => :admin
-
 end
