@@ -5,6 +5,7 @@
 #= require underscore
 #= require backbone
 #= require gravtastic
+#= require jquery.infinitescroll
 #= require_tree .
 
 delay = (ms, fn) -> setTimeout(fn, ms)

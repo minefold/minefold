@@ -25,6 +25,7 @@ class WorldsController < ApplicationController
 
   def show
     @world = World.find_by_slug!(params[:id])
+    @wall_items = WallItem.where(wall_id:@world.id).paginate(order: :created_at.desc, per_page:25, page:1)
     render :action => @world.status unless @world.status.blank?
   end
 

@@ -1,4 +1,4 @@
-= render partial: 'header'
+= render partial: 'worlds/header'
 
 #stream
   %aside
@@ -37,7 +37,7 @@
       <div class="user">
         <span class="username">{{username}}</span>
         {{/user}}
-        <span class="timestamp">{{created_ago}}</span>
+        <span class="timestamp">{{created_ago}} ago</span>
       </div>
       <div class="body">{{{body}}}</div>
       <div class="media">
@@ -49,7 +49,7 @@
         
 :javascript
   $(function(){
-    var chatMessages = #{@world.wall_items.map{|wi| {
+    var chatMessages = #{@wall_items.map{|wi| {
         id: wi.id,
         user: { username:wi.user.username, gravatar_url: wi.user.gravatar_url(size: 36) },
         created_ago:time_ago_in_words(wi.created_at),
@@ -59,9 +59,21 @@
     
     $wallItems = $('#wall-items');
     
-    $.each(chatMessages, function(){
-      $wallItems.append(Mustache.to_html(Mustache.templates['chat-message'], this));
-    });
+    function appendChatMessages(chatMessages) {
+      $.each(chatMessages, function(){
+        $wallItems.append(Mustache.to_html(Mustache.templates['chat-message'], this));
+      });
+    }
+    
+    appendChatMessages(chatMessages);
+    
+    $wallItems.moar({
+      url: '/worlds/#{@world.slug}/wall_items/page/:page',
+      load: function(chatMessages, e) {
+        appendChatMessages(chatMessages);
+      }
+    })
+    
+    
     
   });
-  

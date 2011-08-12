@@ -12,12 +12,15 @@ class Chat < WallItem
   def process!
     urls = []
     self.html = Rinku.auto_link(raw) {|url| urls << url; url }
-    
-    embedly = Embedly::API.new :key => '739f2006c30d11e089e14040d3dc5c07', :user_agent => 'Mozilla/5.0 (compatible; mytestapp/1.0; admin@minefold.com)'
-    
-    self.media = embedly.oembed(urls:urls).map{|m| JSON.parse(m.to_json)['table'] }
+
+    if urls.size > 0
+      embedly = Embedly::API.new :key => '739f2006c30d11e089e14040d3dc5c07', :user_agent => 'Mozilla/5.0 (compatible; mytestapp/1.0; admin@minefold.com)'
+      self.media = embedly.oembed(urls:urls).map{|m| JSON.parse(m.to_json)['table'] }
+    end
     
     save!
+    
+    push_chat_item
   end
   
   def push_chat_item
@@ -26,7 +29,7 @@ class Chat < WallItem
   
   def send_message_to_world
     # TODO: make sure this was published on a world
-    REDIS.publish "world.#{wall.id}.input", "say <#{user.username}> #{body}"
+    REDIS.publish "world.#{wall.id}.input", "say <#{user.username}> #{raw}"
   end
   
   include ActionView::Helpers::DateHelper
