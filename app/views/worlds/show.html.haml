@@ -49,6 +49,9 @@
         
 :javascript
   $(function(){
+    
+    $('#stream').worldStream();
+    
     var chatMessages = #{@wall_items.map{|wi| {
         id: wi.id,
         user: { username:wi.user.username, gravatar_url: wi.user.gravatar_url(size: 36) },
@@ -56,7 +59,7 @@
         body: wi.html ? wi.html.html_safe : wi.raw,
         media: wi.media
       } }.to_json};
-    
+          
     $wallItems = $('#wall-items');
     
     function appendChatMessages(chatMessages) {
