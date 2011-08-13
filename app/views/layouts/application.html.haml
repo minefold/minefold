@@ -37,9 +37,6 @@
       .container
         = render partial: 'shared/footer'
 
-    #templates= yield :templates
-
     = javascript_include_tag 'application'
-
     - if Rails.env.production?
       = render partial: 'shared/stats'

@@ -73,12 +73,3 @@
 
   -# TODO: Investigate wether this is needed
   %img{alt: '', border: 0, src: 'https://www.paypalobjects.com/en_AU/i/scr/pixel.gif', width: 1, height: 1}
-
-:javascript
-  var products = $('#products li');
-  products.click(function(e) {
-    var self = $(e.currentTarget);
-    products.removeClass('active');
-    self.addClass('active').find('input:radio').click();
-    e.preventDefault();
-  });

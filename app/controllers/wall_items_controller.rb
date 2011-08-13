@@ -1,9 +1,9 @@
 class WallItemsController < ApplicationController
 
-  expose(:world) { World.find_by_slug!(params[:world_id]) }
+  expose(:world) { World.find_by_slug!(params[:world_id] || params[:id]) }
 
   def create
-    @chat = Chat.new(user: current_user, raw: params[:body])
+    @chat = Chat.new(user: current_user, raw: params[:raw])
     world.wall_items << @chat
 
     if @chat.valid? and @chat.save

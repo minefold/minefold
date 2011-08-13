@@ -1,0 +1,28 @@
+@import 'shared/vars';
+
+#invites-index #page {
+
+  p {
+    font-size: 14px;
+    margin-bottom: 4 * $baseline;
+  }
+
+  form {
+    div {
+      margin-bottom: 2 * $baseline;
+    }
+
+    .errors, .count {
+      display: inline;
+      margin-left: $gutter;
+    }
+
+    .errors { color: $red; }
+
+    input[type=submit] {
+      display: inline;
+    }
+
+  }
+
+}

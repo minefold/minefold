@@ -4,7 +4,7 @@
 
 <p>To get started sign up at:</p>
 
-<blockquote><%= link_to invite_url(@invite), invite_url(@invite) %></blockquote>
+<blockquote><%= link_to new_user_registration_url(code: @invite.code), new_user_registration_url(code: @invite.code) %></blockquote>
 
 <p><small>(If you don't have a Minecraft username already, you can get one at <a href='http://minecraft.net'>http://minecraft.net</a>)</small></p>
 

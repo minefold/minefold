@@ -1,0 +1,29 @@
+@import 'shared/vars';
+
+header.global {
+  border-bottom: 1px solid darken(white, 5%);
+
+  h1 {
+    float: left;
+    padding: (2 * $baseline) 0;
+
+    a {
+      @include logo;
+      font-size: 21px;
+      line-height: 24px;
+      text-decoration: none;
+      color: lighten(black, 90%);
+      text-shadow: 0 1px 0 lighten(black, 80%);
+      display: block;
+
+      &:hover {
+        color: $blue;
+        text-shadow: 0 1px 0 darken($blue, 20%);
+      }
+    }
+  }
+
+  aside {
+    float: right;
+  }
+}

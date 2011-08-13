@@ -59,7 +59,6 @@
   #stream {
     margin-bottom: 2 * $baseline;
     width: 8 * ($gutter + $col + $gutter) - (2 * $gutter) - (2 * $pad);
-    padding: 0 $pad;
 
     aside {
       float: right;
@@ -175,12 +174,12 @@
         .body {
           margin-left: 36px + $gutter;
         }
-        
+
         .media {
           margin-left: 36px + $gutter;
           .thumbnail { height: 50px; }
         }
-        
+
       }
     }
   }

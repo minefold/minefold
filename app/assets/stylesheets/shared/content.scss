@@ -1,0 +1,89 @@
+@import 'shared/vars';
+
+#content {
+  margin-bottom: 2 * $baseline;
+
+  #page {
+    position: relative;
+    background: white;
+  }
+
+  a {
+    cursor: pointer;
+  }
+
+  strong {
+    font-weight: 700;
+  }
+
+  pre {
+    margin-bottom: 2*$baseline;
+  }
+
+  code {
+    font-family: monospace;
+  }
+
+  form {
+    label {
+      display: block;
+    }
+
+    input, textarea {
+      padding: $baseline $gutter/2;
+
+      padding: ($baseline - $border) ($gutter - $border);
+      border: $border solid darken(white, 10%);
+      @include border-radius($radius);
+      outline: none;
+      margin: 0;
+
+      font: 14px/18px $helvetica;
+
+      @include transition(border-color, 0.15s, ease-in-out);
+
+      &:focus {
+        border-color: $blue;
+      }
+      &[type=image] {
+        border: none;
+      }
+    }
+
+    button, input[type=submit] {
+      margin: 0;
+      padding: $baseline $gutter;
+
+      background: $blue;
+      border: none;
+      color: white;
+      font: 14px/18px $helvetica;
+      font-weight: 600;
+
+      cursor: pointer;
+      display: block;
+
+      &:hover, &:focus {
+        background: $blue;
+      }
+
+      &:disabled {
+        background: darken(white, 10%);
+        &:hover, &:focus {
+          background: darken(white, 15%);
+        }
+      }
+    }
+  }
+
+  header {
+    margin: 0;
+    padding: (2 * $baseline) 0;
+    font-size: 24px; line-height: 48px;
+    overflow: auto;
+
+    h1 {
+      font-size: 24px;
+    }
+  }
+}

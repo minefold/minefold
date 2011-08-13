@@ -20,10 +20,7 @@ $.fn.moar = (options) ->
 
     finishedLoading = ->
       paging = false
-      console.log 'finishedLoading'
       $loading.remove()
-
-
 
     $(window).scroll =>
       return if paging
@@ -37,4 +34,5 @@ $.fn.moar = (options) ->
             currentPage += 1
             options.onLoad(data)
             finishedLoading()
-          error: ->  finishedLoading()
+          error: ->
+            finishedLoading()

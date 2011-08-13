@@ -3,7 +3,7 @@ class User
   include Gravtastic
 
   BILLING_PERIOD = 1.minute
-  DEFAULT_INVITES  = 10
+  MAX_REFERRALS  = 10
   FREE_HOURS  = 1
 
   key :email,    String,  unique: true
@@ -11,6 +11,8 @@ class User
   key :credits,  Integer, default: (FREE_HOURS.hours / BILLING_PERIOD)
   key :minutes_played,  Integer, default: 0
   key :last_played_at, Time
+
+  key :referrals, Integer, :default => 0
 
   one :invite
 
@@ -74,15 +76,24 @@ class User
     self.invite = Invite.unclaimed.find_by_code(code.downcase)
   end
 
+  def referrals_left
+    MAX_REFERRALS - referrals
+  end
+
   after_create do
     self.invite.user = self
     self.invite.save
   end
 
+  USER_REFERRAL_BONUS = 1.hour
+  FRIEND_REFERRAL_BONUS = 4.hours
+
   def verify!
-    add_credits 1.hour
-    invite.creator.add_credits 4.hours
+    decrement referrals: 1
     invite.set claimed: true
+
+    add_credits USER_REFERRAL_BONUS
+    invite.creator.add_credits FRIEND_REFERRAL_BONUS
   end
 
   validates_presence_of :invite, on: :create

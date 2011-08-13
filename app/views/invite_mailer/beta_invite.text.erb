@@ -4,7 +4,7 @@ Hi <%= @invite.email %>!
 
 First off, to get started sign up at:
 
-<%= @invite.code %>
+<%= new_user_registration_url(code: @invite.code) %>
 
 (If you don't have a Minecraft username, you can get one at http://minecraft.net)
 
