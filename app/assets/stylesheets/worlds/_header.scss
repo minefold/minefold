@@ -41,7 +41,9 @@
         text-shadow: 0 1px 0 white;
 
         &:hover {
-          background: #CCC;
+          background: $green;
+          color: white;
+          text-shadow: 0 1px 0 darken($green, 20%);
         }
 
         &.disabled {
@@ -50,10 +52,23 @@
           &:hover {
             background: darken(darken(white, 5%), 5%);
             color: darken(darken(darken(white, 5%), 10%), 5%);
+            text-shadow: 0 1px 0 white;
           }
         }
       }
     }
   }
+}
 
+#worlds-show #nav li.activity, #worlds-map #nav li.map {
+  a {
+    background: darken($blue, 20%);
+    color: #FFF;
+    text-shadow: none;
+    @include border-radius($radius);
+    &:hover {
+      background: darken($blue, 10%);
+      text-shadow: 0 1px 0 darken($blue, 20%);
+    }
+  }
 }

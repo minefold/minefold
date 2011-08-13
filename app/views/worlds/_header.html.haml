@@ -16,16 +16,16 @@
 
 
 %ul#nav
-  %li
+  %li.activity
     = link_to 'Activity', @world
-  %li
+  %li.map
     = link_to 'Map', [:map, @world]
-  %li
+  %li.photos
     %a.disabled Photos
-  %li
+  %li.videos
     %a.disabled Videos
-  %li
+  %li.stats
     %a.disabled Stats
   - if signed_in? and @world.creator == current_user
-    %li
+    %li.settings
       = link_to 'Settings', [:edit, @world]
