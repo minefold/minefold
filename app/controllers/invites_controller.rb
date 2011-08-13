@@ -11,6 +11,7 @@ class InvitesController < ApplicationController
     invite.creator = current_user
 
     if invite.valid? and invite.save and InviteMailer.beta_invite(invite).deliver
+      current_user.increment referrals: 1
 
       current_user.reload
 

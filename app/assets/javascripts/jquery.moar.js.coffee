@@ -6,7 +6,7 @@ $.fn.moar = (options) ->
     load: (data) -> console.log data
     scrollMargin: 50
     startPage: 1
-    loadingImage:"/images/loading.gif"
+    loadingImage: '/images/spinner.gif'
   }, options
 
   # Preload loading image

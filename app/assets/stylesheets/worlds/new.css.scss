@@ -1,32 +1,105 @@
 @import 'shared/vars';
 
-#worlds-new #content {
-  .new-world {
-    float: right;
-    width: 4 * $col + 6 * $gutter;
+#worlds-new #page {
+  label {
+    margin-bottom: $baseline;
   }
 
-  .import-world {
-    float: left;
-    width: 8 * $col + 14 * $gutter;
+  .name {
+    margin-bottom: $baseline;
+    input {
+      font-size: 18px;
+      line-height: 24px;
+      width: 6 * ($gutter + $col + $gutter) - (4 * $gutter);
+    }
   }
 
-  p {
-    margin-bottom: 2 * $baseline;
-
-    &.cb label {
+  .options {
+    margin-bottom: 4 * $baseline;
+    span {
+      margin-left: $gutter;
+    }
+    label {
       display: inline;
     }
   }
 
-  input[type=email], input[type=password], input[type=text] {
-    font: 400 14px/18px $helvetica;
-    margin: $baseline 0;
-    border: 2px solid darken(white, 10%);
-    border-radius: $radius;
-    outline: none;
-    &:focus {
-      border-color: $blue;
+  .data {
+    width: 9 * ($gutter + $col + $gutter) - (2 * $gutter);
+    margin: 24px 0;
+
+    overflow: auto;
+
+    h2 {
+      font-size: 16px;
+//      font-weight: 500;
+      line-height: 24px;
+      color: #CCC;
+//      padding: 0 $gutter;
+      margin-bottom: 2 * $baseline;
     }
+
+    ul {
+      overflow: auto;
+      margin-bottom: $baseline;
+      width: 2 * ($gutter + $col + $gutter) - ($gutter);
+      float: left;
+
+      li {
+        background: darken(white, 5%);
+        padding: $baseline $gutter;
+        line-height: 18px;
+        text-shadow: 0 1px 0 white;
+        font-weight: 600;
+        cursor: pointer;
+
+        label {
+          display: inline;
+          cursor: pointer;
+          span {
+            font-weight: normal;
+            font-size: 12px;
+            color: rgba(black, 0.4);
+          }
+        }
+        input[type=radio] {
+          display: none;
+        }
+
+        &:hover {
+          background: darken(white, 10%);
+        }
+
+        &.active {
+          color: white;
+          background: $blue;
+          text-shadow: 0 1px 0 darken($blue, 10%);
+          @include border-radius($radius 0 0 $radius);
+          label span {
+            color: rgba(white, 0.6);
+          }
+        }
+      }
+    }
+
+    section {
+      float: left;
+      width: 7 * ($gutter + $col + $gutter) - (5 * $gutter);
+      padding: (2 * $baseline - $border) (2 * $gutter - $border);
+
+      border: $border solid $blue;
+      background: white;
+
+      min-height: 3 * 24px - (2 * $border);
+
+      @include border-radius(0 $radius $radius 0);
+
+      pre {
+        margin: (2 * $baseline);
+        color: #999;
+      }
+
+    }
+
   }
 }

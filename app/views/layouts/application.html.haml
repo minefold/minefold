@@ -19,7 +19,9 @@
 
     - # TODO: OpenGraph tags
 
-    %script{src: 'http://js.pusherapp.com/1.8/pusher.min.js'}
+    = javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js'
+    = javascript_include_tag 'http://js.pusherapp.com/1.8/pusher.min.js'
+    = javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js'
 
   %body{page_css_selector}
     %header.global

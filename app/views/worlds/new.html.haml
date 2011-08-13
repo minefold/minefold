@@ -1,125 +1,159 @@
 = flash[:errors].to_json if flash[:errors]
 
-.import-world
-  %header
-    %h1
-      %strong Upload
-      an existing world
+%header
+  %h1
+    %strong Create
+    a new world
 
-  = flash[:errors].to_json if flash[:errors]
+= form_for @world do |f|
+  .name
+    = f.text_field :name, placeholder: 'Name'
 
-  #import-world
-    #upload
-      = raw s3_swf_upload_tag(keyPrefix: "#{@world.id}-")
-    #uploading(style="display:none")
-      %p New world's name:
-
-      = form_for @world do |f|
-        = f.hidden_field :_id, :value => @world.id
-        = f.hidden_field :status, :value => 'pending_import'
-
-        %p
-          = f.text_field :name, :placeholder => 'Name'
-
-        %p.cb
-          = check_box_tag 'world[options][pvp]', 'pvp', checked: @world.options['pvp']
-          = label_tag 'world[options][pvp]', 'PVP'
-
-        %p.cb
-          = check_box_tag 'world[options][spawn-monsters]', 'spawn-monsters', checked: @world.options['spawn-monsters']
-          = label_tag 'world[options][spawn-monsters]', 'Spawn Monsters'
-
-        %p
-          = f.submit 'Create'
-
-    %p.status
-
-  %p
-    You need to create an archive of your world. Nagivate to
-  %pre
-    %code ~/Library/Application&nbsp;Support/minecraft/saves
-
-  %p
-    and right click on your world's folder and choose "Compress (world name)".
-    The zip file that is created is what you need to upload.
-
-  %img{src: '/images/compress.png'}
-
-:javascript
-  $(function(){
-    var worldId = #{@world.id.to_json};
-    var worldUploaded = false;
-    var worldInfoProvided = false;
-
-    var $status = $('#import-world .status');
-
-    var currentFile;
-
-    function createWorldIfReady() {
-      if (worldUploaded && worldInfoProvided) {
-        $('#import-world #uploading form input').attr('disabled', false);
-        $('#import-world #uploading form').submit();
-      }
-    }
-
-    s3_swf_1_object.onFileAdd = function(file) {
-      currentFile = file;
-      $('#import-world #uploading').show();
-      s3_swf_1_object.startUploading();
-      $status.text('Uploading...');
-    };
-
-    s3_swf_1_object.onUploadComplete = function(options, event) {
-      $('#import-world #upload').show();
-      $status.text('Finished');
-
-      $.post('/worlds/import', {
-        world_import: { world_id: worldId, filename: currentFile.name }
-      }, function(){
-        worldUploaded = true;
-        createWorldIfReady();
-      });
-    };
-
-    s3_swf_1_object.onUploadError = function(file, e) {
-      $status.text('Error: ' + e);
-      console.log(e);
-    }
-    s3_swf_1_object.onUploadIOError = function(file, e) {
-      $status.text('IO Error: ' + e);
-      console.log(e);
-    }
-    s3_swf_1_object.onUploadProgress = function(file, progress) {
-      percentage = (progress.bytesLoaded / progress.bytesTotal).toFixed(2) * 100;
-      $status.text(percentage.toFixed(0) + '%')
-    }
-
-    $('#import-world #uploading form').one('submit', function(e){
-      e.preventDefault();
-      worldInfoProvided = true;
-      $('#import-world #uploading form input').attr('disabled', 'disabled');
-
-      createWorldIfReady();
-    });
-  });
-
-.new-world
-  %header
-    %h1
-      or
-      %strong create
-      a new world
-
-  = form_for @world do |f|
-    = f.text_field :name, :placeholder => 'Name'
-
-    %p.cb
+  .options
+    %span
       = check_box_tag 'world[options][pvp]', 'pvp', checked: @world.options['pvp']
       = label_tag 'world[options][pvp]', 'PVP'
 
-    %p.cb
+    %span
       = check_box_tag 'world[options][spawn-monsters]', 'spawn-monsters', checked: @world.options['spawn-monsters']
       = label_tag 'world[options][spawn-monsters]', 'Spawn Monsters'
 
-    %p
-      = f.submit 'Create'
+    %span
+      = check_box_tag 'world[options][spawn-animals]', 'spawn-animals', checked: @world.options['spawn-animals']
+      = label_tag 'world[options][spawn-animals]', 'Spawn Animals'
+
+  .data
+    %h2 Terrain Options
+    %ul
+      %li.luck.active
+        = radio_button_tag :init, 'random', checked: true
+        = label_tag :init_random, 'Luck <span>(default)</span>'.html_safe
+      %li.seed
+        = radio_button_tag :init, 'seed'
+        = label_tag :init_seed, 'Seed'
+
+      %li.import
+        = radio_button_tag :init, 'import'
+        = label_tag :init_upload, 'Import'
+
+    %section.luck
+      %p The good ol' default. Prepare to be stunned by what Minecraft makes for you.
+
+    %section.seed{hidden}
+      %p
+        Give Minecraft a little help generating your world: pass it a <a href="http://en.wikipedia.org/wiki/Random_seed">seed</a>. You can find some really awesome seeds from sites such as <a href='http://www.minecraftseeds.info'>minecraftseeds.info</a> and <a href='http://minecraft-seeds.net'>minecraft-seeds.net</a>.
+
+      = label_tag 'world[options][level-seed]', 'Level Seed'
+      = text_field_tag 'world[options][level-seed]'
+
+    %section.import{hidden}
+      %p
+        If you've been playing Minecraft on your own computer or with your friends on another server, you can import an archive of your world.
+
+      %p If you are on Mac OSX, nagivate to
+      %pre
+        %code ~/Library/Application&nbsp;Support/minecraft/saves
+      %p and right click on your world's folder and click "Compress <world name>". After a moment a ".zip" archive should be created. That is the file you want to upload.
+
+      = s3_swf_upload_tag(keyPrefix: "#{@world.id}-")
+
+  %div
+    = f.submit 'Create world'
+
+
+/ = flash[:errors].to_json if flash[:errors]
+/
+/ #import-world
+/   #upload
+/
+/   #uploading(style="display:none")
+/     %p New world's name:
+/
+/     = form_for @world do |f|
+/       = f.hidden_field :_id, :value => @world.id
+/       = f.hidden_field :status, :value => 'pending_import'
+/
+/       %p
+/         = f.text_field :name, :placeholder => 'Name'
+/
+/       %p.cb
+/         = check_box_tag 'world[options][pvp]', 'pvp', checked: @world.options['pvp']
+/         = label_tag 'world[options][pvp]', 'PVP'
+/
+/       %p.cb
+/         = check_box_tag 'world[options][spawn-monsters]', 'spawn-monsters', checked: @world.options['spawn-monsters']
+/         = label_tag 'world[options][spawn-monsters]', 'Spawn Monsters'
+/
+/       %p
+/         = f.submit 'Create'
+/
+/   %p.status
+/
+/ %p
+/   You need to create an archive of your world. Nagivate to
+/ %pre
+/   %code ~/Library/Application&nbsp;Support/minecraft/saves
+/
+/ %p
+/   and right click on your world's folder and choose "Compress (world name)".
+/   The zip file that is created is what you need to upload.
+/
+/ %img{src: '/images/compress.png'}
+
+/ :javascript
+/ $(function(){
+/   var worldId = #{@world.id.to_json};
+/   var worldUploaded = false;
+/   var worldInfoProvided = false;
+/
+/   var $status = $('#import-world .status');
+/
+/   var currentFile;
+/
+/   function createWorldIfReady() {
+/     if (worldUploaded && worldInfoProvided) {
+/       $('#import-world #uploading form input').attr('disabled', false);
+/       $('#import-world #uploading form').submit();
+/     }
+/   }
+/
+/   s3_swf_1_object.onFileAdd = function(file) {
+/     currentFile = file;
+/     $('#import-world #uploading').show();
+/     s3_swf_1_object.startUploading();
+/     $status.text('Uploading...');
+/   };
+/
+/   s3_swf_1_object.onUploadComplete = function(options, event) {
+/     $('#import-world #upload').show();
+/     $status.text('Finished');
+/
+/     $.post('/worlds/import', {
+/       world_import: { world_id: worldId, filename: currentFile.name }
+/     }, function(){
+/       worldUploaded = true;
+/       createWorldIfReady();
+/     });
+/   };
+/
+/   s3_swf_1_object.onUploadError = function(file, e) {
+/     $status.text('Error: ' + e);
+/     console.log(e);
+/   }
+/   s3_swf_1_object.onUploadIOError = function(file, e) {
+/     $status.text('IO Error: ' + e);
+/     console.log(e);
+/   }
+/   s3_swf_1_object.onUploadProgress = function(file, progress) {
+/     percentage = (progress.bytesLoaded / progress.bytesTotal).toFixed(2) * 100;
+/     $status.text(percentage.toFixed(0) + '%')
+/   }
+/
+/   $('#import-world #uploading form').one('submit', function(e){
+/     e.preventDefault();
+/     worldInfoProvided = true;
+/     $('#import-world #uploading form input').attr('disabled', 'disabled');
+/
+/     createWorldIfReady();
+/   });
+/ });

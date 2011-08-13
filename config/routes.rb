@@ -33,7 +33,7 @@ Minefold::Application.routes.draw do
     post :activate, :on => :member
     get  :map, :on => :member
 
-    post :import
+    get '/import_policy.xml', :action => 'import_policy', :on => :collection
   end
 
   get '/s3_uploads' => 'upload_policy#index', :format => :xml
