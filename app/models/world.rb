@@ -17,8 +17,7 @@ class World
   many :players, class: User
 
   many :wall_items, as: :wall,
-                    sort: :created_at.desc,
-                    limit: 100
+                    sort: :created_at.desc
 
   validates_presence_of :name
   validates_presence_of :slug

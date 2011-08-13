@@ -40,6 +40,7 @@ group :assets, :development do
 end
 
 gem 'haml'
+gem 'mustache'
 
 group :development do
   gem 'heroku'

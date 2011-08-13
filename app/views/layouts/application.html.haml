@@ -5,9 +5,9 @@
     %meta{'http-equiv' => 'X-UA-Compatible', :content => 'IE=edge'}
 
     %title Minefold
-    - unless Rails.env.development?
-      = stylesheet_link_tag '//fonts.googleapis.com/css?family=Paytone+One:regular&v1'
+    = stylesheet_link_tag '//fonts.googleapis.com/css?family=Paytone+One:regular&v1'
     = stylesheet_link_tag 'application'
+    = favicon_link_tag
 
     = csrf_meta_tags
     %meta{name: 'pusher_key', content: Pusher.key}
@@ -17,24 +17,14 @@
     - # TODO: Write tags
     %meta{name:'keywords', content:%w().join(',')}
 
-    %link{rel:'shortcut icon', href:url_for('/favicon.ico'), type:'image/x-icon'}
-
-    - # OpenGraph tags
-    %meta{property:'og:title', content:'Minefold'}
-    %meta{property:'og:type', content:'website'}
-    %meta{property:'og:url', content:'//www.minefold.com'}
-    %meta{property:'og:site_name', content:'Minefold'}
+    - # TODO: OpenGraph tags
 
     %script{src: 'http://js.pusherapp.com/1.8/pusher.min.js'}
-    = javascript_include_tag 'application'
-
 
   %body{page_css_selector}
     %header.global
       .container
-        %h1
-          = link_to root_url do
-            Mine<span>fold</span>
+        %h1= link_to 'Minefold', root_url
 
         %aside
           = render template: 'sessions/show'
@@ -44,9 +34,12 @@
         = yield
 
     %footer.global
-      .container= render partial: 'shared/footer'
-
-    - if Rails.env.production?
-      = render partial: 'shared/clicky'
+      .container
+        = render partial: 'shared/footer'
 
     #templates= yield :templates
+
+    = javascript_include_tag 'application'
+
+    - if Rails.env.production?
+      = render partial: 'shared/stats'

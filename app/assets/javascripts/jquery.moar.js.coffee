@@ -8,21 +8,23 @@ $.fn.moar = (options) ->
     startPage: 1
     loadingImage:"/images/loading.gif"
   }, options
-  
+
   # Preload loading image
   loadingImage = (new Image()).src = options.loadingImage
-  
+
   @each ->
     $loading = $("<img src='#{options.loadingImage}' />");
-  
+
     currentPage = options.startPage + 1
     paging = false
-    
+
     finishedLoading = ->
       paging = false
+      console.log 'finishedLoading'
       $loading.remove()
-    
-    
+
+
+
     $(window).scroll =>
       return if paging
       if $(window).scrollTop() > $(document).height() - $(window).height() - options.scrollMargin
@@ -31,8 +33,8 @@ $.fn.moar = (options) ->
         $.ajax
           url: options.url.replace(':page', currentPage)
           dataType: 'json'
-          success: (data) -> 
+          success: (data) ->
             currentPage += 1
-            options.load(data)
+            options.onLoad(data)
             finishedLoading()
           error: ->  finishedLoading()

@@ -1,6 +1,6 @@
 Minefold::Application.routes.draw do
 
-   root :to => 'home#teaser'
+   root :to => 'home#index'
 
   # Authentication
   devise_for :users, :controllers => {

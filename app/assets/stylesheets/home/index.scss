@@ -1,0 +1,120 @@
+@import 'shared/vars';
+
+#home_index #page {
+  height: 1024px;
+
+  h2 {
+    margin-top: 24px;
+    font-family: $paytone;
+    font-size: 48px;
+    width: 600px;
+    line-height: 48px + 12px;
+    color: $green;
+    text-shadow: 0 2px 0 darken($green, 20%);
+  }
+
+  #illin {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
+//#home-teaser #page {
+////  margin: 0 ($col + $gutter + $col + $gutter + $gutter);
+//
+//  h2 {
+//    font: 200 48px/48px $paytone;
+//    margin: (6 * $baseline) 0 ((6 * $baseline) + $baseline);
+//    text-align: center;
+//    color: $green;
+//    text-shadow: 0 2px 0 darken($green, 20%);
+//  }
+//
+//  p {
+//    font: 14px/24px $helvetica;
+//  }
+//
+//  #features {
+//    overflow: auto;
+//    -webkit-font-smoothing: antialiased;
+//
+//    margin: -1px (-$gutter) (4 * $baseline) (-$gutter);
+//    background: url('/shadow.png') top center no-repeat;
+//    padding-top: 13px + (4 * $baseline);
+//
+//
+//    .feature {
+//      float: left;
+//      width: 3*$col + 2 * (2 * $gutter);
+//      margin: $gutter;
+//      margin-bottom: 24px;
+//      text-align: center;
+//
+//      h3 {
+//        line-height: 32px + (2 * $baseline);
+//        font-weight: normal;
+//        font-size: 18px;
+//        color: $blue;
+//      }
+//
+//      img {
+//        padding: $baseline;
+//        background: lighten(black, 90%);
+//        @include border-radius(32px + (2 * $baseline));
+//        margin: 0 auto;
+//        width: 32px;
+//      }
+//
+//      p {
+//        color: #999;
+//        font-size: 15px;
+//      }
+//    }
+//
+//  }
+//
+//  form {
+//    margin: 0 auto;
+//    margin-bottom: 8 * $baseline;
+//    overflow: auto;
+//    width: (4 * $col) + (2 * $gutter) + $gutter+ (2 * $col);
+//    padding: 0 $gutter;
+//
+//    h3 {
+//      color: darken($blue, 20%);
+//      font: 600 16px/24px $helvetica;
+//      text-shadow: 0 1px 0 rgba(#FFF, 0.1);
+//      text-align: center;
+//    }
+//
+//    h3, p {
+//      margin-bottom: 2 * $baseline;
+//    }
+//
+//    input[type=email] {
+//      width: 4 * $col;
+//      font-size: 16px;
+//      line-height: 24px;
+//      text-align: left;
+//      float: left;
+//      margin-right: $gutter;
+//
+//      &:focus {
+//        border: 2px solid $blue;
+//      }
+//    }
+//
+//    button {
+//      width: 2 * $col;
+//      float: left;
+//      font-size: 16px;
+//      line-height: 24px;
+//      background: $blue;
+//      &:hover, &:focus {
+//        background: lighten($blue, 10%);
+//      }
+//
+//    }
+//  }
+//}

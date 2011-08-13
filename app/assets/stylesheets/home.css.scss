@@ -1,14 +1,10 @@
-//= require shared/reset
+//= require normalize
 //= require_self
-//= require_tree .
+//= require_tree ./home
 
 // 9, 10, 11, 12, 14, 16, 18, 21, 24, 30, 48, 60, 72 pts for type
 
 @import 'shared/vars';
-
-//html {
-//  background: darken($blue, 30%);
-//}
 
 body {
   min-width: $width;
@@ -113,8 +109,8 @@ header.global {
       font-size: 21px;
       line-height: 24px;
       text-decoration: none;
-      color: rgba(black, 0.1);
-      text-shadow: 0 1px 0 rgba(black, 0.2);
+      color: darken(white, 10%);
+      text-shadow: 0 1px 0 darken(white, 20%);
       display: block;
 
       &:hover {

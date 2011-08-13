@@ -1,0 +1,21 @@
+<div id="chat_{{id}}" class="chat item">
+  {{#user}}
+    <div class="avatar">
+      <img src="{{gravatar_url}}" width="36" height="36" />
+    </div>
+    <div class="user">
+      <span class="username">{{username}}</span>
+    </div>
+  {{/user}}
+  <span class="timestamp">
+    {{created_ago}} ago
+  </span>
+  <div class="body">{{{body}}}</div>
+  <div class="media">
+    {{#media}}
+      <a href="{{url}}">
+        <img class="thumbnail" src="{{thumbnail_url}}"/>
+      </a>
+    {{/media}}
+  </div>
+</div>
