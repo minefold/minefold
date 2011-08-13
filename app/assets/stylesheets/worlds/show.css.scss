@@ -1,60 +1,6 @@
 @import 'shared/vars';
 
-#worlds-show #page, #worlds-map #page {
-
-  header {
-    h1 {
-      font-size: 24px;
-      line-height: 48px;
-      color: #333;
-      float: left;
-    }
-
-    aside {
-      font-size: 14px;
-      float: right;
-      margin: (1.5 * $baseline) 0;
-      p {
-        line-height: (5 * $baseline);
-      }
-    }
-  }
-
-  #nav {
-    background: darken(white, 5%);
-    margin: 0 (-$pad);
-    margin-bottom: 4 * $baseline;
-    padding: 0 ($gutter);
-    overflow: auto;
-
-    li {
-      float: left;
-
-      a {
-        display: block;
-        line-height: 24px;
-        font-weight: 600;
-        padding: $baseline $gutter;
-        color: darken($blue, 20%);
-        text-decoration: none;
-        text-shadow: 0 1px 0 white;
-
-        &:hover {
-          background: lighten($blue, 40%);
-        }
-
-        &.disabled {
-          color: darken(darken(white, 5%), 10%);
-          cursor: normal;
-          &:hover {
-            background: darken(darken(white, 5%), 5%);
-            color: darken(darken(darken(white, 5%), 10%), 5%);
-          }
-        }
-      }
-    }
-
-  }
+#worlds-show #page {
 
   #stream {
     margin-bottom: 2 * $baseline;
@@ -101,7 +47,6 @@
     }
 
     form, .item {
-      margin-bottom: 2 * $baseline;
       .avatar {
         img {
           border-radius: $radius;
@@ -117,6 +62,7 @@
 
     form {
       position: relative;
+      margin-bottom: 2 * $baseline;
       .avatar {
         position: absolute;
         top: 0px;
@@ -135,7 +81,7 @@
       textarea {
         @include box-sizing(border-box);
         background-color: transparent;
-        width: 8 * ($gutter + $col + $gutter) - (2 * $pad) - (36px + $gutter);
+        width: 8 * ($gutter + $col + $gutter) - (2 * $pad) - (36px + $pad + $gutter);
         margin: 0 (-$gutter);
         margin-left: 36px + $gutter;
         resize: vertical;
@@ -161,6 +107,10 @@
       &.chat {
         overflow: auto;
 
+        padding-bottom: $baseline - 1px;
+        border-bottom: 1px solid darken(white, 4%);
+        margin-bottom: $baseline;
+
         .avatar {
           float: left;
           margin-right: $gutter;
@@ -171,13 +121,25 @@
             border-radius: $radius;
           }
         }
+
+        .timestamp {
+          float: right;
+          font-size: 12px;
+          margin-top: -18px;
+        }
+
         .body {
           margin-left: 36px + $gutter;
         }
 
+
         .media {
-          margin-left: 36px + $gutter;
-          .thumbnail { height: 50px; }
+          margin-top: $baseline;
+          padding-left: 36px + $gutter;
+          .thumbnail {
+            height: 10 * $baseline;
+            margin-right: $gutter;
+          }
         }
 
       }
