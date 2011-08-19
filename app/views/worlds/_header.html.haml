@@ -4,6 +4,8 @@
 
 %header
   %h1= @world.name
+
+#nav
   %aside
     - if signed_in?
       .connection
@@ -14,18 +16,17 @@
         - else
           = button_to 'Join World', [:activate, @world]
 
-
-%ul#nav
-  %li.activity
-    = link_to 'Activity', @world
-  %li.map
-    = link_to 'Map', [:map, @world]
-  %li.photos
-    %a.disabled Photos
-  %li.videos
-    %a.disabled Videos
-  %li.stats
-    %a.disabled Stats
-  - if signed_in? and @world.creator == current_user
-    %li.settings
-      = link_to 'Settings', [:edit, @world]
+  %ul
+    %li.activity
+      = link_to 'Activity', @world
+    %li.map
+      = link_to 'Map', [:map, @world]
+    %li.photos
+      %a.disabled Photos
+    %li.videos
+      %a.disabled Videos
+    %li.stats
+      %a.disabled Stats
+    - if signed_in? and @world.creator == current_user
+      %li.settings
+        = link_to 'Settings', [:edit, @world]

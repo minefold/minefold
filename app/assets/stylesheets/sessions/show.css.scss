@@ -4,25 +4,26 @@
   font-size: 12px; line-height: 24px;
   padding: (2 * $baseline) 0;
 
-
   li {
     float: left;
     margin-left: $gutter;
 
     &.signin a {
-      background: $blue;
-      color: rgba(white, 0.9);
-      font-weight: bold;
-      text-shadow: 0 1px darken($blue, 10%);
-
       display: block;
+      font-weight: bold;
+
       line-height: 24px;
-      padding: 0 $gutter;
       @include border-radius($radius);
 
+      color: darken($yellow, 40%);
+      background: $yellow;
+      text-shadow: 0 1px 0 white;
+      padding: 0 $gutter;
+      margin-bottom: -1px;
+
       &:hover {
-        color: white;
-        background-color: lighten($blue, 10%);
+        background-color: darken($yellow, 10%);
+        color: darken($yellow, 55%);
       }
     }
 
@@ -68,11 +69,11 @@
           right: 0;
           margin-right: 12px - 3px - 1px;
           polygon {
-            fill: $blue;
+            fill: $yellow;
           }
         }
         ol {
-          background: $blue;
+          background: $yellow;
           margin-top: 6px;
 
           padding: $border 0;
@@ -83,18 +84,20 @@
           li {
             margin: 0;
             padding: 0 $border;
+
             a {
-              color: white;
+              color: darken($yellow, 40%);
               text-align: right;
               display: block;
               width: 100px - (2 * $border) - 2 * ($gutter - $border);
               padding: 0 ($gutter - $border);
               @include border-radius($radius);
               font-weight: 600;
-              text-shadow: 0 1px darken($blue, 10%);
+              text-shadow: 0 1px 0 white;
+              text-align: left;
               &:hover {
-                background: darken($blue, 20%);
-                text-shadow: 0 1px darken($blue, 30%);
+                background-color: darken($yellow, 10%);
+                color: darken($yellow, 55%);
               }
             }
           }

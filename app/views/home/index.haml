@@ -1,39 +1,14 @@
-#illin
+#banner
+  %h2 Play Minecraft with friends!
 
-%h2 Play Minecraft with your friends!
+  = form_tag 'http://minefold.createsend.com/t/r/s/qjhfu', method: :post do
+    %div
+      %h3
+        Pop your email down and we'll email you when we launch:
 
+    .email
+      = email_field_tag 'cm-qjhfu-qjhfu', nil, placeholder: 'email@example.com', id: 'qjhfu-qjhfu'
 
-
-/ %h2 Play Minecraft with your friends.
-/
-/ #features
-/   .feature
-/     %img{src: '/instant.png', width: 32, height: 32}
-/     %h3 Start playing instantly
-/     %p Don't sweat the nerdy stuff: we'll take care of everything. It's free to join.
-/
-/   .feature
-/     %img{src: '/sharing.png', width: 32, height: 32}
-/     %h3 Share anything
-/     %p Show off your build to the internets or just your friends. We make sure your pride and joy is grief-free.
-/
-/
-/   .feature
-/     %img{src: '/players.png', width: 32, height: 32}
-/     %h3 Unlimited players
-/     %p Have up to 254 of your friends crafting along side you. Start planning a monster build!
-/
-/   .feature
-/     %img{src: '/worlds.png', width: 32, height: 32}
-/     %h3 Unlimited Worlds
-/     %p Create as many worlds as you like. You can also upload all your single player worlds. For free.
-/
-/
-/ = form_tag 'http://minefold.createsend.com/t/r/s/qjhfu', method: :post do
-/   %h3 Pop your email down to be first in line
-/
-/   %p
-/     = email_field_tag 'cm-qjhfu-qjhfu', nil, placeholder: 'email@example.com', id: 'qjhfu-qjhfu'
-/
-/   %p
-/     %button Subscribe
+    .submit
+      %button
+        = ['Algebraic!', 'Rhombus!', 'Mathematical!'].shuffle.first

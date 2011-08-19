@@ -33,21 +33,21 @@ class WorldsController < ApplicationController
     current_user.world = World.find_by_slug!(params[:id])
 
     if current_user.save
-      redirect_to current_user.world
+      redirect_to :back
     else
       render json: {errors: current_user.errors}
     end
   end
 
-  # def import
-  #   filename = [
-  #     params[:world][:id],
-  #     params[:world][:filename]
-  #   ].join('-').gsub /[ !'"]/, '_'
-  #
-  #   Resque.enqueue(Job::ImportWorld, params[:world][:id], filename)
-  #   render nothing: true
-  # end
+  def import
+    filename = [
+      params[:world][:id],
+      params[:world][:filename]
+    ].join('-').gsub /[ !'"]/, '_'
+
+    Resque.enqueue(Job::ImportWorld, params[:world][:id], filename)
+    render nothing: true
+  end
 
   def import_policy
     policy = S3UploadPolicy.new(ENV['S3_KEY'], ENV['S3_SECRET'], bucket(:world_import))

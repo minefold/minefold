@@ -55,7 +55,19 @@
         %code ~/Library/Application&nbsp;Support/minecraft/saves
       %p and right click on your world's folder and click "Compress <world name>". After a moment a ".zip" archive should be created. That is the file you want to upload.
 
-      = s3_swf_upload_tag(keyPrefix: "#{@world.id}-")
+      = form_for [:import, @world], html: {class: 'new_world_import', id: 'new_world_import'} do |f|
+        = f.file_field :path
+
+      :javascript
+        $(window).load(function(){
+          $('form').s3upload({
+            policy: '/worlds/import_policy.xml',
+            required: true
+            submit_on_all_complete: false
+          });
+        });
+
+      -# = s3_swf_upload_tag(keyPrefix: "#{@world.id}-")
 
   %div
     = f.submit 'Create world'

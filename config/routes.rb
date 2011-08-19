@@ -26,17 +26,20 @@ Minefold::Application.routes.draw do
 
   resources :worlds do
     resources :wall_items do
-      collection do
-        get 'page/:page' => 'wall_items#page'
-      end
+      get 'page/:page' => 'wall_items#page', :on => :collection
     end
-    post :activate, :on => :member
-    get  :map, :on => :member
 
-    get '/import_policy.xml', :action => 'import_policy', :on => :collection
+    collection do
+      post :import
+      get :import_policy, :format => :xml
+    end
+
+    member do
+      post :activate
+      get  :map
+    end
   end
 
-  get '/s3_uploads' => 'upload_policy#index', :format => :xml
 
   mount Resque::Server, :at => '/resque'
   get '/admin' => 'admin#index', :as => :admin

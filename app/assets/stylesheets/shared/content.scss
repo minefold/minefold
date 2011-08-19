@@ -3,9 +3,10 @@
 #content {
   margin-bottom: 2 * $baseline;
 
+  background-color: -webkit-linear-gradient(top, white, #CCC);
+
   #page {
     position: relative;
-    background: white;
   }
 
   a {
@@ -42,29 +43,46 @@
 
       @include transition(border-color, 0.15s, ease-in-out);
 
+      &.placeholder, &::-webkit-input-placeholder, &::-moz-input-placeholder {
+        color: darken(white, 20%);
+      }
+
+      &:-webkit-autofill {
+        color: darken($yellow, 10%);
+        background: $yellow;
+        border-color: darken($yellow, 20%);
+//        text-shadow: 0 1px 0 white;
+      }
+
       &:focus {
         border-color: $blue;
       }
+
       &[type=image] {
         border: none;
       }
+
     }
 
     button, input[type=submit] {
       margin: 0;
       padding: $baseline $gutter;
 
+      @include border-radius($radius);
+
       background: $blue;
       border: none;
       color: white;
-      font: 14px/18px $helvetica;
-      font-weight: 600;
+      font: 600 14px/18px $helvetica;
+//      text-transform: uppercase;
+      text-shadow: 0 1px 0 darken($blue, 10%);
 
       cursor: pointer;
-      display: block;
+      outline: none;
 
       &:hover, &:focus {
-        background: $blue;
+        background: darken($blue, 10%);
+        text-shadow: 0 1px 0 darken($blue, 20%);
       }
 
       &:disabled {
@@ -84,6 +102,7 @@
 
     h1 {
       font-size: 24px;
+      font-family: $nunito;
     }
   }
 }

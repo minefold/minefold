@@ -4,11 +4,11 @@
 
   #stream {
     margin-bottom: 2 * $baseline;
-    width: 8 * ($gutter + $col + $gutter) - (2 * $gutter) - (2 * $pad);
+    width: 7 * ($gutter + $col + $gutter) - (2 * $gutter) - (2 * $pad);
 
     aside {
       float: right;
-      width: 4 * ($gutter + $col + $gutter) - (2 * $gutter) - (2 * $pad);
+      width: 4 * ($gutter + $col + $gutter) - (2 * $gutter);
       margin-right: -(4 * ($gutter + $col + $gutter) + (2 * $gutter));
       padding: 0 $pad;
 
@@ -62,7 +62,7 @@
 
     form {
       position: relative;
-      margin-bottom: 2 * $baseline;
+      margin-bottom: 3 * $baseline;
       .avatar {
         position: absolute;
         top: 0px;
@@ -81,7 +81,7 @@
       textarea {
         @include box-sizing(border-box);
         background-color: transparent;
-        width: 8 * ($gutter + $col + $gutter) - (2 * $pad) - (36px + $pad + $gutter);
+        width: 7 * ($gutter + $col + $gutter) - (2 * $pad) - (36px + $pad + $gutter);
         margin: 0 (-$gutter);
         margin-left: 36px + $gutter;
         resize: vertical;

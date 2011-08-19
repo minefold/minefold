@@ -2,12 +2,11 @@
 
 // Fonts
 
-$paytone:   'Paytone One', Helvetica, Arial, 'sans-serif';
+$paytone:   'Paytone One', Helvetica, Arial, sans-serif;
+$nunito:    Nunito, 'Comic Sans', sans-serif;
 $helvetica: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 // Grid
-
-$width: 960px;
 
 $baseline: 6px;
 
@@ -19,13 +18,15 @@ $cols:   12;
 $radius: 2px;
 $border: 2px;
 
+$width: 10 * ($gutter + $col + $gutter);
+
 
 // Colors
 
 $bg:     #EDEDED;
 $gray:   #8BC;
 $blue:   #08D;
-$yellow: #FE0;
+$yellow: #fff399;
 $red:    #F63;
 $green:  #BADA55;
 
@@ -38,8 +39,8 @@ $green:  #BADA55;
 
 @mixin logo {
   font-weight: 700;
-  font-family: $paytone;
-  letter-spacing: 0.15em;
+  font-family: 'Nunito';
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   margin-top: -1px;
 }

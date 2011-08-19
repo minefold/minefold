@@ -11,8 +11,10 @@
   = link_to '@minefold', '//twitter.com/minefold'
   %span.pipe
     |
-  = link_to 'Help', page_path('help')
+  = link_to 'Help', page_path(:help)
 
-%p
+%p.fineprint
   Designed in Sydney, Australia. &copy; #{Time.now.year} Minefold.
+  %a{href: page_path(:privacy)} Privacy
+  %a{href: page_path(:terms)} Terms
 

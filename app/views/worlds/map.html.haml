@@ -2,8 +2,8 @@
 
 #mcmap(style="height: 500px; width:960px; margin-left:-10px; margin-top:-25px; display: none")
 
-#nomap(style="display:none")
-  %p This map hasn't been generated yet
+#nomap{hidden}
+  %p Hold your horses, we are still mapping this world…
 
 - map_asset_path = "#{Rails.configuration.map_tiles_url}/#{@world.id}"
 
@@ -15,15 +15,15 @@
 
 :javascript
   $(function() {
-    
+
     var img = new Image();
-    $(img).load(function(){ 
+    $(img).load(function(){
         $('#mcmap').show();
         $.world_map({ path: '#{map_asset_path}' });
-      }).error(function() { 
+      }).error(function() {
         $('#nomap').show();
       }).attr('src', '#{map_asset_path}/base.png');
-    
+
   //   $.extend(overviewerConfig.CONST, {
   //     mapDivId: 'mcmap',
   //     image: {

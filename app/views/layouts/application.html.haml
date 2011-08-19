@@ -5,7 +5,8 @@
     %meta{'http-equiv' => 'X-UA-Compatible', :content => 'IE=edge'}
 
     %title Minefold
-    = stylesheet_link_tag '//fonts.googleapis.com/css?family=Paytone+One:regular&v1'
+    - unless Rails.env.development?
+      = stylesheet_link_tag '//fonts.googleapis.com/css?family=Nunito:300,400,700'
     = stylesheet_link_tag 'application'
     = favicon_link_tag
 
@@ -26,14 +27,20 @@
   %body{page_css_selector}
     %header.global
       .container
-        %h1= link_to 'Minefold', root_url
+        %h1
+          = link_to root_url do
+            Minefold
 
         %aside
           = render template: 'sessions/show'
 
     #content
+      = yield :before
+
       #page.container
         = yield
+
+      = yield :after
 
     %footer.global
       .container

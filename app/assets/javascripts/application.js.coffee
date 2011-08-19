@@ -1,9 +1,11 @@
 #= require json2
+#= require jquery
 #= require jquery_ujs
 #= require underscore
 #= require backbone
 #= require mustache
 #= require gravtastic
+#= require jquery.placeholder
 #= require jquery.infinitescroll
 #= require_self
 #= require_tree .
