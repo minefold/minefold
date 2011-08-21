@@ -9,31 +9,48 @@
   .name
     = f.text_field :name, placeholder: 'Name'
 
+  %section.privacy
+    %h3 Privacy
+
+    %fieldset
+      %div
+        = f.radio_button :private, true
+        = f.label :private, 'Private'
+
+        = f.radio_button :private, false
+        = f.label :private, 'Public'
+
+        .hint
+          Only the people you specify can play in private worlds.
+
   %section.game-options
     %h3 Game options
 
     %fieldset
-      %div
-        = check_box_tag 'world[options][pvp]', 'pvp', checked: @world.options['pvp']
-        = label_tag 'world[options][pvp]', 'Player vs. Player'
+      = f.fields_for(:options, id: false) do |o|
 
-      %div
-        = check_box_tag 'world[options][spawn-monsters]', 'spawn-monsters', checked: @world.options['spawn-monsters']
-        = label_tag 'world[options][spawn-monsters]', 'Spawn monsters'
+        %div
+          = o.check_box :pvp, checked: true
+          = o.label :pvp, 'Player vs. Player'
 
-      %div
-        = check_box_tag 'world[options][spawn-animals]', 'spawn-animals', checked: @world.options['spawn-animals']
-        = label_tag 'world[options][spawn-animals]', 'Spawn animals'
+        %div
+          = o.check_box 'spawn-monsters', checked: true
+          = o.label 'spawn-monsters', 'Spawn monsters'
+
+        %div
+          = o.check_box 'spawn-animals', checked: true
+          = o.label 'spawn-animals', 'Spawn animals'
 
 
   %section.level-seed
     %h3 Level seed
     %fieldset
-      %div
-        = text_field_tag 'world[options][level-seed]'
-        .hint
-          %strong Advanced:
-          Leave blank if you don't know what it does.
+      = f.fields_for(:options, id: false) do |o|
+        %div
+          = o.text_field 'level-seed'
+          .hint
+            %strong Advanced:
+            Leave blank if you don't know what it does.
 
   .submit
     = f.submit 'Create world'

@@ -9,8 +9,14 @@ class WorldsController < ApplicationController
   def create
     @world = World.new(params[:world])
     @world.creator = current_user
+
     if @world.save
-      redirect_to @world
+      current_user.world = @world
+      if current_user.save
+        redirect_to @world
+      else
+        render json: {errors: current_user.errors}
+      end
     else
       render json: {errors: @world.errors}
     end

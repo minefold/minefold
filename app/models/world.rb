@@ -15,7 +15,7 @@ class World
   key :slug, String, unique: true, index: true
   key :options, Hash, default: default_options
   key :status, String, default: ''
-  many :admins, class: User
+  key :private, Boolean, default: true
   many :players, class: User
 
   many :wall_items, as: :wall,
@@ -57,11 +57,11 @@ class World
   end
 
   # TODO: Ugly as sin.
-  def options=(hash)
-    super(self.class.default_options.each_with_object({}) do |(key, val), opts|
-      opts[key] = hash[key].present? || opts[key].present?
-    end)
-  end
+  # def options=(hash)
+  #   super(self.class.default_options.each_with_object({}) do |(key, val), opts|
+  #     opts[key] = hash[key].present? || opts[key]
+  #   end)
+  # end
 
   def to_param
     slug
