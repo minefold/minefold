@@ -27,11 +27,6 @@ class World
   userstamps!
   timestamps!
 
-
-  def self.recently_active
-    sort(:name.asc)
-  end
-
   def self.available_to_play
     where(status:'')
   end
@@ -56,12 +51,11 @@ class World
     REDIS.smembers(redis_key(:connected_players)).size
   end
 
-  # TODO: Ugly as sin.
-  # def options=(hash)
-  #   super(self.class.default_options.each_with_object({}) do |(key, val), opts|
-  #     opts[key] = hash[key].present? || opts[key]
-  #   end)
-  # end
+  def options=(hash)
+    super(self.class.default_options.each_with_object({}) do |(key, val), opts|
+      opts[key] = hash[key].present? || opts[key]
+    end)
+  end
 
   def to_param
     slug

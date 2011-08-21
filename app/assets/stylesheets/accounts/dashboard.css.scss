@@ -53,48 +53,40 @@
       @include border-radius($radius);
       text-align: center;
 
-      &.active a {
-        border-color: $green;
-      }
-
       a {
         display: block;
-        width: $col + (2 * $gutter) + $col;
-        padding: (2 * $baseline) 0;
+        width: $col + (2 * $gutter) + $col - (2 * $border);
+        padding: 2 * ($baseline - $border) 0;
         line-height: 4 * $baseline;
-        text-shadow: 0 1px 0 darken($blue, 10%);
         border-radius: $radius;
-        color: white;
+        color: $blue;
         font-weight: 600;
 
-        background: $blue;
+        border: 1px solid darken(white, 5%);
         text-decoration: none;
 
         .players {
-          color: lighten($blue, 20%);
+          color: darken(white, 20%);
           font-size: 12px;
           font-weight: normal;
-          text-shadow: 0 -1px 0 darken($blue, 10%);
         }
 
         &:hover {
-          background-color: darken($blue, 10%);
+          color: darken($blue, 10%);
+          border-color: $blue;
+
           .players {
-            color: lighten($blue, 10%);
-            text-shadow: 0 -1px 0 darken($blue,20%);
+            color: darken(white, 30%);
           }
         }
       }
 
       &.new a {
-        background: #FFF;
-        color: lighten($blue, 20%);
-        text-decoration: none;
         padding: (4 * $baseline - (2 * $border)) 0;
-        text-shadow: none;
-        &:hover {
-          color: $blue;
-        };
+      }
+
+      &.active a {
+        border-color: $green;
       }
 
     }
