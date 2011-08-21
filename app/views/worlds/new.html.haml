@@ -32,9 +32,10 @@
         = radio_button_tag :init, 'seed'
         = label_tag :init_seed, 'Seed'
 
-      %li.import
-        = radio_button_tag :init, 'import'
-        = label_tag :init_upload, 'Import'
+      /
+        %li.import
+          = radio_button_tag :init, 'import'
+          = label_tag :init_upload, 'Import'
 
     %section.luck
       %p The good ol' default. Prepare to be stunned by what Minecraft makes for you.
@@ -46,26 +47,27 @@
       = label_tag 'world[options][level-seed]', 'Level Seed'
       = text_field_tag 'world[options][level-seed]'
 
-    %section.import{hidden}
-      %p
-        If you've been playing Minecraft on your own computer or with your friends on another server, you can import an archive of your world.
+    /
+      %section.import{hidden}
+        %p
+          If you've been playing Minecraft on your own computer or with your friends on another server, you can import an archive of your world.
 
-      %p If you are on Mac OSX, nagivate to
-      %pre
-        %code ~/Library/Application&nbsp;Support/minecraft/saves
-      %p and right click on your world's folder and click "Compress <world name>". After a moment a ".zip" archive should be created. That is the file you want to upload.
+        %p If you are on Mac OSX, nagivate to
+        %pre
+          %code ~/Library/Application&nbsp;Support/minecraft/saves
+        %p and right click on your world's folder and click "Compress <world name>". After a moment a ".zip" archive should be created. That is the file you want to upload.
 
-      = form_for [:import, @world], html: {class: 'new_world_import', id: 'new_world_import'} do |f|
-        = f.file_field :path
+        = form_for [:import, @world], html: {class: 'new_world_import', id: 'new_world_import'} do |f|
+          = f.file_field :path
 
-      :javascript
-        $(window).load(function(){
-          $('form').s3upload({
-            policy: '/worlds/import_policy.xml',
-            required: true
-            submit_on_all_complete: false
+        :javascript
+          $(window).load(function(){
+            $('form').s3upload({
+              policy: '/worlds/import_policy.xml',
+              required: true
+              submit_on_all_complete: false
+            });
           });
-        });
 
       -# = s3_swf_upload_tag(keyPrefix: "#{@world.id}-")
 

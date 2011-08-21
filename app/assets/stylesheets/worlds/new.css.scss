@@ -85,9 +85,9 @@
     section {
       float: left;
       width: 7 * ($gutter + $col + $gutter) - (5 * $gutter);
-      padding: (2 * $baseline - $border) (2 * $gutter - $border);
+      padding: $baseline (2 * $gutter);
 
-      border: $border solid $blue;
+//      border: $border solid $blue;
       background: white;
 
       min-height: 3 * 24px - (2 * $border);

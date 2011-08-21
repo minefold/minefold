@@ -3,8 +3,10 @@ class World
 
   def self.default_options
     {
+      'level-seed' => '',
+      'pvp' => true,
       'spawn-monsters' => true,
-      'pvp' => true
+      'spawn-animals'  => true
     }
   end
 

@@ -11,6 +11,14 @@
       font-family: 'Nunito';
     }
 
+    p {
+      width: 6 * ($gutter + $col + $gutter) - (2 * $gutter);
+      margin: 0 auto;
+      text-align: center;
+      margin-bottom: 2 * $baseline;
+      color: #999;
+    }
+
     form {
       color: darken($blue, 10%);
       text-align: center;
