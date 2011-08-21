@@ -1,25 +1,30 @@
 class World
   include MongoMapper::Document
 
-  def self.default_options
-    {
-      'level-seed' => '',
-      'pvp' => true,
-      'spawn-monsters' => true,
-      'spawn-animals'  => true
-    }
-  end
+  # def self.default_options
+  #   {
+  #     'level-seed' => '',
+  #     'pvp' => true,
+  #     'spawn-monsters' => true,
+  #     'spawn-animals'  => true
+  #   }
+  # end
 
 
   key :name, String, unique: true
   key :slug, String, unique: true, index: true
-  key :options, Hash, default: default_options
   key :status, String, default: ''
   key :private, Boolean, default: true
   many :players, class: User
 
   many :wall_items, as: :wall,
                     sort: :created_at.desc
+
+  # TODO: Needs migration
+  key :seed, String, default: ''
+  key :pvp, Boolean, default: true
+  key :spawn_monsters, Boolean, default: true
+  key :spawn_animals, Boolean, default: true
 
   validates_presence_of :name
   validates_presence_of :slug
@@ -51,11 +56,11 @@ class World
     REDIS.smembers(redis_key(:connected_players)).size
   end
 
-  def options=(hash)
-    super(self.class.default_options.each_with_object({}) do |(key, val), opts|
-      opts[key] = hash[key].present? || opts[key]
-    end)
-  end
+  # def options=(hash)
+  #   super(self.class.default_options.each_with_object({}) do |(key, val), opts|
+  #     opts[key] = hash[key].present? || opts[key]
+  #   end)
+  # end
 
   def to_param
     slug

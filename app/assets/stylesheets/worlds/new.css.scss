@@ -14,16 +14,6 @@
     }
   }
 
-  .options {
-    margin-bottom: 4 * $baseline;
-    span {
-      margin-left: $gutter;
-    }
-    label {
-      display: inline;
-    }
-  }
-
   .hint {
     color: #CCC;
     font-size: 12px;
@@ -47,6 +37,13 @@
       }
       fieldset div {
         margin-bottom: $baseline;
+      }
+    }
+
+    &.privacy {
+      label {
+        display: inline;
+        margin-right: $gutter;
       }
     }
   }

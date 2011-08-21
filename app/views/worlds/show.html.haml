@@ -4,10 +4,10 @@
   %aside
     %section
       %h2
-        %strong= pluralize @world.connected_players_count, 'person', 'people'
+        %strong= pluralize world.connected_players_count, 'person', 'people'
         playing here now
       %ul
-        - @world.connected_players.each do |player|
+        - world.connected_players.each do |player|
           %li
             = link_to '#', do
               .username
@@ -16,7 +16,7 @@
 
   - if signed_in?
     #share
-      = form_tag world_wall_items_path(@world), method: :post do |f|
+      = form_tag world_wall_items_path(world), method: :post do |f|
         %p.submit-advice ENTER to chat, SHIFT-ENTER for a new line.
         .user
           %span.username= current_user.username
@@ -26,4 +26,4 @@
         = text_area_tag :body, '', rows: 2, autofocus: true
 
   #wall-items
-    = template 'worlds/_wall_item', collection: @world.wall_items
+    = template 'worlds/_wall_item', collection: world.wall_items

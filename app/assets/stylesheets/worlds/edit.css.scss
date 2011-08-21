@@ -1,0 +1,36 @@
+@import 'shared/vars';
+
+#worlds-edit #page {
+
+  .hint {
+    color: #CCC;
+    font-size: 12px;
+  }
+
+  section {
+    margin-bottom: 2 * $baseline;
+    overflow: auto;
+
+    h3, fieldset {
+      float: left;
+    }
+
+    h3 {
+      width: 120px;
+    }
+
+    &.game-options {
+      label {
+        display: inline;
+      }
+      fieldset div {
+        margin-bottom: $baseline;
+      }
+    }
+  }
+
+  .submit {
+    margin-top: 3 * $baseline;
+  }
+
+}

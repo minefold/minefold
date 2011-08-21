@@ -1,1 +1,29 @@
-Edit #{@world.name}
+%header
+  %h1
+    %strong= world.name
+    settings
+
+= form_for world do |f|
+  %section.game-options
+    %h3 Game options
+
+    %fieldset
+      %div
+        = f.check_box :pvp
+        = f.label :pvp, 'Player vs. Player'
+
+      %div
+        = f.check_box :spawn_monsters
+        = f.label :spawn_monsters, 'Spawn monsters'
+
+      %div
+        = f.check_box :spawn_animals
+        = f.label :spawn_animals, 'Spawn animals'
+
+      - unless !world.connected_players_count.zero?
+        .hint
+          %strong NOTE
+          Settings will be applied when the world is empty.
+
+  .submit
+    = f.submit 'Save settings'

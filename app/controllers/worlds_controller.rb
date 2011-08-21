@@ -2,7 +2,10 @@ class WorldsController < ApplicationController
 
   prepend_before_filter :authenticate_user!, except: :show
 
+  expose(:world) { World.find_by_slug(params[:id]) }
+
   def new
+    # TODO Get working with Decent Exposure
     @world = World.new
   end
 
@@ -23,20 +26,29 @@ class WorldsController < ApplicationController
   end
 
   def show
-    @world = World.find_by_slug!(params[:id])
-    render :action => @world.status unless @world.status.blank?
+    render :action => world.status unless world.status.blank?
   end
 
   def edit
-    @world = World.find_by_slug! params[:id]
+    # @world = World.find_by_slug! params[:id]
+  end
+
+  def update
+    world.update_attributes params[:world]
+
+    if world.save
+      redirect_to world
+    else
+      render json: {errors: world.errors}
+    end
   end
 
   def map
-    @world = World.find_by_slug! params[:id]
+    # world = World.find_by_slug! params[:id]
   end
 
   def activate
-    current_user.world = World.find_by_slug!(params[:id])
+    current_user.world = world
 
     if current_user.save
       redirect_to :back
