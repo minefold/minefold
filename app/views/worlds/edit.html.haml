@@ -25,5 +25,14 @@
           %strong NOTE
           Settings will be applied when the world is empty.
 
+  %section.players
+    %h3 Players
+
+    %fieldset
+      %div
+        %ul
+          - world.players.each do |player|
+            %li= player.username
+
   .submit
     = f.submit 'Save settings'

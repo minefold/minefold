@@ -2,6 +2,8 @@ class WorldsController < ApplicationController
 
   prepend_before_filter :authenticate_user!, except: :show
 
+  before_filter :lock_private, except: [:new, :create, :import, :import_policy]
+
   expose(:world) { World.find_by_slug(params[:id]) }
 
   def new
@@ -12,6 +14,7 @@ class WorldsController < ApplicationController
   def create
     @world = World.new(params[:world])
     @world.creator = current_user
+    @world.players << current_user if @world.private?
 
     if @world.save
       current_user.world = @world
@@ -75,5 +78,13 @@ class WorldsController < ApplicationController
     render xml: policy.to_hash
   end
 
+private
+
+  def lock_private
+    if world.private? and
+       not (signed_in? and world.players.include?(current_user))
+      raise MongoMapper::DocumentNotFound
+    end
+  end
 
 end

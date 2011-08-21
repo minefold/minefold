@@ -1,21 +1,13 @@
 class World
   include MongoMapper::Document
 
-  # def self.default_options
-  #   {
-  #     'level-seed' => '',
-  #     'pvp' => true,
-  #     'spawn-monsters' => true,
-  #     'spawn-animals'  => true
-  #   }
-  # end
-
-
   key :name, String, unique: true
   key :slug, String, unique: true, index: true
   key :status, String, default: ''
   key :private, Boolean, default: true
-  many :players, class: User
+
+  key :player_ids, Array
+  many :players, class: User, in: :player_ids
 
   many :wall_items, as: :wall,
                     sort: :created_at.desc
@@ -31,6 +23,13 @@ class World
 
   userstamps!
   timestamps!
+
+  scope :public, private: false
+  scope :private, private: true
+
+  def public?
+    not public?
+  end
 
   def self.available_to_play
     where(status:'')

@@ -29,15 +29,18 @@ class User
          :trackable,
          :validatable
 
-  gravtastic secure: true,
-             format: :png,
-             default: 'identicon'
+  gravtastic format: :png
 
   attr_accessible :email,
                   :username,
                   :password,
                   :password_confirmation,
                   :invite_code
+
+  # TODO: Should really be in MongoMapper
+  def worlds
+    World.all(player_ids: id)
+  end
 
   before_create do
     self.world = World.default

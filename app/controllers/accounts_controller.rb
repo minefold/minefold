@@ -3,7 +3,7 @@ class AccountsController < ApplicationController
   prepend_before_filter :authenticate_user!
 
   def dashboard
-    @worlds = World.available_to_play.sort(:slug)
+    @worlds = World.public.sort(:slug)
   end
 
   def edit

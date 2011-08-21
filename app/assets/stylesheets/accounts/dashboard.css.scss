@@ -38,7 +38,11 @@
     }
   }
 
-  #worlds {
+  header aside {
+    float: right;
+  }
+
+  .worlds {
     margin: 0 (-$gutter);
 
     ul {
@@ -87,6 +91,9 @@
 
       &.active a {
         border-color: $green;
+        &:hover {
+          border-color: darken($green, 20%);
+        }
       }
 
     }

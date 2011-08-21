@@ -3,7 +3,10 @@
   window.channel = pusher.subscribe(#{world.channel.name.to_json});
 
 %header
-  %h1= world.name
+  %h1
+    = world.name
+    - if world.private?
+      %img{src: asset_path('lock.png'), width: 9, height: 12}
 
 #nav
   %aside
@@ -27,6 +30,6 @@
       %a.disabled Videos
     %li.stats
       %a.disabled Stats
-    - if signed_in? and world.creator == current_user
+    - if world.private? and signed_in? and world.creator == current_user
       %li.settings
         = link_to 'Settings', [:edit, world]
