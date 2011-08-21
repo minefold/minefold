@@ -22,8 +22,6 @@ Minefold::Application.routes.draw do
   get '/referrals' => 'invites#index', :as => :referrals
   resources :invites, :only => [:create]
 
-  get '/about' => 'high_voltage/pages#show', :id => 'about'
-
   resources :worlds do
     resources :wall_items do
       get 'page/:page' => 'wall_items#page', :on => :collection
@@ -40,6 +38,14 @@ Minefold::Application.routes.draw do
     end
   end
 
+  {
+    '/about'   => 'about',
+    '/help'    => 'help',
+    '/privacy' => 'privacy',
+    '/terms'   => 'terms'
+  }.each do |url, id|
+    get url => 'high_voltage/pages#show', :id => id
+  end
 
   mount Resque::Server, :at => '/resque'
   get '/admin' => 'admin#index', :as => :admin
