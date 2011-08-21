@@ -6,7 +6,7 @@
   }
 
   .name {
-    margin-bottom: $baseline;
+    margin-bottom: 4 * $baseline;
     input {
       font-size: 18px;
       line-height: 24px;
@@ -24,82 +24,112 @@
     }
   }
 
-  .data {
-    width: 9 * ($gutter + $col + $gutter) - (2 * $gutter);
-    margin: 24px 0;
+  .hint {
+    color: #CCC;
+    font-size: 12px;
+  }
 
+  section {
+    margin-bottom: 2 * $baseline;
     overflow: auto;
 
-    h2 {
-      font-size: 16px;
-//      font-weight: 500;
-      line-height: 24px;
-      color: #CCC;
-//      padding: 0 $gutter;
-      margin-bottom: 2 * $baseline;
+    h3, fieldset {
+      float: left;
     }
 
-    ul {
-      overflow: auto;
-      margin-bottom: $baseline;
-      width: 2 * ($gutter + $col + $gutter) - ($gutter);
-      float: left;
+    h3 {
+      width: 120px;
+    }
 
-      li {
-        background: darken(white, 5%);
-        padding: $baseline $gutter;
-        line-height: 18px;
-        text-shadow: 0 1px 0 white;
-        font-weight: 600;
-        cursor: pointer;
-
-        label {
-          display: inline;
-          cursor: pointer;
-          span {
-            font-weight: normal;
-            font-size: 12px;
-            color: rgba(black, 0.4);
-          }
-        }
-        input[type=radio] {
-          display: none;
-        }
-
-        &:hover {
-          background: darken(white, 10%);
-        }
-
-        &.active {
-          color: white;
-          background: $blue;
-          text-shadow: 0 1px 0 darken($blue, 10%);
-          @include border-radius($radius 0 0 $radius);
-          label span {
-            color: rgba(white, 0.6);
-          }
-        }
+    &.game-options {
+      label {
+        display: inline;
+      }
+      fieldset div {
+        margin-bottom: $baseline;
       }
     }
-
-    section {
-      float: left;
-      width: 7 * ($gutter + $col + $gutter) - (5 * $gutter);
-      padding: $baseline (2 * $gutter);
-
-//      border: $border solid $blue;
-      background: white;
-
-      min-height: 3 * 24px - (2 * $border);
-
-      @include border-radius(0 $radius $radius 0);
-
-      pre {
-        margin: (2 * $baseline);
-        color: #999;
-      }
-
-    }
-
   }
+
+  .submit {
+    margin-top: 3 * $baseline;
+  }
+
+//  .data {
+//    width: 9 * ($gutter + $col + $gutter) - (2 * $gutter);
+//    margin: 24px 0;
+//
+//    overflow: auto;
+//
+//    h2 {
+//      font-size: 16px;
+////      font-weight: 500;
+//      line-height: 24px;
+//      color: #CCC;
+////      padding: 0 $gutter;
+//      margin-bottom: 2 * $baseline;
+//    }
+//
+//    ul {
+//      overflow: auto;
+//      margin-bottom: $baseline;
+//      width: 2 * ($gutter + $col + $gutter) - ($gutter);
+//      float: left;
+//
+//      li {
+//        background: darken(white, 5%);
+//        padding: $baseline $gutter;
+//        line-height: 18px;
+//        text-shadow: 0 1px 0 white;
+//        font-weight: 600;
+//        cursor: pointer;
+//
+//        label {
+//          display: inline;
+//          cursor: pointer;
+//          span {
+//            font-weight: normal;
+//            font-size: 12px;
+//            color: rgba(black, 0.4);
+//          }
+//        }
+//        input[type=radio] {
+//          display: none;
+//        }
+//
+//        &:hover {
+//          background: darken(white, 10%);
+//        }
+//
+//        &.active {
+//          color: white;
+//          background: $blue;
+//          text-shadow: 0 1px 0 darken($blue, 10%);
+//          @include border-radius($radius 0 0 $radius);
+//          label span {
+//            color: rgba(white, 0.6);
+//          }
+//        }
+//      }
+//    }
+//
+//    section {
+//      float: left;
+//      width: 7 * ($gutter + $col + $gutter) - (5 * $gutter);
+//      padding: $baseline (2 * $gutter);
+//
+//      background: white;
+//
+//      min-height: 3 * 24px - (2 * $border);
+//
+//      @include border-radius(0 $radius $radius 0);
+//
+//      pre {
+//        margin: (2 * $baseline);
+//        color: #999;
+//      }
+//
+//    }
+//
+//  }
 }
