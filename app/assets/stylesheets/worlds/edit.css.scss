@@ -32,8 +32,6 @@
 
     &.players {
       overflow: auto;
-      div {
-      }
       select {
         width: 4 * ($gutter + $col + $gutter) - (2 * $gutter);
       }
