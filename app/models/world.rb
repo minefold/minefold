@@ -3,7 +3,6 @@ class World
 
   key :name, String, unique: true
   key :slug, String, unique: true, index: true
-  key :status, String, default: ''
   key :private, Boolean, default: true
 
   key :player_ids, Array
@@ -54,12 +53,6 @@ class World
   def connected_players_count
     REDIS.smembers(redis_key(:connected_players)).size
   end
-
-  # def options=(hash)
-  #   super(self.class.default_options.each_with_object({}) do |(key, val), opts|
-  #     opts[key] = hash[key].present? || opts[key]
-  #   end)
-  # end
 
   def to_param
     slug

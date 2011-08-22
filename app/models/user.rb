@@ -11,6 +11,7 @@ class User
   key :credits,  Integer, default: (FREE_HOURS.hours / BILLING_PERIOD)
   key :minutes_played,  Integer, default: 0
   key :last_played_at, Time
+  key :staff, Boolean, default: false
 
   key :referrals, Integer, :default => 0
 
