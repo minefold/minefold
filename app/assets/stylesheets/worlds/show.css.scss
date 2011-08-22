@@ -107,8 +107,8 @@
       &.chat {
         overflow: auto;
 
-        padding-bottom: $baseline - 1px;
-        border-bottom: 1px solid darken(white, 4%);
+        padding-top: $baseline - 1px;
+        border-top: 1px solid darken(white, 4%);
         margin-bottom: $baseline;
 
         .avatar {
