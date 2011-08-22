@@ -39,6 +39,8 @@ class WorldsController < ApplicationController
   def update
     world.update_attributes params[:world]
 
+    world.players << current_user
+
     if world.save
       redirect_to world
     else

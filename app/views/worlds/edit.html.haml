@@ -30,9 +30,9 @@
 
     %fieldset
       %div
-        %ul
-          - world.players.each do |player|
-            %li= player.username
-
+        = f.collection_select :player_ids, User.all(id: {'$ne' => current_user.id}), :id, :username, {}, multiple: true
+        / %select{multiple: true}
+        /   - User.all(id: {'$ne' => current_user.id}).each do |player|
+        /     %option{value: player.id, selected: world.players.include?(player)}= player.username
   .submit
     = f.submit 'Save settings'
