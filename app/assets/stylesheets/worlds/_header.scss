@@ -68,7 +68,10 @@
   }
 }
 
-#worlds-show #nav ul li.activity, #worlds-map #nav ul li.map, #worlds-photos #nav ul li.photos {
+#worlds-show   #nav ul li.activity,
+#worlds-map    #nav ul li.map,
+#worlds-photos #nav ul li.photos,
+#worlds-edit   #nav ul li.edit {
   a {
     background: darken($blue, 20%);
     color: #FFF;
