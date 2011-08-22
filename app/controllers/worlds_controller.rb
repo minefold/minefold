@@ -49,7 +49,9 @@ class WorldsController < ApplicationController
   end
 
   def map
-    # world = World.find_by_slug! params[:id]
+  end
+
+  def photos
   end
 
   def activate

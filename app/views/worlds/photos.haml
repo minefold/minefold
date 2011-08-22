@@ -1,0 +1,6 @@
+= render partial: 'header'
+
+#photos
+  - world.photos.each do |photo|
+    = link_to photo['url'], class: 'photo' do
+      = image_tag photo['url'], width: 180

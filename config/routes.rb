@@ -35,6 +35,7 @@ Minefold::Application.routes.draw do
     member do
       post :activate
       get  :map
+      get  :photos
     end
   end
 

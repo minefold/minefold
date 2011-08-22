@@ -69,6 +69,14 @@ class World
     find_by_name 'Public'
   end
 
+  def photos
+    wall_items.each_with_object([]) do |item, photos|
+      item.media.select {|m| m['type'] == 'photo'}.each do |photo|
+        photos << photo
+      end
+    end
+  end
+
 private
 
   before_validation :generate_slug

@@ -1,0 +1,16 @@
+@import 'shared/vars';
+
+#worlds-photos #page {
+  #photos {
+    .photo {
+      padding: $gutter;
+      background: white;
+      overflow: auto;
+      display: block;
+      float: left;
+      &:hover {
+        background: darken(white, 5%);
+      }
+    }
+  }
+}
