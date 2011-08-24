@@ -6,7 +6,7 @@ class InvitesController < ApplicationController
     @invite = Invite.new
   end
 
-  statsd_count_success :new, 'InvitesController.new'
+  statsd_count_success :index, 'InvitesController.index'
 
   def create
     invite = Invite.new email: params[:invite][:email]
