@@ -1,0 +1,15 @@
+%section.revenue
+  %h2 Gross Revenue
+  .number.massive= number_to_currency Order.total_revenue
+
+%section.expenses
+  %h2 Expenses
+  .number= number_to_currency Order.total_fees
+
+%section.users
+  %h2 Worlds
+  .number= World.count
+
+%section.users
+  %h2 Users
+  .number.massive= User.count

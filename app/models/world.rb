@@ -59,7 +59,7 @@ class World
   end
 
   def self.default
-    find_by_name 'Public'
+    find_by_name 'Minefold'
   end
 
   def photos

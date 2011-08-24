@@ -4,7 +4,15 @@
 //= require shared/footer
 //= require shared/content
 //= require chosen
-//= require_tree .
+//= require_tree ./accounts
+//= require_tree ./devise
+//= require_tree ./home
+//= require_tree ./invites
+//= require_tree ./orders
+//= require_tree ./registrations
+//= require_tree ./sessions
+//= require_tree ./shared
+//= require_tree ./worlds
 
 // 9, 10, 11, 12, 14, 16, 18, 21, 24, 30, 48, 60, 72 pts for type
 @import 'shared/vars';

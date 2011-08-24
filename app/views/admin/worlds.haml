@@ -1,0 +1,30 @@
+%ul.worlds
+  - @worlds.each do |world|
+    %li[world]
+      - if world.private?
+        .private
+          = image_tag asset_path('lock.png')
+      .name= link_to world.name, world
+      .username= world.creator.username
+      .id= world.id
+
+      - if world.seed?
+        .tag.seed= world.seed
+
+      - if world.pvp?
+        .tag.pvp PvP
+
+      - if world.spawn_monsters?
+        .tag.spawn-monsters Spawn Monsters
+
+      - if world.spawn_animals?
+        .tag.spawn-animals Spawn Animals
+
+      .tag.created
+        %strong Created
+        = world.created_at
+
+      .tag.update
+        %strong Updated
+        = world.updated_at
+

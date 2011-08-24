@@ -29,7 +29,6 @@ class WorldsController < ApplicationController
   end
 
   def show
-    render :action => world.status unless world.status.blank?
   end
 
   def edit
@@ -86,7 +85,10 @@ private
 
   def lock_private
     if world.private? and
-       not (signed_in? and world.players.include?(current_user))
+       not (signed_in? and
+            current_user.staff? and
+         not  world.players.include?(current_user)
+       )
       raise MongoMapper::DocumentNotFound
     end
   end

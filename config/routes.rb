@@ -49,5 +49,8 @@ Minefold::Application.routes.draw do
   end
 
   mount Resque::Server, :at => '/resque'
+
   get '/admin' => 'admin#index', :as => :admin
+  get '/admin/users' => 'admin#users', :as => :admin_users
+  get '/admin/worlds' => 'admin#worlds', :as => :admin_worlds
 end

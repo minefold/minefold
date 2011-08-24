@@ -105,11 +105,11 @@ class User
 protected
 
   def self.chris
-    find_by_email 'chris@minefold.com'
+    find_by_username 'chrislloyd'
   end
 
   def self.dave
-    find_by_email 'dave@minefold.com'
+    find_by_username 'whatupdave'
   end
 
 end

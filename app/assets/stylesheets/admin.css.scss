@@ -1,0 +1,136 @@
+//= require shared/reset
+//= require_self
+
+@import 'shared/vars';
+
+html {
+  background: black;
+}
+
+body {
+  font: 14px/18px $helvetica;
+  color: #CCC;
+}
+
+.container {
+  margin: 0 auto;
+}
+
+header {
+  font-size: 12px;
+  line-height: 18px;
+  height: 24px + (2 * $baseline);
+  padding: 0 $gutter;
+
+  border-bottom: 1px solid #333;
+
+
+  h1 {
+    float: right;
+    font-weight: 600;
+    color: #333;
+    line-height: 24px;
+    font-size: 14px;
+    padding: $baseline $gutter;
+    span {
+      color: $green;
+    }
+  }
+
+  a {
+    color: white;
+    text-decoration: none;
+    padding: $baseline $gutter;
+    display: block;
+    float: left;
+    font-weight: bold;
+    line-height: 24px - $border + 1px;
+
+    margin-bottom: -1px;
+
+    border-bottom: $border solid transparent;
+
+    &:hover {
+      color: $green;
+      border-bottom-color: #666;
+    }
+  }
+}
+
+section {
+  padding: $baseline $gutter;
+  margin: $baseline $gutter;
+  float: left;
+  .number {
+    color: $green;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 48px;
+
+    &.massive {
+      font-size: 72px;
+      line-height: 90px;
+    }
+  }
+}
+
+ul.worlds, ul.users {
+  li {
+    border-bottom: 1px dotted #333;
+    padding: $baseline $gutter;
+
+    .private {
+      float: left;
+      margin-top: 2px;
+      margin-right: 5px;
+      background: #222;
+      border-radius: 18px;
+      width: 20px;
+      height: 18px;
+      padding: 1px 0 ;
+      text-align: center;
+    }
+
+    .name {
+      display: block;
+      font-size: 18px;
+      line-height: 24px;
+      color: $green;
+      text-decoration: none;
+    }
+
+    .id, .username, .email, .tag {
+      display: inline;
+      font-size: 11px;
+    }
+
+    .id {
+      color: #999;
+      margin-right: 5px;
+    }
+
+    .usernamem, .email {
+      color: white;
+      font-size: 12px;
+    }
+
+    .tag {
+      border-radius: 2px;
+      margin-right: 5px;
+      color: #666;
+      strong {
+        color: #333;
+      }
+    }
+
+
+    a {
+      text-decoration: none;
+      color: $green;
+      &:hover {
+        color: white;
+      }
+
+    }
+  }
+}

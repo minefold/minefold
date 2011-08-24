@@ -1,0 +1,56 @@
+!!!
+%html
+  %head
+    %meta{charset: 'utf-8'}
+    %title Minefold Admin
+    = stylesheet_link_tag 'admin'
+    = csrf_meta_tags
+
+    %meta{name: 'pusher_key', content: Pusher.key}
+
+    = javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js'
+    -#= javascript_include_tag 'http://js.pusherapp.com/1.8/pusher.min.js'
+    -#= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js'
+
+  %body{page_css_selector}
+    %header
+      .container
+        %h1
+          - case rand(6)
+          - when 1
+            All
+            %span Minefold
+            all the time
+          - when 2
+            This is
+            %span Miiinneefooold
+          - when 3
+            Y U NO
+            %span Minefold
+            ?
+          - when 4
+            %span Minefold
+            goes down real easy
+          - when 5
+            Rollin' with
+            %span Minefold
+          - else
+            %span Minefold
+            bitches
+        %ul
+          %li.index
+            = link_to 'Home', '/admin'
+          %li.users
+            = link_to 'Users', '/admin/users'
+          %li.worlds
+            = link_to 'Worlds', '/admin/worlds'
+
+    #content
+      = yield :before
+
+      #page.container
+        = yield
+
+      = yield :after
+
+    = javascript_include_tag 'admin'

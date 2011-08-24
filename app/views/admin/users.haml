@@ -1,0 +1,43 @@
+%ul.users
+  - @users.each do |user|
+    %li
+      .name= user.username
+      .email= user.email
+      .id= user.id
+
+      - if user.staff?
+        .tag.staff Staff
+
+      .tag.credits
+        %strong Credits
+        = user.credits
+
+      .tag.minutes-played
+        %strong Minutes Played
+        = user.minutes_played
+
+      .tag.created
+        %strong Created
+        = user.created_at
+
+      .tag.world
+        %strong World
+        = link_to user.world.name, user.world
+
+      - if user.invite
+        .tag.invitee
+          %strong Friend
+          = user.invite.creator.username
+
+      .tag.referrals
+        %strong Referrals
+        = user.referrals
+
+      - if user.last_played_at?
+        .tag.last_played
+          %strong Last played
+          = user.last_played_at
+
+      .tag.created
+        %strong Created
+        = user.created_at
