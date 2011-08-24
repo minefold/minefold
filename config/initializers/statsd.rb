@@ -1,0 +1,1 @@
+StatsD.logger = Rails.logger

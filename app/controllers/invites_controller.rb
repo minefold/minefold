@@ -6,6 +6,8 @@ class InvitesController < ApplicationController
     @invite = Invite.new
   end
 
+  statsd_count_success :new, 'InvitesController.new'
+
   def create
     invite = Invite.new email: params[:invite][:email]
     invite.creator = current_user
@@ -20,5 +22,7 @@ class InvitesController < ApplicationController
       render json: {errors: invite.errors}
     end
   end
+
+  statsd_count_success :create, 'InvitesController.create'
 
 end

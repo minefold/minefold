@@ -31,6 +31,8 @@ gem 'decent_exposure'
 gem 'rubyzip'
 gem 'cancan'
 
+gem 'statsd-instrument'
+
 group :assets, :development do
   gem 'sass-rails'
   gem 'bourbon'

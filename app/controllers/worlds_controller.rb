@@ -28,8 +28,12 @@ class WorldsController < ApplicationController
     end
   end
 
+  statsd_count_success :create, 'WorldsController.create'
+
   def show
   end
+
+  statsd_count_success :show, 'WorldsController.show'
 
   def edit
     # @world = World.find_by_slug! params[:id]
@@ -47,11 +51,17 @@ class WorldsController < ApplicationController
     end
   end
 
+  statsd_count_success :update, 'WorldsController.update'
+
   def map
   end
 
+  statsd_count_success :map, 'WorldsController.map'
+
   def photos
   end
+
+  statsd_count_success :photos, 'WorldsController.photos'
 
   def activate
     current_user.world = world
@@ -62,6 +72,8 @@ class WorldsController < ApplicationController
       render json: {errors: current_user.errors}
     end
   end
+
+  statsd_count_success :activate, 'WorldsController.activate'
 
   def import
     filename = [
@@ -85,10 +97,8 @@ private
 
   def lock_private
     if world.private? and
-       not (signed_in? and
-            current_user.staff? and
-         not  world.players.include?(current_user)
-       )
+       not (signed_in? and current_user.staff?) and
+       not (signed_in? and world.players.include?(current_user))
       raise MongoMapper::DocumentNotFound
     end
   end

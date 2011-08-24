@@ -2,6 +2,9 @@ class RegistrationsController < Devise::RegistrationsController
 
   before_filter :check_invite, :only => [:new]
 
+  statsd_count_success :new, 'RegistrationsController.new'
+  statsd_count_success :create, 'RegistrationsController.create'
+
 protected
 
   def check_invite

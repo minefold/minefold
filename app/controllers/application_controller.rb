@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
 
   rescue_from MongoMapper::DocumentNotFound, with: :not_found
 
+  extend StatsD::Instrument
+
 private
 
   def not_found
