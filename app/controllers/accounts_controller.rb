@@ -3,7 +3,7 @@ class AccountsController < ApplicationController
   prepend_before_filter :authenticate_user!
 
   def dashboard
-    @worlds = World.public.sort(:slug)
+    @worlds = World.visible.order_by(:slug).all
   end
 
   def edit

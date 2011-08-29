@@ -8,6 +8,8 @@ class World
 
   field :visible, type: Boolean, default: false
   field :public,  type: Boolean, default: false
+  scope :public, where(public: true)
+  scope :visible, where(visible: true)
 
   field :seed,           type: String, default: ''
   field :pvp,            type: Boolean, default: true
