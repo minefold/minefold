@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  rescue_from MongoMapper::DocumentNotFound, with: :not_found
+  rescue_from Mongoid::Errors::DocumentNotFound, with: :not_found
 
   extend StatsD::Instrument
 

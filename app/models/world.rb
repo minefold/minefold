@@ -1,99 +1,86 @@
 class World
-  include MongoMapper::Document
+  include Mongoid::Document
+  include Mongoid::Timestamps
+  include Mongoid::Slug
 
-  key :name, String, unique: true
-  key :slug, String, unique: true, index: true
-  key :private, Boolean, default: true
+  field :name,    type: String
+  slug  :name,   scope: :creator, permanent: true, index: true
 
-  key :player_ids, Array
-  many :players, class: User, in: :player_ids
+  field :visible, type: Boolean, default: false
+  field :public,  type: Boolean, default: false
 
-  many :wall_items, as: :wall,
-                    sort: :created_at.desc
+  field :seed,           type: String, default: ''
+  field :pvp,            type: Boolean, default: true
+  field :spawn_monsters, type: Boolean, default: true
+  field :spawn_animals,  type: Boolean, default: true
 
-  # TODO: Needs migration
-  key :seed, String, default: ''
-  key :pvp, Boolean, default: true
-  key :spawn_monsters, Boolean, default: true
-  key :spawn_animals, Boolean, default: true
+  belongs_to :creator, class_name: 'User', inverse_of: :worlds
+
+  has_and_belongs_to_many :players, class_name: 'User'
+
+  embeds_many :wall_items, as: :wall
+
+
+# VALIDATIONS
 
   validates_presence_of :name
-  validates_presence_of :slug
 
-  userstamps!
-  timestamps!
 
-  scope :public, private: false
-  scope :private, private: true
+# PLAYERS
 
-  def public?
-    not public?
-  end
-
-  def self.available_to_play
-    where(status:'')
-  end
-
-  def host
-    'pluto.minefold.com'
-  end
-
-  def channel
-    Pusher[channel_name]
-  end
-
-  def channel_name
-    [self.class.name.downcase, self.id.to_s].join(':')
+  def connected_player_ids
+    REDIS.smembers("#{redis_key}:connected_players")
   end
 
   def connected_players
-    User.find REDIS.smembers(redis_key(:connected_players))
+    User.find connected_player_ids
   end
 
   def connected_players_count
-    REDIS.smembers(redis_key(:connected_players)).size
+    connected_player_ids.size
   end
 
-  def to_param
-    slug
-  end
 
-  def self.default
-    find_by_name 'Minefold'
-  end
+# COMMUNICATION
+
+  # def send_cmd(str)
+  #   REDIS.publish("#{redis_key}.stdin", str)
+  # end
+  #
+  # private(:send_cmd)
+  #
+  # def broadcast(msg)
+  #   send_cmd "say #{msg}"
+  # end
+  #
+  # def broadcast(user, msg)
+  #   send_cmd "/tell #{user.username} #{msg}"
+  # end
+
+
+# MEDIA
 
   def photos
-    wall_items.each_with_object([]) do |item, photos|
-      item.media.select {|m| m['type'] == 'photo'}.each do |photo|
-        photos << photo
+    wall.each_with_object([]) do |item, photos|
+      item.media.each_with_object(photos) do |media, photos|
+        photos << media if media['type'] == 'photo'
       end
     end
   end
 
-private
 
-  before_validation :generate_slug
-
-  # TODO: This is shit
-  def generate_slug
-    return unless name_changed? and name.present?
-
-    # Generate a first guess at the slug
-    self.slug = guess = self.name.to_url
-    n = 0
-
-    # Loops whilst a slug with same name exists, adding an integer to the end
-    # each time. "foo", "foo-1", "foo-2" etc.
-    #
-    # Searching the DB each time isn't particularly performant but this is an
-    # edge case, when two different names produce the same slug.
-    while self.class.exist?(:slug => slug)
-      self.slug = "#{guess}-#{n += 1}"
-    end
+  def pusher_key
+    "#{self.class.name.downcase}-#{id}"
   end
 
-  def redis_key(*members)
-    [self.class.name.downcase, id, *members.map{|m| m.to_s}].join(':')
+  def redis_key
+    "#{self.class.name.downcase}:#{id}"
+  end
+
+protected
+
+  def self.default
+    first(name: 'Minefold').cache
   end
 
 end

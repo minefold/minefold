@@ -1,82 +1,95 @@
 require 'tmpdir'
 
-class TarGz
-  attr_reader :options
+# class TarGz
+#   attr_reader :options
+#
+#   def self.new options = {}
+#     if RUBY_PLATFORM =~ /darwin/i
+#       OSX.new options
+#     elsif RUBY_PLATFORM =~ /linux/i
+#       Linux.new options
+#     else
+#       raise "Windows!? WTF!"
+#     end
+#   end
+#
+#   class Base
+#     attr_reader :options
+#     def initialize options = {}
+#       @options = { sudo:false }.merge(options)
+#     end
+#
+#     def sudo_cmd
+#       ENV['rvm_version'] ? 'rvmsudo' : 'sudo'
+#     end
+#
+#     def sudo cmd
+#       `#{sudo_cmd} #{cmd}`
+#     end
+#
+#     def run_command cmd
+#       if options[:sudo]
+#         sudo cmd
+#       else
+#         `#{cmd}`
+#       end
+#     end
+#
+#     def archive path, output_file, options = {}
+#       run_command "tar #{option_string(options)} -czf '#{output_file}' '#{path}'"
+#     end
+#
+#     def extract archive_file, options = {}
+#       run_command "tar #{option_string(options)} -xzf '#{archive_file}'"
+#     end
+#   end
+#
+#   class OSX < Base
+#     def option_string options
+#       options.map{|k,v| "--#{k} '#{v}'"}.join(" ")
+#     end
+#   end
+#
+#   class Linux < Base
+#     def option_string options
+#       options.map{|k,v| "--#{k}='#{v}'"}.join(" ")
+#     end
+#   end
+# end
 
-  def self.new options = {}
-    if RUBY_PLATFORM =~ /darwin/i
-      OSX.new options
-    elsif RUBY_PLATFORM =~ /linux/i
-      Linux.new options
-    else
-      raise "Windows!? WTF!"
-    end
-  end
-
-  class Base
-    attr_reader :options
-    def initialize options = {}
-      @options = { sudo:false }.merge(options)
-    end
-
-    def sudo_cmd
-      ENV['rvm_version'] ? 'rvmsudo' : 'sudo'
-    end
-
-    def sudo cmd
-      `#{sudo_cmd} #{cmd}`
-    end
-
-    def run_command cmd
-      if options[:sudo]
-        sudo cmd
-      else
-        `#{cmd}`
-      end
-    end
-
-    def archive path, output_file, options = {}
-      run_command "tar #{option_string(options)} -czf '#{output_file}' '#{path}'"
-    end
-
-    def extract archive_file, options = {}
-      run_command "tar #{option_string(options)} -xzf '#{archive_file}'"
-    end
-  end
-
-  class OSX < Base
-    def option_string options
-      options.map{|k,v| "--#{k} '#{v}'"}.join(" ")
-    end
-  end
-
-  class Linux < Base
-    def option_string options
-      options.map{|k,v| "--#{k}='#{v}'"}.join(" ")
-    end
-  end
-end
-
-class ImportWorld
+class ImportWorldJob
   @queue = :low
 
   class InvalidArchive < StandardError; end
   class InvalidWorld < StandardError; end
 
-  def self.storage
-    @storage ||= Fog::Storage.new provider: 'AWS',
-                                  aws_access_key_id: ENV['S3_KEY'],
-                                  aws_secret_access_key: ENV['S3_SECRET']
-  end
+
 
   def self.perform world_id, filename
-    tmp_dir = File.join(Dir.tmpdir, world_id)
+    new(World.find(world_id)).process! filename
+  end
 
-    begin
-      import_dir = FileUtils.mkdir_p(File.join(tmp_dir, 'import')).last
+  def initialize(world)
+    @world = world
+  end
+
+
+# private
+
+  def self.storage
+    @storage ||= Fog::Storage.new provider: 'AWS',
+                         aws_access_key_id: ENV['S3_KEY'],
+                     aws_secret_access_key: ENV['S3_SECRET']
+  end
+
+  def process!(filename)
+    tmp_dir = File.join(Dir.tmpdir, world.id.to_s)
+
+    # begin
+      # import_dir = FileUtils.mkdir_p(File.join(tmp_dir, 'import')).last
       # extract_dir = FileUtils.mkdir_p("#{base_path}/extract").last
-      Dir.chdir extract_path do
-        puts "Downloading #{filename} => #{File.expand_path(filename)}"
+    Dir.chdir tmp_dir do
+      # puts "Downloading #{filename} => #{File.expand_path(filename)}"
 
         remote_file = Storage.new.worlds_to_import.files.get filename
         File.open(filename, 'w') {|local_file| local_file.write(remote_file.body)}

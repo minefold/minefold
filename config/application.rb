@@ -4,9 +4,9 @@ require 'action_controller/railtie'
 require 'action_mailer/railtie'
 require 'sprockets/railtie'
 
-# If you have a Gemfile, require the gems listed there, including any gems
-# you've limited to :test, :development, or :production.
-Bundler.require *Rails.groups(:assets) if defined?(Bundler)
+if defined?(Bundler)
+  Bundler.require(:default, :assets, Rails.env)
+end
 
 module Minefold
   class Application < Rails::Application

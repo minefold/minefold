@@ -1,47 +1,27 @@
 class Order
-  include MongoMapper::Document
+  include Mongoid::Document
+  include Mongoid::Timestamps
+  include Mongoid::Paranoia
 
   belongs_to :user
-  many :payments
+  embeds_many :transactions
 
-  def self.total_revenue
-    Order.all.inject(0) {|t, o| t + o.total}
-  end
+  # TODO: Store credits / cost etc. Needs seperate billing step.
 
-  def self.total_fees
-    Order.all.inject(0) {|t, o| t + o.fee}
-  end
-
-  def process_payment(payment)
-    user.add_credits(payment.hours) if payment.complete?
-  end
-
-  def fulfilled?
-    payments.any? {|payment| payment.complete?}
-  end
-
-  def unfulfilled?
-    not fulfilled?
+  def fulfill!(n)
+    user.increment_credits!(n.hours)
   end
 
   def status
-    payments.empty? ? 'incomplete' : payments.last.status
-  end
-
-  def credits
-    payments.inject(0) {|t, p| t + p.hours} / User::BILLING_PERIOD
+    transactions.last.try(:status) || :pending
   end
 
   def gross
-    payments.inject(0) {|t, p| t + p.gross}
+    transactions.sum(:gross)
   end
 
   def fee
-    payments.inject(0) {|t, p| t + p.fee}
-  end
-
-  def total
-    gross - fee
+    transactions.sum(:fee)
   end
 
 end

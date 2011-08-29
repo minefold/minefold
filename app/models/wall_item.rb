@@ -1,6 +1,7 @@
 class WallItem
-  include MongoMapper::Document
-  belongs_to :wall, polymorphic: true
+  include Mongoid::Document
+  include Mongoid::Timestamps
+
+  embedded_in :wall, polymorphic: true
   belongs_to :user
-  timestamps!
 end

@@ -4,6 +4,7 @@ class SaveChatMessage
   def self.perform(world_id, username, raw)
     world = World.find(world_id)
     user = User.find_by_username(username)
-    Chat.create(user: user, wall: world, raw: raw)
+
+    world.push :wall_items, Chat.new(user: user, raw: raw)
   end
 end

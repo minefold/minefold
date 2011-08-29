@@ -1,57 +1,57 @@
-source :rubygems
+source 'http://rubygems.org'
 
+gem 'rails', '3.1.0.rc8'
 gem 'thin'
-gem 'rails', '~> 3.1.0.rc'
 
+# Gems used only for assets and not required
+# in production environments by default.
+group :assets do
+  gem 'sass-rails'
+  gem 'coffee-rails'
+  gem 'uglifier'
+end
+
+gem 'mongoid'
 gem 'bson_ext'
-gem 'mongo_mapper',
-  git: 'https://github.com/jnunemaker/mongomapper.git'
+gem 'devise',
+  git: 'https://github.com/plataformatec/devise.git'
+gem 'em-http-request'
 
-gem 'devise'
-gem 'mm-devise', require: false
-
+gem 'sendgrid'
 gem 'activemerchant'
-gem 'stringex'
+gem 'pusher'
+
+gem 'statsd-instrument'
+
+gem 'mongoid_slug'
+gem 'gravtastic'
 gem 'high_voltage'
-gem 's3_swf_upload',
-  git: 'https://github.com/nathancolgate/s3-swf-upload-plugin'
+gem 'decent_exposure'
 
 gem 'resque', require: 'resque/server'
 gem 'resque_mailer'
 
-gem 'rinku'
-gem 'embedly'
-
-gem 'fog'
-gem 'gravtastic', '>= 3.2.4', groups: [:default, :assets]
-gem 'em-http-request'
-gem 'pusher'
-gem 'sendgrid'
-gem 'decent_exposure'
-gem 'rubyzip'
-gem 'cancan'
-
-gem 'statsd-instrument'
-
-group :assets, :development do
-  gem 'sass-rails'
-  gem 'bourbon'
-  gem 'coffee-script'
-  gem 'uglifier'
-  gem 'jquery-rails'
-  gem 'backbone-rails'
-end
-
 gem 'haml'
 gem 'mustache'
+gem 'bourbon'
+gem 'jquery-rails'
+gem 'backbone-rails'
+
+group :worker do
+  gem 'fog'
+  gem 'rinku'
+  gem 'embedly'
+end
 
 group :development do
   gem 'heroku'
   gem 'foreman'
-  gem 'rake'
-  gem 'looksee'
 end
 
-group :test do
-  gem 'turn', require: false
+group :test, :development do
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'autotest'
+  gem 'autotest-rails'
+  gem 'mongoid-rspec'
 end

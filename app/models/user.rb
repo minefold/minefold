@@ -1,65 +1,80 @@
 class User
-  include MongoMapper::Document
+  include Mongoid::Document
+  include Mongoid::Timestamps
+  include Mongoid::Slug
+  include Mongoid::Paranoia
   include Gravtastic
 
+
   BILLING_PERIOD = 1.minute
-  MAX_REFERRALS  = 10
-  FREE_HOURS  = 1
+  FREE_HOURS     = 1
+#   MAX_REFERRALS  = 10
 
-  key :email,    String,  unique: true
-  key :username, String
-  key :credits,  Integer, default: (FREE_HOURS.hours / BILLING_PERIOD)
-  key :minutes_played,  Integer, default: 0
-  key :last_played_at, Time
-  key :staff, Boolean, default: false
+  field :email,          type: String
+  field :username,       type: String
+  field :safe_username,  type: String
+  slug  :username,       index: true
 
-  key :referrals, Integer, :default => 0
+  field :staff,          type: Boolean, default: false
 
-  one :invite
+  field :credits,        type: Integer, default: 0
+  field :minutes_played, type: Integer, default: 0
+  embeds_many :credit_events
 
-  many :wall_items, as: :wall
-  belongs_to :world
-  timestamps!
+  has_many :orders
 
-  validates_uniqueness_of :username, allow_nil: true
+  has_one :current_world, class_name: 'World'
+  has_many :worlds
 
-  devise :registerable,
-         :database_authenticatable,
-         :recoverable,
-         :rememberable,
-         :trackable,
-         :validatable
+  has_many :wall_items, as: :wall
 
-  gravtastic format: :png
+  field :referrals_sent, type: Integer, default: 0
+  embeds_many :referrals
+  embeds_one  :referral
+
+
+# VALIDATIONS
+
+  validates_uniqueness_of :email, case_sensitive: false
+  validates_uniqueness_of :username, case_sensitive: false
+  validates_confirmation_of :password
+  validates_numericality_of :credits, greater_than_or_equal_to: 0
+  validates_numericality_of :minutes_played, greater_than_or_equal_to: 0
+  validates_numericality_of :referrals_sent, greater_than_or_equal_to: 0
+
+# SECURITY
 
   attr_accessible :email,
                   :username,
                   :password,
-                  :password_confirmation,
-                  :invite_code
+                  :password_confirmation
 
-  # TODO: Should really be in MongoMapper
-  def worlds
-    World.all(player_ids: id)
-  end
 
-  before_create do
-    self.world = World.default
-  end
+# CREDITS
 
-  def first_signin?
-    sign_in_count <= 1
-  end
+  scope :free, where(:orders.size => 0)
 
-  def verified?
-    not last_played_at.nil?
+  # Gives away the free credits and starts off the credit history
+  after_initialize do
+    self.credits += FREE_HOURS.hours / BILLING_PERIOD
+    self.credit_events.build(delta: credits)
   end
 
 
-# Credits
+  def increment_credits!(n, time=Time.now.utc)
+    event = CreditEvent.new(delta: n)
 
-  def add_credits n
-    increment credits: (n / BILLING_PERIOD)
+    self.class.collection.update({_id: id}, {
+      '$inc' => {
+        credits: n
+      },
+      '$push' => {
+        credit_events: event.attributes.merge(
+          created_at: time,
+          updated_at: time
+        )
+      }
+    })
   end
 
   def hours
@@ -70,46 +85,47 @@ class User
     credits - (hours * (1.hour / BILLING_PERIOD))
   end
 
-# Invites
 
-  def free_invites?
-    invites > 0
-  end
+# AUTHENTICATION
 
-  def invite_code=(code)
-    self.invite = Invite.unclaimed.find_by_code(code.downcase)
-  end
+  devise :registerable,
+         :database_authenticatable,
+         :recoverable,
+         :rememberable,
+         :trackable,
+         :validatable
 
-  def referrals_left
-    MAX_REFERRALS - referrals
-  end
+   def first_sign_in?
+     sign_in_count <= 1
+   end
 
-  after_create do
-    self.invite.user = self
-    self.invite.save
-  end
+
+# AVATARS
+
+  gravtastic format: :png
+
+
+# REFERRALS
 
   USER_REFERRAL_BONUS = 1.hour
   FRIEND_REFERRAL_BONUS = 4.hours
 
-  def verify!
-    decrement referrals: 1
-    invite.set claimed: true
-
-    add_credits USER_REFERRAL_BONUS
-    invite.creator.add_credits FRIEND_REFERRAL_BONUS
-  end
-
-  validates_presence_of :invite, on: :create
+#   def verify!
+#     decrement referrals: 1
+#     invite.set claimed: true
+#
+#     add_credits USER_REFERRAL_BONUS
+#     invite.creator.add_credits FRIEND_REFERRAL_BONUS
+#   end
 
 protected
 
   def self.chris
-    find_by_username 'chrislloyd'
+    first(username: 'chrislloyd').cache
   end
 
   def self.dave
-    find_by_username 'whatupdave'
+    first(username: 'whatupdave').cache
   end
 
 end
