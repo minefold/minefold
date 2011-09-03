@@ -82,7 +82,7 @@ class World
 protected
 
   def self.default
-    first(name: 'Minefold').cache
+    where(name: 'Minefold').cache.first
   end
 
 end
