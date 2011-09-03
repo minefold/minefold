@@ -69,6 +69,15 @@ describe User do
 
   it "#find_for_database_authentication checks both username and email"
 
+  it "#safe_username is set when changing a username" do
+    user = User.new
+    user.safe_username.should be_nil
+    user.username = 'Chris'
+    user.safe_username.should == 'chris'
+    user.username = 'FooBarBaz'
+    user.safe_username.should == 'foobarbaz'
+  end
+
 # REFERRALS
 
 

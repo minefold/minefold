@@ -95,10 +95,14 @@ class User
          :trackable,
          :validatable
 
-   def first_sign_in?
-     sign_in_count <= 1
-   end
+  def first_sign_in?
+    sign_in_count <= 1
+  end
 
+  def username=(str)
+    super(str)
+    self.safe_username = sanitize_username(str)
+  end
 
 # AVATARS
 
@@ -122,7 +126,7 @@ protected
 
   def self.find_for_database_authentication(conditions)
     login = conditions.delete(:login)
-    any_of({username: login}, {email: login}).first
+    any_of({safe_username: sanitize_username(login)}, {email: login}).first
   end
 
   def self.chris
@@ -131,6 +135,12 @@ protected
 
   def self.dave
     where(username: 'whatupdave').cache.first
+  end
+
+private
+
+  def sanitize_username(str)
+    str.downcase
   end
 
 end
