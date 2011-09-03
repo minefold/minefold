@@ -6,6 +6,8 @@ class World
   field :name,    type: String
   slug  :name,    scope: :creator, permanent: true, index: true
 
+  field :host, default: 'pluto.minefold.com'
+
   field :visible, type: Boolean, default: false
   field :public,  type: Boolean, default: false
   scope :public, where(public: true)

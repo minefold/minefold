@@ -1,6 +1,6 @@
 :javascript
   window.pusher = new Pusher(#{Pusher.key.to_json});
-  window.channel = pusher.subscribe(#{world.channel.name.to_json});
+  window.channel = pusher.subscribe(#{Pusher[world.pusher_key].name.to_json});
 
 %header
   %h1
@@ -12,7 +12,7 @@
   %aside
     - if signed_in?
       .connection
-        - if current_user.world == world
+        - if current_user.current_world == world
           %p
             Connect to
             %strong= world.host
