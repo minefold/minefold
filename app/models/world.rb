@@ -4,7 +4,7 @@ class World
   include Mongoid::Slug
 
   field :name,    type: String
-  slug  :name,   scope: :creator, permanent: true, index: true
+  slug  :name,    scope: :creator, permanent: true, index: true
 
   field :visible, type: Boolean, default: false
   field :public,  type: Boolean, default: false

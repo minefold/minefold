@@ -14,14 +14,15 @@
 
     %fieldset
       %div
-        = f.radio_button :private, true
-        = f.label :private_true, 'Private'
+        = f.check_box :visible, checked: true
+        = f.label :visible, 'Anybody can spectate'
 
-        = f.radio_button :private, false
-        = f.label :private_false, 'Public'
+        = f.check_box :public, checked: false
+        = f.label :public, 'Anybody can play'
+      .hint
+        These settings can be changed later.
 
-        .hint
-          Any Minefold player can join a public world.
+
 
   %section.game-options
     %h3 Game options

@@ -1,7 +1,7 @@
 %ul.worlds
   - @worlds.each do |world|
     %li[world]
-      - if world.private?
+      - if not world.public?
         .private
           = image_tag asset_path('lock.png')
       .name= link_to world.name, world

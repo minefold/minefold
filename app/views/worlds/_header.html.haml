@@ -5,7 +5,7 @@
 %header
   %h1
     = world.name
-    - if world.private?
+    - if not world.public?
       %img{src: asset_path('lock.png'), width: 9, height: 12}
 
 #nav
@@ -30,6 +30,6 @@
       %a.disabled Videos
     %li.stats
       %a.disabled Stats
-    - if world.private? and signed_in? and world.creator == current_user
+    - if not world.public? and signed_in? and world.creator == current_user
       %li.edit
         = link_to 'Settings', [:edit, world]

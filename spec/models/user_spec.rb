@@ -19,8 +19,8 @@ describe User do
 
   it {should reference_many(:orders)}
 
-  it {should reference_one(:current_world).of_type(World)}
-  it {should reference_many(:worlds)}
+  it {should belong_to(:current_world).of_type(World)}
+  it {should reference_many(:worlds).as_inverse_of(:creator)}
 
   it {should have_field(:referrals_sent).of_type(Integer).with_default_value_of(0)}
   it {should embed_many(:referrals)}

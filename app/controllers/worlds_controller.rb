@@ -14,10 +14,10 @@ class WorldsController < ApplicationController
   def create
     @world = World.new(params[:world])
     @world.creator = current_user
-    @world.players << current_user if @world.private?
+    @world.players << current_user unless @world.public?
 
-    if @world.save
-      current_user.world = @world
+    if @world.valid? and @world.save
+      current_user.current_world = @world
       if current_user.save
         redirect_to @world
       else
@@ -96,7 +96,7 @@ class WorldsController < ApplicationController
 private
 
   def lock_private
-    if world.private? and
+    if not world.public? and
        not (signed_in? and current_user.staff?) and
        not (signed_in? and world.players.include?(current_user))
       raise MongoMapper::DocumentNotFound

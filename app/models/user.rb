@@ -23,8 +23,8 @@ class User
 
   has_many :orders
 
-  has_one :current_world, class_name: 'World'
-  has_many :worlds
+  belongs_to :current_world, class_name: 'World'
+  has_many :worlds, inverse_of: :creator
 
   embeds_many :wall_items, as: :wall
 
