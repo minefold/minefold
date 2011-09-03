@@ -2,9 +2,8 @@
 
 // Fonts
 
-$paytone:   'Paytone One', Helvetica, Arial, sans-serif;
-$nunito:    Nunito, 'Comic Sans', sans-serif;
 $helvetica: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$museo:     'museo-sans-rounded-1', 'museo-sans-rounded-2', Helvetica, Arial, sans-serif;
 
 // Grid
 
@@ -38,8 +37,8 @@ $green:  #BADA55;
 }
 
 @mixin logo {
-  font-weight: 700;
-  font-family: 'Nunito';
+  font-weight: 900;
+  font-family: $museo;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   margin-top: -1px;

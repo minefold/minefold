@@ -5,8 +5,8 @@
     %meta{'http-equiv' => 'X-UA-Compatible', :content => 'IE=edge'}
 
     %title Minefold
-    - unless Rails.env.development?
-      = stylesheet_link_tag '//fonts.googleapis.com/css?family=Nunito:300,400,700'
+
+    = render partial: 'shared/typekit'
     = stylesheet_link_tag 'application'
     = favicon_link_tag
 
@@ -47,5 +47,6 @@
         = render partial: 'shared/footer'
 
     = javascript_include_tag 'application'
+
     - if Rails.env.production?
-      = render partial: 'shared/stats'
+      = render partial: 'shared/analytics'
