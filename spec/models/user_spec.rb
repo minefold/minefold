@@ -65,6 +65,12 @@ describe User do
   end
 
 
+# AUTHENTICATION
+
+  it "#find_for_database_authentication checks both username and email"
+
 # REFERRALS
+
+
 
 end

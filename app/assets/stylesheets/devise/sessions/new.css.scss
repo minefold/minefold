@@ -1,13 +1,11 @@
 @import 'shared/vars';
 
-#devise-sessions-new footer.global {
+#devise-sessions-new footer.global, #devise-sessions-create footer.global {
   text-align: center;
 }
 
-#devise-sessions-new #page {
-  text-align: center;
-  width: 6 * ($gutter + $col + $gutter) - (2 * $gutter);
-//  border-bottom: 2px solid darken(#c4e8fe, 5%);
+#devise-sessions-new #page, #devise-sessions-create #page {
+  width: 4 * ($gutter + $col + $gutter) - (2 * $gutter);
   padding: $baseline $gutter;
   margin: (4 * $baseline) auto;
 
@@ -19,46 +17,23 @@
     font-family: $museo;
   }
 
+  #errors {
+    color: $red;
+  }
+
   div {
     margin-bottom: 2 * $baseline;
   }
 
-  .email, .password {
+  input + label {
     display: inline;
-  }
-
-  .email input {
-    width: 2.5 * ($gutter + $col + $gutter) - (2 * $gutter);
-  }
-
-  .password input {
-    width: $gutter + $col + $gutter;
+    margin-left: $gutter / 2;
   }
 
   .remember-me {
-    margin-top: 2 * $baseline;
+    display: inline;
+    margin-left: $gutter;
     text-align: center;
-    label {
-      display: inline;
-    }
-  }
-
-//  .email input, .password input {
-//    font: 400 14px/18px $helvetica;
-//    margin: $baseline ($gutter - 2px);
-//    border: 2px solid darken(white, 10%);
-//    @include border-radius($radius);
-//    outline: none;
-//
-//    &:focus {
-//      border-color: $blue;
-//    }
-//  }
-
-  .signin {
-    text-algin: center;
-    input {
-      text-shadow: 0 1px 0 darken($blue, 20%);
-    }
+    font-size: 12px;
   }
 }

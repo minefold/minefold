@@ -120,6 +120,11 @@ class User
 
 protected
 
+  def self.find_for_database_authentication(conditions)
+    login = conditions.delete(:login)
+    any_of({username: login}, {email: login}).first
+  end
+
   def self.chris
     where(username: 'chrislloyd').cache.first
   end

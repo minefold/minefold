@@ -36,7 +36,6 @@
       padding: ($baseline - $border) ($gutter - $border);
       border: $border solid darken(white, 10%);
       @include border-radius($radius);
-      outline: none;
       margin: 0;
 
       font: 14px/18px $helvetica;
@@ -61,7 +60,10 @@
       &[type=image] {
         border: none;
       }
+    }
 
+    input[type=text], input[type=email], input[type=password] {
+      outline: none;
     }
 
     button, input[type=submit] {
