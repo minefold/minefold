@@ -14,7 +14,7 @@ Minefold::Application.routes.draw do
   resource :account
 
   # Payment
-  get  '/buy' => 'orders#new', :as => :credits
+  get  '/time' => 'orders#new', :as => :credits
   post '/order' => 'orders#create', :as => :order
   get  '/order/success' => 'orders#success', :as => :successful_order
   get  '/order/cancel' => 'orders#cancel', :as => :cancel_order
