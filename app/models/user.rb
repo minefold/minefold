@@ -26,11 +26,13 @@ class User
   has_one :current_world, class_name: 'World'
   has_many :worlds
 
-  has_many :wall_items, as: :wall
+  embeds_many :wall_items, as: :wall
 
   field :referrals_sent, type: Integer, default: 0
   embeds_many :referrals
   embeds_one  :referral
+
+  attr_accessor :email_or_username
 
 
 # VALIDATIONS
@@ -48,6 +50,10 @@ class User
                   :username,
                   :password,
                   :password_confirmation
+
+  # Virtual
+  attr_accessible :email_or_username,
+                  :remember_me
 
 
 # CREDITS
@@ -101,7 +107,7 @@ class User
 
   def username=(str)
     super(str)
-    self.safe_username = sanitize_username(str)
+    self.safe_username = self.class.sanitize_username(str)
   end
 
 # AVATARS
@@ -125,8 +131,9 @@ class User
 protected
 
   def self.find_for_database_authentication(conditions)
-    login = conditions.delete(:login)
-    any_of({safe_username: sanitize_username(login)}, {email: login}).first
+    p conditions
+    login = conditions.delete(:email_or_username)
+    any_of({safe_username: sanitize_username(login)}, {email: login}).first.tap {|o| p o}
   end
 
   def self.chris
@@ -139,7 +146,7 @@ protected
 
 private
 
-  def sanitize_username(str)
+  def self.sanitize_username(str)
     str.downcase
   end
 
