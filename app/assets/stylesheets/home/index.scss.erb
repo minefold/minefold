@@ -1,0 +1,111 @@
+@import 'shared/vars';
+
+@-webkit-keyframes bounce {
+ from {
+   -webkit-transform: translate(0);
+ }
+ 50% {
+   -webkit-transform: translateY(10px);
+ }
+ from {
+   -webkit-transform: translate(0);
+ }
+}
+
+#home-index {
+  header.global {
+    position: relative;
+    z-index: 2;
+  }
+
+  #page {
+    position: relative;
+    top: -120px;
+  }
+
+  #spinner {
+    background: rgba(red, 0.1);
+    width: 720px;
+    height: 720px;
+    position: absolute;
+  }
+
+  #banner {
+    padding-top: 160px;
+    display: block;
+    position: relative;
+    h2 {
+      padding: 2 * $baseline;
+      font-size: 40px;
+      line-height: 72px;
+      text-align: center;
+      text-shadow: 0 1px 0 rgba(white, 0.6);
+      font-family: 'Nunito';
+    }
+
+    p {
+      width: 6 * ($gutter + $col + $gutter) - (2 * $gutter);
+      margin: 0 auto;
+      text-align: center;
+      margin-bottom: 2 * $baseline;
+      color: white;
+      text-shadow: 0 1px 0 rgba(black, 0.2);
+    }
+
+    form {
+      color: darken($blue, 10%);
+      text-align: center;
+      margin-bottom: 4 * $baseline;
+      div {
+        margin-bottom: 2 * $baseline;
+        font-weight: 600;
+        text-shadow: 0 1px 0 rgba(white, 0.4);
+      }
+
+      .email input {
+        width: 3 * ($gutter + $col + $gutter) - (2 * $gutter);
+        text-align: center;
+
+        &:focus {
+          text-align: center;
+          border-color: darken($blue, 10%);
+        }
+
+        &:-webkit-input-placeholder, &:-moz-input-placeholder {
+          text-align: center;
+        }
+      }
+      button, .email input {
+        @include box-shadow(0 1px 6px rgba(black, 0.4));
+      }
+    }
+
+    #top-shadow {
+      background: url(<%= asset_path('top-shadow.png') %>);
+      width: 100%;
+      height: 2px;
+    }
+
+    #bottom-shadow {
+      background: white url(<%= asset_path('bottom-shadow.png') %>) top center no-repeat;
+      width: 100%;
+      height: 360px;
+    }
+    #field {
+      width: 100%;
+      height: 700px;
+      position: absolute;
+      top: 0;
+
+      img {
+        -webkit-transition: -webkit-transform linear;
+        -webkit-animation: bounce 1s infinite ease-in-out;
+      }
+    }
+  }
+
+
+  footer.global {
+    text-align: center;
+  }
+}

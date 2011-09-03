@@ -1,5 +1,5 @@
 (function($){
-  
+
   $.world_map = function(options) {
     var config = $.extend({
       path:        '.',
@@ -52,7 +52,7 @@
 
       // fail in a conspicuous way if tileSize doesn't match B and T
       if (config.tileSize != 64*B*T) {
-          console.log("Tile size does not match 64*B*T");
+          // console.log("Tile size does not match 64*B*T");
           return new google.maps.LatLng(0.5, 0.5);
       }
       // the center of block [0,0,0] is at [2B, 64BT-17B] in the tile [tiles/2, tiles/2]
@@ -138,7 +138,7 @@
          var marker = new google.maps.Marker({
           position: converted,
           map: map,
-          title: item.msg, 
+          title: item.msg,
 
           });
 
@@ -169,6 +169,6 @@
 
     initialize();
   }
-  
+
 })(jQuery);
 

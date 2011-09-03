@@ -82,54 +82,54 @@ class ImportWorldJob
                      aws_secret_access_key: ENV['S3_SECRET']
   end
 
-  def process!(filename)
-    tmp_dir = File.join(Dir.tmpdir, world.id.to_s)
-
-    # begin
-      # import_dir = FileUtils.mkdir_p(File.join(tmp_dir, 'import')).last
-      # extract_dir = FileUtils.mkdir_p("#{base_path}/extract").last
-    Dir.chdir tmp_dir do
-      # puts "Downloading #{filename} => #{File.expand_path(filename)}"
-
-        remote_file = Storage.new.worlds_to_import.files.get filename
-        File.open(filename, 'w') {|local_file| local_file.write(remote_file.body)}
-
-        puts "Extracting..."
-        extract_archive filename
-        FileUtils.rm_f filename
-
-        world_path = find_world_path
-
-        FileUtils.mkdir_p "#{import_path}/#{world_id}/#{world_id}"
-        FileUtils.cp_r "#{world_path}/.", "#{import_path}/#{world_id}/#{world_id}"
-
-        Dir.chdir import_path do
-          archive_filename = "#{world_id}.tar.gz"
-          archive_path = File.expand_path archive_filename
-          puts "Rearchiving to #{archive_path}"
-
-          TarGz.new.archive world_id, archive_path
-
-          puts "Uploading #{archive_filename}"
-          directory = Storage.new.worlds
-          directory.files.create(
-            :key    => archive_filename,
-            :body   => File.open(archive_path),
-            :public => false
-          )
-        end
-
-        update_world_status world_id, ''
-      end
-    rescue InvalidArchive
-      update_world_status world_id, 'invalid_archive'
-    rescue InvalidWorld
-      update_world_status world_id, 'invalid_world'
-    ensure
-      FileUtils.rm_rf base_path
-      puts "Complete"
-    end
-  end
+  # def process!(filename)
+  #   tmp_dir = File.join(Dir.tmpdir, world.id.to_s)
+  #
+  #   # begin
+  #     # import_dir = FileUtils.mkdir_p(File.join(tmp_dir, 'import')).last
+  #     # extract_dir = FileUtils.mkdir_p("#{base_path}/extract").last
+  #   Dir.chdir tmp_dir do
+  #     # puts "Downloading #{filename} => #{File.expand_path(filename)}"
+  #
+  #       remote_file = Storage.new.worlds_to_import.files.get filename
+  #       File.open(filename, 'w') {|local_file| local_file.write(remote_file.body)}
+  #
+  #       puts "Extracting..."
+  #       extract_archive filename
+  #       FileUtils.rm_f filename
+  #
+  #       world_path = find_world_path
+  #
+  #       FileUtils.mkdir_p "#{import_path}/#{world_id}/#{world_id}"
+  #       FileUtils.cp_r "#{world_path}/.", "#{import_path}/#{world_id}/#{world_id}"
+  #
+  #       Dir.chdir import_path do
+  #         archive_filename = "#{world_id}.tar.gz"
+  #         archive_path = File.expand_path archive_filename
+  #         puts "Rearchiving to #{archive_path}"
+  #
+  #         TarGz.new.archive world_id, archive_path
+  #
+  #         puts "Uploading #{archive_filename}"
+  #         directory = Storage.new.worlds
+  #         directory.files.create(
+  #           :key    => archive_filename,
+  #           :body   => File.open(archive_path),
+  #           :public => false
+  #         )
+  #       end
+  #
+  #       update_world_status world_id, ''
+  #     end
+  #   rescue InvalidArchive
+  #     update_world_status world_id, 'invalid_archive'
+  #   rescue InvalidWorld
+  #     update_world_status world_id, 'invalid_world'
+  #   ensure
+  #     FileUtils.rm_rf base_path
+  #     puts "Complete"
+  #   end
+  # end
 
   def self.extract_archive filename
     # right now we just assume it's a zip file

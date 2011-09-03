@@ -1,3 +1,4 @@
+#spinner
 #banner
   %h2 Play Minecraft with friends!
 
@@ -15,3 +16,18 @@
     .submit
       %button
         = ['Algebraic!', 'Rhombus!', 'Mathematical!'].shuffle.first
+
+  #top-shadow
+  #bottom-shadow
+  #field
+
+:javascript
+  img = new Image()
+  img.src = "/assets/creeper-0.png";
+
+  $('#field').append($(img));
+
+  setTimeout(function(){
+    console.log('triggering scale');
+    $(img).css('-webkit-transform', 'scale(120%)');
+  }, 2000)

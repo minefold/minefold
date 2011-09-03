@@ -121,11 +121,11 @@ class User
 protected
 
   def self.chris
-    first(username: 'chrislloyd').cache
+    where(username: 'chrislloyd').cache.first
   end
 
   def self.dave
-    first(username: 'whatupdave').cache
+    where(username: 'whatupdave').cache.first
   end
 
 end

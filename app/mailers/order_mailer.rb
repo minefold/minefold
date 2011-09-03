@@ -12,4 +12,16 @@ class OrderMailer < ActionMailer::Base
     mail(to: @order.user.email, subject: 'Thank you for buying Minefold minutes!')
   end
 
+  class Preview < MailView
+
+    def reminder
+      ::OrderMailer.reminder(User.chris.id)
+    end
+
+    def thanks
+      ::OrderMailer.thanks(@order.first)
+    end
+
+  end
+
 end
