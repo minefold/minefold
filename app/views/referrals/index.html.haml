@@ -10,14 +10,15 @@
   = pluralize (User::USER_REFERRAL_BONUS / 1.hour), 'hour', 'hours'
   bonus time.
 
-= form_for @invite do |f|
+= form_for @referral do |f|
   %div
     = f.email_field :email, placeholder: 'Email', required: true
     .errors
 
   %div
-    = f.submit 'Send an invite', disabled: true
+    = f.submit 'Send an invite', disabled: !current_user.referrals_left?
 
-    .count
-      = current_user.referrals_left
-      remaining
+    - if current_user.referrals_left?
+      .count
+        = current_user.referrals_left
+        remaining

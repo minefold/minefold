@@ -1,14 +1,14 @@
-<p>Hi <%= @invite.email %>!</p>
+<p>Hi <%= @referral.email %>!</p>
 
-<p><%= @invite.creator.username %> has invited you to play Minecraft on Minefold. Minefold makes playing Minecraft with your friends super simple.</p>
+<p><%= @referral.creator.username %> has invited you to play Minecraft on Minefold. Minefold makes playing Minecraft with your friends super simple.</p>
 
 <p>To get started sign up at:</p>
 
-<blockquote><%= link_to new_user_registration_url(code: @invite.code), new_user_registration_url(code: @invite.code) %></blockquote>
+<blockquote><%= link_to new_user_registration_url(code: @referral.code), new_user_registration_url(code: @referral.code) %></blockquote>
 
 <p><small>(If you don't have a Minecraft username already, you can get one at <a href='http://minecraft.net'>http://minecraft.net</a>)</small></p>
 
-<p>You'll then be able to log in and view all the worlds. If you click on "<%= link_to @world.name, world_url(@world) %>" you can see our personal world. You'll be spawned there when you connect to "<%= @world.host %>" in Minecraft.</p>
+<p>You'll then be able to log in and view all the worlds. If you click on "<%= link_to @world.name, @world %>" you can see our personal world.</p>
 
 <p>If you've been playing single player you can import your own world when you create a new world from the dashboard.</p>
 

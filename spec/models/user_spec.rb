@@ -22,9 +22,9 @@ describe User do
   it {should belong_to(:current_world).of_type(World)}
   it {should reference_many(:worlds).as_inverse_of(:creator)}
 
-  it {should have_field(:referrals_sent).of_type(Integer).with_default_value_of(0)}
+  it {should have_field(:total_referrals).of_type(Integer).with_default_value_of(10)}
   it {should embed_many(:referrals)}
-  it {should embed_one(:referral)}
+  it {should belong_to(:referrer).of_type(User)}
 
 
 # VALIDATIONS
@@ -80,6 +80,11 @@ describe User do
 
 # REFERRALS
 
-
+  it "#referrals_left does what it says it does" do
+    user = User.new total_referrals: 10
+    user.referrals_left.should == 10
+    user.referrals.new
+    user.referrals_left.should == 9
+  end
 
 end

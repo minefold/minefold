@@ -8,13 +8,12 @@ class User
 
   BILLING_PERIOD = 1.minute
   FREE_HOURS     = 1
-#   MAX_REFERRALS  = 10
 
   field :email,          type: String
   field :username,       type: String
   field :safe_username,  type: String
   slug  :username,       index: true
-  
+
   field :host, default: 'pluto.minefold.com'
 
   field :staff,          type: Boolean, default: false
@@ -30,9 +29,9 @@ class User
 
   embeds_many :wall_items, as: :wall
 
-  field :referrals_sent, type: Integer, default: 0
+  field :total_referrals, type: Integer, default: 10
   embeds_many :referrals
-  embeds_one  :referral
+  belongs_to  :referrer, class_name: 'User', inverse_of: :user
 
   attr_accessor :email_or_username
 
@@ -121,6 +120,14 @@ class User
 
   USER_REFERRAL_BONUS = 1.hour
   FRIEND_REFERRAL_BONUS = 4.hours
+
+  def referrals_left?
+    referrals.length < total_referrals
+  end
+
+  def referrals_left
+    total_referrals - referrals.length
+  end
 
 #   def verify!
 #     decrement referrals: 1

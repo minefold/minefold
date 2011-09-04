@@ -19,8 +19,8 @@ Minefold::Application.routes.draw do
   get  '/order/success' => 'orders#success', :as => :successful_order
   get  '/order/cancel' => 'orders#cancel', :as => :cancel_order
 
-  get '/referrals' => 'invites#index', :as => :referrals
-  resources :invites, :only => [:create]
+  get '/referrals' => 'referrals#index', :as => :referrals
+  resources :referrals, :only => [:create]
 
   resources :worlds do
     resources :wall_items do
@@ -56,6 +56,7 @@ Minefold::Application.routes.draw do
 
 
   if Rails.env.development?
-    mount OrderMailer::Preview => '/dev/mail/orders'
+    mount OrderMailer::Preview => '/dev/order-mail'
+    mount UserMailer::Preview => '/dev/user-mail'
   end
 end
