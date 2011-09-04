@@ -15,7 +15,7 @@
         - if current_user.current_world == world
           %p
             Connect to
-            %strong= world.host
+            %strong= current_user.host
         - else
           = button_to 'Join World', [:activate, world]
 

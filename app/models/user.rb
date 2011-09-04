@@ -14,6 +14,8 @@ class User
   field :username,       type: String
   field :safe_username,  type: String
   slug  :username,       index: true
+  
+  field :host, default: 'pluto.minefold.com'
 
   field :staff,          type: Boolean, default: false
 
