@@ -1,5 +1,10 @@
 tmp_password = 'carlsmum'
 
+chris = User.create username: 'minefold',
+                       email: 'admin@minefold.com'
+                    password: tmp_password,
+       password_confirmation: tmp_password
+
 chris = User.create username: 'chrislloyd',
                        email: 'chris@minefold.com'
                     password: tmp_password,
@@ -11,4 +16,4 @@ dave = User.create username: 'whatupdave',
       password_confirmation: tmp_password
 
 World.create name: 'Minefold',
-          creator: chris
+          creator: minefold
