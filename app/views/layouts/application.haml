@@ -49,16 +49,19 @@
 
           .spaceball
 
-          %li
-            %a{href: about_path} About
+          %li= link_to 'About', about_path
 
           .spaceball
 
-          %li= link_to 'Contact', contact_path
+          %li= link_to 'Jobs', jobs_path
 
           .spaceball
 
           %li= link_to 'Help', help_path
+
+          .spaceball
+
+          %li= link_to 'Contact', contact_path
 
           .spaceball
 
