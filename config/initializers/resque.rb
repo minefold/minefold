@@ -8,5 +8,5 @@ if ENV["REDISTOGO_URL"]
 end
 
 Resque::Server.use(Rack::Auth::Basic) do |user, password|
-  true
+  user == 'admin' && password == 'carlsmum'
 end
