@@ -1,4 +1,8 @@
-%header
+- content_for :masthead do
   %h1 About
+
+- content_for :before do
+  %nav.about-page
+    = render partial: 'pages/nav'
 
 %p TODO

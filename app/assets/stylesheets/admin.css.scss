@@ -19,7 +19,7 @@ body {
 header {
   font-size: 12px;
   line-height: 18px;
-  height: 24px + (2 * $baseline);
+  height: 24px + (2 * $line);
   padding: 0 $gutter;
 
   border-bottom: 1px solid #333;
@@ -31,7 +31,7 @@ header {
     color: #333;
     line-height: 24px;
     font-size: 14px;
-    padding: $baseline $gutter;
+    padding: $line $gutter;
     span {
       color: $green;
     }
@@ -40,7 +40,7 @@ header {
   a {
     color: white;
     text-decoration: none;
-    padding: $baseline $gutter;
+    padding: $line $gutter;
     display: block;
     float: left;
     font-weight: bold;
@@ -58,8 +58,8 @@ header {
 }
 
 section {
-  padding: $baseline $gutter;
-  margin: $baseline $gutter;
+  padding: $line $gutter;
+  margin: $line $gutter;
   float: left;
   .number {
     color: $green;
@@ -77,7 +77,7 @@ section {
 ul.worlds, ul.users {
   li {
     border-bottom: 1px dotted #333;
-    padding: $baseline $gutter;
+    padding: $line $gutter;
 
     .private {
       float: left;

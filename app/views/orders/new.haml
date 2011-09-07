@@ -1,0 +1,75 @@
+- content_for :masthead do
+  %h1
+    You can play for
+    - if not current_user.hours.zero?
+      %strong= pluralize current_user.hours, 'hour', 'hours'
+      and
+    %strong= pluralize current_user.minutes, 'minute', 'minutes'
+
+%h2 Select how many hours you want to top up your account with.
+
+= form_tag ENV['PAYPAL_URL'] do
+  = hidden_field_tag :cmd, '_s-xclick'
+
+  = hidden_field_tag :hosted_button_id, ENV['PAYPAL_BUTTON_ID']
+
+  = hidden_field_tag :item_number, @order.id
+  = hidden_field_tag :custom,      @order.id
+
+  = hidden_field_tag :notify_url, order_url
+  = hidden_field_tag :cancel_return, cancel_order_url
+
+  = hidden_field_tag :return, successful_order_url
+
+  = hidden_field_tag :on0, 'Hours'
+
+  %ul#products
+    %li.active
+      %label{for: 'os0-8'}
+        .time
+          +8
+          %span hours
+        .cost
+          $4
+          %span 50&cent; / hr
+
+      %input#os0-8{type: 'radio', name: 'os0', value: 8, style: 'display:none', checked: true}
+
+    %li
+      %label{for: 'os0-20'}
+        .time
+          +20
+          %span hours
+        .cost
+          $8
+          %span 40&cent; / hr
+
+      %input#os0-20{type: 'radio', name: 'os0', value: 20, style: 'display:none'}
+
+    %li
+      %label{for: 'os0-60'}
+        .time
+          +60
+          %span hours
+        .cost
+          $18
+          %span 30&cent; / hr
+
+      %input#os0-60{type: 'radio', name: 'os0', value: 60, style: 'display:none'}
+
+    %li
+      %label{for: 'os0-160'}
+        .time
+          +160
+          %span hours
+        .cost
+          $40
+          %span 25&cent; / hr
+
+      %input#os0-160{type: 'radio', name: 'os0', value: 160, style: 'display:none'}
+
+
+  %input{type: 'image', src: 'https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif', border: 0, name: 'submit', alt: 'PayPal - The safer, easier way to pay online!'}
+
+  -# TODO: Investigate wether this is needed
+  %img{alt: '', border: 0, src: 'https://www.paypalobjects.com/en_AU/i/scr/pixel.gif', width: 1, height: 1}

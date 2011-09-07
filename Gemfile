@@ -13,7 +13,8 @@ end
 
 gem 'mongoid'
 gem 'bson_ext'
-gem 'devise'
+gem 'devise',
+  git: 'https://github.com/plataformatec/devise.git'
 gem 'em-http-request'
 
 gem 'sendgrid'
@@ -36,7 +37,8 @@ gem 'resque_mailer'
 
 gem 'haml'
 gem 'mustache'
-gem 'bourbon'
+gem 'bourbon',
+  git: 'https://github.com/thoughtbot/bourbon.git'
 gem 'jquery-rails'
 gem 'backbone-rails'
 

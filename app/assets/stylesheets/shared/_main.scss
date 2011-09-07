@@ -1,0 +1,196 @@
+.wrapper {
+  width: gwidth(10);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+::selection {
+  background: rgba($blue, 0.4);
+  text-shadow: none;
+}
+
+strong {
+  font-weight: 600;
+}
+
+.spaceball, .pipe {
+  display: inline;
+
+  &:before {
+    @include inline-block;
+  }
+}
+
+.spaceball:before {
+  content: '\00B7';
+  padding: 0 ($gutter /2);
+}
+
+.pipe:before {
+  content: '|';
+}
+
+
+html {
+  font: 400 14px/18px $helvetica;
+  min-width: $width;
+  background: white;
+}
+
+header {
+  overflow: auto;
+  padding: $line 0 ($line - 1px);
+  border-bottom: 1px solid darken(white, 10%);
+
+  h1 a, aside {
+    line-height: 24px;
+  }
+
+  h1 {
+    float: left;
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+
+    a {
+      color: #333;
+      text-decoration: none;
+
+      margin: (-$line) 0;
+      padding: $line $gutter $line (27px + $gutter);
+      background: url(image-path('logo-24.png')) center left no-repeat;
+
+      &:hover {
+        color: $blue;
+      }
+
+      img {
+        margin: 0;
+        display: block;
+        float: left;
+        margin-right: 2 * $gutter;
+      }
+    }
+  }
+
+  aside {
+    float: right;
+    font-size: 12px;
+
+    ol {
+      overflow: auto;
+
+      li, .pipe {
+        float: left;
+        margin-left: $gutter;
+        color: #CCC;
+      }
+
+      a {
+        color: darken($blue, 10%);
+        text-decoration: none;
+        &:hover {
+          color: $blue;
+        }
+      }
+    }
+  }
+}
+
+#masthead {
+  background: darken(white, 5%);
+  overflow: auto;
+  margin-bottom: 4 * $line;
+
+  h1 {
+    font-size: 24px;
+    line-height: 48px;
+    margin: (2 * $line) 0;
+  }
+}
+
+#content {
+  line-height: 24px;
+
+  .wrapper {
+    width: gwidth(10) + (2 * $gutter);
+    padding: 0 (-$gutter);
+    overflow: auto;
+  }
+
+  h2 {
+    margin: (4 * $line) 0 (2 * $line);
+    line-height: 24px;
+    font-size: 21px;
+  }
+
+  p, ul, ol, pre {
+    margin-bottom: 2 * $line;
+  }
+
+  ol {
+    list-style: decimal;
+  }
+
+  ol {
+    list-style: disc;
+  }
+
+  nav {
+    float: left;
+    width: gwidth(2);
+  }
+
+  #before-page {
+    @include span(2);
+    float: left;
+  }
+
+  #page {
+    @include span(6);
+    float: left;
+  }
+
+  #after-page {
+    @include span(2);
+    float: right;
+  }
+
+}
+
+footer {
+  text-align: center;
+  font: 12px/24px $helvetica;
+  padding: (4 * $line) 0;
+  color: #CCC;
+
+  ul {
+    li {
+      display: inline;
+      a {
+        color: #666;
+        text-decoration: none;
+        &:hover {
+          color: black;
+        }
+      }
+      &.spaceball {
+        @include inline-block;
+        width: $gutter;
+      }
+    }
+  }
+  .fineprint {
+    color: #CCC;
+    a {
+      color: #CCC;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+

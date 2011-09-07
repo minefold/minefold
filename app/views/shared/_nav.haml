@@ -1,0 +1,33 @@
+%ol#nav
+  - if signed_in?
+    %li= link_to 'Dashboard', user_root_path
+  - else
+    %li= link_to 'Home', root_path
+
+  %li
+    = link_to worlds_path do
+      %strong Explore
+
+  %li= link_to 'Blog', '//blog.minefold.com'
+  %li= link_to "We're hiring!", jobs_path
+
+  .pipe
+
+  - if user_signed_in?
+    %li.credits
+      = time_left_in_worlds current_user
+
+    %li.time
+      = link_to 'Buy Time', credits_path
+
+    %li.account
+      = link_to 'Account', account_path
+
+    %li.sign-out
+      = link_to 'Sign Out', destroy_user_session_path, method: :delete
+
+    %li.profile<
+      = link_to(current_user) {image_tag current_user.gravatar_url(size: 24), width: 24, height: 24}
+
+  - else
+    %li.signin= link_to 'Sign In', new_user_session_path

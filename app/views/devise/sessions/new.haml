@@ -1,0 +1,22 @@
+- content_for :masthead do
+  %h1 Sign in
+
+  - if flash[:alert]
+    #errors
+      .alert= flash[:alert]
+
+  = form_for :user, as: :user, url: session_path(:user) do |f|
+    .email
+      = f.label :email_or_username, 'Email or username'
+      = f.text_field :email_or_username, tabindex: 1
+
+    .password
+      = f.label :password
+      = f.password_field :password, tabindex: 2
+
+    .signin
+      = f.submit 'Sign in', tabindex: 4
+      .remember-me
+        = f.check_box :remember_me, tabindex: 3
+        = f.label :remember_me
+

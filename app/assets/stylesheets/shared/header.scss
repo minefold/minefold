@@ -6,7 +6,7 @@ header.global {
 
   h1 {
     float: left;
-    padding: ($baseline) 0;
+    padding: ($line) 0;
 
     a {
       @include logo;
@@ -14,7 +14,7 @@ header.global {
       line-height: 24px;
       text-decoration: none;
       display: block;
-      margin: $baseline 0;
+      margin: $line 0;
       color: $blue;
       text-shadow: 0 1px 0 white;
 

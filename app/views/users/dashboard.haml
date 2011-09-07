@@ -1,0 +1,41 @@
+- if current_user.first_sign_in?
+  .beta-notice
+    %h2
+      Much love, homie
+    .heart &hearts;
+    %p
+      We are working super hard but things may still break. If something seems odd <a href='mailto:support@minefold.com'>shoot us an email</a> or <a href='tel:+61424121343'>give us a call</a>.
+
+%header
+  %aside
+    = button_to 'Create a world', new_world_path, method:  :get
+  %h1
+    %strong Your
+    Worlds
+
+.worlds
+  %ul
+    - current_user.worlds.each do |world|
+      %li{class: (current_user.current_world == world ? 'active' : nil)}
+        = link_to [world.owner, world] do
+          .info
+            = world.name
+            .players
+              = pluralize world.connected_players_count, 'player', 'players'
+
+
+%header
+  %h1
+    %strong Public
+    Worlds
+
+
+.worlds
+  %ul
+    - @worlds.each do |world|
+      %li{class: (current_user.current_world == world ? 'active' : nil)}
+        = link_to [world.owner, world] do
+          .info
+            = world.name
+            .players
+              = pluralize world.connected_players_count, 'player', 'players'

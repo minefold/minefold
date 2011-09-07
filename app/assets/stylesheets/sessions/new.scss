@@ -1,0 +1,39 @@
+@import 'shared';
+
+#devise-sessions-new footer.global, #devise-sessions-create footer.global {
+  text-align: center;
+}
+
+#devise-sessions-new #page, #devise-sessions-create #page {
+  width: 4 * ($gutter + $col + $gutter) - (2 * $gutter);
+  padding: $line $gutter;
+  margin: (4 * $line) auto;
+
+  h2 {
+    font-size: 24px;
+    line-height: 4 * $line;
+    font-weight: 600;
+    margin: $line 0 (2 * $line) 0;
+    font-family: $museo;
+  }
+
+  #errors {
+    color: $red;
+  }
+
+  div {
+    margin-bottom: 2 * $line;
+  }
+
+  input + label {
+    display: inline;
+    margin-left: $gutter / 2;
+  }
+
+  .remember-me {
+    display: inline;
+    margin-left: $gutter;
+    text-align: center;
+    font-size: 12px;
+  }
+}

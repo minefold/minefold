@@ -7,13 +7,13 @@
 
   h2 {
     font-size: 14px;
-    line-height: 4 * $baseline;
+    line-height: 4 * $line;
     font-weight: 600;
-    margin: $baseline 0 (2 * $baseline) 0;
+    margin: $line 0 (2 * $line) 0;
   }
 
   p {
-    margin-bottom: 2 * $baseline;
+    margin-bottom: 2 * $line;
   }
 
   .note {
@@ -24,7 +24,7 @@
 
   input[type=email], input[type=password], input[type=text] {
     font: 400 14px/18px $helvetica;
-    margin: $baseline ($gutter - 2px);
+    margin: $line ($gutter - 2px);
     border: 2px solid darken(white, 10%);
     border-radius: $radius;
     outline: none;

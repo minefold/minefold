@@ -16,7 +16,7 @@ class World
   field :spawn_monsters, type: Boolean, default: true
   field :spawn_animals,  type: Boolean, default: true
 
-  belongs_to :creator, class_name: 'User', inverse_of: :worlds
+  belongs_to :creator, class_name: 'User', inverse_of: :created_worlds
 
   has_and_belongs_to_many :players, class_name: 'User'
 

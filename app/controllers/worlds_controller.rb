@@ -1,10 +1,14 @@
 class WorldsController < ApplicationController
 
-  prepend_before_filter :authenticate_user!, except: :show
+  prepend_before_filter :authenticate_user!, except: [:index, :show]
 
-  before_filter :lock_private, except: [:new, :create, :import, :import_policy]
+  # before_filter :lock_private, only: [:show, :edit, :update, :map, :photos, :activate]
 
-  expose(:world) { World.find_by_slug(params[:id]) }
+  expose(:creator) { User.find_by_slug!(params[:user_id])}
+  expose(:world) { creator.created_worlds.find_by_slug!(params[:id])}
+
+  def index
+  end
 
   def new
     # TODO Get working with Decent Exposure
@@ -99,7 +103,7 @@ private
     if not world.public? and
        not (signed_in? and current_user.staff?) and
        not (signed_in? and world.players.include?(current_user))
-      raise MongoMapper::DocumentNotFound
+      raise Mongoid::Errors::DocumentNotFound
     end
   end
 

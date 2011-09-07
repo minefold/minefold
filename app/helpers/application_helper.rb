@@ -3,23 +3,16 @@
 module ApplicationHelper
 
   def page_css_selector
-    list = [params[:controller].gsub('/', '-').dasherize,
-          params[:action].dasherize]
-    { id: list.join('-'),
-      class: list }
+    [params[:controller].gsub('/', '-').dasherize,
+     params[:action].dasherize].join('-')
   end
 
   def hidden
     {style: 'display:none'}
   end
 
-  def credits_in_words minutes
-    case
-    when minutes < 60
-      pluralize minutes, "minute", "minutes"
-    else
-      pluralize (minutes / 60), "hour", "hours"
-    end
+  def time_left_in_worlds user
+    "#{user.hours}:#{user.minutes}"
   end
 
   def template(name, options)

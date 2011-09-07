@@ -112,11 +112,11 @@ class MimeTypes {
 		["video/x-sgi-movie","movie"],
 		["x-conference/x-cooltalk","ice"]
 	];
-	
+
 	var types : Array<Array<String>>;
-	
+
 	public function new() types = TYPES.copy()
-	
+
 	/**
 	 * Returns the mimetype for the given extension.
 	 */

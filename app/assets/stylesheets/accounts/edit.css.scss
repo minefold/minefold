@@ -12,14 +12,14 @@
   }
 
   form {
-    padding: (2 * $baseline) $pad;
+    padding: (2 * $line) $pad;
 
     label {
-      margin-bottom: $baseline;
+      margin-bottom: $line;
     }
 
     section {
-      margin-bottom: 2 * $baseline;
+      margin-bottom: 2 * $line;
     }
   }
 }

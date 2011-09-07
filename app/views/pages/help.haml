@@ -1,4 +1,20 @@
-%header
+- content_for :masthead do
   %h1 Help
 
-%p TODO
+- content_for :before do
+  %nav.help-page
+    = render partial: 'pages/nav'
+
+
+%p If you are having any problems, contact Chris or Dave.
+
+%dl#faq
+  %dt How do I get started?
+  %dd RTFM.
+
+  %dt Blocks keep on reappearing!
+  %dd Spawn protection, bitches.
+
+  %dt Big chunks of the world are missing!
+  %dd Chunk errors, they happen and arn't our fault. Connect and reconnect.
+

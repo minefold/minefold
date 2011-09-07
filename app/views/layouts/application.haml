@@ -1,0 +1,90 @@
+!!!
+%html
+  %head
+    %meta{charset: 'utf-8'}
+    %meta{'http-equiv' => 'X-UA-Compatible', :content => 'IE=edge,chrome=1'}
+
+    %title Minefold
+    = csrf_meta_tags
+
+    %meta{name: 'viewport', content: 'width=device-width, initial-scale=1'}
+
+    = render partial: 'shared/typekit'
+    = stylesheet_link_tag 'application'
+    = favicon_link_tag
+
+    = javascript_include_tag '//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js'
+
+    /[if lt IE 9]
+      = javascript_include_tag '//html5shim.googlecode.com/svn/trunk/html5.js'
+
+
+    %meta{name:'description', content:'Social Minecraft. Play with friends in the clouds.'}
+    %meta{name:'keywords', content:%w(gaming games game minecraft server hosting multiplayer).join(',')}
+
+  %body{lang: 'en', id: page_css_selector}
+    %header
+      .wrapper
+        %h1
+          = link_to root_url do
+            Minefold
+        %aside
+          = render partial: 'shared/nav'
+
+
+    %section#masthead
+      .wrapper= yield :masthead
+
+    %section#content
+      .wrapper
+        #before-page= yield :before
+        #page= yield
+        #after-page= yield :after
+
+    %footer
+      .wrapper
+        %ul
+          %li
+            %a{href: '//flickr.com/photos/toolmantim/3451060043/'} Made in Sydney, Australia
+
+          .spaceball
+
+          %li
+            %a{href: about_path} About
+
+          .spaceball
+
+          %li= link_to 'Contact', contact_path
+
+          .spaceball
+
+          %li= link_to 'Help', help_path
+
+          .spaceball
+
+          %li= link_to 'Referrals', new_referral_path
+
+          .spaceball
+
+          %li.facebook
+            %a{href: '//facebook.com/minefold'} Become a fan
+
+          .spaceball
+
+          %li.twitter
+            %a{href: '//twitter.com/minefold'} Follow us
+
+
+        %p.fineprint
+          &copy; #{Time.now.year} Minefold.
+          <a href="#{privacy_path}">Privacy</a>, <a href="#{terms_path}">Terms</a>.
+
+    - if Rails.env.development?
+      #grid
+        .overlay
+        %a.toggle &middot;
+
+    = javascript_include_tag 'public'
+
+    - if Rails.env.production?
+      = render partial: 'shared/analytics'

@@ -4,6 +4,9 @@ class Chat < WallItem
 
   field :media, type: Array
 
+  # TODO Should be in WallItem, but there seemed to be an issue with Mongoid.
+  belongs_to :user
+
   def body
     html || raw
   end

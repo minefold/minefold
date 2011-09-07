@@ -10,7 +10,7 @@
   }
 
   section {
-    margin-bottom: 2 * $baseline;
+    margin-bottom: 2 * $line;
     overflow: auto;
 
     h3, fieldset {
@@ -26,7 +26,7 @@
         display: inline;
       }
       fieldset div {
-        margin-bottom: $baseline;
+        margin-bottom: $line;
       }
     }
 
@@ -42,7 +42,7 @@
   }
 
   .submit {
-    margin-top: 3 * $baseline;
+    margin-top: 3 * $line;
   }
 
 }

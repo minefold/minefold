@@ -1,14 +1,14 @@
 class S3Upload extends flash.display.Sprite {
-	
+
 	static var _id : String;
-	
+
 	var _signatureURL : String;
 	var _prefix : String;
 	var _fr : flash.net.FileReference;
 	var _filters : Array<flash.net.FileFilter>;
-	
+
 	public function new() super()
-	
+
 	public function init() {
 		_id = stage.loaderInfo.parameters.id;
 		_signatureURL = stage.loaderInfo.parameters.signatureURL;
@@ -20,7 +20,7 @@ class S3Upload extends flash.display.Sprite {
 				_filters.push( new flash.net.FileFilter( f[0] , f[1] ) );
 			}
 		}
-		
+
 		if( flash.external.ExternalInterface.available ) {
 			flash.external.ExternalInterface.addCallback( "disable" , disable );
 			flash.external.ExternalInterface.addCallback( "enable" , enable );
@@ -30,7 +30,7 @@ class S3Upload extends flash.display.Sprite {
 		onStageResize();
 		enable();
 	}
-	
+
 	function onBrowse( e ) {
 		var fr = new flash.net.FileReference();
 		fr.addEventListener( "cancel" , function(e) { call( e.type , [] ); } );
@@ -41,7 +41,7 @@ class S3Upload extends flash.display.Sprite {
 			fr.browse();
 		_fr = fr;
 	}
-	
+
 	function enable() {
 		buttonMode = true;
 		doubleClickEnabled = true;
@@ -57,7 +57,7 @@ class S3Upload extends flash.display.Sprite {
 		addEventListener( "doubleClick" , onMouseEvent );
 		call("enabled");
 	}
-	
+
 	function disable() {
 		buttonMode = false;
 		doubleClickEnabled = false;
@@ -73,27 +73,27 @@ class S3Upload extends flash.display.Sprite {
 		removeEventListener( "doubleClick" , onMouseEvent );
 		call("disabled");
 	}
-	
+
 	function onMouseEvent(e) {
 		call( "mouseevent" , [e.type.toLowerCase(),e.stageX,e.stageY] );
 	}
-	
+
 	function upload() {
 		// No browse has been called
 		if( _fr == null )
 			return;
-		
+
 		// Fetch a signature and other good things from the backend
 		var vars 			= new flash.net.URLVariables();
 		vars.fileName 		= _fr.name;
 		vars.fileSize 		= _fr.size;
 		vars.contentType	= extractType( _fr );
 		vars.key 			= _prefix + _fr.name;
-		
+
 		var req 			= new flash.net.URLRequest(_signatureURL);
 		req.method			= flash.net.URLRequestMethod.GET;
 		req.data			= vars;
-		
+
 		var load			= new flash.net.URLLoader();
 		load.dataFormat		= flash.net.URLLoaderDataFormat.TEXT;
 		load.addEventListener( "complete" , onSignatureComplete );
@@ -101,7 +101,7 @@ class S3Upload extends flash.display.Sprite {
 		load.addEventListener( "ioError" , onSignatureError );
 		load.load( req );
 	}
-	
+
 	static function extractType( fr : flash.net.FileReference ) {
 		if( fr.type == null || fr.type.indexOf( "/" ) == -1 ) {
 			var ext = fr.name.split(".").pop();
@@ -113,22 +113,22 @@ class S3Upload extends flash.display.Sprite {
 		}
 		return fr.type;
 	}
-	
+
 	function onSignatureError(e) {
 		call( "error" , ["Could not get signature because: " + e.text] );
 	}
-	
+
 	function onSignatureComplete(e) {
 		// Now that we have the signature we can send the file to S3.
-		
+
 		var load 			= cast( e.target , flash.net.URLLoader );
 		var sign			= new haxe.xml.Fast( Xml.parse( load.data ).firstElement() );
-		
+
 		if( sign.has.error ) {
 			call( "error" , ["There was an error while making the signature: " + sign.node.error.innerData] );
 			return;
 		}
-		
+
 		// Create an S3Options object from the signature xml
 		var opts 			= {
 			accessKeyId: sign.node.accessKeyId.innerData,
@@ -141,9 +141,9 @@ class S3Upload extends flash.display.Sprite {
 			signature: sign.node.signature.innerData,
 			policy: sign.node.policy.innerData
 		};
-		
+
 		var fr = _fr;
-		
+
 		var req				= new S3Request( opts );
 		req.onError 		= function(msg) { call( "error" , [msg] ); }
 		req.onProgress 		= function(p) { call( "progress" , [p] ); }
@@ -151,9 +151,9 @@ class S3Upload extends flash.display.Sprite {
 		req.upload( _fr );
 		call( "start" , [] );
 	}
-	
+
 	static function call( eventType , args : Array<Dynamic> = null ) {
-		if( args == null ) 
+		if( args == null )
 			args = [];
 		var method = "on"+eventType;
 		if( _id != null && flash.external.ExternalInterface.available ) {
@@ -165,23 +165,23 @@ class S3Upload extends flash.display.Sprite {
 			flash.external.ExternalInterface.call( c , [] );
 		}
 	}
-	
+
 	function onStageResize(e=null) {
 		graphics.clear();
 		graphics.beginFill( 0 , 0 );
 		graphics.drawRect( 0 , 0 , stage.stageWidth , stage.stageHeight );
 	}
-	
+
 	public static function main() {
 		flash.Lib.current.stage.align = flash.display.StageAlign.TOP_LEFT;
 		flash.Lib.current.stage.scaleMode = flash.display.StageScaleMode.NO_SCALE;
-		
+
 		var s = new S3Upload();
 		flash.Lib.current.addChild( s );
 		s.init();
 	}
-	
-	
+
+
 }
 
 typedef S3Options = {
@@ -197,37 +197,37 @@ typedef S3Options = {
 }
 
 class S3Request {
-	
+
 	static inline var AMAZON_BASE_URL = "s3.amazonaws.com";
-	
+
 	var _opts : S3Options;
 	var _httpStatus : Bool;
-	
+
 	public var onComplete : Void -> Void;
 	public var onProgress : Float -> Void;
 	public var onError : String -> Void;
-	
+
 	public function new( opts : S3Options ) {
 		_opts = opts;
 		_httpStatus = false;
 	}
-	
+
 	function getUrl() {
 		var vanity = canUseVanityStyle();
-		
+
 		if( _opts.secure && vanity && _opts.bucket.indexOf( "." ) > -1 )
 			throw new flash.errors.IllegalOperationError( "Cannot use SSL with bucket name containing '.': " + _opts.bucket );
-			
+
 		var url = "http" + ( _opts.secure ? "s" : "" ) + "://";
-		
+
 		if( vanity )
 			url += _opts.bucket + "." + AMAZON_BASE_URL;
 		else
 			url += AMAZON_BASE_URL + "/" + _opts.bucket;
-			
+
 		return url;
 	}
-	
+
 	function getVars() {
 		var vars 			 = new flash.net.URLVariables();
         vars.key             = _opts.key;
@@ -239,32 +239,32 @@ class S3Request {
         vars.success_action_status = "201";
 		return vars;
 	}
-	
+
 	function canUseVanityStyle() {
 		if( _opts.bucket.length < 3 || _opts.bucket.length > 63 )
 			return false;
-		
+
 		var periodPosition = _opts.bucket.indexOf( "." );
 		if( periodPosition == 0 && periodPosition == _opts.bucket.length - 1 )
 			return false;
-			
+
 		if( ~/^[0-9]|+\.[0-9]|+\.[0-9]|+\.[0-9]|+$/.match( _opts.bucket ) )
 			return false;
-		
+
 		if( _opts.bucket.toLowerCase() != _opts.bucket )
 			return false;
-		
+
 		return true;
 	}
-	
+
 	public function upload( fr : flash.net.FileReference ) {
 		var url = getUrl();
         flash.system.Security.loadPolicyFile(url + "/crossdomain.xml");
-		
+
 		var req = new flash.net.URLRequest( url );
         req.method = flash.net.URLRequestMethod.POST;
-        req.data = getVars();            
-        
+        req.data = getVars();
+
 		fr.addEventListener( "uploadCompleteData" , onUploadComplete );
 		fr.addEventListener( "securityError" , onUploadError );
 		fr.addEventListener( "ioError" , onUploadError );
@@ -274,7 +274,7 @@ class S3Request {
 
         fr.upload(req, "file", false);
 	}
-	
+
 	function onUploadComplete( e ) {
 		if( isError( e.data ) )
 			onError( "Amazon S3 returned an error: " + e.data );
@@ -283,7 +283,7 @@ class S3Request {
 			onComplete();
 		}
 	}
-	
+
 	function onUploadHttpStatus( e ) {
 		_httpStatus = true;
 		if( e.status >= 200 && e.status < 300 )
@@ -291,22 +291,22 @@ class S3Request {
 		else
 			onError( "Amazon S3 returned an error: " + e.status );
 	}
-	
+
 	function onUploadOpen( e ) {
 		onProgress( 0 );
 	}
-	
+
 	function onUploadProgress( e ) {
 		onProgress( e.bytesLoaded / e.bytesTotal );
 	}
-	
+
 	function onUploadError( e ) {
 		if( !_httpStatus ) // ignore io errors if we already had a valid http status
 			onError( "Amazon S3 returned an error: " + e.message );
 	}
-	
+
 	function isError(responseText:String):Bool {
         return StringTools.startsWith( StringTools.trim( StringTools.replace( responseText , '<?xml version="1.0" encoding="UTF-8"?>' , "" ) ) , "<Error>" );
     }
-	
+
 }

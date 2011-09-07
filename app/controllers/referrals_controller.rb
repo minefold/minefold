@@ -2,11 +2,9 @@ class ReferralsController < ApplicationController
 
   before_filter :authenticate_user!
 
-  def index
+  def new
     @referral = current_user.referrals.new
   end
-
-  statsd_count_success :index, 'InvitesController.index'
 
   def create
     referral = current_user.referrals.new params[:referral]
@@ -20,6 +18,8 @@ class ReferralsController < ApplicationController
     end
   end
 
-  statsd_count_success :create, 'InvitesController.create'
+
+  statsd_count_success :new, 'ReferralsController.new'
+  statsd_count_success :create, 'ReferralsController.create'
 
 end

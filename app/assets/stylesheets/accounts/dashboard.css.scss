@@ -3,9 +3,9 @@
 #accounts-dashboard #page {
 
   .beta-notice {
-    margin: (2 * $baseline) 0 (4 * $baseline) 0;
+    margin: (2 * $line) 0 (4 * $line) 0;
     text-align: center;
-    padding: (2 * $baseline) 0;
+    padding: (2 * $line) 0;
 
     h2, .heart {
       color: $red;
@@ -14,7 +14,7 @@
 
     .heart {
       font: 30px/24px $helvetica;
-      margin-bottom: 2 * $baseline;
+      margin-bottom: 2 * $line;
     }
 
     h2 {
@@ -47,12 +47,12 @@
 
     ul {
       overflow: auto;
-      margin: (2 * $baseline) 0;
+      margin: (2 * $line) 0;
     }
 
     li {
       float: left;
-      margin: 0 $gutter (2 * $baseline) $gutter;
+      margin: 0 $gutter (2 * $line) $gutter;
       background: white;
       @include border-radius($radius);
       text-align: center;
@@ -60,8 +60,8 @@
       a {
         display: block;
         width: $col + (2 * $gutter) + $col - (2 * $border);
-        padding: 2 * ($baseline - $border) 0;
-        line-height: 4 * $baseline;
+        padding: 2 * ($line - $border) 0;
+        line-height: 4 * $line;
         border-radius: $radius;
         color: $blue;
         font-weight: 600;
@@ -86,7 +86,7 @@
       }
 
       &.new a {
-        padding: (4 * $baseline - (2 * $border)) 0;
+        padding: (4 * $line - (2 * $border)) 0;
       }
 
       &.active a {

@@ -25,7 +25,8 @@ class User
   has_many :orders
 
   belongs_to :current_world, class_name: 'World'
-  has_many :worlds, inverse_of: :creator
+  has_many :created_worlds, class_name: 'World', inverse_of: :creator
+  has_and_belongs_to_many :worlds
 
   embeds_many :wall_items, as: :wall
 
@@ -43,7 +44,7 @@ class User
   validates_confirmation_of :password
   validates_numericality_of :credits, greater_than_or_equal_to: 0
   validates_numericality_of :minutes_played, greater_than_or_equal_to: 0
-  validates_numericality_of :referrals_sent, greater_than_or_equal_to: 0
+  validates_numericality_of :total_referrals, greater_than_or_equal_to: 0
 
 # SECURITY
 
@@ -137,12 +138,15 @@ class User
 #     invite.creator.add_credits FRIEND_REFERRAL_BONUS
 #   end
 
+  def to_param
+    slug
+  end
+
 protected
 
   def self.find_for_database_authentication(conditions)
-    p conditions
     login = conditions.delete(:email_or_username)
-    any_of({safe_username: sanitize_username(login)}, {email: login}).first.tap {|o| p o}
+    any_of({safe_username: sanitize_username(login)}, {email: login}).first
   end
 
   def self.chris

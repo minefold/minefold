@@ -1,0 +1,29 @@
+= render partial: 'worlds/header'
+
+#stream
+  %aside
+    %section
+      %h2
+        %strong= pluralize world.connected_players_count, 'person', 'people'
+        playing here now
+      %ul
+        - world.connected_players.each do |player|
+          %li
+            = link_to '#' do
+              .username
+                = player.username
+
+
+  - if signed_in?
+    #share
+      = form_tag wall_items_path(world.creator.id, world.id), method: :post do |f|
+        %p.submit-advice ENTER to chat, SHIFT-ENTER for a new line.
+        .user
+          %span.username= current_user.username
+
+        .avatar
+          = image_tag current_user.gravatar_url(size: 36), width: 36, height: 36
+        = text_area_tag :body, '', rows: 2, autofocus: true
+
+  #wall-items
+    = template 'worlds/_wall_item', collection: world.wall_items

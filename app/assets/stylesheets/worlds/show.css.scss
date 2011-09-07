@@ -3,7 +3,7 @@
 #worlds-show #page {
 
   #stream {
-    margin-bottom: 2 * $baseline;
+    margin-bottom: 2 * $line;
     width: 7 * ($gutter + $col + $gutter) - (2 * $gutter) - (2 * $pad);
 
     aside {
@@ -16,7 +16,7 @@
         font-size: 14px;
         line-height: 24px;
         border-bottom: $border solid darken(white, 10%);
-        margin-bottom: $baseline - $border;
+        margin-bottom: $line - $border;
       }
 
       a {
@@ -62,7 +62,7 @@
 
     form {
       position: relative;
-      margin-bottom: 3 * $baseline;
+      margin-bottom: 3 * $line;
       .avatar {
         position: absolute;
         top: 0px;
@@ -74,7 +74,7 @@
       }
 
       .user {
-        margin-bottom: $baseline;
+        margin-bottom: $line;
         margin-left: 36px + $gutter;
       }
 
@@ -107,9 +107,9 @@
       &.chat {
         overflow: auto;
 
-        padding-top: $baseline - 1px;
+        padding-top: $line - 1px;
         border-top: 1px solid darken(white, 4%);
-        margin-bottom: $baseline;
+        margin-bottom: $line;
 
         .avatar {
           float: left;
@@ -134,10 +134,10 @@
 
 
         .media {
-          margin-top: $baseline;
+          margin-top: $line;
           padding-left: 36px + $gutter;
           .thumbnail {
-            height: 10 * $baseline;
+            height: 10 * $line;
             margin-right: $gutter;
           }
         }

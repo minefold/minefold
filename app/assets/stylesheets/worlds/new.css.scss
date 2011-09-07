@@ -2,11 +2,11 @@
 
 #worlds-new #page {
   label {
-    margin-bottom: $baseline;
+    margin-bottom: $line;
   }
 
   .name {
-    margin-bottom: 4 * $baseline;
+    margin-bottom: 4 * $line;
     input {
       font-size: 18px;
       line-height: 24px;
@@ -20,7 +20,7 @@
   }
 
   section {
-    margin-bottom: 2 * $baseline;
+    margin-bottom: 2 * $line;
     overflow: auto;
 
     h3, fieldset {
@@ -36,7 +36,7 @@
         display: inline;
       }
       fieldset div {
-        margin-bottom: $baseline;
+        margin-bottom: $line;
       }
     }
 
@@ -49,7 +49,7 @@
   }
 
   .submit {
-    margin-top: 3 * $baseline;
+    margin-top: 3 * $line;
   }
 
 //  .data {
@@ -64,18 +64,18 @@
 //      line-height: 24px;
 //      color: #CCC;
 ////      padding: 0 $gutter;
-//      margin-bottom: 2 * $baseline;
+//      margin-bottom: 2 * $line;
 //    }
 //
 //    ul {
 //      overflow: auto;
-//      margin-bottom: $baseline;
+//      margin-bottom: $line;
 //      width: 2 * ($gutter + $col + $gutter) - ($gutter);
 //      float: left;
 //
 //      li {
 //        background: darken(white, 5%);
-//        padding: $baseline $gutter;
+//        padding: $line $gutter;
 //        line-height: 18px;
 //        text-shadow: 0 1px 0 white;
 //        font-weight: 600;
@@ -113,7 +113,7 @@
 //    section {
 //      float: left;
 //      width: 7 * ($gutter + $col + $gutter) - (5 * $gutter);
-//      padding: $baseline (2 * $gutter);
+//      padding: $line (2 * $gutter);
 //
 //      background: white;
 //
@@ -122,7 +122,7 @@
 //      @include border-radius(0 $radius $radius 0);
 //
 //      pre {
-//        margin: (2 * $baseline);
+//        margin: (2 * $line);
 //        color: #999;
 //      }
 //

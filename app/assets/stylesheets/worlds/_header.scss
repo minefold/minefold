@@ -14,20 +14,20 @@
 
   #nav {
     margin: 0 (-$pad);
-    margin-bottom: 4 * $baseline - $border;
+    margin-bottom: 4 * $line - $border;
     padding: 0 (2 * $gutter);
     overflow: auto;
     border-bottom: $border solid darken($blue, 20%);
 
     aside {
-      margin: $baseline 0;
+      margin: $line 0;
       float: right;
       input {
         font-size: 12px;
-        padding: ($baseline / 2) $gutter;
+        padding: ($line / 2) $gutter;
       }
       p {
-        margin-top: $baseline;
+        margin-top: $line;
       }
     }
 
@@ -40,7 +40,7 @@
           display: block;
           line-height: 24px;
           font-weight: 600;
-          padding: $baseline $gutter;
+          padding: $line $gutter;
           color: darken($blue, 20%);
           text-decoration: none;
           text-shadow: 0 1px 0 white;

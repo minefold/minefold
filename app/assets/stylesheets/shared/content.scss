@@ -1,7 +1,7 @@
 @import 'shared/vars';
 
 #content {
-  margin-bottom: 2 * $baseline;
+  margin-bottom: 2 * $line;
 
   background-color: -webkit-linear-gradient(top, white, #CCC);
 
@@ -18,7 +18,7 @@
   }
 
   pre {
-    margin-bottom: 2*$baseline;
+    margin-bottom: 2*$line;
   }
 
   code {
@@ -31,9 +31,9 @@
     }
 
     input, textarea {
-      padding: $baseline $gutter/2;
+      padding: $line $gutter/2;
 
-      padding: ($baseline - $border) ($gutter - $border);
+      padding: ($line - $border) ($gutter - $border);
       border: $border solid darken(white, 10%);
       @include border-radius($radius);
       margin: 0;
@@ -61,7 +61,7 @@
 
     button, input[type=submit] {
       margin: 0;
-      padding: $baseline $gutter;
+      padding: $line $gutter;
 
       @include border-radius($radius);
 
@@ -91,7 +91,7 @@
 
   header {
     margin: 0;
-    padding: (2 * $baseline) 0;
+    padding: (2 * $line) 0;
     font-size: 24px; line-height: 48px;
     overflow: auto;
 

@@ -1,5 +1,3 @@
-#= require chosen.jquery
-
 worldsEdit = $('#worlds-edit')
 
 worldsEdit.find('select').chosen()
