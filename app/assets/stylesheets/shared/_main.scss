@@ -137,6 +137,17 @@ header {
     list-style: disc;
   }
 
+  form {
+    label {
+      display: block;
+    }
+    input[type=text], input[type=textarea], input[type=password] {
+      @include box-sizing(border-box);
+      font: 400 16px/18px $helvetica;
+      padding: $line ($gutter / 2);
+    }
+  }
+
   nav {
     float: left;
     width: gwidth(2);

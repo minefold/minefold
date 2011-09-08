@@ -17,7 +17,7 @@
   %ul
     - current_user.worlds.each do |world|
       %li{class: (current_user.current_world == world ? 'active' : nil)}
-        = link_to [world.owner, world] do
+        = link_to [world.creator, world] do
           .info
             = world.name
             .players
@@ -34,7 +34,7 @@
   %ul
     - @worlds.each do |world|
       %li{class: (current_user.current_world == world ? 'active' : nil)}
-        = link_to [world.owner, world] do
+        = link_to [world.creworld] do
           .info
             = world.name
             .players

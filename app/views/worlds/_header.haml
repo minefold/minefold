@@ -3,33 +3,25 @@
   window.channel = pusher.subscribe(#{Pusher[world.pusher_key].name.to_json});
 
 - content_for :masthead do
-  %h1
-    = world.name
-    - if not world.public?
-      %img{src: asset_path('lock.png'), width: 9, height: 12}
+  %h1= world.name
 
-  #nav
-    %aside
-      - if signed_in?
-        .connection
-          - if current_user.current_world == world
-            %p
-              Connect to
-              %strong= current_user.host
-          - else
-            = button_to 'Join World', [:activate, world]
+  %aside
+    - if signed_in?
+      .connection
+        - if current_user.current_world == world
+          %p
+            Connect to
+            %strong= current_user.host
+        - else
+          = button_to 'Join World', [:activate, world]
 
-    %ul
-      %li.activity
-        = link_to 'Activity', world
-      %li.map
-        = link_to 'Map', [:map, world]
-      %li.photos
-        = link_to 'Photos', [:photos, world]
-      %li.videos
-        %a.disabled Videos
-      %li.stats
-        %a.disabled Stats
-      - if not world.public? and signed_in? and world.creator == current_user
-        %li.edit
-          = link_to 'Settings', [:edit, world]
+  %ol
+    %li.activity
+      = link_to 'Activity', world
+    %li.map
+      = link_to 'Map', [:map, world]
+    %li.photos
+      = link_to 'Photos', [:photos, world]
+    - if not world.public? and signed_in? and world.creator == current_user
+      %li.edit
+        = link_to 'Settings', [:edit, world]

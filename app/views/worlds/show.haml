@@ -1,17 +1,26 @@
 = render partial: 'worlds/header'
 
+- content_for :before do
+  %section
+    %h2
+      %strong= pluralize world.connected_players_count, 'person', 'people'
+      playing here now
+    %ul
+      - world.connected_players.each do |player|
+        %li
+          = link_to '#' do
+            .username
+              = player.username
+
+- content_for :after do
+  %section.settings
+    - if world.visible?
+      .visible
+        
+
 #stream
   %aside
-    %section
-      %h2
-        %strong= pluralize world.connected_players_count, 'person', 'people'
-        playing here now
-      %ul
-        - world.connected_players.each do |player|
-          %li
-            = link_to '#' do
-              .username
-                = player.username
+
 
 
   - if signed_in?

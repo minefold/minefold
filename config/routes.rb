@@ -51,7 +51,7 @@ Minefold::Application.routes.draw do
   get '/explore' => 'worlds#index', :as => :worlds
   # get '/:user_id/:world_id/wall/page/:page' => 'wall_items#index'
   # get '/:user_id/:world_id/wall/page/:page' => 'wall_items#index'
-  scope '/:user_id/:id' do
+  scope '/:creator_id/:id' do
     get '/map' => 'worlds#map', :as => :map_world
     get '/photos' => 'worlds#photos', :as => :photos_world
     get '/edit' => 'worlds#edit', :as => :edit_world

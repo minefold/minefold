@@ -79,6 +79,13 @@ class World
     "#{self.class.name.downcase}:#{id}"
   end
 
+  # TODO: @chrislloyd has no idea how this works, but it stops a route needing
+  #       both the creator and the world. The real fix could involve it
+  #       looking like [creator.slug, slug].join('/').
+  def to_param
+    creator.slug
+  end
+
 protected
 
   def self.default

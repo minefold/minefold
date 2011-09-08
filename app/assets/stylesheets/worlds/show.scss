@@ -1,148 +1,192 @@
-@import 'shared/vars';
+@import 'shared';
 
-#worlds-show #page {
+#worlds-show #masthead, #worlds-map #masthead {
+  aside {
+    @include span(2);
+    float: right;
+  }
 
-  #stream {
-    margin-bottom: 2 * $line;
-    width: 7 * ($gutter + $col + $gutter) - (2 * $gutter) - (2 * $pad);
-
-    aside {
-      float: right;
-      width: 4 * ($gutter + $col + $gutter) - (2 * $gutter);
-      margin-right: -(4 * ($gutter + $col + $gutter) + (2 * $gutter));
-      padding: 0 $pad;
-
-      h2 {
-        font-size: 14px;
-        line-height: 24px;
-        border-bottom: $border solid darken(white, 10%);
-        margin-bottom: $line - $border;
-      }
-
-      a {
-        @include box-sizing(border-box);
-        line-height: 24px;
-        padding: 0 $gutter;
-        width: 100%;
-        display: block;
-        overflow: auto;
-        text-decoration: none;
-        color: darken($blue, 10%);
-
-        &:hover {
-          background: $blue;
-          color: white;
-        }
-
-        .avatar {
-          float: left;
-          margin: 0;
-          background: white;
-          img {
-            margin: 0;
-            padding: 0;
-          }
-        }
-      }
+  ol {
+    li {
+      display: block;
+      float: left;
+      color: #CCC;
+      cursor: pointer;
+      margin-right: 1px;
     }
+    a {
+      display: block;
+      padding: $line ($gutter);
+      color: black;
+      text-decoration: none;
+      line-height: 18px;
 
-    form, .item {
-      .avatar {
-        img {
-          border-radius: $radius;
-          background: white;
-        }
-      }
-      .user {
-        .username {
-          color: #999;
-        }
-      }
-    }
-
-    form {
-      position: relative;
-      margin-bottom: 3 * $line;
-      .avatar {
-        position: absolute;
-        top: 0px;
-        img {
-          margin: -$border;
-          border: $border solid white;
-          @include border-radius(4 * $radius);
-        }
-      }
-
-      .user {
-        margin-bottom: $line;
-        margin-left: 36px + $gutter;
-      }
-
-      textarea {
-        @include box-sizing(border-box);
-        background-color: transparent;
-        width: 7 * ($gutter + $col + $gutter) - (2 * $pad) - (36px + $pad + $gutter);
-        margin: 0 (-$gutter);
-        margin-left: 36px + $gutter;
-        resize: vertical;
-      }
-
-      .submit-advice {
-        float: right;
-        font-size: 11px;
-        color: darken(white, 20%);
-
-        @include transition(opacity, 0.15s, ease-in-out);
-
-        &.hidden {
-          opacity: 0;
-        }
-      }
-    }
-
-    .item {
-      .timestamp {
-        color: #CCC;
-      }
-      &.chat {
-        overflow: auto;
-
-        padding-top: $line - 1px;
-        border-top: 1px solid darken(white, 4%);
-        margin-bottom: $line;
-
-        .avatar {
-          float: left;
-          margin-right: $gutter;
-          height: 36px;
-          width: 36px;
-          overflow: hidden;
-          img {
-            border-radius: $radius;
-          }
-        }
-
-        .timestamp {
-          float: right;
-          font-size: 12px;
-          margin-top: -18px;
-        }
-
-        .body {
-          margin-left: 36px + $gutter;
-        }
-
-
-        .media {
-          margin-top: $line;
-          padding-left: 36px + $gutter;
-          .thumbnail {
-            height: 10 * $line;
-            margin-right: $gutter;
-          }
-        }
-
+      &:hover {
+        background: white;
       }
     }
   }
+
+  .locked {
+    color: #999;
+    font-size: 12px;
+    line-height: 18px;
+    margin-top: -(2 * $line);
+    margin-bottom: 2 * $line;
+    padding-left: 9px + ($gutter / 2);
+    background: url(image-path('lock.png')) left center no-repeat;
+  }
+
 }
+
+#worlds-show #masthead .activity a {
+  background: white;
+}
+
+
+//#worlds-show #page {
+//
+//  #stream {
+//    margin-bottom: 2 * $line;
+//    width: 7 * ($gutter + $col + $gutter) - (2 * $gutter) - (2 * $pad);
+//
+//    aside {
+//      float: right;
+//      width: 4 * ($gutter + $col + $gutter) - (2 * $gutter);
+//      margin-right: -(4 * ($gutter + $col + $gutter) + (2 * $gutter));
+//      padding: 0 $pad;
+//
+//      h2 {
+//        font-size: 14px;
+//        line-height: 24px;
+//        border-bottom: $border solid darken(white, 10%);
+//        margin-bottom: $line - $border;
+//      }
+//
+//      a {
+//        @include box-sizing(border-box);
+//        line-height: 24px;
+//        padding: 0 $gutter;
+//        width: 100%;
+//        display: block;
+//        overflow: auto;
+//        text-decoration: none;
+//        color: darken($blue, 10%);
+//
+//        &:hover {
+//          background: $blue;
+//          color: white;
+//        }
+//
+//        .avatar {
+//          float: left;
+//          margin: 0;
+//          background: white;
+//          img {
+//            margin: 0;
+//            padding: 0;
+//          }
+//        }
+//      }
+//    }
+//
+//    form, .item {
+//      .avatar {
+//        img {
+//          border-radius: $radius;
+//          background: white;
+//        }
+//      }
+//      .user {
+//        .username {
+//          color: #999;
+//        }
+//      }
+//    }
+//
+//    form {
+//      position: relative;
+//      margin-bottom: 3 * $line;
+//      .avatar {
+//        position: absolute;
+//        top: 0px;
+//        img {
+//          margin: -$border;
+//          border: $border solid white;
+//          @include border-radius(4 * $radius);
+//        }
+//      }
+//
+//      .user {
+//        margin-bottom: $line;
+//        margin-left: 36px + $gutter;
+//      }
+//
+//      textarea {
+//        @include box-sizing(border-box);
+//        background-color: transparent;
+//        width: 7 * ($gutter + $col + $gutter) - (2 * $pad) - (36px + $pad + $gutter);
+//        margin: 0 (-$gutter);
+//        margin-left: 36px + $gutter;
+//        resize: vertical;
+//      }
+//
+//      .submit-advice {
+//        float: right;
+//        font-size: 11px;
+//        color: darken(white, 20%);
+//
+//        @include transition(opacity, 0.15s, ease-in-out);
+//
+//        &.hidden {
+//          opacity: 0;
+//        }
+//      }
+//    }
+//
+//    .item {
+//      .timestamp {
+//        color: #CCC;
+//      }
+//      &.chat {
+//        overflow: auto;
+//
+//        padding-top: $line - 1px;
+//        border-top: 1px solid darken(white, 4%);
+//        margin-bottom: $line;
+//
+//        .avatar {
+//          float: left;
+//          margin-right: $gutter;
+//          height: 36px;
+//          width: 36px;
+//          overflow: hidden;
+//          img {
+//            border-radius: $radius;
+//          }
+//        }
+//
+//        .timestamp {
+//          float: right;
+//          font-size: 12px;
+//          margin-top: -18px;
+//        }
+//
+//        .body {
+//          margin-left: 36px + $gutter;
+//        }
+//
+//
+//        .media {
+//          margin-top: $line;
+//          padding-left: 36px + $gutter;
+//          .thumbnail {
+//            height: 10 * $line;
+//            margin-right: $gutter;
+//          }
+//        }
+//
+//      }
+//    }
+//  }
+//}
