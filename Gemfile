@@ -41,6 +41,7 @@ gem 'bourbon',
   git: 'https://github.com/thoughtbot/bourbon.git'
 gem 'jquery-rails'
 gem 'backbone-rails'
+gem 'coffee-filter'
 
 group :worker do
   gem 'rinku'

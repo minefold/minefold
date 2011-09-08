@@ -1,6 +1,6 @@
-worldsEdit = $('#worlds-edit')
-
-worldsEdit.find('select').chosen()
+# worldsEdit = $('#worlds-edit')
+#
+# worldsEdit.find('select').chosen()
 
 # display = (query) ->
 #   worldsEdit.find('#')

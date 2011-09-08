@@ -1,24 +1,17 @@
-@import 'shared/vars';
+@import 'shared';
 
 #orders-new {
 
-  header {
-    h1 {
-      text-align: center;
-      font-size: 30px; line-height: 48px;
-    }
+  #masthead {
+    text-align: center;
   }
 
-  h2 {
-    text-align: center;
-    font-size: 18px;
-    line-height: 24px;
-    color: #999;
+  #page {
+    width: gwidth(10);
   }
 
   form {
     text-align: center;
-    margin-bottom: 24px * 2;
 
     input[type=image]:disabled {
       cursor: default;
@@ -27,20 +20,20 @@
   }
 
   #products {
-    margin: (24px - 2 * $border) auto;
-    width: 4 * ((2 * ($gutter + $col + $gutter)) + 1px) - 1px + (4 * $border);
+    margin: 0 auto (4*$line) auto;
+    width: gwidth(8) - (4 - 1)*(2*$gutter) + (3*$border);
     display: block;
     overflow: auto;
     border: $border solid darken(white, 10%);
     padding: $border;
     @include border-radius(2 * $radius);
-    @include box-sizing(border-box);
 
     li {
-      float: left;
+      @include box-sizing(border-box);
       @include border-radius(none);
+      float: left;
       margin-right: 1px;
-      width: 2 * ($gutter + $col + $gutter);
+      width: gwidth(2);
 
       &:first-child {
         border-top-left-radius: 3px;
@@ -70,10 +63,6 @@
 
         span {
           text-shadow: 0 1px 0 lighten($green, 10%);
-        }
-
-        &:hover {
-//          background: darken($green, 10%);
         }
       }
 
