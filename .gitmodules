@@ -1,3 +1,6 @@
 [submodule "vendor/assets/normalize.css"]
 	path = vendor/assets/normalize.css
 	url = https://github.com/necolas/normalize.css
+[submodule "vendor/assets/jquery.timeago.js"]
+	path = vendor/assets/jquery.timeago.js
+	url = https://github.com/rmm5t/jquery-timeago.git
