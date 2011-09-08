@@ -165,6 +165,40 @@ header {
       font: 400 16px/18px $helvetica;
       padding: $line ($gutter / 2);
     }
+
+    textarea {
+      @include box-sizing(border-box);
+      font: 400 14px/18px $helvetica;
+      border: 1px solid darken(white, 10%);
+      outline: none;
+      margin: 0;
+      padding: $line $gutter;
+      @include border-radius($radius);
+
+      &:hover {
+        border-color: darken(white, 20%);
+      }
+
+      &:focus {
+        border-color: $blue;
+      }
+    }
+
+    button, input[type=submit] {
+      margin: 0;
+      border: none;
+      outline: none;
+      background: $blue;
+      color: white;
+      font: 400 12px/18px $helvetica;
+      cursor: pointer;
+      padding: ($line / 2) $gutter;
+
+      @include border-radius($radius);
+      &:hover {
+        background: darken($blue, 10%);
+      }
+    }
   }
 
   nav {
@@ -184,7 +218,7 @@ header {
 
   #after-page {
     @include span(2);
-    float: right;
+    float: left;
   }
 
 }

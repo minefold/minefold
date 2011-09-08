@@ -7,7 +7,11 @@ class WorldsController < ApplicationController
   expose(:creator) { User.find_by_slug!(params[:creator_id])}
   expose(:world) { creator.created_worlds.find_by_slug!(params[:id])}
 
-  def index
+  def index 
+    @main = World.find_by_slug 'midgard'
+    @suba = World.find_by_slug 'atlassian'
+    @subb = World.find_by_slug 'minefold'
+    @subc = World.find_by_slug 'minefold'
   end
 
   def new

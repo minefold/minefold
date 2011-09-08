@@ -12,10 +12,13 @@
 /             .username
 /               = player.username
 
-/ - content_for :after do
-/   %section.settings
-/     - if world.visible?
-/       .visible
+- content_for :after do
+  %section.settings
+    .pvp{class: (world.pvp? ? 'yay' : 'nay')}
+      = world.pvp? ? 'Player vs Player' : 'Free for all'
+    .pvp{class: (world.spawn_monsters? ? 'yay' : 'nay')}
+      = world.spawn_monsters? ? 'Monsters' : 'Friendly'
+  
 
 
 #stream
@@ -24,7 +27,7 @@
       = form_tag wall_items_path(world.creator.id, world.id), method: :post do |f|
         .avatar
           = image_tag current_user.gravatar_url(size: 36)
-        = text_area_tag :body, '', rows: 2, autofocus: true
+        = text_area_tag :body, '', rows: 2, autofocus: true, required: true
 
         .submit
           %button Share

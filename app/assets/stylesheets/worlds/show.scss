@@ -62,7 +62,8 @@
 
 }
 
-#worlds-show #masthead .activity a {
+#worlds-show #masthead .activity a,
+#worlds-show #masthead .maps {
   background: white;
 }
 
@@ -88,21 +89,37 @@
       position: relative;
       margin-bottom: 4 * $line;
 
+      // TODO Duplication
+      .avatar {
+        float: left;
+        margin-right: $gutter;
+      }
+
       textarea {
         @include box-sizing(border-box);
         width: 100%;
         resize: vertical;
+        // TODO: Magic
+        width: gwidth(6) - (4*$line + $gutter);
       }
 
-      .submit-advice {
-        float: right;
-        font-size: 11px;
-        color: darken(white, 20%);
+      .submit {
+        margin-left: 4*$line + $gutter;
+        overflow: auto;
 
-        @include transition(opacity, 0.15s, ease-in-out);
+        button, .advice {
+          float: left;
+        }
 
-        &.hidden {
-          opacity: 0;
+        .advice {
+          @include transition(opacity, 0.15s, ease-in-out);
+          font-size: 11px;
+          color: darken(white, 20%);
+          margin-left: $gutter;
+
+          &.hidden {
+            opacity: 0;
+          }
         }
       }
     }
@@ -125,6 +142,7 @@
 
         .body, .media, .meta {
           margin-left: 4*$line + $gutter;
+          // TODO: Magic
           width: gwidth(6) - (4*$line + $gutter + $gutter + $gutter + $gutter);
         }
 

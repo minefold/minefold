@@ -6,16 +6,8 @@
 
 #devise-sessions-new #page, #devise-sessions-create #page {
   width: 4 * ($gutter + $col + $gutter) - (2 * $gutter);
-  padding: $line $gutter;
-  margin: (4 * $line) auto;
-
-  h2 {
-    font-size: 24px;
-    line-height: 4 * $line;
-    font-weight: 600;
-    margin: $line 0 (2 * $line) 0;
-    font-family: $museo;
-  }
+  padding: 0 $gutter;
+  margin: 0 auto;
 
   #errors {
     color: $red;

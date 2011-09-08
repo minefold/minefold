@@ -65,8 +65,8 @@ class World
 # MEDIA
 
   def photos
-    wall.each_with_object([]) do |item, photos|
-      item.media.each_with_object(photos) do |media, photos|
+    wall_items.each_with_object([]) do |item, photos|
+      (item.media || []).each_with_object(photos) do |media, photos|
         photos << media if media['type'] == 'photo'
       end
     end
