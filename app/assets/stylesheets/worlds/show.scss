@@ -1,9 +1,32 @@
 @import 'shared';
 
 #worlds-show #masthead, #worlds-map #masthead {
+  .wrapper {
+    position: relative;
+  }
+
   aside {
-    @include span(2);
-    float: right;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: (2*$line) 0;
+
+    text-align: right;
+
+    ol {
+      float: right;
+      li {
+        float: left;
+        margin: 0;
+        margin-left: $gutter;
+        background: white;
+        line-height: 24px;
+        padding: 0 ($gutter / 2);
+        @include border-radius($radius);
+        color: #666;
+        font-size: 12px;
+      }
+    }
   }
 
   ol {
@@ -43,150 +66,84 @@
   background: white;
 }
 
+#worlds-show #page {
 
-//#worlds-show #page {
-//
-//  #stream {
-//    margin-bottom: 2 * $line;
-//    width: 7 * ($gutter + $col + $gutter) - (2 * $gutter) - (2 * $pad);
-//
-//    aside {
-//      float: right;
-//      width: 4 * ($gutter + $col + $gutter) - (2 * $gutter);
-//      margin-right: -(4 * ($gutter + $col + $gutter) + (2 * $gutter));
-//      padding: 0 $pad;
-//
-//      h2 {
-//        font-size: 14px;
-//        line-height: 24px;
-//        border-bottom: $border solid darken(white, 10%);
-//        margin-bottom: $line - $border;
-//      }
-//
-//      a {
-//        @include box-sizing(border-box);
-//        line-height: 24px;
-//        padding: 0 $gutter;
-//        width: 100%;
-//        display: block;
-//        overflow: auto;
-//        text-decoration: none;
-//        color: darken($blue, 10%);
-//
-//        &:hover {
-//          background: $blue;
-//          color: white;
-//        }
-//
-//        .avatar {
-//          float: left;
-//          margin: 0;
-//          background: white;
-//          img {
-//            margin: 0;
-//            padding: 0;
-//          }
-//        }
-//      }
-//    }
-//
-//    form, .item {
-//      .avatar {
-//        img {
-//          border-radius: $radius;
-//          background: white;
-//        }
-//      }
-//      .user {
-//        .username {
-//          color: #999;
-//        }
-//      }
-//    }
-//
-//    form {
-//      position: relative;
-//      margin-bottom: 3 * $line;
-//      .avatar {
-//        position: absolute;
-//        top: 0px;
-//        img {
-//          margin: -$border;
-//          border: $border solid white;
-//          @include border-radius(4 * $radius);
-//        }
-//      }
-//
-//      .user {
-//        margin-bottom: $line;
-//        margin-left: 36px + $gutter;
-//      }
-//
-//      textarea {
-//        @include box-sizing(border-box);
-//        background-color: transparent;
-//        width: 7 * ($gutter + $col + $gutter) - (2 * $pad) - (36px + $pad + $gutter);
-//        margin: 0 (-$gutter);
-//        margin-left: 36px + $gutter;
-//        resize: vertical;
-//      }
-//
-//      .submit-advice {
-//        float: right;
-//        font-size: 11px;
-//        color: darken(white, 20%);
-//
-//        @include transition(opacity, 0.15s, ease-in-out);
-//
-//        &.hidden {
-//          opacity: 0;
-//        }
-//      }
-//    }
-//
-//    .item {
-//      .timestamp {
-//        color: #CCC;
-//      }
-//      &.chat {
-//        overflow: auto;
-//
-//        padding-top: $line - 1px;
-//        border-top: 1px solid darken(white, 4%);
-//        margin-bottom: $line;
-//
-//        .avatar {
-//          float: left;
-//          margin-right: $gutter;
-//          height: 36px;
-//          width: 36px;
-//          overflow: hidden;
-//          img {
-//            border-radius: $radius;
-//          }
-//        }
-//
-//        .timestamp {
-//          float: right;
-//          font-size: 12px;
-//          margin-top: -18px;
-//        }
-//
-//        .body {
-//          margin-left: 36px + $gutter;
-//        }
-//
-//
-//        .media {
-//          margin-top: $line;
-//          padding-left: 36px + $gutter;
-//          .thumbnail {
-//            height: 10 * $line;
-//            margin-right: $gutter;
-//          }
-//        }
-//
-//      }
-//    }
-//  }
-//}
+  #stream {
+
+    form, .item {
+      .avatar img {
+        border-radius: $radius;
+        width: 24px;
+        height: 24px;
+        background: darken(white, 4%);
+      }
+      .user {
+        .username {
+          color: #999;
+        }
+      }
+    }
+
+    form {
+      position: relative;
+      margin-bottom: 4 * $line;
+
+      textarea {
+        @include box-sizing(border-box);
+        width: 100%;
+        resize: vertical;
+      }
+
+      .submit-advice {
+        float: right;
+        font-size: 11px;
+        color: darken(white, 20%);
+
+        @include transition(opacity, 0.15s, ease-in-out);
+
+        &.hidden {
+          opacity: 0;
+        }
+      }
+    }
+
+    .item {
+      &.chat {
+        padding: ($line - 1px) 0 $line 0;
+        border-top: 1px solid darken(white, 4%);
+
+        .avatar {
+          float: left;
+          overflow: hidden;
+          img {
+            border-radius: $radius;
+            background: darken(white, 5%);
+            height: 4 * $line;
+            width: 4 * $line;
+          }
+        }
+
+        .body, .media, .meta {
+          margin-left: 4*$line + $gutter;
+          width: gwidth(6) - (4*$line + $gutter + $gutter + $gutter + $gutter);
+        }
+
+        .media {
+          .thumbnail {
+            height: 10 * $line;
+            margin-right: $gutter;
+          }
+        }
+
+        .meta {
+          font-size: 12px;
+          color: #CCC;
+          line-height: 24px;
+          .user {
+            color: darken(#CCC, 10%);
+          }
+        }
+      }
+    }
+  }
+}

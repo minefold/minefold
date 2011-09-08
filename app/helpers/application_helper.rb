@@ -43,4 +43,9 @@ module ApplicationHelper
     }.merge(opts)
   end
 
+  def time_ago(time, options = {})
+    options[:class] ||= 'timeago'
+    content_tag(:abbr, time.to_s, options.merge(:title => time.getutc.iso8601))
+  end
+
 end

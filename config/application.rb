@@ -17,6 +17,8 @@ module Minefold
       config.autoload_paths << Rails.root.join(path)
     end
 
+    config.assets.paths << Rails.root.join('app', 'assets', 'flash')
+
     config.filter_parameters += [:password]
 
     config.assets.enabled = true

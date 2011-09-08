@@ -49,18 +49,25 @@ Minefold::Application.routes.draw do
   resources :worlds, :only => [:new, :create]
 
   get '/explore' => 'worlds#index', :as => :worlds
-  # get '/:user_id/:world_id/wall/page/:page' => 'wall_items#index'
-  # get '/:user_id/:world_id/wall/page/:page' => 'wall_items#index'
+
   scope '/:creator_id/:id' do
-    get '/map' => 'worlds#map', :as => :map_world
-    get '/photos' => 'worlds#photos', :as => :photos_world
-    get '/edit' => 'worlds#edit', :as => :edit_world
+    controller :worlds do
+      get :map, :as => :map_world
+      get :photos, :as => :photos_world
+      get :edit, :as => :edit_world
+
+      post :follow, :as => :follow_world
+      post :join, :as => :join_world
+    end
 
     resources :wall_items, :only => [:index, :create]
 
     get '/' => 'worlds#show', :as => :world
     # get '/wall/page/:page' => 'wall_items#show', :as => :world_wall_items
   end
+  # get '/:id' do
+  #
+  # end
 
   get '/account' => 'users#edit', :as => :account
   get '/:id' => 'users#show', :as => :user

@@ -3,17 +3,27 @@
   window.channel = pusher.subscribe(#{Pusher[world.pusher_key].name.to_json});
 
 - content_for :masthead do
-  %h1= world.name
+  %h1= link_to world.name, world
 
   %aside
-    - if signed_in?
-      .connection
-        - if current_user.current_world == world
-          %p
-            Connect to
-            %strong= current_user.host
-        - else
-          = button_to 'Join World', [:activate, world]
+    %ol
+      - if signed_in?
+        %li.follow
+          = button_to 'Follow', [:follow, world]
+        / %li.join
+        /   = button_to 'Leave', [:join, world], disabled: current_user.current_world == world
+
+      %li.followers= pluralize 67, 'follower', 'followers'
+      %li.players= pluralize 5, 'player', 'players'
+
+      / - if signed_in?
+      /   .connection
+      /     - if current_user.current_world == world
+      /       %p
+      /         Connect to
+      /         %strong= current_user.host
+      /     - else
+      /       = button_to 'Join World', [:activate, world]
 
   %ol
     %li.activity

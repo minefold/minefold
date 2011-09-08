@@ -17,6 +17,7 @@ class World
   field :spawn_animals,  type: Boolean, default: true
 
   belongs_to :creator, class_name: 'User', inverse_of: :created_worlds
+  field :creator_slug, type: String
 
   has_and_belongs_to_many :players, class_name: 'User'
 
@@ -26,6 +27,7 @@ class World
 # VALIDATIONS
 
   validates_presence_of :name
+  validates_presence_of :creator_slug
 
 
 # PLAYERS
@@ -70,7 +72,6 @@ class World
     end
   end
 
-
   def pusher_key
     "#{self.class.name.downcase}-#{id}"
   end
@@ -78,6 +79,7 @@ class World
   def redis_key
     "#{self.class.name.downcase}:#{id}"
   end
+
 
   # TODO: @chrislloyd has no idea how this works, but it stops a route needing
   #       both the creator and the world. The real fix could involve it

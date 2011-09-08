@@ -13,7 +13,8 @@
     = stylesheet_link_tag 'application'
     = favicon_link_tag
 
-    = javascript_include_tag '//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js'
+    - unless Rails.env.development?
+      = javascript_include_tag '//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js'
 
     /[if lt IE 9]
       = javascript_include_tag '//html5shim.googlecode.com/svn/trunk/html5.js'
