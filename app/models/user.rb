@@ -63,11 +63,9 @@ class User
   scope :free, where(:orders.size => 0)
 
   # Gives away the free credits and starts off the credit history
-  after_initialize do
-    self.credits += FREE_HOURS.hours / BILLING_PERIOD
-    self.credit_events.build(delta: credits)
+  after_create do
+    increment_credits! FREE_HOURS.hours / BILLING_PERIOD
   end
-
 
   def increment_credits!(n, time=Time.now.utc)
     event = CreditEvent.new(delta: n)
