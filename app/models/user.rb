@@ -78,8 +78,7 @@ class User
       },
       '$push' => {
         credit_events: event.attributes.merge(
-          created_at: time,
-          updated_at: time
+          created_at: time
         )
       }
     })

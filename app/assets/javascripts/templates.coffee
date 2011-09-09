@@ -6,7 +6,8 @@ Mustache.renderTemplate = (name, data) ->
 
   Mustache.to_html(template, data)
 
-$('script[type="text/x-mustache"]').each ->
-  name = $(@).data('name')
-  # name = $(@).attr('id').replace('template-', '')
-  Mustache.templates[name] = $(@).html()
+$(document).ready ->
+  $('script[type="text/x-mustache"]').each ->
+    name = $(@).data('name')
+    # name = $(@).attr('id').replace('template-', '')
+    Mustache.templates[name] = $(@).html()

@@ -16,6 +16,8 @@ class World
   field :spawn_monsters, type: Boolean, default: true
   field :spawn_animals,  type: Boolean, default: true
 
+  field :last_mapped_at, type: DateTime
+
   belongs_to :creator, class_name: 'User', inverse_of: :created_worlds
   field :creator_slug, type: String
 
@@ -64,6 +66,10 @@ class World
 
 # MEDIA
 
+  def mapped?
+    not last_mapped_at.nil?
+  end
+
   def photos
     wall_items.each_with_object([]) do |item, photos|
       (item.media || []).each_with_object(photos) do |media, photos|
@@ -83,9 +89,9 @@ class World
 
   # TODO: @chrislloyd has no idea how this works, but it stops a route needing
   #       both the creator and the world. The real fix could involve it
-  #       looking like [creator.slug, slug].join('/').
+  #       looking like [creator.slug, slug].to_param.
   def to_param
-    creator.slug
+    slug.to_param
   end
 
 protected

@@ -48,4 +48,8 @@ module ApplicationHelper
     content_tag(:abbr, time.to_s, options.merge(:title => time.getutc.iso8601))
   end
 
+  def youtube_vid
+    content_tag(:iframe, nil, width: 480, height: 390, src: "#{Videos.sample}?rel=0", frameborder: 0, allowfullscreen: true).html_safe
+  end
+
 end

@@ -7,6 +7,7 @@
 #= require gravtastic
 #= require jquery.placeholder
 #= require jquery.infinitescroll
+#= require ./templates
 #= require_self
 #= require_tree .
 

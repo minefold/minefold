@@ -1,38 +1,83 @@
 = render partial: 'worlds/header'
 
-/ - content_for :before do
-/   %section
-/     %h2
-/       %strong= pluralize world.connected_players_count, 'person', 'people'
-/       playing here now
-/     %ul
-/       - world.connected_players.each do |player|
-/         %li
-/           = link_to '#' do
-/             .username
-/               = player.username
-
-- content_for :after do
-  %section.settings
-    .pvp{class: (world.pvp? ? 'yay' : 'nay')}
-      = world.pvp? ? 'Player vs Player' : 'Free for all'
-    .pvp{class: (world.spawn_monsters? ? 'yay' : 'nay')}
-      = world.spawn_monsters? ? 'Monsters' : 'Friendly'
-  
-
-
 #stream
   - if signed_in?
     #share
-      = form_tag wall_items_path(world.creator.id, world.id), method: :post do |f|
+      = form_tag wall_items_path(world), method: :post do |f|
         .avatar
           = image_tag current_user.gravatar_url(size: 36)
-        = text_area_tag :body, '', rows: 2, autofocus: true, required: true
+        = text_area_tag :body, nil, rows: 2, autofocus: true, required: true
 
         .submit
           %button Share
           .advice ENTER to chat, SHIFT-ENTER for a new line.
 
+    :javascript
+      window.current_user = #{current_user.to_json(only: [:id, :username, :email])};
+      current_user.gravatar_url = Gravtastic(current_user.email);
+
+    :coffeescript
+      f = $('#share form')
+
+      f.submit (e) ->
+        e.preventDefault()
+
+        data =
+          chat:
+            user_id: current_user.id
+            raw: f.find('textarea').val()
+
+        cId = _.uniqueId()
+
+        $.ajax
+          type: f.attr('method')
+          url: f.attr('action')
+          data:
+            chat:
+              raw: f.find('textarea').val()
+          dataType: 'json'
+          success: (data) ->
+            console.log data
+            $('#wall-items #chat_'+cId).removeClass('loading')
+
+        data.chat.body = data.chat.raw
+        data.chat.user = current_user
+        data.chat.id = cId
+
+        html = Mustache.renderTemplate('worlds/_wall_item', data.chat)
+        $('#wall-items').prepend $(html).addClass('loading')
+
+        f.find('textarea').val('')
+
+
+
+      f.find('textarea')
+        .focus ->
+          f.find('.advice').removeClass('hidden')
+        .blur ->
+          f.find('.advice').addClass('hidden')
+        .keydown (e) ->
+          if e.keyCode is 13 and !e.shiftKey and !e.ctrlKey and !e.altKey
+            e.preventDefault()
+            f.submit()
+
+
+
 
   #wall-items
-    = template 'worlds/_wall_item', collection: world.wall_items
+    = template 'worlds/_wall_item', collection: world.wall_items.order_by([:created_at, :desc])
+
+
+= javascript_include_tag 'http://js.pusherapp.com/1.9/pusher.min.js'
+
+:coffeescript
+  window.pusher = new Pusher(#{Pusher.key.to_json});
+  window.channel = pusher.subscribe(#{Pusher[world.pusher_key].name.to_json});
+
+  # channel.bind 'chat-create', (data) ->
+  #   item = $('#chat_' + data.id)
+  #
+  #   if item.length > 0
+  #     item.replaceWith(Mustache.to_html(Mustache.templates['chat-message'], data))
+  #   else
+  #     $('#wall-items').prepend(Mustache.to_html(Mustache.templates['chat-message'], data));

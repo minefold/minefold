@@ -1,20 +1,18 @@
 Minefold::Application.routes.draw do
-
   root :to => 'home#index'
-  get '/dashboard' => 'users#dashboard', :as => :user_root
 
+  # Admin
+  namespace :admin do
 
-  # Authentication
-  devise_for :users, :skip => [:sessions, :passwords, :registrations] do
-    get  '/sign-in',
-      :to => 'devise/sessions#new', :as => :new_user_session
-    post '/sign-in',
-      :to => 'devise/sessions#create', :as => :user_session
-    delete '/sign-out',
-      :to => 'devise/sessions#destroy', :as => :destroy_user_session
+    namespace :mail do
+      mount OrderMailer::Preview => 'order'
+      mount UserMailer::Preview => 'user'
+    end
   end
 
-  { '/about'   => 'about',
+  # Static Pages
+  {
+    '/about'   => 'about',
     '/jobs' => 'jobs',
     '/contact' => 'contact',
     '/help'    => 'help',
@@ -24,53 +22,88 @@ Minefold::Application.routes.draw do
     get url => 'high_voltage/pages#show', :id => name
   end
 
-  # devise_for :users
+  # resources :user
 
-  get '/sign-up' => 'users#new'
+  # Authentication
+  devise_for :users, :skip => [:sessions, :registrations, :passwords] do
 
-                     # :path_names => {
-                     #   :sign_up => '/sign_up/:code',
-                     #   :sign_out => '/sign-out',
-                     #   :sign_in => '/sign-in'
-                     # }
+    # # Sessions
+    get    '/sign-in' => 'devise/sessions#new', :as => :new_user_session
+    post   '/sign-in' => 'devise/sessions#create', :as => :user_session
+    delete '/sign-out' => 'devise/sessions#destroy', :as => :destroy_user_session
 
-  # resource :account
+    # Registrations
+    get  '/sign-up' => 'users#new', :as => :new_user
+    post '/sign-up/:code' => 'users#create', :as => :users
+  end
 
-  # Payment
-  get  '/time' => 'orders#new', :as => :credits
-  post '/order' => 'orders#create', :as => :order
-  get  '/order/success' => 'orders#success', :as => :successful_order
-  get  '/order/cancel' => 'orders#cancel', :as => :cancel_order
 
-  get  '/referrals' => 'referrals#new', :as => :new_referral
-  post '/referrals' => 'referrals#create', :as => :referrals
-  # resources :referrals, :only => [:create]
+  devise_scope(:user) do
 
-  resources :worlds, :only => [:new, :create]
+    # Dashboard
+    get  '/dashboard' => 'users#dashboard', :as => :user_root
 
-  get '/explore' => 'worlds#index', :as => :worlds
+    # Payment
+    get  '/buy' => 'orders#new', :as => :new_order
+    post '/order' => 'orders#create', :as => :order
+    get  '/order/success' => 'orders#success', :as => :successful_order
+    get  '/order/cancel' => 'orders#cancel', :as => :cancel_order
 
-  scope '/:creator_id/:id' do
-    controller :worlds do
-      get :map, :as => :map_world
-      get :photos, :as => :photos_world
-      get :edit, :as => :edit_world
+    # Referrals
+    get  '/referrals' => 'referrals#new', :as => :new_referral
+    post '/referrals' => 'referrals#create', :as => :referrals
 
-      post :follow, :as => :follow_world
-      post :join, :as => :join_world
+    # Worlds
+    get '/explore' => 'worlds#index', :as => :worlds
+    get '/worlds/new' => 'worlds#new', :as => :new_world
+
+    scope '/world/:id' do
+      get '/' => 'worlds#show', :as => :world
+      get '/settings' => 'worlds#edit', :as => :edit_world
+      get '/map' => 'worlds#map', :as => :map_world
+      get '/photos' => 'worlds#photos', :as => :photos_world
+      put '/join' => 'worlds#join', :as => :join_world
+
+      resources :wall_items, :only => [:index, :create]
     end
 
-    resources :wall_items, :only => [:index, :create]
-
-    get '/' => 'worlds#show', :as => :world
-    # get '/wall/page/:page' => 'wall_items#show', :as => :world_wall_items
+    # Account
+    get '/:id/account' => 'users#edit', :as => :edit_user
+    put '/:id' => 'users#update', :as => :user
+    get '/:id' => 'users#show', :as => :user
   end
+
+  # resources :worlds, :only => [:new, :create]
+
+  # get '/explore' => 'worlds#index', :as => :worlds
+
+  # scope '/:creator_id/:id' do
+  #   controller :worlds do
+  #     get :map, :as => :map_world
+  #     get :photos, :as => :photos_world
+  #     get :edit, :as => :edit_world
+  #
+  #     post :follow, :as => :follow_world
+  #     post :join, :as => :join_world
+  #   end
+  #
+  #   resources :wall_items, :only => [:index, :create]
+  #
+  #   get '/' => 'worlds#show', :as => :world
+  #   # get '/wall/page/:page' => 'wall_items#show', :as => :world_wall_items
+  # end
+  #
+  # namespace :users do
+  #
+  #
+  #
+  # end
+
+
   # get '/:id' do
   #
   # end
 
-  get '/account' => 'users#edit', :as => :account
-  get '/:id' => 'users#show', :as => :user
   # resources :worlds, :except => [:index, :show, :destroy] do
 
   #   resources :wall_items, :only => [:index, :create] do
@@ -94,10 +127,5 @@ Minefold::Application.routes.draw do
   # get '/admin' => 'admin#index', :as => :admin
   # get '/admin/users' => 'admin#users', :as => :admin_users
   # get '/admin/worlds' => 'admin#worlds', :as => :admin_worlds
-
-  if Rails.env.development?
-    mount OrderMailer::Preview => '/dev/order-mail'
-    mount UserMailer::Preview => '/dev/user-mail'
-  end
 
 end

@@ -112,6 +112,7 @@ header {
     a {
       color: black;
       text-decoration: none;
+      display: block;
       &:hover {
         color: lighten(black, 40%);
       }
@@ -160,7 +161,11 @@ header {
     label {
       display: block;
     }
-    input[type=text], input[type=textarea], input[type=password] {
+
+    input[type=text],
+    input[type=email],
+    input[type=textarea],
+    input[type=password] {
       @include box-sizing(border-box);
       font: 400 16px/18px $helvetica;
       padding: $line ($gutter / 2);
@@ -195,7 +200,7 @@ header {
       padding: ($line / 2) $gutter;
 
       @include border-radius($radius);
-      &:hover {
+      &:hover, &:focus {
         background: darken($blue, 10%);
       }
     }

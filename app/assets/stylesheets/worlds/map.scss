@@ -1,12 +1,14 @@
-@import 'shared/vars';
+@import 'shared';
 
 #worlds-map #page {
-  #nomap {
-    background: url(<%= asset_path('spinner.gif') %>) no-repeat top left;
+  #map {
+    height: 100*$line;
+    width: gcol(10);
+  }
+
+  p#nomap {
+    background: url(image-path('spinner.gif')) left ((24px - 16px) / 2) no-repeat;
     padding-left: 16px + $gutter;
-    p {
-      font-size: 12px;
-    }
   }
 
   #mcmap {

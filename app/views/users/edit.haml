@@ -1,7 +1,7 @@
 - content_for :masthead do
   %h1= current_user.username
 
-= form_for current_user, url: account_path, format: :post do |f|
+= form_for current_user, method: :put do |f|
   %section
     = f.label :username
     = f.text_field :username

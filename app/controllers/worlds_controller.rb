@@ -5,9 +5,9 @@ class WorldsController < ApplicationController
   # before_filter :lock_private, only: [:show, :edit, :update, :map, :photos, :activate]
 
   expose(:creator) { User.find_by_slug!(params[:creator_id])}
-  expose(:world) { creator.created_worlds.find_by_slug!(params[:id])}
+  expose(:world) { World.find_by_slug!(params[:id])}
 
-  def index 
+  def index
     @main = World.find_by_slug 'midgard'
     @suba = World.find_by_slug 'atlassian'
     @subb = World.find_by_slug 'minefold'

@@ -1,5 +1,5 @@
 - content_for :masthead do
-  %h2 Play Minecraft with friends!
+  %h1 Play Minecraft with friends!
 
   %p
     Minefold is an online community for friends who play Minecraft.
@@ -11,9 +11,7 @@
       %h3
         Pop your email down and we'll email you when we launch:
 
-    .email
       = email_field_tag 'cm-qjhfu-qjhfu', nil, placeholder: 'email@example.com', id: 'qjhfu-qjhfu'
 
-    .submit
       %button
         = ['Algebraic!', 'Rhombus!', 'Mathematical!'].shuffle.first

@@ -1,37 +1,19 @@
-:javascript
-  window.pusher = new Pusher(#{Pusher.key.to_json});
-  window.channel = pusher.subscribe(#{Pusher[world.pusher_key].name.to_json});
-
 - content_for :masthead do
   %h1= link_to world.name, world
 
   %aside
-    %ol
-      - if signed_in?
-        %li.follow
-          = button_to 'Follow', [:follow, world]
-        / %li.join
-        /   = button_to 'Leave', [:join, world], disabled: current_user.current_world == world
+    - if signed_in?
+      .meta
+        - if current_user.current_world == world
+          .connection-info
+            Connect to
+            %strong= current_user.host
+          .help
+            = link_to help_path(anchor: 'connecting') do
+              Don't know how to connect?
 
-      %li.followers= pluralize 67, 'follower', 'followers'
-      %li.players= pluralize 5, 'player', 'players'
-
-      / - if signed_in?
-      /   .connection
-      /     - if current_user.current_world == world
-      /       %p
-      /         Connect to
-      /         %strong= current_user.host
-      /     - else
-      /       = button_to 'Join World', [:activate, world]
-
-  %ol
+  %ol#subnav
     %li.activity
       = link_to 'Activity', world
     %li.map
       = link_to 'Map', [:map, world]
-    %li.photos
-      = link_to 'Photos', [:photos, world]
-    - if not world.public? and signed_in? and world.creator == current_user
-      %li.edit
-        = link_to 'Settings', [:edit, world]

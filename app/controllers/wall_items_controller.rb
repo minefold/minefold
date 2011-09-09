@@ -3,17 +3,18 @@ class WallItemsController < ApplicationController
   expose(:world) { World.find_by_slug!(params[:world_id] || params[:id]) }
 
   def create
-    chat = Chat.new(user: current_user, raw: params[:raw])
+    chat = Chat.new(params[:chat])
+    chat.user = current_user
 
     if chat.valid?
       # TODO Check what callbacks this calls and fire media job
-      world.push :wall_items, chat
+      world.wall_items.push chat
 
       # TODO: Implement
-      chat.wall.broadcast chat.raw
+      # chat.wall.broadcast chat.raw
 
       respond_to do |format|
-        format.json { render json: chat.to_hash }
+        format.json { render json: chat.attributes }
       end
     else
       render json: {errors: chat.errors}

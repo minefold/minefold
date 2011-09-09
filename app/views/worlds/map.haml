@@ -1,0 +1,66 @@
+= render partial: 'header'
+
+- if world.mapped?
+  #map
+  - # include_script_tag 'https://maps.google.com/maps/api/js?sensor=false'
+  map_asset_path = "#{Rails.configuration.map_tiles_url}/#{world.id}"
+
+  $.extend(overviewerConfig.CONST, {
+  / / //     mapDivId: 'mcmap',
+  / / //     image: {
+  / / //       defaultMarker: '#{map_asset_path}/signpost.png',
+  / / //       signMarker:    '#{map_asset_path}/signpost_icon.png',
+  / / //       compass:       '#{map_asset_path}/compass.png'
+  / / //     }
+  / / //   });
+  / / //   $.each(overviewerConfig.mapTypes, function(i, type) {
+  / / //     type.path = '#{map_asset_path}/' + type.path;
+  / / //   });
+  / / //   overviewer.util.initialize()
+
+- else
+  %p#nomap
+    %strong Hold your horses!
+    Our gremlins are still mapping this world. In the mean time can we tempt you with this delicious video?
+
+  = youtube_vid
+
+/
+/ #map{hidden}
+/ #nomap{hidden}
+/   %p Hold your horses, we are still mapping this world…
+/
+/ - map_asset_path = "#{Rails.configuration.map_tiles_url}/#{world.id}"
+/
+/ / %script(type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false")
+/ -# %script{type:"text/javascript", src:"#{map_asset_path}/overviewerConfig.js"}
+/ -# %script{type:"text/javascript", src:"#{map_asset_path}/overviewer.js"}
+/ -# %script{type:"text/javascript", src:"#{map_asset_path}/markers.js"}
+/ -# %sc
+/ -# ript{type:"text/javascript", src:"#{map_asset_path}/regions.js"}
+/
+/ :coffeescript
+/   map = $('#map')
+/   nomap = $('#nomap')
+/
+/   img = new Image;
+/   $(img)
+/     .load ->
+/       map.show()
+/     .error ->
+/       nomap.show()
+/
+/   img.src =
+/
+/ / $(function() {
+/ /
+/ /   var img = new Image();
+/ /   $(img).load(function(){
+/ /       $('#mcmap').show();
+/ /       $.world_map({ path: '#{map_asset_path}' });
+/ /     }).error(function() {
+/ /       $('#nomap').show();
+/ /     }).attr('src', '#{map_asset_path}/base.png');
+/ /
+/ / //
+/ / });

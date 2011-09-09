@@ -1,166 +1,104 @@
 @import 'shared';
 
-#worlds-show #masthead, #worlds-map #masthead {
-  .wrapper {
+#stream {
+
+  form, .item {
+    .avatar img {
+      border-radius: $radius;
+      width: 24px;
+      height: 24px;
+      background: darken(white, 4%);
+    }
+    .user {
+      .username {
+        color: #999;
+      }
+    }
+  }
+
+  form {
     position: relative;
-  }
+    margin-bottom: 4 * $line;
 
-  aside {
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: (2*$line) 0;
-
-    text-align: right;
-
-    ol {
-      float: right;
-      li {
-        float: left;
-        margin: 0;
-        margin-left: $gutter;
-        background: white;
-        line-height: 24px;
-        padding: 0 ($gutter / 2);
-        @include border-radius($radius);
-        color: #666;
-        font-size: 12px;
-      }
-    }
-  }
-
-  ol {
-    li {
-      display: block;
+    // TODO Duplication
+    .avatar {
       float: left;
-      color: #CCC;
-      cursor: pointer;
-      margin-right: 1px;
+      margin-right: $gutter;
     }
-    a {
-      display: block;
-      padding: $line ($gutter);
-      color: black;
-      text-decoration: none;
-      line-height: 18px;
 
-      &:hover {
-        background: white;
-      }
+    textarea {
+      @include box-sizing(border-box);
+      width: 100%;
+      resize: vertical;
+      // TODO: Magic
+      width: gwidth(6) - (4*$line + $gutter);
     }
-  }
 
-  .locked {
-    color: #999;
-    font-size: 12px;
-    line-height: 18px;
-    margin-top: -(2 * $line);
-    margin-bottom: 2 * $line;
-    padding-left: 9px + ($gutter / 2);
-    background: url(image-path('lock.png')) left center no-repeat;
-  }
+    .submit {
+      margin-left: 4*$line + $gutter;
+      overflow: auto;
 
-}
-
-#worlds-show #masthead .activity a,
-#worlds-show #masthead .maps {
-  background: white;
-}
-
-#worlds-show #page {
-
-  #stream {
-
-    form, .item {
-      .avatar img {
-        border-radius: $radius;
-        width: 24px;
-        height: 24px;
-        background: darken(white, 4%);
+      button, .advice {
+        float: left;
       }
-      .user {
-        .username {
-          color: #999;
+
+      .advice {
+        @include transition(opacity, 0.15s, ease-in-out);
+        font-size: 11px;
+        color: darken(white, 20%);
+        margin-left: $gutter;
+        opacity: 1;
+        line-height: 24px;
+
+        &.hidden {
+          opacity: 0;
         }
       }
     }
+  }
 
-    form {
-      position: relative;
-      margin-bottom: 4 * $line;
+  .item {
+    &.chat {
+      padding: ($line - 1px) 0 $line 0;
+      border-top: 1px solid darken(white, 4%);
+      @include transition(opacity, 0.3s, ease-in-out);
+      opacity: 1;
 
-      // TODO Duplication
       .avatar {
         float: left;
-        margin-right: $gutter;
+        overflow: hidden;
+        img {
+          border-radius: $radius;
+          background: darken(white, 5%);
+          height: 4 * $line;
+          width: 4 * $line;
+        }
       }
 
-      textarea {
-        @include box-sizing(border-box);
-        width: 100%;
-        resize: vertical;
-        // TODO: Magic
-        width: gwidth(6) - (4*$line + $gutter);
-      }
-
-      .submit {
+      .body, .media, .meta {
         margin-left: 4*$line + $gutter;
-        overflow: auto;
+        // TODO: Magic
+        width: gwidth(6) - (4*$line + $gutter + $gutter + $gutter + $gutter);
+      }
 
-        button, .advice {
-          float: left;
-        }
-
-        .advice {
-          @include transition(opacity, 0.15s, ease-in-out);
-          font-size: 11px;
-          color: darken(white, 20%);
-          margin-left: $gutter;
-
-          &.hidden {
-            opacity: 0;
-          }
+      .media {
+        .thumbnail {
+          height: 10 * $line;
+          margin-right: $gutter;
         }
       }
-    }
 
-    .item {
-      &.chat {
-        padding: ($line - 1px) 0 $line 0;
-        border-top: 1px solid darken(white, 4%);
-
-        .avatar {
-          float: left;
-          overflow: hidden;
-          img {
-            border-radius: $radius;
-            background: darken(white, 5%);
-            height: 4 * $line;
-            width: 4 * $line;
-          }
+      .meta {
+        font-size: 12px;
+        color: #CCC;
+        line-height: 24px;
+        .user {
+          color: darken(#CCC, 10%);
         }
+      }
 
-        .body, .media, .meta {
-          margin-left: 4*$line + $gutter;
-          // TODO: Magic
-          width: gwidth(6) - (4*$line + $gutter + $gutter + $gutter + $gutter);
-        }
-
-        .media {
-          .thumbnail {
-            height: 10 * $line;
-            margin-right: $gutter;
-          }
-        }
-
-        .meta {
-          font-size: 12px;
-          color: #CCC;
-          line-height: 24px;
-          .user {
-            color: darken(#CCC, 10%);
-          }
-        }
+      &.loading {
+        opacity: 0.5;
       }
     }
   }

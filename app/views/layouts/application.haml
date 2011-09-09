@@ -31,7 +31,6 @@
         %aside
           = render partial: 'shared/nav'
 
-
     %section#masthead
       .wrapper= yield :masthead
 
@@ -51,17 +50,17 @@
 
           %li= link_to 'About', about_path
 
-          .spaceball
+          - #.spaceball
 
-          %li= link_to 'Jobs', jobs_path
+          - #%li= link_to 'Jobs', jobs_path
 
           .spaceball
 
           %li= link_to 'Help', help_path
 
-          .spaceball
+          - #.spaceball
 
-          %li= link_to 'Contact', contact_path
+          - #%li= link_to 'Contact', contact_path
 
           .spaceball
 

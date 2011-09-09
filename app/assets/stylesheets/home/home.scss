@@ -11,8 +11,60 @@
       background: url(image-path('logo-48.png')) center left no-repeat;
       font-size: 18px;
       line-height: 24px;
-      margin: -(2* $line) 0;
-      padding: (2 * $line) $gutter (2*$line) (55px + $gutter);
+      margin: (-2*$line) 0;
+      padding: (2*$line) $gutter (2*$line) (55px + $gutter);
     }
   }
+
+  #masthead {
+    padding: 4*$line;
+    text-align: center;
+
+    h1 {
+      font-size: 28px;
+      font-weight: 600;
+    }
+
+    p {
+      line-height: 24px;
+      margin-bottom: $line;
+      color: #666;
+    }
+
+    form {
+      margin: 2*$line 0;
+      p {
+      }
+
+      input {
+        @include box-sizing(border-box);
+        font: 400 16px/18px $helvetica;
+        padding: $line ($gutter / 2);
+        width: gwidth(4);
+        text-align: center;
+        margin: 2*$line 0;
+        @include inline-block;
+      }
+
+      button, input[type=submit] {
+        margin: 0;
+        border: none;
+        outline: none;
+        background: $blue;
+        color: white;
+        font: 400 12px/18px $helvetica;
+        cursor: pointer;
+        padding: ($line / 2) $gutter;
+        padding: $line $gutter;
+        @include inline-block;
+
+        @include border-radius($radius);
+        &:hover, &:focus {
+          background: darken($blue, 10%);
+        }
+      }
+    }
+
+  }
+
 }
