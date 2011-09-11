@@ -78,6 +78,14 @@ class World
     end
   end
 
+  def broadcast(event_name, data, socket_id=nil)
+    pusher_channel.trigger event_name, data, socket_id
+  end
+
+  def pusher_channel
+    Pusher[pusher_key]
+  end
+
   def pusher_key
     "#{self.class.name.downcase}-#{id}"
   end

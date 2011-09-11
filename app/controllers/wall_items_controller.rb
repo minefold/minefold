@@ -10,8 +10,9 @@ class WallItemsController < ApplicationController
       # TODO Check what callbacks this calls and fire media job
       world.wall_items.push chat
 
-      # TODO: Implement
-      # chat.wall.broadcast chat.raw
+      chat.wall.broadcast 'chat-create',
+                          chat.to_json(include: :user),
+                          params[:socket_id]
 
       respond_to do |format|
         format.json { render json: chat.attributes }

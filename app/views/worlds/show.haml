@@ -35,10 +35,12 @@
           data:
             chat:
               raw: f.find('textarea').val()
+            socket_id: pusher.connection.socket_id
           dataType: 'json'
           success: (data) ->
-            console.log data
-            $('#wall-items #chat_'+cId).removeClass('loading')
+            $('#wall-items #chat_'+cId)
+              .removeClass('loading')
+              .attr(id: "chat_"+data._id)
 
         data.chat.body = data.chat.raw
         data.chat.user = current_user
@@ -48,8 +50,6 @@
         $('#wall-items').prepend $(html).addClass('loading')
 
         f.find('textarea').val('')
-
-
 
       f.find('textarea')
         .focus ->
@@ -62,8 +62,6 @@
             f.submit()
 
 
-
-
   #wall-items
     = template 'worlds/_wall_item', collection: world.wall_items.order_by([:created_at, :desc])
 
@@ -74,10 +72,9 @@
   window.pusher = new Pusher(#{Pusher.key.to_json});
   window.channel = pusher.subscribe(#{Pusher[world.pusher_key].name.to_json});
 
-  # channel.bind 'chat-create', (data) ->
-  #   item = $('#chat_' + data.id)
-  #
-  #   if item.length > 0
-  #     item.replaceWith(Mustache.to_html(Mustache.templates['chat-message'], data))
-  #   else
-  #     $('#wall-items').prepend(Mustache.to_html(Mustache.templates['chat-message'], data));
+  channel.bind 'chat-create', (data) ->
+    data.id = data._id
+    data.body = data.raw
+
+    html = Mustache.renderTemplate('worlds/_wall_item', data)
+    $('wall-items').prepend $(html)
