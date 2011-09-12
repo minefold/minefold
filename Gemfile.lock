@@ -5,15 +5,6 @@ GIT
     mail_view (1.0.0)
 
 GIT
-  remote: https://github.com/plataformatec/devise.git
-  revision: 1b5d0af8248cc8f3db4de66d66acbb6556a87354
-  specs:
-    devise (1.4.4)
-      bcrypt-ruby (~> 3.0)
-      orm_adapter (~> 0.0.3)
-      warden (~> 1.0.3)
-
-GIT
   remote: https://github.com/thoughtbot/bourbon.git
   revision: e67bd8c6dff1dc47a66d3d94b69eb50699f3af4a
   specs:
@@ -85,6 +76,10 @@ GEM
     crack (0.1.8)
     daemons (1.1.4)
     decent_exposure (1.0.1)
+    devise (1.4.5)
+      bcrypt-ruby (~> 3.0)
+      orm_adapter (~> 0.0.3)
+      warden (~> 1.0.3)
     diff-lcs (1.1.3)
     em-http-request (1.0.0)
       addressable (>= 2.2.3)
@@ -268,7 +263,7 @@ DEPENDENCIES
   coffee-filter
   coffee-rails
   decent_exposure
-  devise!
+  devise
   em-http-request
   embedly
   fog

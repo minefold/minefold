@@ -14,13 +14,10 @@ end
 
 gem 'mongoid'
 gem 'bson_ext'
-gem 'devise',
-  git: 'https://github.com/plataformatec/devise.git'
+gem 'devise'
 gem 'em-http-request'
 
 gem 'sendgrid'
-gem 'mail_view',
-  git: 'https://github.com/37signals/mail_view.git'
 
 gem 'activemerchant'
 gem 'pusher'
@@ -52,6 +49,8 @@ end
 group :development do
   gem 'heroku'
   gem 'foreman'
+  gem 'mail_view',
+    git: 'https://github.com/37signals/mail_view.git'
 end
 
 group :test, :development do
