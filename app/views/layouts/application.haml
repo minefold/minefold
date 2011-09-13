@@ -48,7 +48,11 @@
 
           .spaceball
 
-          %li= link_to 'About', about_path
+          %li= link_to 'About', about_page_path
+
+          .spaceball
+
+          %li= link_to 'Contact', contact_page_path
 
           - #.spaceball
 
@@ -56,15 +60,15 @@
 
           .spaceball
 
-          %li= link_to 'Help', help_path
+          %li= link_to 'Help', help_page_path
 
           - #.spaceball
 
           - #%li= link_to 'Contact', contact_path
 
-          .spaceball
+          - #.spaceball
 
-          %li= link_to 'Referrals', new_referral_path
+          - #%li= link_to 'Referrals', new_referral_path
 
           .spaceball
 
@@ -79,12 +83,7 @@
 
         %p.fineprint
           &copy; #{Time.now.year} Minefold.
-          <a href="#{privacy_path}">Privacy</a>, <a href="#{terms_path}">Terms</a>.
-
-    - if Rails.env.development?
-      #grid
-        .overlay
-        %a.toggle &middot;
+          #{link_to 'Privacy', privacy_page_path}, #{link_to 'Terms', terms_page_path}.
 
     - if Rails.env.production?
       = render partial: 'shared/analytics'

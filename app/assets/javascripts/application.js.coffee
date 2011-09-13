@@ -14,7 +14,6 @@
 delay = (ms, fn) -> setTimeout(fn, ms)
 every = (ms, fn) -> setInterval(fn, ms)
 
-
 $(document).ready ->
 
   # $('#session .account').hover(

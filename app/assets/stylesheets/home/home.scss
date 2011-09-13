@@ -17,54 +17,182 @@
   }
 
   #masthead {
-    padding: 4*$line;
-    text-align: center;
-
-    h1 {
-      font-size: 28px;
-      font-weight: 600;
+    .wrapper {
+      padding: 0;
+      width: gwidth(10) + (2*$gutter);
     }
 
-    p {
+    .left, .right {
+      width: 60px + 10px + 10px + 60px + 10px + 10px;
+    }
+
+
+    .left, .center, .right {
+      float: left;
+    }
+
+    img {
+      margin: 10px;
+      display: block;
+      float: left;
+      @include border-radius(3px);
+    }
+
+    .center {
+      width: 6 * (10px + 60px + 10px) - 20px;
+      background: white;
+      height: 3 * (10px + 60px + 10px) - 20px;
+      padding: 10px;
+      text-align: center;
       line-height: 24px;
-      margin-bottom: $line;
-      color: #666;
-    }
+      @include border-radius(2 * $radius);
 
-    form {
-      margin: 2*$line 0;
-      p {
-      }
-
-      input {
-        @include box-sizing(border-box);
-        font: 400 16px/18px $helvetica;
-        padding: $line ($gutter / 2);
-        width: gwidth(4);
-        text-align: center;
-        margin: 2*$line 0;
-        @include inline-block;
-      }
-
-      button, input[type=submit] {
+      h1 {
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 36px;
         margin: 0;
-        border: none;
-        outline: none;
-        background: $blue;
-        color: white;
-        font: 400 12px/18px $helvetica;
-        cursor: pointer;
-        padding: ($line / 2) $gutter;
-        padding: $line $gutter;
-        @include inline-block;
+        padding: 24px 0 10px 0;
+      }
 
-        @include border-radius($radius);
-        &:hover, &:focus {
-          background: darken($blue, 10%);
+      .copy {
+        margin: 10px 0;
+        padding: 6px 0;
+        color: #666;
+        p {
+          margin: 0;
+        }
+      }
+
+      .signup {
+        padding: 10px 0;
+        strong {
+          background: #FFC;
+          color: #333;
+          padding: 0 2px;
+        }
+
+        a, button {
+          display: block;
+          margin: 0 auto;
+          background: $blue;
+          width: gwidth(4);
+          font: 600 18px/36px $helvetica;
+          color: white;
+          border: none;
+          @include border-radius($radius);
+          padding: 0;
+          text-decoration: none;
+          margin-bottom: $line;
+
+          &:hover {
+            background-color: darken($blue, 10%);
+          }
+        }
+
+
+        .spots {
+          font-size: 11px;
+          line-height: 12px;
+          color: #999;
+        }
+
+        form {
+          font-size: 12px;
+          margin: 0;
+          padding: 0;
+          margin-top: -20px;
+
+          p {
+            margin-bottom: 3*$line;
+            line-height: 20px;
+            color: #999;
+          }
+
+          input {
+            width: gwidth(3);
+            padding: ($line - $border) ($gutter / 2);
+            border: $border solid darken(white, 10%);
+            @include border-radius($radius);
+            font: 400 14px/18px $helvetica;
+            outline: none;
+            margin: 0;
+            margin-right: $gutter;
+
+            &:hover {
+              border-color: darken(white, 20%);
+            }
+            &:focus {
+              border-color: $blue;
+            }
+          }
+          button {
+            cursor: pointer;
+            width: gwidth(2);
+            line-height: 18px;
+            @include inline-block;
+            font-size: 14px;
+            padding: $line $gutter;
+          }
         }
       }
     }
-
   }
+
+
+
+
+
+//
+//  #masthead {
+//    padding: 4*$line;
+//    text-align: center;
+//
+//    h1 {
+//      font-size: 28px;
+//      font-weight: 600;
+//    }
+//
+//    p {
+//      line-height: 24px;
+//      margin-bottom: $line;
+//      color: #666;
+//    }
+//
+//    form {
+//      margin: 2*$line 0;
+//      p {
+//      }
+//
+//      input {
+//        @include box-sizing(border-box);
+//        font: 400 16px/18px $helvetica;
+//        padding: $line ($gutter / 2);
+//        width: gwidth(4);
+//        text-align: center;
+//        margin: 2*$line 0;
+//        @include inline-block;
+//      }
+//
+//      button, input[type=submit] {
+//        margin: 0;
+//        border: none;
+//        outline: none;
+//        background: $blue;
+//        color: white;
+//        font: 400 12px/18px $helvetica;
+//        cursor: pointer;
+//        padding: ($line / 2) $gutter;
+//        padding: $line $gutter;
+//        @include inline-block;
+//
+//        @include border-radius($radius);
+//        &:hover, &:focus {
+//          background: darken($blue, 10%);
+//        }
+//      }
+//    }
+//
+//  }
 
 }

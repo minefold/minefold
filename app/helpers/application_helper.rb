@@ -52,4 +52,8 @@ module ApplicationHelper
     content_tag(:iframe, nil, width: 480, height: 390, src: "#{Videos.sample}?rel=0", frameborder: 0, allowfullscreen: true).html_safe
   end
 
+  def placekitty(opts={})
+    image_tag "//placekitten.com/#{opts[:width]}/#{opts[:height]}", opts
+  end
+
 end

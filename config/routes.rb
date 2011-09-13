@@ -19,10 +19,9 @@ Minefold::Application.routes.draw do
     '/privacy' => 'privacy',
     '/terms'   => 'terms'
   }.each do |url, name|
-    get url => 'high_voltage/pages#show', :id => name
+    get url => 'high_voltage/pages#show', :id => name, :as => "#{name}_page"
   end
 
-  # resources :user
 
   # Authentication
   devise_for :users, :skip => [:sessions, :registrations, :passwords] do
@@ -34,7 +33,7 @@ Minefold::Application.routes.draw do
 
     # Registrations
     get  '/sign-up' => 'users#new', :as => :new_user
-    post '/sign-up/:code' => 'users#create', :as => :users
+    # post '/sign-up/:code' => 'users#create', :as => :users
   end
 
 
@@ -50,8 +49,8 @@ Minefold::Application.routes.draw do
     get  '/order/cancel' => 'orders#cancel', :as => :cancel_order
 
     # Referrals
-    get  '/referrals' => 'referrals#new', :as => :new_referral
-    post '/referrals' => 'referrals#create', :as => :referrals
+    # get  '/referrals' => 'referrals#new', :as => :new_referral
+    # post '/referrals' => 'referrals#create', :as => :referrals
 
     # Worlds
     get '/explore' => 'worlds#index', :as => :worlds

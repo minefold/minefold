@@ -58,6 +58,19 @@ class User
                   :remember_me
 
 
+# SIGNUPS
+
+  SPOTS = 500
+
+  def self.free_spots
+    SPOTS - count
+  end
+
+  def self.free_spots?
+    free_spots > 0
+  end
+
+
 # CREDITS
 
   scope :free, where(:orders.size => 0)

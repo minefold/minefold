@@ -1,17 +1,46 @@
 - content_for :masthead do
-  %h1 Play Minecraft with friends!
+  .top
+    - 10.times do |x|
+      = placekitty width: 60, height: 60
+  .left
+    - (2 * 3).times do |x|
+      = placekitty width: 60, height: 60
 
-  %p
-    Minefold is an online community for friends who play Minecraft.
-    %br
-    We make it super simple to play together: no more nerdy stuff.
+  .center
+    %h1 Play Minecraft with friends!
 
-  = form_tag 'http://minefold.createsend.com/t/r/s/qjhfu', method: :post do
-    %div
-      %h3
-        Pop your email down and we'll email you when we launch:
+    .copy
+      %p
+        Minefold is an online community for friends who play Minecraft.
+      %p
+        We make it super simple to play together: no more nerdy stuff.
 
-      = email_field_tag 'cm-qjhfu-qjhfu', nil, placeholder: 'email@example.com', id: 'qjhfu-qjhfu'
+    .signup
+      - if User.free_spots?
+        = link_to 'Sign up now', new_user_path
 
-      %button
-        = ['Algebraic!', 'Rhombus!', 'Mathematical!'].shuffle.first
+        %p.spots
+          Only
+          %strong= number_with_delimiter User.free_spots
+          out of #{number_with_delimiter User::SPOTS} spots left
+
+
+      - else
+        = form_tag 'http://minefold.createsend.com/t/r/s/qjhfu', method: :post, class: 'puturnamedown' do
+          %div
+            %p
+              %strong We're full up!
+              Pop your email down and you'll be next in line.
+
+            = email_field_tag 'cm-qjhfu-qjhfu', nil, placeholder: 'email@example.com', id: 'qjhfu-qjhfu'
+
+            %button
+              = ['Algebraic!', 'Rhombus!', 'Mathematical!'].shuffle.first
+
+  .right
+    - (2 * 3).times do |x|
+      = placekitty width: 60, height: 60
+
+
+  - 10.times do |x|
+    = placekitty width: 60, height: 60

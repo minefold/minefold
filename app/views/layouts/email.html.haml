@@ -1,0 +1,72 @@
+!!! Transitional
+%html{xmlns: 'http://www.w3.org/1999/xhtml'}
+  %head
+    %title Minefold
+    %meta{content: 'text/html; charset=iso-8859-1', 'http-equiv' => 'Content-Type'}
+    %meta{name: 'robots', content: 'noindex,nofollow'}
+    :css
+      table {
+        -webkit-text-size-adjust: none;
+      }
+      p {
+        font-style: normal;
+        font-size: 14px;
+        line-height: 140%;
+        color: #333;
+      }
+      li {
+        font-size: 14px;
+        margin-bottom: 5px;
+        color: #333;
+      }
+      a, a:link {
+        color: #ef4130;
+      }
+      a img {
+        border: none;
+        outline: none;
+      }
+      h1, h2 {
+        color: #08D;
+        font-weight: normal;
+      }
+      h1 {
+        font-size: 22px;
+      }
+      h2 {
+        font-size: 17px;
+        margin: 2.0em 0 0.5em 0;
+      }
+
+  %body{marginheigh: 0, topmargin: 0, marginwidth: 0, bgcolor: '#F2F2F2', leftmargin: 0, style: "margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;padding-top:48px;padding-bottom:40px;padding-right:40px;padding-left:40px;background-color:#F2F2F2;background-image:none;background-repeat:repeat;background-position:top left;background-attachment:scroll;color:#333;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;"}
+    %table{cellspacing: 0, border: 0, cellpadding: 0, width: '100%', style: "background-color: #F2F2F2"}
+      %tr
+        %td{valign: 'top'}
+          %table{cellspacing: 0, border: 0, align: 'center', cellpadding: 0, width: 560, style: "background-color:white;background-image:none;background-repeat:repeat;background-position:top left;background-attachment:scroll;border-width:1px;border-style:solid;border-color:#CCC;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;"}
+            %tr
+              %td{valign: 'bottom', colspan: 2, style: "padding-top:24px;padding-bottom:24px;padding-right:10px;padding-left:10px;"}
+                = link_to root_url, style: "'border-style:none;outline-style:none;text-decoration:none;color:#0088DD;'" do
+                  %img{src: image_path('logo-48.png'), alt: 'Booki.sh', style: 'border-style:none;outline-style:none;'}
+
+            %tr
+              %td{colspan: 2, style: "padding-top:24px;padding-bottom:24px;padding-right:10px;padding-left:10px;"}
+                = yield
+
+            %tr.fineprint
+              %td{style: "padding-top:6px;padding-bottom:6px;padding-right:10px;padding-left:10px;border-top-width:1px;border-top-style:solid;border-top-color:#F2F2F2;vertical-align:top;text-align:left;"}
+                %p{style: "font-size:12px;line-height:18px;color:#999;font-style:normal;"}
+                  Minefold
+                  %br
+                  ABN: 37068433851
+                  %br
+                  Sydney, Australia
+
+              %td{style: "padding-top:6px;padding-bottom:6px;padding-right:0;padding-left:10px;border-top-width:1px;border-top-style:solid;border-top-color:#F2F2F2;vertical-align:top;text-align:left;"}
+                %p{style: "font-size:12px;line-height:18px;color:#999;font-style:normal;"}
+                  @minefold on
+                  %a{href: "http://twitter.com/minefold", style: 'color:#0088DD'} Twitter
+                  %br
+                  Minefold on
+                  %a{href: 'http://facebook.com/minefold', style: 'color:#0088DD'} Facebook
+                  %br
+                  = link_to 'Minefold Help & Support', help_url, style: 'color:#0088DD'

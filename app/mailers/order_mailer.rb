@@ -1,10 +1,11 @@
 class OrderMailer < ActionMailer::Base
   include Resque::Mailer
-  default from: 'admin@minefold.com'
+  default from: 'theteam@minefold.com'
+  layout 'email'
 
   def reminder(user_id)
     @user = User.find user_id
-    mail(to: @user.email, subject: 'Minefold minutes running low')
+    mail(to: @user.email, subject: 'Buy more Minefold time (running low)')
   end
 
   def thanks(order_id)
