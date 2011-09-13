@@ -20,11 +20,11 @@ describe User do
   it {should reference_many(:orders)}
 
   it {should belong_to(:current_world).of_type(World)}
-  it {should reference_many(:worlds).as_inverse_of(:creator)}
+  it {should reference_many(:created_worlds).as_inverse_of(:creator)}
 
-  it {should have_field(:total_referrals).of_type(Integer).with_default_value_of(10)}
-  it {should embed_many(:referrals)}
-  it {should belong_to(:referrer).of_type(User)}
+  # it {should have_field(:total_referrals).of_type(Integer).with_default_value_of(10)}
+  # it {should embed_many(:referrals)}
+  # it {should belong_to(:referrer).of_type(User)}
 
 
 # VALIDATIONS
@@ -40,7 +40,7 @@ describe User do
 # CREDITS
 
   it "gives FREE_CREDITS by default" do
-    user = User.new
+    user = User.create
 
     free_credits = User::FREE_HOURS.hours / User::BILLING_PERIOD
 

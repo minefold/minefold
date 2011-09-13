@@ -46,6 +46,10 @@ class World
     connected_player_ids.size
   end
 
+  def creator= creator
+    @creator = creator
+    @creator_slug = creator.slug
+  end
 
 # COMMUNICATION
 

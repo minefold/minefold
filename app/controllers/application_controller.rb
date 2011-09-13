@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from Mongoid::Errors::DocumentNotFound, with: :not_found
 
-  extend StatsD::Instrument
+  extend StatsD::Instrument  
 
 private
 

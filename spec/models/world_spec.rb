@@ -15,7 +15,7 @@ describe World do
   it { should have_field(:spawn_monsters).with_default_value_of(true)}
   it { should have_field(:spawn_animals).with_default_value_of(true)}
 
-  it { should belong_to(:creator).of_type(User).as_inverse_of(:worlds)}
+  it { should belong_to(:creator).of_type(User).as_inverse_of(:created_worlds)}
 
   it { should reference_and_be_referenced_in_many(:players).of_type(User)}
 

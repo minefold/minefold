@@ -54,7 +54,6 @@ Minefold::Application.routes.draw do
 
     # Worlds
     get '/explore' => 'worlds#index', :as => :worlds
-    get '/worlds/new' => 'worlds#new', :as => :new_world
 
     scope '/world/:id' do
       get '/' => 'worlds#show', :as => :world
@@ -72,9 +71,8 @@ Minefold::Application.routes.draw do
     get '/:id' => 'users#show', :as => :user
   end
 
-  # resources :worlds, :only => [:new, :create]
+  resources :worlds, :only => [:new, :create]
 
-  # get '/explore' => 'worlds#index', :as => :worlds
 
   # scope '/:creator_id/:id' do
   #   controller :worlds do

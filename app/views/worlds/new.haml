@@ -5,7 +5,7 @@
     %strong Create
     a new world
 
-= form_for @world do |f|
+= form_for world, :url => '/worlds' do |f|
   .name
     = f.text_field :name, placeholder: 'Name'
 

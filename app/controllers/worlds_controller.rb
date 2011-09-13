@@ -5,18 +5,15 @@ class WorldsController < ApplicationController
   # before_filter :lock_private, only: [:show, :edit, :update, :map, :photos, :activate]
 
   expose(:creator) { User.find_by_slug!(params[:creator_id])}
-  expose(:world) { World.find_by_slug!(params[:id])}
+
+  expose(:worlds)
+  expose(:world) { params[:id] ? World.find_by_slug!(params[:id]) : World.new }
 
   def index
     @main = World.find_by_slug 'midgard'
     @suba = World.find_by_slug 'atlassian'
     @subb = World.find_by_slug 'minefold'
     @subc = World.find_by_slug 'minefold'
-  end
-
-  def new
-    # TODO Get working with Decent Exposure
-    @world = World.new
   end
 
   def create
