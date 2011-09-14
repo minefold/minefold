@@ -2,7 +2,16 @@
   %h1 Sign up
 
 = form_for @user do |f|
-  / = devise_error_messages!
+  - unless @user.errors.empty?
+    .errors
+      %p
+        %strong Whoops!
+        Your:
+      %ol
+      - @user.errors.each do |key, desc|
+        %li
+          %strong= key
+          = desc
 
   %p
     = f.label :email
@@ -10,7 +19,6 @@
 
   %p
     = f.label :username, 'Minecraft Username'
-    / .note This is the same username that you use to login to Minecraft.
     = f.text_field :username
 
   %p
@@ -23,5 +31,3 @@
 
   %p
     = f.submit "Sign up"
-
-- #= render :partial => "devise/shared/links" %>

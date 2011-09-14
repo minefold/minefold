@@ -39,6 +39,7 @@ class User
 
 # VALIDATIONS
 
+  validates_presence_of :username
   validates_uniqueness_of :email, case_sensitive: false
   validates_uniqueness_of :username, case_sensitive: false
   validates_confirmation_of :password
@@ -60,7 +61,7 @@ class User
 
 # SIGNUPS
 
-  SPOTS = 500
+  SPOTS = 100
 
   def self.free_spots
     SPOTS - count

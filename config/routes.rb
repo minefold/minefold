@@ -33,7 +33,7 @@ Minefold::Application.routes.draw do
 
     # Registrations
     get  '/sign-up' => 'users#new', :as => :new_user
-    # post '/sign-up/:code' => 'users#create', :as => :users
+    post '/sign-up' => 'users#create', :as => :users
   end
 
 

@@ -189,6 +189,20 @@ header {
       }
     }
 
+    .errors {
+      p {
+        color: $red;
+        margin-bottom: 0;
+      }
+      ol {
+        margin: 0;
+      }
+    }
+
+    .field_with_errors {
+      color: $red;
+    }
+
     button, input[type=submit] {
       margin: 0;
       border: none;
