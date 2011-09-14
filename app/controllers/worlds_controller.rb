@@ -7,7 +7,7 @@ class WorldsController < ApplicationController
   expose(:creator) { User.find_by_slug!(params[:creator_id])}
 
   expose(:worlds)
-  expose(:world) { params[:id] ? World.find_by_slug!(params[:id]) : World.new }
+  expose(:world) { params[:id] ? World.find_by_slug!(params[:id]) : World.new(params[:world]) }
 
   def index
     @main = World.find_by_slug 'midgard'
@@ -17,19 +17,16 @@ class WorldsController < ApplicationController
   end
 
   def create
-    @world = World.new(params[:world])
-    @world.creator = current_user
-    @world.players << current_user unless @world.public?
+    raise "sup?"
+    world.creator = current_user
+    world.players << current_user unless world.public?
 
-    if @world.valid? and @world.save
-      current_user.current_world = @world
-      if current_user.save
-        redirect_to @world
-      else
-        render json: {errors: current_user.errors}
-      end
+    if world.save
+      current_user.current_world = world
+      current_user.save
+      redirect_to world
     else
-      render json: {errors: @world.errors}
+      render :new
     end
   end
 

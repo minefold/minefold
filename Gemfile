@@ -49,14 +49,21 @@ end
 group :development do
   gem 'heroku'
   gem 'foreman'
+  gem 'looksee'
+  gem 'wirble'
+  gem 'hirb'
 end
 
 group :test, :development do
+  gem 'mail_view',
+    git: 'https://github.com/37signals/mail_view.git'
+end
+
+group :test do
+  gem 'spork', '~> 0.9.0.rc'
   gem 'rspec'
   gem 'rspec-rails'
   gem 'autotest'
   gem 'autotest-rails'
   gem 'mongoid-rspec'
-  gem 'mail_view',
-    git: 'https://github.com/37signals/mail_view.git'
 end

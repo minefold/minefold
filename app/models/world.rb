@@ -25,11 +25,17 @@ class World
 
   embeds_many :wall_items, as: :wall
 
-
 # VALIDATIONS
 
   validates_presence_of :name
   validates_presence_of :creator_slug
+
+# CALLBACKS
+  before_validation :set_creator_slug
+  
+  def set_creator_slug
+    self.creator_slug = creator.safe_username
+  end
 
 
 # PLAYERS
@@ -44,11 +50,6 @@ class World
 
   def connected_players_count
     connected_player_ids.size
-  end
-
-  def creator= creator
-    @creator = creator
-    @creator_slug = creator.slug
   end
 
 # COMMUNICATION
