@@ -3,9 +3,8 @@ class UsersController < ApplicationController
 
   include Devise::Controllers::InternalHelpers
 
-  # prepend_before_filter :require_no_authentication, :only => [:new, :create]
-
-  # prepend_before_filter :authenticate_user!
+  prepend_before_filter :require_no_authentication, :only => [:new, :create]
+  before_filter :check_spots_left, :only => [:new, :create]
 
   def show
   end
@@ -36,6 +35,12 @@ class UsersController < ApplicationController
   def update
     current_user.update_attributes! params[:user]
     redirect_to user_root_path
+  end
+
+protected
+
+  def check_spots_left
+    not_found if !User.free_spots? and params[:secret] != 'fe0e675728078c78912cd5a9779f0217e3c90f6ec9bc9d89240cf4236145a7429e257a8c7dcae8f0267944bbc1ca9adb5519706e01d3d9aadcc46b727df34567'
   end
 
 end

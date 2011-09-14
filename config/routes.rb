@@ -33,6 +33,8 @@ Minefold::Application.routes.draw do
 
     # Registrations
     get  '/sign-up' => 'users#new', :as => :new_user
+    get  '/sign-me-up-scotty' => 'users#new', :as => :new_user,
+      :secret => 'fe0e675728078c78912cd5a9779f0217e3c90f6ec9bc9d89240cf4236145a7429e257a8c7dcae8f0267944bbc1ca9adb5519706e01d3d9aadcc46b727df34567'
     post '/sign-up' => 'users#create', :as => :users
   end
 
