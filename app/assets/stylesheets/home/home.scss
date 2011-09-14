@@ -8,11 +8,10 @@
     }
 
     h1 a {
-      background: url(image-path('logo-48.png')) center left no-repeat;
+      background: url(image-path('logo-48.png')) 2px center no-repeat;
       font-size: 18px;
-      line-height: 24px;
       margin: (-2*$line) 0;
-      padding: (2*$line) $gutter (2*$line) (55px + $gutter);
+      padding: (2*$line) $gutter (2*$line) (60px + $gutter);
     }
   }
 

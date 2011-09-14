@@ -55,8 +55,10 @@ header {
     letter-spacing: 0.05em;
 
     a {
-      color: #333;
+      display: block;
+      color: #000;
       text-decoration: none;
+      line-height: 18px;
 
       margin: (-$line) 0;
       padding: $line $gutter $line (27px + $gutter);
@@ -64,13 +66,6 @@ header {
 
       &:hover {
         color: $blue;
-      }
-
-      img {
-        margin: 0;
-        display: block;
-        float: left;
-        margin-right: 2 * $gutter;
       }
     }
   }
