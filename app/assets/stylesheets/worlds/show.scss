@@ -59,8 +59,9 @@
 
   .item {
     &.chat {
-      padding: ($line - 1px) 0 $line 0;
-      border-top: 1px solid darken(white, 4%);
+      padding: $line 0 ($line - 1px) 0;
+      border-bottom: 1px solid darken(white, 4%);
+      margin-bottom: $line;
       @include transition(opacity, 0.3s, ease-in-out);
       opacity: 1;
 
@@ -91,7 +92,8 @@
       .meta {
         font-size: 12px;
         color: #CCC;
-        line-height: 24px;
+        line-height: 18px;
+
         .user {
           color: darken(#CCC, 10%);
         }
