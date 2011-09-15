@@ -1,9 +1,6 @@
-= flash[:errors].to_json if flash[:errors]
-
-%header
+- content_for :masthead do
   %h1
-    %strong Create
-    a new world
+    Create a new world
 
 = form_for world, :url => '/worlds' do |f|
   .name
