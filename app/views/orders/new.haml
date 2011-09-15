@@ -6,7 +6,7 @@
       and
     %strong= pluralize current_user.minutes, 'minute', 'minutes'
 
-  %h2 Select how many hours you want to top up your account with
+  %h2 Choose how many hours you want to play for.
 
 = form_tag ENV['PAYPAL_URL'] do
   = hidden_field_tag :cmd, '_s-xclick'
