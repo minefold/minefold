@@ -135,9 +135,10 @@ header {
   }
 
   h2 {
-    margin: (4 * $line) 0 (2 * $line);
+    margin: (3*$line) 0 $line;
     line-height: 24px;
-    font-size: 21px;
+    font-size: 18px;
+    font-weight: 500;
   }
 
   p, ul, ol, pre {

@@ -71,6 +71,10 @@ class User
     free_spots > 0
   end
 
+  before_validation on: :create do
+    self.current_world = World.default
+  end
+
 
 # CREDITS
 

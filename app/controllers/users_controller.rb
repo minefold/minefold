@@ -10,7 +10,10 @@ class UsersController < ApplicationController
   end
 
   def dashboard
-    @worlds = World.visible.order_by(:slug).all
+    @worlds = World.order_by([:slug, :asc]).all
+
+    @current_world = current_user.current_world
+    @current_world_players_count = @current_world.connected_players_count
   end
 
   def new

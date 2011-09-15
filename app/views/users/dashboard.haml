@@ -17,29 +17,23 @@
     = link_to 'Import an existing world', new_world_path, class: 'import'
 
 
-.worlds
-  %ul
-    - current_user.worlds.each do |world|
-      %li{class: (current_user.current_world == world ? 'active' : nil)}
-        = link_to world do
-          .info
-            = world.name
-            .players
-              = pluralize world.connected_players_count, 'player', 'players'
+= link_to @current_world, class: 'current-world' do
+  %p You are currently spawning in
+  %h2= @current_world.name
 
+  .players
+    - if @current_world_players_count.zero?
+      Nobody is playing right now.
+    - else
+      = @current_world_players_count
+      people playing right now.
 
-%header
-  %h1
-    %strong Public
-    Worlds
-
-
-.worlds
+.explore-worlds
+  %h2 Explore
   %ul
     - @worlds.each do |world|
       %li{class: (current_user.current_world == world ? 'active' : nil)}
         = link_to world do
-          .info
-            = world.name
-            .players
-              = pluralize world.connected_players_count, 'player', 'players'
+          = world.name
+          .players
+            = pluralize world.connected_players_count, 'player', 'players'

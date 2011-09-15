@@ -7,7 +7,7 @@
   }
 
   .welcome-notice {
-    margin: (2*$line) 0 (4*$line) 0;
+    margin: 0 0 (4*$line) 0;
     padding: 0 (2*$gutter);
     background: #FFC;
     position: relative;
@@ -73,65 +73,71 @@
     }
   }
 
-  header aside {
-    float: right;
-  }
+  a.current-world {
+    display: block;
+    padding: 0 (2*$gutter);
+    background: $green url(image-path('world-watermark.png')) right center no-repeat;
+    text-decoration: none;
+    @include border-radius(2*$radius);
+    color: white;
+    overflow: auto;
 
-  .worlds {
-    margin: 0 (-$gutter);
-
-    ul {
-      overflow: auto;
-      margin: (2 * $line) 0;
+    p {
+      font-size: 12px;
+      color: darken($green, 30%);
+      margin: 0 (-2*$gutter);
+      padding: $line (2*$gutter);
+      border-bottom: 1px solid lighten($green, 10%);
+      margin-bottom: -1px;
     }
 
+    h2 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 48px;
+            display: inline;
+    }
+
+    .players {
+      display: inline;
+      line-height: 48px;
+      color: white;
+      margin-left: $gutter;
+    }
+
+    &:hover {
+      background-color: darken($green, 10%);
+    }
+  }
+
+  .explore-worlds {
+    h2 {
+      margin-bottom: 2*$line;
+    }
     li {
-      float: left;
-      margin: 0 $gutter (2 * $line) $gutter;
-      background: white;
-      @include border-radius($radius);
-      text-align: center;
-
       a {
-        display: block;
-        width: $col + (2 * $gutter) + $col - (2 * $border);
-        padding: 2 * ($line - $border) 0;
-        line-height: 4 * $line;
-        border-radius: $radius;
         color: $blue;
-        font-weight: 600;
-
-        border: 1px solid darken(white, 5%);
+        display: block;
+        line-height: 4*$line;
+        padding: $line 0;
         text-decoration: none;
-
-        .players {
-          color: darken(white, 20%);
-          font-size: 12px;
-          font-weight: normal;
-        }
+        border-bottom: 1px solid darken(white, 5%);
 
         &:hover {
-          color: darken($blue, 10%);
-          border-color: $blue;
-
-          .players {
-            color: darken(white, 30%);
-          }
+          color: darken($blue, 20%);
+          border-bottom-color: darken(white, 20%);
         }
       }
 
-      &.new a {
-        padding: (4 * $line - (2 * $border)) 0;
-      }
-
-      &.active a {
-        border-color: $green;
-        &:hover {
-          border-color: darken($green, 20%);
-        }
+      .players {
+        display: inline;
+        float: right;
+        margin-left: $gutter;
+        color: #CCC;
+        font-size: 12px;
       }
 
     }
-
   }
+
 }
