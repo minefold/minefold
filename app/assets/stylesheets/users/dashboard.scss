@@ -1,31 +1,41 @@
-@import 'shared/vars';
+@import 'shared';
 
-#accounts-dashboard #page {
+#users-dashboard {
 
-  .beta-notice {
-    margin: (2 * $line) 0 (4 * $line) 0;
-    text-align: center;
-    padding: (2 * $line) 0;
+  #after-page {
+    width: gwidth(4);
+  }
 
-    h2, .heart {
-      color: $red;
-      text-shadow: 0 1px 0 darken($red, 20%);
-    }
+  .welcome-notice {
+    margin: (2*$line) 0 (4*$line) 0;
+    padding: 0 (2*$gutter);
+    background: #FFC;
+    position: relative;
+    overflow: hidden;
+    @include border-radius(2*$radius);
 
     .heart {
+      position: absolute;
+      bottom: 48px;
+      right: 0;
       font: 30px/24px $helvetica;
-      margin-bottom: 2 * $line;
+      color: white;
+      font-size: 288px;
     }
 
+    * { position: relative; z-index: 1;}
+    .heart { z-index: 0;}
+
+
     h2 {
-      font: 900 18px/48px $museo;
+      font: 900 18px/24px $helvetica;
       font-weight: 1000;
       text-transform: uppercase;
+      color: $red;
     }
 
     p {
-      margin-bottom: 18px;
-      color: #999;
+      padding-bottom: $line;
     }
 
     a {
@@ -34,6 +44,31 @@
 
       &:hover {
         color: darken($blue, 20%);
+      }
+    }
+  }
+
+  .create-world {
+    text-align: center;
+    color: #999;
+    font-size: 12px;
+    margin-bottom: 8*$line;
+
+    .or {
+      margin: $line 0;
+      font-style: italic;
+    }
+
+    a {
+      display: block;
+      font: 600 18px/24px $helvetica;
+      color: white;
+      background: $blue;
+      padding: $line $gutter;
+      text-decoration: none;
+      @include border-radius($radius);
+      &:hover {
+        background: darken($blue, 10%);
       }
     }
   }

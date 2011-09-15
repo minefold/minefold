@@ -1,17 +1,21 @@
-- if current_user.first_sign_in?
-  .beta-notice
-    %h2
-      Much love, homie
-    .heart &hearts;
-    %p
-      We are working super hard but things may still break. If something seems odd <a href='mailto:support@minefold.com'>shoot us an email</a> or <a href='tel:+61424121343'>give us a call</a>.
+- content_for :masthead do
+  %h1 Dashboard
 
-%header
-  %aside
-    = button_to 'Create a world', new_world_path, method:  :get
-  %h1
-    %strong Your
-    Worlds
+- content_for :after do
+  - if current_user.first_sign_in?
+    .welcome-notice
+      .heart &hearts;
+      %h2
+        G'day mate!
+      %p
+        It's great to see you here.
+        We are working super hard but things may still break. If something seems odd <a href='mailto:support@minefold.com'>shoot us an email</a>.
+
+  .create-world
+    = link_to 'Create a new world', new_world_path, class: 'new'
+    .or — or —
+    = link_to 'Import an existing world', new_world_path, class: 'import'
+
 
 .worlds
   %ul
