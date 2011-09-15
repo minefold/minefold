@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
-  prepend_before_filter :require_no_authentication, :only => [:new, :create]
-
   include Devise::Controllers::InternalHelpers
 
   prepend_before_filter :require_no_authentication, :only => [:new, :create]
+  prepend_before_filter :authenticate_user!, :only => [:dashboard, :edit, :update]
+
   before_filter :check_spots_left, :only => [:new, :create]
 
   def show
