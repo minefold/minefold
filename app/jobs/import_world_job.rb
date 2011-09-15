@@ -10,12 +10,20 @@ class ImportWorldJob
   class << self
     
     def perform world_upload_id
-      process_world_upload WorldUpload.find(world_upload_id)
+      world_upload = process_world_upload WorldUpload.find(world_upload_id)
       
       pusher_key = "#{name}-#{world_upload_id}"
       puts "Work complete. Notifying #{pusher_key}:success"
       
-      Pusher[pusher_key].trigger 'success', {}
+      world = world_upload.world
+      Pusher[pusher_key].trigger 'success', world_upload:{
+        filename: world_upload.filename,
+          s3_key: world_upload.s3_key,
+      }, world: {
+         '_id' => "#{world.id}",
+         name: world.name,
+         slug: world.slug
+      }
     end
   
     def process_world_upload world_upload
@@ -37,6 +45,7 @@ class ImportWorldJob
         world_upload.world = world
         world_upload.save
       end
+      world_upload
     end
     
     def download_world_upload s3_key

@@ -36,7 +36,7 @@
         $('.upload-progress').text('Processing world...')
         $.ajax
           type: 'POST'
-          url: '/worlds/process_upload'
+          url: '#{process_upload_worlds_path}'
           data: info
           dataType: 'json'
           success: (data) -> 
@@ -44,6 +44,7 @@
             console.log 'pusher subscribing to ImportWorldJob-' + data.world_upload_id
             
             channel = pusher.subscribe 'ImportWorldJob-' + data.world_upload_id
-            channel.bind 'success', (data) -> 
+            channel.bind 'success', (data) ->
               $('.upload-progress').text('World created!')
+              window.location = '/world/' + data.world.slug
             

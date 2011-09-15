@@ -3,7 +3,7 @@ class WorldsController < ApplicationController
   prepend_before_filter :authenticate_user!, except: [:index, :show]
 
   # before_filter :lock_private, only: [:show, :edit, :update, :map, :photos, :activate]
-
+  
   expose(:creator) { User.find_by_slug!(params[:creator_id])}
 
   expose(:worlds)
@@ -32,6 +32,10 @@ class WorldsController < ApplicationController
   statsd_count_success :create, 'WorldsController.create'
 
   def show
+    respond_to do |format|
+      format.html
+      format.json { render json:world }
+    end
   end
 
   statsd_count_success :show, 'WorldsController.show'
