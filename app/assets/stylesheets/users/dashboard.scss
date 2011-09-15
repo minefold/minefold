@@ -10,6 +10,7 @@
     margin: 0 0 (4*$line) 0;
     padding: 0 (2*$gutter);
     background: #FFC;
+//    color: darken(#FFC, 80%);
     position: relative;
     overflow: hidden;
     @include border-radius(2*$radius);

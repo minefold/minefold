@@ -1,6 +1,8 @@
 @import 'shared';
 
-#worlds-show #masthead, #worlds-map #masthead {
+#worlds-show #masthead, #worlds-map #masthead, #worlds-edit #masthead {
+  background: darken(white, 5%) url(image-path('world-watermark.png')) right 24px no-repeat;
+
   .wrapper {
     position: relative;
   }
@@ -9,8 +11,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    margin: (2*$line) 0;
-
+    margin: (2*$line) $gutter;
     text-align: right;
 
     .meta {
@@ -40,6 +41,23 @@
           color: #333;
         }
       }
+
+      input[type=submit] {
+        border: none;
+        border-bottom-color: darken(white, 15%);
+        background: $blue;
+        color: white;
+        padding: ($line) 2*$gutter;
+        font: 600 12px/18px $helvetica;
+        @include border-radius($radius);
+        cursor: pointer;
+        margin: 0;
+        margin-top: 0;
+        &:hover {
+          background: darken($blue, 10%);
+        }
+      }
+
     }
   }
 
@@ -65,79 +83,6 @@
   }
 
 }
-
-//#worlds-show #masthead .activity a,
-//#worlds-show #masthead .maps {
-//  background: white;
-//}
-
-//.worlds #page {
-//
-//  header {
-//    h1 {
-//      font-size: 24px;
-//      line-height: 48px;
-//      color: #333;
-//      float: left;
-//      text-shadow: 0 1px 0 white;
-//    }
-//  }
-//
-//  #nav {
-//    margin: 0 (-$pad);
-//    margin-bottom: 4 * $line - $border;
-//    padding: 0 (2 * $gutter);
-//    overflow: auto;
-//    border-bottom: $border solid darken($blue, 20%);
-//
-//    aside {
-//      margin: $line 0;
-//      float: right;
-//      input {
-//        font-size: 12px;
-//        padding: ($line / 2) $gutter;
-//      }
-//      p {
-//        margin-top: $line;
-//      }
-//    }
-//
-//    ul {
-//      li {
-//        float: left;
-//        margin-right: 1px;
-//
-//        a {
-//          display: block;
-//          line-height: 24px;
-//          font-weight: 600;
-//          padding: $line $gutter;
-//          color: darken($blue, 20%);
-//          text-decoration: none;
-//          text-shadow: 0 1px 0 white;
-//          @include border-radius($radius $radius 0 0);
-//
-//          &:hover {
-//            background: $green;
-//            color: white;
-//            text-shadow: 0 1px 0 darken($green, 20%);
-//          }
-//
-//          &.disabled {
-//            color: darken(darken(white, 5%), 10%);
-//            cursor: normal;
-//            &:hover {
-//              background: darken(darken(white, 5%), 5%);
-//              color: darken(darken(darken(white, 5%), 10%), 5%);
-//              text-shadow: 0 1px 0 white;
-//            }
-//          }
-//        }
-//      }
-//    }
-//
-//  }
-//}
 
 #worlds-show #masthead .activity,
 #worlds-map #masthead .map,

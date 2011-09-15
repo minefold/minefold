@@ -59,9 +59,11 @@ Minefold::Application.routes.draw do
     scope '/world/:id' do
       get '/' => 'worlds#show', :as => :world
       get '/settings' => 'worlds#edit', :as => :edit_world
+      put '/' => 'worlds#update'
       get '/map' => 'worlds#map', :as => :map_world
       get '/photos' => 'worlds#photos', :as => :photos_world
-      put '/join' => 'worlds#join', :as => :join_world
+      put '/play' => 'worlds#play', :as => :play_world
+      put '/play/request' => 'worlds#play_request', :as => :play_request_world
 
       resources :wall_items, :only => [:index, :create]
     end

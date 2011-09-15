@@ -1,8 +1,8 @@
 = render partial: 'header'
 
 = form_for world do |f|
-  %section.game-options
-    %h3 Game options
+  %section.game-settings
+    %h3 Game Settings
 
     %fieldset
       %div
@@ -17,19 +17,36 @@
         = f.check_box :spawn_animals
         = f.label :spawn_animals, 'Spawn animals'
 
-      - unless !world.connected_players_count.zero?
+      - unless world.connected_players_count.zero?
         .hint
           %strong NOTE
           Settings will be applied when the world is empty.
+
+  %section.privacy
+    %h3 Privacy
+
+    %fieldset
+      %div
+        = f.check_box :public_activity
+        = f.label :public_activity, 'Public activity stream'
 
   %section.players
     %h3 Players
 
     %fieldset
       %div
-        = f.collection_select :player_ids, User.all(id: {'$ne' => current_user.id}), :id, :username, {}, multiple: true
-        / %select{multiple: true}
-        /   - User.all(id: {'$ne' => current_user.id}).each do |player|
-        /     %option{value: player.id, selected: world.players.include?(player)}= player.username
+        = f.radio_button :invite_only, false
+        = f.label :invite_only_false, 'Anybody can play'
+      %div
+        = f.radio_button :invite_only, true
+        = f.label :invite_only_true, 'Invite only'
+
+
+    / %fieldset
+    /   %div
+    /     = f.collection_select :player_ids, User.all(id: {'$ne' => current_user.id}), :id, :username, {}, multiple: true
+    / %select{multiple: true}
+    /   - User.all(id: {'$ne' => current_user.id}).each do |player|
+    /     %option{value: player.id, selected:world.players.include?(player)}= player.username
   .submit
     = f.submit 'Save settings'

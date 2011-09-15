@@ -8,8 +8,9 @@
       %h2
         G'day mate!
       %p
-        It's great to see you here.
-        We are working super hard but things may still break. If something seems odd <a href='mailto:support@minefold.com'>shoot us an email</a>.
+        It's great to see you here. If you haven't played Minecraft before or don't know how to play multiplayer we have
+        = link_to 'a short guide', about_page_path, anchor: 'getting-started'
+        to help you out. 
 
   .create-world
     = link_to 'Create a new world', new_world_path, class: 'new'
@@ -29,7 +30,7 @@
       people playing right now.
 
 .explore-worlds
-  %h2 Explore
+  %h2 Explore Worlds
   %ul
     - @worlds.each do |world|
       %li{class: (current_user.current_world == world ? 'active' : nil)}

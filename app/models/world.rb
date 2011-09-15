@@ -6,10 +6,8 @@ class World
   field :name,    type: String
   slug  :name,    scope: :creator, permanent: true, index: true
 
-  field :visible, type: Boolean, default: false
-  field :public,  type: Boolean, default: false
-  scope :public, where(public: true)
-  scope :visible, where(visible: true)
+  field :invite_only,     type: Boolean, default: false
+  field :public_activity, type: Boolean, default: true
 
   field :seed,           type: String, default: ''
   field :pvp,            type: Boolean, default: true
@@ -19,26 +17,22 @@ class World
   field :last_mapped_at, type: DateTime
 
   belongs_to :creator, class_name: 'User', inverse_of: :created_worlds
-  field :creator_slug, type: String
 
   has_and_belongs_to_many :players, class_name: 'User'
 
   embeds_many :wall_items, as: :wall
 
+
 # VALIDATIONS
 
   validates_presence_of :name
-  validates_presence_of :creator_slug
-
-# CALLBACKS
-  before_validation :set_creator_slug
-  
-  def set_creator_slug
-    self.creator_slug = creator.safe_username
-  end
 
 
 # PLAYERS
+
+  def public?
+    not invite_only?
+  end
 
   def connected_player_ids
     REDIS.smembers("#{redis_key}:connected_players")

@@ -1,6 +1,6 @@
 class WorldsController < ApplicationController
 
-  prepend_before_filter :authenticate_user!, except: [:index, :show]
+  prepend_before_filter :authenticate_user!, except: [:index, :show, :map]
 
   # before_filter :lock_private, only: [:show, :edit, :update, :map, :photos, :activate]
 
@@ -30,15 +30,10 @@ class WorldsController < ApplicationController
     end
   end
 
-  statsd_count_success :create, 'WorldsController.create'
-
   def show
   end
 
-  statsd_count_success :show, 'WorldsController.show'
-
   def edit
-    # @world = World.find_by_slug! params[:id]
   end
 
   def update
@@ -53,19 +48,13 @@ class WorldsController < ApplicationController
     end
   end
 
-  statsd_count_success :update, 'WorldsController.update'
-
   def map
   end
-
-  statsd_count_success :map, 'WorldsController.map'
 
   def photos
   end
 
-  statsd_count_success :photos, 'WorldsController.photos'
-
-  def activate
+  def play
     current_user.world = world
 
     if current_user.save
@@ -75,7 +64,9 @@ class WorldsController < ApplicationController
     end
   end
 
-  statsd_count_success :activate, 'WorldsController.activate'
+  def play_request
+  end
+
 
   def import
     filename = [
@@ -94,6 +85,16 @@ class WorldsController < ApplicationController
 
     render xml: policy.to_hash
   end
+
+protected
+
+  statsd_count_success :create, 'WorldsController.create'
+  statsd_count_success :show, 'WorldsController.show'
+  statsd_count_success :update, 'WorldsController.update'
+  statsd_count_success :map, 'WorldsController.map'
+  statsd_count_success :photos, 'WorldsController.photos'
+  statsd_count_success :play, 'WorldsController.play'
+  statsd_count_success :play_request, 'WorldsController.play_request'
 
 private
 
