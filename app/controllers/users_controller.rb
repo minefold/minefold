@@ -6,7 +6,10 @@ class UsersController < ApplicationController
 
   before_filter :check_spots_left, :only => [:new, :create]
 
+  expose(:user)
+
   def show
+    @user = User.find_by_slug!(params[:id])
   end
 
   def dashboard

@@ -5,11 +5,10 @@ GIT
     mail_view (1.0.0)
 
 GIT
-  remote: https://github.com/thoughtbot/bourbon.git
-  revision: e67bd8c6dff1dc47a66d3d94b69eb50699f3af4a
+  remote: https://github.com/chrislloyd/decent_exposure.git
+  revision: 424f6b37d2f3ac3d506834c451cf8961db68c50a
   specs:
-    bourbon (0.1.6)
-      sass (>= 3.1)
+    decent_exposure (1.0.1)
 
 GEM
   remote: http://rubygems.org/
@@ -58,6 +57,8 @@ GEM
     backbone-rails (0.5.2)
       rails (>= 3.0.0)
     bcrypt-ruby (3.0.0)
+    bourbon (0.1.7)
+      sass (>= 3.1)
     braintree (2.11.0)
       builder (>= 2.0.0)
     bson (1.3.1)
@@ -75,7 +76,6 @@ GEM
     coffee-script-source (1.1.2)
     crack (0.1.8)
     daemons (1.1.4)
-    decent_exposure (1.0.1)
     devise (1.4.5)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.0.3)
@@ -262,11 +262,11 @@ DEPENDENCIES
   autotest
   autotest-rails
   backbone-rails
-  bourbon!
+  bourbon
   bson_ext
   coffee-filter
   coffee-rails
-  decent_exposure
+  decent_exposure!
   devise
   em-http-request
   embedly

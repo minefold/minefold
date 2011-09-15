@@ -27,7 +27,8 @@ gem 'statsd-instrument'
 gem 'mongoid_slug'
 gem 'gravtastic'
 gem 'high_voltage'
-gem 'decent_exposure'
+gem 'decent_exposure',
+  git: 'https://github.com/chrislloyd/decent_exposure.git'
 
 gem 'fog'
 gem 'resque', require: 'resque/server'
@@ -35,8 +36,7 @@ gem 'resque_mailer'
 
 gem 'haml'
 gem 'mustache'
-gem 'bourbon',
-  git: 'https://github.com/thoughtbot/bourbon.git'
+gem 'bourbon'
 gem 'jquery-rails'
 gem 'backbone-rails'
 gem 'coffee-filter'
