@@ -257,6 +257,17 @@ footer {
         @include inline-block;
         width: $gutter;
       }
+
+      &.facebook a {
+        background: url(image-path('facebook.png')) left center no-repeat;
+        padding-left: 12px + ($gutter/2);
+      }
+
+      &.twitter a {
+        background: url(image-path('twitter.png')) left center no-repeat;
+        padding-left: 12px + ($gutter/2);
+      }
+
     }
   }
   .fineprint {
