@@ -1,4 +1,6 @@
 Minefold::Application.routes.draw do
+  mount Resque::Server, :at => '/resque'
+  
   root :to => 'home#index'
 
   # Admin
@@ -74,7 +76,13 @@ Minefold::Application.routes.draw do
     get '/:id' => 'users#show', :as => :user
   end
 
-  resources :worlds, :only => [:new, :create]
+  resources :worlds, :only => [:new, :create] do
+    collection do
+      get 'upload' => 'worlds#upload'
+      get 'import_policy' => 'worlds#import_policy'
+      post 'process_upload' => 'worlds#process_upload'
+    end
+  end
 
 
   # scope '/:creator_id/:id' do

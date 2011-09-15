@@ -34,8 +34,6 @@ class S3UploadPolicy
     }
   end
 
-private
-
   def expiration_time
     @expires.utc.strftime('%Y-%m-%dT%H:%M:%S.000Z')
   end

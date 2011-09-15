@@ -3,7 +3,7 @@ class WorldsController < ApplicationController
   prepend_before_filter :authenticate_user!, except: [:index, :show, :map]
 
   # before_filter :lock_private, only: [:show, :edit, :update, :map, :photos, :activate]
-
+  
   expose(:creator) { User.find_by_slug!(params[:creator_id])}
 
   expose(:worlds)
@@ -17,7 +17,6 @@ class WorldsController < ApplicationController
   end
 
   def create
-    raise "sup?"
     world.creator = current_user
     world.players << current_user unless world.public?
 
@@ -31,6 +30,10 @@ class WorldsController < ApplicationController
   end
 
   def show
+    respond_to do |format|
+      format.html
+      format.json { render json:world }
+    end
   end
 
   def edit
@@ -68,22 +71,21 @@ class WorldsController < ApplicationController
   end
 
 
-  def import
-    filename = [
-      params[:world][:id],
-      params[:world][:filename]
-    ].join('-').gsub /[ !'"]/, '_'
-
-    Resque.enqueue(Job::ImportWorld, params[:world][:id], filename)
-    render nothing: true
+  def process_upload
+    upload = WorldUpload.create s3_key:params[:key], 
+                              filename:params[:name],
+                              uploader:current_user
+                              
+    Resque.enqueue ImportWorldJob, upload.id
+    render json: { world_upload_id:upload.id }
   end
 
   def import_policy
-    policy = S3UploadPolicy.new(ENV['S3_KEY'], ENV['S3_SECRET'], bucket(:world_import))
-    policy.key = params[:key]
-    policy.content_type = params[:contentType]
+    @policy = S3UploadPolicy.new(ENV['S3_KEY'], ENV['S3_SECRET'], bucket(:world_import))
+    @policy.key = params[:key]
+    @policy.content_type = params[:contentType]
 
-    render xml: policy.to_hash
+    render layout:false
   end
 
 protected
@@ -104,6 +106,10 @@ private
        not (signed_in? and world.players.include?(current_user))
       raise Mongoid::Errors::DocumentNotFound
     end
+  end
+  
+  def bucket path
+    "minefold.#{Rails.env}.worlds-to-import"
   end
 
 end
