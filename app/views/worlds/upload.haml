@@ -47,4 +47,7 @@
             channel.bind 'success', (data) ->
               $('.upload-progress').text('World created!')
               window.location = '/world/' + data.world.slug
+            channel.bind 'fail', (data) ->
+              $('.upload-progress').text('Error: ' + data.error).css('background-color', '#E50')
+              
             

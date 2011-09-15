@@ -10,20 +10,33 @@ class ImportWorldJob
   class << self
     
     def perform world_upload_id
-      world_upload = process_world_upload WorldUpload.find(world_upload_id)
-      
       pusher_key = "#{name}-#{world_upload_id}"
-      puts "Work complete. Notifying #{pusher_key}:success"
+      pusher = Pusher[pusher_key]
+
+      error = nil
+      begin
+        world_upload = process_world_upload WorldUpload.find(world_upload_id)
+        error = world_upload.process_result
+      rescue => e
+        error = e.to_s
+      end
       
-      world = world_upload.world
-      Pusher[pusher_key].trigger 'success', world_upload:{
-        filename: world_upload.filename,
-          s3_key: world_upload.s3_key,
-      }, world: {
-         '_id' => "#{world.id}",
-         name: world.name,
-         slug: world.slug
-      }
+      if error
+        puts "Job failed. #{error}"
+        pusher.trigger 'fail', error:error
+      else
+        puts "Work complete."
+
+        world = world_upload.world
+        pusher.trigger 'success', world_upload:{
+          filename: world_upload.filename,
+            s3_key: world_upload.s3_key,
+        }, world: {
+           '_id' => "#{world.id}",
+           name: world.name,
+           slug: world.slug
+        }
+      end
     end
   
     def process_world_upload world_upload
