@@ -8,9 +8,10 @@
       %h2
         G'day mate!
       %p
-        It's great to see you here. If you haven't played Minecraft before or don't know how to play multiplayer we have
-        = link_to 'a short guide', about_page_path, anchor: 'getting-started'
-        to help you out. 
+        It's great to see you here. If you haven't played Minecraft before or don't know how to play multiplayer we have #{link_to 'a short guide', about_page_path, anchor: 'getting-started'} to help you out.
+      %p
+        Also, if you are stuck or see something wrong, please feel free to #{mail_to 'support@minefold.com', 'email support'}.
+
 
   .create-world
     = link_to 'Create a new world', new_world_path, class: 'new'
@@ -19,7 +20,7 @@
 
 
 = link_to @current_world, class: 'current-world' do
-  %p You are currently spawning in
+  %p You are currently playing in
   %h2= @current_world.name
 
   .players
@@ -28,6 +29,9 @@
     - else
       = @current_world_players_count
       people playing right now.
+
+  .arrow
+    &rarr;
 
 .explore-worlds
   %h2 Explore Worlds
