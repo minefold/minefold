@@ -20,7 +20,11 @@
 
 
 = link_to @current_world, class: 'current-world' do
-  %p You are currently playing in
+  %p
+    You are currently playing in
+
+    %strong.connection-info= current_user.host
+
   %h2= @current_world.name
 
   .players

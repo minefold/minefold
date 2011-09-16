@@ -89,6 +89,12 @@
       padding: $line (2*$gutter);
       border-bottom: 1px solid lighten($green, 10%);
       margin-bottom: -1px;
+
+      .connection-info {
+        @include inline-block;
+        float: right;
+      }
+
     }
 
     h2 {
