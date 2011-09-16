@@ -1,5 +1,4 @@
-- content_for :masthead do
-  %h1 Sign Up
+- title  'Sign Up'
 
 %p= flash[:alert]
 %p= flash[:notice]
@@ -14,7 +13,7 @@
     = f.email_field :email
 
   %p#username
-    = f.label :username, 'Minecraft Username'
+    = f.label :username, 'Minecraft Useasdfrname'
     = f.text_field :username,  autocomplete: :off
 
   %p#password
