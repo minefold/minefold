@@ -24,7 +24,7 @@ describe Referral do
 
   it "downcases and strips emails" do
     referral = Referral.new
-    referral.email = ' CHRIS@MINEFOlD.COM '
+    referral.email = ' CHRIS@MINEFOLD.COM '
     referral.email.should == 'chris@minefold.com'
   end
 

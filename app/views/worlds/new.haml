@@ -5,19 +5,19 @@
 = form_for world, :url => '/worlds' do |f|
   .name
     = f.text_field :name, placeholder: 'Name'
+  /
+    %section.privacy
+      %h3 Privacy
 
-  %section.privacy
-    %h3 Privacy
+      %fieldset
+        %div
+          = f.check_box :visible, checked: true
+          = f.label :visible, 'Anybody can spectate'
 
-    %fieldset
-      %div
-        = f.check_box :visible, checked: true
-        = f.label :visible, 'Anybody can spectate'
-
-        = f.check_box :public, checked: false
-        = f.label :public, 'Anybody can play'
-      .hint
-        These settings can be changed later.
+          = f.check_box :public, checked: false
+          = f.label :public, 'Anybody can play'
+        .hint
+          These settings can be changed later.
 
 
 

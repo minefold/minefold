@@ -7,7 +7,7 @@ class OrdersController < ApplicationController
     @order = Order.create!(user: current_user)
   end
 
-  statsd_count_success :new, 'OrdersController.new'
+
 
   def create
     notify = Paypal::Notification.new(request.raw_post)
@@ -44,17 +44,18 @@ class OrdersController < ApplicationController
     render nothing: true
   end
 
-  statsd_count_success :create, 'OrdersController.create'
-
   def success
   end
-
-  statsd_count_success :success, 'OrdersController.success'
 
   def cancel
     redirect_to credits_path
   end
 
+protected
+
+  statsd_count_success :new, 'OrdersController.new'
+  statsd_count_success :create, 'OrdersController.create'
+  statsd_count_success :success, 'OrdersController.success'
   statsd_count_success :cancel, 'OrdersController.cancel'
 
 end

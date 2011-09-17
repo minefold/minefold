@@ -247,6 +247,14 @@ header {
     padding-left: 37px + 2*$gutter;
   }
 
+  .flash.success {
+    color: darken($green, 20%);
+    padding: ($line - $border) ($gutter - $border);
+    border: 1px solid $green;
+    @include border-radius($radius);
+    margin-bottom: 3 * $line;
+  }
+
   #before-page {
     @include span(2);
     float: left;

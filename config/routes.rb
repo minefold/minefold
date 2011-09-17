@@ -1,6 +1,6 @@
 Minefold::Application.routes.draw do
   mount Resque::Server, :at => '/resque'
-  
+
   root :to => 'home#index'
 
   # Admin
@@ -9,6 +9,7 @@ Minefold::Application.routes.draw do
     namespace :mail do
       mount OrderMailer::Preview => 'order'
       mount UserMailer::Preview => 'user'
+      mount WorldMailer::Preview => 'world'
     end
   end
 
@@ -56,7 +57,7 @@ Minefold::Application.routes.draw do
     # post '/referrals' => 'referrals#create', :as => :referrals
 
     # Worlds
-    get '/explore' => 'worlds#index', :as => :worlds
+    # get '/explore' => 'worlds#index', :as => :worlds
 
     scope '/world/:id' do
       get '/' => 'worlds#show', :as => :world
@@ -69,6 +70,8 @@ Minefold::Application.routes.draw do
 
       resources :wall_items, :only => [:index, :create]
     end
+
+    get '/users/search' => 'users#search', :as => :search_user
 
     # Account
     get '/:id/account' => 'users#edit', :as => :edit_user

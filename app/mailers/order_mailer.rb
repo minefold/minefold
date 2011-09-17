@@ -1,6 +1,6 @@
 class OrderMailer < ActionMailer::Base
   include Resque::Mailer
-  default from: 'theteam@minefold.com'
+  default from: 'team@minefold.com'
   layout 'email'
 
   def reminder(user_id)

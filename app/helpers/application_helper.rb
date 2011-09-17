@@ -19,7 +19,7 @@ module ApplicationHelper
     view = Mustache.new
     view.template_name = name.to_sym
 
-    contexts = [*(options[:object] || options[:collection])]
+    contexts = [*(options[:object] || options[:collection] || [])]
 
     capture_haml do
       contexts.each do |ctx|

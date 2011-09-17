@@ -3,7 +3,7 @@
 Devise.setup do |config|
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in DeviseMailer.
-  config.mailer_sender = 'admin@minefold.com'
+  config.mailer_sender = 'team@minefold.com'
 
   # Configure the class responsible to send e-mails.
   # config.mailer = "Devise::Mailer"

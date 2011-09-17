@@ -1,0 +1,9 @@
+%p Hi #{@world.creator.username},
+
+%p #{@user.username} would like to play in "#{link_to @world.name, @world}". You can let them play in your world by going to
+
+%blockquote= link_to edit_world_url(@world), edit_world_url(@world)
+
+%p and adding #{@user.username} to the list of players. You can also stalk #{@user.username} first at
+
+%blockquote= link_to user_url(@user), url_for(@user)

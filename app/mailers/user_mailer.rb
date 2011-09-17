@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: 'theteam@minefold.com'
+  default from: 'team@minefold.com'
 
   layout 'email'
 

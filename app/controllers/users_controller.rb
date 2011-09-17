@@ -43,6 +43,11 @@ class UsersController < ApplicationController
     redirect_to user_root_path
   end
 
+  def search
+    @results = User.where(username: /#{params[:q]}/i).limit(5).all
+    render json: @results.map {|u| u.to_anon_json}
+  end
+
 protected
 
   def check_spots_left

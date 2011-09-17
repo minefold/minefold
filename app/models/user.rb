@@ -26,7 +26,7 @@ class User
 
   belongs_to :current_world, class_name: 'World'
   has_many :created_worlds, class_name: 'World', inverse_of: :creator
-  has_and_belongs_to_many :worlds
+  has_many :owned_worlds, class_name: 'World', inverse_of: :owner
 
   embeds_many :wall_items, as: :wall
 
@@ -156,6 +156,12 @@ class User
   def to_param
     slug
   end
+
+  # TODO This sucks!
+  def to_anon_json
+    {username: username, gravatar_id: gravatar_id}
+  end
+
 
 protected
 

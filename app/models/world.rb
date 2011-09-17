@@ -16,9 +16,10 @@ class World
 
   field :last_mapped_at, type: DateTime
 
-  belongs_to :creator, class_name: 'User', inverse_of: :created_worlds
+  belongs_to :creator, class_name: 'User'
+  belongs_to :owner, class_name: 'User'
 
-  has_and_belongs_to_many :players, class_name: 'User'
+  references_many :whitelist, class_name: 'User'
 
   embeds_many :wall_items, as: :wall
 
@@ -32,6 +33,10 @@ class World
 
   def public?
     not invite_only?
+  end
+
+  def whitelisted?(user)
+    owner == user or whitelist.include?(user)
   end
 
   def connected_player_ids

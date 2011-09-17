@@ -2,23 +2,17 @@ class WorldsController < ApplicationController
 
   prepend_before_filter :authenticate_user!, except: [:index, :show, :map]
 
-  # before_filter :lock_private, only: [:show, :edit, :update, :map, :photos, :activate]
-  
   expose(:creator) { User.find_by_slug!(params[:creator_id])}
 
   expose(:worlds)
   expose(:world) { params[:id] ? World.find_by_slug!(params[:id]) : World.new(params[:world]) }
 
   def index
-    @main = World.find_by_slug 'midgard'
-    @suba = World.find_by_slug 'atlassian'
-    @subb = World.find_by_slug 'minefold'
-    @subc = World.find_by_slug 'minefold'
   end
 
   def create
     world.creator = current_user
-    world.players << current_user unless world.public?
+    world.owner = current_user
 
     if world.save
       current_user.current_world = world
@@ -42,9 +36,8 @@ class WorldsController < ApplicationController
   def update
     world.update_attributes params[:world]
 
-    world.players << current_user
-
     if world.save
+      flash[:success] = "Settings successfully updated."
       redirect_to world
     else
       render json: {errors: world.errors}
@@ -58,24 +51,26 @@ class WorldsController < ApplicationController
   end
 
   def play
-    current_user.world = world
+    if world.public? or world.whitelisted?(current_user)
+      current_user.current_world = world
+      current_user.save
 
-    if current_user.save
       redirect_to :back
-    else
-      render json: {errors: current_user.errors}
     end
   end
 
   def play_request
+    WorldMailer.play_request(world, current_user).deliver
+    flash[:success] = 'Play request sent'
+    redirect_to world
   end
 
 
   def process_upload
-    upload = WorldUpload.create s3_key:params[:key], 
+    upload = WorldUpload.create s3_key:params[:key],
                               filename:params[:name],
                               uploader:current_user
-                              
+
     Resque.enqueue ImportWorldJob, upload.id
     render json: { world_upload_id:upload.id }
   end
@@ -107,7 +102,7 @@ private
       raise Mongoid::Errors::DocumentNotFound
     end
   end
-  
+
   def bucket path
     "minefold.#{Rails.env}.worlds-to-import"
   end
