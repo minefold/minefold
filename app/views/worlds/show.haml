@@ -1,4 +1,5 @@
-= render partial: 'worlds/header'
+- title world.name do
+  = render partial: 'worlds/header'
 
 - if flash[:success]
   .flash.success= flash[:success]
@@ -6,7 +7,6 @@
 - if !world.public_activity? and not (signed_in? and (world.public? or world.whitelisted?(current_user)))
   .locked
     Sorry, this world's activity stream is private.
-
 
 - else
   #stream

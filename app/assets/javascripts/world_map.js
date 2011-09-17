@@ -153,16 +153,16 @@
         scaleControl: false,
         mapTypeControl: false,
         streetViewControl: false,
-        mapTypeId: 'mcmap'
+        mapTypeId: 'map'
       };
-      map = new google.maps.Map(document.getElementById("mcmap"), mapOptions);
+      map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
 
       // Now attach the coordinate map type to the map's registry
-      map.mapTypes.set('mcmap', MCMapType);
+      map.mapTypes.set('map', MCMapType);
 
       // We can now set the map to use the 'coordinate' map type
-      map.setMapTypeId('mcmap');
+      map.setMapTypeId('map');
 
       initMarkers();
     }

@@ -40,6 +40,7 @@ gem 'bourbon'
 gem 'jquery-rails'
 gem 'backbone-rails'
 gem 'coffee-filter'
+gem 'twitter'
 
 group :worker do
   gem 'rinku'

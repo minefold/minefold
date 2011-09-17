@@ -1,9 +1,10 @@
 @import 'shared';
 
 #worlds-map #page {
+  width: gwidth(10);
+  
   #map {
     height: 100*$line;
-    width: gcol(10);
   }
 
   p#nomap {
@@ -11,7 +12,7 @@
     padding-left: 16px + $gutter;
   }
 
-  #mcmap {
+  #map {
     margin-bottom: 25px;
 
     .infoWindow {

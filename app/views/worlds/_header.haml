@@ -1,29 +1,28 @@
-- content_for :masthead do
-  %h1= link_to world.name, world
+%h1= link_to world.name, world
 
-  %aside
-    - if signed_in?
-      .meta
-        - if world.public? or world.whitelisted?(current_user)
-          - if current_user.current_world == world
-            .connection-info
-              Connect to
-              %strong= current_user.host
-            .help
-              = link_to help_page_path(anchor: 'connecting') do
-                Don't know how to connect?
-          - else
-            = button_to 'Play in this world', [:play, world], method: :put
-
+%aside
+  - if signed_in?
+    .meta
+      - if world.public? or world.players.include?(current_user)
+        - if current_user.current_world == world
+          .connection-info
+            Connect to
+            %strong= current_user.host
+          .help
+            = link_to help_page_path(anchor: 'connecting') do
+              Don't know how to connect?
         - else
-          = button_to 'Send request to play', [:play_request, world], method: :put
+          = button_to 'Play in this world', [:play, world]
 
-  %ol#subnav
-    %li.activity
-      = link_to 'Activity', world
-    %li.map
-      = link_to 'Map', [:map, world]
+      - else
+        = button_to 'Send request to play', [:play_request, world]
 
-    - if signed_in? and world.creator == current_user
-      %li.edit
-        = link_to 'Settings', [:edit, world]
+%ol#subnav
+  %li.activity
+    = link_to 'Activity', world
+  %li.map
+    = link_to 'Map', [:map, world]
+
+  - if signed_in? and world.creator == current_user
+    %li.edit
+      = link_to 'Settings', [:edit, world]

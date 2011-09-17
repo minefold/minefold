@@ -55,5 +55,14 @@ module ApplicationHelper
   def placekitty(opts={})
     image_tag "//placekitten.com/#{opts[:width]}/#{opts[:height]}", opts
   end
+  
+  def title page_title, header_title=page_title, &blk
+    content_for :title, "#{Array(page_title).join(" • ")}"
+    if block_given?
+      content_for :masthead, capture_haml(&blk)
+    else
+      content_for :masthead, content_tag(:h1, header_title)
+    end
+  end
 
 end
