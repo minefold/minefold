@@ -2,7 +2,7 @@ class World
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::Slug
-
+  
   field :name,    type: String
   slug  :name,    scope: :creator, permanent: true, index: true
 
@@ -22,6 +22,8 @@ class World
   has_and_belongs_to_many :whitelist, class_name: 'User', inverse_of: nil
 
   embeds_many :wall_items, as: :wall
+  embeds_many :world_photos, class_name: 'WorldPhoto', cascade_callbacks: true
+  accepts_nested_attributes_for :world_photos, destroy: true
 
 
 # VALIDATIONS
@@ -80,13 +82,13 @@ class World
     not last_mapped_at.nil?
   end
 
-  def photos
-    wall_items.each_with_object([]) do |item, photos|
-      (item.media || []).each_with_object(photos) do |media, photos|
-        photos << media if media['type'] == 'photo'
-      end
-    end
-  end
+  # def photos
+  #   wall_items.each_with_object([]) do |item, photos|
+  #     (item.media || []).each_with_object(photos) do |media, photos|
+  #       photos << media if media['type'] == 'photo'
+  #     end
+  #   end
+  # end
 
   def broadcast(event_name, data, socket_id=nil)
     pusher_channel.trigger event_name, data, socket_id

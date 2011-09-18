@@ -1,6 +1,15 @@
-= render partial: 'header'
+- title "#{world.name} Photos"
 
+
+= form_for world, :html => {:multipart => true} do |f|
+  = hidden_field_tag :return_url, photos_world_path(world)
+  
+  = f.fields_for 'world_photos[]', WorldPhoto.new do |photo|
+    = photo.file_field :image
+
+  = f.submit 'Upload'
+  
 #photos
-  - world.photos.each do |photo|
-    = link_to photo['url'], class: 'photo' do
-      = image_tag photo['url'], width: 180
+  - world.world_photos.each.with_index do |photo, i|
+    .photo{}
+      = image_tag photo.image_url(:small)
