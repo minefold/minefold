@@ -2,6 +2,16 @@
   = render partial: 'header'
 
 = form_for world do |f|
+  %section.name
+    %h3
+      = f.label :name
+
+    %fieldset
+      = f.text_field :name
+      .note
+        %strong Note:
+        Danger Zone. Renaming your world will break any external links to it.
+
   %section.game-settings
     %h3 Game Settings
 
