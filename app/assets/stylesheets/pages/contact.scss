@@ -1,0 +1,22 @@
+@import 'shared';
+
+#high-voltage-pages-show {
+
+  .address {
+    width: gwidth(8);
+    overflow: auto;
+
+    .location {
+      float: left;
+      width: gwidth(2);
+      margin-right: $gutter;
+    }
+
+    iframe {
+      float: left;
+      width: gwidth(6);
+      height: 20 * $line;
+      margin-left: $gutter;
+    }
+  }
+}

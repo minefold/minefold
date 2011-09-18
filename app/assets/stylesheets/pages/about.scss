@@ -1,0 +1,31 @@
+@import 'shared';
+
+#high-voltage-pages-show {
+  p.story {
+    font-size: 15px;
+    line-height: 24px;
+    font-style: italic;
+    color: #666;
+  }
+
+  .founder {
+    margin-bottom: 4*$line;
+
+    p {
+      margin-left: 48px + $gutter;
+    }
+
+    .contact {
+      font-size: 12px;
+      a {
+        margin-right: $gutter;
+      }
+    }
+
+    img {
+      float: left;
+      @include border-radius($radius);
+      margin-right: $gutter;
+    }
+  }
+}

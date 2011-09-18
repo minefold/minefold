@@ -10,7 +10,6 @@
 
 @import 'home/home';
 @import 'sessions/new';
-@import 'pages/pages';
 
 @import 'worlds/header';
 @import 'worlds/show';
@@ -20,3 +19,7 @@
 @import 'users/dashboard';
 
 @import 'orders/orders';
+
+@import 'pages/page';
+@import 'pages/about';
+@import 'pages/contact';

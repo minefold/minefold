@@ -35,6 +35,30 @@
 
 
   }
-  
-  dl dt { margin-top: 1em; font-weight: bold;}
+
+  #page {
+    margin-bottom: 10 * $line;
+
+    h2 {
+      font-weight: 600;
+      margin-bottom: 2 * $line;
+    }
+
+    dl dt { margin-top: 1em; font-weight: bold; font-size: 16px;}
+
+    .note {
+      background: #FFC;
+      padding: $line $gutter;
+      margin: 0 (-$gutter) $line (-$gutter);
+    }
+
+    a {
+      color: $blue;
+      text-decoration: none;
+      &:hover {
+        color: darken($blue, 10%);
+      }
+    }
+
+  }
 }

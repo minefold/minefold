@@ -65,4 +65,12 @@ module ApplicationHelper
     end
   end
 
+  def before &blk
+    content_for :before, &blk
+  end
+
+  def after &blk
+    content_for :after, &blk
+  end
+
 end

@@ -1,22 +1,25 @@
 - title  'Contact'
 
-- content_for :before do
-  %nav.contact-page
-    = render partial: 'pages/nav'
+- before do
+  %nav.contact-page= render partial: 'pages/nav'
 
 %p
-  Send us an email at
-  %a(href="mailto:team@minefold.com") team@minefold.com
+  The best way to get in contact with us at Minefold is to end us an email at #{mail_to 'team@minefold.com'}. You can also email Dave or Chris directly at #{mail_to 'dave@minefold.com'} &amp; #{mail_to 'chris@minefold.com'} respectively.
 
 %p
-  Follow us on 
-  %a(href="http://twitter.com/minefold") twitter
-  
-%p
-  Hit us up on
-  %a(href="http://www.facebook.com/pages/Minefold/212665678793611") facebook
-  
-%p
-  Read about our adventures on 
-  %a(href="http://blog.minefold.com") the blog!
-  
+  For bite sized status updates you can #{link_to 'follow us on Twitter', '//twitter.com/minefold'} or read about our adventures on #{link_to 'our blog', '//blog.minefold.com'}.
+
+.address
+  %h2 Address
+  .location
+    Minefold,
+    %br
+    Tamarama,
+    %br
+    NSW  2026,
+    %br
+    Australia
+
+    %p.abn ABN: 37068433851
+
+  %iframe{width: 425, height: 350, frameborder: 0, scrolling: 'no', marginheight: 0, marginwidth: 0, src: 'http://maps.google.com.au/maps?f=q&source=s_q&hl=en&geocode=&q=Tamarama,+New+South+Wales&amp;aq=0&sll=-33.155948,149.0625&sspn=6.785544,7.174072&vpsrc=0&ie=UTF8&hq=&hnear=Tamarama+New+South+Wales&ll=-33.899692,151.27062&spn=0.054285,0.088749&t=m&z=14&output=embed'}

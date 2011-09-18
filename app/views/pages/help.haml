@@ -5,20 +5,33 @@
     = render partial: 'pages/nav'
 
 
-%p 
-  If you are having problems not covered here, email
-  %a(href="mailto:support@minefold.com") support@minefold.com
+%p.note
+  If you are having problems that are not covered here, email
+  = mail_to 'support@minefold.com'
+  and we'll get back to you straight away.
 
 %dl#faq
   %dt How do I play in a world I've joined?
-  %dd 
-    First make sure you have purchased and downloaded a copy of 
-    %a(href="http://www.minecraft.net/") minecraft.
-    To connect to the world you have joined on the website, run minecraft, select multiplayer and add the server with the address on the world page. The server address will look something like "pluto.minefold.com"
+  %dd
+    %p First make sure you have purchased and downloaded a copy of #{link_to 'Minecraft', '//minecraft.net'}.
+
+    %p
+      To connect to the world you have joined on the website, run Minecraft, select multiplayer and add the server with the address on the world page.
+      - if signed_in?
+        For you this will be <strong><code>#{current_user.host}</code></strong>.
+
+    %p When you connect to this server you'll be connected to whatever world you have selected on the website.
+
+    = image_tag 'help/join.png', width: '100%'
+
+  %dt So I'm in the game, what do I do now?
+  %dd
+    Minecraft is all about exploration and creativity. We reccomend you build a small house so you can survive your first night. There is a great #{link_to 'series of videos', '//minecraft.net/game/howtoplay'} on the Minecraft website.
+
 
   %dt Blocks keep on reappearing!
   %dd Make sure you aren't digging too close to where your player spawns. Minecraft makes sure this area doesn't get tampered with
 
   %dt Big chunks of the world are missing!
-  %dd Chunk errors happen sometimes, you can try waiting it out or disconnecting and reconnecting. You can also kill your player by pressing T and typing /kill. For obvious reasons this is probably a last resort...
+  %dd Chunk errors happen sometimes but you can still play the game if you just walk around them. To fix them you can try waiting it out or disconnecting and reconnecting. As a last resort you can try killing your player by pressing <code>T</code> and entering <code>/kill</code>. Be careful before you do this or obvious reasons!
 
