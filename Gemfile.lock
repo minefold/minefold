@@ -10,6 +10,15 @@ GIT
   specs:
     decent_exposure (1.0.1)
 
+GIT
+  remote: https://github.com/pyromaniac/mongoid.git
+  revision: 1f53df59af21602862b9ee8246c014a61c177091
+  specs:
+    mongoid (2.2.0)
+      activemodel (~> 3.0)
+      mongo (~> 1.3)
+      tzinfo (~> 0.3.22)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -64,6 +73,11 @@ GEM
     bson (1.3.1)
     bson_ext (1.3.1)
     builder (3.0.0)
+    carrierwave (0.5.7)
+      activesupport (~> 3.0)
+    carrierwave-mongoid (0.1.2)
+      carrierwave (>= 0.5.6)
+      mongoid (~> 2.1)
     coffee-filter (0.1.1)
       coffee-script (>= 2.2.0)
       haml (>= 3.0.18)
@@ -140,12 +154,10 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.16)
+    mini_magick (3.3)
+      subexec (~> 0.1.0)
     mongo (1.3.1)
       bson (>= 1.3.1)
-    mongoid (2.2.0)
-      activemodel (~> 3.0)
-      mongo (~> 1.3)
-      tzinfo (~> 0.3.22)
     mongoid-rspec (1.4.4)
       mongoid (~> 2.0)
       rspec (~> 2)
@@ -244,6 +256,7 @@ GEM
       tilt (!= 1.3.0, ~> 1.1)
     statsd-instrument (1.0.1)
     stringex (1.3.0)
+    subexec (0.1.0)
     term-ansicolor (1.0.6)
     thin (1.2.11)
       daemons (>= 1.0.9)
@@ -281,6 +294,8 @@ DEPENDENCIES
   backbone-rails
   bourbon
   bson_ext
+  carrierwave
+  carrierwave-mongoid
   coffee-filter
   coffee-rails
   decent_exposure!
@@ -297,7 +312,8 @@ DEPENDENCIES
   jquery-rails
   looksee
   mail_view!
-  mongoid
+  mini_magick
+  mongoid!
   mongoid-rspec
   mongoid_slug
   mustache

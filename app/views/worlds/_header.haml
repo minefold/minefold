@@ -21,6 +21,8 @@
   %li.activity
     = link_to 'Activity', world
   %li.map
+    = link_to 'Photos', [:photos, world]
+  %li.map
     = link_to 'Map', [:map, world]
 
   - if signed_in? and world.creator == current_user

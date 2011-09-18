@@ -12,7 +12,7 @@ group :assets do
   gem 'uglifier'
 end
 
-gem 'mongoid'
+gem 'mongoid', git: 'https://github.com/pyromaniac/mongoid.git'
 gem 'bson_ext'
 gem 'devise'
 gem 'em-http-request'
@@ -41,6 +41,9 @@ gem 'jquery-rails'
 gem 'backbone-rails'
 gem 'coffee-filter'
 gem 'twitter'
+gem 'mini_magick'
+gem 'carrierwave'
+gem 'carrierwave-mongoid', require: 'carrierwave/mongoid'
 
 group :worker do
   gem 'rinku'

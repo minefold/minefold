@@ -1,16 +1,25 @@
-@import 'shared/vars';
+@import 'shared';
 
 #worlds-photos #page {
+  width: gwidth(10);
+  
   #photos {
+    margin-left: -$gutter;
+    margin-right: -$gutter;
+    
     .photo {
-      padding: $gutter;
-      background: white;
-      overflow: auto;
-      display: block;
-      float: left;
+      margin: $gutter 2px 0 0;
+      position:relative;
+      width: 240px + 2 * $gutter; height: 180px + 2 * $gutter;
+      display: inline-block; vertical-align: middle;
+      
+      background: white; border: solid 1px #ccc;
+
       &:hover {
         background: darken(white, 5%);
       }
+      text-align: center;
+      img { position:absolute; top:$gutter; left:$gutter; }
     }
   }
 }

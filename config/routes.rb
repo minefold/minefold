@@ -85,6 +85,8 @@ Minefold::Application.routes.draw do
       get 'import_policy' => 'worlds#import_policy'
       post 'process_upload' => 'worlds#process_upload'
     end
+    
+    resources :world_photos, :as => :photos, :only => [:create, :destroy]
   end
 
 
