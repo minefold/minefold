@@ -1,4 +1,4 @@
-- title ['Settings', world.name] do
+- title "#{world.name} Settings" do
   = render partial: 'header'
 
 = form_for world do |f|
@@ -40,14 +40,36 @@
         = f.label :invite_only_false, 'Anybody can play'
       %div
         = f.radio_button :invite_only, true
-        = f.label :invite_only_true, 'Invite only'
+        = f.label :invite_only_true, 'Only whitelisted players can play'
+
+  %section.whitelist{style: (world.invite_only? ? nil : 'display:none')}
+    %h3 Whitelist
+
+    %fieldset
+      %ul.whitelisted-players
+        %li.owner{id: world.owner.id}
+
+          %img{src: world.owner.gravatar_url(width: 18, height: 18), width: 18, height: 18}
+          = world.owner.username
+          (owner)
+        - world.whitelist.each do |player|
+          %li
+            %input{type: 'hidden', name: 'world[fucking_whitelist_ids][]', value: player.id}
+            %img{src: player.gravatar_url(width: 18, height: 18), width: 18, height: 18}
+            = player.username
+            %a.remove Remove
+      %input.autocomplete{type: 'search', data: {source: search_user_path}, placeholder: 'Username'}
+      .autocomplete-results
+
+  :coffeescript
+    inviteOnly = $('.players input:radio[name=world[invite_only]]')
+    whitelist = $('.whitelist')
+    inviteOnly.change -> whitelist.toggle()
+    whitelist.find('input.autocomplete').autocomplete()
+
+    $('.whitelisted-players .remove').live 'click', ->
+      $(@).parent().remove()
 
 
-    / %fieldset
-    /   %div
-    /     = f.collection_select :player_ids, User.all(id: {'$ne' => current_user.id}), :id, :username, {}, multiple: true
-    / %select{multiple: true}
-    /   - User.all(id: {'$ne' => current_user.id}).each do |player|
-    /     %option{value: player.id, selected:world.players.include?(player)}= player.username
   .submit
     = f.submit 'Save settings'

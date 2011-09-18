@@ -71,7 +71,7 @@ Minefold::Application.routes.draw do
       resources :wall_items, :only => [:index, :create]
     end
 
-    get '/users/search' => 'users#search', :as => :search_user
+    get '/users/search.json' => 'users#search', :as => :search_user, :format => :json
 
     # Account
     get '/:id/account' => 'users#edit', :as => :edit_user

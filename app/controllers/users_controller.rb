@@ -45,7 +45,9 @@ class UsersController < ApplicationController
 
   def search
     @results = User.where(username: /#{params[:q]}/i).limit(5).all
-    render json: @results.map {|u| u.to_anon_json}
+    render json: @results.map {|u|
+      {id: u.id, username: u.username, gravatar_id: u.gravatar_id}
+    }
   end
 
 protected

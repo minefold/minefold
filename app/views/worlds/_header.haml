@@ -3,7 +3,7 @@
 %aside
   - if signed_in?
     .meta
-      - if world.public? or world.players.include?(current_user)
+      - if world.public? or world.whitelisted?(current_user)
         - if current_user.current_world == world
           .connection-info
             Connect to
@@ -12,10 +12,10 @@
             = link_to help_page_path(anchor: 'connecting') do
               Don't know how to connect?
         - else
-          = button_to 'Play in this world', [:play, world]
+          = button_to 'Play in this world', [:play, world], method: :put
 
       - else
-        = button_to 'Send request to play', [:play_request, world]
+        = button_to 'Send request to play', [:play_request, world], method: :put
 
 %ol#subnav
   %li.activity

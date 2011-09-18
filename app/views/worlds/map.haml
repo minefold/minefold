@@ -1,4 +1,4 @@
-- title ['Map', world.name] do
+- title "#{world.name} Map" do
   = render partial: 'header'
 
 - if world.mapped?
@@ -6,7 +6,7 @@
   - map_asset_path = "#{Rails.configuration.map_tiles_url}/#{world.id}"
 
   = javascript_include_tag 'https://maps.google.com/maps/api/js?sensor=false'
-  
+
   :coffeescript
     $.world_map path:'#{map_asset_path}'
 

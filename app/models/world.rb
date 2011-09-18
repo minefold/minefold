@@ -19,7 +19,7 @@ class World
   belongs_to :creator, class_name: 'User'
   belongs_to :owner, class_name: 'User'
 
-  references_many :whitelist, class_name: 'User'
+  has_and_belongs_to_many :whitelist, class_name: 'User', inverse_of: nil
 
   embeds_many :wall_items, as: :wall
 
@@ -38,6 +38,12 @@ class World
   def whitelisted?(user)
     owner == user or whitelist.include?(user)
   end
+
+  # accepts_nested_attributes_for :whitelist
+  def fucking_whitelist_ids=(vals)
+    self.whitelist = vals.map {|v| User.find(v) }
+  end
+
 
   def connected_player_ids
     REDIS.smembers("#{redis_key}:connected_players")

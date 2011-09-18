@@ -28,6 +28,8 @@ class User
   has_many :created_worlds, class_name: 'World', inverse_of: :creator
   has_many :owned_worlds, class_name: 'World', inverse_of: :owner
 
+  referenced_in :whitelists, class_name: 'World', inverse_of: :whitelist
+
   embeds_many :wall_items, as: :wall
 
   field :total_referrals, type: Integer, default: 10
@@ -156,12 +158,6 @@ class User
   def to_param
     slug
   end
-
-  # TODO This sucks!
-  def to_anon_json
-    {username: username, gravatar_id: gravatar_id}
-  end
-
 
 protected
 
