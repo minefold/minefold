@@ -41,7 +41,7 @@ Minefold::Application.configure do
     :address              => "smtp.gmail.com",
     :port                 => 587,
     :domain               => "minefold.com",
-    :user_name            => "admin@minefold.com",
+    :user_name            => "team@minefold.com",
     :password             => "minefold",
     :authentication       => "plain",
     :enable_starttls_auto => true

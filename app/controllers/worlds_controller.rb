@@ -59,7 +59,9 @@ class WorldsController < ApplicationController
   end
 
   def play_request
-    WorldMailer.play_request(world, current_user).deliver
+    WorldMailer.play_request(world.id,
+                             world.owner.id,
+                             current_user.id).deliver
     flash[:success] = 'Play request sent'
     redirect_to world
   end

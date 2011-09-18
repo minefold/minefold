@@ -1,7 +1,7 @@
 tmp_password = 'carlsmum'
 
 chris = User.create username: 'minefold',
-                       email: 'admin@minefold.com'
+                       email: 'team@minefold.com'
                     password: tmp_password,
        password_confirmation: tmp_password
 

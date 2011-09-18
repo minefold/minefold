@@ -68,7 +68,7 @@ class World
   def connected_players_count
     connected_player_ids.size
   end
-  
+
 # COMMUNICATION
 
   # def send_cmd(str)

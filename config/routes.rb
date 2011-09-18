@@ -1,10 +1,9 @@
 Minefold::Application.routes.draw do
-  mount Resque::Server, :at => '/resque'
-
   root :to => 'home#index'
 
   # Admin
   namespace :admin do
+    mount Resque::Server => 'resque'
 
     namespace :mail do
       mount OrderMailer::Preview => 'order'
@@ -85,7 +84,7 @@ Minefold::Application.routes.draw do
       get 'import_policy' => 'worlds#import_policy'
       post 'process_upload' => 'worlds#process_upload'
     end
-    
+
     resources :world_photos, :as => :photos, :only => [:create, :destroy]
   end
 
