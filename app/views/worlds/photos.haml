@@ -1,4 +1,5 @@
-- title "#{world.name} Photos"
+- title "#{world.name} Photos" do
+  = render partial: 'header'
 
 
 = form_for world, :html => {:multipart => true} do |f|
