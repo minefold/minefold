@@ -45,6 +45,8 @@ gem 'mini_magick'
 gem 'carrierwave'
 gem 'carrierwave-mongoid', require: 'carrierwave/mongoid'
 
+gem 'airbrake'
+
 group :worker do
   gem 'rinku'
   gem 'embedly'
