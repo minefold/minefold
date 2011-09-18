@@ -1,8 +1,7 @@
 - title  'Help'
 
-- content_for :before do
-  %nav.help-page
-    = render partial: 'pages/nav'
+- before do
+  %nav.help-page= render partial: 'pages/nav'
 
 
 %p.note
@@ -11,7 +10,11 @@
   and we'll get back to you straight away.
 
 %dl#faq
-  %dt How do I play in a world I've joined?
+  %dt#username It keeps on saying the connection was terminated
+  %dd
+    Check that the username you've entered on Minefold is the same as the username you're using in Minecraft. If it's not you can change your username in the account tab.
+
+  %dt#connecting How do I play in a world I've joined?
   %dd
     %p First make sure you have purchased and downloaded a copy of #{link_to 'Minecraft', '//minecraft.net'}.
 
@@ -24,14 +27,14 @@
 
     = image_tag 'help/join.png', width: '100%'
 
-  %dt So I'm in the game, what do I do now?
+  %dt#howtoplay So I'm in the game, what do I do now?
   %dd
-    Minecraft is all about exploration and creativity. We reccomend you build a small house so you can survive your first night. There is a great #{link_to 'series of videos', '//minecraft.net/game/howtoplay'} on the Minecraft website.
+    Minecraft is all about exploration and creativity. We recommend you build a small house so you can survive your first night. There is a great #{link_to 'series of videos', '//minecraft.net/game/howtoplay'} on the Minecraft website.
 
 
-  %dt Blocks keep on reappearing!
-  %dd Make sure you aren't digging too close to where your player spawns. Minecraft makes sure this area doesn't get tampered with
+  %dt#spawnprotection Blocks keep on reappearing
+  %dd Make sure you aren't digging too close to where your player spawns. Minecraft makes sure this area doesn't get tampered with. Sometimes nasty people put lava where you spawn so you die as soon as you spawn.
 
-  %dt Big chunks of the world are missing!
+  %dt#chunkerrors Big chunks of the world are missing
   %dd Chunk errors happen sometimes but you can still play the game if you just walk around them. To fix them you can try waiting it out or disconnecting and reconnecting. As a last resort you can try killing your player by pressing <code>T</code> and entering <code>/kill</code>. Be careful before you do this or obvious reasons!
 
