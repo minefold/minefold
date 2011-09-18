@@ -5,11 +5,11 @@
   = hidden_field_tag :return_url, photos_world_path(world)
   
   = f.fields_for 'world_photos[]', WorldPhoto.new do |photo|
-    = photo.file_field :image
+    = photo.file_field :image, multiple:true
 
   = f.submit 'Upload'
   
 #photos
   - world.world_photos.each.with_index do |photo, i|
-    .photo{}
+    .photo
       = image_tag photo.image_url(:small)
