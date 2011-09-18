@@ -1,6 +1,9 @@
 @import 'shared';
 
-#worlds-show #masthead, #worlds-map #masthead, #worlds-edit #masthead {
+#worlds-show #masthead,
+#worlds-map #masthead,
+#worlds-edit #masthead,
+#worlds-photos #masthead {
   background: darken(white, 5%) url(image-path('world-watermark.png')) right 24px no-repeat;
 
   .wrapper {
