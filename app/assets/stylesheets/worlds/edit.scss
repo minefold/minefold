@@ -1,6 +1,8 @@
 @import 'shared';
 
 #worlds-edit #page {
+  width: gwidth(8);
+
   .whitelisted-players, .autocomplete-results {
     margin: 0;
     margin-bottom: $line;

@@ -10,7 +10,39 @@
       = f.text_field :name
       .note
         %strong Note:
-        Danger Zone. Renaming your world will break any external links to it.
+        Renaming your world will break any external links.
+
+  %section.game-mode
+    %h3 Game Mode
+
+    %fieldset.inline
+      %div
+        = f.radio_button :game_mode, 0
+        = f.label :game_mode_0, 'Survival'
+
+      %div
+        = f.radio_button :game_mode, 1
+        = f.label :game_mode_1, 'Creative'
+
+  %section.difficulty
+    %h3 Difficulty
+
+    %fieldset.inline
+      %div
+        = f.radio_button :difficulty, 0
+        = f.label :difficulty_0, 'Peaceful'
+
+      %div
+        = f.radio_button :difficulty, 1
+        = f.label :difficulty_1, 'Easy'
+
+      %div
+        = f.radio_button :difficulty, 2
+        = f.label :difficulty_2, 'Normal'
+
+      %div
+        = f.radio_button :difficulty, 3
+        = f.label :difficulty_3, 'Hard'
 
   %section.game-settings
     %h3 Game Settings
@@ -28,11 +60,6 @@
         = f.check_box :spawn_animals
         = f.label :spawn_animals, 'Spawn animals'
 
-      - unless world.connected_players_count.zero?
-        .hint
-          %strong NOTE
-          Settings will be applied when the world is empty.
-
   %section.privacy
     %h3 Privacy
 
@@ -42,15 +69,15 @@
         = f.label :public_activity, 'Public activity stream'
 
   %section.players
-    %h3 Players
+    %h3 Who Can Play
 
     %fieldset
       %div
         = f.radio_button :invite_only, false
-        = f.label :invite_only_false, 'Anybody can play'
+        = f.label :invite_only_false, 'Anybody'
       %div
         = f.radio_button :invite_only, true
-        = f.label :invite_only_true, 'Only whitelisted players can play'
+        = f.label :invite_only_true, 'Only whitelisted players'
 
   %section.whitelist{style: (world.invite_only? ? nil : 'display:none')}
     %h3 Whitelist
@@ -80,6 +107,11 @@
     $('.whitelisted-players .remove').live 'click', ->
       $(@).parent().remove()
 
-
   .submit
     = f.submit 'Save settings'
+
+    - unless world.connected_players_count.zero?
+      .note
+        %strong Note:
+        Settings will be applied next time the server is empty.
+

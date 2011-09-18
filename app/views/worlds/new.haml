@@ -1,49 +1,99 @@
 - title 'Create a new world'
 
-= form_for world, :url => '/worlds' do |f|
-  .name
-    = f.text_field :name, placeholder: 'Name'
-  /
+= form_for world do |f|
+  %section.name
+    %h3
+      = f.label :name
+
+    %fieldset
+      = f.text_field :name
+
+  %section.game-mode
+    %h3 Game Mode
+
+    %fieldset.inline
+      %div
+        = f.radio_button :game_mode, 0
+        = f.label :game_mode_0, 'Survival'
+
+      %div
+        = f.radio_button :game_mode, 1
+        = f.label :game_mode_1, 'Creative'
+
+  %section.show-advanced
+    %fieldset
+      %a#showadvanced{href: '#'}
+        %span.action Show
+        advanced settings
+
+  .advanced{hidden}
+    %section.difficulty
+      %h3 Difficulty
+
+      %fieldset.inline
+        %div
+          = f.radio_button :difficulty, 0
+          = f.label :difficulty_0, 'Peaceful'
+
+        %div
+          = f.radio_button :difficulty, 1
+          = f.label :difficulty_1, 'Easy'
+
+        %div
+          = f.radio_button :difficulty, 2
+          = f.label :difficulty_2, 'Normal'
+
+        %div
+          = f.radio_button :difficulty, 3
+          = f.label :difficulty_3, 'Hard'
+
+    %section.game-settings
+      %h3 Game Settings
+
+      %fieldset
+        %div
+          = f.check_box :pvp
+          = f.label :pvp, 'Player vs. Player'
+
+        %div
+          = f.check_box :spawn_monsters
+          = f.label :spawn_monsters, 'Spawn monsters'
+
+        %div
+          = f.check_box :spawn_animals
+          = f.label :spawn_animals, 'Spawn animals'
+
     %section.privacy
       %h3 Privacy
 
       %fieldset
         %div
-          = f.check_box :visible, checked: true
-          = f.label :visible, 'Anybody can spectate'
+          = f.check_box :public_activity
+          = f.label :public_activity, 'Public activity stream'
 
-          = f.check_box :public, checked: false
-          = f.label :public, 'Anybody can play'
-        .hint
-          These settings can be changed later.
+    %section.players
+      %h3 Who Can Play
 
+      %fieldset
+        %div
+          = f.radio_button :invite_only, false
+          = f.label :invite_only_false, 'Anybody'
+        %div
+          = f.radio_button :invite_only, true
+          = f.label :invite_only_true, 'Only whitelisted players'
 
+  :coffeescript
+    link = $('#showadvanced')
+    body = $('.advanced')
 
-  %section.game-options
-    %h3 Game options
-
-    %fieldset
-
-      %div
-        = f.check_box :pvp
-        = f.label :pvp, 'Player vs. Player'
-
-      %div
-        = f.check_box :spawn_monsters
-        = f.label :spawn_monsters, 'Spawn monsters'
-
-      %div
-        = f.check_box :spawn_animals
-        = f.label :spawn_animals, 'Spawn animals'
-
-  %section.level-seed
-    %h3 Level seed
-    %fieldset
-      %div
-        = f.text_field :seed
-        .hint
-          %strong Advanced:
-          Leave blank if you don't know what it does.
+    link.click (e) ->
+      e.preventDefault()
+      body.toggle()
+      link.find('.action').text(
+        if body.is(':visible') then 'Hide' else 'Show'
+      )
 
   .submit
     = f.submit 'Create world'
+
+

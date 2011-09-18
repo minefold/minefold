@@ -2,7 +2,7 @@ class World
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::Slug
-  
+
   field :name,    type: String
   slug  :name,    scope: :creator, permanent: true, index: true
 
@@ -10,6 +10,8 @@ class World
   field :public_activity, type: Boolean, default: true
 
   field :seed,           type: String, default: ''
+  field :game_mode,      type: Integer, default: 0
+  field :difficulty,     type: Integer, default: 1
   field :pvp,            type: Boolean, default: true
   field :spawn_monsters, type: Boolean, default: true
   field :spawn_animals,  type: Boolean, default: true
@@ -29,7 +31,15 @@ class World
 # VALIDATIONS
 
   validates_presence_of :name
+  validates_numericality_of :game_mode,
+    only_integer: true,
+    greater_than_or_equal_to: 0,
+    less_than_or_equal_to: 1
 
+  validates_numericality_of :difficulty,
+    only_integer: true,
+    greater_than_or_equal_to: 0,
+    less_than_or_equal_to: 3
 
 # PLAYERS
 
@@ -58,7 +68,7 @@ class World
   def connected_players_count
     connected_player_ids.size
   end
-
+  
 # COMMUNICATION
 
   # def send_cmd(str)

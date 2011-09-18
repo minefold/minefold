@@ -211,6 +211,11 @@ header {
       }
       fieldset {
         margin-left: gwidth(2);
+
+        &.inline div {
+          display: inline;
+          margin-right: $gutter;
+        }
       }
     }
 
@@ -238,6 +243,7 @@ header {
       font: 400 12px/18px $helvetica;
       cursor: pointer;
       padding: ($line / 2) $gutter;
+      margin-bottom: $line;
 
       @include border-radius($radius);
       &:hover, &:focus {
