@@ -14,31 +14,11 @@ class OrdersController < ApplicationController
     order = Order.find(params[:custom])
 
     if notify.acknowledge
-      payment = order.payments.find(notify.transaction_id)
-
-      if payment.nil?
-        payment = Payment.new(id: notify.transaction_id,
-                          params: params)
-
-        order.payments << payment
-      end
-
-      begin
-        if notify.complete?
-          payment.status = notify.status
-          order.process_payment(payment)
-          logger.info("Processed PayPal IPN")
-        else
-          logger.error("Failed to verify Paypal's notification, please investigate")
-        end
-      rescue => e
-        payment.status = 'Error'
-        raise
-      ensure
-        order.save
-      end
+      order.transactions.find_or_initialize_by(params)
+      order.process_payment!
+      order.save
     else
-      logger.info("Failed to authenticate PayPal IPN")
+      logger.info("[PayPal] Failed to authenticate IPN")
     end
 
     render nothing: true

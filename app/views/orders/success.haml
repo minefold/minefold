@@ -18,5 +18,5 @@
     %strong= pluralize current_user.minutes, 'minute', 'minutes'
     \.
 
-= link_to(current_user.world, class: 'button') do
-  &larr; Back to #{current_user.world.name}
+= link_to(current_user.current_world, class: 'button') do
+  &larr; Back to #{current_user.current_world.name}

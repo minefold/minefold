@@ -55,9 +55,9 @@ end
 group :development do
   gem 'heroku'
   gem 'foreman'
-  gem 'looksee'
-  gem 'wirble'
-  gem 'hirb'
+  # gem 'looksee'
+  # gem 'wirble'
+  # gem 'hirb'
 end
 
 group :test, :development do
