@@ -81,7 +81,7 @@ Minefold::Application.routes.draw do
   resources :worlds, :only => [:new, :create] do
     collection do
       get 'upload' => 'worlds#upload'
-      get 'import_policy' => 'worlds#import_policy'
+      get 'upload_policy' => 'worlds#upload_policy'
       post 'process_upload' => 'worlds#process_upload'
     end
 

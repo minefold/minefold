@@ -4,49 +4,48 @@
   = f.file_field :path
 
   .upload-progress(style="width:0px;height:25px;background:#5a5")
-    
 
+= javascript_include_tag '//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js'
 = javascript_include_tag 'http://js.pusherapp.com/1.9/pusher.min.js'
 
 :coffeescript
-  $ ->
-    pusher = new Pusher(#{Pusher.key.to_json})
-    maxFileSize = 1 * 1024 * 1024 * 1024 # 1Gb
-    $('form').s3upload
-      prefix: '#{Time.now.strftime('%Y%m%d%H%M%S')}-#{current_user.safe_username}-#{current_user.id}-'
-      text: 'Click Me!'
-      signature_url: '/worlds/import_policy.xml'
-      required: true
-      submit_on_all_complete: false
-      onselect: (info, swf) ->
-        if parseInt(info.size) < maxFileSize
-          swf.upload()
-          return true
-        else
-          console.log 'too big'
+  pusher = new Pusher(#{Pusher.key.to_json})
+  maxFileSize = 1 * 1024 * 1024 * 1024 # 1Gb
+  $('form').s3upload
+    prefix: '#{Time.now.strftime('%Y%m%d%H%M%S')}-#{current_user.safe_username}-#{current_user.id}-'
+    text: 'Click Me!'
+    signature_url: '/worlds/upload_policy.xml'
+    required: true
+    submit_on_all_complete: false
+    onselect: (info, swf) ->
+      if parseInt(info.size) < maxFileSize
+        swf.upload()
+        return true
 
-      onstart: -> 
-      
-      onprogress: (progress,info) -> 
-        $('.upload-progress').width(300 * progress).text(Math.ceil( progress * 100 ) + "%")
-        false
-      onerror: -> console.log 'error!'
-      oncomplete: (info) -> 
-        $('.upload-progress').text('Processing world...')
-        $.ajax
-          type: 'POST'
-          url: '#{process_upload_worlds_path}'
-          data: info
-          dataType: 'json'
-          success: (data) -> 
-            console.log data
-            console.log 'pusher subscribing to ImportWorldJob-' + data.world_upload_id
-            
-            channel = pusher.subscribe 'ImportWorldJob-' + data.world_upload_id
-            channel.bind 'success', (data) ->
-              $('.upload-progress').text('World created!')
-              window.location = '/world/' + data.world.slug
-            channel.bind 'fail', (data) ->
-              $('.upload-progress').text('Error: ' + data.error).css('background-color', '#E50')
-              
-            
+    onstart: ->
+
+    onprogress: (progress,info) ->
+      $('.upload-progress').width(300 * progress).text(Math.ceil( progress * 100 ) + "%")
+      false
+
+    onerror: (msg) ->
+
+    oncomplete: (info) ->
+      $('.upload-progress').text('Processing world...')
+      $.ajax
+        type: 'POST'
+        url: '#{process_upload_worlds_path}'
+        data: info
+        dataType: 'json'
+        success: (data) ->
+          # console.log data
+          # console.log 'pusher subscribing to ImportWorldJob-' + data.world_upload_id
+
+          channel = pusher.subscribe 'ImportWorldJob-' + data.world_upload_id
+          channel.bind 'success', (data) ->
+            $('.upload-progress').text('World created!')
+            window.location = '/world/' + data.world.slug
+          channel.bind 'fail', (data) ->
+            $('.upload-progress').text('Error: ' + data.error).css('background-color', '#E50')
+
+

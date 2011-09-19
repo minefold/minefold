@@ -76,7 +76,7 @@ class WorldsController < ApplicationController
     render json: { world_upload_id:upload.id }
   end
 
-  def import_policy
+  def upload_policy
     @policy = S3UploadPolicy.new(ENV['S3_KEY'], ENV['S3_SECRET'], bucket(:world_import))
     @policy.key = params[:key]
     @policy.content_type = params[:contentType]
