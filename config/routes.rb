@@ -57,87 +57,46 @@ Minefold::Application.routes.draw do
 
     # Worlds
     # get '/explore' => 'worlds#index', :as => :worlds
+    get  '/worlds/new' => 'worlds#new',
+                   :as => :new_world
+    post '/worlds' => 'worlds#create',
+               :as => :user_worlds
+    get  '/worlds/upload' => 'worlds#upload',
+                      :as => :upload_worlds
+    get  '/worlds/upload_policy' => 'worlds#upload_policy',
+                             :as => :upload_policy_worlds
+    post '/worlds/process_upload' => 'worlds#process_upload',
+                              :as => :process_upload_worlds
 
-    scope '/world/:id' do
-      get '/' => 'worlds#show', :as => :world
-      get '/settings' => 'worlds#edit', :as => :edit_world
+    # Users
+    get '/users/search.json' => 'users#search',
+                         :as => :search_user,
+                     :format => :json
+    get '/:id/account' => 'users#edit', :as => :edit_user
+
+    scope '/:user_id/:id' do
+      get '/' => 'worlds#show', :as => :user_world
+      get '/settings' => 'worlds#edit', :as => :edit_user_world
       put '/' => 'worlds#update'
-      get '/map' => 'worlds#map', :as => :map_world
-      get '/photos' => 'worlds#photos', :as => :photos_world
-      put '/play' => 'worlds#play', :as => :play_world
-      put '/play/request' => 'worlds#play_request', :as => :play_request_world
+      get '/map' => 'worlds#map', :as => :map_user_world
 
-      resources :wall_items, :only => [:index, :create]
+      put '/play' => 'worlds#play', :as => :play_user_world
+      put '/play/request' => 'worlds#play_request', :as => :play_request_user_world
+
+      controller :wall_items do
+        get  '/wall', :action => 'index', :as => :user_world_wall_items
+        post '/wall', :action => 'create'
+      end
+
+      controller :photos do
+        get  '/photos', :action => :index, :as => :photos_user_world
+        post '/photos', :action => :create
+      end
     end
 
-    get '/users/search.json' => 'users#search', :as => :search_user, :format => :json
-
     # Account
-    get '/:id/account' => 'users#edit', :as => :edit_user
     put '/:id' => 'users#update', :as => :user
     get '/:id' => 'users#show', :as => :user
   end
-
-  resources :worlds, :only => [:new, :create] do
-    collection do
-      get 'upload' => 'worlds#upload'
-      get 'upload_policy' => 'worlds#upload_policy'
-      post 'process_upload' => 'worlds#process_upload'
-    end
-
-    resources :world_photos, :as => :photos, :only => [:create, :destroy]
-  end
-
-
-  # scope '/:creator_id/:id' do
-  #   controller :worlds do
-  #     get :map, :as => :map_world
-  #     get :photos, :as => :photos_world
-  #     get :edit, :as => :edit_world
-  #
-  #     post :follow, :as => :follow_world
-  #     post :join, :as => :join_world
-  #   end
-  #
-  #   resources :wall_items, :only => [:index, :create]
-  #
-  #   get '/' => 'worlds#show', :as => :world
-  #   # get '/wall/page/:page' => 'wall_items#show', :as => :world_wall_items
-  # end
-  #
-  # namespace :users do
-  #
-  #
-  #
-  # end
-
-
-  # get '/:id' do
-  #
-  # end
-
-  # resources :worlds, :except => [:index, :show, :destroy] do
-
-  #   resources :wall_items, :only => [:index, :create] do
-  #     get 'page/:page' => 'wall_items#page', :on => :collection
-  #   end
-  #
-  #   collection do
-  #     post :import
-  #     get :import_policy, :format => :xml
-  #   end
-  #
-  #   member do
-  #     post :activate
-  #     get  :map
-  #     get  :photos
-  #   end
-  # end
-
-  # mount Resque::Server, :at => '/resque'
-
-  # get '/admin' => 'admin#index', :as => :admin
-  # get '/admin/users' => 'admin#users', :as => :admin_users
-  # get '/admin/worlds' => 'admin#worlds', :as => :admin_worlds
 
 end

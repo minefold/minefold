@@ -1,8 +1,9 @@
 %p Hi #{@owner.username},
 
-%p #{@user.username} would like to play in "#{link_to @world.name, @world}". You can let them play in your world by going to
+%p #{@user.username} would like to play in "#{link_to @world.name, user_world_url(@owner, @world)}". You can let them play in your world by going to
 
-%blockquote= link_to edit_world_url(@world), edit_world_url(@world)
+%blockquote
+  = link_to edit_user_world_url(@owner, @world), edit_user_world_url(@owner, @world)
 
 %p and adding #{@user.username} to the list of players. You can also stalk #{@user.username} first at
 

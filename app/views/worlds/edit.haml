@@ -95,7 +95,7 @@
             %img{src: player.gravatar_url(width: 18, height: 18), width: 18, height: 18}
             = player.username
             %a.remove Remove
-      %input.autocomplete{type: 'search', data: {source: search_user_path}, placeholder: 'Username'}
+      %input.autocomplete{type: 'search', data: {source: search_users_path}, placeholder: 'Username'}
       .autocomplete-results
 
   :coffeescript

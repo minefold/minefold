@@ -2,22 +2,31 @@ class WorldsController < ApplicationController
 
   prepend_before_filter :authenticate_user!, except: [:index, :show, :map]
 
-  expose(:creator) { User.find_by_slug!(params[:creator_id])}
+  expose(:user) { User.find_by_slug!(params[:user_id])}
 
   expose(:worlds)
-  expose(:world) { params[:id] ? World.find_by_slug!(params[:id]) : World.new(params[:world]) }
+  expose(:world) do
+    user.owned_worlds.find_by_slug!(params[:id])
+  end
 
   def index
   end
 
+  def new
+    @world = World.new
+    @world.creator = current_user
+  end
+
   def create
+    @world = World.new(params[:world])
+
     world.creator = current_user
     world.owner = current_user
 
     if world.save
       current_user.current_world = world
       current_user.save
-      redirect_to world
+      redirect_to user_world_path(world.owner, world)
     else
       render :new
     end
@@ -63,7 +72,7 @@ class WorldsController < ApplicationController
                              world.owner.id,
                              current_user.id).deliver
     flash[:success] = 'Play request sent'
-    redirect_to world
+    redirect_to user_world_path(world.owner, world)
   end
 
 

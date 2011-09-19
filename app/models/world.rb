@@ -4,7 +4,7 @@ class World
   include Mongoid::Slug
 
   field :name,    type: String
-  slug  :name,    scope: :creator, permanent: true, index: true
+  slug  :name,    scope: :owner, index: true
 
   field :invite_only,     type: Boolean, default: false
   field :public_activity, type: Boolean, default: true
@@ -116,10 +116,6 @@ class World
     "#{self.class.name.downcase}:#{id}"
   end
 
-
-  # TODO: @chrislloyd has no idea how this works, but it stops a route needing
-  #       both the creator and the world. The real fix could involve it
-  #       looking like [creator.slug, slug].to_param.
   def to_param
     slug.to_param
   end

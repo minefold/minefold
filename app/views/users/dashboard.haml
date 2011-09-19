@@ -13,9 +13,9 @@
 
 
   .create-world
-    = link_to 'Create a new world', new_world_path, class: 'new'
+    = link_to 'Create a new world', [:new, :world], class: 'new'
     .or — or —
-    = link_to 'Upload an existing world', upload_worlds_path, class: 'import'
+    = link_to 'Upload an existing world', [:upload, :worlds], class: 'import'
 
 
 = link_to @current_world, class: 'current-world' do
