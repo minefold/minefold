@@ -1,51 +1,75 @@
 - title  'Upload a world'
 
+%p
+  If you've been playing single player you can upload your world to Minefold. You need to follow the following instructions carefully so that you send us the right data.
+
+%h2 Instructions
+
+%ol
+  %li
+    %strong Step 1.
+
 = form_for :world_upload do |f|
+
   = f.file_field :path
 
-  .upload-progress(style="width:0px;height:25px;background:#5a5")
+  .progress{hidden}
+    .bar
+
+  .status
+
+  %p.note.error{hidden}
+    Make sure you've followed the instructions to the tee. If you <em>still</em> continue to have problems, email your world as an attachment to #{mail_to 'support@minefold.com'}.
 
 = javascript_include_tag '//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js'
-= javascript_include_tag 'http://js.pusherapp.com/1.9/pusher.min.js'
+= javascript_include_tag '//js.pusherapp.com/1.9/pusher.min.js'
 
 :coffeescript
   pusher = new Pusher(#{Pusher.key.to_json})
   maxFileSize = 1 * 1024 * 1024 * 1024 # 1Gb
+
+  status = $('form .status')
+
   $('form').s3upload
     prefix: '#{Time.now.strftime('%Y%m%d%H%M%S')}-#{current_user.safe_username}-#{current_user.id}-'
-    text: 'Click Me!'
-    signature_url: '/worlds/upload_policy.xml'
+    text: 'Upload your world'
+    signature_url: #{upload_policy_worlds_path(format: :xml).to_json}
     required: true
     submit_on_all_complete: false
     onselect: (info, swf) ->
       if parseInt(info.size) < maxFileSize
         swf.upload()
-        return true
+        $('#world_upload_path').val('Uploading '+info.name)
+        return false
 
     onstart: ->
+      status.removeClass('error')
+      $('.progress').show()
 
-    onprogress: (progress,info) ->
-      $('.upload-progress').width(300 * progress).text(Math.ceil( progress * 100 ) + "%")
+    onprogress: (progress, info) ->
+      $('form .progress .bar').css width: (progress * 100) + '%'
+      status.text(Math.ceil( progress * 100 ) + '%')
       false
 
     onerror: (msg) ->
+      status.addClass('error').text(msg)
 
     oncomplete: (info) ->
-      $('.upload-progress').text('Processing world...')
+      status.text('Processing world. This may take a few minutes depending on the size of your world.')
       $.ajax
         type: 'POST'
         url: '#{process_upload_worlds_path}'
         data: info
         dataType: 'json'
         success: (data) ->
-          # console.log data
-          # console.log 'pusher subscribing to ImportWorldJob-' + data.world_upload_id
-
           channel = pusher.subscribe 'ImportWorldJob-' + data.world_upload_id
+
           channel.bind 'success', (data) ->
-            $('.upload-progress').text('World created!')
-            window.location = '/world/' + data.world.slug
-          channel.bind 'fail', (data) ->
-            $('.upload-progress').text('Error: ' + data.error).css('background-color', '#E50')
+            status.text('Finished')
+            window.location = data.world.url
 
-
+          channel.bind 'error', (data) ->
+            $('.progress').hide()
+            $('#world_upload_path').val('Upload your world')
+            status.addClass('error').text('Error: ' + data)
+            $('.note.error').show()

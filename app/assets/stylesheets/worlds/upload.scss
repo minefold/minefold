@@ -1,0 +1,59 @@
+@import 'shared';
+
+#worlds-upload #page {
+
+  form {
+    margin-bottom: 4*$line;
+    #world_upload_path {
+      background: $blue;
+      border: none;
+      color: white;
+      text-align: center;
+      @include border-radius($radius);
+      width: gwidth(4);
+
+      &:hover {
+        background: darken($blue, 10%);
+      }
+    }
+
+    .progress {
+      margin-top: 2*$line;
+      height: 6px;
+      background: darken(white, 5%);
+      width: 100%;
+      @include border-radius($radius);
+
+      .bar {
+        background: $blue;
+        height: 6px;
+        @include border-radius($radius);
+      }
+    }
+
+    .status {
+      font-size: 12px;
+      color: #999;
+      line-height: 24px;
+      &.error {
+        color: $red;
+      }
+    }
+
+  }
+
+  .note {
+    background: #FFC;
+    padding: $line $gutter;
+    margin: 0 (-$gutter) $line (-$gutter);
+    font-size: 12px;
+  }
+
+  a {
+    color: $blue;
+    text-decoration: none;
+    &:hover {
+      color: darken($blue, 10%);
+    }
+  }
+}

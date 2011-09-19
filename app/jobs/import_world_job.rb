@@ -23,19 +23,28 @@ class ImportWorldJob
 
       if error
         puts "Job failed. #{error}"
-        pusher.trigger 'fail', error:error
+        pusher.trigger 'error', error
       else
         puts "Work complete."
 
         world = world_upload.world
-        pusher.trigger 'success', world_upload:{
-          filename: world_upload.filename,
-            s3_key: world_upload.s3_key,
-        }, world: {
-           '_id' => "#{world.id}",
-           name: world.name,
-           slug: world.slug
-        }
+        pusher.trigger 'success',
+          world_upload: {
+            filename: world_upload.filename,
+              s3_key: world_upload.s3_key,
+          },
+          world: {
+            '_id' => "#{world.id}",
+            name: world.name,
+            slug: world.slug,
+            url:  Minefold::Application.routes.url_for(
+              controller: 'worlds',
+              action:     'show',
+              user_id:    world.owner.slug,
+              id:         world.slug,
+              only_path:  true
+            )
+          }
       end
     end
 
@@ -113,7 +122,7 @@ class ImportWorldJob
       "#{tmp_dir}/#{world_id}/import/#{world_id}.tar.gz"
     end
 
-    private
+  private
 
     def storage
       @storage ||= Fog::Storage.new provider: 'AWS',
