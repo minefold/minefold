@@ -70,7 +70,7 @@ Minefold::Application.routes.draw do
 
     # Users
     get '/users/search.json' => 'users#search',
-                         :as => :search_user,
+                         :as => :search_users,
                      :format => :json
     get '/:id/account' => 'users#edit', :as => :edit_user
 
