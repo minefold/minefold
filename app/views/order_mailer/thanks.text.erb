@@ -1,7 +1,3 @@
-Hi <%= @user.username %>,
+Hi <%= @order.user.username %>,
 
-We've noticed you only have 30 minutes remaining in your Minefold account. To continue playing just pop over to http://www.minefold.com/buy and top up!
-
-Happy crafting!
-
-<%= render partial: 'shared/sig' %>
+Thank you for buying <%= pluralize @order.hours, 'hour', 'hours' %> on Minefold! You can now play for <%= pluralize @order.user.hours, 'hour', 'hours' %> and <%= pluralize @order.user.minutes, 'minute', 'minutes' %>.

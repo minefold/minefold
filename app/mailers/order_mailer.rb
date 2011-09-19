@@ -20,7 +20,12 @@ class OrderMailer < ActionMailer::Base
     end
 
     def thanks
-      ::OrderMailer.thanks(@order.first)
+      order = Order.new
+      order.transactions.new option_selection1: 8
+      order.user = User.chris
+      order.save
+
+      ::OrderMailer.thanks(order.id)
     end
 
   end

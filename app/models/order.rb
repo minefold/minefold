@@ -20,6 +20,14 @@ class Order
     transactions.last.try(:status) || :pending
   end
 
+  def credits
+    transactions.last.credits
+  end
+
+  def hours
+    transactions.last.hours
+  end
+
   def gross
     transactions.sum(:gross)
   end

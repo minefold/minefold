@@ -23,12 +23,12 @@ class Transaction
     self[:payment_status] = status
   end
 
-  def hours
-    self[:option_selection1].to_i.hours
+  def credits
+    self[:option_selection1].to_i.hours / User::BILLING_PERIOD
   end
 
-  def credits
-    hours / User::BILLING_PERIOD
+  def hours
+    credits / User::BILLING_PERIOD
   end
 
   def gross

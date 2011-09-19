@@ -7,8 +7,6 @@ class OrdersController < ApplicationController
     @order = Order.create!(user: current_user)
   end
 
-
-
   def create
     notify = Paypal::Notification.new(request.raw_post)
     order = Order.find(params[:custom])
@@ -17,6 +15,8 @@ class OrdersController < ApplicationController
       order.transactions.find_or_initialize_by(params)
       order.process_payment!
       order.save
+
+      OrderMailer.thanks(order.id).deliver
     else
       logger.info("[PayPal] Failed to authenticate IPN")
     end
