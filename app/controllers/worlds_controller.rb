@@ -46,7 +46,7 @@ class WorldsController < ApplicationController
     world.update_attributes params[:world]
     if world.save
       flash[:success] = "Settings successfully updated."
-      redirect_to params['return_url'] || world
+      redirect_to params['return_url'] || user_world_path(world.owner, world)
     else
       render json: {errors: world.errors}
     end

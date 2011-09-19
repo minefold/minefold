@@ -15,10 +15,18 @@
 
   .progress{hidden}
     .bar
+  .status{hidden}
 
-  .status
+  %p.processing{hidden}
+    %strong Processing world
+    This may take a few minutes depending on the size of your world.
 
-  %p.note.error{hidden}
+  %p.error{hidden}
+    %strong Error:
+    %span.message
+
+
+  %p.note{hidden}
     Make sure you've followed the instructions to the tee. If you <em>still</em> continue to have problems, email your world as an attachment to #{mail_to 'support@minefold.com'}.
 
 = javascript_include_tag '//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js'
@@ -29,6 +37,7 @@
   maxFileSize = 1 * 1024 * 1024 * 1024 # 1Gb
 
   status = $('form .status')
+  processing = $('form .processing')
 
   $('form').s3upload
     prefix: '#{Time.now.strftime('%Y%m%d%H%M%S')}-#{current_user.safe_username}-#{current_user.id}-'
@@ -43,8 +52,9 @@
         return false
 
     onstart: ->
-      status.removeClass('error')
+      $('.error').hide()
       $('.progress').show()
+      status.show()
 
     onprogress: (progress, info) ->
       $('form .progress .bar').css width: (progress * 100) + '%'
@@ -55,7 +65,9 @@
       status.addClass('error').text(msg)
 
     oncomplete: (info) ->
-      status.text('Processing world. This may take a few minutes depending on the size of your world.')
+      $('.progress').add($('.status')).slideUp()
+      processing.show()
+
       $.ajax
         type: 'POST'
         url: '#{process_upload_worlds_path}'
@@ -65,11 +77,12 @@
           channel = pusher.subscribe 'ImportWorldJob-' + data.world_upload_id
 
           channel.bind 'success', (data) ->
-            status.text('Finished')
             window.location = data.world.url
 
-          channel.bind 'error', (data) ->
+          channel.bind 'error', (message) ->
             $('.progress').hide()
+            processing.hide()
             $('#world_upload_path').val('Upload your world')
-            status.addClass('error').text('Error: ' + data)
-            $('.note.error').show()
+            $('.error .message').text(message)
+            $('.error').show()
+            $('.note').show()

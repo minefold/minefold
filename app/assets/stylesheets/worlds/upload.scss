@@ -28,6 +28,7 @@
         background: $blue;
         height: 6px;
         @include border-radius($radius);
+        width: 0;
       }
     }
 
@@ -37,6 +38,34 @@
       line-height: 24px;
       &.error {
         color: $red;
+      }
+    }
+
+    .error {
+      margin-top: 2*$line;
+
+      strong {
+        line-height: 24px;
+        margin: 0;
+        color: $red;
+      }
+      .message {
+        display: block;
+      }
+    }
+
+    .processing {
+      background: url(image-path('spinner.gif')) left 1px no-repeat;
+      padding-left: 16px + $gutter;
+      font-size: 12px;
+      line-height: 18px;
+      color: #999;
+      margin-top: $line;
+      width: gwidth(4) - 16px;
+
+      strong {
+        display: block;
+        color: #000;
       }
     }
 

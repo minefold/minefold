@@ -69,6 +69,9 @@ class ImportWorldJob
         upload_world_archive world_archive, world.id
         world_upload.world = world
         world_upload.save
+
+        world_upload.uploader.current_world = world
+        world_upload.uploader.save
       end
       world_upload
     end
