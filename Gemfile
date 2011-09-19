@@ -50,6 +50,8 @@ gem 'airbrake'
 gem 'mail_view',
   git: 'https://github.com/37signals/mail_view.git'
 
+gem 'rubyzip'
+
 group :worker do
   gem 'rinku'
   gem 'embedly'
