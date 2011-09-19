@@ -85,5 +85,7 @@
         data.id = data._id
         data.body = data.raw
 
+        data.gravatar_url = Gravtastic(data.user.email)
+
         html = Mustache.renderTemplate('worlds/_wall_item', data)
-        $('wall-items').prepend $(html)
+        $('#wall-items').prepend $(html)
