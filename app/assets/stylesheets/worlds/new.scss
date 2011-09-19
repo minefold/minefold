@@ -2,4 +2,18 @@
 
 #worlds-new #page {
   width: gwidth(8);
+
+  #showadvanced {
+    color: $blue;
+    text-decoration: none;
+    font-size: 12px;
+    &:hover {
+      color: darken($blue, 10%);
+    }
+  }
+
+  .advanced {
+    border-top: 1px solid darken(white, 5%);
+    padding: (2*$line) 0;
+  }
 }
