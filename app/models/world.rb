@@ -72,9 +72,7 @@ class World
 # COMMUNICATION
 
   def send_cmd(str)
-    # TODO Not using redis_key here as the separator for this is a dot
-    #      and needs to be made more consistant.
-    REDIS.publish("#{self.class.name.downcase}.#{id}.stdin", str)
+    REDIS.publish("#{redis_key}:stdin", str)
   end
 
   private(:send_cmd)
