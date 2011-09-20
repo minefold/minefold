@@ -1,9 +1,11 @@
 - content_for :masthead do
   .top
-    - 10.times do |x|
+    = image_tag 'home/1-1-whatupdave.png', width: 60, height: 60, alt: 'whatupdave', id: 'img-1-1'
+    - 9.times do |x|
       = placekitty width: 60, height: 60
   .left
-    - (2 * 3).times do |x|
+    = image_tag 'home/2-1-twe4ked.png', width: 60, height: 60, alt: 'twe4ked'
+    - (2 * 3 - 1).times do |x|
       = placekitty width: 60, height: 60
 
   .center
