@@ -72,6 +72,8 @@ Minefold::Application.configure do
 
   config.map_tiles_url = "http://s3.amazonaws.com/minefold.production.world-tiles"
 
+  ActionController::Base.asset_host = 'minefold.com'
+
   StatsD.server = ENV['STATSD_SERVER']
   StatsD.mode = :production
 end

@@ -88,11 +88,11 @@ class User
   end
 
   def increment_credits!(n, time=Time.now.utc)
-    event = CreditEvent.new(delta: n)
+    event = CreditEvent.new(delta: n.to_i)
 
     self.class.collection.update({_id: id}, {
       '$inc' => {
-        credits: n
+        credits: n.to_i
       },
       '$push' => {
         credit_events: event.attributes.merge(

@@ -9,11 +9,9 @@ class Order
   # TODO: Store credits / cost etc. Needs seperate billing step.
 
   def process_payment!
-    fulfill!(transactions.last.hours) if transactions.last.completed?
-  end
-
-  def fulfill!(n)
-    user.increment_credits!(n.hours)
+    if transactions.last.completed?
+      user.increment_credits! transactions.last.credits
+    end
   end
 
   def status
