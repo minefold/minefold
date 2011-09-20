@@ -30,8 +30,8 @@
     - if @current_world_players_count.zero?
       Nobody is playing right now.
     - else
-      = @current_world_players_count
-      people playing right now.
+      = pluralize @current_world_players_count, 'person', 'people'
+      playing right now.
 
   .arrow
     &rarr;
