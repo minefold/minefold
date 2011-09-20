@@ -5,6 +5,6 @@ class SaveChatMessage
     world = World.find(world_id)
     user = User.first conditions:{username:username}
 
-    world.push :wall_items, Chat.new(user: user, raw: raw)
+    world.wall_items.push Chat.new(user: user, raw: raw)
   end
 end
