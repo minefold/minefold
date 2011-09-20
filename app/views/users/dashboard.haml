@@ -18,24 +18,23 @@
     = link_to 'Upload an existing world', [:upload, :worlds], class: 'import'
 
 
-- if @current_world
-  = link_to @current_world, class: 'current-world' do
-    %p
-      You are currently playing in
+= link_to @current_world, class: 'current-world' do
+  %p
+    You are currently playing in
 
-      %strong.connection-info= current_user.host
+    %strong.connection-info= current_user.host
 
-    %h2= @current_world.name
+  %h2= @current_world.name
 
-    .players
-      - if @current_world_players_count.zero?
-        Nobody is playing right now.
-      - else
-        = @current_world_players_count
-        people playing right now.
+  .players
+    - if @current_world_players_count.zero?
+      Nobody is playing right now.
+    - else
+      = @current_world_players_count
+      people playing right now.
 
-    .arrow
-      &rarr;
+  .arrow
+    &rarr;
 
 .explore-worlds
   %h2 Explore Worlds
