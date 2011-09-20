@@ -111,11 +111,12 @@ class World
   end
 
   def pusher_key
+    # TODO Change to collection.name
     "#{self.class.name.downcase}-#{id}"
   end
 
   def redis_key
-    "worlds:#{id}"
+    "#{collection.name}:#{id}"
   end
 
   def to_param
