@@ -115,7 +115,7 @@ class World
   end
 
   def redis_key
-    "#{self.class.name.downcase}:#{id}"
+    "worlds:#{id}"
   end
 
   def to_param

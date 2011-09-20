@@ -3,7 +3,7 @@ class SaveChatMessage
 
   def self.perform(world_id, username, raw)
     world = World.find(world_id)
-    user = User.find_by_username(username)
+    user = User.first conditions:{username:username}
 
     world.push :wall_items, Chat.new(user: user, raw: raw)
   end

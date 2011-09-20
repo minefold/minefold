@@ -16,7 +16,7 @@ class UsersController < ApplicationController
     @worlds = World.order_by([:slug, :asc]).all
 
     @current_world = current_user.current_world
-    @current_world_players_count = @current_world.connected_players_count
+    @current_world_players_count = @current_world and @current_world.connected_players_count
   end
 
   def new
