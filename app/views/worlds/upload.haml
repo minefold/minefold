@@ -1,13 +1,29 @@
 - title  'Upload a world'
 
+- after do
+  = image_tag 'help/upload-goto.png'
+  = image_tag 'help/upload-compress.png'
+
 %p
   If you've been playing single player you can upload your world to Minefold. You need to follow the following instructions carefully so that you send us the right data.
 
 %h2 Instructions
 
-%ol
+%ol.instructions
   %li
-    %strong Step 1.
+    %p Go to
+    %pre
+      %code ~/Library/Application Support/minecraft/saves
+    %p.hint
+      You can get there quicker in Finder by either pressing <code>CMD⌘+SHIFT+g</code> or by selecting "Go" and "Go to folder" in the menu.
+
+  %li
+    You should see all your Minecraft worlds here. Select the folder of the world you want to upload right mouse button click and select "Compress".
+
+  %li Click the button below and select that <code>.zip</code> file.
+
+
+
 
 = form_for :world_upload do |f|
 
