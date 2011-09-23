@@ -61,7 +61,7 @@ class User
 
 # SIGNUPS
 
-  SPOTS = 100
+  SPOTS = 500
 
   def self.free_spots
     SPOTS - count
