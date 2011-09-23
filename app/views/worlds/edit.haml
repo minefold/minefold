@@ -12,17 +12,21 @@
         %strong Note:
         Renaming your world will break any external links.
 
-  %section.game-mode
-    %h3 Game Mode
+  /
+    We are as upset about leaving this out as you are.
+    Blame Notch!
 
-    %fieldset.inline
-      %div
-        = f.radio_button :game_mode, 0
-        = f.label :game_mode_0, 'Survival'
+    %section.game-mode
+      %h3 Game Mode
 
-      %div
-        = f.radio_button :game_mode, 1
-        = f.label :game_mode_1, 'Creative'
+      %fieldset.inline
+        %div
+          = f.radio_button :game_mode, 0
+          = f.label :game_mode_0, 'Survival'
+
+        %div
+          = f.radio_button :game_mode, 1
+          = f.label :game_mode_1, 'Creative'
 
   %section.difficulty
     %h3 Difficulty
