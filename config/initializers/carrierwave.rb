@@ -5,6 +5,7 @@ CarrierWave.configure do |config|
       :local_root    => "#{Rails.root}/tmp/local_storage"
     }
   else
+    config.storage = :s3
     config.fog_credentials = {
       :provider               => 'AWS',
       :aws_access_key_id      => ENV['S3_KEY'],

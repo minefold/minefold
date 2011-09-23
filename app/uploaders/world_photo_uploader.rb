@@ -3,8 +3,6 @@
 class WorldPhotoUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
-  storage :file
-
   process :resize_to_fit => [800, 600]
 
   # photos page is 800 px wide
