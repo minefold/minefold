@@ -74,7 +74,6 @@ class World
 
   def connected_player_ids
     REDIS.smembers("#{redis_key}:connected_players")
-    User.all.limit(5).map {|u| u.id.to_s}
   end
 
   def connected_players
