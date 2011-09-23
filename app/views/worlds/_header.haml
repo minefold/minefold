@@ -23,8 +23,9 @@
     = link_to 'Activity', world
   %li.map
     = link_to 'Map', [:map, world]
-  %li.photos
-    = link_to 'Photos', [:photos, world]
+  /
+    %li.photos
+      = link_to 'Photos', [:photos, world]
 
 
   - if signed_in? and world.creator == current_user
