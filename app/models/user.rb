@@ -3,8 +3,6 @@ class User
   include Mongoid::Timestamps
   include Mongoid::Slug
   include Mongoid::Paranoia
-  include Gravtastic
-
 
   BILLING_PERIOD = 1.minute
   FREE_HOURS     = 1
@@ -131,7 +129,9 @@ class User
 
 # AVATARS
 
-  gravtastic format: :png
+  def avatar_url(options={width:60})
+    "http://minotar.net/avatar/#{safe_username}/#{options[:width]}.png"
+  end
 
 
 # REFERRALS

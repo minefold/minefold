@@ -3,7 +3,8 @@
 #worlds-show #masthead,
 #worlds-map #masthead,
 #worlds-edit #masthead,
-#worlds-photos #masthead {
+#worlds-photos #masthead,
+#photos-index #masthead {
   background: darken(white, 5%) url(image-path('world-watermark.png')) right 24px no-repeat;
 
   .wrapper {
@@ -89,8 +90,8 @@
 
 #worlds-show #masthead .activity,
 #worlds-map #masthead .map,
-#worlds-photos #masthead .photos,
-#worlds-edit #masthead .edit {
+#worlds-edit #masthead .edit,
+#photos-index #masthead .photos {
   a {
     background: white;
   }

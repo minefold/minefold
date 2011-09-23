@@ -1,6 +1,34 @@
 - title world.name do
   = render partial: 'worlds/header'
 
+- before do
+  %dl.settings
+    %dt Game mode
+    - if world.survival?
+      %dd.game-mode.survival Survival
+    - else
+      %dd.game-mode.creative Creative
+
+    %dt Difficulty
+    %dd.difficulty= world.difficulty_label.humanize
+
+    %dt Owner
+    %dd.owner= world.owner.username
+
+  %ul.players.playing-now{class: ('empty' if world.connected_players_count.zero?)}
+    %h3
+      Playing Now
+      .count= world.connected_players_count
+
+    - if world.connected_players.empty?
+      %li.empty Nobody is playing right now.
+    - else
+      - world.connected_players.each do |player|
+        %li
+          .avatar= image_tag player.avatar_url(width: 16), width: 16, height: 16
+          = player.username
+
+
 - if flash[:success]
   .flash.success= flash[:success]
 
@@ -14,7 +42,7 @@
       #share
         = form_tag [world.creator, world, :wall_items], method: :post do |f|
           .avatar
-            = image_tag current_user.gravatar_url(size: 36)
+            = image_tag current_user.avatar_url(width: 36)
           = text_area_tag :body, nil, rows: 2, autofocus: true, required: true
 
           .submit
@@ -23,7 +51,6 @@
 
       :javascript
         window.current_user = #{current_user.to_json(only: [:id, :username, :email])};
-        current_user.gravatar_url = Gravtastic(current_user.email);
 
       :coffeescript
         f = $('#share form')
@@ -84,8 +111,6 @@
       channel.bind 'chat-create', (data) ->
         data.id = data._id
         data.body = data.raw
-
-        data.gravatar_url = Gravtastic(data.user.email)
 
         html = Mustache.renderTemplate('worlds/_wall_item', data)
         $('#wall-items').prepend $(html)

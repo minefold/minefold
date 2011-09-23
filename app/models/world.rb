@@ -24,6 +24,7 @@ class World
   has_and_belongs_to_many :whitelist, class_name: 'User', inverse_of: nil
 
   embeds_many :wall_items, as: :wall
+
   embeds_many :world_photos, class_name: 'WorldPhoto', cascade_callbacks: true
   accepts_nested_attributes_for :world_photos, destroy: true
 
@@ -40,6 +41,20 @@ class World
     only_integer: true,
     greater_than_or_equal_to: 0,
     less_than_or_equal_to: 3
+
+# SETTINGS
+
+  def creative?
+    game_mode == 1
+  end
+
+  def survival?
+    game_mode == 0
+  end
+
+  def difficulty_label
+    %w{peaceful easy normal hard}[difficulty]
+  end
 
 # PLAYERS
 
@@ -59,6 +74,7 @@ class World
 
   def connected_player_ids
     REDIS.smembers("#{redis_key}:connected_players")
+    User.all.limit(5).map {|u| u.id.to_s}
   end
 
   def connected_players

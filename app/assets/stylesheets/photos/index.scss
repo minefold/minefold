@@ -1,0 +1,15 @@
+@import 'shared';
+
+#photos-index #page {
+
+  width: gwdith(8);
+  #photos {
+    margin: 0 (-$gutter);
+
+    .photo {
+      width: gwidth(2);
+      float: left;
+      margin: 0 $gutter;
+    }
+  }
+}

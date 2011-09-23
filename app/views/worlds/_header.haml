@@ -1,4 +1,5 @@
-%h1= link_to world.name, world
+%h1
+  = link_to world.name, world
 
 %aside
   - if signed_in?
@@ -20,11 +21,11 @@
 %ol#subnav
   %li.activity
     = link_to 'Activity', world
-  /
-    %li.photos
-      = link_to 'Photos', [:photos, world]
   %li.map
     = link_to 'Map', [:map, world]
+  %li.photos
+    = link_to 'Photos', [:photos, world]
+
 
   - if signed_in? and world.creator == current_user
     %li.edit

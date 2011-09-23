@@ -1,12 +1,10 @@
 - content_for :masthead do
   .top
-    = image_tag 'home/1-1-whatupdave.png', width: 60, height: 60, alt: 'whatupdave', id: 'img-1-1'
-    - 9.times do |x|
-      = placekitty width: 60, height: 60
+    - @usernames[0...10].each do |username|
+      = image_tag "http://minotar.net/avatar/#{username}/60.png", width: 60, height: 60, alt: username
   .left
-    = image_tag 'home/2-1-twe4ked.png', width: 60, height: 60, alt: 'twe4ked'
-    - (2 * 3 - 1).times do |x|
-      = placekitty width: 60, height: 60
+    - @usernames[10...16].each do |username|
+      = image_tag "http://minotar.net/avatar/#{username}/60.png", width: 60, height: 60, alt: username
 
   .center
     %h1 Play Minecraft with friends!
@@ -24,7 +22,7 @@
         %p.spots
           Only
           %strong= number_with_delimiter User.free_spots
-          out of #{number_with_delimiter User::SPOTS} spots left
+          free spots left
 
 
       - else
@@ -40,9 +38,8 @@
               = ['Algebraic!', 'Rhombus!', 'Mathematical!'].shuffle.first
 
   .right
-    - (2 * 3).times do |x|
-      = placekitty width: 60, height: 60
+    - @usernames[16...22].each do |username|
+      = image_tag "http://minotar.net/avatar/#{username}/60.png", width: 60, height: 60, alt: username
 
-
-  - 10.times do |x|
-    = placekitty width: 60, height: 60
+  - @usernames[22...32].each do |username|
+    = image_tag "http://minotar.net/avatar/#{username}/60.png", width: 60, height: 60, alt: username
