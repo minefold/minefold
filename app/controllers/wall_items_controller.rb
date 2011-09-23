@@ -14,7 +14,7 @@ class WallItemsController < ApplicationController
                           chat.to_json(include: :user),
                           params[:socket_id]
 
-      chat.wall.say chat.body
+      chat.wall.say chat.msg
 
       respond_to do |format|
         format.json { render json: chat.attributes }

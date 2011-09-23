@@ -52,8 +52,10 @@ gem 'mail_view',
 
 gem 'rubyzip'
 
+gem 'rinku'
+
 group :worker do
-  gem 'rinku'
+
   gem 'embedly'
 end
 
