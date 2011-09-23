@@ -9,6 +9,6 @@ class SaveChatMessage
 
     world.wall_items.push chat
 
-    world.broadcast 'chat-create', to_json(include: :user)
+    world.broadcast 'chat-create', chat.to_json(include: :user)
   end
 end
