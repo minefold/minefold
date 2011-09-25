@@ -8,8 +8,8 @@ class Order
 
   # TODO: Store credits / cost etc. Needs seperate billing step.
 
-  def self.total_revenue
-    10
+  def self.total_income
+    where(:transactions.ne => nil).inject(0) {|total, order| total + order.income }
   end
 
   def process_payment!
@@ -28,6 +28,10 @@ class Order
 
   def hours
     transactions.last.hours
+  end
+
+  def income
+    gross - fee
   end
 
   def gross
