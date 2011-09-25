@@ -1,136 +1,97 @@
-//= require shared/reset
+//= require reset
 //= require_self
 
-@import 'shared/vars';
+@import 'shared';
+
+$width: 960px;
 
 html {
-  background: black;
-}
-
-body {
-  font: 14px/18px $helvetica;
-  color: #CCC;
-}
-
-.container {
-  margin: 0 auto;
+  font: 400 12px/18px Helvetica;
+  background: darken(white, 5%);
 }
 
 header {
-  font-size: 12px;
-  line-height: 18px;
-  height: 24px + (2 * $line);
-  padding: 0 $gutter;
+  background: white -webkit-linear-gradient(top, white, darken(white, 10%));
+  border-bottom: 1px solid darken(white, 20%);
 
-  border-bottom: 1px solid #333;
+  ol {
+    width: $width;
+    margin: 0 auto;
+
+    border-left: 1px solid darken(white, 20%);
+    border-right: 1px solid darken(white, 0%);
+
+    overflow: auto;
+
+    li {
+      float: left;
+      width: $width / 4;
+      -webkit-box-sizing: border-box;
+      padding: 6px 10px;
+
+      border-left: 1px solid darken(white, 0%);
+      border-right: 1px solid darken(white, 20%);
 
 
-  h1 {
-    float: right;
-    font-weight: 600;
-    color: #333;
-    line-height: 24px;
-    font-size: 14px;
-    padding: $line $gutter;
-    span {
-      color: $green;
+
+      p {
+        font-size: 10px;
+        line-height: 18px;
+        text-transform: uppercase;
+        color: #999;
+      }
+
+      h2 {
+        font-size: 48px;
+        font-weight: 800;
+        line-height: 48px;
+      }
+    }
+  }
+}
+
+#page {
+  width: $width;
+  margin: 24px auto;
+
+  section {
+    background: white;
+    border-radius: 6px;
+    border-top: 1px solid darken(white, 20%);
+    padding: (12px - 1px) 10px;
+  }
+
+  table {
+    th {
+      font-size: 11px;
+      color: #666;
+      text-transform: uppercase;
+      text-align: left;
+    }
+    tr {
+      border-bottom: 1px solid darken(white, 10%);
+    }
+    td, th {
+      padding: 0 5px;
+      line-height: 24px;
     }
   }
 
   a {
-    color: white;
+    color: darken($blue, 10%);
     text-decoration: none;
-    padding: $line $gutter;
-    display: block;
-    float: left;
-    font-weight: bold;
-    line-height: 24px - $border + 1px;
-
-    margin-bottom: -1px;
-
-    border-bottom: $border solid transparent;
-
     &:hover {
-      color: $green;
-      border-bottom-color: #666;
+      color: $blue;
     }
   }
 }
 
-section {
-  padding: $line $gutter;
-  margin: $line $gutter;
-  float: left;
-  .number {
-    color: $green;
-    font-weight: 600;
-    font-size: 30px;
-    line-height: 48px;
-
-    &.massive {
-      font-size: 72px;
-      line-height: 90px;
-    }
-  }
-}
-
-ul.worlds, ul.users {
-  li {
-    border-bottom: 1px dotted #333;
-    padding: $line $gutter;
-
-    .private {
-      float: left;
-      margin-top: 2px;
-      margin-right: 5px;
-      background: #222;
-      border-radius: 18px;
-      width: 20px;
-      height: 18px;
-      padding: 1px 0 ;
-      text-align: center;
-    }
-
-    .name {
-      display: block;
-      font-size: 18px;
-      line-height: 24px;
-      color: $green;
-      text-decoration: none;
-    }
-
-    .id, .username, .email, .tag {
-      display: inline;
-      font-size: 11px;
-    }
-
-    .id {
-      color: #999;
-      margin-right: 5px;
-    }
-
-    .usernamem, .email {
-      color: white;
-      font-size: 12px;
-    }
-
-    .tag {
-      border-radius: 2px;
-      margin-right: 5px;
-      color: #666;
-      strong {
-        color: #333;
-      }
-    }
 
 
-    a {
-      text-decoration: none;
-      color: $green;
-      &:hover {
-        color: white;
-      }
-
-    }
+#users table {
+  .id {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #999;
   }
 }

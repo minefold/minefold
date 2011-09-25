@@ -8,6 +8,10 @@ class Order
 
   # TODO: Store credits / cost etc. Needs seperate billing step.
 
+  def self.total_revenue
+    10
+  end
+
   def process_payment!
     if transactions.last.completed?
       user.increment_credits! transactions.last.credits

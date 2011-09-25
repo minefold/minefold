@@ -2,6 +2,7 @@ Minefold::Application.routes.draw do
   root :to => 'home#index'
 
   # Admin
+  get '/admin' => 'admin#index'
   namespace :admin do
     mount Resque::Server => 'resque'
 

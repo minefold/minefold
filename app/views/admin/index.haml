@@ -1,15 +1,63 @@
-%section.revenue
-  %h2 Gross Revenue
-  .number.massive= number_to_currency Order.total_revenue
+!!!
+%html
+  %head
+    %meta{charset: 'utf-8'}
+    %title Minefold Admin
+    = stylesheet_link_tag 'admin'
+    = csrf_meta_tags
 
-%section.expenses
-  %h2 Expenses
-  .number= number_to_currency Order.total_fees
+    %meta{name: 'pusher_key', content: Pusher.key}
 
-%section.users
-  %h2 Worlds
-  .number= World.count
+    = javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js'
 
-%section.users
-  %h2 Users
-  .number.massive= User.count
+  %body
+    %header
+      %ol
+        %li
+          %p Total Revenue
+          %h2= number_to_currency Order.total_revenue
+
+        %li
+          %p Total users
+          %h2= User.count
+
+        %li
+          %p Total Worlds
+          %h2= World.count
+
+        %li
+          %p Current Players
+          %h2= 5
+
+    #page
+
+      %section#users
+        %table
+          %thead
+            %tr
+              %th ID
+              %th Username
+              %th Email
+
+              %th Host
+              %th World
+
+              %th Credits
+              %th Played
+
+              %th Created
+
+          %tbody
+            - @users.each do |user|
+              %tr
+                %td.id= user.id
+                %td.username= link_to user.username, user
+                %td.email= mail_to user.email
+
+                %td= link_to user.host, user.host
+                %td= link_to user.current_world.name, user.current_world
+
+                %td= user.credits
+                %td= user.minutes_played
+
+                %td= time_ago_in_words user.created_at
