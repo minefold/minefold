@@ -7,7 +7,7 @@ test:
   database: minefold_test
 
 staging:
-  uri: <%= ENV['MONGOHQ_URL'] || ENV['DATABASE_URL'] %>
+  host: <%= ENV['MONGOHQ_URL'] || 'mongodb://user:pass@127.0.0.1/dbname' %>
 
 production:
-  uri: <%= ENV['MONGOHQ_URL'] || ENV['DATABASE_URL'] %>
+  uri: <%= ENV['MONGOHQ_URL'] || 'mongodb://user:pass@127.0.0.1/dbname' %>
