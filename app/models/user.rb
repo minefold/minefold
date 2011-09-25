@@ -129,9 +129,51 @@ class User
 
 # AVATARS
 
-  def avatar_url(options={width:60})
-    "http://minotar.net/avatar/#{safe_username}/#{options[:width]}.png"
+  class Skin < CarrierWave::Uploader::Base
+    include CarrierWave::MiniMagick
+
+    def fog_directory
+      "minefold.#{Rails.env}.users.skins"
+    end
+
+    version :avatar do
+      process :crop_head!
+
+      version(:home) do
+        process :nn_scale => [60, 60]
+      end
+      version(:small) do
+        process :nn_scale => [24, 24]
+      end
+    end
+
+    def nn_scale(width, height)
+      manipulate! do |img|
+        img.filter :point
+        img.resize "%ix%i" % [width, height]
+        img = yield(img) if block_given?
+        img
+      end
+    end
+
+    def crop_head!
+      manipulate! do |img|
+        img.crop "%ix%i+%i+%i" % [8, 8, 8, 8]
+        img = yield(img) if block_given?
+        img
+      end
+    end
+
+    def extension_white_list
+      %w(jpg jpeg gif png)
+    end
   end
+
+  mount_uploader :skin, Skin
+
+  # def avatar_url(options={width:60})
+  #   "http://minotar.net/avatar/#{safe_username}/#{options[:width]}.png"
+  # end
 
 
 # REFERRALS
