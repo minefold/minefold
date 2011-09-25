@@ -14,8 +14,8 @@
     %header
       %ol
         %li
-          %p Total Income
-          %h2= number_to_currency Order.total_income
+          %p Current Players
+          %h2 #
 
         %li
           %p Total users
@@ -26,8 +26,12 @@
           %h2= World.count
 
         %li
-          %p Current Players
-          %h2 #
+          %p Total Minutes Played
+          %h2= User.all.inject(0) {|total, user| total + user.minutes_played}
+
+        %li
+          %p Total Income
+          %h2= number_to_currency Order.total_income
 
     #page
 
