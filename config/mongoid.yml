@@ -6,7 +6,6 @@ test:
   host: localhost
   database: minefold_test
 
-
 staging:
   uri: <%= ENV['MONGOHQ_URL'] %>
 

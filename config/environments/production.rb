@@ -74,7 +74,6 @@ Minefold::Application.configure do
 
   ActionController::Base.asset_host = 'minefold.com'
 
-  StatsD.server = ENV['STATSD_SERVER']
   StatsD.mode = :production
 end
 
