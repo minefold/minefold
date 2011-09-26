@@ -171,9 +171,9 @@ class User
 
   mount_uploader :skin, Skin
 
-  # def avatar_url(options={width:60})
-  #   "http://minotar.net/avatar/#{safe_username}/#{options[:width]}.png"
-  # end
+  def avatar_url(options={width:60})
+    "http://minotar.net/avatar/#{safe_username}/#{options[:width]}.png"
+  end
 
 
 # REFERRALS
