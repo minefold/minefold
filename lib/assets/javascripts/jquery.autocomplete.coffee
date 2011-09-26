@@ -1,6 +1,6 @@
 template = _.template """
   <a id="<%= id %>">
-    <img src="http://minotar.net/avatar/#{username}/18.png" width="18" height="18" />
+    <img src="http://minotar.net/avatar/<%= username %>/18.png" width="18" height="18" />
     <%= username %>
   </a>
 """
