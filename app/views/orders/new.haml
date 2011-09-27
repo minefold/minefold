@@ -81,7 +81,9 @@
     self = $(e.currentTarget)
     products.removeClass 'active'
     self.addClass('active')
-        .find('input:radio')
+
+    products.find('input:radio').attr('checked', false)
+    self.find('input:radio').attr('checked', true)
 
     e.preventDefault()
 
