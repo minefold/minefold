@@ -15,6 +15,7 @@ class Order
   def process_payment!
     if transactions.last.completed?
       user.increment_credits! transactions.last.credits
+      Resque.enqueue(OrderProcessed, id)
     end
   end
 
@@ -37,6 +38,8 @@ class Order
   def gross
     transactions.sum(:gross)
   end
+
+  alias_method :total, :gross
 
   def fee
     transactions.sum(:fee)

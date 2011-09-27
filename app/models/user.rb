@@ -200,6 +200,9 @@ class User
     "http://minotar.com/avatar/#{safe_username}/#{options[:width]}.png"
   end
 
+  before_save do
+    Resque.enqueue(FetchSkin, id) if safe_username_changed?
+  end
 
 # REFERRALS
 
