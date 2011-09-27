@@ -22,4 +22,11 @@
 
     %p.abn ABN: 37068433851
 
-  %iframe{width: 425, height: 350, frameborder: 0, scrolling: 'no', marginheight: 0, marginwidth: 0, src: 'http://maps.google.com.au/maps?f=q&source=s_q&hl=en&geocode=&q=Tamarama,+New+South+Wales&amp;aq=0&sll=-33.155948,149.0625&sspn=6.785544,7.174072&vpsrc=0&ie=UTF8&hq=&hnear=Tamarama+New+South+Wales&ll=-33.899692,151.27062&spn=0.054285,0.088749&t=m&z=14&output=embed'}
+  %script{src: 'http://maps.googleapis.com/maps/api/js?sensor=false'}
+  #map_canvas
+  :coffeescript
+    new google.maps.Map $('#map_canvas')[0],
+      zoom: 14
+      center: new google.maps.LatLng(-33.899692, 151.27062)
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+      disableDefaultUI: true
