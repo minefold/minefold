@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/37signals/mail_view.git
-  revision: 85c7ea2abdeaaa7d67c7b3579695e7178a79fe38
+  revision: 7c0cf5df704f999acab375836026297801c9c6bb
   specs:
-    mail_view (1.0.0)
+    mail_view (1.0.1)
 
 GIT
   remote: https://github.com/chrislloyd/decent_exposure.git
@@ -37,11 +37,17 @@ GEM
       rack-mount (~> 0.8.2)
       rack-test (~> 0.6.1)
       sprockets (~> 2.0.0)
-    activemerchant (1.17.0)
+    active_utils (1.0.1)
+      activesupport (>= 2.3.11)
+      i18n
+    activemerchant (1.18.0)
+      active_utils (>= 1.0.1)
       activesupport (>= 2.3.11)
       braintree (>= 2.0.0)
       builder (>= 2.0.0)
+      i18n
       json (>= 1.5.1)
+      money
     activemodel (3.1.0)
       activesupport (= 3.1.0)
       bcrypt-ruby (~> 3.0.0)
@@ -69,16 +75,16 @@ GEM
     backbone-rails (0.5.2)
       rails (>= 3.0.0)
     bcrypt-ruby (3.0.1)
-    bourbon (0.1.7)
+    bourbon (0.1.9)
       sass (>= 3.1)
     braintree (2.11.0)
       builder (>= 2.0.0)
-    bson (1.3.1)
-    bson_ext (1.3.1)
+    bson (1.4.0)
+    bson_ext (1.4.0)
     builder (3.0.0)
     carrierwave (0.5.7)
       activesupport (~> 3.0)
-    carrierwave-mongoid (0.1.2)
+    carrierwave-mongoid (0.1.3)
       carrierwave (>= 0.5.6)
       mongoid (~> 2.1)
     coffee-filter (0.1.1)
@@ -93,7 +99,7 @@ GEM
     coffee-script-source (1.1.2)
     crack (0.1.8)
     daemons (1.1.4)
-    devise (1.4.5)
+    devise (1.4.7)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.0.3)
       warden (~> 1.0.3)
@@ -112,7 +118,7 @@ GEM
     erubis (2.7.0)
     eventmachine (1.0.0.beta.4)
     excon (0.6.6)
-    execjs (1.2.6)
+    execjs (1.2.9)
       multi_json (~> 1.0)
     faraday (0.7.4)
       addressable (~> 2.2.6)
@@ -134,10 +140,9 @@ GEM
       term-ansicolor (~> 1.0.5)
       thor (>= 0.13.6)
     formatador (0.2.1)
-    gravtastic (3.2.6)
     haml (3.1.3)
     hashie (1.1.0)
-    heroku (2.8.0)
+    heroku (2.8.4)
       launchy (>= 0.3.2)
       rest-client (~> 1.6.1)
       rubyzip
@@ -159,8 +164,10 @@ GEM
     mime-types (1.16)
     mini_magick (3.3)
       subexec (~> 0.1.0)
-    mongo (1.3.1)
-      bson (>= 1.3.1)
+    money (3.7.1)
+      i18n (~> 0.4)
+    mongo (1.4.0)
+      bson (= 1.4.0)
     mongoid-rspec (1.4.4)
       mongoid (~> 2.0)
       rspec (~> 2)
@@ -168,7 +175,7 @@ GEM
       mongoid (~> 2.0)
       stringex (~> 1.3)
     multi_json (1.0.3)
-    multi_xml (0.3.0)
+    multi_xml (0.4.1)
     multipart-post (1.1.3)
     mustache (0.99.4)
     net-scp (1.0.4)
@@ -178,7 +185,7 @@ GEM
     oauth (0.4.5)
     orm_adapter (0.0.5)
     polyglot (0.3.2)
-    pusher (0.8.2)
+    pusher (0.8.3)
       crack (~> 0.1.0)
       multi_json (~> 1.0)
       ruby-hmac (~> 0.4.0)
@@ -273,12 +280,12 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
-    twitter (1.7.1)
+    twitter (1.7.2)
       faraday (~> 0.7.4)
       faraday_middleware (~> 0.7.0)
       hashie (~> 1.1.0)
       multi_json (~> 1.0.0)
-      multi_xml (~> 0.3.0)
+      multi_xml (~> 0.4.0)
       simple_oauth (~> 0.1.5)
     typhoeus (0.2.4)
       mime-types
@@ -313,7 +320,6 @@ DEPENDENCIES
   embedly
   fog
   foreman
-  gravtastic
   haml
   heroku
   high_voltage
@@ -326,7 +332,7 @@ DEPENDENCIES
   mustache
   pusher
   rails (= 3.1.0)
-  rake (= 0.9.2)
+  rake
   resque
   resque_mailer
   rinku
