@@ -139,18 +139,34 @@ class User
     version :avatar do
       process :crop_head!
 
-      version(:home) do
-        process :nn_scale => [60, 60]
+      version(:s60) do
+        process :sample => [60, 60]
       end
-      version(:small) do
-        process :nn_scale => [24, 24]
+
+      version(:s48) do
+        process :sample => [48, 48]
+      end
+
+      version :s36 do
+        process :sample => [36, 36]
+      end
+
+      version :s24 do
+        process :sample => [24, 24]
+      end
+
+      version :s18 do
+        process :sample => [18, 18]
+      end
+
+      version :s16 do
+        process :sample => [16, 16]
       end
     end
 
-    def nn_scale(width, height)
+    def sample(width, height)
       manipulate! do |img|
-        img.filter :point
-        img.resize "%ix%i" % [width, height]
+        img.sample "%ix%i" % [width, height]
         img = yield(img) if block_given?
         img
       end
@@ -171,8 +187,17 @@ class User
 
   mount_uploader :skin, Skin
 
-  def avatar_url(options={width:60})
-    "http://minotar.net/avatar/#{safe_username}/#{options[:width]}.png"
+  def fetch_skin!
+    self.remote_skin_url = "http://minecraft.net/skin/#{safe_username}.png"
+  rescue OpenURI::HTTPError # User has a default skin
+  end
+
+  def async_fetch_skin!
+    Resque.enqueue(FetchSkin, id)
+  end
+
+  def avatar_url(options={width:24})
+    "http://minotar.com/avatar/#{safe_username}/#{options[:width]}.png"
   end
 
 
