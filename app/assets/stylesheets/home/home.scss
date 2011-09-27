@@ -7,11 +7,24 @@
       line-height: 24px;
     }
 
-    h1 a {
-      background: url(image-path('logo-48.png')) 2px center no-repeat;
-      font-size: 18px;
-      margin: (-2*$line) 0;
-      padding: (2*$line) $gutter (2*$line) (60px + $gutter);
+    h1 {
+      a {
+        background: url(image-path('logo-48.png')) 2px center no-repeat;
+        font-size: 18px;
+        margin: (-2*$line) 0;
+        padding: (2*$line) $gutter (2*$line) (60px + $gutter);
+        float: none;
+      }
+
+      .beta {
+        margin-top: 8px;
+        line-height: 10px;
+        font-size: 12px;
+        font-weight: 600;
+        margin-top: 3px;
+        margin-right: $gutter;
+        line-height: 0;
+      }
     }
   }
 
