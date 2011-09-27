@@ -28,7 +28,7 @@ class OrdersController < ApplicationController
   end
 
   def cancel
-    redirect_to credits_path
+    redirect_to new_order_path
   end
 
 protected
