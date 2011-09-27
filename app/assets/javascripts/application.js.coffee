@@ -4,7 +4,6 @@
 #= require underscore
 #= require backbone
 #= require mustache
-#= require gravtastic
 #= require jquery.placeholder
 #= require jquery.infinitescroll
 #= require jquery.autocomplete
