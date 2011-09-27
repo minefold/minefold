@@ -3,41 +3,10 @@
 %p Thanks for signing up for Minefold. We are positively thrilled to have aboard and can't wait to see what you build.
 
 %p
-  Start crafting straight away by connecting to
+  You can start crafting straight away by connecting to
   %strong= @user.host
   in Minecraft.
 
-%p.small
-  (If you don't have a Minecraft username already, you can get one at <a href="http://minecraft.net">http://minecraft.net</a>)
+%strong Have fun and show us what you build!
 
-%p We are so excited to see what you'll build we've given you #{pluralize User::FREE_HOURS, 'hour', 'hours'} free.
-
-<h3>Minefold is beta!</h3>
-<p>Things are bound to break. We'd appreciate it if you tell us about any problems, thoughts or suggestions you may have. Our contact details are:</p>
-
-%ul
-  %li
-    Dave
-    &mdash;
-    #{mail_to 'dave@minefold.com'}, #{link_to '+614 1547 3249', 'tel:+61415473249'}, #{link_to '@whatupdave', '//twitter.com/whatupdave'}
-  %li
-    Chris
-    &mdash;
-    #{mail_to 'chris@minefold.com'}, #{link_to '+614 2412 1343', 'tel:+61424121343'}, #{link_to '@chrislloyd', '//twitter.com/chrislloyd'}
-
-%p It may take a while (up to 2 minutes) to connect to your game. This is an known issue that we are working on.
-
-
-%h3 Worlds are public
-%p Everybody in the beta has access to any world you create. We aren't going to have any permissions whilst we are in beta, as we have a lot of trust in the community. Just please be nice and don't grief other people's worlds.
-
-
-%h3 Have fun and show us what you make!
-%p  We are on the so let us know when you have something ready to show off.
-
-
-%p We are really excited about Minefold and hope it'll help make playing Minecraft with your friends super simple.
-
-%p Lots of love,
-
-%p Dave &amp; Chris
+%p We've given you #{pluralize User::FREE_HOURS, 'hour', 'hours'} free to help you get started. Email us at #{mail_to 'team@minefold.com'} when you have something awesome to show off!

@@ -1,12 +1,8 @@
 class OrderMailer < ActionMailer::Base
   include Resque::Mailer
+
   default from: 'team@minefold.com'
   layout 'email'
-
-  def reminder(user_id)
-    @user = User.find user_id
-    mail(to: @user.email, subject: 'Buy more Minefold time (running low)')
-  end
 
   def thanks(order_id)
     @order = Order.find(order_id)
@@ -14,10 +10,6 @@ class OrderMailer < ActionMailer::Base
   end
 
   class Preview < MailView
-
-    def reminder
-      ::OrderMailer.reminder(User.chris.id)
-    end
 
     def thanks
       order = Order.new

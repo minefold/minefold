@@ -1,5 +1,6 @@
 class WorldMailer < ActionMailer::Base
   include Resque::Mailer
+
   default from: 'team@minefold.com'
   layout 'email'
 

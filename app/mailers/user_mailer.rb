@@ -1,6 +1,7 @@
 class UserMailer < ActionMailer::Base
-  default from: 'team@minefold.com'
+  include Resque::Mailer
 
+  default from: 'team@minefold.com'
   layout 'email'
 
   def referral(referral)
@@ -9,9 +10,14 @@ class UserMailer < ActionMailer::Base
     mail(to: @referral.email, subject: 'Minefold Beta')
   end
 
-  def welcome(user)
-    @user = user
-    mail(to: @user.email, subject: 'Welcome to Minefold')
+  def welcome(user_id)
+    @user = User.find user_id
+    mail(to: @user.email, subject: 'Welcome to Minefold!')
+  end
+
+  def reminder(user_id)
+    @user = User.find user_id
+    mail(to: @user.email, subject: 'Buy more Minefold time (running low)')
   end
 
   class Preview < MailView
@@ -21,12 +27,15 @@ class UserMailer < ActionMailer::Base
       referral = chris.referrals.new email: 'christopher.lloyd@gmail.com'
       referral.creator = chris
 
-      UserMailer.referral(referral)
+      ::UserMailer.referral(referral)
     end
 
     def welcome
-      chris = User.chris
-      UserMailer.welcome(chris)
+      ::UserMailer.welcome User.chris.id
+    end
+
+    def reminder
+      ::UserMailer.reminder User.chris.id
     end
 
   end

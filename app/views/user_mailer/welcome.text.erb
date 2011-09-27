@@ -1,0 +1,13 @@
+Hi <%= @user.username %>!
+
+Thanks for signing up for Minefold. We are positively thrilled to have aboard and can't wait to see what you build.
+
+You can start crafting straight away by connecting to
+
+    <%= @user.host %>
+
+in Minecraft.
+
+*Have fun and show us what you build!*
+
+We've given you <%= pluralize User::FREE_HOURS, 'hour', 'hours' %> free to help you get started. Email us at <%= mail_to 'team@minefold.com' %> when you have something awesome to show off!

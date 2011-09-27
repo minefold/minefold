@@ -27,6 +27,8 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
 
     if @user.save
+      UserMailer.welcome(@user.id).deliver
+
       sign_in :user, @user
       respond_with @user, :location => stored_location_for(:user) || user_root_path
     else
