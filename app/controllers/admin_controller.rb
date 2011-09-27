@@ -5,7 +5,7 @@ class AdminController < ApplicationController
   layout nil
 
   def index
-    @current_players_count = REDIS.scard 'players:playing'
+    @current_players_count = REDIS.hlen 'players:playing'
     @users = User.order_by([:created_at, :desc]).all
   end
 
