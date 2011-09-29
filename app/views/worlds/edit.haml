@@ -93,7 +93,7 @@
           %img{src: world.owner.avatar_url(width: 18), width: 18, height: 18}
           = world.owner.username
           (owner)
-        - world.whitelist.each do |player|
+        - world.whitelisted_players.each do |player|
           %li
             %input{type: 'hidden', name: 'world[fucking_whitelist_ids][]', value: player.id}
             %img{src: player.avatar_url(width: 18), width: 18, height: 18}

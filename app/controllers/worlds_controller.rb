@@ -1,15 +1,12 @@
 class WorldsController < ApplicationController
 
-  prepend_before_filter :authenticate_user!, except: [:index, :show, :map]
+  prepend_before_filter :authenticate_user!, except: [:show, :map]
 
   expose(:user) { User.find_by_slug!(params[:user_id])}
 
   expose(:worlds)
   expose(:world) do
     user.owned_worlds.find_by_slug!(params[:id])
-  end
-
-  def index
   end
 
   def new
@@ -26,7 +23,7 @@ class WorldsController < ApplicationController
     if world.save
       current_user.current_world = world
       current_user.save
-      redirect_to user_world_path(world.owner, world)
+      redirect_to invite_user_world_path(world.owner, world)
     else
       render :new
     end
@@ -86,7 +83,10 @@ class WorldsController < ApplicationController
   end
 
   def upload_policy
-    @policy = S3UploadPolicy.new(ENV['S3_KEY'], ENV['S3_SECRET'], bucket(:world_import))
+    @policy = S3UploadPolicy.new ENV['S3_KEY'],
+                                 ENV['S3_SECRET'],
+                                 "minefold.#{Rails.env}.worlds.uploads"
+
     @policy.key = params[:key]
     @policy.content_type = params[:contentType]
 
@@ -95,13 +95,13 @@ class WorldsController < ApplicationController
 
 protected
 
-  statsd_count_success :create, 'WorldsController.create'
-  statsd_count_success :show, 'WorldsController.show'
-  statsd_count_success :update, 'WorldsController.update'
-  statsd_count_success :map, 'WorldsController.map'
-  statsd_count_success :photos, 'WorldsController.photos'
-  statsd_count_success :play, 'WorldsController.play'
-  statsd_count_success :play_request, 'WorldsController.play_request'
+  # statsd_count_success :create, 'WorldsController.create'
+  # statsd_count_success :show, 'WorldsController.show'
+  # statsd_count_success :update, 'WorldsController.update'
+  # statsd_count_success :chat, 'WorldsController.chat'
+  # statsd_count_success :photos, 'WorldsController.photos'
+  # statsd_count_success :play, 'WorldsController.play'
+  # statsd_count_success :play_request, 'WorldsController.play_request'
 
 private
 
@@ -111,10 +111,6 @@ private
        not (signed_in? and world.players.include?(current_user))
       raise Mongoid::Errors::DocumentNotFound
     end
-  end
-
-  def bucket path
-    "minefold.#{Rails.env}.worlds-to-import"
   end
 
 end

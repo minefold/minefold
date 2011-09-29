@@ -21,7 +21,7 @@ class World
   belongs_to :creator, class_name: 'User'
   belongs_to :owner, class_name: 'User'
 
-  has_and_belongs_to_many :whitelist, class_name: 'User', inverse_of: nil
+  has_and_belongs_to_many :whitelisted_players, class_name: 'User', inverse_of: :whitelisted_worlds
 
   embeds_many :wall_items, as: :wall
 
@@ -63,12 +63,12 @@ class World
   end
 
   def whitelisted?(user)
-    owner == user or whitelist.include?(user)
+    owner == user or whitelisted_players.include?(user)
   end
 
   # accepts_nested_attributes_for :whitelist
   def fucking_whitelist_ids=(vals)
-    self.whitelist = vals.map {|v| User.find(v) }
+    self.whitelisted_players = vals.map {|v| User.find(v) }
   end
 
 

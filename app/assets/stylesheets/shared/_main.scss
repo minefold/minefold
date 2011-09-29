@@ -1,5 +1,5 @@
 .wrapper {
-  width: gwidth(10);
+  width: cols(8);
   margin-left: auto;
   margin-right: auto;
 }
@@ -39,7 +39,7 @@ html {
 
 header {
   overflow: auto;
-  margin-top: 2*$line;
+//  margin-top: 2*$line;
   padding: $line 0 ($line - 1px);
   border-bottom: 1px solid darken(white, 10%);
 
@@ -146,7 +146,7 @@ header {
   line-height: 24px;
 
   .wrapper {
-    width: gwidth(10) + (2 * $gutter);
+    width: cols(8) + (2 * $gutter);
     padding: 0 (-$gutter);
     overflow: auto;
   }
@@ -224,7 +224,7 @@ header {
         float: left;
       }
       fieldset {
-        margin-left: gwidth(2);
+        margin-left: cols(2);
 
         &.inline div {
           display: inline;
@@ -268,7 +268,7 @@ header {
 
   nav {
     float: left;
-    width: gwidth(2);
+    width: cols(2);
   }
 
   .locked {
@@ -287,11 +287,13 @@ header {
 
   #before-page {
     @include span(2);
+//    width: cols(2);
     float: left;
   }
 
   #page {
     @include span(6);
+//    width: cols(6);
     float: left;
   }
 

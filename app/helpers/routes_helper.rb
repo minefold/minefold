@@ -10,17 +10,20 @@ module RoutesHelper
     user_world_url(args.first.owner, *args)
   end
 
-
   def worlds_path(*args)
     user_worlds_path(*args)
   end
 
-  def edit_world_path(world)
-    edit_user_world_path(world.owner, world)
-  end
-
   def map_world_path(world)
     map_user_world_path(world.owner, world)
+  end
+
+  def invite_world_path(world)
+    invite_user_world_path(world.owner, world)
+  end
+
+  def edit_world_path(world)
+    edit_user_world_path(world.owner, world)
   end
 
   def photos_world_path(world)

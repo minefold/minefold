@@ -1,10 +1,10 @@
 - content_for :masthead do
   .top
-    - @usernames[0...10].each do |username|
-      = image_tag "http://minotar.net/avatar/#{username}/60.png", width: 60, height: 60, alt: username
+    - @users[0...8].each do |user|
+      = image_tag user.skin.avatar.s60, width: 60, height: 60, alt: user.username
   .left
-    - @usernames[10...16].each do |username|
-      = image_tag "http://minotar.net/avatar/#{username}/60.png", width: 60, height: 60, alt: username
+    - @users[8...11].each do |user|
+      = image_tag user.skin.avatar.s60, width: 60, height: 60, alt: user.username
 
   .center
     %h1 Play Minecraft with friends!
@@ -38,8 +38,8 @@
               = ['Algebraic!', 'Rhombus!', 'Mathematical!'].shuffle.first
 
   .right
-    - @usernames[16...22].each do |username|
-      = image_tag "http://minotar.net/avatar/#{username}/60.png", width: 60, height: 60, alt: username
+    - @users[11...14].each do |user|
+      = image_tag user.skin.avatar.s60, width: 60, height: 60, alt: user.username
 
-  - @usernames[22...32].each do |username|
-    = image_tag "http://minotar.net/avatar/#{username}/60.png", width: 60, height: 60, alt: username
+  - @users[14...22].each do |user|
+    = image_tag user.skin.avatar.s60, width: 60, height: 60, alt: user.username

@@ -7,7 +7,7 @@
   }
 
   #page {
-    width: gwidth(10);
+    width: cols(10);
   }
 
   form {
@@ -21,7 +21,7 @@
 
   #products {
     margin: 0 auto (4*$line) auto;
-    width: gwidth(8) - (4 - 1)*(2*$gutter) + (3*$border);
+    width: cols(8) - (4 - 1)*(2*$gutter) + (3*$border);
     display: block;
     overflow: auto;
     border: $border solid darken(white, 10%);
@@ -33,7 +33,7 @@
       @include border-radius(none);
       float: left;
       margin-right: 1px;
-      width: gwidth(2);
+      width: cols(2);
 
       &:first-child {
         border-top-left-radius: 3px;

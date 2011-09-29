@@ -1,17 +1,21 @@
 @import 'shared';
 
 #users-dashboard {
-
-  #after-page {
-    width: gwidth(4);
+  #page {
+    @include span(8);
   }
 
-  .welcome-notice {
+  #after-page {
+    @include span(4)
+  }
+
+  .welcome {
     margin: 0 0 (4*$line) 0;
     padding: 0 (2*$gutter);
     background: #FFC;
     position: relative;
     overflow: hidden;
+    border-top: 1px solid rgba(black, 0.05);
     @include border-radius(2*$radius);
 
     .heart {
@@ -26,12 +30,11 @@
     * { position: relative; z-index: 1;}
     .heart { z-index: 0;}
 
-
     h2 {
       font: 900 18px/24px $helvetica;
       font-weight: 1000;
       text-transform: uppercase;
-      color: $red;
+      color: $blue;
     }
 
     p {
@@ -49,103 +52,92 @@
   }
 
   .create-world {
-    text-align: center;
-    color: #999;
-    font-size: 12px;
+    margin: 0;
     margin-bottom: 8*$line;
-
-    .or {
-      margin: $line 0;
-      font-style: italic;
-    }
+    overflow: auto;
 
     a {
-      display: block;
-      font: 600 18px/24px $helvetica;
+      font: 400 14px/18px $helvetica;
       color: white;
       background: $blue;
       padding: $line $gutter;
       text-decoration: none;
+      text-align: center;
       @include border-radius($radius);
+
+      @include inline-block;
+//      float: left;
+//      @include span(3);
+
       &:hover {
         background: darken($blue, 10%);
       }
+
     }
   }
 
-  a.current-world {
-    display: block;
-    padding: 0 (2*$gutter);
-    background: $green url(image-path('world-watermark.png')) right center no-repeat;
-    text-decoration: none;
-    @include border-radius(2*$radius);
-    color: white;
+  .dshbrd {
+    margin: 0 (-$gutter);
+    margin-bottom: 2 * $line;
     overflow: auto;
-
-    p {
-      font-size: 12px;
-      color: darken($green, 30%);
-      margin: 0 (-2*$gutter);
-      padding: $line (2*$gutter);
-      border-bottom: 1px solid lighten($green, 10%);
-      margin-bottom: -1px;
-
-      .connection-info {
-        @include inline-block;
-        float: right;
-      }
-
-    }
-
-    h2 {
-      margin: 0;
-      font-size: 24px;
-      line-height: 48px;
-            display: inline;
-    }
-
-    .players {
-      display: inline;
-      line-height: 48px;
-      color: white;
-      margin-left: $gutter;
-    }
-
-    &:hover {
-      background-color: darken($green, 10%);
-    }
-
-    .arrow {
-      float: right;
-      @include border-radius(24px);
-      border: $border solid white;
-      font-weight: 900;
-      font-size: 12px;
-      line-height: 18px - (2*$border);
-      width: 18px - (2*$border);
-      text-align: center;
-      margin-top: 3*$line;
-    }
+//    border-bottom: 1px solid darken(white, 10%);
   }
 
-  .explore-worlds {
+  .worlds {
+    @include span(4);
+    float: left;
     h2 {
+      margin-top: 0;
       margin-bottom: 2*$line;
     }
+
+    p {
+      color: #666;
+    }
+
     li {
       a {
         color: $blue;
         display: block;
         line-height: 4*$line;
-        padding: $line 0;
+        padding: $line;
         text-decoration: none;
-        border-bottom: 1px solid darken(white, 5%);
+
+//        border-bottom: 1px solid darken(white, 5%);
+        margin: 0 -($gutter/2);
+        padding: $line ($gutter/2);
+
+        .current {
+          height: 8px;
+          width: 8px;
+          background: $green;
+          @include border-radius(8px);
+          float: left;
+          margin: (24px - 8px)/2 0;
+          margin-right: $gutter;
+          margin-left: $gutter /2;
+        }
+
+        .user {
+          color: #999;
+        }
+        .slash {
+          color: #CCC;
+        }
 
         &:hover {
           color: darken($blue, 20%);
-          border-bottom-color: darken(white, 20%);
+          background: darken(white, 3%);
+          .current {
+            background-color: darken($green, 10%);
+          }
         }
       }
+
+      &:last-child a {
+        border-bottom: none;
+      }
+
 
       .players {
         display: inline;

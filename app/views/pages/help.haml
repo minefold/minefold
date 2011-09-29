@@ -20,7 +20,7 @@
 
     %p
       To connect to the world you have joined on the website, run Minecraft, select multiplayer and add the server with the address on the world page.
-      - if signed_in?
+      - if signed_in? and current_user.current_world
         For you this will be <strong><code>#{current_user.host}</code></strong>.
 
         %p When you connect to this server you'll be dropped into the <strong>#{current_user.current_world.name}</strong> world.

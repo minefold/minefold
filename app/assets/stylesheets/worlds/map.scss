@@ -1,10 +1,10 @@
 @import 'shared';
 
 #worlds-map #page {
-  width: gwidth(10);
-  
+  width: cols(8);
+
   #map {
-    height: 100*$line;
+    height: 8 * (10*$line);
   }
 
   p#nomap {

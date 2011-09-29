@@ -26,7 +26,7 @@ class User
   has_many :created_worlds, class_name: 'World', inverse_of: :creator
   has_many :owned_worlds, class_name: 'World', inverse_of: :owner
 
-  referenced_in :whitelists, class_name: 'World', inverse_of: :whitelist
+  has_and_belongs_to_many :whitelisted_worlds, class_name: 'World', inverse_of: :whitelisted_players
 
   embeds_many :wall_items, as: :wall
 
@@ -69,10 +69,6 @@ class User
 
   def self.free_spots?
     free_spots > 0
-  end
-
-  before_validation on: :create do
-    self.current_world = World.default
   end
 
 
@@ -224,6 +220,16 @@ class User
 #     add_credits USER_REFERRAL_BONUS
 #     invite.creator.add_credits FRIEND_REFERRAL_BONUS
 #   end
+
+# OTHER
+
+  def playable_worlds
+    owned_worlds | whitelisted_worlds
+  end
+
+  def first_sign_in?
+    sign_in_count <= 1
+  end
 
   def to_param
     slug

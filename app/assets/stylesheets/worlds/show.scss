@@ -117,7 +117,7 @@
       width: 100%;
       resize: vertical;
       // TODO: Magic
-      width: gwidth(6) - (4*$line + $gutter);
+      width: cols(6) - (4*$line + $gutter);
     }
 
     .submit {

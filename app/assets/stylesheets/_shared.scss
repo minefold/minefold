@@ -10,7 +10,7 @@ $line: 6px;
 $gutter: 10px;
 $pad:    20px;
 $col:    $pad + 20px + $pad;
-$cols:   12;
+$ncols:  8;
 
 $radius: 2px;
 $border: 1px;
@@ -34,13 +34,13 @@ $green:  #BADA55;
   background: rgba(red, 0.2);
 }
 
-@function gwidth($n) {
+@function cols($n) {
   @return $n * ($gutter + $col + $gutter) - 2 * $gutter;
 }
 
 @mixin span($n) {
   @include box-sizing(border-box);
-  width: gwidth($n);
+  width: cols($n);
   margin-left: $gutter;
   margin-right: $gutter;
 }

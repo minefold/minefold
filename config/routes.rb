@@ -80,13 +80,18 @@ Minefold::Application.routes.draw do
       get '/settings' => 'worlds#edit', :as => :edit_user_world
       put '/' => 'worlds#update'
       get '/map' => 'worlds#map', :as => :map_user_world
+      get '/invite' => 'worlds#invite', :as => :invite_user_world
 
       put '/play' => 'worlds#play', :as => :play_user_world
       put '/play/request' => 'worlds#play_request', :as => :play_request_user_world
 
+      controller :invites do
+        post '/invite', :action => :create
+      end
+
       controller :wall_items do
-        get  '/wall', :action => 'index', :as => :user_world_wall_items
-        post '/wall', :action => 'create'
+        get  '/wall', :action => :index, :as => :user_world_wall_items
+        post '/wall', :action => :create
       end
 
       controller :photos do

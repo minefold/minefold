@@ -24,7 +24,7 @@
       color: white;
       text-align: center;
       @include border-radius($radius);
-      width: gwidth(4);
+      width: cols(4);
 
       &:hover {
         background: darken($blue, 10%);
@@ -75,7 +75,7 @@
       line-height: 18px;
       color: #999;
       margin-top: $line;
-      width: gwidth(4) - 16px;
+      width: cols(4) - 16px;
 
       strong {
         display: block;

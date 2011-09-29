@@ -1,47 +1,47 @@
 - title  'Dashboard'
 
-- content_for :after do
-  - if current_user.first_sign_in?
-    .welcome-notice
-      .heart &hearts;
-      %h2
-        G'day mate!
-      %p
-        It's great to see you here. If you haven't played Minecraft before or don't know how to play multiplayer we have #{link_to 'a short guide', about_page_path, anchor: 'getting-started'} to help you out.
-      %p
-        Also, if you are stuck or see something wrong, please feel free to #{mail_to 'support@minefold.com', 'email support'}.
+- if current_user.first_sign_in? and not (current_user.current_world or current_user.playable_worlds)
+  .welcome
+    .heart &hearts;
+    %h2
+      G'day #{current_user.username}
+    %p
+      It's great to see you here! If you haven't played Minecraft before or are new to multiplayer we have #{link_to 'a short guide', help_page_path} to help you out. However, if you are ready to start playing you can either create a new world, or upload one of your single player worlds.
 
+  .create-world.attention
+    = link_to 'Create a new world', [:new, :world], class: 'new'
+    = link_to 'Upload an existing world', [:upload, :worlds], class: 'import'
+
+- else
+  .dshbrd
+    .worlds
+      %h2 Your worlds
+      %ul
+        - current_user.owned_worlds.each do |world|
+          %li{class: (current_user.current_world == world ? 'active' : nil)}
+            = link_to world do
+              - if world == current_user.current_world
+                .current
+              %span.user= world.owner.username
+              %span.slash /
+              %strong= world.name
+
+    .worlds
+      %h2 Friend's worlds
+      - if current_user.whitelisted_worlds.empty?
+        %p You haven't been whitelisted in any other worlds yet.
+      - else
+        %ul
+          - current_user.whitelisted_worlds.each do |world|
+            %li{class: (current_user.current_world == world ? 'active' : nil)}
+              = link_to world do
+                - if world == current_user.current_world
+                  .current
+                %span.user= world.owner.username
+                %span.slash /
+                %strong= world.name
 
   .create-world
     = link_to 'Create a new world', [:new, :world], class: 'new'
-    .or — or —
     = link_to 'Upload an existing world', [:upload, :worlds], class: 'import'
 
-
-= link_to @current_world, class: 'current-world' do
-  %p
-    You are currently playing in
-
-    %strong.connection-info= current_user.host
-
-  %h2= @current_world.name
-
-  .players
-    - if @current_world_players_count.zero?
-      Nobody is playing right now.
-    - else
-      = pluralize @current_world_players_count, 'person', 'people'
-      playing right now.
-
-  .arrow
-    &rarr;
-
-.explore-worlds
-  %h2 Explore Worlds
-  %ul
-    - @worlds.each do |world|
-      %li{class: (current_user.current_world == world ? 'active' : nil)}
-        = link_to world do
-          = world.name
-          .players
-            = pluralize world.connected_players_count, 'player', 'players'
