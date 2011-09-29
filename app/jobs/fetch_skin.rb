@@ -2,12 +2,10 @@ class FetchSkin
   @queue = :low
 
   def self.perform user_id
-    new.process! User.find(user_id)
+    new.process User.find(user_id)
   end
 
-private
-
-  def process!
+  def process(user)
     user.fetch_skin!
     user.save
   rescue OpenURI::HTTPError
