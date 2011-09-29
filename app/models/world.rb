@@ -6,7 +6,6 @@ class World
   field :name,    type: String
   slug  :name,    scope: :owner, index: true
 
-  field :invite_only,     type: Boolean, default: false
   field :public_activity, type: Boolean, default: true
 
   field :seed,           type: String, default: ''
@@ -21,7 +20,9 @@ class World
   belongs_to :creator, class_name: 'User'
   belongs_to :owner, class_name: 'User'
 
-  has_and_belongs_to_many :whitelisted_players, class_name: 'User', inverse_of: :whitelisted_worlds
+  has_and_belongs_to_many :members, inverse_of: :memberships, class_name: 'User'
+  embeds_many :invites
+
 
   embeds_many :wall_items, as: :wall
 
@@ -42,6 +43,7 @@ class World
     greater_than_or_equal_to: 0,
     less_than_or_equal_to: 3
 
+
 # SETTINGS
 
   def creative?
@@ -58,18 +60,14 @@ class World
 
 # PLAYERS
 
-  def public?
-    not invite_only?
-  end
-
-  def whitelisted?(user)
-    owner == user or whitelisted_players.include?(user)
+  def member?(user)
+    owner == user or members.include?(user)
   end
 
   # accepts_nested_attributes_for :whitelist
-  def fucking_whitelist_ids=(vals)
-    self.whitelisted_players = vals.map {|v| User.find(v) }
-  end
+  # def fucking_whitelist_ids=(vals)
+  #   self.whitelisted_players = vals.map {|v| User.find(v) }
+  # end
 
 
   def connected_player_ids

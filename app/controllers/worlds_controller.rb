@@ -52,7 +52,11 @@ class WorldsController < ApplicationController
   def map
   end
 
-  def photos
+  def members
+  end
+
+  def invite
+    @invite = Invite.new(world: world, from: current_user)
   end
 
   def play
@@ -65,10 +69,11 @@ class WorldsController < ApplicationController
   end
 
   def play_request
-    WorldMailer.play_request(world.id,
-                             world.owner.id,
-                             current_user.id).deliver
-    flash[:success] = 'Play request sent'
+    @invite = world.invites.create from: current_user, to: world.owner
+    
+    # WorldMailer.play_request(world.id,
+    #                          world.owner.id,
+    #                          current_user.id).deliver
     redirect_to user_world_path(world.owner, world)
   end
 

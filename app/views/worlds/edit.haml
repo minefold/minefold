@@ -1,4 +1,4 @@
-- title "#{world.name} Settings" do
+- title "#{world.name} settings" do
   = render partial: 'header'
 
 = form_for world do |f|
@@ -72,44 +72,44 @@
         = f.check_box :public_activity
         = f.label :public_activity, 'Public activity stream'
 
-  %section.players
-    %h3 Who Can Play
-
-    %fieldset
-      %div
-        = f.radio_button :invite_only, false
-        = f.label :invite_only_false, 'Anybody'
-      %div
-        = f.radio_button :invite_only, true
-        = f.label :invite_only_true, 'Only whitelisted players'
-
-  %section.whitelist{style: (world.invite_only? ? nil : 'display:none')}
-    %h3 Whitelist
-
-    %fieldset
-      %ul.whitelisted-players
-        %li.owner{id: world.owner.id}
-
-          %img{src: world.owner.avatar_url(width: 18), width: 18, height: 18}
-          = world.owner.username
-          (owner)
-        - world.whitelisted_players.each do |player|
-          %li
-            %input{type: 'hidden', name: 'world[fucking_whitelist_ids][]', value: player.id}
-            %img{src: player.avatar_url(width: 18), width: 18, height: 18}
-            = player.username
-            %a.remove Remove
-      %input.autocomplete{type: 'search', data: {source: search_users_path}, placeholder: 'Username'}
-      .autocomplete-results
-
-  :coffeescript
-    inviteOnly = $('.players input:radio[name=world[invite_only]]')
-    whitelist = $('.whitelist')
-    inviteOnly.change -> whitelist.toggle()
-    whitelist.find('input.autocomplete').autocomplete()
-
-    $('.whitelisted-players .remove').live 'click', ->
-      $(@).parent().remove()
+  / %section.players
+  /   %h3 Who Can Play
+  /
+  /   %fieldset
+  /     %div
+  /       = f.radio_button :invite_only, false
+  /       = f.label :invite_only_false, 'Anybody'
+  /     %div
+  /       = f.radio_button :invite_only, true
+  /       = f.label :invite_only_true, 'Only whitelisted players'
+  /
+  / %section.whitelist{style: (world.invite_only? ? nil : 'display:none')}
+  /   %h3 Whitelist
+  /
+  /   %fieldset
+  /     %ul.whitelisted-players
+  /       %li.owner{id: world.owner.id}
+  /
+  /         %img{src: world.owner.avatar_url(width: 18), width: 18, height: 18}
+  /         = world.owner.username
+  /         (owner)
+  /       - world.whitelisted_players.each do |player|
+  /         %li
+  /           %input{type: 'hidden', name: 'world[fucking_whitelist_ids][]', value: player.id}
+  /           %img{src: player.avatar_url(width: 18), width: 18, height: 18}
+  /           = player.username
+  /           %a.remove Remove
+  /     %input.autocomplete{type: 'search', data: {source: search_users_path}, placeholder: 'Username'}
+  /     .autocomplete-results
+  /
+  / :coffeescript
+  /   inviteOnly = $('.players input:radio[name=world[invite_only]]')
+  /   whitelist = $('.whitelist')
+  /   inviteOnly.change -> whitelist.toggle()
+  /   whitelist.find('input.autocomplete').autocomplete()
+  /
+  /   $('.whitelisted-players .remove').live 'click', ->
+  /     $(@).parent().remove()
 
   .submit
     = f.submit 'Save settings'

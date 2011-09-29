@@ -39,12 +39,12 @@ html {
 
 header {
   overflow: auto;
-//  margin-top: 2*$line;
-  padding: $line 0 ($line - 1px);
   border-bottom: 1px solid darken(white, 10%);
 
   .wrapper {
-    overflow: visible;
+    overflow: auto;
+    padding-top: $line;
+    padding-bottom: $line;
   }
 
   h1 a, aside {

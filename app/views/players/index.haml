@@ -1,0 +1,13 @@
+- title "#{world.name} players" do
+  = render partial: 'worlds/header'
+
+%p= world.owner.username
+- world.members.each do |player|
+  %p
+    = player.username
+    = link_to 'remove', world_player_path(world, player), method: 'delete'
+
+= form_for :player, url: world_players_path(world), method: 'post' do |f|
+  = text_field_tag :player_id
+  = f.submit
+

@@ -4,7 +4,7 @@
 %aside
   - if signed_in?
     .meta
-      - if world.public? or world.whitelisted?(current_user)
+      - if world.member?(current_user)
         - if current_user.current_world == world
           .connection-info
             Connect to
@@ -16,7 +16,11 @@
           = button_to 'Play in this world', [:play, world], method: :put
 
       - else
-        = button_to 'Send request to play', [:play_request, world], method: :put
+        - if world.invites.where(from: current_user).exists?
+          .connection-info Waiting for #{world.owner.username} to let you play…
+        - else
+          = button_to 'Ask to play here', [world, :players], method: :put
+
 
 %ol#subnav
   %li.chat
@@ -25,9 +29,9 @@
   %li.map
     = link_to 'Map', [:map, world]
 
-  - if signed_in? and world.creator == current_user
-    %li.invite
-      = link_to 'Invite friends', [:invite, world]
+  %li.players
+    = link_to 'Players', [world, :players]
 
+  - if signed_in? and world.creator == current_user
     %li.edit
       = link_to 'Settings', [:edit, world]

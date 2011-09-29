@@ -19,13 +19,13 @@
 - if flash[:success]
   .flash.success= flash[:success]
 
-- if !world.public_activity? and not (signed_in? and (world.public? or world.whitelisted?(current_user)))
+- if !world.public_activity? and not (signed_in? and world.whitelisted?(current_user))
   .locked
     Sorry, this world's activity stream is private.
 
 - else
   #stream
-    - if signed_in? and (world.public? or world.whitelisted?(current_user))
+    - if signed_in?
       #share
         = form_tag [world.creator, world, :wall_items], method: :post do |f|
           .avatar

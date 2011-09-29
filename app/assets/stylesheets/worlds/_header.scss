@@ -2,7 +2,7 @@
 
 #worlds-show #masthead,
 #worlds-map #masthead,
-#worlds-invite #masthead,
+#players-index #masthead,
 #worlds-edit #masthead {
   background: darken(white, 5%) url(image-path('world-watermark.png')) right 24px no-repeat;
 
@@ -89,7 +89,7 @@
 
 #worlds-show #masthead .chat,
 #worlds-map #masthead .map,
-#worlds-invite #masthead .invite,
+#players-index #masthead .players,
 #worlds-edit #masthead .edit {
   a {
     background: white;

@@ -1,10 +1,6 @@
-class ReferralsController < ApplicationController
+class InvitesController < ApplicationController
 
   before_filter :authenticate_user!
-
-  def new
-    @referral = current_user.referrals.new
-  end
 
   def create
     referral = current_user.referrals.new params[:referral]

@@ -26,13 +26,13 @@ class User
   has_many :created_worlds, class_name: 'World', inverse_of: :creator
   has_many :owned_worlds, class_name: 'World', inverse_of: :owner
 
-  has_and_belongs_to_many :whitelisted_worlds, class_name: 'World', inverse_of: :whitelisted_players
+  has_and_belongs_to_many :memberships, inverse_of: :members, class_name: 'World'
 
   embeds_many :wall_items, as: :wall
 
-  field :total_referrals, type: Integer, default: 10
-  embeds_many :referrals
-  belongs_to  :referrer, class_name: 'User', inverse_of: :user
+  # field :total_referrals, type: Integer, default: 10
+  # embeds_many :referrals
+  # belongs_to  :referrer, class_name: 'User', inverse_of: :user
 
   attr_accessor :email_or_username
 
@@ -45,7 +45,6 @@ class User
   validates_confirmation_of :password
   validates_numericality_of :credits, greater_than_or_equal_to: 0
   validates_numericality_of :minutes_played, greater_than_or_equal_to: 0
-  validates_numericality_of :total_referrals, greater_than_or_equal_to: 0
 
 # SECURITY
 
@@ -202,16 +201,16 @@ class User
 
 # REFERRALS
 
-  USER_REFERRAL_BONUS = 1.hour
-  FRIEND_REFERRAL_BONUS = 4.hours
-
-  def referrals_left?
-    referrals.length < total_referrals
-  end
-
-  def referrals_left
-    total_referrals - referrals.length
-  end
+# USER_REFERRAL_BONUS = 1.hour
+# FRIEND_REFERRAL_BONUS = 4.hours
+#
+# def referrals_left?
+#   referrals.length < total_referrals
+# end
+#
+# def referrals_left
+#   total_referrals - referrals.length
+# end
 
 #   def verify!
 #     decrement referrals: 1
@@ -224,7 +223,7 @@ class User
 # OTHER
 
   def playable_worlds
-    owned_worlds | whitelisted_worlds
+    owned_worlds | memberships
   end
 
   def first_sign_in?

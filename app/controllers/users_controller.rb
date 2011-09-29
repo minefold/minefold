@@ -12,10 +12,6 @@ class UsersController < ApplicationController
     @user = User.find_by_slug!(params[:id])
   end
 
-  def dashboard
-    @worlds = World.order_by([:slug, :asc]).all
-  end
-
   def new
     @user = User.new
   end

@@ -1,4 +1,9 @@
 - title world.name do
   = render partial: 'worlds/header'
 
-Yo nigga, invite your friends
+%p You can now invite your friends to play in this world
+
+= form_for [world, @invite] do |f|
+  / = f.hidden_field :world_id, world.id
+
+  = f.email_field :email

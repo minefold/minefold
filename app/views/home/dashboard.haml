@@ -1,0 +1,46 @@
+- title  'Dashboard'
+
+- if current_user.first_sign_in? and not (current_user.current_world or !current_user.memberships.empty?)
+  .welcome
+    .heart &hearts;
+    %h2
+      G'day #{current_user.username}
+    %p
+      It's great to see you here! If you haven't played Minecraft before or are new to multiplayer we have #{link_to 'a short guide', help_page_path} to help you out. However, if you are ready to start playing you can either create a new world, or upload one of your single player worlds.
+
+- else
+  .dshbrd
+    .worlds
+      %h2 Your worlds
+      - if current_user.owned_worlds.empty?
+        %p You haven't created any worlds yet.
+      - else
+        %ul
+          - current_user.owned_worlds.each do |world|
+            %li{class: (current_user.current_world == world ? 'active' : nil)}
+              = link_to world do
+                - if world == current_user.current_world
+                  .current
+                %span.user= world.owner.username
+                %span.slash /
+                %strong= world.name
+
+    .worlds
+      %h2 Friend's worlds
+      - if current_user.memberships.empty?
+        %p You arn't a member of any other worlds yet.
+      - else
+        %ul
+          - current_user.memberships.each do |world|
+            %li{class: (current_user.current_world == world ? 'active' : nil)}
+              = link_to world do
+                - if world == current_user.current_world
+                  .current
+                %span.user= world.owner.username
+                %span.slash /
+                %strong= world.name
+
+.create-world
+  = link_to 'Create a new world', new_worlds_path, class: 'new'
+  = link_to 'Upload an existing world', new_upload_path, class: 'import'
+
