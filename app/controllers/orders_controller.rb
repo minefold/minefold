@@ -1,41 +1,56 @@
 class OrdersController < ApplicationController
-  include ActiveMerchant::Billing::Integrations
-
   prepend_before_filter :authenticate_user!, except: [:create]
 
+  PRICES = {
+    8   => 400,
+    20  => 800,
+    60  => 1800,
+    160 => 4000
+  }
+
   def new
-    @order = Order.create!(user: current_user)
+    @order = Order.new
   end
 
   def create
-    notify = Paypal::Notification.new(request.raw_post)
-    order = Order.find(params[:custom])
+    # TODO Error checking
 
-    if notify.acknowledge
-      order.transactions.find_or_initialize_by(params)
-      order.process_payment!
-      order.save
+    unless current_user.customer_id?
+      token = params[:stripeToken]
 
-      OrderMailer.thanks(order.id).deliver
-    else
-      logger.info("[PayPal] Failed to authenticate IPN")
+      customer = Stripe::Customer.create card: token,
+                                  description: current_user.username,
+                                        email: current_user.email
+
+      current_user.customer_id = customer.id
+      current_user.save
     end
 
-    render nothing: true
+    amount = PRICES[params[:hours].to_i]
+
+    Stripe::Charge.create amount: amount,
+                        currency: 'usd',
+                        customer: current_user.customer_id
+
+    credits = params[:hours].to_i.hours / User::BILLING_PERIOD
+
+    current_user.increment_credits! credits
+
+    redirect_to user_root_path
   end
 
-  def success
-  end
-
-  def cancel
-    redirect_to new_order_path
-  end
+  # def success
+  # end
+  #
+  # def cancel
+  #   redirect_to new_order_path
+  # end
 
 protected
 
-  statsd_count_success :new, 'OrdersController.new'
-  statsd_count_success :create, 'OrdersController.create'
-  statsd_count_success :success, 'OrdersController.success'
-  statsd_count_success :cancel, 'OrdersController.cancel'
+  # statsd_count_success :new, 'OrdersController.new'
+  # statsd_count_success :create, 'OrdersController.create'
+  # statsd_count_success :success, 'OrdersController.success'
+  # statsd_count_success :cancel, 'OrdersController.cancel'
 
 end

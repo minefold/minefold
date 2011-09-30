@@ -37,10 +37,7 @@ Minefold::Application.routes.draw do
     post '/users' => 'users#create', :as => :users
   end
 
-  resource :order do
-    get :success
-    get :cancel
-  end
+  resources :orders
 
   as :user do
 

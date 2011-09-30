@@ -1,4 +1,5 @@
-source 'http://rubygems.org'
+source 'https://code.stripe.com'
+source 'https://rubygems.org'
 
 gem 'thin'
 gem 'rails', '3.1.0'
@@ -9,10 +10,11 @@ gem 'bson_ext'
 gem 'mongoid_slug'
 
 # Authentication
+gem 'rack-ssl'
 gem 'devise'
 
 # Payment Processing
-gem 'activemerchant'
+gem 'stripe'
 
 # Notifications
 gem 'sendgrid'

@@ -8,24 +8,24 @@
 
   %h2 Choose how many hours you want to play for.
 
-= form_tag ENV['PAYPAL_URL'] do
-  = hidden_field_tag :cmd, '_s-xclick'
+= form_for @order do |f|
+  / = hidden_field_tag :cmd, '_s-xclick'
+  /
+  / = hidden_field_tag :hosted_button_id, ENV['PAYPAL_BUTTON_ID']
+  /
+  / = hidden_field_tag :item_number, @order.id
+  / = hidden_field_tag :custom,      @order.id
 
-  = hidden_field_tag :hosted_button_id, ENV['PAYPAL_BUTTON_ID']
+  / = hidden_field_tag :notify_url, order_url
+  / = hidden_field_tag :cancel_return, cancel_order_url
+  /
+  / = hidden_field_tag :return, success_order_url
 
-  = hidden_field_tag :item_number, @order.id
-  = hidden_field_tag :custom,      @order.id
-
-  = hidden_field_tag :notify_url, order_url
-  = hidden_field_tag :cancel_return, cancel_order_url
-
-  = hidden_field_tag :return, success_order_url
-
-  = hidden_field_tag :on0, 'Hours'
+  / = hidden_field_tag :on0, 'Hours'
 
   %ul#products
     %li.active
-      %label{for: 'os0-8'}
+      %label{for: '8hrs'}
         .time
           +8
           %span hours
@@ -33,10 +33,10 @@
           $4
           %span 50&cent; / hr
 
-      %input#os0-8{type: 'radio', name: 'os0', value: 8, style: 'display:none', checked: true}
+      %input#8hrs{type: 'radio', name: 'hours', value: 8, style: 'display:none', checked: true}
 
     %li
-      %label{for: 'os0-20'}
+      %label{for: '20hrs'}
         .time
           +20
           %span hours
@@ -44,10 +44,10 @@
           $8
           %span 40&cent; / hr
 
-      %input#os0-20{type: 'radio', name: 'os0', value: 20, style: 'display:none'}
+      %input#20hrs{type: 'radio', name: 'hours', value: 20, style: 'display:none'}
 
     %li
-      %label{for: 'os0-60'}
+      %label{for: '60hrs'}
         .time
           +60
           %span hours
@@ -55,10 +55,10 @@
           $18
           %span 30&cent; / hr
 
-      %input#os0-60{type: 'radio', name: 'os0', value: 60, style: 'display:none'}
+      %input#60hrs{type: 'radio', name: 'hours', value: 60, style: 'display:none'}
 
     %li
-      %label{for: 'os0-160'}
+      %label{for: '160hrs'}
         .time
           +160
           %span hours
@@ -66,25 +66,69 @@
           $40
           %span 25&cent; / hr
 
-      %input#os0-160{type: 'radio', name: 'os0', value: 160, style: 'display:none'}
+      %input#160hrs{type: 'radio', name: 'hours', value: 160, style: 'display:none'}
 
+  :coffeescript
+    products = $('#products li')
 
-  %input{type: 'image', src: 'https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif', border: 0, name: 'submit', alt: 'PayPal - The safer, easier way to pay online!'}
+    products.click (e) ->
+      self = $(e.currentTarget)
+      products.removeClass 'active'
+      self.addClass('active')
 
-  -# TODO: Investigate wether this is needed
-  %img{alt: '', border: 0, src: 'https://www.paypalobjects.com/en_AU/i/scr/pixel.gif', width: 1, height: 1}
+      products.find('input:radio').attr('checked', false)
+      self.find('input:radio').attr('checked', true)
 
-:coffeescript
-  products = $('#products li')
+      e.preventDefault()
 
-  products.click (e) ->
-    self = $(e.currentTarget)
-    products.removeClass 'active'
-    self.addClass('active')
+  - unless current_user.customer?
+    %script{src: 'https://js.stripe.com/v1'}
+    :coffeescript
+      Stripe.setPublishableKey #{ENV['STRIPE_PUBLISHABLE'].to_json}
 
-    products.find('input:radio').attr('checked', false)
-    self.find('input:radio').attr('checked', true)
+    %p
+      = label_tag 'Card Number'
+      = text_field_tag nil, '', size: 20, autocomplete: 'off', class: 'card-number'
 
-    e.preventDefault()
+    %p
+      = label_tag 'CVC'
+      = text_field_tag nil, '', size: 4, autocomplete: 'off', class: 'card-cvc'
 
+    %p
+      = label_tag 'Expiration (MM/YYYY)'
+      = text_field_tag nil, '', size: 2, class: 'card-expiry-month'
+      %span /
+      = text_field_tag nil, '', size: 4, class: 'card-expiry-year'
 
+    :coffeescript
+      prices =
+        '8':   400
+        '20':  800
+        '60':  1800
+        '160': 4000
+
+      $('#new_order').submit (e) ->
+        # an amount is needed by stripe to guarentee that the charge can go
+        # through
+        amount = prices[$('input[name=hours]:checked').val()]
+
+        card =
+          number: $('.card-number').val()
+          cvc: $('.card-cvc').val()
+          exp_month: $('.card-expiry-month').val()
+          exp_year: $('.card-expiry-year').val()
+
+        Stripe.createToken card, amount, (status, response) ->
+
+          if response.error
+            alert response.error.message
+          else
+            form = $('#new_order')
+            token = response.id
+            form.append("<input type='hidden' name='stripeToken' value='" + token+"'/>")
+
+            form.get(0).submit()
+
+        e.preventDefault()
+
+  = f.submit 'Buy hours!'

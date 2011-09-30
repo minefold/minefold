@@ -12,6 +12,9 @@ class User
   field :safe_username,  type: String
   slug  :username,       index: true
 
+  field :customer_id,    type: String
+  alias_method :customer?, :customer_id?
+
   field :host, default: 'pluto.minefold.com'
 
   field :staff,          type: Boolean, default: false

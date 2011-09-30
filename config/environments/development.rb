@@ -1,5 +1,7 @@
 Minefold::Application.configure do
-  # Settings specified here will take precedence over those in config/application.rb
+
+  config.map_tiles_url = "/maps"
+
 
   # In the development environment your application's code is reloaded on
   # every request.  This slows down response time but is perfect for development
@@ -28,26 +30,22 @@ Minefold::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
-  ActiveMerchant::Billing::Base.mode = :test
-
   config.action_mailer.default_url_options = { host: 'localhost:5000' }
   config.action_mailer.delivery_method = :smtp
 
   config.action_mailer.smtp_settings = {
-    :address              => "smtp.gmail.com",
-    :port                 => 587,
-    :domain               => "minefold.com",
-    :user_name            => "admin@minefold.com",
-    :password             => "minefold",
-    :authentication       => "plain",
-    :enable_starttls_auto => true
+    address:              "smtp.gmail.com",
+    port:                 587,
+    domain:               "minefold.com",
+    user_name:            "admin@minefold.com",
+    password:             "minefold",
+    authentication:       "plain",
+    enable_starttls_auto: true
   }
 
   config.action_mailer.perform_deliveries = true
 
   config.action_mailer.raise_delivery_errors = true
-
-  config.map_tiles_url = "/maps"
 end
 
 
