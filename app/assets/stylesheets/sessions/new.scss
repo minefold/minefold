@@ -1,9 +1,3 @@
-@import 'shared';
-
-#devise-sessions-new footer.global, #devise-sessions-create footer.global {
-  text-align: center;
-}
-
 #devise-sessions-new #page, #devise-sessions-create #page {
   width: 4 * ($gutter + $col + $gutter) - (2 * $gutter);
   padding: 0 $gutter;

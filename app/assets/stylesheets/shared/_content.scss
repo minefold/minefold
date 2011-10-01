@@ -1,0 +1,34 @@
+#content {
+  line-height: 24px;
+
+  .wrapper {
+    width: cols(8) + (2 * $gutter);
+    padding: 0 (-$gutter);
+    overflow: visible;
+  }
+
+  #before-page, #page, #after-page {
+    float: left;
+  }
+
+  #before-page {
+    @include span(2);
+  }
+
+  #page {
+    @include span(6);
+  }
+
+  #after-page {
+    @include span(2);
+  }
+
+  nav {
+    float: left;
+    width: cols(2);
+  }
+
+  p, ul, ol, pre {
+    margin-bottom: 2 * $line;
+  }
+}

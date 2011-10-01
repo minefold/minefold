@@ -1,0 +1,65 @@
+- title 'Plans & Pricing'.html_safe do
+  %h1 Plans &amp; Pricing
+  %h2 Join today and you can start playing on Minefold instantly.
+
+- subhead do
+  #plans
+    .plan.free
+      .price
+        %span.dollar-sign $
+        %span.amount 0
+        %span.period / mo
+      .details
+        %h2 Free to spectate
+        %p
+          Play for <strong>5 hours free</strong> in <strong>unlimited</strong> worlds.
+
+      = link_to 'Create a free account', '/signup/free', class: 'button'
+
+    .plan.small
+      .price
+        %span.dollar-sign $
+        %span.amount 5
+        %span.period / mo
+      .details
+        %h2 Small
+        %p
+          Play for <strong>10 hours</strong> a month in <strong>unlimited</strong> worlds.
+
+      = link_to 'Create an account', '/signup/small', class: 'button'
+
+    .plan.medium
+      .price
+        %span.dollar-sign $
+        %span.amount 10
+        %span.period / mo
+      .details
+        %h2 Medium
+        %p
+          Play for <strong>40 hours</strong> a month in <strong>unlimited</strong> worlds.
+
+      = link_to 'Create an account', '/signup/medium', class: 'button'
+
+    .plan.large
+      .price
+        %span.dollar-sign $
+        %span.amount 15
+        %span.period / mo
+      .details
+        %h2 Large
+        %p
+          Play for <strong>80 hours</strong> a month in <strong>unlimited</strong> worlds.
+
+      = link_to 'Create an account', '/signup/large', class: 'button'
+
+    .plan.pro
+      .price
+        %span.dollar-sign $
+        %span.amount 30
+        %span.period / mo
+      .details
+        %h2 Pro
+        %p
+          Play for <strong>infinity hours</strong> in <strong>unlimited</strong> worlds.
+
+      = link_to 'Create a pro account', '/signup/pro', class: 'button'

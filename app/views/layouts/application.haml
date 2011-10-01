@@ -24,6 +24,8 @@
     %meta{name:'description', content:'Social Minecraft. Play with friends in the clouds.'}
     %meta{name:'keywords', content:%w(gaming games game minecraft server hosting multiplayer).join(',')}
 
+    = yield :head
+
   %body{lang: 'en', id: page_css_selector}
     %header
       .wrapper
@@ -37,6 +39,9 @@
 
     %section#masthead
       .wrapper= yield :masthead
+
+    %section#subhead
+      .wrapper= yield :subhead
 
     %section#content
       .wrapper
@@ -58,21 +63,9 @@
 
           %li= link_to 'Contact', contact_page_path
 
-          - #.spaceball
-
-          - #%li= link_to 'Jobs', jobs_path
-
           .spaceball
 
           %li= link_to 'Help', help_page_path
-
-          - #.spaceball
-
-          - #%li= link_to 'Contact', contact_path
-
-          - #.spaceball
-
-          - #%li= link_to 'Referrals', new_referral_path
 
           .spaceball
 

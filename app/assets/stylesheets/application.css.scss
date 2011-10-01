@@ -4,12 +4,11 @@
 @import 'bourbon';
 
 @import 'shared';
-@import 'shared/grid';
 @import 'shared/main';
-@import 'shared/nav';
 
 @import 'home/home';
 @import 'home/dashboard';
+
 @import 'sessions/new';
 
 @import 'worlds/header';
@@ -18,12 +17,8 @@
 @import 'worlds/new';
 @import 'worlds/upload';
 @import 'worlds/edit';
-@import 'worlds/photos';
 
 @import 'orders/orders';
 
 @import 'pages/page';
-@import 'pages/about';
-@import 'pages/contact';
-
-@import 'photos/index';
+@import 'pages/plans'

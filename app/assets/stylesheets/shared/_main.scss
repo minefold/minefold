@@ -5,12 +5,28 @@
 }
 
 ::selection {
-  background: rgba($blue, 0.4);
+  background: rgba($blue, 0.2);
   text-shadow: none;
 }
 
+html {
+  font: 400 14px/18px $helvetica;
+  min-width: $width;
+  background: white;
+}
+
+@import 'header';
+@import 'masthead';
+@import 'subhead';
+@import 'content';
+@import 'footer';
+
 strong {
   font-weight: 600;
+}
+
+em {
+  font-style: italic;
 }
 
 .spaceball, .pipe {
@@ -30,323 +46,109 @@ strong {
   content: '|';
 }
 
-
-html {
-  font: 400 14px/18px $helvetica;
-  min-width: $width;
-  background: white;
-}
-
-header {
-  overflow: auto;
-  border-bottom: 1px solid darken(white, 10%);
-
-  .wrapper {
-    overflow: auto;
-    padding-top: $line;
-    padding-bottom: $line;
-  }
-
-  h1 a, aside {
-    line-height: 24px;
-  }
-
-  h1 {
-    overflow: visible;
-    float: left;
-    margin: 0;
-    font-size: 16px;
-    letter-spacing: 0.05em;
-    line-height: 18px;
-    font-weight: 600;
-
-    a {
-      display: block;
-      color: #000;
-      text-decoration: none;
-      float: left;
-
-      margin: (-$line) 0;
-      padding: $line ($gutter/2) $line (27px + $gutter);
-      background: url(image-path('logo-24.png')) center left no-repeat;
-
-      &:hover {
-        color: $blue;
-      }
-    }
-
-    .beta {
-      color: darken(white, 20%);
-      float: right;
-      font-size: 11px;
-      line-height: 24px;
-      font-weight: 400;
-    }
-  }
-
-  aside {
-    float: right;
-    font-size: 12px;
-
-    ol {
-      overflow: auto;
-
-      li, .pipe {
-        float: left;
-        margin-left: $gutter;
-        color: #CCC;
-      }
-
-      a {
-        color: darken($blue, 10%);
-        text-decoration: none;
-        &:hover {
-          color: $blue;
-        }
-      }
-    }
-  }
-}
-
-#masthead {
-  background: darken(white, 5%);
-  overflow: auto;
-  margin-bottom: 4 * $line;
-
-  .wrapper {
-    padding: 0 $gutter;
-  }
-
-  h1 {
-    font-size: 24px;
-    line-height: 48px;
-    margin: (2 * $line) 0;
-
-    a {
-      color: black;
-      text-decoration: none;
-      &:hover {
-        color: lighten(black, 40%);
-      }
-    }
-  }
-
-  h2 {
-    margin: (-2*$line) 0 (2*$line);
-    padding-bottom: 2*$line;
-
-    font-size: 18px;
-    color: #999;
-
-    line-height: 24px;
-  }
-}
-
-#content {
+h2 {
+  margin: (3*$line) 0 $line;
   line-height: 24px;
+  font-size: 18px;
+  font-weight: 400;
+}
 
-  .wrapper {
-    width: cols(8) + (2 * $gutter);
-    padding: 0 (-$gutter);
-    overflow: auto;
+code {
+  font-family: monospace;
+}
+
+label {
+  display: block;
+}
+
+input[type=text],
+input[type=email],
+input[type=textarea],
+input[type=password] {
+  @include box-sizing(border-box);
+  font: 400 16px/18px $helvetica;
+  padding: $line ($gutter / 2);
+  margin: 0;
+}
+
+textarea {
+  @include box-sizing(border-box);
+  font: 400 14px/18px $helvetica;
+  border: 1px solid darken(white, 10%);
+  outline: none;
+  margin: 0;
+  padding: $line $gutter;
+  @include border-radius($radius);
+
+  &:hover {
+    border-color: darken(white, 20%);
   }
 
-  h2 {
-    margin: (3*$line) 0 $line;
-    line-height: 24px;
-    font-size: 18px;
-    font-weight: 500;
+  &:focus {
+    border-color: $blue;
   }
+}
 
-  p, ul, ol, pre {
-    margin-bottom: 2 * $line;
+input[type=checkbox] + label, input[type=radio] + label {
+  display: inline;
+}
+
+button, input[type=submit], a.button {
+  margin: 0;
+  border: none;
+  outline: none;
+  @include linear-gradient(rgba(white, 0.1), rgba(black, 0.1));
+  background-color: $blue;
+  color: white;
+  font: 500 12px/24px $helvetica;
+  cursor: pointer;
+  padding: ($line / 2) (2*$gutter);
+  margin-bottom: $line;
+  text-shadow: 0 1px 0 darken($blue, 20%);
+  text-decoration: none;
+
+  @include border-radius($radius);
+
+  &:hover, &:focus {
+    background-color: darken($blue, 10%);
   }
+}
 
-  ol {
-    list-style: decimal;
-  }
-
-  ol {
-    list-style: disc;
-  }
-
-  code {
-    font-family: monospace;
-  }
-
-  form {
-    label {
-      display: block;
-    }
-
-    input[type=text],
-    input[type=email],
-    input[type=textarea],
-    input[type=password] {
-      @include box-sizing(border-box);
-      font: 400 16px/18px $helvetica;
-      padding: $line ($gutter / 2);
-    }
-
-    textarea {
-      @include box-sizing(border-box);
-      font: 400 14px/18px $helvetica;
-      border: 1px solid darken(white, 10%);
-      outline: none;
-      margin: 0;
-      padding: $line $gutter;
-      @include border-radius($radius);
-
-      &:hover {
-        border-color: darken(white, 20%);
-      }
-
-      &:focus {
-        border-color: $blue;
-      }
-    }
-
-    .errors {
-      p {
-        color: $red;
-        margin-bottom: 0;
-      }
-      ol {
-        margin: 0;
-      }
-    }
-
-    section {
-      overflow: auto;
-      margin-bottom: 2*$line;
-
-      h3 {
-        float: left;
-      }
-      fieldset {
-        margin-left: cols(2);
-
-        &.inline div {
-          display: inline;
-          margin-right: $gutter;
-        }
-      }
-    }
-
-    input[type=checkbox] + label, input[type=radio] + label {
-      display: inline;
-    }
-
-
-    .field_with_errors {
+form {
+  .errors {
+    p {
       color: $red;
+      margin-bottom: 0;
     }
-
-    .note {
-      font-size: 12px;
-      color: #999;
-      line-height: 18px;
-    }
-
-    button, input[type=submit] {
+    ol {
       margin: 0;
-      border: none;
-      outline: none;
-      background: $blue;
-      color: white;
-      font: 400 12px/18px $helvetica;
-      cursor: pointer;
-      padding: ($line / 2) $gutter;
-      margin-bottom: $line;
+    }
+  }
 
-      @include border-radius($radius);
-      &:hover, &:focus {
-        background: darken($blue, 10%);
+  section {
+    overflow: auto;
+    margin-bottom: 2*$line;
+
+    h3 {
+      float: left;
+    }
+    fieldset {
+      margin-left: cols(2);
+
+      &.inline div {
+        display: inline;
+        margin-right: $gutter;
       }
     }
   }
 
-  nav {
-    float: left;
-    width: cols(2);
+  .field_with_errors {
+    color: $red;
   }
 
-  .locked {
-    background: url(image-path('lock.png')) left center no-repeat;
-    padding: (2*$line) 0;
-    padding-left: 37px + 2*$gutter;
-  }
-
-  .flash.success {
-    color: darken($green, 20%);
-    padding: ($line - $border) ($gutter - $border);
-    border: 1px solid $green;
-    @include border-radius($radius);
-    margin-bottom: 3 * $line;
-  }
-
-  #before-page {
-    @include span(2);
-//    width: cols(2);
-    float: left;
-  }
-
-  #page {
-    @include span(6);
-//    width: cols(6);
-    float: left;
-  }
-
-  #after-page {
-    @include span(2);
-    float: left;
-  }
-
-}
-
-footer {
-  text-align: center;
-  font: 12px/24px $helvetica;
-  padding: (4 * $line) 0;
-  color: #CCC;
-
-  ul {
-    li {
-      display: inline;
-      a {
-        color: #666;
-        text-decoration: none;
-        &:hover {
-          color: black;
-        }
-      }
-      &.spaceball {
-        @include inline-block;
-        width: $gutter;
-      }
-
-      &.facebook a {
-        background: url(image-path('facebook.png')) left center no-repeat;
-        padding-left: 12px + ($gutter/2);
-      }
-
-      &.twitter a {
-        background: url(image-path('twitter.png')) left center no-repeat;
-        padding-left: 12px + ($gutter/2);
-      }
-
-    }
-  }
-  .fineprint {
-    color: #CCC;
-    a {
-      color: #CCC;
-      text-decoration: none;
-      &:hover {
-        text-decoration: underline;
-      }
-    }
+  .note {
+    font-size: 12px;
+    color: #999;
+    line-height: 18px;
   }
 }
-
-

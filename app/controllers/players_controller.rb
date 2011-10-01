@@ -1,6 +1,6 @@
 class PlayersController < ApplicationController
 
-  expose(:owner) {User.find_by_slug!(params[:user_id])}
+  expose(:creator) {User.find_by_slug!(params[:user_id])}
   expose(:world) {owner.owned_worlds.find_by_slug!(params[:world_id])}
   expose(:player) do
     world.members.find_by_slug(params[:id]) or

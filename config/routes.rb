@@ -17,23 +17,25 @@ Minefold::Application.routes.draw do
   end
 
   # Static Pages
-  { '/about'   => 'about',
-    '/jobs' => 'jobs',
-    '/contact' => 'contact',
-    '/help'    => 'help',
-    '/privacy' => 'privacy',
-    '/terms'   => 'terms'
+  { '/plans'    => 'plans',
+    '/features' => 'features',
+    '/about'    => 'about',
+    '/jobs'     => 'jobs',
+    '/contact'  => 'contact',
+    '/help'     => 'help',
+    '/privacy'  => 'privacy',
+    '/terms'    => 'terms'
   }.each do |url, name|
     get url => 'high_voltage/pages#show', :id => name, :as => "#{name}_page"
   end
 
   # Authentication
   devise_for :users, :skip => [:sessions, :registrations, :passwords] do
-    get    '/sign-in' => 'devise/sessions#new', :as => :new_user_session
-    post   '/sign-in' => 'devise/sessions#create', :as => :user_session
-    delete '/sign-out' => 'devise/sessions#destroy', :as => :destroy_user_session
+    get    '/login' => 'devise/sessions#new', :as => :new_user_session
+    post   '/logout' => 'devise/sessions#create', :as => :user_session
+    delete '/logout' => 'devise/sessions#destroy', :as => :destroy_user_session
 
-    get  '/sign-up' => 'users#new', :as => :new_user
+    get  '/signup/:plan' => 'users#new', :as => :new_user
     post '/users' => 'users#create', :as => :users
   end
 

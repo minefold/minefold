@@ -1,19 +1,12 @@
 @import 'shared';
 
-#worlds-show #masthead,
-#worlds-map #masthead,
-#players-index #masthead,
-#worlds-edit #masthead {
-  background: darken(white, 5%) url(image-path('world-watermark.png')) right 24px no-repeat;
-
-  .wrapper {
-    position: relative;
-  }
+#worlds-show #subhead,
+#worlds-map #subhead,
+#players-index #subhead,
+#worlds-edit #subhead {
 
   aside {
-    position: absolute;
-    top: 0;
-    right: 0;
+    float: right;
     margin: (2*$line) $gutter;
     text-align: right;
 
@@ -68,7 +61,6 @@
     li {
       display: block;
       float: left;
-      color: #CCC;
       cursor: pointer;
       margin-right: 1px;
     }
@@ -78,20 +70,21 @@
       color: black;
       text-decoration: none;
       line-height: 18px;
+      @include border-radius($radius $radius 0 0);
 
       &:hover {
-        background: white;
+        background-color: darken(white, 10%);
       }
     }
   }
 
 }
 
-#worlds-show #masthead .chat,
-#worlds-map #masthead .map,
-#players-index #masthead .players,
-#worlds-edit #masthead .edit {
+#worlds-show #subhead .chat,
+#worlds-map #subhead .map,
+#players-index #subhead .players,
+#worlds-edit #subhead .edit {
   a {
-    background: white;
+    background: darken(white, 5%);
   }
 }

@@ -1,37 +1,47 @@
-%h1
-  = link_to world.name, world
+- masthead do
+  %h1
+    = link_to world.name, world
 
-%aside
-  - if signed_in?
-    .meta
-      - if world.member?(current_user)
+  %aside
+    - if signed_in?
+      - if world.whitelisted?(current_user)
         - if current_user.current_world == world
-          .connection-info
+          %p
             Connect to
             %strong= current_user.host
-          .help
+          %p.help
             = link_to help_page_path(anchor: 'connecting') do
               Don't know how to connect?
         - else
-          = button_to 'Play in this world', [:play, world], method: :put
+          = button_to 'Play here', [:play, world], method: :put
 
       - else
-        - if world.invites.where(from: current_user).exists?
-          .connection-info Waiting for #{world.owner.username} to let you play…
+        - if false #world.wait_list.include?(current_user)
+          %p Waiting for #{world.owner.username}
         - else
           = button_to 'Ask to play here', [world, :players], method: :put
 
+    - else
+      Hey! #{world.creator.username}
+      - if world.whitelisted_players.size.zero?
+        is playing here.
+      - else
+        and #{pluralize world.whitelisted_players.size, 'person', 'people'} are playing here.
 
-%ol#subnav
-  %li.chat
-    = link_to 'Chat', world
+      = link_to 'Sign up', plans_page_path
+      to play here too.
 
-  %li.map
-    = link_to 'Map', [:map, world]
+- subhead do
+  %ol#subnav
+    %li.chat
+      = link_to 'Chat', world
 
-  %li.players
-    = link_to 'Players', [world, :players]
+    %li.map
+      = link_to 'Map', [:map, world]
 
-  - if signed_in? and world.creator == current_user
-    %li.edit
-      = link_to 'Settings', [:edit, world]
+    %li.players
+      = link_to 'Players', [world, :players]
+
+    - if signed_in? and world.creator == current_user
+      %li.edit
+        = link_to 'Settings', [:edit, world]

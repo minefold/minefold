@@ -12,10 +12,10 @@ $pad:    20px;
 $col:    $pad + 20px + $pad;
 $ncols:  8;
 
-$radius: 2px;
+$radius: 3px;
 $border: 1px;
 
-$width: 10 * ($gutter + $col + $gutter);
+$width: $ncols * ($gutter + $col + $gutter);
 
 
 // Colors

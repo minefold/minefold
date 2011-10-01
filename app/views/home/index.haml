@@ -7,7 +7,7 @@
       = image_tag user.skin.avatar.s60, width: 60, height: 60, alt: user.username
 
   .center
-    %h1 Play Minecraft with friends!
+    %h1 Play Minecraft with your friends!
 
     .copy
       %p
@@ -16,26 +16,7 @@
         We make it super simple to play together: no more nerdy stuff.
 
     .signup
-      - if User.free_spots?
-        = link_to 'Sign up now', new_user_path
-
-        %p.spots
-          Only
-          %strong= number_with_delimiter User.free_spots
-          free spots left
-
-
-      - else
-        = form_tag 'http://minefold.createsend.com/t/r/s/qjhfu', method: :post, class: 'puturnamedown' do
-          %div
-            %p
-              %strong We're full up!
-              Pop your email down and you'll be next in line.
-
-            = email_field_tag 'cm-qjhfu-qjhfu', nil, placeholder: 'email@example.com', id: 'qjhfu-qjhfu'
-
-            %button
-              = ['Algebraic!', 'Rhombus!', 'Mathematical!'].shuffle.first
+      = link_to 'Plans, Pricing & Signup', plans_page_path
 
   .right
     - @users[11...14].each do |user|

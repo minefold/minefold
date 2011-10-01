@@ -1,4 +1,4 @@
-- title  'Sign in'
+- title  'Login'
 
 - if flash[:alert]
   #errors
@@ -14,7 +14,7 @@
     = f.password_field :password, tabindex: 2
 
   .signin
-    = f.submit 'Sign in', tabindex: 4
+    = f.submit 'Login', tabindex: 4
     .remember-me
       = f.check_box :remember_me, tabindex: 3
       = f.label :remember_me

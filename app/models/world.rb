@@ -3,31 +3,29 @@ class World
   include Mongoid::Timestamps
   include Mongoid::Slug
 
+  GAME_MODES = [:survival, :creative]
+  DIFFICULTIES = [:peaceful, :easy, :normal, :hard]
+
   field :name,    type: String
   slug  :name,    scope: :owner, index: true
 
-  field :public_activity, type: Boolean, default: true
-
-  field :seed,           type: String, default: ''
-  field :game_mode,      type: Integer, default: 0
-  field :difficulty,     type: Integer, default: 1
-  field :pvp,            type: Boolean, default: true
-  field :spawn_monsters, type: Boolean, default: true
-  field :spawn_animals,  type: Boolean, default: true
+  field :seed,             type: String, default: ''
+  field :game_mode,        type: Integer, default: GAME_MODES.index(:survival)
+  # TODO: Create migration
+  field :difficulty_level, type: Integer, default: DIFFICULTIES.index(:easy)
+  field :pvp,              type: Boolean, default: true
+  field :spawn_monsters,   type: Boolean, default: true
+  field :spawn_animals,    type: Boolean, default: true
 
   field :last_mapped_at, type: DateTime
 
+
   belongs_to :creator, class_name: 'User'
-  belongs_to :owner, class_name: 'User'
-
-  has_and_belongs_to_many :members, inverse_of: :memberships, class_name: 'User'
-  embeds_many :invites
-
+  has_and_belongs_to_many :whitelisted_players,
+                          inverse_of: :whitelisted_worlds,
+                          class_name: 'User'
 
   embeds_many :wall_items, as: :wall
-
-  embeds_many :world_photos, class_name: 'WorldPhoto', cascade_callbacks: true
-  accepts_nested_attributes_for :world_photos, destroy: true
 
 
 # VALIDATIONS
@@ -36,59 +34,53 @@ class World
   validates_numericality_of :game_mode,
     only_integer: true,
     greater_than_or_equal_to: 0,
-    less_than_or_equal_to: 1
+    less_than: GAME_MODES.size
 
   validates_numericality_of :difficulty,
     only_integer: true,
     greater_than_or_equal_to: 0,
-    less_than_or_equal_to: 3
+    less_than: DIFFICULTIES.size
 
 
 # SETTINGS
 
-  def creative?
-    game_mode == 1
+  GAME_MODES.each do |mode|
+    define_method("#{mode}?") do
+      GAME_MODES[game_mode] == mode
+    end
   end
 
-  def survival?
-    game_mode == 0
+  def difficulty
+    DIFFICULTIES[difficulty]
   end
 
-  def difficulty_label
-    %w{peaceful easy normal hard}[difficulty]
+  DIFFICULTIES.each do |difficulty|
+    define_method("#{difficulty}?") do
+      DIFFICULTIES[difficulty_level] == difficulty
+    end
   end
+
 
 # PLAYERS
 
-  def member?(user)
-    owner == user or members.include?(user)
+  def whitelisted?(user)
+    creator == user or whitelisted_players.include?(user)
   end
 
-  # accepts_nested_attributes_for :whitelist
-  # def fucking_whitelist_ids=(vals)
-  #   self.whitelisted_players = vals.map {|v| User.find(v) }
-  # end
-
-
-  def connected_player_ids
-    REDIS.smembers("#{redis_key}:connected_players")
+  def current_players
+    User.find current_player_ids
   end
 
-  def connected_players
-    User.find connected_player_ids
+  def current_players_count
+    current_player_ids.size
   end
 
-  def connected_players_count
-    connected_player_ids.size
-  end
 
 # COMMUNICATION
 
-  def send_cmd(str)
-    REDIS.publish("#{redis_key}:stdin", str)
+  def broadcast(event_name, data, socket_id=nil)
+    pusher_channel.trigger event_name, data, socket_id
   end
-
-  private(:send_cmd)
 
   def say(msg)
     send_cmd "say #{msg}"
@@ -99,45 +91,39 @@ class World
   end
 
 
-# MEDIA
+# MAPS
 
   def mapped?
     not last_mapped_at.nil?
   end
 
-  # def photos
-  #   wall_items.each_with_object([]) do |item, photos|
-  #     (item.media || []).each_with_object(photos) do |media, photos|
-  #       photos << media if media['type'] == 'photo'
-  #     end
-  #   end
-  # end
 
-  def broadcast(event_name, data, socket_id=nil)
-    pusher_channel.trigger event_name, data, socket_id
-  end
+# OTHER
 
   def pusher_channel
     Pusher[pusher_key]
   end
 
   def pusher_key
-    # TODO Change to collection.name
-    "#{self.class.name.downcase}-#{id}"
+    "#{collection.name.downcase}-#{id}"
   end
 
   def redis_key
-    "#{collection.name}:#{id}"
+    "#{collection.name.downcase}:#{id}"
   end
 
   def to_param
     slug.to_param
   end
 
-protected
+private
 
-  def self.default
-    where(name: 'Minefold').cache.first
+  def current_player_ids
+    REDIS.smembers("#{redis_key}:connected_players")
+  end
+
+  def send_cmd(str)
+    REDIS.publish("#{redis_key}:stdin", str)
   end
 
 end

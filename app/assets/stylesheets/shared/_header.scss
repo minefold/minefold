@@ -1,0 +1,75 @@
+header {
+  overflow: auto;
+  border-bottom: 1px solid darken(white, 10%);
+
+  .wrapper {
+    overflow: auto;
+    padding-top: $line;
+    padding-bottom: $line;
+  }
+
+  h1 a, aside {
+    line-height: 24px;
+  }
+
+  h1 {
+    overflow: visible;
+    float: left;
+    margin: 0;
+    font-size: 16px;
+    letter-spacing: 0.05em;
+    line-height: 18px;
+    font-weight: 600;
+
+    a {
+      display: block;
+      color: #000;
+      text-decoration: none;
+      float: left;
+
+      margin: (-$line) 0;
+      padding: $line ($gutter/2) $line (27px + $gutter);
+      background: url(image-path('logo-24.png')) center left no-repeat;
+
+      &:hover {
+        color: $blue;
+      }
+    }
+
+    .beta {
+      color: darken(white, 20%);
+      float: right;
+      font-size: 11px;
+      line-height: 24px;
+      font-weight: 400;
+    }
+  }
+
+  aside {
+    float: right;
+    font-size: 12px;
+
+    ol {
+      overflow: auto;
+
+      li, .pipe {
+        float: left;
+        margin-left: $gutter;
+        color: #CCC;
+      }
+
+      a {
+        color: darken($blue, 10%);
+        text-decoration: none;
+        &:hover {
+          color: $blue;
+        }
+      }
+
+      .profile img {
+        display: block;
+        border-radius: $radius;
+      }
+    }
+  }
+}

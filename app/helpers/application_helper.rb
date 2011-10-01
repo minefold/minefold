@@ -11,10 +11,6 @@ module ApplicationHelper
     {style: 'display:none'}
   end
 
-  def time_left_in_worlds user
-    "#{user.hours}:#{user.minutes}"
-  end
-
   def template(name, options)
     view = Mustache.new
     view.template_name = name.to_sym
@@ -52,17 +48,21 @@ module ApplicationHelper
     content_tag(:iframe, nil, width: 480, height: 390, src: "#{Videos.sample}?rel=0", frameborder: 0, allowfullscreen: true).html_safe
   end
 
-  def placekitty(opts={})
-    image_tag "//placekitten.com/#{opts[:width]}/#{opts[:height]}", opts
-  end
-
-  def title page_title, header_title=page_title, &blk
+  def title page_title, masthead_title=page_title, &blk
     content_for :title, page_title.to_s
     if block_given?
-      content_for :masthead, capture_haml(&blk)
+      masthead &blk
     else
-      content_for :masthead, content_tag(:h1, header_title)
+      content_for :masthead, content_tag(:h1, masthead_title)
     end
+  end
+
+  def masthead &blk
+    content_for :masthead, capture_haml(&blk)
+  end
+
+  def subhead &blk
+    content_for :subhead, capture_haml(&blk)
   end
 
   def before &blk
@@ -71,6 +71,14 @@ module ApplicationHelper
 
   def after &blk
     content_for :after, &blk
+  end
+
+  def current_user_needs_help?
+    current_user.first_sign_in? and
+    not (
+      current_user.current_world or
+      not current_user.whitelisted_worlds.empty?
+    )
   end
 
 end

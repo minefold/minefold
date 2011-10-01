@@ -1,0 +1,45 @@
+footer {
+  clear: both;
+  text-align: center;
+  font: 12px/24px $helvetica;
+  padding: (4 * $line) 0;
+  color: #CCC;
+
+  ul {
+    li {
+      display: inline;
+      a {
+        color: #666;
+        text-decoration: none;
+        &:hover {
+          color: black;
+        }
+      }
+      &.spaceball {
+        @include inline-block;
+        width: $gutter;
+      }
+
+      &.facebook a {
+        background: url(image-path('facebook.png')) left center no-repeat;
+        padding-left: 12px + ($gutter/2);
+      }
+
+      &.twitter a {
+        background: url(image-path('twitter.png')) left center no-repeat;
+        padding-left: 12px + ($gutter/2);
+      }
+
+    }
+  }
+  .fineprint {
+    color: #CCC;
+    a {
+      color: #CCC;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

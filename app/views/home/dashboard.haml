@@ -1,6 +1,11 @@
-- title  'Dashboard'
+- title  'Dashboard' do
+  %h1 Dashboard
 
-- if current_user.first_sign_in? and not (current_user.current_world or !current_user.memberships.empty?)
+  .create{hidden}
+    = link_to 'Create a new world', new_worlds_path, class: 'new'
+    = link_to 'Upload an existing world', new_upload_path, class: 'import'
+
+- if current_user_needs_help?
   .welcome
     .heart &hearts;
     %h2
@@ -21,7 +26,7 @@
               = link_to world do
                 - if world == current_user.current_world
                   .current
-                %span.user= world.owner.username
+                %span.user= world.creator.username
                 %span.slash /
                 %strong= world.name
 
@@ -39,8 +44,3 @@
                 %span.user= world.owner.username
                 %span.slash /
                 %strong= world.name
-
-.create-world
-  = link_to 'Create a new world', new_worlds_path, class: 'new'
-  = link_to 'Upload an existing world', new_upload_path, class: 'import'
-

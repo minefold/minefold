@@ -24,8 +24,6 @@ class WallItemsController < ApplicationController
     end
   end
 
-  statsd_count_success :create, 'WallItemsController.create'
-
   def page
     render :json => world.wall_items.paginate(page: params[:page].to_i).map(&:to_hash)
   end

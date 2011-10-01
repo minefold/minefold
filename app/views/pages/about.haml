@@ -3,17 +3,17 @@
 - before do
   %nav.about-page= render partial: 'pages/nav'
 
-%p.story Minefold was founded in mid 2011 by Dave Newman and Chris Lloyd, two software developers with a love of Minecraft.
+%p.byline Minefold was founded in 2011 by Dave Newman and Chris Lloyd, two nerds who love to play Minecraft.
 
-%p We happily played Minecraft together for months. Being nerds we had rented a server, SSH'd in, configured a RAM disk, run the JVM and oh God my brain hurts. It was all too complicated. It was just a matter of time before Chris mistyped a command and all our hard work was lost.
+%p We happily played Minecraft together for months. Dave built this wicked rollercoaster and Chis was exploring the outer edges of an infinite universe. It was beautiful. We had rented a server, setup SSH access, configured a RAM disk, monitored the JVM and <em>oh God my brain hurts</em>. It was all too complicated. It wasn't long before Chris mistyped a command and all our hard work was lost.
 
-%p From that moment on we decided to rid the world of Minecraft servers and let people focus on having fun and building awesome stuff!
+%p After we had wiped away the tears, we decided to rid the world of boring, difficult Minecraft hosting and let people just have fun building awesome stuff!
 
-%h2 The Founders
+%h2 The Team
 
 .founder.dave
   = image_tag 'dave-portrait.png', width: 48, height: 48
-  %p <strong>Dave</strong> is the closest thing you'll find to the “rockstar programmer” cliché. When not immersing himself in various programming languages and working on tricky back-end problems, he can often be found shirtless in #{link_to 'Ding Dong Dang', 'http://www.au.timeout.com/sydney/bars/venues/2178/ding-dong-dang'} singing karaoke with his eyes closed.
+  %p <strong>Dave</strong> is the closest thing you'll find to the “rockstar programmer” cliché. When he's taking time out from learning new programming languages or working on a tricky back-end problem, he can often be found shirtless in #{link_to 'Ding Dong Dang', 'http://www.au.timeout.com/sydney/bars/venues/2178/ding-dong-dang'} singing karaoke with his eyes closed.
 
   %p.contact
     = link_to '@whatupdave', '//twitter.com/whatupdave'
@@ -21,7 +21,7 @@
 
 .founder.chris
   = image_tag 'chris-portrait.png', width: 48, height: 48
-  %p <strong>Chris</strong> has always seen himself as a slashie. That's Designer / Developer, not the other way around. Chris is passionate about clean design, minimalism and hipster music.
+  %p <strong>Chris</strong> has always seen himself as a slashie. That's Designer / Developer, not the other way around. Chris is passionate about clean design, minimalism and hipster music. He'd share a band with you but you wouldn't have heard of them yet.
 
   %p.contact
     = link_to '@chrislloyd', '//twitter.com/chrislloyd'
@@ -29,6 +29,8 @@
 
 
 %h2 Logo
+
+%p Our logo was graciously designed by #{link_to 'Cameron Adams', '//twitter.com/themaninblue'}.
 
 %ol
   %li= link_to 'Raster (PNG)', image_path('minefold-logo.png')

@@ -1,17 +1,13 @@
 class WorldsController < ApplicationController
-
   prepend_before_filter :authenticate_user!, except: [:show, :map]
 
-  expose(:user) { User.find_by_slug!(params[:user_id])}
+  expose(:creator) { User.find_by_slug!(params[:user_id])}
+  expose(:world) {creator.created_worlds.find_by_slug!(params[:id])}
 
-  expose(:worlds)
-  expose(:world) do
-    user.owned_worlds.find_by_slug!(params[:id])
-  end
+  respond_to :html
 
   def new
-    @world = World.new
-    @world.creator = current_user
+    world.creator = current_user
   end
 
   def create
@@ -30,10 +26,7 @@ class WorldsController < ApplicationController
   end
 
   def show
-    respond_to do |format|
-      format.html
-      format.json { render json:world }
-    end
+    respond_with world
   end
 
   def edit
@@ -70,7 +63,7 @@ class WorldsController < ApplicationController
 
   def play_request
     @invite = world.invites.create from: current_user, to: world.owner
-    
+
     # WorldMailer.play_request(world.id,
     #                          world.owner.id,
     #                          current_user.id).deliver
@@ -97,16 +90,6 @@ class WorldsController < ApplicationController
 
     render layout:false
   end
-
-protected
-
-  # statsd_count_success :create, 'WorldsController.create'
-  # statsd_count_success :show, 'WorldsController.show'
-  # statsd_count_success :update, 'WorldsController.update'
-  # statsd_count_success :chat, 'WorldsController.chat'
-  # statsd_count_success :photos, 'WorldsController.photos'
-  # statsd_count_success :play, 'WorldsController.play'
-  # statsd_count_success :play_request, 'WorldsController.play_request'
 
 private
 
