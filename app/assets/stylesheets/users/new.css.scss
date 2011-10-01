@@ -1,40 +1,10 @@
-@import 'shared/vars';
+#users-new {
+  #page, #after-page {
+    @include span(4);
 
-#registrations
-
-#registrations-new #content, #registrations-create #content {
-  text-align: center;
-
-  h2 {
-    font-size: 14px;
-    line-height: 4 * $line;
-    font-weight: 600;
-    margin: $line 0 (2 * $line) 0;
-  }
-
-  p {
-    margin-bottom: 2 * $line;
-  }
-
-  .note {
-    font-size: 12px;
-    line-height: 18px;
-    color: #999;
-  }
-
-  input[type=email], input[type=password], input[type=text] {
-    font: 400 14px/18px $helvetica;
-    margin: $line ($gutter - 2px);
-    border: 2px solid darken(white, 10%);
-    border-radius: $radius;
-    outline: none;
-    &:focus {
-      border-color: $blue;
+    input[type=email], input[type=text], input[type=password] {
+      width: 100%;
     }
   }
 
-
-  .remember-me label {
-    display: inline;
-  }
 }

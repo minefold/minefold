@@ -7,10 +7,14 @@ class User
   BILLING_PERIOD = 1.minute
   FREE_HOURS     = 1
 
+  PLANS = %W{small medium large pro}
+
   field :email,          type: String
   field :username,       type: String
   field :safe_username,  type: String
   slug  :username,       index: true
+
+  field :plan, type: String
 
   field :customer_id,    type: String
   alias_method :customer?, :customer_id?
@@ -61,17 +65,23 @@ class User
                   :remember_me
 
 
-# SIGNUPS
+# PLANS
 
-  SPOTS = 500
-
-  def self.free_spots
-    SPOTS - count
+  def paying?
+    PLANS.include?(plan)
   end
 
-  def self.free_spots?
-    free_spots > 0
+  def customer?
+    customer_id?
   end
+
+  def self.paid_for_minecraft?(username)
+    response = RestClient.get "http://www.minecraft.net/haspaid.jsp", params: {user: username}
+    return response == 'true'
+  rescue RestClient::Exception
+    false
+  end
+
 
 
 # CREDITS

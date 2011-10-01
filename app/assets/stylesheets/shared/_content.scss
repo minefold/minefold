@@ -31,4 +31,16 @@
   p, ul, ol, pre {
     margin-bottom: 2 * $line;
   }
+
+  label {
+    font-weight: 600;
+  }
+
+  a {
+    color: $blue;
+    text-decoration: none;
+    &:hover {
+      color: darken($blue, 10%);
+    }
+  }
 }

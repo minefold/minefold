@@ -4,8 +4,6 @@ class UsersController < ApplicationController
   prepend_before_filter :require_no_authentication, :only => [:new, :create]
   prepend_before_filter :authenticate_user!, :only => [:dashboard, :edit, :update]
 
-  before_filter :check_spots_left, :only => [:new, :create]
-
   expose(:user)
 
   def show
@@ -14,6 +12,14 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    @user.plan = params[:plans]
+  end
+
+  def check
+    render json: {
+      username: params[:username],
+      paid: User.paid_for_minecraft?(params[:username])
+    }
   end
 
   def create

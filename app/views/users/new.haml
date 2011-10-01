@@ -1,4 +1,18 @@
-- title  'Sign Up'
+- title  'Sign up for Minefold'
+
+- subhead do
+  #plans
+    - case params[:plan]
+    - when 'free'
+      .plan{class: params[:plan]}
+        .price
+          %span.dollar-sign $
+          %span.amount 0
+          %span.period / mo
+        .details
+          %h2 You are signing up for the free plan
+          %p
+            You can upgrade or downgrade at any time.
 
 = form_for @user do |f|
   - unless @user.errors.empty?
@@ -12,21 +26,40 @@
           %strong= key
           = desc
 
-  %p
+  %section
     = f.label :email
     = f.email_field :email
 
-  %p
+  %section
     = f.label :username, 'Minecraft Username'
     = f.text_field :username
+    :coffeescript
+      username = $('input#user_username')
+      fetchUser = ->
+        $.getJSON '/signup/check', {
+            username: username.val()
+          }, (data, status) ->
+            username.siblings('.hint').toggle(not data.paid)
 
-  %p
+      username.keydown _.debounce(fetchUser, 300)
+
+    .hint{hidden}
+      %p
+        A paid Minecraft account is needed to play on Minefold. You can buy  one at
+        %a{href: 'http://minecraft.com/store', target: '_blank'} http://minecraft.com/store
+        or you can change your username later.
+
+  %section
     = f.label :password
     = f.password_field :password
 
-  %p
-    = f.label :password_confirmation
+  %section
+    = f.label :password_confirmation, 'Confirm Password'
     = f.password_field :password_confirmation
 
-  %p
-    = f.submit "Sign up"
+  - after do
+    - if @user.paying?
+      Visa, MasterCard, American Express, Discover, JCB, and Diners Club
+
+  %section
+    = f.submit 'Create an account'

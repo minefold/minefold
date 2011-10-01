@@ -35,6 +35,7 @@ Minefold::Application.routes.draw do
     post   '/logout' => 'devise/sessions#create', :as => :user_session
     delete '/logout' => 'devise/sessions#destroy', :as => :destroy_user_session
 
+    get  '/signup/check' => 'users#check'
     get  '/signup/:plan' => 'users#new', :as => :new_user
     post '/users' => 'users#create', :as => :users
   end
