@@ -3,43 +3,53 @@
 - before do
   %nav.help-page= render partial: 'pages/nav'
 
-
 %p.note
-  If you are having problems that are not covered here, email
-  = mail_to 'support@minefold.com'
-  and we'll get back to you straight away.
+  If you have any problems or questions that are not covered here, please email #{mail_to 'support@minefold.com'} and we'll get back to you straight away.
 
 %dl#faq
-  %dt#username It keeps on saying the connection was terminated
+  %dt#minecraft Do I need a copy of Minecraft to play?
   %dd
-    Check that the username you've entered on Minefold is the same as the username you're using in Minecraft. If it's not you can change your username in the account tab.
+    %p Yes. You can buy a copy for €15 from #{link_to 'http://minecraft.net'}.
 
-  %dt#connecting How do I play in a world I've joined?
+  %dt#connecting How do I play in a world?
   %dd
-    %p First make sure you have purchased and downloaded a copy of #{link_to 'Minecraft', '//minecraft.net'}.
+    - if signed_in?
+      - if current_user.current_world
+        %p To connect to #{link_to current_user.current_world.name, current_user.current_world} you need to open Minecraft, select “Multiplayer” and add a server with the address <strong>#{current_user.host}</strong>.
 
-    %p
-      To connect to the world you have joined on the website, run Minecraft, select multiplayer and add the server with the address on the world page.
-      - if signed_in? and current_user.current_world
-        For you this will be <strong><code>#{current_user.host}</code></strong>.
+      - else
+        %p First you need to either #{link_to 'create a new world', new_worlds_path} or ask a friend to invite you to one of their worlds. Once you have done that, open Minecraft, select “Multiplayer” and add a server with the address <strong>#{current_user.host}</strong>.
 
-        %p When you connect to this server you'll be dropped into the <strong>#{current_user.current_world.name}</strong> world.
+    - else
+      %p When you select a world to play in, you'll be given an address to connect to. Open Minecraft, select “Multiplayer” and add a server with that same address.
 
-    = image_tag 'help/join.png', width: '100%'
+    %p You only need to do this once, no matter what world you choose to play in. If you change the world you want to play in, next time you connect you'll automatically be dropped into that world.
 
-  %dt#howtoplay So I'm in the game, what do I do now?
+    %figure
+      = image_tag 'help/join.png', width: '100%'
+
+  %dt#firstnight So I'm in the game, what do I do now?
   %dd
-    Minecraft is all about exploration and creativity. We recommend you build a small house so you can survive your first night. There is a great #{link_to 'series of videos', '//minecraft.net/game/howtoplay'} on the Minecraft website.
+    %p Minecraft is all about exploration and creativity. You can do anything! It's a good idea to build a small house so that you can survive the first night. For more detailed help, there is a great #{link_to 'series of videos', '//minecraft.net/game/howtoplay'} on the official Minecraft website.
 
-  %dt#spawnprotection Blocks keep on reappearing
-  %dd Make sure you aren't digging too close to where your player spawns. Minecraft makes sure this area doesn't get tampered with. Sometimes nasty people put lava where you spawn so you die as soon as you spawn.
+  %dt#version What version of Minecraft are you using?
+  %dd
+    - # TODO Make dynamic.
+    %p We currently support Minecraft 1.8.1.
+
+  %dt#updating What happens when a new version of Minecraft comes out?
+  %dd
+    %p Our servers automatically update themselves to the latest version of Minecraft. When Minecraft releases an update your worlds will also be updated.
+
+  %dt#bukkit Can I run a Bukkit server?
+  %dd
+    %p No. We're investingating supporting Bukkit, but for the moment we only support the offical Minecraft server.
+
+  %dt#spawnprotection Why do blocks keep reappearing?
+  %dd This happens if you dig too close to where you spawned. Minecraft does this to ensure the area doesn't get “griefed”. Sometimes people will do nasty things like placing a big lava pool there so other players die as soon as they join. Ouch!
 
   %dt#chunkerrors Big chunks of the world are missing
-  %dd Chunk errors happen sometimes but you can still play the game if you just walk around them. To fix them you can try waiting it out or disconnecting and reconnecting. As a last resort you can try killing your player by pressing <code>T</code> and entering <code>/kill</code>. Be careful before you do this or obvious reasons!
+  %dd Chunk errors can happen sometimes but it they don't affect your world. You can simply walk around them and everything should be fine. You can try and fix them by either waiting it out or disconnecting and reconnecting to the world. You can also try killing your player by typing <code>t</code> and entering the <code>/kill</code> command. Only do this as a last resort!
 
   %dt#downloading Can I download my world?
   %dd Yes, if you'd like an archive of your world, send an email to #{mail_to 'support@minefold.com'}.
-
-  %dt#specs How much RAM am I paying for?
-  %dd Using our unique technology every world has up to 64 GB of RAM available.
-
