@@ -121,7 +121,10 @@
         Stripe.createToken card, amount, (status, response) ->
 
           if response.error
-            alert response.error.message
+            $('<p></p>')
+              .text(response.error.message)
+              .appendTo form.find('.errors')
+
           else
             form = $('#new_order')
             token = response.id

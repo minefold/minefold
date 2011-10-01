@@ -1,65 +1,197 @@
 - title  'Sign up for Minefold'
 
+- masthead do
+  %aside
+    = link_to 'Log in to an existing account', new_user_session_path, class: 'button muted'
+
 - subhead do
   #plans
-    - case params[:plan]
-    - when 'free'
-      .plan{class: params[:plan]}
+    .plan{class: user.plan}
+      - case user.plan
+      - when 'free'
         .price
           %span.dollar-sign $
           %span.amount 0
           %span.period / mo
         .details
-          %h2 You are signing up for the free plan
+          %h2 You are signing up for our free plan
           %p
-            You can upgrade or downgrade at any time.
+            You can upgrade at any time.
 
-= form_for @user do |f|
-  - unless @user.errors.empty?
-    .errors
+      - when 'small'
+        .price
+          %span.dollar-sign $
+          %span.amount 5
+          %span.period / mo
+        .details
+          %h2 You are signing up for our small plan
+          %p
+            This plan is <strong>$5 per month</strong>. You can upgrade or downgrade at any time.
+
+
+      - when 'medium'
+        .price
+          %span.dollar-sign $
+          %span.amount 10
+          %span.period / mo
+        .details
+          %h2 You are signing up for our medium plan
+          %p
+            This plan is <strong>$10 per month</strong>. You can upgrade or downgrade at any time.
+
+      - when 'large'
+        .price
+          %span.dollar-sign $
+          %span.amount 15
+          %span.period / mo
+        .details
+          %h2 You are signing up for our large plan
+          %p
+            This plan is <strong>$15 per month</strong>. You can upgrade or downgrade at any time.
+
+      - when 'pro'
+        .price
+          %span.dollar-sign $
+          %span.amount 30
+          %span.period / mo
+        .details
+          %h2 You are signing up for our Pro plan
+          %p
+            This plan is <strong>$30 per month</strong>. You can downgrade at any time.
+
+
+= form_for user do |f|
+  = f.hidden_field :plan
+
+  .errors
+    - unless user.errors.empty?
       %p
-        %strong Whoops!
-        Your:
+        Whoops a daisy! Your:
       %ol
-      - @user.errors.each do |key, desc|
-        %li
-          %strong= key
-          = desc
+        - @user.errors.each do |key, desc|
+          %li
+            %strong= key
+            = desc
 
   %section
     = f.label :email
-    = f.email_field :email
+    = f.email_field :email, tabindex: 1
 
   %section
     = f.label :username, 'Minecraft Username'
-    = f.text_field :username
+    = f.text_field :username, tabindex: 2
     :coffeescript
       username = $('input#user_username')
       fetchUser = ->
-        $.getJSON '/signup/check', {
-            username: username.val()
-          }, (data, status) ->
-            username.siblings('.hint').toggle(not data.paid)
+        u = username.val()
+        if u isnt ''
+          $.getJSON '/signup/check', {username: u}, (data, status) ->
+              username.siblings('.hint').toggle(not data.paid)
 
-      username.keydown _.debounce(fetchUser, 300)
+      username.keyup _.debounce(fetchUser, 300)
 
     .hint{hidden}
       %p
-        A paid Minecraft account is needed to play on Minefold. You can buy  one at
-        %a{href: 'http://minecraft.com/store', target: '_blank'} http://minecraft.com/store
+        You need a <em>paid</em> Minecraft account to play on Minefold. They are €14.95 at
+        %a{href: 'http://minecraft.net/store', target: '_blank'} http://minecraft.com/store
         or you can change your username later.
 
   %section
     = f.label :password
-    = f.password_field :password
+    = f.password_field :password, tabindex: 3
 
   %section
     = f.label :password_confirmation, 'Confirm Password'
-    = f.password_field :password_confirmation
-
-  - after do
-    - if @user.paying?
-      Visa, MasterCard, American Express, Discover, JCB, and Diners Club
+    = f.password_field :password_confirmation, tabindex: 4
 
   %section
-    = f.submit 'Create an account'
+    = f.submit 'Create your account'
+    .spinner{hidden}
+
+- after do
+  - if user.paying?
+    - head do
+      %script{src: 'https://js.stripe.com/v1'}
+      :coffeescript
+        Stripe.setPublishableKey #{ENV['STRIPE_PUBLISHABLE'].to_json}
+
+    .billing
+      %h2 Billing details
+
+      .accepted-cards
+        = image_tag 'cards/visa.png', class: 'visa'
+        = image_tag 'cards/mastercard.png', class: 'mastercard'
+        = image_tag 'cards/amex.png', class: 'amex'
+        = image_tag 'cards/discover.png', class: 'discover'
+        Accepted cards
+
+      %section
+        %fieldset
+          %label{for: 'card-number'} Card Number
+          %input#card-number{type: 'text', size: 20, autocomplete: 'off', tabindex: 5}
+          :coffeescript
+            cardTypes =
+              'Visa': 'visa'
+              'American Express': 'amex'
+              'Discover': 'discover'
+
+            cards = $('.accepted-cards img')
+
+            cardNumber = $('#card-number')
+            cardNumber.keyup ->
+              cardType = Stripe.cardType(cardNumber.val())
+              if cardType of cardTypes
+                cards.addClass('disabled')
+                cards.filter('.'+cardTypes[cardType]).removeClass('disabled')
+              else
+                cards.removeClass('disabled')
+
+        %fieldset
+          %label{for: 'card-cvc'} CVC
+          %input#card-cvc{type: 'text', size: 4, autocomplete: 'off', tabindex: 6}
+
+      %section
+        %label Expiry
+        = date_select 'card', 'expiry', start_year: Time.now.year, end_year:Time.now.year + 10, discard_day: true, add_month_numbers: true, order: [:month, :year], default: 1.year.from_now, tabindex: 7
+
+    :coffeescript
+      form = $('form#new_user')
+
+      amount = {
+        small:  500
+        medium: 1000
+        large:  1500
+        pro:    3000
+      }[form.find('input#user_plan').val()]
+
+      form.submit (e) ->
+        e.preventDefault()
+
+        form.find('input[type=submit]').attr(disabled: true)
+        form.find('.spinner').show()
+
+        card =
+          number:    $('#card-number').val()
+          cvc:       $('#card-cvc').val()
+          exp_month: $('#card_expiry_2i').val()
+          exp_year:  $('#card_expiry_1i').val()
+
+        Stripe.createToken card, amount, (status, response) ->
+          if response.error
+            form.find('input[type=submit]').attr(disabled: false)
+            form.find('.spinner').hide()
+
+            $('<p></p>')
+              .addClass('stripe')
+              .text(response.error.message)
+              .appendTo form.find('.errors').empty()
+
+          else
+            token = response.id
+            $('<input></input>')
+              .attr(type: 'hidden', name: 'user[stripe_token]')
+              .val(token)
+              .appendTo(form)
+
+            form.get(0).submit()
+

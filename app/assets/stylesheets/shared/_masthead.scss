@@ -6,6 +6,7 @@
   }
 
   h1 {
+    float: left;
     font-size: 24px;
     line-height: 48px;
     margin: (2 * $line) 0;
@@ -20,6 +21,7 @@
   }
 
   h2 {
+    float: left;
     margin: (-2*$line) 0 (2*$line);
     padding-bottom: 2*$line;
 
@@ -31,5 +33,12 @@
 
   aside {
     float: right;
+    margin: (4*$line) 0;
+    text-align: right;
+
+    button, input[type=submit], .button {
+      padding: $line (2*$gutter);
+    }
+
   }
 }

@@ -46,6 +46,12 @@ em {
   content: '|';
 }
 
+.spinner {
+  background: url(image-path('spinner.gif')) center no-repeat;
+  width: 16px;
+  height: 16px;
+}
+
 h2 {
   margin: (3*$line) 0 $line;
   line-height: 24px;
@@ -104,24 +110,37 @@ button, input[type=submit], a.button {
   cursor: pointer;
   padding: ($line / 2) (2*$gutter);
   margin-bottom: $line;
-  text-shadow: 0 1px 0 darken($blue, 20%);
+  text-shadow: 0 1px 0 rgba(black, 0.4);
   text-decoration: none;
 
   @include border-radius($radius);
 
+  &.muted {
+    background-color: darken(white, 10%);
+    color: darken(white, 60%);
+    text-shadow: 0 1px 0 rgba(white, 0.4);
+  }
+
   &:hover, &:focus {
+    color: white;
     background-color: darken($blue, 10%);
+    text-shadow: 0 1px 0 rgba(black, 0.4);
+  }
+
+  &:disabled {
+    background-color: darken(white, 5%);
+    text-shadow: 0 -1px 0 rgba(black, 0.2);
+    cursor: default;
   }
 }
 
 form {
   .errors {
     p {
-      color: $red;
-      margin-bottom: 0;
+      margin: 0 !important;
     }
     ol {
-      margin: 0;
+      margin: 0 0 (2*$line) $gutter;
     }
   }
 

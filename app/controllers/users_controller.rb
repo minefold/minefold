@@ -11,8 +11,8 @@ class UsersController < ApplicationController
   end
 
   def new
-    @user = User.new
-    @user.plan = params[:plans]
+    not_found unless User::PLANS.include? params[:plan]
+    user.plan = params[:plan]
   end
 
   def check
@@ -23,16 +23,28 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(params[:user])
+    if user.save
+      UserMailer.welcome(user.id).deliver
 
-    if @user.save
-      UserMailer.welcome(@user.id).deliver
+      # TODO: Move to the model
+      unless user.customer_id?
+        logger.info user.stripe_token
 
-      sign_in :user, @user
-      respond_with @user, :location => stored_location_for(:user) || user_root_path
+        customer = Stripe::Customer.create card: user.stripe_token,
+                                    description: user.username,
+                                          email: user.email
+
+        user.customer_id = customer.id
+      end
+
+      customer ||= Stripe::Customer.retrieve(user.customer_id)
+      customer.update_subscription plan: user.plan
+
+      sign_in :user, user
+      respond_with user, :location => stored_location_for(:user) || user_root_path
     else
       clean_up_passwords(@user)
-      respond_with @user, :location => users_path
+      respond_with user, :location => users_path
     end
   end
 

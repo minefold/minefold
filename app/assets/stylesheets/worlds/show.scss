@@ -134,7 +134,7 @@
         color: darken(white, 20%);
         margin-left: $gutter;
         opacity: 1;
-        line-height: 24px;
+        line-height: 24px + $line;
 
         &.hidden {
           opacity: 0;

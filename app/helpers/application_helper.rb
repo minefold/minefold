@@ -57,6 +57,10 @@ module ApplicationHelper
     end
   end
 
+  def head &blk
+    content_for :head, capture_haml(&blk)
+  end
+
   def masthead &blk
     content_for :masthead, capture_haml(&blk)
   end

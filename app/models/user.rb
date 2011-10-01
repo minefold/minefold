@@ -7,7 +7,8 @@ class User
   BILLING_PERIOD = 1.minute
   FREE_HOURS     = 1
 
-  PLANS = %W{small medium large pro}
+  PLANS = %W{free small medium large pro}
+  PAID_PLANS = %W{small medium large pro}
 
   field :email,          type: String
   field :username,       type: String
@@ -52,13 +53,16 @@ class User
   validates_confirmation_of :password
   validates_numericality_of :credits, greater_than_or_equal_to: 0
   validates_numericality_of :minutes_played, greater_than_or_equal_to: 0
+  validates_inclusion_of :plan, in: PLANS
 
 # SECURITY
 
   attr_accessible :email,
                   :username,
                   :password,
-                  :password_confirmation
+                  :password_confirmation,
+                  # TODO: Think more about the security implications of this.
+                  :plan
 
   # Virtual
   attr_accessible :email_or_username,
@@ -67,8 +71,10 @@ class User
 
 # PLANS
 
+  attr_accessor :stripe_token
+
   def paying?
-    PLANS.include?(plan)
+    PAID_PLANS.include?(plan)
   end
 
   def customer?
