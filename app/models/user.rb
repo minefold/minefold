@@ -5,7 +5,7 @@ class User
   include Mongoid::Paranoia
 
   BILLING_PERIOD = 1.minute
-  FREE_HOURS     = 1
+  FREE_HOURS     = 12
 
   PLANS = %W{free pro}
 
@@ -83,7 +83,7 @@ class User
     @customer ||= if customer_id?
       Stripe::Customer.retrieve(customer_id)
     else
-      Stripe::Customer.create(description: username, email: email).tap do |c|
+      Stripe::Customer.create(description: "#{id}-#{username}", email: email).tap do |c|
         self.customer_id = c.id
       end
     end

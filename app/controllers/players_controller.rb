@@ -1,23 +1,23 @@
 class PlayersController < ApplicationController
 
   expose(:creator) {User.find_by_slug!(params[:user_id])}
-  expose(:world) {owner.owned_worlds.find_by_slug!(params[:world_id])}
+  expose(:world) {creator.created_worlds.find_by_slug!(params[:world_id])}
   expose(:player) do
-    world.members.find_by_slug(params[:id]) or
+    world.whitelisted_players.find_by_slug(params[:id]) or
     User.find(params[:player_id])
   end
 
   def create
-    world.members << player
+    world.whitelisted_players << player
     world.save
 
-    redirect_to user_world_players_path(world.owner, world)
+    redirect_to user_world_players_path(world.creator, world)
   end
 
   def destroy
-    world.members.delete(player)
+    world.whitelisted_players.delete(player)
     world.save
-    redirect_to user_world_players_path(world.owner, world)
+    redirect_to user_world_players_path(world.creator, world)
   end
 
 end

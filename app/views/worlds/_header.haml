@@ -9,7 +9,7 @@
           %p
             Connect to
             %strong= current_user.host
-          %p.help
+          %p.hint
             = link_to help_page_path(anchor: 'connecting') do
               Don't know how to connect?
         - else
@@ -17,19 +17,19 @@
 
       - else
         - if false #world.wait_list.include?(current_user)
-          %p Waiting for #{world.owner.username}
+          %p Waiting for #{world.creator.username}
         - else
           = button_to 'Ask to play here', [world, :players], method: :put
 
     - else
-      Hey! #{world.creator.username}
-      - if world.whitelisted_players.size.zero?
-        is playing here.
-      - else
-        and #{pluralize world.whitelisted_players.size, 'person', 'people'} are playing here.
+      %p.hint
+        Hey!
+        - if world.whitelisted_players.size.zero?
+          #{world.creator.username} is playing here.
+        - else
+          #{pluralize world.whitelisted_players.size, 'person', 'people'} are playing here.
 
-      = link_to 'Sign up', plans_page_path
-      to play here too.
+      = link_to 'Sign up for Minefold', plans_page_path, class: 'button'
 
 - subhead do
   %ol#subnav

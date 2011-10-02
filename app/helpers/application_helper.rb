@@ -12,8 +12,8 @@ module ApplicationHelper
   end
 
   def time_left_for user
-      "#{user.hours}:#{user.minutes}"
-    end
+    "#{user.hours}:#{user.minutes}"
+  end
 
   def template(name, options)
     view = Mustache.new
@@ -49,7 +49,14 @@ module ApplicationHelper
   end
 
   def youtube_vid
-    content_tag(:iframe, nil, width: 480, height: 390, src: "#{Videos.sample}?rel=0", frameborder: 0, allowfullscreen: true).html_safe
+    content_tag(:iframe, nil,
+      width: 480,
+      height: 390,
+      src: "#{Videos.sample}?rel=0",
+      frameborder: 0,
+      allowfullscreen: true,
+      class: 'youtube'
+    ).html_safe
   end
 
   def title page_title, masthead_title=page_title, &blk

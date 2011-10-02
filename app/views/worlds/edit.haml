@@ -9,21 +9,17 @@
     %fieldset
       = f.text_field :name
 
-  /
-    We are as upset about leaving this out as you are.
-    Kindly ask Notch to fix it!
+  %section.game-mode.disabled
+    %h3 Game Mode
 
-    %section.game-mode
-      %h3 Game Mode
+    %fieldset.inline
+      %div
+        = f.radio_button :game_mode, 0, disabled: true
+        = f.label :game_mode_0, 'Survival'
 
-      %fieldset.inline
-        %div
-          = f.radio_button :game_mode, 0
-          = f.label :game_mode_0, 'Survival'
-
-        %div
-          = f.radio_button :game_mode, 1
-          = f.label :game_mode_1, 'Creative'
+      %div
+        = f.radio_button :game_mode, 1, disabled: true
+        = f.label :game_mode_1, 'Creative'
 
   %section.difficulty
     %h3 Difficulty
@@ -38,11 +34,11 @@
         = f.label :difficulty_level_1, 'Easy'
 
       %div
-        = f.radio_button :difficulty, 2
+        = f.radio_button :difficulty_level, 2
         = f.label :difficulty_level_2, 'Normal'
 
       %div
-        = f.radio_button :difficulty, 3
+        = f.radio_button :difficulty_level, 3
         = f.label :difficulty_level_3, 'Hard'
 
   %section.game-settings

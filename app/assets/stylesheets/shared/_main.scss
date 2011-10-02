@@ -159,6 +159,10 @@ form {
         margin-right: $gutter;
       }
     }
+
+    &.disabled label {
+      color: #999;
+    }
   }
 
   .field_with_errors {
@@ -171,4 +175,9 @@ form {
     line-height: 18px;
     margin-top: $line;
   }
+}
+
+iframe.youtube {
+  margin: 24px auto;
+  display: block;
 }

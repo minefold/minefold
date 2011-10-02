@@ -1,8 +1,8 @@
 - title "#{world.name} players" do
   = render partial: 'worlds/header'
 
-%p= world.owner.username
-- world.members.each do |player|
+%p= world.creator.username
+- world.whitelisted_players.each do |player|
   %p
     = player.username
     = link_to 'remove', world_player_path(world, player), method: 'delete'

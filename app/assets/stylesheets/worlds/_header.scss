@@ -5,58 +5,6 @@
 #players-index #subhead,
 #worlds-edit #subhead {
 
-  aside {
-    float: right;
-    margin: (2*$line) $gutter;
-    text-align: right;
-
-    .meta {
-      float: right;
-      .connection-info {
-        float: left;
-        margin: 0;
-        margin-left: $gutter;
-        background: white;
-        line-height: 24px;
-        padding: 0 ($gutter / 2);
-        @include border-radius($radius);
-        color: #666;
-        font-size: 12px;
-        margin-bottom: $line;
-
-        strong {
-          color: black;
-        }
-      }
-      .help a {
-        font-size: 11px;
-        color: #999;
-        text-decoration: none;
-
-        &:hover {
-          color: #333;
-        }
-      }
-
-      input[type=submit] {
-        border: none;
-        border-bottom-color: darken(white, 15%);
-        background: $blue;
-        color: white;
-        padding: ($line) 2*$gutter;
-        font: 600 12px/18px $helvetica;
-        @include border-radius($radius);
-        cursor: pointer;
-        margin: 0;
-        margin-top: 0;
-        &:hover {
-          background: darken($blue, 10%);
-        }
-      }
-
-    }
-  }
-
   ol#subnav {
     li {
       display: block;

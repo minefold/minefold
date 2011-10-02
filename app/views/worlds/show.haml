@@ -12,7 +12,7 @@
     - else
       - world.current_players.each do |player|
         %li
-          .avatar= image_tag player.avatar.head.s16, width: 16, height: 16
+          .avatar= image_tag player.avatar.head.s16.url, width: 16, height: 16
           = player.username
 
 - if flash[:success]
@@ -23,7 +23,7 @@
     #share
       = form_tag [world.creator, world, :wall_items], method: :post do |f|
         .avatar
-          = image_tag current_user.avatar.head.s36
+          = image_tag current_user.avatar.head.s36.url, with: 36, height: 36
         = text_area_tag :body, nil, rows: 2, autofocus: true, required: true
 
         .submit
