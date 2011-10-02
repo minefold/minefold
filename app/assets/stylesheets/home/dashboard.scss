@@ -13,7 +13,6 @@
     background: #FFC;
     position: relative;
     overflow: hidden;
-    border-top: 1px solid rgba(black, 0.05);
     @include border-radius(2*$radius);
 
     .heart {
@@ -32,7 +31,7 @@
       font: 900 18px/24px $helvetica;
       font-weight: 1000;
       text-transform: uppercase;
-      color: $blue;
+      color: darken($blue, 20%);
     }
 
     p {
@@ -49,29 +48,16 @@
     }
   }
 
-  .create-world {
+  .create {
     margin: 0;
     margin-bottom: 8*$line;
-    overflow: auto;
 
-    a {
-      font: 400 14px/18px $helvetica;
-      color: white;
-      background: $blue;
-      padding: $line $gutter;
-      text-decoration: none;
-      text-align: center;
-      @include border-radius($radius);
-
-      @include inline-block;
-//      float: left;
-//      @include span(3);
-
-      &:hover {
-        background: darken($blue, 10%);
+      .button {
+        display: inline;
+        padding: $line (2*$gutter);
+        color: white;
+        margin-right: $gutter;
       }
-
-    }
   }
 
   .dshbrd {

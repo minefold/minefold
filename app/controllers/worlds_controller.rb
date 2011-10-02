@@ -70,27 +70,6 @@ class WorldsController < ApplicationController
     redirect_to user_world_path(world.owner, world)
   end
 
-
-  def process_upload
-    upload = WorldUpload.create s3_key:params[:key],
-                              filename:params[:name],
-                              uploader:current_user
-
-    Resque.enqueue ImportWorldJob, upload.id
-    render json: { world_upload_id:upload.id }
-  end
-
-  def upload_policy
-    @policy = S3UploadPolicy.new ENV['S3_KEY'],
-                                 ENV['S3_SECRET'],
-                                 "minefold.#{Rails.env}.worlds.uploads"
-
-    @policy.key = params[:key]
-    @policy.content_type = params[:contentType]
-
-    render layout:false
-  end
-
 private
 
   def lock_private

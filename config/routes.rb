@@ -43,6 +43,13 @@ Minefold::Application.routes.draw do
 
   resources :orders
 
+  get  '/worlds/new' => 'worlds#new', :as => :new_worlds
+  post '/worlds/new' => 'worlds#create'
+
+  resource :upload, :path => '/worlds/upload', :only => [:new, :create], :path_names => {:new => '/'} do
+    get :policy
+  end
+
   as :user do
 
     resources :users, :path => '/',
@@ -54,14 +61,6 @@ Minefold::Application.routes.draw do
       put 'downgrade', :action => :downgrade, :as => :downgrade, :on => :member
 
       resources :worlds, :path => '/', :only => [:show, :edit, :update] do
-        collection do
-          get  'worlds/new', :action => :new, :as => :new
-          post 'worlds/new', :action => :create, :as => nil
-
-          resource :upload, :path => 'worlds/upload', :only => [:new, :create] do
-            get :policy
-          end
-        end
 
         member do
           get  :map

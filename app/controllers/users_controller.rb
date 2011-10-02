@@ -4,7 +4,9 @@ class UsersController < ApplicationController
   prepend_before_filter :require_no_authentication, :only => [:new, :create]
   prepend_before_filter :authenticate_user!, :only => [:dashboard, :edit, :update]
 
-  expose(:user)
+  expose(:user) {
+    User.find_by_slug(params[:user_id] || params[:id]) || User.new(params[:user])
+  }
 
   def show
     @user = User.find_by_slug!(params[:id])
@@ -40,7 +42,7 @@ class UsersController < ApplicationController
     current_user.update_attributes! params[:user]
     redirect_to user_root_path
   end
-  
+
   # def upgrade
   #   if user.save
   # end

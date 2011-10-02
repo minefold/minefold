@@ -2,26 +2,6 @@
 
 module RoutesHelper
 
-  # new_user_worlds
-  def new_worlds_path
-    new_user_worlds_path(current_user)
-  end
-
-  # policy_user_upload
-  def policy_upload_path
-    policy_user_upload_path(current_user)
-  end
-
-  # user_upload
-  def upload_path
-    user_upload_path(current_user)
-  end
-
-  # new_user_upload
-  def new_upload_path
-    new_user_upload_path(current_user)
-  end
-
   # map_user_world
   def map_world_path(world)
     map_user_world_path(world.creator, world)

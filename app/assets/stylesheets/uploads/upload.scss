@@ -1,6 +1,14 @@
 @import 'shared';
 
-#worlds-upload #page {
+#uploads-new {
+
+  #page {
+    @include span(4);
+  }
+
+  #after-page {
+    @include span(4);
+  }
 
   .instructions {
     list-style-type: decimal;
