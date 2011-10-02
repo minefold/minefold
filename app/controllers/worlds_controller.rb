@@ -2,7 +2,13 @@ class WorldsController < ApplicationController
   prepend_before_filter :authenticate_user!, except: [:show, :map]
 
   expose(:creator) { User.find_by_slug(params[:user_id])}
-  expose(:world) {creator.created_worlds.find_by_slug!(params[:id])}
+  expose(:world) do
+    if creator
+      creator.created_worlds.find_by_slug(params[:id])
+    else
+      World.new(params[:world])
+    end
+  end
 
   respond_to :html
 
@@ -11,15 +17,12 @@ class WorldsController < ApplicationController
   end
 
   def create
-    @world = World.new(params[:world])
-
     world.creator = current_user
-    world.owner = current_user
 
     if world.save
       current_user.current_world = world
       current_user.save
-      redirect_to invite_user_world_path(world.owner, world)
+      redirect_to user_world_players_path(world.creator, world)
     else
       render :new
     end

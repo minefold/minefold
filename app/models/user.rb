@@ -223,6 +223,12 @@ class User
     slug
   end
 
+  def as_json(options={})
+    super(options).merge(
+      avatar_head_24_url: avatar.head.s24.url
+    )
+  end
+
 protected
 
   def self.find_for_database_authentication(conditions)

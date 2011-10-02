@@ -6,8 +6,8 @@ class World
   GAME_MODES = [:survival, :creative]
   DIFFICULTIES = [:peaceful, :easy, :normal, :hard]
 
-  field :name,    type: String
-  slug  :name,    scope: :owner, index: true
+  field :name, type: String
+  slug  :name, scope: :creator, index: true
 
   field :seed,             type: String, default: ''
   field :game_mode,        type: Integer, default: GAME_MODES.index(:survival)
@@ -19,8 +19,7 @@ class World
 
   field :last_mapped_at, type: DateTime
 
-
-  belongs_to :creator, class_name: 'User'
+  belongs_to :creator, inverse_of: :created_worlds, class_name: 'User'
   has_and_belongs_to_many :whitelisted_players,
                           inverse_of: :whitelisted_worlds,
                           class_name: 'User'
@@ -36,7 +35,7 @@ class World
     greater_than_or_equal_to: 0,
     less_than: GAME_MODES.size
 
-  validates_numericality_of :difficulty,
+  validates_numericality_of :difficulty_level,
     only_integer: true,
     greater_than_or_equal_to: 0,
     less_than: DIFFICULTIES.size
@@ -51,7 +50,7 @@ class World
   end
 
   def difficulty
-    DIFFICULTIES[difficulty]
+    DIFFICULTIES[difficulty_level]
   end
 
   DIFFICULTIES.each do |difficulty|

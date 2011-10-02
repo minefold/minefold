@@ -66,6 +66,14 @@ header {
         }
       }
 
+      .pro {
+        background: $red;
+        padding: 0 ($gutter/2);
+        @include border-radius($radius);
+        color: white;
+        font-weight: 600;
+      }
+
       .profile img {
         display: block;
         border-radius: $radius;

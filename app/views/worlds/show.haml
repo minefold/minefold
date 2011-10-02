@@ -12,7 +12,7 @@
     - else
       - world.current_players.each do |player|
         %li
-          .avatar= image_tag player.avatar_url(width: 16), width: 16, height: 16
+          .avatar= image_tag player.avatar.head.s16, width: 16, height: 16
           = player.username
 
 - if flash[:success]
@@ -23,15 +23,15 @@
     #share
       = form_tag [world.creator, world, :wall_items], method: :post do |f|
         .avatar
-          = image_tag current_user.avatar_url(width: 36)
+          = image_tag current_user.avatar.head.s36
         = text_area_tag :body, nil, rows: 2, autofocus: true, required: true
 
         .submit
           %button Chat
           .advice ENTER to chat, SHIFT-ENTER for a new line.
 
-    :javascript
-      window.current_user = #{current_user.to_json(only: [:id, :username, :email])};
+    :coffeescript
+      window.current_user = #{current_user.to_json(only: [:id, :username, :email])}
 
     :coffeescript
       f = $('#share form')

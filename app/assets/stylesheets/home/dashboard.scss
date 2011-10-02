@@ -89,20 +89,13 @@
         line-height: 4*$line;
         padding: $line;
         text-decoration: none;
-
-//        border-bottom: 1px solid darken(white, 5%);
-        margin: 0 -($gutter/2);
-        padding: $line ($gutter/2);
+        padding: $line $gutter;
+        border-bottom: 1px solid darken(white, 10%);
+        padding-bottom: $line - 1px;
 
         .current {
-          height: 8px;
-          width: 8px;
-          background: $green;
-          @include border-radius(8px);
-          float: left;
-          margin: (24px - 8px)/2 0;
-          margin-right: $gutter;
-          margin-left: $gutter /2;
+          color: $green;
+          float: right;
         }
 
         .user {
@@ -116,13 +109,14 @@
           color: darken($blue, 20%);
           background: darken(white, 3%);
           .current {
-            background-color: darken($green, 10%);
+            color: darken($green, 10%);
           }
         }
       }
 
       &:last-child a {
         border-bottom: none;
+        padding-bottom: $line;
       }
 
 

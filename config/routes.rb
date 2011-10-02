@@ -1,6 +1,6 @@
 Minefold::Application.routes.draw do
   root :to => 'home#index'
-  get  '/dashboard' => 'home#dashboard', :as => :user_root
+  get  '/worlds' => 'home#dashboard', :as => :user_root
 
   # Admin
   get '/admin' => 'admin#index'
@@ -43,8 +43,8 @@ Minefold::Application.routes.draw do
 
   resources :orders
 
-  get  '/worlds/new' => 'worlds#new', :as => :new_worlds
-  post '/worlds/new' => 'worlds#create'
+  get  '/worlds/new' => 'worlds#new', :as => :new_world
+  post '/worlds' => 'worlds#create', :as => :worlds
 
   resource :upload, :path => '/worlds/upload', :only => [:new, :create], :path_names => {:new => '/'} do
     get :policy

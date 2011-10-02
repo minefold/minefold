@@ -11,6 +11,10 @@ module ApplicationHelper
     {style: 'display:none'}
   end
 
+  def time_left_for user
+      "#{user.hours}:#{user.minutes}"
+    end
+
   def template(name, options)
     view = Mustache.new
     view.template_name = name.to_sym

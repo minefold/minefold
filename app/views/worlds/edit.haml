@@ -8,13 +8,10 @@
 
     %fieldset
       = f.text_field :name
-      .note
-        %strong Note:
-        Renaming your world will break any external links.
 
   /
     We are as upset about leaving this out as you are.
-    Blame Notch!
+    Kindly ask Notch to fix it!
 
     %section.game-mode
       %h3 Game Mode
@@ -33,20 +30,20 @@
 
     %fieldset.inline
       %div
-        = f.radio_button :difficulty, 0
-        = f.label :difficulty_0, 'Peaceful'
+        = f.radio_button :difficulty_level, 0
+        = f.label :difficulty_level_0, 'Peaceful'
 
       %div
-        = f.radio_button :difficulty, 1
-        = f.label :difficulty_1, 'Easy'
+        = f.radio_button :difficulty_level, 1
+        = f.label :difficulty_level_1, 'Easy'
 
       %div
         = f.radio_button :difficulty, 2
-        = f.label :difficulty_2, 'Normal'
+        = f.label :difficulty_level_2, 'Normal'
 
       %div
         = f.radio_button :difficulty, 3
-        = f.label :difficulty_3, 'Hard'
+        = f.label :difficulty_level_3, 'Hard'
 
   %section.game-settings
     %h3 Game Settings
@@ -64,13 +61,13 @@
         = f.check_box :spawn_animals
         = f.label :spawn_animals, 'Spawn animals'
 
-  %section.privacy
-    %h3 Privacy
-
-    %fieldset
-      %div
-        = f.check_box :public_activity
-        = f.label :public_activity, 'Public activity stream'
+  / %section.privacy
+  /   %h3 Privacy
+  /
+  /   %fieldset
+  /     %div
+  /       = f.check_box :public_activity
+  /       = f.label :public_activity, 'Public activity stream'
 
   / %section.players
   /   %h3 Who Can Play
@@ -114,7 +111,7 @@
   .submit
     = f.submit 'Save settings'
 
-    - unless world.connected_players_count.zero?
+    - unless world.current_players_count.zero?
       .note
         %strong Note:
         Settings will be applied next time the server is empty.

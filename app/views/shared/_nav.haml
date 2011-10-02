@@ -10,10 +10,17 @@
 
   - if user_signed_in?
     - if current_user.pro?
-      %li.time
-        PRO
+      %li.pro PRO
+
     - else
-      %li.time
+      %li.free
+        = time_left_for current_user
+        left
+
+      %li.go-pro
+        = link_to 'Go Pro', [:edit, current_user]
+
+
 
     %li.account
       = link_to 'Account', [:edit, current_user]

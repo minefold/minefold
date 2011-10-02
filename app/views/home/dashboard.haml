@@ -26,10 +26,11 @@
           %li{class: (current_user.current_world == world ? 'active' : nil)}
             = link_to world do
               - if world == current_user.current_world
-                .current
+                .current Playing here
               %span.user= world.creator.username
               %span.slash /
               %strong= world.name
+
   - after do
     .create
       = link_to 'Create a new world', new_worlds_path, class: ['new', 'button']
