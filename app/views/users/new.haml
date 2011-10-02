@@ -18,46 +18,15 @@
           %p
             You can upgrade at any time.
 
-      - when 'small'
-        .price
-          %span.dollar-sign $
-          %span.amount 5
-          %span.period / mo
-        .details
-          %h2 You are signing up for our small plan
-          %p
-            This plan is <strong>$5 per month</strong>. You can upgrade or downgrade at any time.
-
-
-      - when 'medium'
-        .price
-          %span.dollar-sign $
-          %span.amount 10
-          %span.period / mo
-        .details
-          %h2 You are signing up for our medium plan
-          %p
-            This plan is <strong>$10 per month</strong>. You can upgrade or downgrade at any time.
-
-      - when 'large'
-        .price
-          %span.dollar-sign $
-          %span.amount 15
-          %span.period / mo
-        .details
-          %h2 You are signing up for our large plan
-          %p
-            This plan is <strong>$15 per month</strong>. You can upgrade or downgrade at any time.
-
       - when 'pro'
         .price
           %span.dollar-sign $
-          %span.amount 30
+          %span.amount 12
           %span.period / mo
         .details
           %h2 You are signing up for our Pro plan
           %p
-            This plan is <strong>$30 per month</strong>. You can downgrade at any time.
+            This plan is <strong>$12 per month</strong>. You can downgrade at any time.
 
 
 = form_for user do |f|
@@ -109,7 +78,7 @@
     .spinner{hidden}
 
 - after do
-  - if user.paying?
+  - if user.pro?
     - head do
       %script{src: 'https://js.stripe.com/v1'}
       :coffeescript
@@ -158,10 +127,7 @@
       form = $('form#new_user')
 
       amount = {
-        small:  500
-        medium: 1000
-        large:  1500
-        pro:    3000
+        pro:    1200
       }[form.find('input#user_plan').val()]
 
       form.submit (e) ->
@@ -189,7 +155,7 @@
           else
             token = response.id
             $('<input></input>')
-              .attr(type: 'hidden', name: 'user[stripe_token]')
+              .attr(type: 'hidden', name: 'user[card_token]')
               .val(token)
               .appendTo(form)
 

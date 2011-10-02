@@ -7,18 +7,16 @@ class User
   BILLING_PERIOD = 1.minute
   FREE_HOURS     = 1
 
-  PLANS = %W{free small medium large pro}
-  PAID_PLANS = %W{small medium large pro}
+  PLANS = %W{free pro}
 
   field :email,          type: String
   field :username,       type: String
   field :safe_username,  type: String
   slug  :username,       index: true
 
-  field :plan, type: String
+  field :plan, type: String, default: 'free'
 
   field :customer_id,    type: String
-  alias_method :customer?, :customer_id?
 
   field :host, default: 'pluto.minefold.com'
 
@@ -62,7 +60,8 @@ class User
                   :password,
                   :password_confirmation,
                   # TODO: Think more about the security implications of this.
-                  :plan
+                  :plan,
+                  :card_token
 
   # Virtual
   attr_accessible :email_or_username,
@@ -71,10 +70,40 @@ class User
 
 # PLANS
 
-  attr_accessor :stripe_token
+  attr_reader :card_token
 
-  def paying?
-    PAID_PLANS.include?(plan)
+  after_save do
+    if plan_changed?
+      if free?
+        customer.cancel_subscription
+      else
+        customer.update_subscription plan: plan, prorate: true
+      end
+    end
+  end
+
+  def customer
+    @customer ||= if customer_id?
+      Stripe::Customer.retrieve(customer_id)
+    else
+      Stripe::Customer.create(description: username, email: email).tap do |c|
+        self.customer_id = c.id
+      end
+    end
+  end
+
+  def card_token=(token)
+    customer.card = token
+    customer.save
+    token
+  end
+
+  def pro?
+    plan == 'pro'
+  end
+
+  def free?
+    plan == 'free'
   end
 
   def customer?
@@ -92,7 +121,7 @@ class User
 
 # CREDITS
 
-  scope :free, where(:orders.size => 0)
+  # scope :free, where(:orders.size => 0)
 
   # Gives away the free credits and starts off the credit history
   after_create do

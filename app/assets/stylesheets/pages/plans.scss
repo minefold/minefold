@@ -10,10 +10,9 @@
 
     .price {
       float: left;
-      border: 1px solid rgba(black, 0.1);
       @include border-radius($radius);
       line-height: 24px;
-      padding: ($line - $border) ($gutter - $border);
+      padding: $line $gutter;
       margin-right: $gutter;
       overflow: auto;
       text-shadow: 0 1px 0 rgba(white, 0.6);
@@ -65,31 +64,25 @@
     }
 
     &.free {
-      background: lighten(#FFC, 5%);
-      a.button {
-        background-color: darken($green, 0%);
-        text-shadow: 0 1px 0 darken($green, 20%);
-        &:hover {
-          background-color: darken($green, 20%);
-          text-shadow: 0 1px 0 darken($green, 30%);
-        }
-      }
-
-    }
-
-    &.small, &.medium, &.large {
-      background: lighten($blue, 45%);
+      background: darken(white, 5%);
       .price {
-        border-color: darken(lighten($blue, 45%), 10%);
+        border-color: darken(white, 10%);
       }
     }
 
     &.pro {
       background: darken($blue, 30%);
       .details {
-        color: rgba(white, 0.8);
+        color: lighten($blue, 40%);
         h2 {
           color: white;
+          .beta {
+            color: #FFC;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            line-height: 12px;
+          }
         }
       }
 
