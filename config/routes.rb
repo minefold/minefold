@@ -50,6 +50,8 @@ Minefold::Application.routes.draw do
                       :path_names => {:edit => 'settings'} do
 
       get 'account', :action => :edit, :as => :edit, :on => :member
+      put 'upgrade', :action => :upgrade, :as => :upgrade, :on => :member
+      put 'downgrade', :action => :downgrade, :as => :downgrade, :on => :member
 
       resources :worlds, :path => '/', :only => [:show, :edit, :update] do
         collection do

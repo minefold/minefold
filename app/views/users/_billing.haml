@@ -1,0 +1,83 @@
+- head do
+  %script{src: 'https://js.stripe.com/v1'}
+  :coffeescript
+    Stripe.setPublishableKey #{ENV['STRIPE_PUBLISHABLE'].to_json}
+
+.billing
+  %h2 Billing details
+
+  .accepted-cards
+    = image_tag 'cards/visa.png', class: 'visa'
+    = image_tag 'cards/mastercard.png', class: 'mastercard'
+    = image_tag 'cards/amex.png', class: 'amex'
+    = image_tag 'cards/discover.png', class: 'discover'
+    Accepted cards
+
+  %section
+    %fieldset
+      %label{for: 'card-number'} Card Number
+      %input#card-number{type: 'text', size: 20, autocomplete: 'off', tabindex: 5}
+      :coffeescript
+        cardTypes =
+          'Visa': 'visa'
+          'American Express': 'amex'
+          'Discover': 'discover'
+
+        cards = $('.accepted-cards img')
+
+        cardNumber = $('#card-number')
+        cardNumber.keyup ->
+          cardType = Stripe.cardType(cardNumber.val())
+          if cardType of cardTypes
+            cards.addClass('disabled')
+            cards.filter('.'+cardTypes[cardType]).removeClass('disabled')
+          else
+            cards.removeClass('disabled')
+
+    %fieldset
+      %label{for: 'card-cvc'} CVC
+      %input#card-cvc{type: 'text', size: 4, autocomplete: 'off', tabindex: 6}
+
+  %section
+    %label Expiry
+    = date_select 'card', 'expiry', start_year: Time.now.year, end_year:Time.now.year + 10, discard_day: true, add_month_numbers: true, order: [:month, :year], default: 1.year.from_now, tabindex: 7
+
+:coffeescript
+  $(document).ready ->
+    form = $('form.stripe-target')
+
+    amount = {
+      pro:    1200
+    }[form.find('input#user_plan').val()]
+
+    form.submit (e) ->
+      e.preventDefault()
+
+      form.find('input[type=submit]').attr(disabled: true)
+      form.find('.spinner').show()
+
+      card =
+        number:    $('#card-number').val()
+        cvc:       $('#card-cvc').val()
+        exp_month: $('#card_expiry_2i').val()
+        exp_year:  $('#card_expiry_1i').val()
+
+      Stripe.createToken card, amount, (status, response) ->
+        if response.error
+          form.find('input[type=submit]').attr(disabled: false)
+          form.find('.spinner').hide()
+
+          $('<p></p>')
+            .addClass('stripe')
+            .text(response.error.message)
+            .appendTo form.find('.errors').empty()
+
+        else
+          token = response.id
+          $('<input></input>')
+            .attr(type: 'hidden', name: 'user[card_token]')
+            .val(token)
+            .appendTo(form)
+
+          form.get(0).submit()
+

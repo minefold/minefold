@@ -1,9 +1,52 @@
 - title 'Account'
 
-= form_for current_user, method: :put do |f|
+= form_for current_user, method: :put, class: 'stripe-target' do |f|
   %section
     = f.label :username
     = f.text_field :username
+    :coffeescript
+      username = $('input#user_username')
+      fetchUser = ->
+        u = username.val()
+        if u isnt ''
+          $.getJSON '/signup/check', {username: u}, (data, status) ->
+              username.siblings('.hint').toggle(not data.paid)
+
+      username.keyup _.debounce(fetchUser, 300)
+
+    .hint{hidden}
+      %p
+        You need a <em>paid</em> Minecraft account to play on Minefold. They are €14.95 at
+        %a{href: 'http://minecraft.net/store', target: '_blank'} http://minecraft.com/store
+        or you can change your username later.
 
   %section
     = f.submit 'Update account'
+
+- after do
+  - if current_user.free?
+    %h2 Upgrade to a Pro account
+
+    %p
+      When you upgrade to a pro account you can play for <strong>infinity</strong> more hours.
+
+    %p A pro account costs is <strong>$12</strong> a month. You can downgrade again at any time.
+
+    - unless current_user.customer?
+      = render partial: 'billing'
+
+    = form_for current_user, method: 'put', html: {class: 'stripe-target'} do |f|
+      = f.hidden_field :plan, value: 'pro'
+
+      %section
+        = f.submit 'Upgrade to a pro account'
+        .spinner{hidden}
+
+  - else
+
+    = form_for current_user, method: 'put' do |f|
+      %h2 Downgrade
+      = f.hidden_field :plan, value: 'free'
+      %section
+        = f.submit 'Downgrade to a free account', class: 'muted'
+        .hint You will be pro-rated for the rest of the month.

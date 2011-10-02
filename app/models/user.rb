@@ -30,15 +30,12 @@ class User
 
   belongs_to :current_world, class_name: 'World'
   has_many :created_worlds, class_name: 'World', inverse_of: :creator
-  has_many :owned_worlds, class_name: 'World', inverse_of: :owner
 
-  has_and_belongs_to_many :memberships, inverse_of: :members, class_name: 'World'
+  has_and_belongs_to_many :whitelisted_worlds,
+                          inverse_of: :whitelisted_players,
+                          class_name: 'World'
 
   embeds_many :wall_items, as: :wall
-
-  # field :total_referrals, type: Integer, default: 10
-  # embeds_many :referrals
-  # belongs_to  :referrer, class_name: 'User', inverse_of: :user
 
   attr_accessor :email_or_username
 

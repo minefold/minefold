@@ -1,5 +1,5 @@
 %ol#nav
-  - if signed_in?
+  - if user_signed_in?
     %li= link_to 'Dashboard', user_root_path
   - else
     %li= link_to 'Pricing and Signup', plans_page_path
@@ -10,6 +10,12 @@
   .pipe
 
   - if user_signed_in?
+    - if current_user.pro?
+      %li.time
+        PRO
+    - else
+      %li.time
+
     %li.account
       = link_to 'Account', [:edit, current_user]
 

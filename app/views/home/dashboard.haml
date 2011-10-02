@@ -9,9 +9,15 @@
   .welcome
     .heart &hearts;
     %h2
-      G'day #{current_user.username}
+      G'day #{current_user.username}!
     %p
-      It's great to see you here! If you haven't played Minecraft before or are new to multiplayer we have #{link_to 'a short guide', help_page_path} to help you out. However, if you are ready to start playing you can either create a new world, or upload one of your single player worlds.
+      %strong It's great to see you here.
+      If you haven't played Minecraft before or are new to multiplayer we have #{link_to 'a short guide', help_page_path} to help you out. If you are ready to jump in and start playing you can either create a new world or upload one of your single player worlds.
+
+  .create
+    = link_to 'Create a new world', new_worlds_path, class: 'new'
+    = link_to 'Upload an existing world', new_upload_path, class: 'import'
+
 
 - else
   .dshbrd

@@ -40,6 +40,10 @@ class UsersController < ApplicationController
     current_user.update_attributes! params[:user]
     redirect_to user_root_path
   end
+  
+  # def upgrade
+  #   if user.save
+  # end
 
   def search
     @results = User.where(username: /#{params[:q]}/i).limit(5).all
