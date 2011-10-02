@@ -1,9 +1,4 @@
-- title  'Dashboard' do
-  %h1 Dashboard
-
-  .create{hidden}
-    = link_to 'Create a new world', new_worlds_path, class: 'new'
-    = link_to 'Upload an existing world', new_upload_path, class: 'import'
+- title  'Worlds'
 
 - if current_user_needs_help?
   .welcome
@@ -20,33 +15,22 @@
 
 
 - else
-  .dshbrd
-    .worlds
-      %h2 Your worlds
-      - if current_user.owned_worlds.empty?
-        %p You haven't created any worlds yet.
-      - else
-        %ul
-          - current_user.owned_worlds.each do |world|
-            %li{class: (current_user.current_world == world ? 'active' : nil)}
-              = link_to world do
-                - if world == current_user.current_world
-                  .current
-                %span.user= world.creator.username
-                %span.slash /
-                %strong= world.name
-
-    .worlds
-      %h2 Friend's worlds
-      - if current_user.memberships.empty?
-        %p You arn't a member of any other worlds yet.
-      - else
-        %ul
-          - current_user.memberships.each do |world|
-            %li{class: (current_user.current_world == world ? 'active' : nil)}
-              = link_to world do
-                - if world == current_user.current_world
-                  .current
-                %span.user= world.owner.username
-                %span.slash /
-                %strong= world.name
+  .worlds
+    - if current_user.worlds.empty?
+      %p
+        %strong Sad panda.
+        You don't have any worlds you can play in. You can either #{link_to 'create one', new_worlds_path} or #{link_to 'upload a single player world', upload_path}.
+    - else
+      %ul
+        - current_user.worlds.each do |world|
+          %li{class: (current_user.current_world == world ? 'active' : nil)}
+            = link_to world do
+              - if world == current_user.current_world
+                .current
+              %span.user= world.creator.username
+              %span.slash /
+              %strong= world.name
+  - after do
+    .create
+      = link_to 'Create a new world', new_worlds_path, class: ['new', 'button']
+      = link_to 'Upload an existing world', new_upload_path, class: ['import', 'button']

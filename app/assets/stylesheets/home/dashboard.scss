@@ -1,10 +1,10 @@
 #home-dashboard {
   #page {
-    @include span(8);
+    @include span(5);
   }
 
   #after-page {
-    @include span(4)
+    @include span(3);
   }
 
   .welcome {
@@ -57,19 +57,22 @@
         padding: $line (2*$gutter);
         color: white;
         margin-right: $gutter;
+        margin-bottom: $line;
       }
   }
 
-  .dshbrd {
-    margin: 0 (-$gutter);
-    margin-bottom: 2 * $line;
-    overflow: auto;
-//    border-bottom: 1px solid darken(white, 10%);
+  #after-page {
+    .create {
+      .button {
+        text-align: center;
+        display: block;
+        margin: 0;
+        margin-bottom: 2*$line;
+      }
+    }
   }
 
   .worlds {
-    @include span(4);
-    float: left;
     h2 {
       margin-top: 0;
       margin-bottom: 2*$line;

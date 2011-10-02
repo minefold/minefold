@@ -1,7 +1,7 @@
 class WorldsController < ApplicationController
   prepend_before_filter :authenticate_user!, except: [:show, :map]
 
-  expose(:creator) { User.find_by_slug!(params[:user_id])}
+  expose(:creator) { User.find_by_slug(params[:user_id])}
   expose(:world) {creator.created_worlds.find_by_slug!(params[:id])}
 
   respond_to :html
@@ -53,11 +53,11 @@ class WorldsController < ApplicationController
   end
 
   def play
-    if world.public? or world.whitelisted?(current_user)
+    if world.whitelisted?(current_user)
       current_user.current_world = world
       current_user.save
 
-      redirect_to :back
+      redirect_to user_world_path(world.creator, world)
     end
   end
 

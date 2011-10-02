@@ -1,10 +1,10 @@
 - content_for :masthead do
   .top
     - @users[0...8].each do |user|
-      = image_tag user.skin.avatar.s60, width: 60, height: 60, alt: user.username
+      = image_tag user.avatar.head.s60, width: 60, height: 60, alt: user.username
   .left
     - @users[8...11].each do |user|
-      = image_tag user.skin.avatar.s60, width: 60, height: 60, alt: user.username
+      = image_tag user.avatar.head.s60, width: 60, height: 60, alt: user.username
 
   .center
     %h1 Play Minecraft with your friends!
@@ -20,7 +20,7 @@
 
   .right
     - @users[11...14].each do |user|
-      = image_tag user.skin.avatar.s60, width: 60, height: 60, alt: user.username
+      = image_tag user.avatar.head.s60, width: 60, height: 60, alt: user.username
 
   - @users[14...22].each do |user|
-    = image_tag user.skin.avatar.s60, width: 60, height: 60, alt: user.username
+    = image_tag user.avatar.head.s60, width: 60, height: 60, alt: user.username

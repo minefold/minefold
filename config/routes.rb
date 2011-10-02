@@ -64,7 +64,7 @@ Minefold::Application.routes.draw do
 
         member do
           get  :map
-          post :play
+          put :play
         end
 
         resources :wall_items, :only => [:index, :create]

@@ -1,4 +1,4 @@
-class FetchSkin
+class FetchAvatar
   @queue = :low
 
   def self.perform user_id
@@ -6,10 +6,11 @@ class FetchSkin
   end
 
   def process(user)
-    user.fetch_skin!
+    user.fetch_avatar!
     user.save
+    puts "downloaded skin for #{user.safe_username}"
   rescue OpenURI::HTTPError
-    Rails.logger.info "No skin for #{user.username}"
+    puts "no skin for #{user.safe_username}"
   end
 
 end

@@ -45,6 +45,7 @@
       text-align: center;
       line-height: 24px;
       @include border-radius(2 * $radius);
+      background: lighten($blue, 50%);
 
       h1 {
         font-size: 24px;
@@ -52,12 +53,15 @@
         line-height: 36px;
         margin: 0;
         padding: 24px 0 10px 0;
+        float: none;
+        color: darken($blue, 30%);
       }
 
       .copy {
         margin: 10px 0;
         padding: 6px 0;
-        color: #666;
+        color: rgba(black, 0.5);
+        font-weight: 500;
         p {
           margin: 0;
         }

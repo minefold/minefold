@@ -169,79 +169,23 @@ class User
 
 # AVATARS
 
-  class Skin < CarrierWave::Uploader::Base
-    include CarrierWave::MiniMagick
+  mount_uploader :avatar, AvatarUploader
 
-    def fog_directory
-      "minefold.#{Rails.env}.users.skins"
-    end
-
-    version :avatar do
-      process :crop_head!
-
-      version(:s60) do
-        process :sample => [60, 60]
-      end
-
-      version(:s48) do
-        process :sample => [48, 48]
-      end
-
-      version :s36 do
-        process :sample => [36, 36]
-      end
-
-      version :s24 do
-        process :sample => [24, 24]
-      end
-
-      version :s18 do
-        process :sample => [18, 18]
-      end
-
-      version :s16 do
-        process :sample => [16, 16]
-      end
-    end
-
-    def sample(width, height)
-      manipulate! do |img|
-        img.sample "%ix%i" % [width, height]
-        img = yield(img) if block_given?
-        img
-      end
-    end
-
-    def crop_head!
-      manipulate! do |img|
-        img.crop "%ix%i+%i+%i" % [8, 8, 8, 8]
-        img = yield(img) if block_given?
-        img
-      end
-    end
-
-    def extension_white_list
-      %w(jpg jpeg gif png)
-    end
-  end
-
-  mount_uploader :skin, Skin
-
-  def fetch_skin!
-    self.remote_skin_url = "http://minecraft.net/skin/#{safe_username}.png"
+  def fetch_avatar!
+    self.remote_avatar_url = "http://minecraft.net/skin/#{safe_username}.png"
   rescue OpenURI::HTTPError # User has a default skin
   end
 
-  def async_fetch_skin!
-    Resque.enqueue(FetchSkin, id)
+  def async_fetch_avatar!
+    Resque.enqueue(FetchAvatar, id)
   end
 
-  def avatar_url(options={width:24})
-    "http://minotar.com/avatar/#{safe_username}/#{options[:width]}.png"
-  end
+  # def avatar_url(options={width:24})
+  #   "http://minotar.com/avatar/#{safe_username}/#{options[:width]}.png"
+  # end
 
   before_save do
-    Resque.enqueue(FetchSkin, id) if safe_username_changed?
+    Resque.enqueue(FetchAvatar, id) if safe_username_changed?
   end
 
 # REFERRALS
@@ -267,8 +211,8 @@ class User
 
 # OTHER
 
-  def playable_worlds
-    owned_worlds | memberships
+  def worlds
+    created_worlds | whitelisted_worlds
   end
 
   def first_sign_in?
