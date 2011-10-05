@@ -71,13 +71,15 @@
 
         cId = _.uniqueId()
 
+        socket_id = pusher and pusher.connection.socket_id
+
         $.ajax
           type: f.attr('method')
           url: f.attr('action')
           data:
             chat:
               raw: f.find('textarea').val()
-            socket_id: pusher.connection.socket_id
+            socket_id: socket_id
           dataType: 'json'
           success: (data) ->
             $('#wall-items #chat_'+cId)
