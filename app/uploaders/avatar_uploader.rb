@@ -8,7 +8,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
   end
 
   def fog_directory
-    "avatars-#{Rails.env}-minefold"
+    "avatars.minefold.com"
   end
 
   def store_dir
