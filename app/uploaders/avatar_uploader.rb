@@ -8,7 +8,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
   end
 
   def fog_directory
-    "avatars-production-minefold.s3.amazonaws.com"
+    "avatars-production-minefold"
   end
 
   def store_dir
