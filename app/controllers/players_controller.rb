@@ -26,17 +26,8 @@ class PlayersController < ApplicationController
   end
 
   def add
-    logger.info '*' * 80
-    logger.info player.inspect
-    logger.info '*' * 80
     world.whitelisted_players << player
-    logger.info '*' * 80
-    logger.info world.whitelisted_players.inspect
-    logger.info '*' * 80
-    logger.info world.save(safe: true)
-    logger.info '*' * 80
-    logger.info world.errors.to_hash
-    logger.info '*' * 80
+    world.save
 
     redirect_to user_world_players_path(world.creator, world)
   end

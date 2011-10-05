@@ -4,10 +4,10 @@ class UserMailer < ActionMailer::Base
   default from: 'team@minefold.com'
   layout 'email'
 
-  def referral(referral)
-    @referral = referral
-    @world = World.default
-    mail(to: @referral.email, subject: 'Minefold Beta')
+  def invite(invite_id)
+    @invite = Invite.find(invite_id)
+    mail to: @invite.email,
+         subject: "#{@invite.world.creator.username} wants you to play in #{@invite.world.name}"
   end
 
   def welcome(user_id)
@@ -28,7 +28,8 @@ class UserMailer < ActionMailer::Base
 
   class Preview < MailView
 
-    def referral
+    def invite
+      invite = Invite.create
       chris = User.chris
       referral = chris.referrals.new email: 'christopher.lloyd@gmail.com'
       referral.creator = chris

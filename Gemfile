@@ -34,6 +34,7 @@ gem 'jquery-rails'
 gem 'backbone-rails'
 gem 'coffee-filter'
 gem 'decent_exposure', git: 'https://github.com/chrislloyd/decent_exposure.git'
+gem 'fancybox-rails'
 
 # Uploads
 gem 'carrierwave'

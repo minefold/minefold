@@ -1,4 +1,4 @@
-- content_for :masthead do
+- masthead do
   .top
     - @users[0...8].each do |user|
       = image_tag user.avatar.head.s60.url, width: 60, height: 60, alt: user.username
@@ -24,3 +24,56 @@
 
   - @users[14...22].each do |user|
     = image_tag user.avatar.head.s60.url, width: 60, height: 60, alt: user.username
+
+%a.play-video{href: 'http://www.youtube.com/v/MqlxZig0bBY'}
+  Play film
+  :coffeescript
+    $(document).ready ->
+      $('a.play-video').click (e) ->
+        e.preventDefault()
+        $.fancybox(
+          'padding': 0
+          'autoScale': false
+          'transitionIn': 'none'
+          'transitionOut': 'none'
+          'title': this.title
+          'width': 680
+          'height': 495
+          'href': this.href.replace(new RegExp("watch\\?v=", "i"), 'v/')
+          'type': 'swf'
+          'swf': {
+            'wmode': 'transparent'
+            'allowfullscreen': 'true'
+          }
+        )
+        false
+
+
+
+%ol
+  %li.feature
+    %h2 No nerdy stuff
+    %p We take care of all the nerdy server stuff for you. No more worrying about RAM, Java or SSH. All you have to do is connect and play.
+
+  %li.feature
+    %h2 Infinity worlds
+    %p Unlike other Minecraft hosts, we don't limit the number of worlds you can play in. Create a new world for every day of the week!
+
+  %li.feature
+    %h2 Realtime in-game chat
+    %p See when your friends are playing online and chat with them straight from the site. You don't even have to open Minecraft to say “hi”.
+
+  %li.feature
+    %h2 Show off
+    %p We generate high quality maps of your worlds so you can quickly show everybody what you have built.
+
+  %li.feature
+    %h2 Make love, not grief
+    %p Keep pesky griefers out by limiting your world to only people you know.
+
+  %li.feature
+    %h2 Peace of mind
+    %p All your data is backed up safely in multiple datacenters. Your builds are safe with us.
+
+.signup-button
+  = link_to 'Sign up now!', plans_page_path, class: ['button', 'signup']
