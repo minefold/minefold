@@ -1,0 +1,9 @@
+Hi!
+
+<%= @invite.world.creator.username %> would like you to play with them in “#{@invite.world.name}” on Minefold.
+
+Head to
+
+    <%= link_to plans_page_url(code: @invite.code), plans_page_url(code: @invite.code) %>
+
+to get started!

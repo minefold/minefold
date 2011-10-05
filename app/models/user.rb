@@ -24,6 +24,8 @@ class User
   field :minutes_played, type: Integer, default: 0
   embeds_many :credit_events
 
+  belongs_to :invite
+
   belongs_to :current_world, class_name: 'World', inverse_of: nil
   has_many :created_worlds, class_name: 'World', inverse_of: :creator
 
@@ -54,7 +56,8 @@ class User
                   :password_confirmation,
                   # TODO: Think more about the security implications of this.
                   :plan,
-                  :card_token
+                  :card_token,
+                  :invite
 
   # Virtual
   attr_accessible :email_or_username,
@@ -162,6 +165,7 @@ class User
     super(str)
     self.safe_username = self.class.sanitize_username(str)
   end
+
 
 # AVATARS
 

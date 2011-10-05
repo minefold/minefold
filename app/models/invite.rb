@@ -16,6 +16,7 @@ class Invite
 
   field :email,   type: String
 
+  scope :unclaimed, where(claimed: false)
 
 # VALIDATIONS
 
@@ -23,10 +24,6 @@ class Invite
 
   def email=(str)
     super str.downcase.strip
-  end
-
-  def to_param
-    code
   end
 
   def mail

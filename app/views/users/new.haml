@@ -31,6 +31,7 @@
 
 = form_for user, class: 'stripe-target' do |f|
   = f.hidden_field :plan
+  = f.hidden_field :invite_id
 
   .errors
     - unless user.errors.empty?
@@ -44,7 +45,7 @@
 
   %section
     = f.label :email
-    = f.email_field :email, tabindex: 1
+    = f.email_field :email, tabindex: 1, value: user.email || user.invite.try(:email) || ''
 
   %section
     = f.label :username, 'Minecraft Username'

@@ -22,6 +22,10 @@ class UsersController < ApplicationController
   def new
     not_found unless User::PLANS.include? params[:plan]
     user.plan = params[:plan]
+
+    if invite = Invite.where(claimed: false, code: params[:code]).first
+      user.invite = invite
+    end
   end
 
   def check
@@ -33,12 +37,25 @@ class UsersController < ApplicationController
 
   def create
     if user.save
+      user.invite = Invite.find(params[:user][:invite_id])
+
+      if user.invite
+        user.invite.world.whitelisted_players << user
+        user.invite.world.save
+
+        user.current_world = user.invite.world
+        user.save
+
+        user.invite.claimed = true
+        user.invite.save
+      end
+
       UserMailer.welcome(user.id).deliver
       sign_in :user, user
-      respond_with user, :location => stored_location_for(:user) || user_root_path
+      respond_with user, :location => user_root_path
     else
       clean_up_passwords(@user)
-      respond_with user, :location => users_path
+      respond_with user, :location => users_path(code: params[:user][:invite_id])
     end
   end
 

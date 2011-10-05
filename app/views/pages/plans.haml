@@ -16,7 +16,7 @@
         %p
           Play for <strong>infinity hours</strong> in <strong>unlimited</strong> worlds.
 
-      = link_to 'Create a pro account', '/signup/pro', class: 'button'
+      = link_to 'Create a pro account', new_user_path(plan: 'pro', code: params[:code]), class: 'button'
 
 
     .plan.free
@@ -29,4 +29,4 @@
         %p
           Play for <strong>12 hours free</strong> in <strong>unlimited</strong> worlds.
 
-      = link_to 'Create a free account', '/signup/free', class: 'button'
+      = link_to 'Create a free account', new_user_path(plan: 'free', code: params[:code]), class: 'button'
