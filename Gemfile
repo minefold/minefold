@@ -1,7 +1,6 @@
 source 'https://code.stripe.com'
 source 'https://rubygems.org'
 
-gem 'rake'
 gem 'thin'
 gem 'rails', '3.1.0'
 
@@ -54,7 +53,6 @@ gem 'airbrake'
 gem 'statsd-instrument'
 
 group :development do
-  gem 'rake'
   gem 'heroku'
   gem 'foreman'
 end
