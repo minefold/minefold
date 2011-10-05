@@ -9,9 +9,9 @@ class Chat < WallItem
     html || raw
   end
 
-  before_save do
-    self.html = Rinku.auto_link(raw)
-  end
+  # before_save do
+  #   self.html = Rinku.auto_link(raw)
+  # end
 
   def msg
     "<#{user.username}> #{raw}"
