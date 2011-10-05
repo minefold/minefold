@@ -62,6 +62,7 @@ header {
   }
 
   table {
+    width: 100%;
     th {
       font-size: 11px;
       color: #666;
@@ -70,6 +71,9 @@ header {
     }
     tr {
       border-bottom: 1px solid darken(white, 10%);
+      &:hover {
+        background-color: darken(white, 5%);
+      }
     }
     td, th {
       padding: 0 5px;
@@ -89,9 +93,22 @@ header {
 
 
 #users table {
+  tr.pro {
+    background: #FFC;
+  }
   .id {
     font-size: 10px;
     text-transform: uppercase;
     color: #999;
+  }
+  .avatar img {
+    display: block;
+    margin-top: 3px;
+    margin-bottom: -5px;
+    line-height: 18px;
+    border-radius: $radius;
+  }
+  .username {
+    font-weight: bold;
   }
 }

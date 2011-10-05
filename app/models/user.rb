@@ -20,15 +20,11 @@ class User
 
   field :host, default: 'pluto.minefold.com'
 
-  field :staff,          type: Boolean, default: false
-
   field :credits,        type: Integer, default: 0
   field :minutes_played, type: Integer, default: 0
   embeds_many :credit_events
 
-  has_many :orders
-
-  belongs_to :current_world, class_name: 'World'
+  belongs_to :current_world, class_name: 'World', inverse_of: nil
   has_many :created_worlds, class_name: 'World', inverse_of: :creator
 
   has_and_belongs_to_many :whitelisted_worlds,
@@ -212,7 +208,9 @@ class User
 # OTHER
 
   def worlds
-    created_worlds | whitelisted_worlds
+    (created_worlds | whitelisted_worlds).sort_by do |world|
+      world.creator.safe_username + world.name
+    end
   end
 
   def first_sign_in?
@@ -224,9 +222,11 @@ class User
   end
 
   def as_json(options={})
-    super(options).merge(
-      avatar_head_24_url: avatar.head.s24.url
-    )
+    {
+      avatar_head_24_url: avatar.head.s24.url,
+      avatar_head_60_url: avatar.head.s60.url,
+      id: id
+    }.merge(super(options))
   end
 
 protected

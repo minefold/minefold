@@ -2,30 +2,32 @@
 
 #worlds-show {
   #before-page {
-    border-right: $border solid darken(white, 20%);
+    display: block;
+    float: none;
+    @include span(8);
+    margin-bottom: 4*$line;
+  }
 
-    dl.settings {
-      margin-bottom: 3*$line;
+  #page {
+    @include span(6);
+  }
 
-      dt, dd {
-        border-bottom: 1px solid darken(white, 5%);
-        padding: 0 ($gutter/2);
-      }
+  #invite {
+    background: lighten($blue, 50%);
+    padding: (2*$line) (2*$gutter);
+    @include border-radius($radius);
 
-      dt {
-        font-size: 12px;
-        color: #999;
-        line-height: 18px - $border;
-      }
-
-      dd {
-        font-weight: 600;
-        line-height: 24px;
-        border: none;
-        margin-bottom: $line;
-      }
+    h2 {
+      margin: (2*$line) 0;
+      color: darken($blue, 20%);
     }
-
+    p {
+      color: rgba(black, 0.6);
+    }
+    textarea {
+      width: 100%;
+      resize: vertical;
+    }
   }
 
   ul.players {

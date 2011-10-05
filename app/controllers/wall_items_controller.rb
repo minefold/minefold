@@ -7,8 +7,7 @@ class WallItemsController < ApplicationController
     chat.user = current_user
 
     if chat.valid?
-      # TODO Check what callbacks this calls and fire media job
-      world.wall_items.push chat
+      world.wall_items.push(chat)
 
       chat.wall.broadcast 'chat-create',
                           chat.to_json(include: :user),

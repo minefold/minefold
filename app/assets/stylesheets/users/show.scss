@@ -1,0 +1,14 @@
+#users-show {
+  #masthead {
+    .avatar, .username {
+      float: left;
+    }
+    .avatar {
+      margin-right: 2* $gutter;
+      img {
+        display: block;
+        @include border-radius($radius);
+      }
+    }
+  }
+}

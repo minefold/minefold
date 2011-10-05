@@ -10,6 +10,7 @@
 @import 'home/dashboard';
 
 @import 'users/new';
+@import 'users/show';
 @import 'users/edit';
 @import 'users/billing';
 
@@ -24,7 +25,7 @@
 
 @import 'uploads/upload';
 
-//@import 'orders/orders';
+@import 'players/index';
 
 @import 'pages/page';
 @import 'pages/plans'

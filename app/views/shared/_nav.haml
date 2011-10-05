@@ -5,6 +5,7 @@
     %li= link_to 'Pricing and Signup', plans_page_path
 
   %li= link_to 'Blog', '//blog.minefold.com'
+  %li= mail_to 'feedback@minefold.com', 'Feedback'
 
   .pipe
 
@@ -18,7 +19,7 @@
         left
 
       %li.go-pro
-        = link_to 'Go Pro', [:edit, current_user]
+        = link_to 'Go Pro', [:edit, current_user], class: 'button'
 
 
 

@@ -2,33 +2,35 @@ class Invite
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  CODE_LENGTH=16
+  CODE_LENGTH = 6
 
-  embedded_in :world
+  belongs_to :world
 
-  belongs_to :from, class_name:'User'
-  belongs_to :to, class_name:'User'
-  field :email
-
-  field :claimed, type: Boolean
-
-  field :code, type: String, default: -> {
-    code = nil
+  field :claimed, type: Boolean, default: false
+  field :code,    type: String, default: -> {
     begin
-      code = self.class.random_code
-    end while self.class.where(code: self.code).exists?
-    code
+      c = rand(36 ** CODE_LENGTH).to_s(36).rjust(CODE_LENGTH, '0').upcase
+    end while User.where(code: c).exists?
+    c
   }
 
-  validates_presence_of :code
-  validates_presence_of :from
+  field :email,   type: String
 
-  scope :claimed, where(:receiver.ne => nil)
 
-private
+# VALIDATIONS
 
-  def self.random_code(length=CODE_LENGTH)
-    rand(36 ** length).to_s(36)
+  validates_uniqueness_of :code
+
+  def email=(str)
+    super str.downcase.strip
+  end
+
+  def to_param
+    code
+  end
+
+  def mail
+    UserMailer.invite(id)
   end
 
 end

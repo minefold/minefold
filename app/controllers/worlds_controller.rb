@@ -4,7 +4,7 @@ class WorldsController < ApplicationController
   expose(:creator) { User.find_by_slug(params[:user_id])}
   expose(:world) do
     if creator
-      creator.created_worlds.find_by_slug(params[:id])
+      creator.created_worlds.find_by_slug!(params[:id])
     else
       World.new(params[:world])
     end
@@ -22,7 +22,8 @@ class WorldsController < ApplicationController
     if world.save
       current_user.current_world = world
       current_user.save
-      redirect_to user_world_players_path(world.creator, world)
+      flash[:new] = true
+      redirect_to user_world_path(world.creator, world)
     else
       render :new
     end
@@ -39,7 +40,7 @@ class WorldsController < ApplicationController
     world.update_attributes params[:world]
     if world.save
       flash[:success] = "Settings successfully updated."
-      redirect_to params['return_url'] || user_world_path(world.owner, world)
+      redirect_to params['return_url'] || user_world_path(world.creator, world)
     else
       render json: {errors: world.errors}
     end
@@ -59,28 +60,16 @@ class WorldsController < ApplicationController
     if world.whitelisted?(current_user)
       current_user.current_world = world
       current_user.save
-
-      redirect_to user_world_path(world.creator, world)
     end
+    redirect_to :back
   end
 
-  def play_request
-    @invite = world.invites.create from: current_user, to: world.owner
-
-    # WorldMailer.play_request(world.id,
-    #                          world.owner.id,
-    #                          current_user.id).deliver
-    redirect_to user_world_path(world.owner, world)
-  end
-
-private
-
-  def lock_private
-    if not world.public? and
-       not (signed_in? and current_user.staff?) and
-       not (signed_in? and world.players.include?(current_user))
-      raise Mongoid::Errors::DocumentNotFound
-    end
-  end
-
+  # def play_request
+  #   @invite = world.invites.create from: current_user, to: world.owner
+  #
+  #   # WorldMailer.play_request(world.id,
+  #   #                          world.owner.id,
+  #   #                          current_user.id).deliver
+  #   redirect_to user_world_path(world.owner, world)
+  # end
 end

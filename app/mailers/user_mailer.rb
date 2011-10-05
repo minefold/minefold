@@ -20,6 +20,12 @@ class UserMailer < ActionMailer::Base
     mail(to: @user.email, subject: 'Buy more Minefold time (running low)')
   end
 
+  # TODO
+  def thanks(order_id)
+    # @order = Order.find(order_id)
+    # mail(to: @order.user.email, subject: 'Thank you for buying Minefold minutes!')
+  end
+
   class Preview < MailView
 
     def referral
@@ -36,6 +42,15 @@ class UserMailer < ActionMailer::Base
 
     def reminder
       ::UserMailer.reminder User.chris.id
+    end
+
+    def thanks
+      # order = Order.new
+      # order.transactions.new option_selection1: 8
+      # order.user = User.chris
+      # order.save
+      #
+      # ::OrderMailer.thanks(order.id)
     end
 
   end

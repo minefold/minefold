@@ -45,8 +45,9 @@
   - else
 
     = form_for current_user, method: 'put' do |f|
-      %h2 Downgrade
       = f.hidden_field :plan, value: 'free'
       %section
-        = f.submit 'Downgrade to a free account', class: 'muted'
         .hint You will be pro-rated for the rest of the month.
+
+      %section
+        = f.submit 'Downgrade to a free account', class: 'muted'

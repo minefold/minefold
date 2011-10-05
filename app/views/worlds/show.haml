@@ -18,6 +18,18 @@
 - if flash[:success]
   .flash.success= flash[:success]
 
+- if flash[:new]
+  - before do
+    #invite
+      %h2 Now, show off what you build!
+      %p It's easy to start sharing #{world.name} with your friends. If they are already on Minefold you can #{link_to 'add them to the whitelist', world_players_path(world)}. Otherwise, if you enter their emails below, we can let them know that you want them to join you in #{world.name}.
+      = form_for :invite, url: user_world_invite_path(world.creator, world), method: 'post' do |f|
+        %section
+          = f.text_area :emails, rows: 1, placeholder: 'chris@minefold.com, dave@minefold.com'
+
+        %section
+          = f.submit 'Send invites'
+
 #stream
   - if signed_in?
     #share
@@ -35,6 +47,19 @@
 
     :coffeescript
       f = $('#share form')
+
+      window.template = _.template """
+        <div id="chat_<%= id %>" class="chat item">
+          <div class="avatar">
+            <img src="<%= avatar_head_24_url %>" width="24" height="24" />
+          </div>
+          <div class="body"><%= body %></div>
+          <div class="meta">
+            <span class="user">@<%= user.username %></span>
+            <time><%= created_at || '' %></time>
+          </div>
+        </div>
+      """
 
       f.submit (e) ->
         e.preventDefault()
@@ -62,8 +87,12 @@
         data.chat.body = data.chat.raw
         data.chat.user = current_user
         data.chat.id = cId
+        data.chat.created_at = 'just now'
+        data.chat.avatar_head_24_url = current_user.avatar_head_24_url
 
-        html = Mustache.renderTemplate('worlds/_wall_item', data.chat)
+        console.log data
+
+        html = template(data.chat)
         $('#wall-items').prepend $(html).addClass('loading')
 
         f.find('textarea').val('')
@@ -80,10 +109,18 @@
 
 
   #wall-items
-    = template 'worlds/_wall_item', collection: world.wall_items.order_by([:created_at, :desc]).limit(100)
+    - world.wall_items.order_by([:created_at, :desc]).limit(100).each do |chat|
+      .item[chat]
+        - if !chat.user.nil?
+          .avatar= image_tag chat.user.avatar.head.s24.url, width: 24, height: 24
+        .body= chat.body
+        .meta
+          - if !chat.user.nil?
+            %span.user @#{chat.user.username}
+          %time= chat.created_at
 
-
-  = javascript_include_tag 'http://js.pusherapp.com/1.9/pusher.min.js'
+  - head do
+    = javascript_include_tag '//js.pusherapp.com/1.9/pusher.min.js'
 
   :coffeescript
     window.pusher = new Pusher(#{Pusher.key.to_json});
@@ -93,5 +130,7 @@
       data.id = data._id
       data.body = data.raw
 
-      html = Mustache.renderTemplate('worlds/_wall_item', data)
+      console.log data
+
+      html = template(data)
       $('#wall-items').prepend $(html)

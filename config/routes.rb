@@ -9,7 +9,6 @@ Minefold::Application.routes.draw do
 
     if Rails.env.development?
       namespace :mail do
-        mount OrderMailer::Preview => 'order'
         mount UserMailer::Preview => 'user'
         mount WorldMailer::Preview => 'world'
       end
@@ -68,7 +67,19 @@ Minefold::Application.routes.draw do
         end
 
         resources :wall_items, :only => [:index, :create]
-        resources :players, :only => [:index, :create, :destroy]
+        resources :players, :only => [:index, :create, :destroy] do
+          post :ask, :action => :ask, :on => :collection
+          post :add, :action => :add, :on => :collection
+          get  :search, :action => :search, :on => :collection
+
+          put '/approve/:play_request_id',
+            :action => :approve,
+            :on => :collection,
+            :as => :approve_play_request
+        end
+
+        resource :invite, :only => :create
+
       end
     end
 

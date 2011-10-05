@@ -1,4 +1,7 @@
-- title user.username
+- title user.username do
+  %h1
+    .avatar= image_tag user.avatar.head.s48.url, width: 48, height: 48
+    .username= user.username
 
 %p There isn't much to see here yet. But hey, we hope you enjoy this video!
 

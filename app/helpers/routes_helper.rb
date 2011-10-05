@@ -37,8 +37,12 @@ module RoutesHelper
     user_world_path(world.creator, world, opts)
   end
 
-  # def worlds_path(world)
-  #   worlds_path(current_user)
-  # end
+  def ask_world_players_path(world, opts={})
+    ask_user_world_players_path(world.creator, world, opts)
+  end
+
+  def add_world_players_path(world, opts={})
+    add_user_world_players_path(world.creator, world, opts)
+  end
 
 end

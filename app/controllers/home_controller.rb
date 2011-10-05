@@ -7,8 +7,4 @@ class HomeController < ApplicationController
     @users = User.where(:skin.ne => nil).shuffle
   end
 
-  def dashboard
-    @worlds = World.order_by([:slug, :asc]).all
-  end
-
 end

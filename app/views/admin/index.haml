@@ -22,16 +22,16 @@
           %h2= User.count
 
         %li
+          %p Total Pro Users
+          %h2= User.where(plan: 'pro').count
+
+        %li
           %p Total Worlds
           %h2= World.count
 
         %li
           %p Total Minutes Played
           %h2= User.all.inject(0) {|total, user| total + user.minutes_played}
-
-        %li
-          %p Total Income
-          %h2= number_to_currency Order.total_income
 
     #page
 
@@ -40,10 +40,11 @@
           %thead
             %tr
               %th ID
+              %th
               %th Username
               %th Email
 
-              %th Host
+              / %th Host
               %th World
 
               %th Credits
@@ -53,13 +54,18 @@
 
           %tbody
             - @users.each do |user|
-              %tr
+              %tr{class: user.plan}
                 %td.id= user.id
+                %td.avatar= image_tag user.avatar.head.s18.url
                 %td.username= link_to user.username, user
                 %td.email= mail_to user.email
 
-                %td= link_to user.host, user.host
-                %td= link_to user.current_world.name, user.current_world
+                - # %td= link_to user.host, user.host
+                %td
+                  - if user.current_world
+                    = link_to user.current_world.name, user.current_world
+                  - else
+                    \-
 
                 %td= user.credits
                 %td= user.minutes_played

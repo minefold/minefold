@@ -67,11 +67,20 @@ header {
       }
 
       .pro {
-        background: $red;
-        padding: 0 ($gutter/2);
+        color: darken($blue, 20%);
+        @include border-radius($radius);
+        font-weight: 600;
+      }
+
+      .go-pro a {
+        background-color: darken($red, 10%);
+        padding: ($line/2) $gutter;
         @include border-radius($radius);
         color: white;
         font-weight: 600;
+        &:hover, &:focus {
+          background-color: darken($red, 20%);
+        }
       }
 
       .profile img {

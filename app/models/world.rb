@@ -24,6 +24,9 @@ class World
                           inverse_of: :whitelisted_worlds,
                           class_name: 'User'
 
+  embeds_many :play_requests
+  has_many :invites
+
   embeds_many :wall_items, as: :wall
 
 
@@ -62,8 +65,22 @@ class World
 
 # PLAYERS
 
+  def can_play?(user)
+    not players.include?(user)
+  end
+
+  def available_player(username)
+    User
+      .not_in(_id: players.map {|p| p.id})
+      .where(safe_username: username.downcase)
+  end
+
   def whitelisted?(user)
-    creator == user or whitelisted_players.include?(user)
+    players.include? user
+  end
+
+  def players
+    [creator] + whitelisted_players
   end
 
   def current_players

@@ -10,7 +10,7 @@
   .welcome {
     margin: 0 0 (4*$line) 0;
     padding: 0 (2*$gutter);
-    background: #FFC;
+    background: lighten($blue, 50%);
     position: relative;
     overflow: hidden;
     @include border-radius(2*$radius);

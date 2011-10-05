@@ -80,14 +80,14 @@ input[type=password] {
 textarea {
   @include box-sizing(border-box);
   font: 400 14px/18px $helvetica;
-  border: 1px solid darken(white, 10%);
+  border: 1px solid rgba(black, 0.1);
   outline: none;
   margin: 0;
   padding: $line $gutter;
   @include border-radius($radius);
 
   &:hover {
-    border-color: darken(white, 20%);
+    border-color: rgba(black, 0.2);
   }
 
   &:focus {

@@ -16,20 +16,19 @@
           = button_to 'Play here', [:play, world], method: :put
 
       - else
-        - if false #world.wait_list.include?(current_user)
+        - if world.play_requests.where(user: current_user).exists?
           %p Waiting for #{world.creator.username}
         - else
-          = button_to 'Ask to play here', [world, :players], method: :put
+          = button_to 'Ask to play here', [:ask, world, :players], method: :post
 
     - else
       %p.hint
-        Hey!
         - if world.whitelisted_players.size.zero?
           #{world.creator.username} is playing here.
         - else
-          #{pluralize world.whitelisted_players.size, 'person', 'people'} are playing here.
+          #{world.players.size} other people are playing here.
 
-      = link_to 'Sign up for Minefold', plans_page_path, class: 'button'
+      = link_to 'Join them by signing up now', plans_page_path, class: 'button'
 
 - subhead do
   %ol#subnav
