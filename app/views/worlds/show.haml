@@ -125,7 +125,7 @@
     = javascript_include_tag '//d3ds63zw57jt09.cloudfront.net/1.7/pusher.min.js'
 
   :coffeescript
-    window.pusher = new Pusher(#{Pusher.key.to_json});
+    window.pusher = new Pusher(#{Pusher.key.to_json}, encrypted: true);
     window.channel = pusher.subscribe(#{Pusher[world.pusher_key].name.to_json});
 
     channel.bind 'chat-create', (data) ->

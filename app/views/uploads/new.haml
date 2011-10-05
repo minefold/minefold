@@ -49,7 +49,7 @@
 = javascript_include_tag '//https://d3ds63zw57jt09.cloudfront.net/1.7/pusher.min.js'
 
 :coffeescript
-  pusher = new Pusher(#{Pusher.key.to_json})
+  pusher = new Pusher(#{Pusher.key.to_json}, encrypted: true)
   maxFileSize = 1 * 1024 * 1024 * 1024 # 1Gb
 
   status = $('form .status')
