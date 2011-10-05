@@ -18,7 +18,7 @@
         %p To connect to #{link_to current_user.current_world.name, current_user.current_world} you need to open Minecraft, select “Multiplayer” and add a server with the address <strong>#{current_user.host}</strong>.
 
       - else
-        %p First you need to either #{link_to 'create a new world', new_worlds_path} or ask a friend to invite you to one of their worlds. Once you have done that, open Minecraft, select “Multiplayer” and add a server with the address <strong>#{current_user.host}</strong>.
+        %p First you need to either #{link_to 'create a new world', new_world_path} or ask a friend to invite you to one of their worlds. Once you have done that, open Minecraft, select “Multiplayer” and add a server with the address <strong>#{current_user.host}</strong>.
 
     - else
       %p When you select a world to play in, you'll be given an address to connect to. Open Minecraft, select “Multiplayer” and add a server with that same address.
