@@ -139,7 +139,11 @@ private
   end
 
   def send_cmd(str)
-    REDIS.publish("#{redis_key}:stdin", str)
+    world_data = REDIS.hget "worlds:running", id
+    if world_data
+      instance_id = JSON.parse(world_data)['instance_id']
+      REDIS.publish("workers:#{instance_id}:worlds:#{id}:stdin", str)
+    end
   end
 
 end
