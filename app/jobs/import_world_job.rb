@@ -12,7 +12,7 @@ class ImportWorldJob
   end
 
   def process(upload)
-    pusher_key = "#{self.class.name}-#{upload}"
+    pusher_key = "#{self.class.name}-#{upload.id}"
     pusher = Pusher[pusher_key]
 
     error = nil
