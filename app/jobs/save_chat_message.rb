@@ -3,7 +3,7 @@ class SaveChatMessage
 
   def self.perform(world_id, username, raw)
     world = World.find(world_id)
-    user = User.first conditions:{username:username}
+    user = User.where(safe_username: username.downcase).first
 
     chat = Chat.new(user: user, raw: raw)
 
