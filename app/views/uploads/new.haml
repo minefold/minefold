@@ -58,7 +58,7 @@
   $('form').s3upload
     prefix: '#{Time.now.strftime('%Y%m%d%H%M%S')}-#{current_user.safe_username}-#{current_user.id}-'
     text: 'Upload your world'
-    signature_url: #{policy_upload_path(forma: :xml).to_json}
+    signature_url: #{policy_upload_path(format: :xml).to_json}
     required: true
     submit_on_all_complete: false
     onselect: (info, swf) ->
