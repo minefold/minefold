@@ -11,6 +11,10 @@
         If you haven't played Minecraft before or are new to multiplayer we have #{link_to 'a short guide', help_page_path} to help you out. If you are ready to jump in and start playing you can either create a new world or upload one of your single player worlds.
       %p If you have any feedback or problems, please email us anytime at #{mail_to 'support@minefold.com'}.
 
+- subhead do
+  .callout
+    Want to show off your amazing builds with other Minefold players? #{mail_to 'team@minefold.com', 'Send us some screenshots'} to have your world be in the running to be our first featured world!
+
 .worlds
   - if current_user.worlds.empty?
     %p

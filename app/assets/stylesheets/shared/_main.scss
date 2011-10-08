@@ -181,3 +181,19 @@ iframe.youtube {
   margin: 24px auto;
   display: block;
 }
+
+.callout {
+  background: #FFC;
+  text-align: center;
+  padding: $line $gutter;
+  line-height: 18px;
+  margin-bottom: 2*$line;
+  a {
+    color: $blue;
+    text-decoration: none;
+    &:hover {
+      color: darken($blue, 10%);
+    }
+  }
+
+}
