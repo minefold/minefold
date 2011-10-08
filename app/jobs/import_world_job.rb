@@ -45,7 +45,7 @@ class ImportWorldJob
           url:  Minefold::Application.routes.url_for(
             controller: 'worlds',
             action:     'show',
-            user_id:    world.owner.slug,
+            user_id:    world.creator .slug,
             id:         world.slug,
             only_path:  true
           )
