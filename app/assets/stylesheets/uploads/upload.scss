@@ -2,109 +2,109 @@
 
 #uploads-new {
 
-  #page {
-    @include span(4);
-  }
-
   #after-page {
     @include span(4);
   }
 
-  .instructions {
-    list-style-type: decimal;
-    padding-left: 20px;
-    .hint {
-      font-size: 12px;
-      color: #999;
-    }
-  }
+  #page {
+    @include span(4);
 
-  pre {
-    margin: $line (2*$gutter);
-    color: #666;
-  }
-
-  form {
-    margin-bottom: 4*$line;
-    #world_upload_path {
-      background: $blue;
-      border: none;
-      color: white;
-      text-align: center;
-      @include border-radius($radius);
-      width: cols(4);
-
-      &:hover {
-        background: darken($blue, 10%);
+    .instructions {
+      list-style-type: decimal;
+      padding-left: 20px;
+      .hint {
+        font-size: 12px;
+        color: #999;
       }
     }
 
-    .progress {
-      margin-top: 2*$line;
-      height: 6px;
-      background: darken(white, 5%);
-      width: 100%;
-      @include border-radius($radius);
+    pre {
+      margin: $line (2*$gutter);
+      color: #666;
+    }
 
-      .bar {
+    form {
+      margin-bottom: 4*$line;
+      #world_upload_path {
         background: $blue;
-        height: 6px;
+        border: none;
+        color: white;
+        text-align: center;
         @include border-radius($radius);
-        width: 0;
+        width: cols(4);
+
+        &:hover {
+          background: darken($blue, 10%);
+        }
       }
-    }
 
-    .status {
-      font-size: 12px;
-      color: #999;
-      line-height: 24px;
-      &.error {
-        color: $red;
+      .progress {
+        margin-top: 2*$line;
+        height: 6px;
+        background: darken(white, 5%);
+        width: 100%;
+        @include border-radius($radius);
+
+        .bar {
+          background: $blue;
+          height: 6px;
+          @include border-radius($radius);
+          width: 0;
+        }
       }
-    }
 
-    .error {
-      margin-top: 2*$line;
-
-      strong {
+      .status {
+        font-size: 12px;
+        color: #999;
         line-height: 24px;
-        margin: 0;
-        color: $red;
+        &.error {
+          color: $red;
+        }
       }
-      .message {
-        display: block;
+
+      .error {
+        margin-top: 2*$line;
+
+        strong {
+          line-height: 24px;
+          margin: 0;
+          color: $red;
+        }
+        .message {
+          display: block;
+        }
       }
+
+      .processing {
+        background: url(image-path('spinner.gif')) left 1px no-repeat;
+        padding-left: 16px + $gutter;
+        font-size: 12px;
+        line-height: 18px;
+        color: #999;
+        margin-top: $line;
+        width: cols(4) - 16px;
+
+        strong {
+          display: block;
+          color: #000;
+        }
+      }
+
     }
 
-    .processing {
-      background: url(image-path('spinner.gif')) left 1px no-repeat;
-      padding-left: 16px + $gutter;
+    .note {
+      background: #FFC;
+      padding: $line $gutter;
+      margin: 0 (-$gutter) $line (-$gutter);
       font-size: 12px;
-      line-height: 18px;
-      color: #999;
-      margin-top: $line;
-      width: cols(4) - 16px;
-
-      strong {
-        display: block;
-        color: #000;
-      }
     }
 
-  }
-
-  .note {
-    background: #FFC;
-    padding: $line $gutter;
-    margin: 0 (-$gutter) $line (-$gutter);
-    font-size: 12px;
-  }
-
-  a {
-    color: $blue;
-    text-decoration: none;
-    &:hover {
-      color: darken($blue, 10%);
+    a {
+      color: $blue;
+      text-decoration: none;
+      &:hover {
+        color: darken($blue, 10%);
+      }
     }
   }
 }
