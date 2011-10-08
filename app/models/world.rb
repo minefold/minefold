@@ -29,6 +29,8 @@ class World
 
   embeds_many :wall_items, as: :wall
 
+  default_scope includes(:creator)
+
 
 # VALIDATIONS
 

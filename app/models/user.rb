@@ -14,6 +14,10 @@ class User
   field :safe_username,  type: String
   slug  :username,       index: true
 
+  index :email, unique: true
+  index :safe_username, unique: true
+
+
   field :plan, type: String, default: 'free'
 
   field :customer_id,    type: String
