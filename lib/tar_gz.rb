@@ -1,4 +1,4 @@
-class Archive
+class TarGz
   attr_reader :options
 
   def self.new(*args)

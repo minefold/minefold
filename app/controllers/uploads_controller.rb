@@ -10,7 +10,7 @@ class UploadsController < ApplicationController
                               uploader:current_user
 
     Resque.enqueue ImportWorldJob, upload.id
-    render json: { world_upload_id:upload.id }
+    render json: { id:upload.id }
   end
 
   def policy

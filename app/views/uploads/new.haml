@@ -90,7 +90,9 @@
         data: info
         dataType: 'json'
         success: (data) ->
-          channel = pusher.subscribe 'ImportWorldJob-' + data.world_upload_id
+          channel_name = 'WorldUpload-' + data.id
+          channel = pusher.subscribe channel_name
+
 
           channel.bind 'success', (data) ->
             window.location = data.world.url

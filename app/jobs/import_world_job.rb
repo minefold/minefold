@@ -12,14 +12,17 @@ class ImportWorldJob
   end
 
   def process(upload)
-    pusher_key = "#{name}-#{world_upload_id}"
+    pusher_key = "#{upload.class.name}-#{upload.id}"
     pusher = Pusher[pusher_key]
+
+    puts "connecting to channel: #{pusher_key}"
 
     error = nil
     begin
       world_upload = process_world_upload upload
       error = world_upload.process_result
     rescue => e
+      Airbrake.notify(e)
       error = e.to_s
     end
 
@@ -63,8 +66,7 @@ class ImportWorldJob
       puts "Creating world:#{world_name} creator:#{world_upload.uploader.username}"
 
       world = World.create name:world_name,
-                        creator:world_upload.uploader,
-                          owner:world_upload.uploader
+                        creator:world_upload.uploader
 
       world_archive = create_world_archive world.id, world_upload_archive, result[:world_path]
 
