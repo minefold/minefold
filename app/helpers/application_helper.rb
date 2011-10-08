@@ -12,7 +12,7 @@ module ApplicationHelper
   end
 
   def time_left_for user
-    "#{user.hours}:#{user.minutes}"
+    "%02d' %02d\"" % user.time_left
   end
 
   def template(name, options)

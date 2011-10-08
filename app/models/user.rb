@@ -151,6 +151,11 @@ class User
     credits - (hours * (1.hour / BILLING_PERIOD))
   end
 
+  # TODO: Get rid of hours and minutes
+  def time_left
+    [hours, minutes]
+  end
+
 
 # AUTHENTICATION
 
