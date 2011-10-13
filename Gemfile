@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 gem 'rake', '0.8.7'
 gem 'thin'
 gem 'rails', '3.1.0'
+gem 'sprockets', '2.0.2'
 
 # ORM
 gem 'mongoid', git: 'https://github.com/pyromaniac/mongoid.git'
