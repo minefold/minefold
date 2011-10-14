@@ -48,7 +48,7 @@ class User
   validates_uniqueness_of :email, case_sensitive: false
   validates_uniqueness_of :username, case_sensitive: false
   validates_confirmation_of :password
-  validates_numericality_of :credits, greater_than_or_equal_to: 0
+  validates_numericality_of :credits
   validates_numericality_of :minutes_played, greater_than_or_equal_to: 0
   validates_inclusion_of :plan, in: PLANS
 
