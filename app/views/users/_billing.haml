@@ -63,7 +63,7 @@
         exp_year:  $('#card_expiry_1i').val()
 
       Stripe.createToken card, amount, (status, response) ->
-        if response.error
+        if status isnt 200
           form.find('input[type=submit]').attr(disabled: false)
           form.find('.spinner').hide()
 
