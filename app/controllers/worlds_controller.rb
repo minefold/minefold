@@ -1,7 +1,7 @@
 class WorldsController < ApplicationController
   prepend_before_filter :authenticate_user!, except: [:show, :map]
 
-  expose(:creator) { User.find_by_slug(params[:user_id])}
+  expose(:creator) { User.find_by_slug!(params[:user_id])}
   expose(:world) do
     if creator
       creator.created_worlds.find_by_slug!(params[:id])

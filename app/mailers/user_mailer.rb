@@ -6,8 +6,11 @@ class UserMailer < ActionMailer::Base
 
   def invite(invite_id)
     @invite = Invite.find(invite_id)
+    @world = @invite.world.
+    @creator = @world.creator
+
     mail to: @invite.email,
-         subject: "#{@invite.world.creator.username} wants you to play in #{@invite.world.name}"
+         subject: "#{@creator.username} wants you to play in #{@world.name}"
   end
 
   def welcome(user_id)

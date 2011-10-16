@@ -1,5 +1,11 @@
 #home-index {
 
+  #page {
+    @include span(8);
+    width: cols(8) + (2*$gutter);
+    margin: 0;
+  }
+
   header {
     padding-top: 8 * $line;
     padding-bottom: 0;
@@ -139,67 +145,110 @@
     }
   }
 
-  #page {
-    @include span(8);
 
-    a.play-video {
-      padding: (64px + 12px + 6px) 32px $line 32px;
-      @include span(2);
-      margin: 0 auto (2*$line) auto;
-      background: $green url(image-path('play.png')) 0 12px no-repeat;
-      display: block;
-      width: 128px;
-      text-align: center;
-      font-weight: bold;
-      color: white;
-      text-shadow: 0 1px 0 rgba(black, 0.2);
-      @include border-radius(4 *$radius);
-      cursor: pointer;
-      &:hover {
-        background-color: darken($green, 10%);
-        color: white;
-        background-position: -128px 12px;
+}
+
+#plans, form#new_user {
+  @include span(4);
+  float: left;
+}
+
+#plans {
+
+
+  .plan {
+    overflow: hidden;
+    padding: $line $gutter;
+    margin-bottom: 2*$line;
+    @include border-radius($radius);
+
+    h3 {
+      float: left;
+      margin: $line 0;
+
+
+      font-size: 21px;
+      line-height: 24px;
+      font-weight: 600;
+    }
+
+    .price {
+      float: right;
+      background: white;
+      padding: 0 $gutter;
+      margin: $line 0;
+      @include border-radius($radius);
+
+      .dollar {
+        font-size: 10px;
+        color: darken(white, 40%);
       }
+
+      .amount {
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      .slash {
+        color: darken(white, 20%);
+      }
+
+      .period {
+        font-size: 12px;
+        color: darken(white, 40%);
+      }
+
+    }
+
+    .features {
+      float: left;
+      margin: 0;
     }
 
 
-    ol {
-      overflow: auto;
-      margin: 0 (-$gutter);
-      margin-bottom: 4*$line;
+  }
 
-      li {
-        @include span(4);
-        float: left;
-        h2 {
-          font-weight: 600;
-        }
-        p {
-          color: #666;
-        }
-      }
+  .plan.pro {
+    background: lighten($blue, 40%);
+
+    h3 {
+      color: darken($blue, 30%);
     }
 
-    .signup-button {
-      text-align: center;
-      margin-bottom: 4*$line;
-      width: 100%;
+    .features {
+      color: darken($blue, 10%);
+    }
+  }
 
-      a {
-        padding: $line (2*$gutter);
-        color: white;
-//        background-color: $green;
-        font-size: 18px;
-        line-height: 24px;
-        display: block;
-        @include span(4);
-        margin-left: auto;
-        margin-right: auto;
-        &:hover {
+  .plan.free {
+    background: darken(white, 5%);
 
-          background-color: darken($blue, 20%);
-        }
-      }
+    .features {
+      color: darken(white, 60%);
+    }
+  }
+
+}
+
+form#new_user {
+  input {
+    width: 100%;
+  }
+}
+
+#features {
+  overflow: visible;
+  margin-bottom: 4*$line;
+  clear: both;
+
+  li {
+    @include span(4);
+    float: left;
+    h2 {
+      font-weight: 600;
+    }
+    p {
+      color: darken(white, 60%);
     }
   }
 }
