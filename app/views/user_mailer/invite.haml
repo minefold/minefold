@@ -1,8 +1,0 @@
-%p Hi!
-
-%p
-  #{@invite.world.creator.username} would like you to join their Minecraft world “#{@invite.world.name}” on Minefold.
-
-%p Click the link below to get started!
-
-%blockquote= link_to plans_page_url(code: @invite.code), plans_page_url(code: @invite.code)
