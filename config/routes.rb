@@ -40,8 +40,6 @@ Minefold::Application.routes.draw do
     post '/users' => 'users#create', :as => :users
   end
 
-  resources :orders
-
   get  '/worlds/new' => 'worlds#new', :as => :new_world
   post '/worlds' => 'worlds#create', :as => :worlds
 
@@ -54,6 +52,8 @@ Minefold::Application.routes.draw do
     resources :users, :path => '/',
                       :only => [:show, :update],
                       :path_names => {:edit => 'settings'} do
+
+      resources :orders
 
       get 'account', :action => :edit, :as => :edit, :on => :member
       put 'upgrade', :action => :upgrade, :as => :upgrade, :on => :member

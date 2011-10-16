@@ -70,33 +70,33 @@ class User
 
 # PLANS
 
-  attr_reader :card_token
 
-  after_save do
-    if plan_changed?
-      if free?
-        customer.cancel_subscription
-      else
-        customer.update_subscription plan: plan, prorate: true
-      end
-    end
-  end
 
-  def customer
-    @customer ||= if customer_id?
-      Stripe::Customer.retrieve(customer_id)
-    else
-      Stripe::Customer.create(description: "#{id}-#{username}", email: email).tap do |c|
-        self.customer_id = c.id
-      end
-    end
-  end
+  # after_save do
+  #   if plan_changed?
+  #     if free?
+  #       customer.cancel_subscription
+  #     else
+  #       customer.update_subscription plan: plan, prorate: true
+  #     end
+  #   end
+  # end
 
-  def card_token=(token)
-    customer.card = token
-    customer.save
-    token
-  end
+  # def stripe_customer
+  #   @customer ||= if customer_id?
+  #     Stripe::Customer.retrieve(customer_id)
+  #   else
+  #     Stripe::Customer.create(description: "#{id}-#{username}", email: email).tap do |c|
+  #       self.customer_id = c.id
+  #     end
+  #   end
+  # end
+
+  # def card_token=(token)
+  #   customer.card = token
+  #   customer.save
+  #   token
+  # end
 
   def pro?
     plan == 'pro'

@@ -2,7 +2,7 @@
   - if user_signed_in?
     %li= link_to 'Worlds', user_root_path
   - else
-    %li= link_to 'Pricing and Signup', plans_page_path
+    %li= link_to 'Pricing and Signup', root_path(anchor: 'plans')
 
   %li= link_to 'Blog', 'http://blog.minefold.com'
   %li= mail_to 'feedback@minefold.com', 'Feedback'

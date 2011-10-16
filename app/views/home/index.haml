@@ -16,7 +16,7 @@
         We make it super simple to play together: no more nerdy stuff.
 
     .signup
-      = link_to 'Plans, Pricing & Signup', plans_page_path
+      = link_to 'Plans, Pricing & Signup', root_path(anchor: 'plans')
 
   .right
     - @users[11...14].each do |user|
@@ -25,32 +25,37 @@
   - @users[14...22].each do |user|
     = image_tag user.avatar.head.s60.url, width: 60, height: 60, alt: user.username
 
-%a.play-video{href: '//www.youtube.com/watch?v=CdiUFoVdHLA'}
-  Play film
-  :coffeescript
-    $(document).ready ->
-      $('a.play-video').click (e) ->
-        e.preventDefault()
-        $.fancybox(
-          'padding': 0
-          'autoScale': false
-          'transitionIn': 'none'
-          'transitionOut': 'none'
-          'title': this.title
-          'width': 560
-          'height': 315
-          'href': this.href.replace(new RegExp("watch\\?v=", "i"), 'v/')
-          'type': 'swf'
-          'swf': {
-            'wmode': 'transparent'
-            'allowfullscreen': 'true'
-          }
-        )
-        false
+#plans
+  %ol
+    %li.plan.free
+      %h3 Free
+
+      .price
+        %span.dollar $
+        %span.amount 0
+        %span.slash /
+        %span.period mo
+
+      %ol.features
+        %li Play for <em>12 hours</em> free in unlimited worlds.
+
+    %li.plan.pro
+      %h3 Pro
+
+      .price
+        %span.dollar $
+        %span.amount 12
+        %span.slash /
+        %span.period mo
+
+      %ol.features
+        %li Play for <em>infinity hours</em> in unlimited worlds.
 
 
+= render partial: 'users/new_user', object: User.new
 
-%ol
+
+%ol#features
   %li.feature
     %h2 No nerdy stuff
     %p We take care of it all for you. No more servers, RAM, Java, SSH or any of that mumbojumbo. All you have to do is connect and play.
@@ -75,5 +80,3 @@
     %h2 Peace of mind
     %p All your data is backed up safely in multiple datacenters. Your stuff is safe with us.
 
-.signup-button
-  = link_to 'Sign up now!', plans_page_path, class: ['button', 'signup']

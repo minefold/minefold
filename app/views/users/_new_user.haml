@@ -1,0 +1,44 @@
+= form_for new_user do |f|
+  = f.hidden_field :plan
+  = f.hidden_field :invite_id
+
+  .errors
+    - unless new_user.errors.empty?
+      %p
+        Whoops a daisy! Your:
+      %ol
+        - new_user.errors.each do |key, desc|
+          %li
+            %strong= key
+            = desc
+
+  %section
+    = f.label :username, 'Minecraft Username'
+    = f.text_field :username, tabindex: 1, placeholder: 'notch'
+    :coffeescript
+      username = $('input#user_username')
+      fetchUser = ->
+        u = username.val()
+        if u isnt ''
+          $.getJSON '/signup/check', {username: u}, (data, status) ->
+              username.siblings('.hint').toggle(not data.paid)
+
+      username.keyup _.debounce(fetchUser, 300)
+
+    .hint{hidden}
+      %p
+        You need a <em>paid</em> Minecraft account to play on Minefold. They are €14.95 at
+        %a{href: 'http://minecraft.net/store', target: '_blank'} http://minecraft.com/store
+        or you can change your username later.
+
+  %section
+    = f.label :email
+    = f.email_field :email, tabindex:2, value: new_user.email || new_user.invite.try(:email) || '', placeholder: 'notch@mojang.com'
+
+  %section
+    = f.label :password
+    = f.password_field :password, tabindex: 3
+
+  %section
+    = f.submit 'Create a free account'
+    .spinner{hidden}
