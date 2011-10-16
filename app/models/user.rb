@@ -7,26 +7,26 @@ class User
   BILLING_PERIOD = 1.minute
   FREE_HOURS     = 12
 
-  PLANS = %W{free pro}
+  PLANS = %W{pro}
 
   field :email,          type: String
   field :username,       type: String
   field :safe_username,  type: String
   slug  :username,       index: true
 
-  index :email, unique: true
-  index :safe_username, unique: true
+  field :host,           default: 'pluto.minefold.com'
 
-
-  field :plan, type: String, default: 'free'
-
-  field :customer_id,    type: String
-
-  field :host, default: 'pluto.minefold.com'
-
-  field :credits,        type: Integer, default: 0
+  field :credits,        type: Integer, default: (FREE_HOURS.hours / BILLING_PERIOD)
   field :minutes_played, type: Integer, default: 0
   embeds_many :credit_events
+
+
+  attr_accessor :stripe_token
+  attr_accessor :coupon
+
+  field :stripe_id,       type: String
+  field :plan,            type: String
+  embeds_one :card
 
   belongs_to :invite
 
@@ -42,7 +42,35 @@ class User
   attr_accessor :email_or_username
 
 
-# VALIDATIONS
+# Finders
+
+  index :email, unique: true
+
+  def self.by_email(email)
+    where(email: sanitize_email(email))
+  end
+
+  index :safe_username, unique: true
+
+  def self.by_username(username)
+    where(safe_username: sanitize_username(username))
+  end
+
+  def self.by_email_or_username(str)
+    any_of(
+      {safe_username: sanitize_username(str)},
+      {email: sanitize_email(str)}
+    )
+  end
+
+  index :stripe_id, unique: true
+
+  def self.by_stripe_id(stripe_id)
+    where(stripe_id: stripe_id)
+  end
+
+
+# Validations
 
   validates_presence_of :username
   validates_uniqueness_of :email, case_sensitive: false
@@ -52,23 +80,22 @@ class User
   validates_numericality_of :minutes_played, greater_than_or_equal_to: 0
   validates_inclusion_of :plan, in: PLANS
 
-# SECURITY
+
+# Security
 
   attr_accessible :email,
                   :username,
                   :password,
                   :password_confirmation,
-                  # TODO: Think more about the security implications of this.
-                  :plan,
-                  :card_token,
+                  :plan, # TODO: Think more about the security implications of this.
                   :invite
 
-  # Virtual
-  attr_accessible :email_or_username,
+  attr_accessible :stripe_token,
+                  :email_or_username,
                   :remember_me
 
 
-# PLANS
+# Plans
 
 
 
@@ -103,12 +130,55 @@ class User
   end
 
   def free?
-    plan == 'free'
+    not pro?
   end
 
   def customer?
-    customer_id?
+    stripe_id?
   end
+
+  def customer_description
+    [id, safe_username].join('-')
+  end
+
+  def customer
+    @customer ||= if customer?
+        Stripe::Customer.retrieve(stripe_id)
+      else
+        Stripe::Customer.create(
+          description: customer_description,
+          email: email,
+          card: stripe_token
+          plan: plan
+          coupon: coupon
+        )
+      end.tap do |c|
+        self.card = Card.new_from_stripe(c.active_card)
+      end
+  end
+
+  def fetch_stripe_id!
+    self.stripe_id = customer.id
+  end
+
+  def update_subscription!
+    if plan.nil?
+      # TODO Should we cancel at period end?
+      # customer.cancel_subscription at_period_end: true
+      customer.cancel_subscription
+    else
+      customer.update_subscription plan: plan, coupon: coupon, prorate: true
+    end
+  end
+
+  before_validation do
+    fetch_stripe_id! if not customer? and stripe_token?
+  end
+
+  before_save do
+    update_subscription! if customer? and plan_changed?
+  end
+
 
   def self.paid_for_minecraft?(username)
     response = RestClient.get "http://www.minecraft.net/haspaid.jsp", params: {user: username}
@@ -121,11 +191,19 @@ class User
 
 # CREDITS
 
-  # scope :free, where(:orders.size => 0)
-
   # Gives away the free credits and starts off the credit history
-  after_create do
-    increment_credits! FREE_HOURS.hours / BILLING_PERIOD
+  # after_create do
+  #   increment_credits!
+  # end
+  #
+  # before_validation(on: :create) do
+  #   n = FREE_HOURS.hours / BILLING_PERIOD
+  #   self.credits = n
+  #
+  # end
+
+  before_create do
+    self.credit_events.build(delta: self.credits)
   end
 
   def increment_credits!(n, time=Time.now.utc)
@@ -151,8 +229,7 @@ class User
     credits - (hours * (1.hour / BILLING_PERIOD))
   end
 
-  # TODO: Get rid of hours and minutes
-  def time_left
+  def time_remaining
     [hours, minutes]
   end
 
@@ -188,10 +265,6 @@ class User
   def async_fetch_avatar!
     Resque.enqueue(FetchAvatar, id)
   end
-
-  # def avatar_url(options={width:24})
-  #   "http://minotar.com/avatar/#{safe_username}/#{options[:width]}.png"
-  # end
 
   before_save do
     Resque.enqueue(FetchAvatar, id) if safe_username_changed?
@@ -246,7 +319,7 @@ protected
 
   def self.find_for_database_authentication(conditions)
     login = conditions.delete(:email_or_username)
-    any_of({safe_username: sanitize_username(login)}, {email: login}).first
+    by_email_or_username(login).first
   end
 
   def self.chris
@@ -260,7 +333,11 @@ protected
 private
 
   def self.sanitize_username(str)
-    str.downcase
+    str.downcase.strip
+  end
+
+  def self.sanitize_email(str)
+    str.downcase.strip
   end
 
 end

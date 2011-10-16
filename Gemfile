@@ -44,6 +44,7 @@ gem 'mini_magick'
 
 # Job Processing
 gem 'fog'
+gem 'sinatra', '1.2.6' # Removes warning with outdated resque version
 gem 'resque', require: 'resque/server'
 gem 'resque_mailer'
 
@@ -74,10 +75,9 @@ group :worker do
 end
 
 group :test do
-  gem 'spork', '~> 0.9.0.rc'
   gem 'rspec'
   gem 'rspec-rails'
-  gem 'autotest'
-  gem 'autotest-rails'
+  gem 'factory_girl_rails'
   gem 'mongoid-rspec'
+  gem 'autotest-rails'
 end

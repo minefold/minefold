@@ -1,30 +1,28 @@
-require 'spec_helper'
-
-describe WorldsController do
-  let(:dave) { User.create username: 'whatupdave',
-                              email: 'dave@minefold.com',
-                           password: 'carlsmum',
-              password_confirmation: 'carlsmum'}
-  before do
-    @request.env["devise.mapping"] = Devise.mappings[:user]
-    sign_in dave
-  end
-  
-  describe "create" do
-    it "creates a world" do
-      
-      # lambda {
-      #   post :create, world: { name:'jupiter' }
-      # }.should change(World, :count).by(1)
-      
-      post :create, world: { name:'jupiter' }
-      p request.env['warden']
-      p request.env['warden.options']
-      
-      response.should redirect_to("/world/jupiter")
-      
-      # new_world = World.first
-      # new_world.creator_slug.should == 'whatupdave'
-    end
-  end
-end
+# require 'spec_helper'
+#
+# describe WorldsController do
+#   let(:user) {create(:user)}
+#
+#   before do
+#     @request.env["devise.mapping"] = Devise.mappings[:user]
+#     sign_in user
+#   end
+#
+#   describe "create" do
+#     let(:world) {build(:world)}
+#
+#     it "redirects to the world's page" do
+#       post :create, world: {name: world.name}
+#
+#       assigns[:world].should_not be_nil
+#
+#       response.should be_redirect
+#       response.should redirect_to(user_world_path(@world.creator, @world))
+#     end
+#
+#     it "sets the user's current world" do
+#       user.reload
+#       user.current_world.should == assigns[:world]
+#     end
+#   end
+# end
