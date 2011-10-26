@@ -1,16 +1,16 @@
-- title world.name do
+- title @world.name do
   = render partial: 'worlds/header'
 
 - after do
-  %ul.players.playing-now{class: ('empty' if world.current_players_count.zero?)}
+  %ul.players.playing-now{class: ('empty' if @world.current_players_count.zero?)}
     %h3
       Playing Now
-      .count= world.current_players_count
+      .count= @world.current_players_count
 
-    - if world.current_players_count.zero?
+    - if @world.current_players_count.zero?
       %li.empty Nobody is playing right now.
     - else
-      - world.current_players.each do |player|
+      - @world.current_players.each do |player|
         %li
           .avatar= image_tag player.avatar.head.s16.url, width: 16, height: 16
           = player.username
@@ -23,7 +23,7 @@
     #invite
       %h2 Now, show off what you build!
       %p It's easy to start sharing #{world.name} with your friends. If they are already on Minefold you can #{link_to 'add them to the whitelist', world_players_path(world)}. Otherwise, if you enter their emails below, we can let them know that you want them to join you in #{world.name}.
-      = form_for :invite, url: user_world_invite_path(world.creator, world), method: 'post' do |f|
+      = form_for :invite, url: user_world_invite_path(@world.creator, @world), method: 'post' do |f|
         %section
           = f.text_area :emails, rows: 1, placeholder: 'chris@minefold.com, dave@minefold.com'
 
@@ -33,7 +33,7 @@
 #stream
   - if signed_in?
     #share
-      = form_tag [world.creator, world, :wall_items], method: :post do |f|
+      = form_tag [@world.creator, @world, :wall_items], method: :post do |f|
         .avatar
           = image_tag current_user.avatar.head.s36.url, with: 36, height: 36
         = text_area_tag :body, nil, rows: 2, autofocus: true, required: true
@@ -109,7 +109,7 @@
 
 
   #wall-items
-    - world.wall_items.order_by([:created_at, :desc]).limit(100).each do |chat|
+    - @world.wall_items.order_by([:created_at, :desc]).limit(100).each do |chat|
       .item[chat]
         - if !chat.user.nil?
           .avatar= image_tag chat.user.avatar.head.s24.url, width: 24, height: 24

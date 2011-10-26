@@ -1,82 +1,59 @@
 - masthead do
-  .top
-    - @users[0...8].each do |user|
-      = image_tag user.avatar.head.s60.url, width: 60, height: 60, alt: user.username
-  .left
-    - @users[8...11].each do |user|
-      = image_tag user.avatar.head.s60.url, width: 60, height: 60, alt: user.username
+  %h1 Play Minecraft with your friends
 
-  .center
-    %h1 Play Minecraft with your friends!
+  %p
+    We've made multiplayer Minecraft fast and easy.
 
-    .copy
-      %p
-        Minefold is an online community for friends who play Minecraft.
-      %p
-        We make it super simple to play together: no more nerdy stuff.
-
-    .signup
-      = link_to 'Plans, Pricing & Signup', root_path(anchor: 'plans')
-
-  .right
-    - @users[11...14].each do |user|
-      = image_tag user.avatar.head.s60.url, width: 60, height: 60, alt: user.username
-
-  - @users[14...22].each do |user|
-    = image_tag user.avatar.head.s60.url, width: 60, height: 60, alt: user.username
-
-#plans
-  %ol
-    %li.plan.free
-      %h3 Free
-
-      .price
-        %span.dollar $
-        %span.amount 0
-        %span.slash /
-        %span.period mo
-
-      %ol.features
-        %li Play for <em>12 hours</em> free in unlimited worlds.
-
-    %li.plan.pro
-      %h3 Pro
-
-      .price
-        %span.dollar $
-        %span.amount 12
-        %span.slash /
-        %span.period mo
-
-      %ol.features
-        %li Play for <em>infinity hours</em> in unlimited worlds.
+  = link_to 'Sign up now, it\'s free', root_path(anchor: 'plans'), class: 'button'
 
 
 = render partial: 'users/new_user', object: User.new
 
+#plans
+  %p You can play for <strong class="highlight">#{pluralize User::FREE_HOURS, 'hour', 'hours'} free</strong>, each month. We only have two other plans:
+
+  %table
+    %thead
+      %tr.name
+        %th.casual Casual
+        %th.pro Pro
+    %tbody
+      %tr.price
+        %td.casual $3.95 / mo
+        %td.pro $9.95 / mo
+      %tr.hours
+        %td.casual 80 hrs / mo
+        %td.pro <em>Infinity</em> hours
+      %tr.worlds
+        %td.casual 1 world
+        %td.pro <em>Infinity</em> worlds
+      %tr.players
+        %td.casual 4 Minefold players
+        %td.pro <em>Infinity</em> Minefold players
+
 
 %ol#features
   %li.feature
-    %h2 No nerdy stuff
-    %p We take care of it all for you. No more servers, RAM, Java, SSH or any of that mumbojumbo. All you have to do is connect and play.
-
-  %li.feature
-    %h2 Infinite worlds
-    %p Unlike other Minecraft hosts, we don't limit the number of worlds you can play in. Create a new world for every day of the week!
-
-  %li.feature
-    %h2 Realtime in-game chat
-    %p See when your friends are playing online and chat with them straight from the site. You don't even have to open Minecraft to say “OMG”.
+    %h2 Zen Simplicity
+    %p We do it all for you. <strong>No more servers</strong>, RAM, Java, SSH or any of that mumbojumbo. Just sign up and play, grasshopper.
 
   %li.feature
     %h2 Show off
-    %p We generate high quality maps of your worlds so you can quickly show your peeps that 'coaster you've been working on.
+    %p We give you <strong>high quality maps</strong> of your worlds so you can quickly show your bros that rad 'coaster you've been working on.
+
+  %li.feature
+    %h2 Infinite worlds
+    %p Unlike other Minecraft hosts, we let you create <strong>as many worlds as you like</strong>. Start a new one for every day of the week!
+
+  %li.feature
+    %h2 Realtime in-game chat
+    %p See when your friends are playing online and chat with them straight from the site. You don't have to open Minecraft to shout <strong>“OMG”</strong>.
 
   %li.feature
     %h2 Make love, not grief
-    %p Keep pesky griefers out by limiting your world to only people you know.
+    %p Keep pesky griefers out by only inviting <strong>people you trust</strong> to play with you.
 
   %li.feature
     %h2 Peace of mind
-    %p All your data is backed up safely in multiple datacenters. Your stuff is safe with us.
+    %p All your work is <strong>continiously backed up</strong> in multiple datacenters. Your builds are secure.
 

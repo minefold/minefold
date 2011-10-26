@@ -2,7 +2,7 @@
   - if user_signed_in?
     %li= link_to 'Worlds', user_root_path
   - else
-    %li= link_to 'Pricing and Signup', root_path(anchor: 'plans')
+    %li= link_to 'Pricing and Signup', plans_page_path
 
   %li= link_to 'Blog', 'http://blog.minefold.com'
   %li= mail_to 'feedback@minefold.com', 'Feedback'
@@ -18,13 +18,13 @@
         = time_left_for current_user
         left
 
-      %li.go-pro
-        = link_to 'Go Pro', [:edit, current_user], class: 'button'
+      %li.buy
+        = link_to 'Plans', plans_page_path, class: 'button'
 
 
 
     %li.account
-      = link_to 'Account', [:edit, current_user]
+      = link_to 'Settings', [:edit, current_user]
 
     %li.sign-out
       = link_to 'Logout', destroy_user_session_path, method: :delete

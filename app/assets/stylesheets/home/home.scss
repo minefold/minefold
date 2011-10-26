@@ -22,125 +22,36 @@
   }
 
   #masthead {
-    .wrapper {
-      padding: 0;
-      width: cols(8) + (2*$gutter);
+    text-align: center;
+    padding: 8*$line 0;
+
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 36px;
+      margin: 0;
+      float: none;
     }
 
-    .left, .right {
-      width: 10px + 60px + 10px;
-    }
-
-
-    .left, .center, .right {
-      float: left;
-    }
-
-    img {
-      margin: 10px;
-      display: block;
-      float: left;
-      @include border-radius(3px);
-    }
-
-    .center {
-      width: 6 * (10px + 60px + 10px) - 20px;
-      background: white;
-      height: 3 * (10px + 60px + 10px) - 20px;
-      padding: 10px;
-      text-align: center;
+    p {
+      margin: 10px 0;
+      padding: 6px 0;
+      color: rgba(black, 0.5);
+      font-weight: 500;
       line-height: 24px;
-      @include border-radius(2 * $radius);
-//      background: lighten($blue, 50%);
+    }
 
-      h1 {
-        font-size: 24px;
-        font-weight: 600;
-        line-height: 36px;
-        margin: 0;
-        padding: 24px 0 10px 0;
-        float: none;
-//        color: darken($blue, 30%);
-      }
+    a.button {
+      @include inline-block;
+      margin: 0 auto;
+      background-color: $green;
+      font-size: 18px;
+      line-height: 24px;
+      font-weight: 600;
+      padding: $line (2*$gutter);
 
-      .copy {
-        margin: 10px 0;
-        padding: 6px 0;
-        color: rgba(black, 0.5);
-        font-weight: 500;
-        p {
-          margin: 0;
-        }
-      }
-
-      .signup {
-        padding: 10px 0;
-        strong {
-          background: #FFC;
-          color: #333;
-          padding: 0 2px;
-        }
-
-        a, button {
-          display: block;
-          margin: 0 auto;
-          @include linear-gradient(rgba(white, 0.05), rgba(black, 0.05));
-
-          background-color: $blue;
-
-          width: cols(4);
-          font: 600 18px/36px $helvetica;
-          color: white;
-          border: none;
-          @include border-radius($radius);
-          text-shadow: 0 1px 0 darken($blue, 20%);
-          padding: 0;
-          text-decoration: none;
-          margin-bottom: $line;
-
-          &:hover {
-            background-color: darken($blue, 10%);
-          }
-        }
-
-        form {
-          font-size: 12px;
-          margin: 0;
-          padding: 0;
-          margin-top: -20px;
-
-          p {
-            margin-bottom: 3*$line;
-            line-height: 20px;
-            color: #999;
-          }
-
-          input {
-            width: cols(3);
-            padding: ($line - $border) ($gutter / 2);
-            border: $border solid darken(white, 10%);
-            @include border-radius($radius);
-            font: 400 14px/18px $helvetica;
-            outline: none;
-            margin: 0;
-            margin-right: $gutter;
-
-            &:hover {
-              border-color: darken(white, 20%);
-            }
-            &:focus {
-              border-color: $blue;
-            }
-          }
-          button {
-            cursor: pointer;
-            width: cols(2);
-            line-height: 18px;
-            @include inline-block;
-            font-size: 14px;
-            padding: $line $gutter;
-          }
-        }
+      &:hover {
+        background-color: darken($green, 10%);
       }
     }
   }
@@ -154,83 +65,58 @@
 }
 
 #plans {
+  margin-top: 18px;
+  color: rgba(black, 0.6);
 
+  p {
+    margin: 0;
+    margin-bottom: $line;
+  }
 
-  .plan {
-    overflow: hidden;
-    padding: $line $gutter;
-    margin-bottom: 2*$line;
-    @include border-radius($radius);
+  strong {
+    color: #000;
+  }
 
-    h3 {
-      float: left;
-      margin: $line 0;
+  table {
+    width: 100%;
+    text-align: center;
+    margin: (2*$line) 0;
+    padding: (4*$line) 0;
+    background-color: darken(white, 5%);
 
-
-      font-size: 21px;
-      line-height: 24px;
-      font-weight: 600;
-    }
-
-    .price {
-      float: right;
+    th {
+      padding-top: $line;
       background: white;
-      padding: 0 $gutter;
-      margin: $line 0;
-      @include border-radius($radius);
-
-      .dollar {
-        font-size: 10px;
-        color: darken(white, 40%);
-      }
-
-      .amount {
-        font-size: 16px;
-        font-weight: 600;
-      }
-
-      .slash {
-        color: darken(white, 20%);
-      }
-
-      .period {
-        font-size: 12px;
-        color: darken(white, 40%);
-      }
-
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 24px;
+      color: #000;
     }
 
-    .features {
-      float: left;
-      margin: 0;
+    .price td {
+      color: black;
     }
 
-
-  }
-
-  .plan.pro {
-    background: lighten($blue, 40%);
-
-    h3 {
-      color: darken($blue, 30%);
-    }
-
-    .features {
-      color: darken($blue, 10%);
+    .time {
     }
   }
 
-  .plan.free {
-    background: darken(white, 5%);
-
-    .features {
-      color: darken(white, 60%);
-    }
+  .highlight {
+    background-color: #FFC;
+    padding: 1px 2px;
   }
+
+  .diamond {
+    background-color: #0EBFE9;
+    color: white;
+    padding: 1px 2px;
+  }
+
 
 }
 
 form#new_user {
+  margin-bottom: 4*$line;
   input {
     width: 100%;
   }
@@ -240,6 +126,12 @@ form#new_user {
   overflow: visible;
   margin-bottom: 4*$line;
   clear: both;
+
+  strong {
+    color: rgba(black, 0.9);
+    padding: 1px 2px;
+    background-color: #FFC;
+  }
 
   li {
     @include span(4);

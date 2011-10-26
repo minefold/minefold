@@ -38,10 +38,8 @@ header {
 
     .beta {
       color: darken(white, 20%);
-      float: right;
-      font-size: 11px;
-      line-height: 24px;
       font-weight: 400;
+      margin-left: 0.5em;
     }
   }
 
@@ -72,15 +70,9 @@ header {
         font-weight: 600;
       }
 
-      .go-pro a {
-        background-color: darken($red, 10%);
+      .buy a {
         padding: ($line/2) $gutter;
-        @include border-radius($radius);
-        color: white;
         font-weight: 600;
-        &:hover, &:focus {
-          background-color: darken($red, 20%);
-        }
       }
 
       .profile img {

@@ -1,59 +1,61 @@
-- title  'Sign up for Minefold'
+- title  'Become a member'
 
 - masthead do
   %aside
-    = link_to 'Log in to an existing account', new_user_session_path, class: 'button muted'
+    = link_to 'Log in to an existing account', new_user_session_path, class: 'button subtle'
+
+= render partial: 'new_user', object: user
 
 
-= form_for user, html: {class: 'stripe-target'} do |f|
-  = f.hidden_field :plan
-  = f.hidden_field :invite_id
-
-  .errors
-    - unless user.errors.empty?
-      %p
-        Whoops a daisy! Your:
-      %ol
-        - @user.errors.each do |key, desc|
-          %li
-            %strong= key
-            = desc
-
-  %section
-    = f.label :email
-    = f.email_field :email, tabindex: 1, value: user.email || user.invite.try(:email) || ''
-
-  %section
-    = f.label :username, 'Minecraft Username'
-    = f.text_field :username, tabindex: 2
-    :coffeescript
-      username = $('input#user_username')
-      fetchUser = ->
-        u = username.val()
-        if u isnt ''
-          $.getJSON '/signup/check', {username: u}, (data, status) ->
-              username.siblings('.hint').toggle(not data.paid)
-
-      username.keyup _.debounce(fetchUser, 300)
-
-    .hint{hidden}
-      %p
-        You need a <em>paid</em> Minecraft account to play on Minefold. They are €14.95 at
-        %a{href: 'http://minecraft.net/store', target: '_blank'} http://minecraft.com/store
-        or you can change your username later.
-
-  %section
-    = f.label :password
-    = f.password_field :password, tabindex: 3
-
-  %section
-    = f.label :password_confirmation, 'Confirm Password'
-    = f.password_field :password_confirmation, tabindex: 4
-
-  %section
-    = f.submit 'Create your account'
-    .spinner{hidden}
-
-- after do
-  - if user.pro?
-    = render partial: 'users/billing'
+/ = form_for user, html: {class: 'stripe-target'} do |f|
+/   = f.hidden_field :plan
+/   = f.hidden_field :invite_id
+/
+/   .errors
+/     - unless user.errors.empty?
+/       %p
+/         Whoops a daisy! Your:
+/       %ol
+/         - @user.errors.each do |key, desc|
+/           %li
+/             %strong= key
+/             = desc
+/
+/   %section
+/     = f.label :email
+/     = f.email_field :email, tabindex: 1, value: user.email || user.invite.try(:email) || ''
+/
+/   %section
+/     = f.label :username, 'Minecraft Username'
+/     = f.text_field :username, tabindex: 2
+/     :coffeescript
+/       username = $('input#user_username')
+/       fetchUser = ->
+/         u = username.val()
+/         if u isnt ''
+/           $.getJSON '/signup/check', {username: u}, (data, status) ->
+/               username.siblings('.hint').toggle(not data.paid)
+/
+/       username.keyup _.debounce(fetchUser, 300)
+/
+/     .hint{hidden}
+/       %p
+/         You need a <em>paid</em> Minecraft account to play on Minefold. They are €14.95 at
+/         %a{href: 'http://minecraft.net/store', target: '_blank'} http://minecraft.com/store
+/         or you can change your username later.
+/
+/   %section
+/     = f.label :password
+/     = f.password_field :password, tabindex: 3
+/
+/   %section
+/     = f.label :password_confirmation, 'Confirm Password'
+/     = f.password_field :password_confirmation, tabindex: 4
+/
+/   %section
+/     = f.submit 'Create your account'
+/     .spinner{hidden}
+/
+/ - after do
+/   - if user.pro?
+/     = render partial: 'users/billing'

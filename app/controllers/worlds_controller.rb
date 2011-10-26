@@ -10,11 +10,16 @@ class WorldsController < ApplicationController
   #   end
   # end
 
+  before_filter do
+    @creator = User.find_by_slug! params[:user_id]
+    @world = @creator.created_worlds.find_by_slug! params[:id]
+  end
+
   respond_to :html
 
 
   def new
-    world.creator = current_user
+    @world.creator = current_user
   end
 
   def create
@@ -32,9 +37,6 @@ class WorldsController < ApplicationController
   end
 
   def show
-    @creator = User.find_by_slug! params[:user_id]
-    @world = @creator.created_worlds.find_by_slug! params[:id]
-
     respond_with @world
   end
 

@@ -27,18 +27,16 @@
 
     .hint{hidden}
       %p
-        You need a <em>paid</em> Minecraft account to play on Minefold. They are €14.95 at
-        %a{href: 'http://minecraft.net/store', target: '_blank'} http://minecraft.com/store
-        or you can change your username later.
+        You need a <em>paid</em> Minecraft account to play on Minefold. They are €14.95 at #{link_to 'http://minecraft.net/store', 'http://minecraft.net/store', target: '_blank'}.
 
   %section
     = f.label :email
     = f.email_field :email, tabindex:2, value: new_user.email || new_user.invite.try(:email) || '', placeholder: 'notch@mojang.com'
 
   %section
-    = f.label :password
+    = f.label :password, 'Choose a password'
     = f.password_field :password, tabindex: 3
 
   %section
-    = f.submit 'Create a free account'
+    = f.submit 'Start playing now'
     .spinner{hidden}

@@ -1,5 +1,5 @@
 class Invoice
-  include MongoMapper::Document
+  include Mongoid::Document
 
   embeds_one :payment
 end

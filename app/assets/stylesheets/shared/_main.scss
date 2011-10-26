@@ -103,28 +103,25 @@ button, input[type=submit], a.button {
   margin: 0;
   border: none;
   outline: none;
-  @include linear-gradient(rgba(white, 0.1), rgba(black, 0.1));
   background-color: $blue;
   color: white;
-  font: 500 12px/24px $helvetica;
+  font: 600 12px/24px $helvetica;
   cursor: pointer;
   padding: ($line / 2) (2*$gutter);
   margin-bottom: $line;
-  text-shadow: 0 1px 0 rgba(black, 0.4);
+  text-shadow: 0 1px 0 rgba(black, 0.2);
   text-decoration: none;
-
-  @include border-radius($radius);
 
   &.muted {
     background-color: darken(white, 10%);
     color: darken(white, 60%);
-    text-shadow: 0 1px 0 rgba(white, 0.4);
+    text-shadow: 0 1px 0 rgba(white, 0.2);
   }
 
   &:hover, &:focus {
     color: white;
     background-color: darken($blue, 10%);
-    text-shadow: 0 1px 0 rgba(black, 0.4);
+    text-shadow: 0 1px 0 rgba(black, 0.2);
   }
 
   &:disabled {
@@ -183,11 +180,10 @@ iframe.youtube {
 }
 
 .callout {
-  background: #FFC;
-  text-align: center;
-  padding: $line $gutter;
   line-height: 18px;
   margin-bottom: 2*$line;
+  color: darken(white, 60%);
+
   a {
     color: $blue;
     text-decoration: none;
@@ -195,5 +191,4 @@ iframe.youtube {
       color: darken($blue, 10%);
     }
   }
-
 }

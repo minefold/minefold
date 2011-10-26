@@ -5,9 +5,9 @@ class User
   include Mongoid::Paranoia
 
   BILLING_PERIOD = 1.minute
-  FREE_HOURS     = 12
+  FREE_HOURS     = 4
 
-  PLANS = %W{pro}
+  PLANS = %W{free casual pro}
 
   field :email,          type: String
   field :username,       type: String
@@ -78,7 +78,7 @@ class User
   validates_confirmation_of :password
   validates_numericality_of :credits
   validates_numericality_of :minutes_played, greater_than_or_equal_to: 0
-  validates_inclusion_of :plan, in: PLANS
+  validates_inclusion_of :plan, in: PLANS, allow_blank: true
 
 
 # Security
@@ -125,16 +125,24 @@ class User
   #   token
   # end
 
+  def free?
+    plan == 'free'
+  end
+
+  def casual?
+    plan == 'casual'
+  end
+
   def pro?
     plan == 'pro'
   end
 
-  def free?
-    not pro?
-  end
-
   def customer?
     stripe_id?
+  end
+
+  def card?
+    not card.nil?
   end
 
   def customer_description
@@ -148,8 +156,8 @@ class User
         Stripe::Customer.create(
           description: customer_description,
           email: email,
-          card: stripe_token
-          plan: plan
+          card: stripe_token,
+          plan: plan,
           coupon: coupon
         )
       end.tap do |c|
@@ -172,7 +180,7 @@ class User
   end
 
   before_validation do
-    fetch_stripe_id! if not customer? and stripe_token?
+    fetch_stripe_id! unless customer? or stripe_token.nil?
   end
 
   before_save do

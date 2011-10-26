@@ -25,12 +25,14 @@
 
     = yield :head
 
+    = render partial: 'shared/mixpanel'
   %body{lang: 'en', id: page_css_selector}
     %header
       .wrapper
         %h1
           = link_to root_url do
             Minefold
+            %span.beta Beta
         %aside
           = render partial: 'shared/nav'
 
@@ -75,7 +77,6 @@
 
           %li.twitter
             %a{href: '//twitter.com/minefold'} Follow us
-
 
         %p.fineprint
           &copy; #{Time.now.year} Minefold.

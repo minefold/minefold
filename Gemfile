@@ -1,13 +1,13 @@
 source 'https://code.stripe.com'
 source 'https://rubygems.org'
 
-gem 'rake', '0.8.7'
+gem 'rake', '0.9.2.2'
 gem 'thin'
 gem 'rails', '3.1.0'
 gem 'sprockets', '2.0.2'
 
 # ORM
-gem 'mongoid', git: 'https://github.com/pyromaniac/mongoid.git'
+gem 'mongoid'
 gem 'bson_ext'
 gem 'mongoid_slug'
 

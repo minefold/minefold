@@ -29,7 +29,7 @@ Minefold::Application.routes.draw do
   end
 
   # Authentication
-  devise_for :users, :skip => [:sessions, :registrations, :passwords] do
+  devise_for :users, :skip => :all do
     get    '/login' => 'devise/sessions#new', :as => :new_user_session
     post   '/logout' => 'devise/sessions#create', :as => :user_session
     delete '/logout' => 'devise/sessions#destroy', :as => :destroy_user_session
@@ -47,17 +47,20 @@ Minefold::Application.routes.draw do
     get :policy
   end
 
+  resources :orders
+
   as :user do
 
     resources :users, :path => '/',
                       :only => [:show, :update],
                       :path_names => {:edit => 'settings'} do
 
-      resources :orders
+      get 'settings', :action => :edit, :as => :edit, :on => :member
 
-      get 'account', :action => :edit, :as => :edit, :on => :member
-      put 'upgrade', :action => :upgrade, :as => :upgrade, :on => :member
-      put 'downgrade', :action => :downgrade, :as => :downgrade, :on => :member
+
+
+      # put 'upgrade', :action => :upgrade, :as => :upgrade, :on => :member
+      # put 'downgrade', :action => :downgrade, :as => :downgrade, :on => :member
 
       resources :worlds, :path => '/', :only => [:show, :edit, :update] do
 

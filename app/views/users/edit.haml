@@ -1,4 +1,4 @@
-- title 'Account'
+- title 'Settings'
 
 = form_for current_user, method: :put, class: 'stripe-target' do |f|
   %section
@@ -21,33 +21,37 @@
         or you can change your username later.
 
   %section
-    = f.submit 'Update account'
+    = f.submit 'Update settings'
 
 - after do
-  - if current_user.free?
-    %h2 Upgrade to a Pro account
+  - if current_user.card
+    %h2 Card
 
-    %p
-      When you upgrade to a pro account you can play for <strong>infinity</strong> more hours.
-
-    %p A pro account costs is <strong>$12</strong> a month. You can downgrade again at any time.
-
-    - unless current_user.customer?
-      = render partial: 'billing'
-
-    = form_for current_user, method: 'put', html: {class: 'stripe-target'} do |f|
-      = f.hidden_field :plan, value: 'pro'
-
-      %section
-        = f.submit 'Upgrade to a pro account'
-        .spinner{hidden}
-
-  - else
-
-    = form_for current_user, method: 'put' do |f|
-      = f.hidden_field :plan, value: 'free'
-      %section
-        .hint You will be pro-rated for the rest of the month.
-
-      %section
-        = f.submit 'Downgrade to a free account', class: 'muted'
+/ - after do
+/   - if current_user.free?
+/     %h2 Upgrade to a Pro account
+/
+/     %p
+/       When you upgrade to a pro account you can play for <strong>infinity</strong> more hours.
+/
+/     %p A pro account costs is <strong>$12</strong> a month. You can downgrade again at any time.
+/
+/     - unless current_user.customer?
+/       = render partial: 'billing'
+/
+/     = form_for current_user, method: 'put', html: {class: 'stripe-target'} do |f|
+/       = f.hidden_field :plan, value: 'pro'
+/
+/       %section
+/         = f.submit 'Upgrade to a pro account'
+/         .spinner{hidden}
+/
+/   - else
+/
+/     = form_for current_user, method: 'put' do |f|
+/       = f.hidden_field :plan, value: 'free'
+/       %section
+/         .hint You will be pro-rated for the rest of the month.
+/
+/       %section
+/         = f.submit 'Downgrade to a free account', class: 'muted'
