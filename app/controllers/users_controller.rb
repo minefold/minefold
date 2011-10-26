@@ -20,9 +20,6 @@ class UsersController < ApplicationController
   end
 
   def new
-    not_found unless User::PLANS.include? params[:plan]
-    user.plan = params[:plan]
-
     if invite = Invite.where(claimed: false, code: params[:code]).first
       user.invite = invite
     end

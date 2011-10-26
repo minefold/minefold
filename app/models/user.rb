@@ -5,9 +5,6 @@ class User
   include Mongoid::Paranoia
 
   BILLING_PERIOD = 1.minute
-  FREE_HOURS     = 4
-
-  PLANS = %W{free casual pro}
 
   field :email,          type: String
   field :username,       type: String
@@ -16,7 +13,7 @@ class User
 
   field :host,           default: 'pluto.minefold.com'
 
-  field :credits,        type: Integer, default: (FREE_HOURS.hours / BILLING_PERIOD)
+  field :credits,        type: Integer, default: Plan::DEFAULT.credits
   field :minutes_played, type: Integer, default: 0
   embeds_many :credit_events
 
@@ -25,7 +22,7 @@ class User
   attr_accessor :coupon
 
   field :stripe_id,       type: String
-  field :plan,            type: String
+  field :plan,            type: String, default: Plan::DEFAULT.stripe_id
   embeds_one :card
 
   belongs_to :invite
@@ -41,6 +38,7 @@ class User
 
   attr_accessor :email_or_username
 
+  FREE_HOURS = Plan.free.hours
 
 # Finders
 
@@ -78,7 +76,7 @@ class User
   validates_confirmation_of :password
   validates_numericality_of :credits
   validates_numericality_of :minutes_played, greater_than_or_equal_to: 0
-  validates_inclusion_of :plan, in: PLANS, allow_blank: true
+  validates_inclusion_of :plan, in: Plan.stripe_ids, allow_blank: true
 
 
 # Security
@@ -150,23 +148,7 @@ class User
   end
 
   def customer
-    @customer ||= if customer?
-        Stripe::Customer.retrieve(stripe_id)
-      else
-        Stripe::Customer.create(
-          description: customer_description,
-          email: email,
-          card: stripe_token,
-          plan: plan,
-          coupon: coupon
-        )
-      end.tap do |c|
-        self.card = Card.new_from_stripe(c.active_card)
-      end
-  end
-
-  def fetch_stripe_id!
-    self.stripe_id = customer.id
+    Stripe::Customer.retrieve(stripe_id)
   end
 
   def update_subscription!
@@ -175,16 +157,35 @@ class User
       # customer.cancel_subscription at_period_end: true
       customer.cancel_subscription
     else
-      customer.update_subscription plan: plan, coupon: coupon, prorate: true
+      customer.update_subscription plan: plan, coupon: coupon, card: stripe_token
+      
     end
   end
+  
+  def update_card
+    self.card = Card.new_from_stripe(customer.active_card)
+  end
+  
+  def create_stripe_customer
+    self.stripe_id = Stripe::Customer.create(
+      description: customer_description,
+      email: email,
+      plan: plan,
+      coupon: coupon
+    ).id
+  end
 
-  before_validation do
-    fetch_stripe_id! unless customer? or stripe_token.nil?
+  after_create do
+    create_stripe_customer
+    save!
   end
 
   before_save do
     update_subscription! if customer? and plan_changed?
+  end
+
+  before_save do
+    update_card if stripe_token
   end
 
 
@@ -275,7 +276,7 @@ class User
   end
 
   before_save do
-    Resque.enqueue(FetchAvatar, id) if safe_username_changed?
+    async_fetch_avatar! if safe_username_changed?
   end
 
 # REFERRALS

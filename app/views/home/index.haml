@@ -4,33 +4,31 @@
   %p
     We've made multiplayer Minecraft fast and easy.
 
-  = link_to 'Sign up now, it\'s free', root_path(anchor: 'plans'), class: 'button'
-
-
-= render partial: 'users/new_user', object: User.new
+  = link_to 'Sign up now, it\'s free', new_user_path, class: 'button'
 
 #plans
-  %p You can play for <strong class="highlight">#{pluralize User::FREE_HOURS, 'hour', 'hours'} free</strong>, each month. We only have two other plans:
-
   %table
     %thead
       %tr.name
         %th.casual Casual
+        %th.hardcore Hardcore
         %th.pro Pro
     %tbody
       %tr.price
         %td.casual $3.95 / mo
-        %td.pro $9.95 / mo
+        %td.hardcore $7.95 / mo
+        %td.pro $11.95 / mo
       %tr.hours
-        %td.casual 80 hrs / mo
-        %td.pro <em>Infinity</em> hours
+        %td.casual 40 hrs / mo
+        %td.hardcore 80 hrs / mo
+        %td.pro 160 hours
       %tr.worlds
-        %td.casual 1 world
-        %td.pro <em>Infinity</em> worlds
-      %tr.players
-        %td.casual 4 Minefold players
-        %td.pro <em>Infinity</em> Minefold players
-
+        %td.casual 5 worlds
+        %td.hardcore 10 worlds
+        %td.pro 40 worlds
+  
+  %p You can also play for <strong class="highlight">#{pluralize User::FREE_HOURS, 'hour', 'hours'} free</strong> per month in one world.
+  
 
 %ol#features
   %li.feature
