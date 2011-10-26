@@ -4,6 +4,13 @@ class ApplicationController < ActionController::Base
   rescue_from Mongoid::Errors::DocumentNotFound, with: :not_found
 
   extend StatsD::Instrument
+  
+  def track event_name, properties={}
+    properties[:distinct_id] = current_user.id if current_user
+
+    mixpanel.track event_name, properties
+  end
+  
 
 private
 
@@ -21,5 +28,8 @@ private
       redirect_to after_sign_in_path_for(resource)
     end
   end
-
+  
+  def mixpanel
+    @mixpanel ||= Mixpanel::Tracker.new(ENV['MIXPANEL_TOKEN'], request.env)
+  end
 end
