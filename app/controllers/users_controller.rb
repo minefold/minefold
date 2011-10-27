@@ -51,7 +51,7 @@ class UsersController < ApplicationController
 
       UserMailer.welcome(user.id).deliver
       sign_in :user, user
-      respond_with user, :location => user_root_path
+      respond_with user, :location => new_world_path
     else
       clean_up_passwords(@user)
       respond_with user, :location => users_path(code: params[:user][:invite_id])

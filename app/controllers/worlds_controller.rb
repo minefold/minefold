@@ -1,43 +1,32 @@
 class WorldsController < ApplicationController
-  # prepend_before_filter :authenticate_user!, except: [:show, :map]
+  prepend_before_filter :authenticate_user!, except: [:show, :map]
 
-  # expose(:creator) { User.find_by_slug!(params[:user_id])}
-  # expose(:world) do
-  #   if creator
-  #     creator.created_worlds.find_by_slug!(params[:id])
-  #   else
-  #     World.new(params[:world])
-  #   end
-  # end
-
-  before_filter do
-    @creator = User.find_by_slug! params[:user_id]
-    @world = @creator.created_worlds.find_by_slug! params[:id]
-  end
+  expose(:creator) { User.find_by_slug!(params[:user_id]) if params[:user_id] }
+  expose(:world) do
+     if params[:id]
+       creator.created_worlds.find_by_slug!(params[:id])
+     else
+       World.new(params[:world])
+     end
+   end
 
   respond_to :html
 
-
-  def new
-    @world.creator = current_user
-  end
-
   def create
-    @world = World.new(params[:world])
-    @world.creator = current_user
+    world.creator = current_user
 
-    if @world.save
-      current_user.current_world = @world
+    if world.save
+      current_user.current_world = world
       current_user.save
       flash[:new] = true
-      redirect_to user_world_path(@world.creator, @world)
+      redirect_to user_world_path(world.creator, world)
     else
       render :new
     end
   end
 
   def show
-    respond_with @world
+    respond_with world
   end
 
   def edit
