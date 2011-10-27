@@ -33,5 +33,9 @@ class Plan < Struct.new(:name, :stripe_id, :cost, :hours, :worlds)
     hours.hours / User::BILLING_PERIOD
   end
   
+  def free?
+    cost == 0
+  end
+  
 end
 

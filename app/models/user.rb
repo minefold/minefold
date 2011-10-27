@@ -109,6 +109,10 @@ class User
   def customer
     Stripe::Customer.retrieve(stripe_id)
   end
+  
+  def has_card?
+    not card == nil
+  end
 
   def update_subscription!
     if plan.nil?
@@ -123,6 +127,8 @@ class User
   
   def update_card
     self.card = Card.new_from_stripe(customer.active_card)
+    Rails.logger.info "set card: #{card.inspect}"
+    
   end
   
   def create_stripe_customer
@@ -144,7 +150,10 @@ class User
   end
 
   before_save do
-    update_card if stripe_token
+    Rails.logger.info "stripe_token: #{stripe_token}"
+    if stripe_token
+      update_card 
+    end
   end
 
 

@@ -44,7 +44,6 @@ gem 'mini_magick'
 
 # Job Processing
 gem 'fog'
-gem 'sinatra', '1.2.6' # Removes warning with outdated resque version
 gem 'resque', require: 'resque/server'
 gem 'resque_mailer'
 

@@ -5,8 +5,6 @@ Minefold::Application.routes.draw do
   # Admin
   get '/admin' => 'admin#index'
   namespace :admin do
-    mount Resque::Server => 'resque'
-
     if Rails.env.development?
       namespace :mail do
         mount UserMailer::Preview => 'user'

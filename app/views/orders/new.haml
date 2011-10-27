@@ -5,69 +5,16 @@
   :coffeescript
     Stripe.setPublishableKey #{ENV['STRIPE_PUBLISHABLE'].to_json}
 
+- new_plan = Plan.find(params[:plan])
 
-%p You are about to switch to our #{params[:plan]} plan. It will cost you $#{plan_cost params[:plan]}/month.
+%p You are about to switch to our <strong>#{new_plan.name}</strong> plan. It will cost you $#{new_plan.cost}/month.
 
-- if card = current_user.card
-  %p Yo dawg, we already have a card on file for you. Do you want us to use this?
-  
-  %p #{card.type} *****#{card.last4} exp. #{card.exp_month}/#{card.exp_year}
-
-- else
-  %p Yo dawg, you need a card!
-
-  %p
-    = label_tag 'Card Number'
-    = text_field_tag nil, '', size: 20, autocomplete: 'off', class: 'card-number'
-
-  %p
-    = label_tag 'CVC'
-    = text_field_tag nil, '', size: 4, autocomplete: 'off', class: 'card-cvc'
-
-  %p
-    = label_tag 'Expiration (MM/YYYY)'
-    = text_field_tag nil, '', size: 2, class: 'card-expiry-month'
-    %span /
-    = text_field_tag nil, '', size: 4, class: 'card-expiry-year'
-    
-    :coffeescript
-      $('#new_order').submit (e) ->
-        e.preventDefault()
-
-        amount = #{(plan_cost(params[:plan]) * 100).to_i}
-
-        card =
-          number: $('input.card-number').val()
-          cvc: $('input.card-cvc').val()
-          exp_month: $('input.card-expiry-month').val()
-          exp_year: $('input.card-expiry-year').val()
-
-        # TODO: Stripe.validateCardNumber(number)
-        #       Stripe.validateExpiry(month, year)
-        #       Stripe.validateCVC(cvc)
-
-        console.log card, amount
-
-        form = $('#new_order')
-
-        Stripe.createToken card, amount, (status, response) ->
-          if status is 200
-            token = response.id
-            form.append("<input type='hidden' name='stripe_token' value='" + token+"'/>")
-
-            form.get(0).submit()
-
-          else
-            $('<p></p>')
-              .text(response.error.message)
-              .appendTo '.errors'
+= render 'card' unless new_plan.free?
 
 = form_tag orders_path, method: :post, id: 'new_order' do
   = hidden_field_tag :plan, params[:plan]
-  
-  
 
-  = submit_tag 'Purchase plan'
+  = submit_tag new_plan.free? ? 'Switch plan' : 'Purchase plan'
   
   .errors
 
