@@ -5,6 +5,7 @@ class Invite
   CODE_LENGTH = 6
 
   belongs_to :world
+  belongs_to :creator, inverse_of: :invites, class_name: 'User'
 
   field :claimed, type: Boolean, default: false
   field :code,    type: String, default: -> {
@@ -27,7 +28,7 @@ class Invite
   end
 
   def mail
-    UserMailer.invite(id)
+    UserMailer.invite(self)
   end
 
 end

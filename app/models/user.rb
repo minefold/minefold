@@ -17,7 +17,6 @@ class User
   field :minutes_played, type: Integer, default: 0
   embeds_many :credit_events
 
-
   attr_accessor :stripe_token
   attr_accessor :coupon
 
@@ -26,6 +25,7 @@ class User
   embeds_one :card
 
   belongs_to :invite
+  has_many :invites, inverse_of: :creator
 
   belongs_to :current_world, class_name: 'World', inverse_of: nil
   has_many :created_worlds, class_name: 'World', inverse_of: :creator
