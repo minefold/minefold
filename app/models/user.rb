@@ -116,8 +116,8 @@ class User
       # customer.cancel_subscription at_period_end: true
       customer.cancel_subscription
     else
-      customer.update_subscription plan: plan, coupon: coupon, card: stripe_token, prorate: true
-      
+      customer.update_subscription plan: plan, coupon: coupon, card: stripe_token, prorate: false
+      self.credits = [credits, Plan.find(plan).credits].max
     end
   end
   
