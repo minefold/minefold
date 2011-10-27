@@ -92,55 +92,14 @@ class User
                   :email_or_username,
                   :remember_me
 
-
 # Plans
-
-
-
-  # after_save do
-  #   if plan_changed?
-  #     if free?
-  #       customer.cancel_subscription
-  #     else
-  #       customer.update_subscription plan: plan, prorate: true
-  #     end
-  #   end
-  # end
-
-  # def stripe_customer
-  #   @customer ||= if customer_id?
-  #     Stripe::Customer.retrieve(customer_id)
-  #   else
-  #     Stripe::Customer.create(description: "#{id}-#{username}", email: email).tap do |c|
-  #       self.customer_id = c.id
-  #     end
-  #   end
-  # end
-
-  # def card_token=(token)
-  #   customer.card = token
-  #   customer.save
-  #   token
-  # end
 
   def free?
     plan == 'free'
   end
 
-  def casual?
-    plan == 'casual'
-  end
-
-  def pro?
-    plan == 'pro'
-  end
-
   def customer?
     stripe_id?
-  end
-
-  def card?
-    not card.nil?
   end
 
   def customer_description
@@ -157,7 +116,7 @@ class User
       # customer.cancel_subscription at_period_end: true
       customer.cancel_subscription
     else
-      customer.update_subscription plan: plan, coupon: coupon, card: stripe_token
+      customer.update_subscription plan: plan, coupon: coupon, card: stripe_token, prorate: true
       
     end
   end

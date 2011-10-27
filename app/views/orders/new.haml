@@ -1,29 +1,20 @@
 - title "Confirm Order"
 
-/ = form_for [current_user, @order] do |f|
-
-%p You are about to upgrade to our #{params[:plan]} plan. It will cost you X number of dollars.
-
-%p Here is an invoice:
-
-%p
-  %strong No invoice yet :(
-
-.errors
-
-- if current_user.card?
-  %p Yo dawg, we already have a card on file for you. Do you want us to use this?
-
-  %p #{current_user.card.type} expiring in #{current_user.card.exp_month}, #{current_user.card.exp_year}
-
-- else
-  - head do
-    %script{src: 'https://js.stripe.com/v1'}
-
-  %p Yo dawg, you need a card!
-
+- head do
+  %script{src: 'https://js.stripe.com/v1'}
   :coffeescript
     Stripe.setPublishableKey #{ENV['STRIPE_PUBLISHABLE'].to_json}
+
+
+%p You are about to switch to our #{params[:plan]} plan. It will cost you $#{plan_cost params[:plan]}/month.
+
+- if card = current_user.card
+  %p Yo dawg, we already have a card on file for you. Do you want us to use this?
+  
+  %p #{card.type} *****#{card.last4} exp. #{card.exp_month}/#{card.exp_year}
+
+- else
+  %p Yo dawg, you need a card!
 
   %p
     = label_tag 'Card Number'
@@ -38,45 +29,46 @@
     = text_field_tag nil, '', size: 2, class: 'card-expiry-month'
     %span /
     = text_field_tag nil, '', size: 4, class: 'card-expiry-year'
+    
+    :coffeescript
+      $('#new_order').submit (e) ->
+        e.preventDefault()
+
+        amount = #{(plan_cost(params[:plan]) * 100).to_i}
+
+        card =
+          number: $('input.card-number').val()
+          cvc: $('input.card-cvc').val()
+          exp_month: $('input.card-expiry-month').val()
+          exp_year: $('input.card-expiry-year').val()
+
+        # TODO: Stripe.validateCardNumber(number)
+        #       Stripe.validateExpiry(month, year)
+        #       Stripe.validateCVC(cvc)
+
+        console.log card, amount
+
+        form = $('#new_order')
+
+        Stripe.createToken card, amount, (status, response) ->
+          if status is 200
+            token = response.id
+            form.append("<input type='hidden' name='stripe_token' value='" + token+"'/>")
+
+            form.get(0).submit()
+
+          else
+            $('<p></p>')
+              .text(response.error.message)
+              .appendTo '.errors'
 
 = form_tag orders_path, method: :post, id: 'new_order' do
   = hidden_field_tag :plan, params[:plan]
+  
+  
 
   = submit_tag 'Purchase plan'
-
-:coffeescript
-  $('#new_order').submit (e) ->
-    e.preventDefault()
-
-    amount = switch $('input[name=plan]').val()
-      when 'free' then 0
-      when 'casual' then 395
-      when 'pro' then 995
-
-    card =
-      number: $('input.card-number').val()
-      cvc: $('input.card-cvc').val()
-      exp_month: $('input.card-expiry-month').val()
-      exp_year: $('input.card-expiry-year').val()
-
-    # TODO: Stripe.validateCardNumber(number)
-    #       Stripe.validateExpiry(month, year)
-    #       Stripe.validateCVC(cvc)
-
-    console.log card, amount
-
-    form = $('#new_order')
-
-    Stripe.createToken card, amount, (status, response) ->
-      if status is 200
-        token = response.id
-        form.append("<input type='hidden' name='stripe_token' value='" + token+"'/>")
-
-        form.get(0).submit()
-
-      else
-        $('<p></p>')
-          .text(response.error.message)
-          .appendTo '.errors'
+  
+  .errors
 
 %p Our shit is secured by Stripe. Read all about it on #{link_to "Stripe's site", 'https://stripe.com/help/security'}.

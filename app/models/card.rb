@@ -1,6 +1,8 @@
 class Card
   include Mongoid::Document
 
+  embedded_in :user
+  
   field :type
   field :country
   field :exp_month
@@ -13,7 +15,7 @@ class Card
       country: card.country,
       exp_month: card.exp_month,
       exp_year: card.exp_year,
-      las4: card.last4
+      last4: card.last4
     )
   end
 

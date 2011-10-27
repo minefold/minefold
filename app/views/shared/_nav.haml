@@ -10,18 +10,12 @@
   .pipe
 
   - if user_signed_in?
-    - if current_user.pro?
-      %li.pro Pro!
+    %li.free
+      = time_left_for current_user
+      left
 
-    - else
-      %li.free
-        = time_left_for current_user
-        left
-
-      %li.buy
-        = link_to 'Plans', plans_page_path, class: 'button'
-
-
+    %li.buy
+      = link_to 'Plans', plans_page_path, class: 'button'
 
     %li.account
       = link_to 'Settings', [:edit, current_user]

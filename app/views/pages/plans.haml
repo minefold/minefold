@@ -12,28 +12,22 @@
 
 / = form_for [current_user, @order] do |f|
 
-%section
-  %h2 Free
-  - if current_user.free?
-    Do nothing
-  - else
-    = link_to 'Downgrade', '/orders/new?plan=free'
-
-%section
-  %h2 Casual
-  - if current_user.casual?
-    Do nothing
-  - elsif current_user.free?
-    = link_to 'Upgrade', '/orders/new?plan=casual'
-  - elsif current_user.pro?
-    = link_to 'Downgrade', '/orders/new?plan=casual'
-
-%section
-  %h2 Pro
-  - if current_user.pro?
-    Do nothing
-  - else
-    = link_to 'Upgrade', '/orders/new?plan=pro'
+%table.plans
+  %tbody
+    %tr
+      %th Plan
+      %th.num Hours
+      %th.num Worlds
+      
+    - Plan.all.reverse.each do |plan|
+      %tr
+        %td.name 
+          = plan.name
+          %em== ($#{plan.cost}/month)
+        %td.num= plan.hours
+        %td.num= plan.worlds
+        %td.action
+          %a{href: "/orders/new?plan=#{plan.stripe_id}", class: "choose_plan"}= plan_change_action current_user, plan
 
 
 
