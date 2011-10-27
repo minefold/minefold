@@ -1,52 +1,44 @@
-- if card = current_user.card
-  %p Yo dawg, we already have a card on file for you. Do you want us to use this?
+%p
+  = label_tag 'Card Number'
+  = text_field_tag nil, '', size: 20, autocomplete: 'off', class: 'card-number'
+
+%p
+  = label_tag 'CVC'
+  = text_field_tag nil, '', size: 4, autocomplete: 'off', class: 'card-cvc'
+
+%p
+  = label_tag 'Expiration (MM/YYYY)'
+  = text_field_tag nil, '', size: 2, class: 'card-expiry-month'
+  %span /
+  = text_field_tag nil, '', size: 4, class: 'card-expiry-year'
   
-  %p #{card.type} *****#{card.last4} exp. #{card.exp_month}/#{card.exp_year}
+  :coffeescript
+    $(document).ready -> 
+      $('#new_order').submit (e) ->
+        e.preventDefault()
 
-- else
-  %p Yo dawg, you need a card!
+        amount = #{(plan_cost(params[:plan]) * 100).to_i}
 
-  %p
-    = label_tag 'Card Number'
-    = text_field_tag nil, '', size: 20, autocomplete: 'off', class: 'card-number'
+        card =
+          number: $('input.card-number').val()
+          cvc: $('input.card-cvc').val()
+          exp_month: $('input.card-expiry-month').val()
+          exp_year: $('input.card-expiry-year').val()
 
-  %p
-    = label_tag 'CVC'
-    = text_field_tag nil, '', size: 4, autocomplete: 'off', class: 'card-cvc'
+        # TODO: Stripe.validateCardNumber(number)
+        #       Stripe.validateExpiry(month, year)
+        #       Stripe.validateCVC(cvc)
 
-  %p
-    = label_tag 'Expiration (MM/YYYY)'
-    = text_field_tag nil, '', size: 2, class: 'card-expiry-month'
-    %span /
-    = text_field_tag nil, '', size: 4, class: 'card-expiry-year'
-    
-    :coffeescript
-      $(document).ready -> 
-        $('#new_order').submit (e) ->
-          e.preventDefault()
+        form = $('#new_order')
 
-          amount = #{(plan_cost(params[:plan]) * 100).to_i}
+        Stripe.createToken card, amount, (status, response) ->
+          if status is 200
+            token = response.id
+            form.append("<input type='hidden' name='stripe_token' value='" + token+"'/>")
 
-          card =
-            number: $('input.card-number').val()
-            cvc: $('input.card-cvc').val()
-            exp_month: $('input.card-expiry-month').val()
-            exp_year: $('input.card-expiry-year').val()
+            form.get(0).submit()
 
-          # TODO: Stripe.validateCardNumber(number)
-          #       Stripe.validateExpiry(month, year)
-          #       Stripe.validateCVC(cvc)
-
-          form = $('#new_order')
-
-          Stripe.createToken card, amount, (status, response) ->
-            if status is 200
-              token = response.id
-              form.append("<input type='hidden' name='stripe_token' value='" + token+"'/>")
-
-              form.get(0).submit()
-
-            else
-              $('<p></p>')
-                .text(response.error.message)
-                .appendTo '.errors'
+          else
+            $('<p></p>')
+              .text(response.error.message)
+              .appendTo '.errors'

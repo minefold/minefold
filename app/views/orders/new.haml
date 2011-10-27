@@ -9,6 +9,16 @@
 
 %p You are about to switch to our <strong>#{new_plan.name}</strong> plan. It will cost you $#{new_plan.cost}/month.
 
+- if card = current_user.card
+  %p Yo dawg, we already have a card on file for you. Do you want us to use this?
+  
+  %p #{card.type} *****#{card.last4} exp. #{card.exp_month}/#{card.exp_year}
+  
+  %p Otherwise you can enter new card details
+
+- else
+  %p Yo dawg, you need a card!
+
 = render 'card' unless new_plan.free?
 
 = form_tag orders_path, method: :post, id: 'new_order' do
