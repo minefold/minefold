@@ -12,7 +12,6 @@ describe User do
   it {should have_field(:slug)}
 
   it {should have_field(:plan)}
-  it {should have_field(:customer_id)}
 
   it {should have_field(:host)}
 
