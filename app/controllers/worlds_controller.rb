@@ -26,7 +26,15 @@ class WorldsController < ApplicationController
   end
 
   def show
-    
+    if params[:i]
+      if signed_in?
+        # if they havent claimed an invite, claim this one?
+        # set world to this world?
+      else
+        # set cookie so when user signs up at a later stage they can claim this invite
+        cookies[:invite] = params[:i]
+      end
+    end
     respond_with world
   end
 

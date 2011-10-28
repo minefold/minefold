@@ -13,6 +13,7 @@ RSpec.configure do |config|
   
   config.before(:each) do
     DatabaseCleaner.start
+    Stripe::Customer.stub(:create) { Struct.new(:id).new('stripe_id') }
   end
 
   config.after(:each) do

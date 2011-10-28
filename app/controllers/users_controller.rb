@@ -34,19 +34,21 @@ class UsersController < ApplicationController
 
   def create
     if user.save
-      unless params[:user][:invite_id].blank?
-        user.invite = Invite.find(params[:user][:invite_id])
+      if params[:user][:invite_id]
+        user.invite = Invite.find params[:user][:invite_id]
+      elsif cookies[:invite]
+        user.invite = Invite.find_by_code cookies[:invite]
+      end
 
-        if user.invite
-          user.invite.world.whitelisted_players << user
-          user.invite.world.save
+      if user.invite
+        user.invite.world.whitelisted_players << user
+        user.invite.world.save
 
-          user.current_world = user.invite.world
-          user.save
+        user.current_world = user.invite.world
+        user.save
 
-          user.invite.claimed = true
-          user.invite.save
-        end
+        user.invite.claimed = true
+        user.invite.save
       end
 
       UserMailer.welcome(user.id).deliver
