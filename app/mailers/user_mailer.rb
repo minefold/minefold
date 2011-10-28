@@ -5,8 +5,8 @@ class UserMailer < ActionMailer::Base
   layout 'email'
 
   def invite(invite)
-    @invite = invite
-    @world = @invite.world
+    @invite  = invite
+    @world   = @invite.world
     @creator = @invite.creator
 
     mail to: @invite.email,

@@ -3,7 +3,7 @@ require "spec_helper"
 describe UserMailer do
   describe "invite" do
     let(:user)   { build :user }
-    let(:world)  { build :world, creator: user }
+    let(:world)  { build :world, creator: user}
     let(:invite) { user.invites.build email: 'chris@minefold.com', world: world }
     let(:mail)   { UserMailer.invite invite }
 
@@ -14,7 +14,9 @@ describe UserMailer do
     end
 
     it "renders the body" do
-      mail.body.encoded.should include("Minefold")
+      mail.body.encoded.should include(world.name)
+      mail.body.encoded.should include(world.slug)
+      mail.body.encoded.should include(user.slug)
     end
   end
 

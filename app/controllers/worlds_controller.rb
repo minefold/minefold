@@ -26,6 +26,7 @@ class WorldsController < ApplicationController
   end
 
   def show
+    
     respond_with world
   end
 
