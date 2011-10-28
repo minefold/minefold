@@ -2,6 +2,6 @@ Hey there!
 
 <%= @invite.creator.username %> wants you to play with them in “<%= @invite.world.name %>” on Minefold.
 
-Head to <%= link_to plans_page_url(code: @invite.code), plans_page_url(code: @invite.code) %>
+Head to <%= user_world_url(@invite.world.creator_id, @invite.world_id, i: @invite.code) %>
 
 to get started!

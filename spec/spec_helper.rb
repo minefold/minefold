@@ -10,6 +10,14 @@ RSpec.configure do |config|
   config.include Mongoid::Matchers
   config.include Factory::Syntax::Methods
   config.include Devise::TestHelpers, type: :controller
+  
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
 
   Fog.mock!
 end

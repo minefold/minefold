@@ -17,6 +17,7 @@ FactoryGirl.define do
 
   factory :world do
     sequence(:name) {|n| "World #{n}"}
+    association :creator, factory: :user
   end
 
 end

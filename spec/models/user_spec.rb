@@ -27,9 +27,6 @@ describe User do
 
   it {should reference_and_be_referenced_in_many(:whitelisted_worlds).of_type(World)}
 
-  it {should embed_many(:wall_items)}
-
-
 # Validations
 
   it { should validate_uniqueness_of(:email).case_insensitive}

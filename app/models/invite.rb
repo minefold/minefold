@@ -20,7 +20,8 @@ class Invite
   scope :unclaimed, where(claimed: false)
 
 # VALIDATIONS
-
+  validates_presence_of :world
+  validates_presence_of :creator
   validates_uniqueness_of :code
 
   def email=(str)

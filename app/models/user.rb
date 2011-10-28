@@ -34,8 +34,6 @@ class User
                           inverse_of: :whitelisted_players,
                           class_name: 'World'
 
-  embeds_many :wall_items, as: :wall
-
   attr_accessor :email_or_username
 
   FREE_HOURS = Plan.free.hours

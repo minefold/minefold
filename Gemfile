@@ -79,4 +79,5 @@ group :test do
   gem 'factory_girl_rails'
   gem 'mongoid-rspec'
   gem 'autotest-rails'
+  gem 'database_cleaner'
 end
