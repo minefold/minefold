@@ -53,10 +53,12 @@ class WorldsController < ApplicationController
   end
 
   def play
-    if world.whitelisted?(current_user)
-      current_user.current_world = world
-      current_user.save
-    end
+    raise 'Not whitelisted for world' unless world.whitelisted?(current_user)
+    
+    p "Setting user to world:#{world}"
+
+    current_user.current_world = world
+    current_user.save
     redirect_to :back
   end
 
