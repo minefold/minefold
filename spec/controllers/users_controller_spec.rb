@@ -14,9 +14,9 @@ describe UsersController do
       assigns(:user).username.should == 'notch'
     end
     
-    # context 'with an invite code' do
-    #   
-    # end
+    context 'with an invite code' do
+      
+    end
   end
 
 end

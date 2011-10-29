@@ -7,7 +7,6 @@ class Invite
   belongs_to :world
   belongs_to :creator, inverse_of: :invites, class_name: 'User'
 
-  field :claimed, type: Boolean, default: false
   field :code,    type: String, default: -> {
     begin
       c = rand(36 ** CODE_LENGTH).to_s(36).rjust(CODE_LENGTH, '0').upcase
@@ -16,8 +15,6 @@ class Invite
   }
 
   field :email,   type: String
-
-  scope :unclaimed, where(claimed: false)
 
 # VALIDATIONS
   validates_presence_of :world

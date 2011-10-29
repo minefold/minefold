@@ -20,7 +20,7 @@ class UsersController < ApplicationController
   end
 
   def new
-    if invite = Invite.where(claimed: false, code: params[:code]).first
+    if invite = Invite.where(code: params[:code]).first
       user.invite = invite
     end
   end
@@ -33,24 +33,13 @@ class UsersController < ApplicationController
   end
 
   def create
+    if params[:user][:invite_id]
+      user.invite = Invite.find params[:user][:invite_id]
+    elsif cookies[:invite]
+      user.invite = Invite.find_by_code cookies[:invite]
+    end
+    
     if user.save
-      if params[:user][:invite_id]
-        user.invite = Invite.find params[:user][:invite_id]
-      elsif cookies[:invite]
-        user.invite = Invite.find_by_code cookies[:invite]
-      end
-
-      if user.invite
-        user.invite.world.whitelisted_players << user
-        user.invite.world.save
-
-        user.current_world = user.invite.world
-        user.save
-
-        user.invite.claimed = true
-        user.invite.save
-      end
-
       UserMailer.welcome(user.id).deliver
       sign_in :user, user
       respond_with user, :location => new_world_path

@@ -58,5 +58,10 @@ describe User do
     user.username = ' FooBarBaz '
     user.safe_username.should == 'foobarbaz'
   end
+  
+# Referrals
+
+  it { should belong_to(:referrer).of_type(User).as_inverse_of(:referrals) }
+  it { should reference_many(:referrals).of_type(User).as_inverse_of(:referrer) }
 
 end

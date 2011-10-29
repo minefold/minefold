@@ -33,6 +33,9 @@ class User
   has_and_belongs_to_many :whitelisted_worlds,
                           inverse_of: :whitelisted_players,
                           class_name: 'World'
+                          
+  belongs_to :referrer,  class_name: 'User', inverse_of: :referrals
+  has_many   :referrals, class_name: 'User', inverse_of: :referrer
 
   attr_accessor :email_or_username
 
@@ -246,6 +249,17 @@ class User
   end
 
 # REFERRALS
+
+  before_create do
+    if invite
+      invite.world.whitelisted_players << user
+      invite.world.save
+      
+      current_world = user.invite.world
+      save
+    end
+    
+  end
 
 # USER_REFERRAL_BONUS = 1.hour
 # FRIEND_REFERRAL_BONUS = 4.hours
