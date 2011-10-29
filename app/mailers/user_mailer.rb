@@ -4,13 +4,11 @@ class UserMailer < ActionMailer::Base
   default from: 'team@minefold.com'
   layout 'email'
 
-  def invite(invite)
-    @invite  = invite
-    @world   = @invite.world
-    @creator = @invite.creator
+  def invite invitor, world, invitee_email
+    @invitor, @world, @invitee_email = invitor, world, invitee_email
 
-    mail to: @invite.email,
-         subject: "#{@creator.username} wants you to play in #{@world.name}"
+    mail to: @invitee_email,
+         subject: "#{@invitor.username} wants you to play in #{@world.name}"
   end
 
   def welcome(user_id)

@@ -23,6 +23,16 @@ class User
   field :stripe_id,       type: String
   field :plan,            type: String, default: Plan::DEFAULT.stripe_id
   embeds_one :card
+  
+  CODE_LENGTH = 6
+  
+  field :referral_code,    type: String, default: -> {
+    begin
+      c = rand(36 ** CODE_LENGTH).to_s(36).rjust(CODE_LENGTH, '0').upcase
+    end while User.where(code: c).exists?
+    c
+  }
+  validates_uniqueness_of :referral_code
 
   belongs_to :invite
   has_many :invites, inverse_of: :creator
@@ -251,13 +261,14 @@ class User
 # REFERRALS
 
   before_create do
-    if invite
-      invite.world.whitelisted_players << user
-      invite.world.save
-      
-      current_world = user.invite.world
-      save
-    end
+    
+    # if invite
+    #   invite.world.whitelisted_players << user
+    #   invite.world.save
+    #   
+    #   current_world = user.invite.world
+    #   save
+    # end
     
   end
 

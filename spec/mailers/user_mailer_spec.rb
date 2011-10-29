@@ -4,8 +4,7 @@ describe UserMailer do
   describe "invite" do
     let(:user)   { build :user }
     let(:world)  { build :world, creator: user}
-    let(:invite) { user.invites.build email: 'chris@minefold.com', world: world }
-    let(:mail)   { UserMailer.invite invite }
+    let(:mail)   { UserMailer.invite user, world, 'chris@minefold.com' }
 
     it "renders the headers" do
       mail.subject.should eq("#{user.username} wants you to play in #{world.name}")
@@ -17,6 +16,7 @@ describe UserMailer do
       mail.body.encoded.should include(world.name)
       mail.body.encoded.should include(world.slug)
       mail.body.encoded.should include(user.slug)
+      mail.body.encoded.should include(user.referral_code)
     end
   end
 

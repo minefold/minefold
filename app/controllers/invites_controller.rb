@@ -11,10 +11,12 @@ class InvitesController < ApplicationController
           world.save
         end
       else
-        unless current_user.invites.where(email: email, world_id: world.id).exists?
-          invite = current_user.invites.create(email: email, world: world)
-          invite.mail.deliver!
-        end
+        # TODO track invites already sent?
+        # unless current_user.invites.where(email: email, world_id: world.id).exists?
+          UserMailer.invite(current_user, world, email).deliver!
+          # invite = current_user.invites.create(email: email, world: world)
+          # invite.mail.deliver!
+        # end
       end
     end
     
