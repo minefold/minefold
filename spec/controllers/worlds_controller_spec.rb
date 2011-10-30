@@ -43,9 +43,8 @@ describe WorldsController do
         end
       end
     end
-    
   end
-
+  
   # describe "create" do
   #   let(:world) {build(:world)}
   # 

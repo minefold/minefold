@@ -80,4 +80,5 @@ group :test do
   gem 'mongoid-rspec'
   gem 'autotest-rails'
   gem 'database_cleaner'
+  gem 'capybara', '~> 1.1.1'
 end

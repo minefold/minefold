@@ -10,14 +10,9 @@ class InvitesController < ApplicationController
           world.whitelisted_players << user
           world.save
         end
-      else
-        # TODO track invites already sent?
-        # unless current_user.invites.where(email: email, world_id: world.id).exists?
-          UserMailer.invite(current_user, world, email).deliver!
-          # invite = current_user.invites.create(email: email, world: world)
-          # invite.mail.deliver!
-        # end
       end
+      
+      UserMailer.invite(current_user, world, email).deliver!
     end
     
     redirect_to :back

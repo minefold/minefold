@@ -132,14 +132,14 @@
       %section
         = f.text_area :emails, rows: 1, placeholder: 'chris@minefold.com, dave@minefold.com'
 
-        .hint
-          %p
-            - if invites.length == 1
-              An invite has already been sent to
-              = world.invites.map {|i| i.email}.to_sentence
-            - elsif invites.length > 0
-              Invites have already been sent to
-              = world.invites.map {|i| i.email}.to_sentence
+        -# .hint
+        -#   %p
+        -#     - if invites.length == 1
+        -#       An invite has already been sent to
+        -#       = world.invites.map {|i| i.email}.to_sentence
+        -#     - elsif invites.length > 0
+        -#       Invites have already been sent to
+        -#       = world.invites.map {|i| i.email}.to_sentence
 
       %section
         = f.submit 'Send invites'

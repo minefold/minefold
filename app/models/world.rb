@@ -25,12 +25,10 @@ class World
                           class_name: 'User'
 
   embeds_many :play_requests
-  has_many :invites
 
   embeds_many :wall_items, as: :wall
 
   default_scope includes(:creator)
-
 
 # VALIDATIONS
 
@@ -44,7 +42,6 @@ class World
     only_integer: true,
     greater_than_or_equal_to: 0,
     less_than: DIFFICULTIES.size
-
 
 # SETTINGS
 

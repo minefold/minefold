@@ -1,6 +1,5 @@
 = form_for new_user do |f|
   = f.hidden_field :plan
-  = f.hidden_field :invite_id
 
   .errors
     - unless new_user.errors.empty?
@@ -11,6 +10,10 @@
           %li
             %strong= key
             = desc
+
+  - if referrer
+    %section.referral
+      %p You've been referred by #{referrer.username}
 
   %section
     = f.label :username, 'Minecraft Username'
@@ -31,7 +34,7 @@
 
   %section
     = f.label :email
-    = f.email_field :email, tabindex:2, value: new_user.email || new_user.invite.try(:email) || '', placeholder: 'notch@mojang.com'
+    = f.email_field :email, tabindex:2, value: new_user.email || '', placeholder: 'notch@mojang.com'
 
   %section
     = f.label :password, 'Choose a password'

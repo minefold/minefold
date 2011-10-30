@@ -34,9 +34,6 @@ class User
   }
   validates_uniqueness_of :referral_code
 
-  belongs_to :invite
-  has_many :invites, inverse_of: :creator
-
   belongs_to :current_world, class_name: 'World', inverse_of: nil
   has_many :created_worlds, class_name: 'World', inverse_of: :creator
 
@@ -46,6 +43,9 @@ class User
                           
   belongs_to :referrer,  class_name: 'User', inverse_of: :referrals
   has_many   :referrals, class_name: 'User', inverse_of: :referrer
+  
+  STATUSES = %W(signed_up played payed)
+  field :referral_state, default: 'signed_up'
 
   attr_accessor :email_or_username
 

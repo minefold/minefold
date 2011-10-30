@@ -3,7 +3,5 @@
 
 %p You can now invite your friends to play in this world
 
-= form_for [world, @invite] do |f|
-  / = f.hidden_field :world_id, world.id
-
+= form_for world, url: user_world_invite_path(world.creator, world) do |f|
   = f.email_field :email
