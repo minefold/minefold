@@ -70,11 +70,12 @@ describe User do
     subject { user }
     
     its(:referral_state) { should == 'signed_up' }
-  
-    # context 'after played' do
-    #   its (:referral_state) { should == 'played' }
-    # end
-    #   
+    
+    context 'after played' do
+      before { user.played! }
+      its (:referral_state) { should == 'played' }
+    end
+
     # context 'after payed' do
     #   its (:referral_state) { should == 'payed' }
     # end

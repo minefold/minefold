@@ -41,12 +41,6 @@ class User
                           inverse_of: :whitelisted_players,
                           class_name: 'World'
                           
-  belongs_to :referrer,  class_name: 'User', inverse_of: :referrals
-  has_many   :referrals, class_name: 'User', inverse_of: :referrer
-  
-  STATUSES = %W(signed_up played payed)
-  field :referral_state, default: 'signed_up'
-
   attr_accessor :email_or_username
 
   FREE_HOURS = Plan.free.hours
@@ -260,18 +254,17 @@ class User
 
 # REFERRALS
 
-  before_create do
-    
-    # if invite
-    #   invite.world.whitelisted_players << user
-    #   invite.world.save
-    #   
-    #   current_world = user.invite.world
-    #   save
-    # end
-    
-  end
+  belongs_to :referrer,  class_name: 'User', inverse_of: :referrals
+  has_many   :referrals, class_name: 'User', inverse_of: :referrer
 
+  STATUSES = %W(signed_up played payed)
+  field :referral_state, default: 'signed_up'
+
+  def played!
+    self.referral_state = 'played'
+    save!
+  end
+  
 # USER_REFERRAL_BONUS = 1.hour
 # FRIEND_REFERRAL_BONUS = 4.hours
 #
