@@ -23,6 +23,11 @@ html {
 
 strong {
   font-weight: 600;
+
+  &.highlight {
+    background-color: #FFC;
+    padding: 1px 2px;
+  }
 }
 
 em {

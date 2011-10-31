@@ -14,10 +14,6 @@ class OrdersController < ApplicationController
     current_user.save
 
     redirect_to user_root_path
-    # @order = Order.new(params[:order])
-
-    # @order.user = current_user
-    #
   end
 
 end

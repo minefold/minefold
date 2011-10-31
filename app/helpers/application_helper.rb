@@ -11,8 +11,11 @@ module ApplicationHelper
     {style: 'display:none'}
   end
 
-  def time_left_for user
-    "%02d' %02d\"" % user.time_remaining
+  def format_time_left user
+    hours = (user.credits * User::BILLING_PERIOD) / 1.hour
+    minutes = user.credits - (hours * (1.hour / User::BILLING_PERIOD))
+
+    "%02d' %02d\"" % [hours, minutes]
   end
 
   def template(name, options)

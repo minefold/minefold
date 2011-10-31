@@ -87,7 +87,7 @@
               .attr(id: "chat_"+data._id)
 
         data.chat.body = data.chat.raw
-        data.chat.creator = current_user
+        data.chat.user = current_user
         data.chat.id = cId
         data.chat.created_at = 'just now'
         data.chat.avatar_head_24_url = current_user.avatar_head_24_url
@@ -111,12 +111,12 @@
   #wall-items
     - world.wall_items.order_by([:created_at, :desc]).limit(100).each do |chat|
       .item[chat]
-        - if !chat.creator.nil?
-          .avatar= image_tag chat.creator.avatar.head.s24.url, width: 24, height: 24
+        - if !chat.user.nil?
+          .avatar= image_tag chat.user.avatar.head.s24.url, width: 24, height: 24
         .body= chat.body
         .meta
-          - if !chat.creator.nil?
-            %span.user @#{chat.creator.username}
+          - if !chat.user.nil?
+            %span.user @#{chat.user.username}
           %time= chat.created_at
 
   - head do

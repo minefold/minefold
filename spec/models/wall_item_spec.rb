@@ -3,6 +3,6 @@ require 'spec_helper'
 describe WallItem do
   it {should be_timestamped_document}
 
-  it {should be_embedded_in(:wall_items)}
-  it {should belong_to(:creator).of_type(User) }
+  it {should be_embedded_in(:wall)}
+  it {should belong_to(:user).of_type(User) }
 end

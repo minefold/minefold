@@ -60,12 +60,12 @@
 }
 
 #plans {
-  margin-top: 18px;
   color: rgba(black, 0.6);
+  text-align: center;
+  margin: (4*$line) 0;
 
   p {
     margin: 0;
-    margin-bottom: $line;
   }
 
   strong {
@@ -74,14 +74,11 @@
 
   table {
     width: 100%;
-    text-align: center;
     margin: (2*$line) 0;
     padding: (4*$line) 0;
-    background-color: darken(white, 5%);
 
     th {
       padding-top: $line;
-      background: white;
       font-weight: bold;
       font-size: 16px;
       line-height: 24px;
@@ -96,11 +93,6 @@
     }
   }
 
-  .highlight {
-    background-color: #FFC;
-    padding: 1px 2px;
-  }
-
   .diamond {
     background-color: #0EBFE9;
     color: white;
@@ -108,13 +100,6 @@
   }
 
 
-}
-
-form#new_user {
-  margin-bottom: 4*$line;
-  input {
-    width: 100%;
-  }
 }
 
 #features {

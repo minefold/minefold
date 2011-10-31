@@ -4,7 +4,7 @@ class WallItemsController < ApplicationController
 
   def create
     chat = Chat.new(params[:chat])
-    chat.creator = current_user
+    chat.user = current_user
 
     if chat.valid?
       world.wall_items.push(chat)

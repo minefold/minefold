@@ -48,16 +48,11 @@ Minefold::Application.routes.draw do
 
   as :user do
 
+    get '/account' => 'users#edit', :as => :edit_user
+
     resources :users, :path => '/',
                       :only => [:show, :update],
-                      :path_names => {:edit => 'settings'} do
-
-      get 'settings', :action => :edit, :as => :edit, :on => :member
-
-
-
-      # put 'upgrade', :action => :upgrade, :as => :upgrade, :on => :member
-      # put 'downgrade', :action => :downgrade, :as => :downgrade, :on => :member
+                      :path_names => {:edit => 'account'} do
 
       resources :worlds, :path => '/', :only => [:show, :edit, :update] do
 

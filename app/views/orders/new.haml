@@ -7,13 +7,13 @@
 
 - new_plan = Plan.find(params[:plan])
 
-%p You are about to switch to our <strong>#{new_plan.name}</strong> plan. It will cost you $#{new_plan.cost}/month.
+%p You are about to switch to the <strong class="highlight">#{new_plan.name}</strong> plan. It will cost you <strong class="highlight">$#{new_plan.cost} per month</strong>. Your account will be automatically pro-rated.
 
 - if card = current_user.card
   %p Yo dawg, we already have a card on file for you. Do you want us to use this?
-  
+
   %p #{card.type} *****#{card.last4} exp. #{card.exp_month}/#{card.exp_year}
-  
+
   %p Otherwise you can enter new card details
 
 - else
@@ -23,9 +23,7 @@
 
 = form_tag orders_path, method: :post, id: 'new_order' do
   = hidden_field_tag :plan, params[:plan]
-
-  = submit_tag new_plan.free? ? 'Switch plan' : 'Purchase plan'
-  
+  = submit_tag new_plan.free? ? 'Change plan' : 'Purchase plan'
   .errors
 
-%p Our shit is secured by Stripe. Read all about it on #{link_to "Stripe's site", 'https://stripe.com/help/security'}.
+%p Minefold's payments are secured by 128-bit SSL and Stripe. Read about our security situation on #{link_to "Stripe's site", 'https://stripe.com/help/security'}.
