@@ -58,7 +58,6 @@ class WorldsController < ApplicationController
   end
 
   def invite
-    @invite = Invite.new(world: world, from: current_user)
   end
 
   def play

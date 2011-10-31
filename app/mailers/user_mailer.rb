@@ -30,9 +30,7 @@ class UserMailer < ActionMailer::Base
   class Preview < MailView
 
     def invite
-      invite = User.chris.invites.build email: 'christopher.lloyd@gmail.com', world: User.chris.created_worlds.first
-      
-      ::UserMailer.invite(invite)
+      ::UserMailer.invite User.chris, User.chris.created_worlds.first, 'dave@minefold.com'
     end
 
     def welcome

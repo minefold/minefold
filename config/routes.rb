@@ -14,7 +14,7 @@ Minefold::Application.routes.draw do
   end
 
   # Static Pages
-  { '/plans'    => 'plans',
+  { '/plans'    => 'plans',     # TODO fix signed out plans page
     '/features' => 'features',
     '/about'    => 'about',
     '/jobs'     => 'jobs',

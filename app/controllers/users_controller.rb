@@ -11,6 +11,8 @@ class UsersController < ApplicationController
       User.new params[:user]
     end
   }
+  
+  expose(:referrer) { User.first(conditions: {referral_code: cookies[:invite]}) if cookies[:invite] }
 
   def show
     respond_to do |format|
@@ -20,9 +22,6 @@ class UsersController < ApplicationController
   end
 
   def new
-    if invite = Invite.where(code: params[:code]).first
-      user.invite = invite
-    end
   end
 
   def check
@@ -33,12 +32,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    if params[:user][:invite_id]
-      user.invite = Invite.find params[:user][:invite_id]
-    elsif cookies[:invite]
-      user.invite = Invite.find_by_code cookies[:invite]
-    end
-    
+    user.referrer = referrer
     if user.save
       UserMailer.welcome(user.id).deliver
       sign_in :user, user

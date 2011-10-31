@@ -19,8 +19,6 @@ describe User do
   it { should embed_many(:credit_events) }
   it { should embed_one(:card) }
        
-  it { should belong_to(:invite) }
-       
   it { should belong_to(:current_world).of_type(World).as_inverse_of(nil) }
   it { should reference_many(:created_worlds).of_type(World).as_inverse_of(:creator) }
        
@@ -58,16 +56,27 @@ describe User do
     user.safe_username.should == 'foobarbaz'
   end
   
-# Referrals
-
-  it { should validate_uniqueness_of(:referral_code) }
+  describe "referrals" do
+    it { should validate_uniqueness_of(:referral_code) }
   
-  it "should have a short referral code" do
-    user.save!
-    user.referral_code.length.should == User::CODE_LENGTH
+    it "should have a short referral code" do
+      user.save!
+      user.referral_code.length.should == User::CODE_LENGTH
+    end
+  
+    it { should belong_to(:referrer).of_type(User).as_inverse_of(:referrals) }
+    it { should reference_many(:referrals).of_type(User).as_inverse_of(:referrer) }
+  
+    subject { user }
+    
+    its(:referral_state) { should == 'signed_up' }
+  
+    # context 'after played' do
+    #   its (:referral_state) { should == 'played' }
+    # end
+    #   
+    # context 'after payed' do
+    #   its (:referral_state) { should == 'payed' }
+    # end
   end
-  
-  it { should belong_to(:referrer).of_type(User).as_inverse_of(:referrals) }
-  it { should reference_many(:referrals).of_type(User).as_inverse_of(:referrer) }
-
 end

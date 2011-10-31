@@ -6,7 +6,6 @@ class PlayersController < ApplicationController
     world.whitelisted_players.find_by_slug(params[:id]) or
     User.find(params[:player_id])
   end
-  expose(:invites) { current_user.invites.where world_id: world.id }
 
   def search
     not_found unless current_user == world.creator
