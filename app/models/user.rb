@@ -23,19 +23,23 @@ class User
   field :stripe_id,       type: String
   field :plan,            type: String, default: Plan::DEFAULT.stripe_id
   embeds_one :card
-  
+
   CODE_LENGTH = 6
-  
-  field :referral_code,    type: String, default: -> {
+  REFERRAL_HOURS = 2
+
+  field :referral_code,   type: String, default: -> {
     begin
       c = rand(36 ** CODE_LENGTH).to_s(36).rjust(CODE_LENGTH, '0').upcase
-    end while User.where(code: c).exists?
+    end while self.class.where(code: c).exists?
     c
   }
   validates_uniqueness_of :referral_code
 
-  belongs_to :invite
-  has_many :invites, inverse_of: :creator
+  belongs_to :referrer,  class_name: 'User', inverse_of: :referrals
+  has_many   :referrals, class_name: 'User', inverse_of: :referrer
+
+  # belongs_to :invite
+  # has_many :invites, inverse_of: :creator
 
   belongs_to :current_world, class_name: 'World', inverse_of: nil
   has_many :created_worlds, class_name: 'World', inverse_of: :creator
@@ -43,9 +47,6 @@ class User
   has_and_belongs_to_many :whitelisted_worlds,
                           inverse_of: :whitelisted_players,
                           class_name: 'World'
-                          
-  belongs_to :referrer,  class_name: 'User', inverse_of: :referrals
-  has_many   :referrals, class_name: 'User', inverse_of: :referrer
 
   attr_accessor :email_or_username
 
@@ -120,7 +121,7 @@ class User
   def customer
     Stripe::Customer.retrieve(stripe_id)
   end
-  
+
   def has_card?
     not card == nil
   end
@@ -131,17 +132,20 @@ class User
       # customer.cancel_subscription at_period_end: true
       customer.cancel_subscription
     else
-      customer.update_subscription plan: plan, coupon: coupon, card: stripe_token, prorate: false
+      customer.update_subscription plan: plan,
+                                 coupon: coupon,
+                                   card: stripe_token,
+                                prorate: true
+
       self.credits = [credits, Plan.find(plan).credits].max
     end
   end
-  
+
   def update_card
     self.card = Card.new_from_stripe(customer.active_card)
     Rails.logger.info "set card: #{card.inspect}"
-    
   end
-  
+
   def create_stripe_customer
     self.stripe_id = Stripe::Customer.create(
       description: customer_description,
@@ -163,7 +167,7 @@ class User
   before_save do
     Rails.logger.info "stripe_token: #{stripe_token}"
     if stripe_token
-      update_card 
+      update_card
     end
   end
 
@@ -209,15 +213,21 @@ class User
     })
   end
 
-  def hours
-    (credits * BILLING_PERIOD) / 1.hour
+  def plan_credits
+    Plan.find(plan).credits
   end
 
-  def minutes
-    credits - (hours * (1.hour / BILLING_PERIOD))
+  def referral_credits
+    cr = REFERRAL_HOURS.hours / BILLING_PERIOD
+    (referrer.nil? ? 0 : cr) + (referrals.empty? ? 0 : referrals.length * cr)
   end
 
-  def time_remaining
+
+  def total_credits
+    plan_credits + referral_credits
+  end
+
+  def time_left
     [hours, minutes]
   end
 
@@ -261,15 +271,15 @@ class User
 # REFERRALS
 
   before_create do
-    
+
     # if invite
     #   invite.world.whitelisted_players << user
     #   invite.world.save
-    #   
+    #
     #   current_world = user.invite.world
     #   save
     # end
-    
+
   end
 
 # USER_REFERRAL_BONUS = 1.hour

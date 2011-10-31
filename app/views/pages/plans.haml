@@ -1,159 +1,39 @@
-- title "Buy Time" do
-  %h1
-    You are on the #{current_user.plan} plan and can play for
-    - if not current_user.hours.zero?
-      %strong= pluralize current_user.hours, 'hour', 'hours'
-    - if current_user.hours > 0 and current_user.minutes > 0
-      and
-    - if not current_user.minutes.zero?
-      %strong= pluralize current_user.minutes, 'minute', 'minutes'
+- title "Change plan"
 
-  %h2 Choose how many hours you want to play for.
+%p
+  You are currently on the <strong class="highlight">#{Plan.find(current_user.plan).name}</strong> plan and can play for <strong class="highlight">#{current_user.total_credits.minutes / 1.hour}</strong> hours each month.
 
-/ = form_for [current_user, @order] do |f|
+#plans
+  %table
+    %thead
+      %tr.name
+        %th.free Free
+        %th.casual Casual
+        %th.hardcore Hardcore
+        %th.pro Pro
+    %tbody
+      %tr.price
+        %td.free Free
+        %td.casual $3.95 / mo
+        %td.hardcore $7.95 / mo
+        %td.pro $11.95 / mo
+      %tr.hours
+        %td.free 4 hrs / mo
+        %td.casual 40 hrs / mo
+        %td.hardcore 80 hrs / mo
+        %td.pro 160 hrs / mo
+      %tr.worlds
+        %td.free 1 world
+        %td.casual 5 worlds
+        %td.hardcore 10 worlds
+        %td.pro 40 worlds
+      %tr.buy
+        - Plan.all.each do |plan|
+          %td
+            - if current_user.plan != plan.stripe_id
+              %a{href: new_order_path(plan: plan.stripe_id)}= plan_change_action current_user, plan
+            - else
+              \-
 
-%table.plans
-  %tbody
-    %tr
-      %th Plan
-      %th.num Hours
-      %th.num Worlds
-      
-    - Plan.all.reverse.each do |plan|
-      %tr
-        %td.name 
-          = plan.name
-          %em== ($#{plan.cost}/month)
-        %td.num= plan.hours
-        %td.num= plan.worlds
-        %td.action
-          %a{href: "/orders/new?plan=#{plan.stripe_id}", class: "choose_plan"}= plan_change_action current_user, plan
-
-
-
-/   / = hidden_field_tag :cmd, '_s-xclick'
-/   /
-/   / = hidden_field_tag :hosted_button_id, ENV['PAYPAL_BUTTON_ID']
-/   /
-/   / = hidden_field_tag :item_number, @order.id
-/   / = hidden_field_tag :custom,      @order.id
-/
-/   / = hidden_field_tag :notify_url, order_url
-/   / = hidden_field_tag :cancel_return, cancel_order_url
-/   /
-/   / = hidden_field_tag :return, success_order_url
-/
-/   / = hidden_field_tag :on0, 'Hours'
-/
-/   %ul#products
-/     %li.active
-/       %label{for: '8hrs'}
-/         .time
-/           +8
-/           %span hours
-/         .cost
-/           $4
-/           %span 50&cent; / hr
-/
-/       %input#8hrs{type: 'radio', name: 'hours', value: 8, style: 'display:none', checked: true}
-/
-/     %li
-/       %label{for: '20hrs'}
-/         .time
-/           +20
-/           %span hours
-/         .cost
-/           $8
-/           %span 40&cent; / hr
-/
-/       %input#20hrs{type: 'radio', name: 'hours', value: 20, style: 'display:none'}
-/
-/     %li
-/       %label{for: '60hrs'}
-/         .time
-/           +60
-/           %span hours
-/         .cost
-/           $18
-/           %span 30&cent; / hr
-/
-/       %input#60hrs{type: 'radio', name: 'hours', value: 60, style: 'display:none'}
-/
-/     %li
-/       %label{for: '160hrs'}
-/         .time
-/           +160
-/           %span hours
-/         .cost
-/           $40
-/           %span 25&cent; / hr
-/
-/       %input#160hrs{type: 'radio', name: 'hours', value: 160, style: 'display:none'}
-/
-/   :coffeescript
-/     products = $('#products li')
-/
-/     products.click (e) ->
-/       self = $(e.currentTarget)
-/       products.removeClass 'active'
-/       self.addClass('active')
-/
-/       products.find('input:radio').attr('checked', false)
-/       self.find('input:radio').attr('checked', true)
-/
-/       e.preventDefault()
-/
-/   - unless current_user.customer?
-/     %script{src: 'https://js.stripe.com/v1'}
-/     :coffeescript
-/       Stripe.setPublishableKey #{ENV['STRIPE_PUBLISHABLE'].to_json}
-/
-/     %p
-/       = label_tag 'Card Number'
-/       = text_field_tag nil, '', size: 20, autocomplete: 'off', class: 'card-number'
-/
-/     %p
-/       = label_tag 'CVC'
-/       = text_field_tag nil, '', size: 4, autocomplete: 'off', class: 'card-cvc'
-/
-/     %p
-/       = label_tag 'Expiration (MM/YYYY)'
-/       = text_field_tag nil, '', size: 2, class: 'card-expiry-month'
-/       %span /
-/       = text_field_tag nil, '', size: 4, class: 'card-expiry-year'
-/
-/     :coffeescript
-/       prices =
-/         '8':   400
-/         '20':  800
-/         '60':  1800
-/         '160': 4000
-/
-/       $('#new_order').submit (e) ->
-/         # an amount is needed by stripe to guarentee that the charge can go
-/         # through
-/         amount = prices[$('input[name=hours]:checked').val()]
-/
-/         card =
-/           number: $('.card-number').val()
-/           cvc: $('.card-cvc').val()
-/           exp_month: $('.card-expiry-month').val()
-/           exp_year: $('.card-expiry-year').val()
-/
-/         Stripe.createToken card, amount, (status, response) ->
-/
-/           if response.error
-/             $('<p></p>')
-/               .text(response.error.message)
-/               .appendTo form.find('.errors')
-/
-/           else
-/             form = $('#new_order')
-/             token = response.id
-/             form.append("<input type='hidden' name='stripeToken' value='" + token+"'/>")
-/
-/             form.get(0).submit()
-/
-/         e.preventDefault()
-/
-/   = f.submit 'Buy hours!'
+- after do
+  %p You can change plans at any time. Any changes in your plan will be pro-rated until your next billing cycle.
