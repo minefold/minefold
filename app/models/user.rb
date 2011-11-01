@@ -35,8 +35,6 @@ class User
   }
   validates_uniqueness_of :referral_code
 
-  belongs_to :referrer,  class_name: 'User', inverse_of: :referrals
-  has_many   :referrals, class_name: 'User', inverse_of: :referrer
 
   STATUSES = %W(signed_up played payed)
   field :referral_state, default: 'signed_up'
@@ -47,8 +45,6 @@ class User
   has_and_belongs_to_many :whitelisted_worlds,
                           inverse_of: :whitelisted_players,
                           class_name: 'World'
-
-
   attr_accessor :email_or_username
 
   FREE_HOURS = Plan.free.hours
@@ -228,10 +224,6 @@ class User
     plan_credits + referral_credits
   end
 
-  def time_left
-    [hours, minutes]
-  end
-
 
 # AUTHENTICATION
 
@@ -271,18 +263,14 @@ class User
 
 # REFERRALS
 
-  before_create do
+  belongs_to :referrer,  class_name: 'User', inverse_of: :referrals
+  has_many   :referrals, class_name: 'User', inverse_of: :referrer
 
-    # if invite
-    #   invite.world.whitelisted_players << user
-    #   invite.world.save
-    #
-    #   current_world = user.invite.world
-    #   save
-    # end
-
+  def played!
+    self.referral_state = 'played'
+    save!
   end
-
+  
 # USER_REFERRAL_BONUS = 1.hour
 # FRIEND_REFERRAL_BONUS = 4.hours
 #

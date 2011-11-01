@@ -41,14 +41,6 @@ describe User do
     user.credits.should == (User::FREE_HOURS.hours / User::BILLING_PERIOD)
   end
 
-  it "#minutes is the remaining minutes from the hour" do
-    user.credits = 1
-    user.minutes.should == 1
-    user.credits = 61
-    user.minutes.should == 1
-  end
-
-
 # Authentication
 
   it "#safe_username is set when changing a username" do
@@ -70,11 +62,12 @@ describe User do
     subject { user }
     
     its(:referral_state) { should == 'signed_up' }
-  
-    # context 'after played' do
-    #   its (:referral_state) { should == 'played' }
-    # end
-    #   
+    
+    context 'after played' do
+      before { user.played! }
+      its (:referral_state) { should == 'played' }
+    end
+
     # context 'after payed' do
     #   its (:referral_state) { should == 'payed' }
     # end

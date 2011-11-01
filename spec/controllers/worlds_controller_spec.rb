@@ -7,7 +7,7 @@ describe WorldsController do
   let(:world) { create :world, creator: user }
 
   before do
-    world.wall_items.push Chat.new(raw: 'wasssuuuuuuuup', creator: user)
+    world.wall_items.push Chat.new(raw: 'wasssuuuuuuuup', user: user)
   end
   
   describe '#show' do
