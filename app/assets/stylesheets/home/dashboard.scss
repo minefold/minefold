@@ -84,6 +84,8 @@
     }
 
     li {
+      border-bottom: 1px solid darken(white, 10%);
+
       a {
         color: $blue;
         display: block;
@@ -91,33 +93,49 @@
         padding: $line;
         text-decoration: none;
         padding: $line $gutter;
-        border-bottom: 1px solid darken(white, 10%);
         padding-bottom: $line - 1px;
 
-        .current {
-          color: $green;
-          float: right;
-        }
-
         .user {
-          color: #999;
+          color: rgba(black, 0.4);
         }
         .slash {
-          color: #CCC;
-        }
-
-        &:hover {
-          color: darken($blue, 20%);
-          background: darken(white, 3%);
-          .current {
-            color: darken($green, 10%);
-          }
+          color: rgba(black, 0.2);
         }
       }
 
-      &:last-child a {
+      &:hover {
+        background: lighten($blue, 50%);
+        border-bottom-color: lighten($blue, 40%);
+        a {
+          color: darken($blue, 10%);
+        }
+      }
+
+      &:last-child {
         border-bottom: none;
-        padding-bottom: $line;
+        a {padding-bottom: $line;}
+      }
+
+      &.active {
+        background: $green;
+        border-bottom-color: darken($green, 10%);
+
+        a {
+          color: darken($green, 40%);
+          &:hover {
+            color: darken($green, 50%);
+          };
+        }
+        .playing {
+          float: right;
+          font-weight: 600;
+          color: lighten($green, 40%);
+          text-shadow: 0 (-1px) 0 rgba(black, 0.1);
+        }
+        &:hover {
+          border-bottom-color: darken($green, 20%);
+          background-color: darken($green, 10%);
+        }
       }
 
 
