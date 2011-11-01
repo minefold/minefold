@@ -1,7 +1,7 @@
 - title "Change plan"
 
 %p
-  You are currently on the <strong class="highlight">#{Plan.find(current_user.plan).name}</strong> plan and can play for <strong class="highlight">#{current_user.total_credits.minutes / 1.hour}</strong> hours each month.
+  You are currently on the <strong class="highlight">#{Plan.find(current_user.plan).name}</strong> plan and can play for <strong class="highlight">#{pluralize (current_user.total_credits.minutes / 1.hour), 'hour', 'hours'}</strong> each month.
 
 #plans
   %table
@@ -34,6 +34,3 @@
               %a{href: new_order_path(plan: plan.stripe_id)}= plan_change_action current_user, plan
             - else
               \-
-
-- after do
-  %p You can change plans at any time. Any changes in your plan will be pro-rated until your next billing cycle.

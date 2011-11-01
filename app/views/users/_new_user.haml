@@ -40,6 +40,9 @@
     = f.label :password, 'Choose a password'
     = f.password_field :password, tabindex: 3
 
+    = f.label :password_confirmation, 'Confirm password'
+    = f.password_field :password_confirmation, tabindex: 4
+
   %section
     = f.submit 'Start playing now'
     .spinner{hidden}

@@ -2,16 +2,16 @@
   %h1 Play Minecraft with your friends
 
   %p
-    We've made multiplayer Minecraft fast and easy.
+    We've made it fast and easy.
 
-  = link_to 'Sign up now, it\'s free', new_user_path, class: 'button'
+  = link_to 'Start playing now for free', new_user_path, class: 'button'
 
 #plans
   %table
     %thead
       %tr.name
         %th.casual Casual
-        %th.hardcore Hardcore
+        %th.hardcore Crafter
         %th.pro Pro
     %tbody
       %tr.price
@@ -27,7 +27,7 @@
         %td.hardcore 10 worlds
         %td.pro 40 worlds
 
-  %p You can also play for <strong class="highlight">#{pluralize User::FREE_HOURS, 'hour', 'hours'} free</strong> each month in one world.
+  %p It's <strong class="highlight">free</strong> for anybody to play for <strong class="highlight">#{pluralize User::FREE_HOURS, 'hour', 'hours'}</strong> a month in one world.
 
 
 %ol#features
@@ -36,7 +36,7 @@
     %p We do it all for you. No servers, RAM, Java or SSH. <strong>No more mumbojumbo</strong>. Just sign up and start playing, grasshopper.
 
   %li.feature
-    %h2 Individual pricing
+    %h2 Pay for yourself
     %p <strong>Don't pay for Frank</strong> who faked a sickie and played for a week straight. Sign up for a plan that suits <em>your</em> habits, not Frank's habit.
 
   %li.feature

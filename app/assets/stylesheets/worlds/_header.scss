@@ -1,11 +1,12 @@
 @import 'shared';
 
-#worlds-show #subhead,
-#worlds-map #subhead,
-#players-index #subhead,
-#worlds-edit #subhead {
+#worlds-show #masthead,
+#worlds-map #masthead,
+#players-index #masthead,
+#worlds-edit #masthead {
 
   ol#subnav {
+    clear: both;
     li {
       display: block;
       float: left;
@@ -28,11 +29,11 @@
 
 }
 
-#worlds-show #subhead .chat,
-#worlds-map #subhead .map,
-#players-index #subhead .players,
-#worlds-edit #subhead .edit {
+#worlds-show #masthead .chat,
+#worlds-map #masthead .map,
+#players-index #masthead .players,
+#worlds-edit #masthead .edit {
   a {
-    background: darken(white, 5%);
+    background: white;
   }
 }

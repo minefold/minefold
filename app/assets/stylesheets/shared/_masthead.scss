@@ -1,5 +1,7 @@
 #masthead {
   overflow: auto;
+  background: url(image-path('cubes.png')) center top;
+  margin-bottom: 4*$line;
 
   .wrapper {
     width: cols(8);

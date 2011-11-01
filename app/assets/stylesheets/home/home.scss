@@ -23,7 +23,8 @@
 
   #masthead {
     text-align: center;
-    padding: 8*$line 0;
+    padding: (8*$line) 0;
+    text-shadow: 0 1px 0 white;
 
     h1 {
       font-size: 24px;
@@ -34,16 +35,13 @@
     }
 
     p {
-      margin: 10px 0;
-      padding: 6px 0;
+      margin-bottom: 4*$line;
       color: rgba(black, 0.5);
       font-weight: 500;
       line-height: 24px;
     }
 
     a.button {
-      @include inline-block;
-      margin: 0 auto;
       background-color: $green;
       font-size: 18px;
       line-height: 24px;
@@ -56,57 +54,26 @@
     }
   }
 
+  #plans {
+    margin-bottom: 8*$line;
+    .hardcore {
+      background-color: lighten($blue, 40%);
+      color: darken($blue, 10%);
+    }
 
+    th.hardcore {
+      color: darken($blue, 40%);
+      border-color: lighten($blue, 30%);
+    }
+
+    .price .hardcore {
+      color: darken($blue, 20%);
+    }
+  }
 }
 
-#plans {
-  color: rgba(black, 0.6);
-  text-align: center;
-  margin: (4*$line) 0;
-
-  p {
-    margin: 0;
-  }
-
-  strong {
-    color: #000;
-  }
-
-  table {
-    width: 100%;
-    margin: (2*$line) 0;
-    padding: (4*$line) 0;
-
-    th {
-      padding-top: $line;
-      font-weight: bold;
-      font-size: 16px;
-      line-height: 24px;
-      color: #000;
-    }
-
-    .price td {
-      color: black;
-    }
-
-    .time {
-    }
-  }
-
-  .diamond {
-    background-color: #0EBFE9;
-    color: white;
-    padding: 1px 2px;
-  }
-
-
-}
 
 #features {
-  overflow: visible;
-  margin-bottom: 4*$line;
-  clear: both;
-
   strong {
     color: rgba(black, 0.9);
     padding: 1px 2px;
