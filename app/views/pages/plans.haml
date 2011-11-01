@@ -33,4 +33,4 @@
             - if current_user.plan != plan.stripe_id
               %a{href: new_order_path(plan: plan.stripe_id)}= plan_change_action current_user, plan
             - else
-              \-
+              (Current Plan)

@@ -7,7 +7,7 @@
 
 - new_plan = Plan.find(params[:plan])
 
-%p You are about to switch to the <strong class="highlight">#{new_plan.name}</strong> plan. It will cost you <strong class="highlight">$#{new_plan.cost} per month</strong>. Your account will be automatically pro-rated.
+%p You are about to switch to the <strong class="highlight">#{new_plan.name}</strong> plan. It will cost you <strong class="highlight">$#{new_plan.cost} per month</strong>. Your account will be automatically pro-rated and the change is immediate.
 
 - if card = current_user.card
   %p Yo dawg, we already have a card on file for you. Do you want us to use this?
