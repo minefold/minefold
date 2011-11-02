@@ -15,7 +15,7 @@
       left
 
     %li.buy
-      = link_to 'Plans', plans_page_path, class: 'button'
+      = link_to Plan.find(current_user.plan).name, plans_page_path, class: 'button'
 
     %li.account
       = link_to 'Settings', edit_user_path

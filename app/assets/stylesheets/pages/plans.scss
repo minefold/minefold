@@ -1,4 +1,10 @@
+#high-voltage-pages-show #page {
+  width: cols(8);
 
+  a.button {
+    color: white;
+  }
+}
 
 #plans {
   color: rgba(black, 0.6);
@@ -37,4 +43,9 @@
     }
 
   }
+}
+
+#high-voltage-pages-show #plans table {
+  margin-left: 0;
+  margin-right: 0;
 }

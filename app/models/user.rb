@@ -270,7 +270,7 @@ class User
     self.referral_state = 'played'
     save!
   end
-  
+
 # USER_REFERRAL_BONUS = 1.hour
 # FRIEND_REFERRAL_BONUS = 4.hours
 #
