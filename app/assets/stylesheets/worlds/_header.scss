@@ -19,7 +19,6 @@
       color: black;
       text-decoration: none;
       line-height: 18px;
-      @include border-radius($radius $radius 0 0);
 
       &:hover {
         background-color: darken(white, 10%);

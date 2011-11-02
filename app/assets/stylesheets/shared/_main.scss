@@ -89,7 +89,6 @@ textarea {
   outline: none;
   margin: 0;
   padding: $line $gutter;
-  @include border-radius($radius);
 
   &:hover {
     border-color: rgba(black, 0.2);

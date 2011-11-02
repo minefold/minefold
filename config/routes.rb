@@ -1,6 +1,6 @@
 Minefold::Application.routes.draw do
   root :to => 'home#index'
-  get  '/worlds' => 'home#dashboard', :as => :user_root
+  get  '/dashboard' => 'home#dashboard', :as => :user_root
 
   # Admin
   get '/admin' => 'admin#index'

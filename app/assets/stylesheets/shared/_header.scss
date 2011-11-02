@@ -72,8 +72,11 @@ header {
       }
 
       .buy a {
-        padding: ($line/2) $gutter;
-        font-weight: 600;
+        padding: ($line/2) ($gutter/2);
+        font-weight: 400;
+        background-color: lighten($blue, 40%);
+        color: $blue;
+        text-shadow: 0 1px 0 rgba(white, 0.4);
       }
 
       .profile img {

@@ -119,18 +119,24 @@
       &.active {
         background: $green;
         border-bottom-color: darken($green, 10%);
+        text-shadow: 0 (-1px) 0 rgba(black, 0.1);
 
         a {
-          color: darken($green, 40%);
-          &:hover {
-            color: darken($green, 50%);
-          };
+          color: white;
+          color: lighten($green, 40%);
+        }
+        .user {
+          color: rgba(white, 0.6);
+        }
+
+        .slash {
+          color: rgba(white, 0.4);
         }
         .playing {
           float: right;
           font-weight: 600;
           color: lighten($green, 40%);
-          text-shadow: 0 (-1px) 0 rgba(black, 0.1);
+          text-shadow: 0 (-1px) 0 rgba(black, 0.2);
         }
         &:hover {
           border-bottom-color: darken($green, 20%);
