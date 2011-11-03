@@ -132,7 +132,7 @@ class User
       customer.update_subscription plan: plan,
                                  coupon: coupon,
                                    card: stripe_token,
-                                prorate: true
+                                prorate: false
 
       self.credits = [credits, Plan.find(plan).credits].max
     end

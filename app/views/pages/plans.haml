@@ -1,4 +1,4 @@
-- title "Change plan"
+- title "Change your plan"
 
 %p
   You are currently on the <strong class="highlight">#{Plan.find(current_user.plan).name}</strong> plan and can play for <strong class="highlight">#{pluralize (current_user.total_credits.minutes / 1.hour), 'hour', 'hours'}</strong> each month.
@@ -9,7 +9,7 @@
       %tr.name
         %th.free Free
         %th.casual Casual
-        %th.hardcore Hardcore
+        %th.hardcore Crafter
         %th.pro Pro
     %tbody
       %tr.price

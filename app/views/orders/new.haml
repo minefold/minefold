@@ -2,7 +2,7 @@
 
 %p You are about to switch to the <strong class="highlight">#{@plan.name}</strong> plan. It will cost you <strong class="highlight">#{number_to_currency(@plan.price.to_f / 100)} per month</strong>.
 
-%p.hint When you purchase this plan your account will be automatically pro-rated and the first change will be immediate. We <em>don't offer refunds</em>, but you can downgrade at any time.
+%p.hint When you purchase this plan your account will be automatically pro-rated and the first change will be immediate. We <em>don't offer refunds</em>, but you <em>can</em> downgrade at any time.
 
 = form_tag orders_path, method: :post, id: 'new_order' do
   = hidden_field_tag :plan, @plan.stripe_id
@@ -18,13 +18,14 @@
     #stripe{style: ('display:none' unless current_user.card.nil?)}= render 'card'
 
     :coffeescript
-      $('#stripe-reveal').click (e) ->
-        $('#stripe').show()
+      $('#stripe-reveal').click (e) -> $('#stripe').show()
 
     :coffeescript
       form = $('form#new_order')
       form.stripe
         amount: #{@plan.price}
+        guard: ->
+          $('#stripe').is(':hidden')
         submit: ->
           form.find('input:submit').attr('disabled', true)
         error: (status, response) ->

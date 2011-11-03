@@ -8,6 +8,8 @@ jQuery.fn.stripe = (opts={}) ->
 
   # Find the form and bind to sumbit
   self.submit (e) ->
+    return if $.isFunction(opts.guard) and opts.guard()
+
     e.preventDefault()
 
     amount = if $.isFunction(opts.amount)
@@ -29,13 +31,11 @@ jQuery.fn.stripe = (opts={}) ->
                    .removeAttr('name')
                    .val()
 
-    opts.submit.call(window) if $.isFunction(opts.submit)
+    opts.submit() if $.isFunction(opts.submit)
 
     # TODO: Stripe.validateCardNumber(number)
     #       Stripe.validateExpiry(month, year)
     #       Stripe.validateCVC(cvc)
-    
-    self.get(0).submit()
 
     Stripe.createToken card, amount, (status, response) ->
       if status is 200
@@ -48,4 +48,4 @@ jQuery.fn.stripe = (opts={}) ->
         self.get(0).submit()
 
       else
-        opts.error.call(window, status, response) if $.isFunction(opts.error)
+        opts.error(status, response) if $.isFunction(opts.error)

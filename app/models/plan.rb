@@ -7,8 +7,8 @@ class Plan < Struct.new(:name, :stripe_id, :price, :hours, :worlds)
     Plan.new('Casual', 'casual', 395, 40, 5)
   end
 
-  def self.hardcore
-    Plan.new('Hardcore', 'hardcore', 795, 80, 10)
+  def self.fun
+    Plan.new('Fun', 'fun', 795, 80, 10)
   end
 
   def self.pro
@@ -16,7 +16,7 @@ class Plan < Struct.new(:name, :stripe_id, :price, :hours, :worlds)
   end
 
   def self.all
-    [free, casual, hardcore, pro]
+    [free, casual, fun, pro]
   end
 
   def self.stripe_ids
