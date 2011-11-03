@@ -35,17 +35,17 @@ describe User do
   let(:user) { build(:user) }
 
 
-# Credits
-
-  it "gives FREE_HOURS by default" do
-    user.credits.should == (User::FREE_HOURS.hours / User::BILLING_PERIOD)
+  describe 'credits' do
+    it "gives FREE_HOURS by default" do
+      user.credits.should == (User::FREE_HOURS.hours / User::BILLING_PERIOD)
+    end
   end
-
-# Authentication
-
-  it "#safe_username is set when changing a username" do
-    user.username = ' FooBarBaz '
-    user.safe_username.should == 'foobarbaz'
+  
+  describe 'Authentication' do
+    it "#safe_username is set when changing a username" do
+      user.username = ' FooBarBaz '
+      user.safe_username.should == 'foobarbaz'
+    end
   end
   
   describe "referrals" do

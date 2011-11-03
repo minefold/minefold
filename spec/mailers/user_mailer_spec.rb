@@ -15,7 +15,6 @@ describe UserMailer do
     it "renders the body" do
       mail.body.encoded.should include(world.name)
       mail.body.encoded.should include(world.slug)
-      mail.body.encoded.should include(user.slug)
       mail.body.encoded.should include(user.referral_code)
     end
   end

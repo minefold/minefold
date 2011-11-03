@@ -152,11 +152,6 @@ class User
     ).id
   end
 
-  after_create do
-    create_stripe_customer
-    save!
-  end
-
   before_save do
     update_subscription! if customer? and plan_changed?
   end
