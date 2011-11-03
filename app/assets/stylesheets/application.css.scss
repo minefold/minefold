@@ -10,10 +10,15 @@
 @import 'home/home';
 @import 'home/dashboard';
 
+@import 'accounts/header';
+
 @import 'users/new';
 @import 'users/show';
 @import 'users/edit';
 @import 'users/billing';
+
+@import 'accounts/billing';
+@import 'accounts/plan';
 
 
 @import 'sessions/new';

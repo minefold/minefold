@@ -7,7 +7,7 @@ class World
   DIFFICULTIES = [:peaceful, :easy, :normal, :hard]
 
   field :name, type: String
-  slug  :name, scope: :creator, index: true
+  slug  :name, index: true
 
   field :seed,             type: String, default: ''
   field :game_mode,        type: Integer, default: GAME_MODES.index(:survival)
@@ -42,6 +42,7 @@ class World
     only_integer: true,
     greater_than_or_equal_to: 0,
     less_than: DIFFICULTIES.size
+
 
 # SETTINGS
 

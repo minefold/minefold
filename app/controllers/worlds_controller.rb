@@ -1,16 +1,15 @@
 class WorldsController < ApplicationController
+  respond_to :html
+
   prepend_before_filter :authenticate_user!, except: [:show, :map]
 
-  expose(:creator) { User.find_by_slug!(params[:user_id]) if params[:user_id] }
   expose(:world) do
      if params[:id]
-       creator.created_worlds.find_by_slug!(params[:id])
+       World.find_by_slug!(params[:id])
      else
        World.new(params[:world])
      end
    end
-
-  respond_to :html
 
   def create
     world.creator = current_user
@@ -62,7 +61,7 @@ class WorldsController < ApplicationController
 
   def play
     raise 'Not whitelisted for world' unless world.whitelisted?(current_user)
-    
+
     p "Setting user to world:#{world}"
 
     current_user.current_world = world
@@ -70,12 +69,4 @@ class WorldsController < ApplicationController
     redirect_to :back
   end
 
-  # def play_request
-  #   @invite = world.invites.create from: current_user, to: world.owner
-  #
-  #   # WorldMailer.play_request(world.id,
-  #   #                          world.owner.id,
-  #   #                          current_user.id).deliver
-  #   redirect_to user_world_path(world.owner, world)
-  # end
 end

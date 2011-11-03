@@ -57,17 +57,22 @@
   #plans {
     margin-bottom: 8*$line;
     .hardcore {
-      background-color: lighten($blue, 40%);
+      background-color: lighten($blue, 50%);
       color: darken($blue, 10%);
     }
 
     th.hardcore {
       color: darken($blue, 40%);
-      border-color: lighten($blue, 30%);
+      border-color: lighten($blue, 40%);
+      @include border-radius(6px 6px 0 0);
     }
 
     .price .hardcore {
       color: darken($blue, 20%);
+    }
+
+    .worlds .hardcore {
+      @include border-radius(0 0 6px 6px);
     }
   }
 }

@@ -1,0 +1,26 @@
+#plan
+  - plan = Plan.find(current_user.plan)
+  %section.description
+    %dl
+      %dt
+        %em= plan.name
+        = number_to_currency(plan.price / 100)
+        per month
+
+  %section.hours
+    %dl
+      %dt.numbers
+        = current_user.minutes_played.minutes / 1.hour
+        \/
+        = current_user.total_credits.minutes / 1.hour
+      %dt hours this month
+      %dd
+        - percent = current_user.minutes_played.to_f / current_user.total_credits * 100
+        %span{style: "width:#{percent}%"} #{percent}%
+
+  %section.worlds
+    %dl
+      %dt.numbers 1/5
+      %dt worlds
+      %dd
+        %span{style: "width:20%"} 20%

@@ -22,8 +22,6 @@
           = link_to world do
             - if world == current_user.current_world
               .playing Playing here &rarr;
-            %span.user= world.creator.username
-            %span.slash /
             %strong= world.name
 
 - after do

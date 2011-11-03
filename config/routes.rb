@@ -44,39 +44,35 @@ Minefold::Application.routes.draw do
     get :policy
   end
 
-  resources :orders
+  # resources :orders
 
-  as :user do
+  resource :account, :except => [:destroy] do
+    get :billing
+  end
 
-    get '/account' => 'users#edit', :as => :edit_user
+  resources :users, :path => 'players', :only => :show
 
-    resources :users, :path => '/',
-                      :only => [:show, :update],
-                      :path_names => {:edit => 'account'} do
+  resources :worlds, :only => [:show, :edit, :update] do
 
-      resources :worlds, :path => '/', :only => [:show, :edit, :update] do
-
-        member do
-          get  :map
-          put :play
-        end
-
-        resources :wall_items, :only => [:index, :create]
-        resources :players, :only => [:index, :create, :destroy] do
-          post :ask, :action => :ask, :on => :collection
-          post :add, :action => :add, :on => :collection
-          get  :search, :action => :search, :on => :collection
-
-          put '/approve/:play_request_id',
-            :action => :approve,
-            :on => :collection,
-            :as => :approve_play_request
-        end
-
-        resource :invite, :only => :create
-
-      end
+    member do
+      get  :map
+      put :play
     end
 
+    resources :wall_items, :only => [:index, :create]
+    resources :players, :only => [:index, :create, :destroy] do
+      post :ask, :action => :ask, :on => :collection
+      post :add, :action => :add, :on => :collection
+      get  :search, :action => :search, :on => :collection
+
+      put '/approve/:play_request_id',
+        :action => :approve,
+        :on => :collection,
+        :as => :approve_play_request
+    end
+
+    resource :invite, :only => :create
+
   end
+
 end

@@ -1,0 +1,35 @@
+= render partial: 'header'
+= render partial: 'plan'
+
+#plans
+  %table
+    %thead
+      %tr.name
+        %th.free Free
+        %th.casual Casual
+        %th.hardcore Crafter
+        %th.pro Pro
+    %tbody
+      %tr.price
+        %td.free Free
+        %td.casual $3.95 / mo
+        %td.hardcore $7.95 / mo
+        %td.pro $11.95 / mo
+      %tr.hours
+        %td.free 4 hrs / mo
+        %td.casual 40 hrs / mo
+        %td.hardcore 80 hrs / mo
+        %td.pro 160 hrs / mo
+      %tr.worlds
+        %td.free 1 world
+        %td.casual 5 worlds
+        %td.hardcore 10 worlds
+        %td.pro 40 worlds
+      %tr.buy
+        - Plan.all.each do |plan|
+          %td
+            - if current_user.plan != plan.stripe_id
+              / %a.button{href: new_order_path(plan: plan.stripe_id)}= plan_change_action current_user, plan
+            - else
+              (Current Plan)
+
