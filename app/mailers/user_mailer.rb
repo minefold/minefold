@@ -6,7 +6,7 @@ class UserMailer < ActionMailer::Base
 
   def invite(invite_id)
     @invite = Invite.find(invite_id)
-    @world = @invite.world.
+    @world = @invite.world
     @creator = @world.creator
 
     mail to: @invite.email,
