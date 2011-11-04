@@ -81,4 +81,5 @@ group :test do
   gem 'autotest-rails'
   gem 'database_cleaner'
   gem 'capybara', '~> 1.1.1'
+  gem 'timecop'
 end

@@ -22,6 +22,8 @@ class User
 
   field :stripe_id,       type: String
   field :plan,            type: String, default: Plan::DEFAULT.stripe_id
+  field :next_recurring_charge_date,   type: Date
+  field :next_recurring_charge_amount, type: Integer
   embeds_one :card
 
   CODE_LENGTH = 6
@@ -115,53 +117,83 @@ class User
     [id, safe_username].join('-')
   end
 
-  def customer
-    Stripe::Customer.retrieve(stripe_id)
-  end
-
   def has_card?
     not card == nil
   end
+  
+  before_save do
+    change_plan! if plan_changed?
+  end
+  
+  def change_plan!
+    if customer?
+      update_subscription!
+    else
+      create_stripe_customer!
+    end
+  end
+  
+  
+  def create_stripe_customer!
+    options = {
+      description: customer_description,
+            email: email,
+             plan: plan,
+           coupon: coupon,
+             card: stripe_token
+    }
+
+    stripe_customer = Stripe::Customer.create(options)
+    
+    self.stripe_id = stripe_customer.id
+    self.next_recurring_charge_date   = Time.parse stripe_customer.next_recurring_charge.date
+    self.next_recurring_charge_amount = stripe_customer.next_recurring_charge.amount
+    self.credits = [credits, Plan.find(plan).credits].max
+  end
 
   def update_subscription!
-    if plan.nil?
-      # TODO Should we cancel at period end?
-      # customer.cancel_subscription at_period_end: true
-      customer.cancel_subscription
-    else
-      customer.update_subscription plan: plan,
-                                 coupon: coupon,
-                                   card: stripe_token,
-                                prorate: false
+    customer = Stripe::Customer.retrieve(stripe_id)
+    options = {
+         plan: plan,
+       coupon: coupon,
+         card: stripe_token,
+      prorate: false
+    }
+    customer.update_subscription options
+    
+    new_plan = Plan.find(plan)
+    old_plan = Plan.find(plan_was)
+    price_difference = new_plan.price - old_plan.price
 
-      self.credits = [credits, Plan.find(plan).credits].max
+    if price_difference > 0
+      seconds_remaining = Time.parse(customer.next_recurring_charge.date) - Time.now
+      days_remaining = seconds_remaining / 60 / 60 / 24
+      cycle_left = days_remaining / Time.days_in_month(Time.now.month)
+
+      pro_rated_charge = (price_difference * cycle_left).floor
+      
+      Stripe::Charge.create(
+        :amount => pro_rated_charge,
+        :currency => "usd",
+        :customer => stripe_id,
+        :description => "Minefold.com #{new_plan.name} plan"
+      )
+      
+      self.credits = new_plan.credits
     end
   end
+    
+  # def update_card
+  #   self.card = Card.new_from_stripe(customer.active_card)
+  #   Rails.logger.info "set card: #{card.inspect}"
+  # end
 
-  def update_card
-    self.card = Card.new_from_stripe(customer.active_card)
-    Rails.logger.info "set card: #{card.inspect}"
-  end
-
-  def create_stripe_customer
-    self.stripe_id = Stripe::Customer.create(
-      description: customer_description,
-      email: email,
-      plan: plan,
-      coupon: coupon
-    ).id
-  end
-
-  before_save do
-    update_subscription! if customer? and plan_changed?
-  end
-
-  before_save do
-    Rails.logger.info "stripe_token: #{stripe_token}"
-    if stripe_token
-      update_card
-    end
-  end
+  # before_save do
+  #   Rails.logger.info "stripe_token: #{stripe_token}"
+  #   if stripe_token
+  #     update_card
+  #   end
+  # end
 
 
   def self.paid_for_minecraft?(username)
