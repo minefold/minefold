@@ -24,6 +24,7 @@ class User
   field :plan,            type: String, default: Plan::DEFAULT.stripe_id
   field :next_recurring_charge_date,   type: Date
   field :next_recurring_charge_amount, type: Integer
+  field :last_payment_succeeded, type: Boolean
   embeds_one :card
 
   CODE_LENGTH = 6
@@ -125,6 +126,11 @@ class User
     change_plan! if plan_changed?
   end
   
+  def renew_subscription!
+    self.credits = plan_credits
+    save!
+  end
+  
   def change_plan!
     if customer?
       update_subscription!
@@ -132,7 +138,6 @@ class User
       create_stripe_customer!
     end
   end
-  
   
   def create_stripe_customer!
     options = {

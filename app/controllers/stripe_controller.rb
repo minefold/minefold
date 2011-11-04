@@ -1,13 +1,12 @@
 class StripeController < ApplicationController
 
-  EVENTS = [
-    :recurring_payment_failed,
-    :invoice_ready,
-    :recurring_payment_succeeded,
-    :subscription_trial_ending,
-    :subscription_final_payment_attempt_failed,
-    :ping
-  ]
+  EVENTS = %W(
+    recurring_payment_failed
+    invoice_ready
+    recurring_payment_succeeded
+    subscription_trial_ending
+    subscription_final_payment_attempt_failed
+    ping)
 
   protect_from_forgery except: [:webhook]
 
@@ -35,60 +34,36 @@ class StripeController < ApplicationController
   # Processes Stripe webhooks
   def webhook
     event = params.delete(:event)
-    customer_id = params.delete(:customer_id)
-    if EVENTS.include?(event)
-      @user = User.by_stripe_id(customer_id).first
+    customer_id = params.delete(:customer)
+    
+    if EVENTS.include?(event) && @user = User.by_stripe_id(customer_id).first
       send("#{event}_hook", params)
     else
-      render status: :unprocessable_entity
+      render nothing: true, status: :unprocessable_entity
     end
   end
 
 private
 
   def recurring_payment_succeeded_hook(params)
-    @invoice = Invoice.new(params[:invoice])
-    @invoice.payment.new(params[:payment])
-    @user.push :invoices, @invoice
-
-    # TODO
-    UserMailer.invoice(@user.id, @invoice.id).deliver!
-
-    render status: :success
+    # # TODO
+    # UserMailer.invoice(@user.id, @invoice.id).deliver!
+    @user.renew_subscription!
+    
+    render nothing: true, status: :success
   end
 
   def recurring_payment_failed_hook(params)
-    @invoice = Invoice.new(params[:invoice])
-    @invoice.payment.new(params[:payment])
-    @user.push :invoices, invoice
+    @user.last_payment_succeeded = false
+    @user.save!
+    
+    UserMailer.payment_failed(@user.id).deliver!
 
-    # TODO
-    UserMailer.payment_failed(@user.id, @invoice.id).deliver!
-
-    render status: :success
-  end
-
-  def subscription_final_payment_attempt_failed_hook(params)
-    @user.plan = nil
-    @user.save
-
-    # TODO
-    UserMailer.final_payment_failed(@user.id).deliver!
-
-    render status: :success
-  end
-
-
-  def invoice_ready_hook(params)
-    render json: {invoiceitems: []}
-  end
-
-  def subscription_trial_ending_hook(params)
-    render status: :success
+    render nothing: true, status: :success
   end
 
   def ping_hook(params)
-    render status: :success
+    render nothing: true, status: :success
   end
 
 end
