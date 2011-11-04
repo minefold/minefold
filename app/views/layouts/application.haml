@@ -24,7 +24,9 @@
     %meta{name:'keywords', content:%w(gaming games game minecraft server hosting multiplayer).join(',')}
 
     = yield :head
-
+    
+    = render partial: 'shared/mixpanel'
+    
   %body{lang: 'en', id: page_css_selector}
     %header
       .wrapper

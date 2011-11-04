@@ -1,0 +1,7 @@
+%script
+  var mpq=[];mpq.push(["init","34356c196fac389dff577bf3e1a2164a"]);(function(){var b,a,e,d,c;b=document.createElement("script");b.type="text/javascript";b.async=true
+
+- if user_signed_in?
+  :javascript
+    mpq.identify(#{current_user.id.to_s.to_json});
+    mpq.name_tag(#{current_user.username.to_s.to_json});
