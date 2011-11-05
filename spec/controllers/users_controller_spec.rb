@@ -8,10 +8,16 @@ describe UsersController do
   end
   
   describe '#create' do
-    it "creates a user" do
+    before do
       post :create, user: { username: 'notch', email: 'notch@mojang.com', password: 'rainycorn' }
-      
-      assigns(:user).username.should == 'notch'
+    end
+    
+    it "should redirect to new world" do
+      response.should redirect_to(new_world_path)
+    end
+    
+    it "creates a user" do
+      User.by_username('notch').should_not be_empty
     end
   end
 

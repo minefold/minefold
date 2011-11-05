@@ -38,7 +38,7 @@ class UsersController < ApplicationController
       sign_in :user, user
       respond_with user, :location => new_world_path
     else
-      clean_up_passwords(@user)
+      clean_up_passwords user
       respond_with user, :location => users_path(code: params[:user][:invite_id])
     end
   end
