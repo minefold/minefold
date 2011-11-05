@@ -44,20 +44,20 @@ describe User do
     before do
       expect_stripe_create user, Plan.casual
       user.plan = Plan.casual.stripe_id
-      user.credits = user.credits / 2
       user.stripe_token = 'tok_12345'
       user.save!
+      
+      user.credits = Plan.casual.credits / 2
 
       Timecop.freeze(Date.parse('2011-11-15')) do
         expect_stripe_update user, Plan.fun, '2011-11-30'
-        expect_stripe_charge user, (Plan.fun.price - Plan.casual.price) / 2
         user.plan = Plan.fun.stripe_id
         user.save!
       end
     end
     
-    it "should replace credits with new amount" do
-      user.credits.should == Plan.fun.credits
+    it "should leave credits with current amount" do
+      user.credits.should == Plan.casual.credits / 2
     end
   end
 
@@ -81,7 +81,7 @@ describe User do
   end
   
   context 'Plan subscription renewed' do
-    it "should reset credits" do
+    it "should add new credits" do
       set_plan user, Plan.pro 
       user.save!
       
@@ -90,7 +90,7 @@ describe User do
       
       user.renew_subscription!
       
-      user.reload.credits.should == Plan.pro.credits
+      user.reload.credits.should == 200 + Plan.pro.credits
     end
   end
 end

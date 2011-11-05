@@ -127,7 +127,7 @@ class User
   end
   
   def renew_subscription!
-    self.credits = plan_credits
+    self.credits += plan_credits
     save!
   end
   
@@ -165,27 +165,6 @@ class User
       prorate: false
     }
     customer.update_subscription options
-    
-    new_plan = Plan.find(plan)
-    old_plan = Plan.find(plan_was)
-    price_difference = new_plan.price - old_plan.price
-
-    if price_difference > 0
-      seconds_remaining = Time.parse(customer.next_recurring_charge.date) - Time.now
-      days_remaining = seconds_remaining / 60 / 60 / 24
-      cycle_left = days_remaining / Time.days_in_month(Time.now.month)
-
-      pro_rated_charge = (price_difference * cycle_left).floor
-      
-      Stripe::Charge.create(
-        :amount => pro_rated_charge,
-        :currency => "usd",
-        :customer => stripe_id,
-        :description => "Minefold.com #{new_plan.name} plan"
-      )
-      
-      self.credits = new_plan.credits
-    end
   end
     
   # def update_card
