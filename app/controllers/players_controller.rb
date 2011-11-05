@@ -1,14 +1,15 @@
 class PlayersController < ApplicationController
 
-  expose(:creator) {User.find_by_slug!(params[:user_id])}
-  expose(:world) {creator.created_worlds.find_by_slug!(params[:world_id])}
+  expose(:world) {
+    World.find_by_slug! params[:world_id]
+  }
+
   expose(:player) do
     world.whitelisted_players.find_by_slug(params[:id]) or
     User.find(params[:player_id])
   end
 
   def search
-    not_found unless current_user == world.creator
     user = world.available_player(params[:username]).first
 
     if user

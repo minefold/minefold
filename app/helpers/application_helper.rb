@@ -15,7 +15,7 @@ module ApplicationHelper
     hours = (user.credits * User::BILLING_PERIOD) / 1.hour
     minutes = user.credits - (hours * (1.hour / User::BILLING_PERIOD))
 
-    "%02d' %02d\"" % [hours, minutes]
+    "%02dh %02d'" % [hours, minutes]
   end
 
   def template(name, options)
@@ -77,10 +77,6 @@ module ApplicationHelper
 
   def masthead &blk
     content_for :masthead, capture_haml(&blk)
-  end
-
-  def subhead &blk
-    content_for :subhead, capture_haml(&blk)
   end
 
   def before &blk

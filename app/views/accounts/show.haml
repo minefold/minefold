@@ -1,9 +1,9 @@
 = render partial: 'header'
 = render partial: 'plan'
 
-= form_for edit_account_path, object: current_user, method: :put, class: 'stripe-target' do |f|
+= form_for account_path, object: current_user, method: :put, class: 'stripe-target' do |f|
   %section
-    %h2 Username
+    = f.label :username
     = f.text_field :username, value: current_user.username
     :coffeescript
       username = $('input#user_username')
@@ -23,9 +23,3 @@
 
   %section
     = f.submit 'Update settings'
-
-- after do
-  - if card = current_user.card
-    %h2 Card
-
-    %p #{card.type} *****#{card.last4} exp. #{card.exp_month}/#{card.exp_year}

@@ -1,16 +1,18 @@
 //= require reset
 //= require_self
-//= require fancybox
 
 @import 'bourbon';
 
 @import 'shared';
 @import 'shared/main';
 
-@import 'home/home';
-@import 'home/dashboard';
+@import 'pages/home';
+
+//@import 'home/home';
+//@import 'home/dashboard';
 
 @import 'accounts/header';
+@import 'accounts/dashboard';
 
 @import 'users/new';
 @import 'users/show';

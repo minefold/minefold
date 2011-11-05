@@ -18,16 +18,23 @@ $border: 1px;
 $width: $ncols * ($gutter + $col + $gutter);
 
 @function cols($n) {
-  @return $n * ($gutter + $col + $gutter) - 2 * $gutter;
+  @return $n * ($gutter + $col + $gutter);
 }
 
 @mixin span($n) {
-  @include box-sizing(border-box);
-  width: cols($n);
-  margin-left: $gutter;
-  margin-right: $gutter;
+  width: cols($n) - (2*$gutter);
+  padding-left: $gutter;
+  padding-right: $gutter;
 }
 
+@mixin edgeless {
+  &:first-child {
+    margin-left: 0;
+  }
+  &:last-child {
+    margin-right: 0;
+  }
+}
 
 // Colors
 

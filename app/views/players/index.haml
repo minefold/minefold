@@ -156,4 +156,4 @@
           = link_to req.user do
             .avatar= image_tag req.user.avatar.head.s60.url, width: 60, height: 60
           .username= req.user.username
-          = link_to 'Approve', approve_play_request_user_world_players_path(world.creator, world, req), method: 'put', class: 'approve'
+          = link_to 'Approve', approve_play_request_world_players_path(world, req), method: 'put', class: 'approve'

@@ -1,6 +1,6 @@
 Minefold::Application.routes.draw do
-  root :to => 'home#index'
-  get  '/dashboard' => 'home#dashboard', :as => :user_root
+  root :to => 'pages#home'
+  get  '/dashboard' => 'accounts#dashboard', :as => :user_root
 
   # Admin
   get '/admin' => 'admin#index'
@@ -14,16 +14,15 @@ Minefold::Application.routes.draw do
   end
 
   # Static Pages
-  { '/plans'    => 'plans',     # TODO fix signed out plans page
-    '/features' => 'features',
-    '/about'    => 'about',
-    '/jobs'     => 'jobs',
-    '/contact'  => 'contact',
-    '/help'     => 'help',
-    '/privacy'  => 'privacy',
-    '/terms'    => 'terms'
+  { '/features' => :features,
+    '/about'    => :about,
+    '/jobs'     => :jobs,
+    '/contact'  => :contact,
+    '/help'     => :help,
+    '/privacy'  => :privacy,
+    '/terms'    => :terms
   }.each do |url, name|
-    get url => 'high_voltage/pages#show', :id => name, :as => "#{name}_page"
+    get url, :controller => 'pages',:action => name, :as => "#{name}_page"
   end
 
   # Authentication
@@ -46,11 +45,15 @@ Minefold::Application.routes.draw do
 
   # resources :orders
 
-  resource :account, :except => [:destroy] do
+  resource :account, :except => [:new, :edit, :destroy] do
     get :billing
+    get :card
+    put :plan, :action => :change_plan
   end
 
-  resources :users, :path => 'players', :only => :show
+  as :user do
+    resources :users, :path => 'players', :only => :show
+  end
 
   resources :worlds, :only => [:show, :edit, :update] do
 

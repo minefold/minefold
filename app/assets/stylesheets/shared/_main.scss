@@ -1,5 +1,5 @@
 .wrapper {
-  width: cols(8);
+  @include span(8);
   margin-left: auto;
   margin-right: auto;
 }
@@ -95,7 +95,8 @@ textarea {
   }
 
   &:focus {
-    border-color: $blue;
+    border-color: lighten($blue, 20%);
+    border-bottom-color: lighten($blue, 10%);
   }
 }
 
@@ -104,35 +105,57 @@ input[type=checkbox] + label, input[type=radio] + label {
 }
 
 button, input[type=submit], a.button {
+//  color: white;
+  display: block;
+//  width: cols(4) - (2*$gutter);
+//  float: left;
+//  margin: 0 ($gutter);
+//  padding: 0;
   margin: 0;
   border: none;
-  outline: none;
-  background-color: $blue;
-  color: white;
-  font: 600 12px/24px $helvetica;
-  cursor: pointer;
-  padding: ($line / 2) (2*$gutter);
-  margin-bottom: $line;
-  text-shadow: 0 1px 0 rgba(black, 0.2);
+  text-align: center;
+  padding: $line (4*$gutter);
+  @include box-sizing(border-box);
+  font-size: 16px;
+  background-color: lighten($blue, 30%);
+
+  text-shadow: 0 1px 0 rgba(white, 0.6);
+  color: darken($blue, 10%);
   text-decoration: none;
+  @include border-radius(24px);
+  @include linear-gradient(rgba(white, 0.4), rgba(white, 0));
+//    box-shadow: 0 1px 3px rgba(black, 0.4);
+  border-bottom: 1px solid lighten($blue, 40%);
 
-  &.muted {
-    background-color: darken(white, 10%);
-    color: darken(white, 60%);
-    text-shadow: 0 1px 0 rgba(white, 0.2);
-  }
+  box-shadow: 0 1px 1px rgba(black, 0.1);
 
-  &:hover, &:focus {
-    color: white;
-    background-color: darken($blue, 10%);
-    text-shadow: 0 1px 0 rgba(black, 0.2);
-  }
+  background-color: lighten($blue, 50%);
+  font-weight: 600;
+  font-family: $helvetica;
 
-  &:disabled {
-    background-color: darken(white, 5%);
-    text-shadow: 0 -1px 0 rgba(black, 0.2);
-    cursor: default;
-  }
+  &:hover {
+    color: black;
+    background-color: lighten($blue, 45%);
+    border-bottom-color: lighten($blue, 35%);
+  };
+//
+//  &.muted {
+//    background-color: darken(white, 10%);
+//    color: darken(white, 60%);
+//    text-shadow: 0 1px 0 rgba(white, 0.2);
+//  }
+//
+//  &:hover, &:focus {
+//    color: white;
+//    background-color: darken($blue, 10%);
+//    text-shadow: 0 1px 0 rgba(black, 0.2);
+//  }
+//
+//  &:disabled {
+//    background-color: darken(white, 5%);
+//    text-shadow: 0 -1px 0 rgba(black, 0.2);
+//    cursor: default;
+//  }
 }
 
 form {

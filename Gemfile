@@ -24,9 +24,6 @@ gem 'twitter'
 gem 'pusher'
 gem 'em-http-request'
 
-# Pages
-gem 'high_voltage'
-
 # Views
 gem 'haml'
 gem 'mustache'
@@ -34,8 +31,7 @@ gem 'bourbon'
 gem 'jquery-rails'
 gem 'backbone-rails'
 gem 'coffee-filter'
-gem 'decent_exposure', git: 'https://github.com/chrislloyd/decent_exposure.git'
-gem 'fancybox-rails'
+gem 'decent_exposure'
 
 # Uploads
 gem 'carrierwave'

@@ -11,7 +11,7 @@ class UsersController < ApplicationController
       User.new params[:user]
     end
   }
-  
+
   expose(:referrer) { User.first(conditions: {referral_code: cookies[:invite]}) if cookies[:invite] }
 
   def show
@@ -50,10 +50,6 @@ class UsersController < ApplicationController
     current_user.update_attributes! params[:user]
     redirect_to user_root_path
   end
-
-  # def upgrade
-  #   if user.save
-  # end
 
   # def search
   #   @results = User.where(username: /#{params[:q]}/i).limit(5).all

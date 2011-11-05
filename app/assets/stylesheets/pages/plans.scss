@@ -1,51 +1,38 @@
-#high-voltage-pages-show #page {
-  width: cols(8);
-
-  a.button {
-    color: white;
-  }
-}
-
-#plans {
-  color: rgba(black, 0.6);
-  text-align: center;
-  margin: (4*$line) 0;
-
-  p {
-    margin: 0;
-  }
-
-  strong {
-    color: #000;
-  }
-
-  table {
-    width: 100%;
-    margin: (2*$line) $gutter;
-    padding: (4*$line) 0;
-    width: span(8);
-
-    th {
-      padding-top: $line;
-      font-weight: bold;
-      font-size: 16px;
-      line-height: 24px;
-      color: #000;
-      border-bottom: 1px solid darken(white, 10%);
-    }
-
-    .price td {
-      color: black;
-    }
-
-    .buy {
-      color: rgba(black, 0.2);
-    }
-
-  }
-}
-
-#high-voltage-pages-show #plans table {
-  margin-left: 0;
-  margin-right: 0;
-}
+//#plans {
+//  color: rgba(black, 0.6);
+//  text-align: center;
+//  margin: (4*$line) 0;
+//  @include box-sizing(border-box);
+//  width: 100%;
+//
+//  p {
+//    margin: 0;
+//  }
+//
+//  strong {
+//    color: #000;
+//  }
+//
+//  table {
+//    width: 100%;
+//    padding: (4*$line) 0;
+//
+//    th {
+//      padding-top: $line;
+//      font-weight: bold;
+//      font-size: 16px;
+//      line-height: 24px;
+//      color: #000;
+//      border-bottom: 1px solid darken(white, 10%);
+//    }
+//
+//    .price td {
+//      color: black;
+//    }
+//
+//    .buy {
+//      color: rgba(black, 0.2);
+//    }
+//
+//  }
+//}

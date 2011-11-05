@@ -1,16 +1,4 @@
-@import 'shared';
-
 #worlds-show {
-  #before-page {
-    display: block;
-    float: none;
-    @include span(8);
-    margin-bottom: 4*$line;
-  }
-
-  #page {
-    @include span(6);
-  }
 
   #invite {
     background: lighten($blue, 50%);

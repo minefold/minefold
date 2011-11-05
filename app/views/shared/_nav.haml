@@ -10,8 +10,7 @@
   .pipe
 
   - if user_signed_in?
-    %li.buy
-      = link_to "#{format_time_left(current_user)} left", plans_page_path, class: 'button'
+    %li.buy= format_time_left(current_user)
 
     %li.account
       = link_to 'Account Settings', account_path

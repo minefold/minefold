@@ -41,20 +41,16 @@
     %section#masthead
       .wrapper= yield :masthead
 
-    %section#content
-      .wrapper
-        #before-page= yield :before
-        #page= yield
-        #after-page= yield :after
+    %section#before= yield :before
+
+    %section#page
+      .wrapper= yield
+
+    %section#after= yield :after
 
     %footer
       .wrapper
         %ul
-          %li
-            %a{href: 'http://flickr.com/photos/toolmantim/3451060043/'} Made in Sydney, Australia
-
-          .spaceball
-
           %li= link_to 'About', about_page_path
 
           .spaceball

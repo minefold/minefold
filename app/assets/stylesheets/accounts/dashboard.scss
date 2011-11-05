@@ -1,0 +1,202 @@
+#new-user-welcome {
+  margin: 0 0 (4*$line) 0;
+  padding: 0 (2*$gutter);
+  background: #FFC;//lighten($blue, 50%);
+  position: relative;
+  overflow: hidden;
+//  @include border-radius(2*$radius);
+  line-height: 24px;
+  color: desaturate(lighten($blue, 10%), 50%);
+
+  .heart {
+    position: absolute;
+    bottom: 18px;
+    right: 0;
+    font: 30px/24px $helvetica;
+    color: white;
+    font-size: 128px;
+  }
+
+  * { position: relative; z-index: 1;}
+  .heart { z-index: 0;}
+
+  h2 {
+    font: 900 18px/24px $helvetica;
+    font-weight: 1000;
+    color: darken($blue, 20%);
+    margin-bottom: 2*$line;
+  }
+
+  p {
+    padding-bottom: $line;
+  }
+
+  a {
+    color: darken($blue,10%);
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+      color: black;
+    }
+  }
+}
+
+#accounts-dashboard #before {
+//  width: 100%;
+//  width: cols(8);
+  overflow: auto;
+  padding: 4*$line 0;
+  border-bottom: 1px solid darken(white, 5%);
+
+  a.button {
+//    color: white;
+//    display: block;
+    width: cols(4) - (2*$gutter);
+    float: left;
+    margin: 0 ($gutter);
+    color: darken($blue, 10%);
+    @include edgeless;
+//    padding: 0;
+//    text-align: center;
+//    padding: $line $gutter;
+//    @include box-sizing(border-box);
+//    font-size: 16px;
+//    background-color: lighten($blue, 30%);
+//
+//    text-shadow: 0 1px 0 rgba(white, 0.6);
+//    color: darken($blue, 10%);
+//    @include border-radius(6px);
+//    @include linear-gradient(rgba(white, 0.4), rgba(white, 0));
+////    box-shadow: 0 1px 3px rgba(black, 0.4);
+//    border-bottom: 1px solid lighten($blue, 40%);
+//
+//    background-color: lighten($blue, 50%);
+//    @include edgeless;
+//    &:hover {
+//      color: black;
+//      background-color: lighten($blue, 45%);
+//      border-bottom-color: lighten($blue, 35%);
+//    };
+  }
+}
+
+////#home-dashboard {
+////  #page {
+////    @include span(5);
+////  }
+////
+////  #after-page {
+////    @include span(3);
+////  }
+//
+
+//
+//  .create {
+//    margin: 0;
+//    margin-bottom: 8*$line;
+//
+//      .button {
+//        display: inline;
+//        padding: $line (2*$gutter);
+//        color: white;
+//        margin-right: $gutter;
+//        margin-bottom: $line;
+//      }
+//  }
+//
+//  #after-page {
+//    .create {
+//      .button {
+//        text-align: center;
+//        display: block;
+//        margin: 0;
+//        margin-bottom: 2*$line;
+//      }
+//    }
+//  }
+//
+//  .worlds {
+//    h2 {
+//      margin-top: 0;
+//      margin-bottom: 2*$line;
+//    }
+//
+//    p {
+//      color: #666;
+//    }
+//
+//    li {
+//      border-bottom: 1px solid darken(white, 10%);
+//
+//      a {
+//        color: $blue;
+//        display: block;
+//        line-height: 4*$line;
+//        padding: $line;
+//        text-decoration: none;
+//        padding: $line $gutter;
+//        padding-bottom: $line - 1px;
+//
+//        .user {
+//          color: rgba(black, 0.4);
+//        }
+//        .slash {
+//          color: rgba(black, 0.2);
+//        }
+//      }
+//
+//      &:hover {
+//        background: lighten($blue, 50%);
+//        border-bottom-color: lighten($blue, 40%);
+//        a {
+//          color: darken($blue, 10%);
+//        }
+//      }
+//
+//      &:last-child {
+//        border-bottom: none;
+//        a {padding-bottom: $line;}
+//      }
+//
+//      &.active {
+//        background: $green;
+//        border-bottom-color: darken($green, 10%);
+//        text-shadow: 0 (-1px) 0 rgba(black, 0.1);
+//
+//        a {
+//          color: white;
+//          color: lighten($green, 40%);
+//        }
+//        .user {
+//          color: rgba(white, 0.6);
+//        }
+//
+//        .slash {
+//          color: rgba(white, 0.4);
+//        }
+//        .playing {
+//          float: right;
+//          font-weight: 600;
+//          color: lighten($green, 40%);
+//          text-shadow: 0 (-1px) 0 rgba(black, 0.2);
+//        }
+//        &:hover {
+//          border-bottom-color: darken($green, 20%);
+//          background-color: darken($green, 10%);
+//        }
+//      }
+//
+//
+//      .players {
+//        display: inline;
+//        float: right;
+//        margin-left: $gutter;
+//        color: #CCC;
+//        font-size: 12px;
+//      }
+//
+//    }
+//  }
+//
+//}

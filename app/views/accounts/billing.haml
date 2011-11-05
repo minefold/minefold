@@ -1,35 +1,35 @@
 = render partial: 'header'
 = render partial: 'plan'
 
+#card
+  = image_tag 'card.png'
+  - if current_user.card.nil?
+    %p No card on file
+  - else
+    %p
+      %strong Card on file:
+      = current_user.card.type
+
+
 #plans
   %table
     %thead
-      %tr.name
-        %th.free Free
-        %th.casual Casual
-        %th.hardcore Crafter
-        %th.pro Pro
-    %tbody
-      %tr.price
-        %td.free Free
-        %td.casual $3.95 / mo
-        %td.hardcore $7.95 / mo
-        %td.pro $11.95 / mo
-      %tr.hours
-        %td.free 4 hrs / mo
-        %td.casual 40 hrs / mo
-        %td.hardcore 80 hrs / mo
-        %td.pro 160 hrs / mo
-      %tr.worlds
-        %td.free 1 world
-        %td.casual 5 worlds
-        %td.hardcore 10 worlds
-        %td.pro 40 worlds
-      %tr.buy
-        - Plan.all.each do |plan|
-          %td
-            - if current_user.plan != plan.stripe_id
-              / %a.button{href: new_order_path(plan: plan.stripe_id)}= plan_change_action current_user, plan
-            - else
-              (Current Plan)
+      %tr
+        %th
+        %th Price
+        %th Hours / mo
+        %th Worlds
 
+    %tbody
+      - Plan.all.sort_by {|plan| plan.price}.reverse.each do |plan|
+        %tr{class: plan.stripe_id}
+          %th.name= plan.name
+          %td.price= number_to_currency(plan.price.to_f / 100)
+          %td.hours= plan.credits / 60
+          %td.worlds= plan.worlds
+          %td.change
+            - if current_user.plan == plan.stripe_id
+              Current plan
+            - else
+              - action = plan_change_action(current_user, plan)
+              = button_to action, plan_account_path(plan_id: plan.stripe_id), method: :put, confirm: "Are you sure you want to #{action.downcase}?", class: 'button'

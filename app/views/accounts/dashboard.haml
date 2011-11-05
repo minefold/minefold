@@ -1,0 +1,30 @@
+- title  'Dashboard'
+
+- if true #current_user_needs_help?
+  #new-user-welcome
+    .heart &hearts;
+    %h2
+      Hi #{current_user.username},
+    %p
+      %em It's great to see you.
+      If you <em>haven't</em> played Minecraft before or are new to multiplayer we have a #{link_to 'short guide to help you get started', help_page_path}. If you are ready to jump in and start playing you can either create a new world or upload one of your single player worlds.
+    %p Don't hesitate to tell us if you have any problems at #{mail_to 'feedback@minefold.com'}.
+
+- before do
+  .wrapper
+    = link_to 'Create a new world', new_world_path, class: ['new', 'button']
+    = link_to 'Upload an existing world',new_upload_path,class:['import','button']
+
+#switch-worlds
+  - if current_user.worlds.empty?
+    %p
+      %strong Sad panda.
+      You don't have any worlds you can play in. You can either #{link_to 'create one', new_world_path} or #{link_to 'upload an existing world', upload_path}.
+  - else
+    %ul
+      - current_user.worlds.each do |world|
+        %li{class: (current_user.current_world == world ? 'active' : nil)}
+          = link_to world do
+            - if world == current_user.current_world
+              .playing Playing here &rarr;
+            %strong= world.name

@@ -7,7 +7,6 @@
 #= require jquery.placeholder
 #= require jquery.infinitescroll
 #= require jquery.autocomplete
-#= require fancybox
 #= require ./templates
 #= require_self
 #= require_tree .

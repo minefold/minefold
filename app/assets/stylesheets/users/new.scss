@@ -1,10 +1,9 @@
 #users-new, #users-create {
-  #page, #after-page {
-    @include span(4);
+  #page {
 
     form {
       input[type=email], input[type=text], input[type=password] {
-        width: 100%;
+        width: cols(4);
       }
 
       .errors p.stripe {

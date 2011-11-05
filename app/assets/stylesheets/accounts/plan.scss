@@ -1,34 +1,15 @@
 #plan {
   overflow: auto;
-  border-bottom: 1px solid #CCC;
+  border-bottom: 1px solid darken(white, 5%);
+  padding-top: 4*$line;
   padding-bottom: 4*$line;
-  margin-bottom: 4*$line;
-  width: cols(8);
 
   section {
     float: left;
-    width: 33.3%;
-  }
+    margin: 0 $gutter;
+    @include edgeless;
+    width: cols(2) - (2*$gutter);
 
-  .description {
-    font-size: 12px;
-    color: #666;
-    width: cols(4);
-
-    em {
-      display: block;
-      color: #000;
-      font-size: 16px;
-      font-weight: 600;
-    }
-  }
-
-  .hours, .worlds {
-    width: cols(2);
-    margin: 0  $gutter;
-  }
-
-  section {
     font-size: 12px;
     line-height: 18px;
     color: #666;
@@ -47,6 +28,19 @@
         overflow: hidden;
         line-height: 10px;
       }
+    }
+  }
+
+  .description {
+    font-size: 12px;
+    color: #666;
+    width: cols(4) - (2*$gutter);
+
+    strong {
+      display: block;
+      color: #000;
+      font-size: 18px;
+      margin-bottom: $line;
     }
   }
 

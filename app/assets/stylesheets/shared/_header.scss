@@ -23,24 +23,33 @@ header {
 
     a {
       display: block;
-      color: #000;
+      color: darken($blue, 10%);
       text-decoration: none;
       float: left;
+
+      position: relative;
 
       margin: (-$line) 0;
       padding: $line ($gutter/2) $line (27px + $gutter);
       background: url(image-path('logo-24.png')) center left no-repeat;
 
       &:hover {
-        color: $blue;
+        color: black;
       }
     }
 
     .beta {
-      color: darken(white, 20%);
+      display: block;
+      color: darken(white, 40%);
       font-weight: 400;
       margin-left: 0.5em;
       font-size: 12px;
+
+      position: absolute;
+      line-height: 12px;
+      font-size: 9px;
+      bottom: 0;
+      right: $gutter/2;
     }
   }
 
@@ -61,7 +70,7 @@ header {
         color: darken($blue, 10%);
         text-decoration: none;
         &:hover {
-          color: $blue;
+          color: black;
         }
       }
 
@@ -71,18 +80,13 @@ header {
         font-weight: 600;
       }
 
-      .buy a {
-        padding: ($line/2) ($gutter/2);
+      .buy {
+        padding-left: 18px + ($gutter/2);
         font-weight: 400;
-        background-color: lighten($blue, 50%);
+        background: url(image-path('clock.png')) ($gutter/2) center no-repeat;
         @include border-radius(6px);
-        color: darken($blue, 10%);
+        color: lighten($blue, 10%);
         text-shadow: 0 1px 0 rgba(white, 0.4);
-        &:hover {
-          background-color: lighten($blue, 50%);
-          color: $blue;
-          text-shadow: none;
-        }
       }
 
       .profile img {
