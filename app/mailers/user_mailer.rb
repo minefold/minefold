@@ -20,11 +20,16 @@ class UserMailer < ActionMailer::Base
     @user = User.find user_id
     mail(to: @user.email, subject: 'Buy more Minefold time (running low)')
   end
-
+  
   # TODO
   def thanks(order_id)
     # @order = Order.find(order_id)
     # mail(to: @order.user.email, subject: 'Thank you for buying Minefold minutes!')
+  end
+  
+  # TODO
+  def payment_failed user_id
+    
   end
 
   class Preview < MailView

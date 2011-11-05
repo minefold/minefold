@@ -14,7 +14,7 @@ RSpec.configure do |config|
   
   config.before(:each) do
     DatabaseCleaner.start
-    Stripe::Customer.stub(:create) { Struct.new(:id).new('stripe_id') }
+    
   end
 
   config.after(:each) do
@@ -25,3 +25,41 @@ RSpec.configure do |config|
 end
 
 
+def expect_stripe_create user, plan, next_charge_date = '2011-12-04'
+  Stripe::Customer.should_receive(:create).with(
+    description: user.customer_description,
+          email: user.email,
+           plan: plan.stripe_id,
+         coupon: nil,
+           card: 'tok_12345'
+  ) { Struct.new(:id, :next_recurring_charge).new('cus_1', Struct.new(:date, :amount).new(next_charge_date, plan.price)) }
+end
+
+def expect_stripe_update user, plan, next_charge_date = '2011-12-04'
+  customer = double("Stripe::Customer")
+  customer.stub(:next_recurring_charge) { Struct.new(:date, :amount).new(next_charge_date, plan.price) }
+  
+  Stripe::Customer.should_receive(:retrieve).with(user.stripe_id) { customer }
+  
+  customer.should_receive(:update_subscription).with(
+        plan: plan.stripe_id,
+      coupon: user.coupon,
+        card: user.stripe_token,
+     prorate: false
+  )
+end
+
+def expect_stripe_charge user, amount 
+  Stripe::Charge.should_receive(:create).with(
+    :amount => amount,
+    :currency => "usd",
+    :customer => user.stripe_id,
+    :description => "Minefold.com Fun plan"
+  )
+end
+
+def set_plan user, plan
+  expect_stripe_create user, Plan.pro
+  user.plan = Plan.pro.stripe_id
+  user.stripe_token = 'tok_12345'
+end

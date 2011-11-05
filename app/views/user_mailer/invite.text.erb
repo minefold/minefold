@@ -2,6 +2,6 @@ Hey there!
 
 <%= @invitor.username %> wants you to play with them in “<%= @world.name %>” on Minefold.
 
-Head to <%= user_world_url(@world.creator.slug, @world.slug, i: @invitor.referral_code) %>
+Head to <%= world_url(@world.slug, i: @invitor.referral_code) %>
 
 to get started!

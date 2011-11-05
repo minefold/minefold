@@ -77,5 +77,7 @@ Minefold::Application.routes.draw do
     resource :invite, :only => :create
 
   end
+  
+  post '/stripe/webhook' => 'stripe#webhook'
 
 end
