@@ -5,39 +5,67 @@
     .wrapper
       %section.casual
         %h3 Casual
-        pre-paid time
+        %p
+          pre-paid time
+          %br
+          %br
+
+        = form_tag customer_unsubscribe_path, method: :delete do
+          - if current_user.casual?
+            %button{disabled: true} Current plan
+          - else
+            %button Downgrade
+
       %section.small
         %h3 Small
         %p 40 hours every month
-        %P
+        %p
           = number_to_currency 4.95
           \/ mo
 
-        = form_tag customer_subscription_path, method: :put do
+        = form_tag customer_subscribe_path, method: :put do
           = hidden_field_tag :plan_id, 'small'
-          %button Upgrade
+          - case plan_change_action(current_user.plan_id, 'small')
+          - when :upgrade
+            %button Upgrade
+          - when :downgrade
+            %button Downgrade
+          - else
+            %button{disabled: true} Current plan
 
       %section.medium
         %h3 Medium
         %p 100 hours every month
-        %P
+        %p
           = number_to_currency 9.95
           \/ mo
 
-        = form_tag customer_subscription_path, method: :put do
+        = form_tag customer_subscribe_path, method: :put do
           = hidden_field_tag :plan_id, 'medium'
-          %button Upgrade
+          - case plan_change_action(current_user.plan_id, 'medium')
+          - when :upgrade
+            %button Upgrade
+          - when :downgrade
+            %button Downgrade
+          - else
+            %button{disabled: true} Current plan
 
       %section.large
         %h3 Large
         %p 260 hours every month
-        %P
+        %p
           = number_to_currency 19.95
           \/ mo
 
-        = form_tag customer_subscription_path, method: :put do
+        = form_tag customer_subscribe_path, method: :put do
           = hidden_field_tag :plan_id, 'large'
-          %button Upgrade
+          - case plan_change_action(current_user.plan_id, 'large')
+          - when :upgrade
+            %button Upgrade
+          - when :downgrade
+            %button Downgrade
+          - else
+            %button{disabled: true} Current plan
 
 = image_tag 'card.png'
 - if current_user.card.nil?

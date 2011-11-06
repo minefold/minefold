@@ -1,13 +1,22 @@
 module PlansHelper
 
-  def plan_change_action user, new_plan
-    old_plan = Plan.find(user.plan)
+  def plan_change_action(current_plan, new_plan)
+    prices = {
+      'small' => 495,
+      'medium' => 995,
+      'large' => 1995
+    }
+
+    current_price = prices[current_plan] || 0
+    new_price     = prices[new_plan]
 
     case
-    when old_plan.price < new_plan.price
+    when current_price < new_price
       :upgrade
-    when old_plan.price > new_plan.price
+    when current_price > new_price
       :downgrade
+    else
+      nil
     end
   end
 

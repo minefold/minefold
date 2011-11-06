@@ -37,12 +37,18 @@ class StripeController < ApplicationController
     redirect_to billing_account_path
   end
 
-  def subscription
-    current_user.plan_id = params[:plan_id]
-    current_user.save
+  def subscribe
+    current_user.update_attribute :plan_id, params[:plan_id]
 
     redirect_to billing_account_path
   end
+
+  def unsubscribe
+    current_user.update_attribute :plan_id, nil
+
+    redirect_to billing_account_path
+  end
+
 
   # Processes Stripe webhooks
   def webhook
