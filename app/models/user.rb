@@ -26,6 +26,8 @@ class User
 
   field :stripe_id,       type: String
   field :plan_id,         type: String
+  field :failed_payment_attempts, type: Integer
+  field :last_failed_payment_at,  type: DateTime
 
   embeds_one :card
 
@@ -193,7 +195,24 @@ class User
   rescue RestClient::Exception
     return false
   end
+  
+  def buy_hours! hours, amount
+    # The order is important here. If the charge fails for some reason we
+    # don't want the credits to be applied.
+    create_charge! amound
+    increment_hours! hours
+  end
 
+  def recurring_payment_succeeded! plan_id
+    # TODO check to see if plan has changed
+    increment_hours! Plan.find(plan_id).hours
+  end
+  
+  def recurring_payment_failed! attempt
+    self.failed_payment_attempts = attempt
+    self.last_failed_payment_at = Time.now
+    save!
+  end
 
 
 # CREDITS

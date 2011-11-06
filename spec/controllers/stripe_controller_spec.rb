@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe StripeController do
-  let(:user) do 
-    build(:user).tap {|u| set_plan u, Plan.pro }
+  let(:user) do
+    build(:user).tap {|u| set_plan u, Plan.large }
   end
   
   describe '#webhook' do
@@ -13,7 +13,16 @@ describe StripeController do
         user.credits = 200
         user.save!
           
-        post :webhook, customer: 'cus_1', event: 'recurring_payment_succeeded'
+        post :webhook, customer: 'cus_1', event: 'recurring_payment_succeeded',
+                                        invoice: {
+                                          lines: {
+                                            subscriptions: [{
+                                              plan: {
+                                                id: "medium"
+                                              }
+                                            }]
+                                          }
+                                        }
         
         user.reload.credits.should be > 200
       end
@@ -36,7 +45,7 @@ describe StripeController do
       end
       
       it "should set flag on user" do
-        user.reload.last_payment_succeeded.should == false
+        user.reload.failed_payment_attempts.should == 1
       end
     end
   end

@@ -32,11 +32,7 @@ class StripeController < ApplicationController
   # Creates a charge  new customer/plan from the given tokens
   def charge
     # TODO: Check that the hours exist in AMOUNTS
-
-    # The order is important here. If the charge fails for some reason we
-    # don't want the credits to be applied.
-    current_user.create_charge! AMOUNTS[params[:hours]]
-    current_user.increment_hours! params[:hours].to_i
+    current_user.buy_hours! params[:hours].to_i, AMOUNTS[params[:hours]]
 
     redirect_to time_account_path
   end
@@ -65,14 +61,17 @@ private
   def recurring_payment_succeeded_hook(params)
     # # TODO
     # UserMailer.invoice(@user.id, @invoice.id).deliver!
-    @user.renew_subscription!
+    subscriptions = params['invoice']['lines']['subscriptions']
+    plan_id = subscriptions.first['plan']['id']
+    
+    @user.recurring_payment_succeeded! plan_id
 
     render nothing: true, status: :success
   end
 
   def recurring_payment_failed_hook(params)
-    @user.last_payment_succeeded = false
-    @user.save!
+    
+    @user.recurring_payment_failed! params['attempt'].to_i
 
     UserMailer.payment_failed(@user.id).deliver!
 
