@@ -117,9 +117,9 @@ button, input[type=submit], a.button {
   color: darken($blue, 10%);
   text-decoration: none;
   line-height: 18px;
-  @include border-radius(24px);
+  @include border-radius(48px);
   @include linear-gradient(rgba(white, 0.4), rgba(white, 0));
-//    box-shadow: 0 1px 3px rgba(black, 0.4);
+
   border-top: 1px solid lighten($blue, 60%);
   border-bottom: 1px solid lighten($blue, 40%);
 

@@ -51,13 +51,12 @@
       .free {
         font-size: 12px;
         line-height: 18px;
-        color: rgba($blue, 0.4);
+        color: rgba($blue, 0.5);
+        font-weight: 400;
       }
 
       strong {
-        background: rgba(#FFC, 0.5);
-//        color: rgba(black, 0.6);
-        padding: 0 2px;
+        font-weight: 500;
       }
     }
   }
