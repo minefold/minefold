@@ -4,19 +4,18 @@ class WorldMailer < ActionMailer::Base
   default from: 'team@minefold.com'
   layout 'email'
 
-  def play_request(world_id, owner_id, user_id)
-    @world = World.find(world_id)
-    @owner = User.find(owner_id)
-    @user = User.find(user_id)
+  def play_request world_id, requestor_id
+    @world     = World.find(world_id)
+    @owner     = @world.creator
+    @requestor = User.find(requestor_id)
 
     mail   to: @owner.email,
-      subject: "#{@user.username} would like to play in #{@world.name}"
+      subject: "#{@requestor.username} would like to play in #{@world.name}"
   end
 
   class Preview < MailView
     def play_request
       ::WorldMailer.play_request(World.default.id,
-                                 World.default.owner.id,
                                  User.dave.id)
     end
   end
