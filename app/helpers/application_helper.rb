@@ -11,13 +11,6 @@ module ApplicationHelper
     {style: 'display:none'}
   end
 
-  def format_time_left user
-    hours = (user.credits * User::BILLING_PERIOD) / 1.hour
-    minutes = user.credits - (hours * (1.hour / User::BILLING_PERIOD))
-
-    "%02dh %02d'" % [hours, minutes]
-  end
-
   def template(name, options)
     view = Mustache.new
     view.template_name = name.to_sym

@@ -80,13 +80,17 @@ header {
         font-weight: 600;
       }
 
-      .buy {
+      .time a {
         padding-left: 18px + ($gutter/2);
         font-weight: 400;
-        background: url(image-path('clock.png')) ($gutter/2) center no-repeat;
+        background: url(image-path('clock.png')) left -1px no-repeat;
         @include border-radius(6px);
         color: lighten($blue, 10%);
         text-shadow: 0 1px 0 rgba(white, 0.4);
+        font-weight: 500;
+        &:hover {
+          color: black;
+        }
       }
 
       .profile img {

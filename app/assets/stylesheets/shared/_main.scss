@@ -105,12 +105,6 @@ input[type=checkbox] + label, input[type=radio] + label {
 }
 
 button, input[type=submit], a.button {
-//  color: white;
-  display: block;
-//  width: cols(4) - (2*$gutter);
-//  float: left;
-//  margin: 0 ($gutter);
-//  padding: 0;
   margin: 0;
   border: none;
   text-align: center;
@@ -122,9 +116,11 @@ button, input[type=submit], a.button {
   text-shadow: 0 1px 0 rgba(white, 0.6);
   color: darken($blue, 10%);
   text-decoration: none;
+  line-height: 18px;
   @include border-radius(24px);
   @include linear-gradient(rgba(white, 0.4), rgba(white, 0));
 //    box-shadow: 0 1px 3px rgba(black, 0.4);
+  border-top: 1px solid lighten($blue, 60%);
   border-bottom: 1px solid lighten($blue, 40%);
 
   box-shadow: 0 1px 1px rgba(black, 0.1);
@@ -133,11 +129,28 @@ button, input[type=submit], a.button {
   font-weight: 600;
   font-family: $helvetica;
 
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+    background-color: lighten($blue, 45%);
+    border-top-color: lighten($blue, 55%);
+    border-bottom-color: lighten($blue, 35%);
+  }
+
   &:hover {
     color: black;
     background-color: lighten($blue, 45%);
+    border-top-color: lighten($blue, 55%);
     border-bottom-color: lighten($blue, 35%);
   };
+
+  &:disabled {
+    color: darken(white, 15%);
+    background-color: darken(white, 5%);
+    border-bottom-color: darken(white, 10%);
+    cursor: default;
+  }
 //
 //  &.muted {
 //    background-color: darken(white, 10%);

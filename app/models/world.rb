@@ -32,6 +32,7 @@ class World
 
 # VALIDATIONS
 
+  validates_uniqueness_of :name
   validates_presence_of :name
   validates_numericality_of :game_mode,
     only_integer: true,

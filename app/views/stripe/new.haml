@@ -1,0 +1,99 @@
+- title 'Billing Details'
+
+- head do
+  %script{src: 'https://js.stripe.com/v1'}
+  :coffeescript
+    Stripe.setPublishableKey #{ENV['STRIPE_PUBLISHABLE'].to_json}
+
+
+
+%section.card-number
+  = label_tag :number, 'Card Number'
+  = text_field_tag :number, '', name: nil, size: 20, autocomplete: 'off', class: %w{stripe number}, id: 'stripe-number'
+
+
+%p.card-types
+  We accept <span class="visa">Visa</span>, <span class="mastercard">MasterCard</span>, <span class="american-express">American Express</span>, <span class="discover">Discover</span>, <span class="jcb">JCB</span> and <span class="diners-club">Diners Club</span>.
+
+:coffeescript
+  $('input.stripe.number').keyup (e) ->
+    target = $(e.target)
+    cardType = Stripe.cardType(target.val())
+      .toLowerCase()
+      .replace(/\s/,'-')
+
+    $('.card-types span')
+      .toggleClass('unknown', cardType isnt 'unknown')
+      .removeClass('active')
+      .filter(-> $(@).hasClass(cardType))
+      .addClass('active')
+
+%section.card-cvc
+  = label_tag :cvc, 'CVC'
+  = text_field_tag :cvc, '', name: nil, size: 4, autocomplete: 'off', class: %w{stripe cvc}, id: 'stripe-cvc'
+
+%section.card-expiration
+  = label_tag :expiry_month, 'Expiration (MM/YYYY)'
+  = text_field_tag :expiry_month, '', name: nil, size: 2, class: %w{stripe expiry-month}, id: 'stripe-exp-month'
+  %span /
+  = text_field_tag :expiry_year, '', name: nil, size: 4, class: %w{stripe expiry-year}, id: 'stripe-exp-year'
+
+  :coffeescript
+    # Skip to the next field
+
+    $('input.stripe.expiry-month').keyup (e) ->
+      return unless 48 <= e.keyCode <= 57
+
+      target = $(e.target)
+      $('input.stripe.expiry-year').focus() if target.val().length is parseInt(target.attr('size'), 10)
+
+%a#secured-by{href: 'https://stripe.com', target: '_blank'}
+  Secured by
+  = image_tag 'stripe.png', width: 72, height: 31
+
+= form_tag nil, :id => 'new_order' do
+
+  - if params[:plan_id]
+    = hidden_field_tag :plan_id, params[:user][:plan_id]
+  - elsif params[:hours]
+    = hidden_field_tag :hours, params[:hours]
+
+
+  %button Continue
+
+
+
+:coffeescript
+  form = $('form#new_order')
+
+  form.submit (e) ->
+    e.preventDefault()
+
+    form.find('button').attr(disabled: true)
+    form.find('.spinner').show()
+
+    card =
+      number:    $('#stripe-number').val()
+      cvc:       $('#stripe-cvc').val()
+      exp_month: $('#stripe-exp-month').val()
+      exp_year:  $('#stripe-exp-year').val()
+
+
+    Stripe.createToken card, #{@amount.to_i.to_json}, (status, response) ->
+      if status isnt 200
+        form.find('input[type=submit]').attr(disabled: false)
+        form.find('.spinner').hide()
+
+        $('<p></p>')
+          .addClass('stripe')
+          .text(response.error.message)
+          .appendTo form.find('.errors').empty()
+
+      else
+        token = response.id
+        $('<input></input>')
+          .attr(type: 'hidden', name: 'stripe_token')
+          .val(token)
+          .appendTo(form)
+
+        form.get(0).submit()

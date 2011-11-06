@@ -38,7 +38,7 @@
   }
 }
 
-#accounts-show .overview,
-#accounts-billing .billing {
+#accounts-show #masthead nav .overview,
+#accounts-time #masthead nav .time {
   @include active-masthead-menu;
 }

@@ -18,7 +18,7 @@ class WorldsController < ApplicationController
       current_user.current_world = world
       current_user.save
       flash[:new] = true
-      redirect_to user_world_path(world.creator, world)
+      redirect_to world_path(world)
     else
       render :new
     end

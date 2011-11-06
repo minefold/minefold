@@ -43,12 +43,16 @@ Minefold::Application.routes.draw do
     get :policy
   end
 
-  # resources :orders
+  controller :stripe, :path => 'order', :as => :customer do
+    get :new
+    post :charge
+    put :subscription
+  end
 
   resource :account, :except => [:new, :edit, :destroy] do
-    get :billing
+    get :time
     get :card
-    put :plan, :action => :change_plan
+    # put :plan, :action => :change_plan
   end
 
   as :user do
@@ -77,7 +81,7 @@ Minefold::Application.routes.draw do
     resource :invite, :only => :create
 
   end
-  
+
   post '/stripe/webhook' => 'stripe#webhook'
 
 end

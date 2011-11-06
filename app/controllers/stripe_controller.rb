@@ -6,36 +6,53 @@ class StripeController < ApplicationController
     recurring_payment_succeeded
     subscription_trial_ending
     subscription_final_payment_attempt_failed
-    ping)
+    ping
+  )
+
+  # TODO: Refactor
+  AMOUNTS = {
+    '10'  => 295,
+    '40'  => 795,
+    '120' => 1195,
+    'small' => 495,
+    'medium' => 995,
+    'large' => 1995
+  }
 
   protect_from_forgery except: [:webhook]
+
+  respond_to :html
 
   # Renders page that gets the card token
   def new
   end
 
-  # Creates a new customer/plan from the given tokens
-  def create
-    current_user.stripe_token = params[:stripe_token]
-    current_user.plan = params[:plan]
-    current_user.save
+  before_filter :require_customer!, only: [:charge, :subscription]
 
-    respond_with current_user
+  # Creates a charge  new customer/plan from the given tokens
+  def charge
+    # TODO: Check that the hours exist in AMOUNTS
+
+    # The order is important here. If the charge fails for some reason we
+    # don't want the credits to be applied.
+    current_user.create_charge! AMOUNTS[params[:hours]]
+    current_user.increment_hours! params[:hours].to_i
+
+    redirect_to time_account_path
   end
 
-  # Handles any changes to plans
-  def update
-    current_user.plan = params[:plan]
+  def subscription
+    current_user.plan_id = params[:plan_id]
     current_user.save
 
-    respond_with current_user
+    redirect_to time_account_path
   end
 
   # Processes Stripe webhooks
   def webhook
     event = params.delete(:event)
     customer_id = params.delete(:customer)
-    
+
     if EVENTS.include?(event) && @user = User.by_stripe_id(customer_id).first
       send("#{event}_hook", params)
     else
@@ -49,14 +66,14 @@ private
     # # TODO
     # UserMailer.invoice(@user.id, @invoice.id).deliver!
     @user.renew_subscription!
-    
+
     render nothing: true, status: :success
   end
 
   def recurring_payment_failed_hook(params)
     @user.last_payment_succeeded = false
     @user.save!
-    
+
     UserMailer.payment_failed(@user.id).deliver!
 
     render nothing: true, status: :success

@@ -1,10 +1,15 @@
 - masthead do
   %h1 Play Minecraft with your friends
 
-  %p
+  %h2
     We've made it fast and easy.
 
-  = link_to 'Start playing now for free', new_user_path, class: 'button'
+  = link_to new_user_path, class: 'button' do
+    Start playing now
+    .free
+      Try it out for
+      %strong 4 hours free
+
 
 #plans
   %table
@@ -36,8 +41,8 @@
     %p We do it all for you. No servers, RAM, Java or SSH. <strong>No more mumbojumbo</strong>. Just sign up and start playing, grasshopper.
 
   %li.feature
-    %h2 Pay for yourself
-    %p <strong>Don't pay for Frank</strong> who faked a sickie and played for a week straight. Sign up for a plan that suits <em>your</em> habits, not Frank's habit.
+    %h2 Prepay, personally
+    %p <strong>Don't pay for Frank</strong> who faked a sickie and played for a week straight. Pay for a plan that suits <em>your</em> habits, not Frank's habit.
 
   %li.feature
     %h2 Show off

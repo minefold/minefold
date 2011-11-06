@@ -1,32 +1,15 @@
 - before do
   #plan
     .wrapper
-      - plan = Plan.find(current_user.plan)
       %section.description
-        %dl
-          %dt
-            %strong= plan.name
-            = number_to_currency(plan.price / 100)
-            per month
+        - if current_user.casual?
+          %strong Casual
+          pre-pay for time
+        - else
+          %strong= current_user.plan_id
+          = number_to_currency 19.95
+          each month
 
-      %section.hours
-        %dl
-          %dt.numbers
-            = current_user.minutes_played.minutes / 1.hour
-            \/
-            = current_user.total_credits.minutes / 1.hour
-          %dt hours this month
-          %dd
-            - percent = current_user.minutes_played / current_user.total_credits.to_f * 100
-            %span{style: "width:#{percent}%"} #{percent}%
-
-      %section.worlds
-        %dl
-          %dt.numbers
-            = current_user.created_worlds.length
-            \/
-            = plan.worlds
-          %dt worlds
-          %dd
-            - percent = current_user.created_worlds.length / plan.worlds.to_f * 100
-            %span{style: "width:#{percent}%"} #{percent}%
+      - unless current_page?(action: :time)
+        %section.buy
+          = link_to 'Buy time', time_account_path

@@ -5,6 +5,10 @@ class User
   include Mongoid::Paranoia
 
   BILLING_PERIOD = 1.minute
+  FREE_HOURS  = 4
+
+  REFERRAL_CODE_LENGTH = 6
+  REFERRAL_HOURS = 2
 
   field :email,          type: String
   field :username,       type: String
@@ -13,7 +17,7 @@ class User
 
   field :host,           default: 'pluto.minefold.com'
 
-  field :credits,        type: Integer, default: Plan::DEFAULT.credits
+  field :credits,        type: Integer, default: (FREE_HOURS.hours / BILLING_PERIOD)
   field :minutes_played, type: Integer, default: 0
   embeds_many :credit_events
 
@@ -21,18 +25,13 @@ class User
   attr_accessor :coupon
 
   field :stripe_id,       type: String
-  field :plan,            type: String, default: Plan::DEFAULT.stripe_id
-  field :next_recurring_charge_date,   type: Date
-  field :next_recurring_charge_amount, type: Integer
-  field :last_payment_succeeded, type: Boolean
-  embeds_one :card
+  field :plan_id,         type: String
 
-  CODE_LENGTH = 6
-  REFERRAL_HOURS = 2
+  embeds_one :card
 
   field :referral_code,   type: String, default: -> {
     begin
-      c = rand(36 ** CODE_LENGTH).to_s(36).rjust(CODE_LENGTH, '0').upcase
+      c = rand(36 ** REFERRAL_CODE_LENGTH).to_s(36).rjust(REFERRAL_CODE_LENGTH, '0').upcase
     end while self.class.where(code: c).exists?
     c
   }
@@ -50,34 +49,35 @@ class User
                           class_name: 'World'
   attr_accessor :email_or_username
 
-  FREE_HOURS = Plan.free.hours
+  # FREE_HOURS = Plan.free.hours
 
 # Finders
 
   index :email, unique: true
-
-  def self.by_email(email)
+  scope :by_email, ->(email) {
     where(email: sanitize_email(email))
-  end
+  }
 
   index :safe_username, unique: true
-
-  def self.by_username(username)
+  scope :by_username, ->(username) {
     where(safe_username: sanitize_username(username))
-  end
-
-  def self.by_email_or_username(str)
+  }
+  scope :by_email_or_username, ->(str) {
     any_of(
       {safe_username: sanitize_username(str)},
       {email: sanitize_email(str)}
     )
-  end
+  }
 
   index :stripe_id, unique: true
-
-  def self.by_stripe_id(stripe_id)
+  scope :by_stripe_id, ->(stripe_id) {
     where(stripe_id: stripe_id)
-  end
+  }
+
+  index :plan_id
+  scope :by_plan_id, ->(plan_id) {
+    where(plan_id: plan_id)
+  }
 
 
 # Validations
@@ -88,7 +88,7 @@ class User
   validates_confirmation_of :password
   validates_numericality_of :credits
   validates_numericality_of :minutes_played, greater_than_or_equal_to: 0
-  validates_inclusion_of :plan, in: Plan.stripe_ids, allow_blank: true
+  # validates_inclusion_of :plan, in: Plan.stripe_ids, allow_blank: true
 
 
 # Security
@@ -96,9 +96,7 @@ class User
   attr_accessible :email,
                   :username,
                   :password,
-                  :password_confirmation,
-                  :plan, # TODO: Think more about the security implications of this.
-                  :invite
+                  :password_confirmation
 
   attr_accessible :stripe_token,
                   :email_or_username,
@@ -106,8 +104,8 @@ class User
 
 # Plans
 
-  def free?
-    plan == 'free'
+  def casual?
+    not plan_id?
   end
 
   def customer?
@@ -118,127 +116,108 @@ class User
     [id, safe_username].join('-')
   end
 
-  def has_card?
-    not card == nil
-  end
-  
-  before_save do
-    change_plan! if plan_changed?
-  end
-  
-  def renew_subscription!
-    self.credits = plan_credits
-    save!
-  end
-  
-  def change_plan!
-    if customer?
-      update_subscription!
-    else
-      create_stripe_customer!
-    end
-  end
-  
-  def create_stripe_customer!
-    options = {
-      description: customer_description,
-            email: email,
-             plan: plan,
-           coupon: coupon,
-             card: stripe_token
-    }
-
-    stripe_customer = Stripe::Customer.create(options)
-    
-    self.stripe_id = stripe_customer.id
-    self.next_recurring_charge_date   = Time.parse stripe_customer.next_recurring_charge.date
-    self.next_recurring_charge_amount = stripe_customer.next_recurring_charge.amount
-    self.credits = [credits, Plan.find(plan).credits].max
+  def card?
+    not card.nil?
   end
 
-  def update_subscription!
-    customer = Stripe::Customer.retrieve(stripe_id)
-    options = {
-         plan: plan,
-       coupon: coupon,
-         card: stripe_token,
-      prorate: false
-    }
-    customer.update_subscription options
-    
-    new_plan = Plan.find(plan)
-    old_plan = Plan.find(plan_was)
-    price_difference = new_plan.price - old_plan.price
+  def customer
+    @customer ||= Stripe::Customer.retrieve(stripe_id) if customer?
+  end
 
-    if price_difference > 0
-      seconds_remaining = Time.parse(customer.next_recurring_charge.date) - Time.now
-      days_remaining = seconds_remaining / 60 / 60 / 24
-      cycle_left = days_remaining / Time.days_in_month(Time.now.month)
+  def create_customer
+    @customer = Stripe::Customer.create email: email,
+                                  description: customer_description,
+                                         plan: plan_id,
+                                       coupon: coupon,
+                                         card: stripe_token
+    self.stripe_id = @customer.id
+    build_card_from_stripe(@customer.active_card)
+    self.stripe_token = nil
+  end
 
-      pro_rated_charge = (price_difference * cycle_left).floor
-      
-      Stripe::Charge.create(
-        :amount => pro_rated_charge,
-        :currency => "usd",
-        :customer => stripe_id,
-        :description => "Minefold.com #{new_plan.name} plan"
+  def update_subscription
+    if plan_id?
+      subscription = customer.update_subscription(
+        plan: plan_id,
+        coupon: coupon,
+        card: stripe_token,
+        prorate: false
       )
-      
-      self.credits = new_plan.credits
+
+      if not stripe_token.nil?
+        build_card_from_stripe!(subscription.card)
+      end
+
+      subscription
+    else
+      customer.cancel_subscription
     end
   end
-    
-  # def update_card
-  #   self.card = Card.new_from_stripe(customer.active_card)
-  #   Rails.logger.info "set card: #{card.inspect}"
-  # end
 
-  # before_save do
-  #   Rails.logger.info "stripe_token: #{stripe_token}"
-  #   if stripe_token
-  #     update_card
-  #   end
-  # end
+  before_save do
+    if plan_id_changed?
+      if customer?
+        update_subscription
+      else
+        create_customer
+      end
+    end
+  end
+
+  def create_charge!(amount)
+    Rails.logger.info '=' * 80
+
+    Rails.logger.info "customer: #{stripe_id}"
+    Rails.logger.info "card: #{stripe_token}"
+
+    charge = Stripe::Charge.create(
+      amount: amount,
+      currency: 'usd',
+      customer: stripe_id,
+      card: stripe_token,
+      description: "Minefold.com time"
+    )
+
+    create_card_from_stripe(charge.card)
+
+    charge
+  end
+
+  def build_card_from_stripe(card)
+    build_card Card.attributes_from_stripe(card)
+  end
+
+  def create_card_from_stripe(card)
+    create_card Card.attributes_from_stripe(card)
+  end
 
 
   def self.paid_for_minecraft?(username)
     response = RestClient.get "http://www.minecraft.net/haspaid.jsp", params: {user: username}
     return response == 'true'
   rescue RestClient::Exception
-    false
+    return false
   end
 
 
 
 # CREDITS
 
-  # Gives away the free credits and starts off the credit history
-  # after_create do
-  #   increment_credits!
-  # end
-  #
-  # before_validation(on: :create) do
-  #   n = FREE_HOURS.hours / BILLING_PERIOD
-  #   self.credits = n
-  #
-  # end
-
+  # Kicks off the audit trail for any credits the user starts off with
   before_create do
     self.credit_events.build(delta: self.credits)
   end
 
+  def increment_hours!(n, time=Time.now.utc)
+    increment_credits! self.class.hours_to_credits(n), time
+  end
+
   def increment_credits!(n, time=Time.now.utc)
-    event = CreditEvent.new(delta: n.to_i)
+    event = CreditEvent.new(delta: n.to_i, created_at: time)
 
     self.class.collection.update({_id: id}, {
-      '$inc' => {
-        credits: n.to_i
-      },
-      '$push' => {
-        credit_events: event.attributes.merge(
-          created_at: time
-        )
-      }
+      '$inc' => {credits: n.to_i},
+      '$push' => {credit_events: event.attributes}
     })
   end
 
@@ -254,6 +233,10 @@ class User
 
   def total_credits
     plan_credits + referral_credits
+  end
+
+  def hours_left
+    credits / User::BILLING_PERIOD
   end
 
 
@@ -369,6 +352,10 @@ private
 
   def self.sanitize_email(str)
     str.downcase.strip
+  end
+
+  def self.hours_to_credits(n)
+    n.hours / BILLING_PERIOD
   end
 
 end
