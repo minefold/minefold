@@ -61,78 +61,10 @@
     }
   }
 
-  #plans {
-    color: rgba(black, 0.6);
-    text-align: center;
-    margin: (4*$line) 0 (8*$line);
-    @include box-sizing(border-box);
-    width: 100%;
-
-    p {
-      margin: 0;
-    }
-
-    strong {
-      color: #000;
-    }
-
-    table {
-      width: 100%;
-      padding: (4*$line) 0;
-      margin-bottom: $line;
-
-      th {
-        padding-top: $line;
-        font-weight: bold;
-        font-size: 16px;
-        line-height: 24px;
-        color: #000;
-        border-bottom: 1px solid darken(white, 10%);
-      }
-
-      .price td {
-        color: black;
-      }
-
-      .buy {
-        color: rgba(black, 0.2);
-      }
-
-    }
-  }
-
-
-  #plans {
-    margin: (4*$line) 0 (8*$line);
-
-    table {
-      margin-bottom: $line;
-    }
-
-    .fun {
-      background-color: lighten($blue, 50%);
-      color: darken($blue, 10%);
-    }
-
-    th.fun {
-      color: darken($blue, 40%);
-      border-color: lighten($blue, 40%);
-      @include border-radius(6px 6px 0 0);
-    }
-
-    .price .fun {
-      color: darken($blue, 20%);
-    }
-
-    .worlds .fun {
-      @include border-radius(0 0 6px 6px);
-      padding-bottom: $line;
-    }
-  }
-
   #features {
     overflow: auto;
     margin: 0 (-$gutter);
+    margin-top: 6*$gutter;
 
     strong {
       color: rgba(black, 0.9);
