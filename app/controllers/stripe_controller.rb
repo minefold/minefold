@@ -34,14 +34,14 @@ class StripeController < ApplicationController
     # TODO: Check that the hours exist in AMOUNTS
     current_user.buy_hours! params[:hours].to_i, AMOUNTS[params[:hours]]
 
-    redirect_to time_account_path
+    redirect_to billing_account_path
   end
 
   def subscription
     current_user.plan_id = params[:plan_id]
     current_user.save
 
-    redirect_to time_account_path
+    redirect_to billing_account_path
   end
 
   # Processes Stripe webhooks
@@ -63,14 +63,14 @@ private
     # UserMailer.invoice(@user.id, @invoice.id).deliver!
     subscriptions = params['invoice']['lines']['subscriptions']
     plan_id = subscriptions.first['plan']['id']
-    
+
     @user.recurring_payment_succeeded! plan_id
 
     render nothing: true, status: :success
   end
 
   def recurring_payment_failed_hook(params)
-    
+
     @user.recurring_payment_failed! params['attempt'].to_i
 
     UserMailer.payment_failed(@user.id).deliver!

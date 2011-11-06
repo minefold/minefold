@@ -14,9 +14,10 @@ Minefold::Application.routes.draw do
   end
 
   # Static Pages
-  { '/features' => :features,
+  { '/time'     => :time,
+    #'/features' => :features,
     '/about'    => :about,
-    '/jobs'     => :jobs,
+    #'/jobs'     => :jobs,
     '/contact'  => :contact,
     '/help'     => :help,
     '/privacy'  => :privacy,
@@ -50,9 +51,7 @@ Minefold::Application.routes.draw do
   end
 
   resource :account, :except => [:new, :edit, :destroy] do
-    get :time
-    get :card
-    # put :plan, :action => :change_plan
+    get :billing
   end
 
   as :user do

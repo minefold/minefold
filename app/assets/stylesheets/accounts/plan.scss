@@ -7,17 +7,26 @@
   section {
     float: left;
     margin: 0 $gutter;
+    width: cols(2) - (2*$gutter);
     @include edgeless;
 
     font-size: 12px;
     line-height: 18px;
     color: #666;
 
-    strong {
+    h3 {
       display: block;
       color: #000;
       font-size: 18px;
-      margin-bottom: $line;
+      margin: 0 0 $line 0;
+      padding: 0;
+    }
+
+    button {
+      margin-top: $line;
+      font-size: 12px;
+      padding: ($line / 2) (2*$gutter);
+      margin-left: -$gutter;
     }
   }
 }

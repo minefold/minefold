@@ -9,7 +9,7 @@
 
   - if user_signed_in?
     %li.time
-      = link_to "#{current_user.hours_left}h", time_account_path
+      = link_to "#{current_user.hours_left}h", time_page_path
 
     %li.account
       = link_to 'Settings', account_path

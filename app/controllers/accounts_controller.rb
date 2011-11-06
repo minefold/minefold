@@ -12,7 +12,7 @@ class AccountsController < ApplicationController
     current_user.save
   end
 
-  def time
+  def billing
   end
 
 end

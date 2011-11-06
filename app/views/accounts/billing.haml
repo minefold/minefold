@@ -1,0 +1,58 @@
+= render partial: 'header'
+
+- before do
+  #plan
+    .wrapper
+      %section.casual
+        %h3 Casual
+        pre-paid time
+      %section.small
+        %h3 Small
+        %p 40 hours every month
+        %P
+          = number_to_currency 4.95
+          \/ mo
+
+        = form_tag customer_subscription_path, method: :put do
+          = hidden_field_tag :plan_id, 'small'
+          %button Upgrade
+
+      %section.medium
+        %h3 Medium
+        %p 100 hours every month
+        %P
+          = number_to_currency 9.95
+          \/ mo
+
+        = form_tag customer_subscription_path, method: :put do
+          = hidden_field_tag :plan_id, 'medium'
+          %button Upgrade
+
+      %section.large
+        %h3 Large
+        %p 260 hours every month
+        %P
+          = number_to_currency 19.95
+          \/ mo
+
+        = form_tag customer_subscription_path, method: :put do
+          = hidden_field_tag :plan_id, 'large'
+          %button Upgrade
+
+= image_tag 'card.png'
+- if current_user.card.nil?
+  %p No card on file
+- else
+  %p
+    %strong Card on file:
+    = current_user.card.type
+
+
+#packs
+  %p
+    = form_tag customer_charge_path, method: :post do
+      = hidden_field_tag :hours, 10
+      %button Buy 10 hours for $2.95
+
+  %p= link_to 'buy 40 hours for $7.95'
+  %p= link_to 'buy 120 hours for $11.95'

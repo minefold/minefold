@@ -4,6 +4,9 @@ class PagesController < ApplicationController
     redirect_to(user_root_path) if signed_in?
   end
 
+  def time
+  end
+
   def features
   end
 
