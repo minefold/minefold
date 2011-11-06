@@ -127,7 +127,7 @@
 /   #invite
 /     %h2 Invite your friends!
 /     %p Enter their emails below.
-/     = form_for :invite, url: user_world_invite_path(world.creator, world), method: 'post' do |f|
+/     = form_for :invite, url: world_invite_path(world), method: 'post' do |f|
 /
 /       %section
 /         = f.text_area :emails, rows: 1, placeholder: 'chris@minefold.com, dave@minefold.com'
