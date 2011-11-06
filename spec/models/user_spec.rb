@@ -10,7 +10,7 @@ describe User do
   it { should have_field(:safe_username) }
   it { should have_field(:slug) }
                                 
-  it { should have_field(:plan) }
+  it { should have_field(:plan_id) }
                                 
   it { should have_field(:host) }
        
@@ -53,7 +53,7 @@ describe User do
   
     it "should have a short referral code" do
       user.save!
-      user.referral_code.length.should == User::CODE_LENGTH
+      user.referral_code.length.should == User::REFERRAL_CODE_LENGTH
     end
   
     it { should belong_to(:referrer).of_type(User).as_inverse_of(:referrals) }

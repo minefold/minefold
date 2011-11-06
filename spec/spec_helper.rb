@@ -14,7 +14,6 @@ RSpec.configure do |config|
   
   config.before(:each) do
     DatabaseCleaner.start
-    
   end
 
   config.after(:each) do
@@ -24,25 +23,24 @@ RSpec.configure do |config|
   Fog.mock!
 end
 
-
 def expect_stripe_create user, plan, next_charge_date = '2011-12-04'
   Stripe::Customer.should_receive(:create).with(
     description: user.customer_description,
           email: user.email,
-           plan: plan.stripe_id,
+           plan: plan.id,
          coupon: nil,
            card: 'tok_12345'
-  ) { Struct.new(:id, :next_recurring_charge).new('cus_1', Struct.new(:date, :amount).new(next_charge_date, plan.price)) }
+  ) { Struct.new(:id, :next_recurring_charge, :active_card).new(
+        'cus_1', 
+        Struct.new(:date, :amount).new(next_charge_date, plan.price),
+        Struct.new(:type, :country, :exp_month, :exp_year, :last4).new('visa', 'US', 11, 2012, '4242')
+      )
+    }
 end
 
 def expect_stripe_update user, plan, next_charge_date = '2011-12-04'
-  customer = double("Stripe::Customer")
-  customer.stub(:next_recurring_charge) { Struct.new(:date, :amount).new(next_charge_date, plan.price) }
-  
-  Stripe::Customer.should_receive(:retrieve).with(user.stripe_id) { customer }
-  
-  customer.should_receive(:update_subscription).with(
-        plan: plan.stripe_id,
+  user.customer.should_receive(:update_subscription).with(
+        plan: plan.id,
       coupon: user.coupon,
         card: user.stripe_token,
      prorate: false
@@ -59,7 +57,7 @@ def expect_stripe_charge user, amount
 end
 
 def set_plan user, plan
-  expect_stripe_create user, Plan.pro
-  user.plan = Plan.pro.stripe_id
+  expect_stripe_create user, plan
+  user.plan_id = plan.id
   user.stripe_token = 'tok_12345'
 end
