@@ -1,11 +1,33 @@
 require 'spec_helper'
 
 describe StripeController do
-  let(:user) do
-    build(:user).tap {|u| set_plan u, Plan.large }
+  render_views
+  
+  describe '#new' do
+    let(:user) do
+      build(:user)
+    end
+    
+    before do
+      user.save!
+      @request.env["devise.mapping"] = Devise.mappings[:user]
+      sign_in user
+    end
+    
+    context 'posting with plan' do
+      it 'should succeed' do
+        post :new, plan_id: Plan.small.id
+        
+        response.should be_success
+      end
+    end
   end
   
   describe '#webhook' do
+    let(:user) do
+      build(:user).tap {|u| set_plan u, Plan.large }
+    end
+    
     context 'recurring_payment_succeeded' do
       it "should renew plan on user" do
         user.save!
