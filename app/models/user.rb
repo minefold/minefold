@@ -165,11 +165,6 @@ class User
   end
 
   def create_charge!(amount)
-    Rails.logger.info '=' * 80
-
-    Rails.logger.info "customer: #{stripe_id}"
-    Rails.logger.info "card: #{stripe_token}"
-
     charge = Stripe::Charge.create(
       amount: amount,
       currency: 'usd',
