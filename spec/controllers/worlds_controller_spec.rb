@@ -18,7 +18,7 @@ describe WorldsController do
       end
       
       it "should succeed" do
-        get :show, user_id: user.slug, id: world.slug
+        get :show, { user_id: user.slug, id: world.slug }, nil, { new: true }
         response.should be_success
       end
     end

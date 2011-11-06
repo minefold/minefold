@@ -12,4 +12,30 @@ describe PlayersController do
       response.should be_success
     end
   end
+  
+  describe '#ask' do
+    it "should redirect to world" do
+      post :ask, world_id: world.slug
+      response.should redirect_to(world_path(world))
+    end
+  end
+
+  describe '#add' do
+    it "should redirect to world" do
+      post :add, world_id: world.slug, player_id: user.id
+      response.should redirect_to(world_players_path(world))
+    end
+  end
+
+  describe '#destroy' do
+    before do
+      world.whitelisted_players << user
+      world.save!
+    end
+
+    it "should redirect to world" do
+      delete :destroy, world_id: world.slug, id: user.slug
+      response.should redirect_to(world_players_path(world))
+    end
+  end
 end
