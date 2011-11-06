@@ -195,11 +195,11 @@ class User
   rescue RestClient::Exception
     return false
   end
-  
-  def buy_hours! hours, amount
+
+  def buy_hours!(amount, hours)
     # The order is important here. If the charge fails for some reason we
     # don't want the credits to be applied.
-    create_charge! amound
+    create_charge! amount
     increment_hours! hours
   end
 
@@ -207,7 +207,7 @@ class User
     # TODO check to see if plan has changed
     increment_hours! Plan.find(plan_id).hours
   end
-  
+
   def recurring_payment_failed! attempt
     self.failed_payment_attempts = attempt
     self.last_failed_payment_at = Time.now

@@ -13,14 +13,14 @@
 
 @import 'accounts/header';
 @import 'accounts/dashboard';
+@import 'accounts/billing';
+@import 'accounts/plans';
 
 @import 'users/new';
 @import 'users/show';
 @import 'users/edit';
 @import 'users/billing';
 
-@import 'accounts/billing';
-@import 'accounts/plan';
 
 
 @import 'sessions/new';

@@ -29,10 +29,9 @@ class StripeController < ApplicationController
 
   before_filter :require_customer!, only: [:charge, :subscription]
 
-  # Creates a charge  new customer/plan from the given tokens
   def charge
     # TODO: Check that the hours exist in AMOUNTS
-    current_user.buy_hours! params[:hours].to_i, AMOUNTS[params[:hours]]
+    current_user.buy_hours! AMOUNTS[params[:hours]], params[:hours].to_i
 
     redirect_to billing_account_path
   end

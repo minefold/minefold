@@ -1,0 +1,29 @@
+- title 'Buy Time'
+
+- before do
+
+  #plans
+    .wrapper
+      %section
+        %h3 Prepaid
+        %p Buy packs of time as you need them.
+
+      %section
+        %h3 10 Hours
+        = form_tag customer_charge_path, method: :post do
+          = hidden_field_tag :hours, 10
+          %button Buy for $2.95
+
+      %section
+        %h3 40 Hours
+        = form_tag customer_charge_path, method: :post do
+          = hidden_field_tag :hours, 40
+          %button Buy for $7.95
+
+      %section
+        %h3 120 Hours
+        = form_tag customer_charge_path, method: :post do
+          = hidden_field_tag :hours, 120
+          %button Buy for $11.95
+
+  = render partial: 'accounts/plans'

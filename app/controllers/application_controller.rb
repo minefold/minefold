@@ -26,8 +26,8 @@ private
     if not current_user.customer?
       if params[:stripe_token]
         current_user.stripe_token = params[:stripe_token]
-        current_user.create_customer!
-        curren_user.save
+        current_user.create_customer
+        current_user.save
       else
         # This amount that will be guarenteed by Stripe
         @amount = StripeController::AMOUNTS[params[:plan_id] || params[:hours]]

@@ -1,71 +1,7 @@
 = render partial: 'header'
 
 - before do
-  #plan
-    .wrapper
-      %section.casual
-        %h3 Casual
-        %p
-          pre-paid time
-          %br
-          %br
-
-        = form_tag customer_unsubscribe_path, method: :delete do
-          - if current_user.casual?
-            %button{disabled: true} Current plan
-          - else
-            %button Downgrade
-
-      %section.small
-        %h3 Small
-        %p 40 hours every month
-        %p
-          = number_to_currency 4.95
-          \/ mo
-
-        = form_tag customer_subscribe_path, method: :put do
-          = hidden_field_tag :plan_id, 'small'
-          - case plan_change_action(current_user.plan_id, 'small')
-          - when :upgrade
-            %button Upgrade
-          - when :downgrade
-            %button Downgrade
-          - else
-            %button{disabled: true} Current plan
-
-      %section.medium
-        %h3 Medium
-        %p 100 hours every month
-        %p
-          = number_to_currency 9.95
-          \/ mo
-
-        = form_tag customer_subscribe_path, method: :put do
-          = hidden_field_tag :plan_id, 'medium'
-          - case plan_change_action(current_user.plan_id, 'medium')
-          - when :upgrade
-            %button Upgrade
-          - when :downgrade
-            %button Downgrade
-          - else
-            %button{disabled: true} Current plan
-
-      %section.large
-        %h3 Large
-        %p 260 hours every month
-        %p
-          = number_to_currency 19.95
-          \/ mo
-
-        = form_tag customer_subscribe_path, method: :put do
-          = hidden_field_tag :plan_id, 'large'
-          - case plan_change_action(current_user.plan_id, 'large')
-          - when :upgrade
-            %button Upgrade
-          - when :downgrade
-            %button Downgrade
-          - else
-            %button{disabled: true} Current plan
+  = render partial: 'plans'
 
 = image_tag 'card.png'
 - if current_user.card.nil?
@@ -74,13 +10,3 @@
   %p
     %strong Card on file:
     = current_user.card.type
-
-
-#packs
-  %p
-    = form_tag customer_charge_path, method: :post do
-      = hidden_field_tag :hours, 10
-      %button Buy 10 hours for $2.95
-
-  %p= link_to 'buy 40 hours for $7.95'
-  %p= link_to 'buy 120 hours for $11.95'
