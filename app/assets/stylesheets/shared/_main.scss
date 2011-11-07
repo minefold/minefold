@@ -151,6 +151,11 @@ button, input[type=submit], a.button {
     border-bottom-color: darken(white, 10%);
     cursor: default;
   }
+  
+  &:active {
+    box-shadow: 0px 0px 0px 0px;
+    background-color: lighten($blue, 40%);
+  }
 //
 //  &.muted {
 //    background-color: darken(white, 10%);
