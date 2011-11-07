@@ -1,57 +1,57 @@
-#new-user-welcome {
-  margin: 0 0 (4*$line) 0;
-  padding: 0 (2*$gutter);
-  background: #FFC;//lighten($blue, 50%);
-  position: relative;
-  overflow: hidden;
-//  @include border-radius(2*$radius);
-  line-height: 24px;
-  color: desaturate(lighten($blue, 10%), 50%);
-
-  .heart {
-    position: absolute;
-    bottom: 18px;
-    right: 0;
-    font: 30px/24px $helvetica;
-    color: white;
-    font-size: 128px;
-  }
-
-  * { position: relative; z-index: 1;}
-  .heart { z-index: 0;}
-
-  h2 {
-    font: 900 18px/24px $helvetica;
-    font-weight: 1000;
-    color: darken($blue, 20%);
-    margin-bottom: 2*$line;
-  }
-
-  p {
-    padding-bottom: $line;
-  }
-
-  a {
-    color: darken($blue,10%);
-    text-decoration: none;
-    font-weight: 500;
-
-    &:hover {
-      color: black;
-    }
-  }
-}
-
 #accounts-dashboard #before {
   overflow: auto;
   padding: 4*$line 0;
   border-bottom: 1px solid darken(white, 5%);
 
   a.button {
-    width: cols(3) - (2*$gutter);
+    width: cols(4) - (2*$gutter);
     float: left;
     margin: 0 ($gutter);
     color: darken($blue, 10%);
     @include edgeless;
   }
+}
+
+#switch-worlds-dashboard {
+
+  li {
+    padding: $line $gutter;
+    padding-bottom: $line - 1px;
+    border-bottom: 1px solid darken(white, 5%);
+
+    &:nth-child(even) {
+      background-color: lighten($blue, 55%);
+    }
+  }
+
+  h3 {
+    float: left;
+    font-size: 18px;
+  }
+
+  a {
+    color: darken($blue, 10%);
+    &:hover {
+      color: black;
+    }
+  }
+
+  .current {
+    float: right;
+
+    input[type=submit], button {
+      margin-top: $line;
+      font-size: 12px;
+      line-height: 18px;
+      padding: ($line/2) (2*$gutter);
+    }
+  }
+
+  .players {
+    clear: left;
+    font-size: 12px;
+    line-height: 18px;
+    color: rgba(black, 0.4);
+  }
+
 }
