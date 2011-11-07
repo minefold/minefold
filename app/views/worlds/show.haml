@@ -1,7 +1,7 @@
 - title world.name do
   = render partial: 'worlds/header'
 
-- after do
+%aside
   %ul.players.playing-now{class: ('empty' if world.current_players_count.zero?)}
     %h3
       Playing Now
@@ -30,7 +30,7 @@
         %section
           = f.submit 'Send invites'
 
-#stream
+#activity-stream
   - if signed_in?
     #share
       = form_tag [world, :wall_items], method: :post do |f|
