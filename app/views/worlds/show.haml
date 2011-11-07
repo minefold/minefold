@@ -71,7 +71,10 @@
 
         cId = _.uniqueId()
 
-        socket_id = pusher and pusher.connection.socket_id
+        socketID = if pusher?
+          pusher.connection.socket_id
+        else
+          ''
 
         $.ajax
           type: f.attr('method')
@@ -79,7 +82,7 @@
           data:
             chat:
               raw: f.find('textarea').val()
-            socket_id: socket_id
+            socket_id: socketID
           dataType: 'json'
           success: (data) ->
             $('#wall-items #chat_'+cId)
@@ -120,13 +123,14 @@
           %time= chat.created_at
 
   - head do
-    = javascript_include_tag '//d3ds63zw57jt09.cloudfront.net/1.7/pusher.min.js'
+    = javascript_include_tag '//d3ds63zw57jt09.cloudfront.net/1.9/pusher.min.js'
 
   :coffeescript
     window.pusher = new Pusher(#{Pusher.key.to_json}, encrypted: true);
     window.channel = pusher.subscribe(#{Pusher[world.pusher_key].name.to_json});
 
     channel.bind 'chat-create', (data) ->
+      console.log data
       data.id = data._id
       data.body = data.raw
 
