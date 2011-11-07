@@ -143,37 +143,21 @@ button, input[type=submit], a.button {
     background-color: lighten($blue, 45%);
     border-top-color: lighten($blue, 55%);
     border-bottom-color: lighten($blue, 35%);
-  };
+  }
+
+  &:active {
+    box-shadow: 0 1px 0 rgba(white, 0.8);
+    background-color: lighten($blue, 40%);
+    border-bottom-color: lighten($blue, 30%);
+  }
 
   &:disabled {
     color: darken(white, 15%);
     background-color: darken(white, 5%);
     border-bottom-color: darken(white, 10%);
+    box-shadow: 0 1px 1px rgba(black, 0.1);
     cursor: default;
   }
-  
-  &:active {
-    box-shadow: 0px 0px 0px 0px;
-    background-color: lighten($blue, 40%);
-  }
-//
-//  &.muted {
-//    background-color: darken(white, 10%);
-//    color: darken(white, 60%);
-//    text-shadow: 0 1px 0 rgba(white, 0.2);
-//  }
-//
-//  &:hover, &:focus {
-//    color: white;
-//    background-color: darken($blue, 10%);
-//    text-shadow: 0 1px 0 rgba(black, 0.2);
-//  }
-//
-//  &:disabled {
-//    background-color: darken(white, 5%);
-//    text-shadow: 0 -1px 0 rgba(black, 0.2);
-//    cursor: default;
-//  }
 }
 
 form {
