@@ -9,16 +9,16 @@
     %fieldset
       = f.text_field :name
 
-  %section.game-mode.disabled
-    %h3 Game Mode
+  %section.game-mode
+    %h3 Default game mode
 
     %fieldset.inline
       %div
-        = f.radio_button :game_mode, 0, disabled: true
+        = f.radio_button :game_mode, 0
         = f.label :game_mode_0, 'Survival'
 
       %div
-        = f.radio_button :game_mode, 1, disabled: true
+        = f.radio_button :game_mode, 1
         = f.label :game_mode_1, 'Creative'
 
   %section.difficulty
@@ -42,7 +42,7 @@
         = f.label :difficulty_level_3, 'Hard'
 
   %section.game-settings
-    %h3 Game Settings
+    %h3 Game settings
 
     %fieldset
       %div
