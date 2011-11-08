@@ -1,5 +1,5 @@
 .wrapper {
-  width: cols(8);
+  @include span(8);
   margin-left: auto;
   margin-right: auto;
 }
@@ -23,6 +23,11 @@ html {
 
 strong {
   font-weight: 600;
+
+  &.highlight {
+    background-color: #FFC;
+    padding: 1px 2px;
+  }
 }
 
 em {
@@ -84,14 +89,15 @@ textarea {
   outline: none;
   margin: 0;
   padding: $line $gutter;
-  @include border-radius($radius);
+  @include border-radius(3px);
 
   &:hover {
     border-color: rgba(black, 0.2);
   }
 
   &:focus {
-    border-color: $blue;
+    border-color: lighten($blue, 20%);
+    border-bottom-color: lighten($blue, 10%);
   }
 }
 
@@ -102,34 +108,55 @@ input[type=checkbox] + label, input[type=radio] + label {
 button, input[type=submit], a.button {
   margin: 0;
   border: none;
-  outline: none;
-  @include linear-gradient(rgba(white, 0.1), rgba(black, 0.1));
-  background-color: $blue;
-  color: white;
-  font: 500 12px/24px $helvetica;
-  cursor: pointer;
-  padding: ($line / 2) (2*$gutter);
-  margin-bottom: $line;
-  text-shadow: 0 1px 0 rgba(black, 0.4);
+  text-align: center;
+  padding: $line (4*$gutter);
+  @include box-sizing(border-box);
+  font-size: 16px;
+  background-color: lighten($blue, 30%);
+
+  text-shadow: 0 1px 0 rgba(white, 0.6);
+  color: darken($blue, 10%);
   text-decoration: none;
+  line-height: 18px;
+  @include border-radius(48px);
+  @include linear-gradient(rgba(white, 0.4), rgba(white, 0));
 
-  @include border-radius($radius);
+  border-top: 1px solid lighten($blue, 60%);
+  border-bottom: 1px solid lighten($blue, 40%);
 
-  &.muted {
-    background-color: darken(white, 10%);
-    color: darken(white, 60%);
-    text-shadow: 0 1px 0 rgba(white, 0.4);
+  box-shadow: 0 1px 1px rgba(black, 0.1);
+
+  background-color: lighten($blue, 50%);
+  font-weight: 600;
+  font-family: $helvetica;
+
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+    background-color: lighten($blue, 45%);
+    border-top-color: lighten($blue, 55%);
+    border-bottom-color: lighten($blue, 35%);
   }
 
-  &:hover, &:focus {
-    color: white;
-    background-color: darken($blue, 10%);
-    text-shadow: 0 1px 0 rgba(black, 0.4);
+  &:hover {
+    color: black;
+    background-color: lighten($blue, 45%);
+    border-top-color: lighten($blue, 55%);
+    border-bottom-color: lighten($blue, 35%);
+  }
+
+  &:active {
+    box-shadow: 0 1px 0 rgba(white, 0.8);
+    background-color: lighten($blue, 40%);
+    border-bottom-color: lighten($blue, 30%);
   }
 
   &:disabled {
+    color: darken(white, 15%);
     background-color: darken(white, 5%);
-    text-shadow: 0 -1px 0 rgba(black, 0.2);
+    border-bottom-color: darken(white, 10%);
+    box-shadow: 0 1px 1px rgba(black, 0.1);
     cursor: default;
   }
 }
@@ -178,16 +205,15 @@ form {
 }
 
 iframe.youtube {
-  margin: 24px auto;
+  margin: 24px 0;
   display: block;
 }
 
 .callout {
-  background: #FFC;
-  text-align: center;
-  padding: $line $gutter;
   line-height: 18px;
   margin-bottom: 2*$line;
+  color: darken(white, 60%);
+
   a {
     color: $blue;
     text-decoration: none;
@@ -195,5 +221,4 @@ iframe.youtube {
       color: darken($blue, 10%);
     }
   }
-
 }

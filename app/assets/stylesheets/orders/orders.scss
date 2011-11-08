@@ -1,105 +1,78 @@
-@import 'shared';
+#orders-new #page {
+  width: cols(8);
 
-#orders-new {
+  .hint {
+    color: #666;
+  }
+}
 
-  #masthead {
-    text-align: center;
+
+#stripe {
+  background-color: lighten($blue, 50%);
+  padding: (2*$line) $gutter $line $gutter;
+  width: cols(5);
+  margin-bottom: 2*$line;
+  overflow: auto;
+
+  .card-types {
+    font-size: 11px;
+    line-height: 18px;
+
+    span.unknown {
+      color: rgba(black, 0.4);
+    }
+
+    span.active {
+      color: darken($blue,10%);
+      font-weight: 600;
+      background-color: #FFC;
+      padding: 1px 2px;
+    }
   }
 
-  #page {
-    width: cols(8);
+  section.card-number input {
+    width: 100%;
   }
 
-  form {
-    text-align: center;
+  section.card-cvc, section.card-expiration {
+    float: left;
+    margin-right: 2*$gutter;
+  }
 
-    input[type=image]:disabled {
-      cursor: default;
+  #secured-by {
+    float: right;
+    font-size: 11px;
+    line-height: 18px;
+    color: rgba(black, 0.4);
+    display: block;
+    text-align: right;
+    margin-top: 2*$line;
+
+    img {
+      display: block;
+      border: none;
       opacity: 0.2;
     }
   }
-
-  #products {
-    margin: 0 auto (4*$line) auto;
-    width: cols(8) - (4 - 1)*(2*$gutter) + (3*$border);
-    display: block;
-    overflow: auto;
-    border: $border solid darken(white, 10%);
-    padding: $border;
-    @include border-radius(2 * $radius);
-
-    li {
-      @include box-sizing(border-box);
-      @include border-radius(none);
-      float: left;
-      margin-right: 1px;
-      width: cols(2);
-
-      &:first-child {
-        border-top-left-radius: 3px;
-        border-bottom-left-radius: 3px;
-      }
-
-      &:last-child {
-        border-top-right-radius: 3px;
-        border-bottom-right-radius: 3px;
-        margin-right: 0;
-      }
-
-
-      &:hover {
-        background: #E5e5e5;
-        span {
-          text-shadow: 0 1px 0 rgba(white, 0.2);
-        }
-      }
-
-      &.active {
-        background: $green;
-        .credits, .time, .cost {
-          color: white;
-          text-shadow: 0 1px 0 darken($green, 20%);
-        }
-
-        span {
-          text-shadow: 0 1px 0 lighten($green, 10%);
-        }
-      }
-
-      // Label has cursor defaults
-      label {
-        cursor: pointer;
-        width: 100%;
-      }
-
-      .credits, .time, .cost {
-        padding: 0 (2 * $gutter);
-        color: #333;
-        text-shadow: 0 1px 0 white;
-      }
-
-      .credits {
-        padding-top: 12px; padding-bottom: 12px;
-        font-size: 18px;
-      }
-
-      .time {
-        padding-top: 12px; padding-bottom: 12px;
-        font-size: 30px; line-height: 36px;
-        font-weight: 600;
-      }
-
-      .cost {
-        padding-top: 6px; padding-bottom: 24px;
-        font-size: 24px; line-height: 30px;
-        font-weight: 600;
-      }
-
-      span {
-        display: block;
-        color: rgba(black, 0.4);
-        font-size: 12px; line-height: 12px;
-      }
-    }
-  }
 }
+
+form#new_order {
+
+  overflow: auto;
+
+  .errors {
+    color: $red;
+    margin-bottom: $line;
+  }
+
+
+}
+
+p.security {
+  margin-top: 4*$line;
+
+  font-size: 11px;
+  line-height: 18px;
+  color: rgba(black, 0.4);
+}
+

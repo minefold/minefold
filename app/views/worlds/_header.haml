@@ -11,7 +11,7 @@
             %strong= current_user.host
           %p.hint
             = link_to help_page_path(anchor: 'connecting') do
-              Don't know how to connect?
+              How do I connect?
         - else
           = button_to 'Play here', [:play, world], method: :put
 
@@ -30,17 +30,11 @@
 
       = link_to 'Join them by signing up now', root_path(anchor: 'plans'), class: 'button'
 
-- subhead do
-  %ol#subnav
-    %li.chat
-      = link_to 'Chat', world
+  %nav
+    %ol
+      %li.chat= link_to 'Chat', world
+      %li.map= link_to 'Map', map_world_path(world)
+      %li.players= link_to 'Players', world_players_path(world)
 
-    %li.map
-      = link_to 'Map', [:map, world]
-
-    %li.players
-      = link_to 'Players', [world, :players]
-
-    - if signed_in? and world.creator == current_user
-      %li.edit
-        = link_to 'Settings', [:edit, world]
+      - if signed_in? and world.creator == current_user
+        %li.settings= link_to 'Settings', edit_world_path(world)

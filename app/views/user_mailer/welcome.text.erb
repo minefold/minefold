@@ -4,6 +4,6 @@ Thanks for signing up for Minefold. We're thrilled to have you aboard and can't 
 
 *Have fun and show us what you build!*
 
-<% if @user.free? %>We've given you <%= pluralize User::FREE_HOURS, 'hour', 'hours' %> free to help you get started.
+<% if @user.casual? %>We've given you <%= pluralize User::FREE_HOURS, 'hour', 'hours' %> free to help you get started.
 
 <% end %>Be sure to email us at <%= mail_to 'team@minefold.com' %> when you have something awesome to show off!

@@ -1,33 +1,26 @@
-@import 'shared';
-
 #worlds-show {
-  #before-page {
-    display: block;
-    float: none;
-    @include span(8);
-    margin-bottom: 4*$line;
-  }
 
-  #page {
-    @include span(6);
-  }
+//  #invite {
+//    background: lighten($blue, 50%);
+//    padding: (2*$line) (2*$gutter);
+//    @include border-radius($radius);
+//
+//    h2 {
+//      margin: (2*$line) 0;
+//      color: darken($blue, 20%);
+//    }
+//    p {
+//      color: rgba(black, 0.6);
+//    }
+//    textarea {
+//      width: 100%;
+//      resize: vertical;
+//    }
+//  }
 
-  #invite {
-    background: lighten($blue, 50%);
-    padding: (2*$line) (2*$gutter);
-    @include border-radius($radius);
-
-    h2 {
-      margin: (2*$line) 0;
-      color: darken($blue, 20%);
-    }
-    p {
-      color: rgba(black, 0.6);
-    }
-    textarea {
-      width: 100%;
-      resize: vertical;
-    }
+  #page aside {
+    float: right;
+    width: cols(2) - (2*$gutter);
   }
 
   ul.players {
@@ -38,23 +31,16 @@
       color: #999;
       padding: 0 ($gutter/2);
       margin-bottom: $line;
+    }
 
-      .count {
-        float: right;
-        margin-right: $gutter;
-        background: $blue;
-        color: white;
-        line-height: 18px;
-        margin: ((24px - 18px)/2) 0;
-        padding: 0 ($gutter/2);
-        @include border-radius($radius);
-        font-weight: 600;
-        font-size: 11px;
+    .count {
+      float: right;
+    }
 
-        &.zero {
-          background: darken(white, 20%);
-        }
-      }
+    .empty {
+      font-size: 12px;
+      color: #CCC;
+      line-height: 18px;
     }
 
 
@@ -71,24 +57,12 @@
       }
     }
 
-    &.empty {
-      h3 .count {
-        background: darken(white, 10%);
-        color: #999;
-      }
-
-      .empty {
-        font-size: 12px;
-        color: #666;
-        line-height: 18px;
-        margin-top: $line;
-      }
-    }
-
   }
 }
 
-#stream {
+#activity-stream {
+  width: cols(6) - (2*$gutter);
+  float: left;
 
   form, .item {
     .avatar img {
@@ -118,13 +92,18 @@
       @include box-sizing(border-box);
       width: 100%;
       resize: vertical;
-      // TODO: Magic
-      width: cols(6) - (4*$line + $gutter);
+      width: cols(6) - (2*$gutter) - (24px + $gutter);
     }
 
     .submit {
       margin-left: 4*$line + $gutter;
       overflow: auto;
+
+      button {
+        font-size: 12px;
+        line-height: 18px;
+        padding: ($line/2) (2*$gutter);
+      }
 
       button, .advice {
         float: left;

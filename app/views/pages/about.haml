@@ -12,7 +12,7 @@
 %h2 The Team
 
 .founder.dave
-  = image_tag 'dave-portrait.png', width: 48, height: 48
+  = image_tag User.dave.avatar.head.s48.url, width: 48, height: 48
   %p <strong>Dave</strong> is the closest thing you'll find to the “rockstar programmer” cliché. When he's taking time out from learning new programming languages or working on a tricky back-end problem, he can often be found shirtless in #{link_to 'Ding Dong Dang', 'http://www.au.timeout.com/sydney/bars/venues/2178/ding-dong-dang'} singing karaoke with his eyes closed.
 
   %p.contact
@@ -20,7 +20,7 @@
     = mail_to 'dave@minefold.com'
 
 .founder.chris
-  = image_tag 'chris-portrait.png', width: 48, height: 48
+  = image_tag User.chris.avatar.head.s48.url, width: 48, height: 48
   %p <strong>Chris</strong> has always seen himself as a slashie. That's Designer / Developer, not the other way around. Chris is passionate about clean design, minimalism and hipster music. He'd share a band with you but you wouldn't have heard of them yet.
 
   %p.contact
@@ -30,7 +30,7 @@
 
 %h2 Logo
 
-%p Our logo was graciously designed by #{link_to 'Cameron Adams', '//twitter.com/themaninblue'}.
+%p Our logo was graciously donated by #{link_to 'Cameron Adams', '//twitter.com/themaninblue'}.
 
 %ol
   %li= link_to 'Raster (PNG)', image_path('minefold-logo.png')

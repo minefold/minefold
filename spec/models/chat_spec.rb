@@ -5,7 +5,6 @@ describe Chat do
 
   it {should have_field(:raw)}
   it {should have_field(:html)}
-  it {should have_field(:media).of_type(Array)}
 
   it "#body should be html or raw" do
     chat = Chat.new

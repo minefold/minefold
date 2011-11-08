@@ -5,30 +5,43 @@ class User
   include Mongoid::Paranoia
 
   BILLING_PERIOD = 1.minute
-  FREE_HOURS     = 12
+  FREE_HOURS  = 4
 
-  PLANS = %W{free pro}
+  REFERRAL_CODE_LENGTH = 6
+  REFERRAL_HOURS = 2
 
   field :email,          type: String
   field :username,       type: String
   field :safe_username,  type: String
   slug  :username,       index: true
 
-  index :email, unique: true
-  index :safe_username, unique: true
+  field :host,           default: 'pluto.minefold.com'
 
-
-  field :plan, type: String, default: 'free'
-
-  field :customer_id,    type: String
-
-  field :host, default: 'pluto.minefold.com'
-
-  field :credits,        type: Integer, default: 0
+  field :credits,        type: Integer, default: (FREE_HOURS.hours / BILLING_PERIOD)
   field :minutes_played, type: Integer, default: 0
   embeds_many :credit_events
 
-  belongs_to :invite
+  attr_accessor :stripe_token
+  attr_accessor :coupon
+
+  field :stripe_id,       type: String
+  field :plan_id,         type: String
+  field :failed_payment_attempts, type: Integer
+  field :last_failed_payment_at,  type: DateTime
+
+  embeds_one :card
+
+  field :referral_code,   type: String, default: -> {
+    begin
+      c = rand(36 ** REFERRAL_CODE_LENGTH).to_s(36).rjust(REFERRAL_CODE_LENGTH, '0').upcase
+    end while self.class.where(code: c).exists?
+    c
+  }
+  validates_uniqueness_of :referral_code
+
+
+  STATUSES = %W(signed_up played payed)
+  field :referral_state, default: 'signed_up'
 
   belongs_to :current_world, class_name: 'World', inverse_of: nil
   has_many :created_worlds, class_name: 'World', inverse_of: :creator
@@ -36,13 +49,40 @@ class User
   has_and_belongs_to_many :whitelisted_worlds,
                           inverse_of: :whitelisted_players,
                           class_name: 'World'
-
-  embeds_many :wall_items, as: :wall
-
   attr_accessor :email_or_username
 
+  # FREE_HOURS = Plan.free.hours
 
-# VALIDATIONS
+# Finders
+
+  index :email, unique: true
+  scope :by_email, ->(email) {
+    where(email: sanitize_email(email))
+  }
+
+  index :safe_username, unique: true
+  scope :by_username, ->(username) {
+    where(safe_username: sanitize_username(username))
+  }
+  scope :by_email_or_username, ->(str) {
+    any_of(
+      {safe_username: sanitize_username(str)},
+      {email: sanitize_email(str)}
+    )
+  }
+
+  index :stripe_id, unique: true
+  scope :by_stripe_id, ->(stripe_id) {
+    where(stripe_id: stripe_id)
+  }
+
+  index :plan_id
+  scope :by_plan_id, ->(plan_id) {
+    where(plan_id: plan_id)
+  }
+
+
+# Validations
 
   validates_presence_of :username
   validates_uniqueness_of :email, case_sensitive: false
@@ -50,110 +90,167 @@ class User
   validates_confirmation_of :password
   validates_numericality_of :credits
   validates_numericality_of :minutes_played, greater_than_or_equal_to: 0
-  validates_inclusion_of :plan, in: PLANS
+  # validates_inclusion_of :plan, in: Plan.stripe_ids, allow_blank: true
 
-# SECURITY
+
+# Security
 
   attr_accessible :email,
                   :username,
                   :password,
-                  :password_confirmation,
-                  # TODO: Think more about the security implications of this.
-                  :plan,
-                  :card_token,
-                  :invite
+                  :password_confirmation
 
-  # Virtual
-  attr_accessible :email_or_username,
+  attr_accessible :stripe_token,
+                  :email_or_username,
                   :remember_me
 
+# Plans
 
-# PLANS
-
-
-
-  # after_save do
-  #   if plan_changed?
-  #     if free?
-  #       customer.cancel_subscription
-  #     else
-  #       customer.update_subscription plan: plan, prorate: true
-  #     end
-  #   end
-  # end
-
-  # def stripe_customer
-  #   @customer ||= if customer_id?
-  #     Stripe::Customer.retrieve(customer_id)
-  #   else
-  #     Stripe::Customer.create(description: "#{id}-#{username}", email: email).tap do |c|
-  #       self.customer_id = c.id
-  #     end
-  #   end
-  # end
-
-  # def card_token=(token)
-  #   customer.card = token
-  #   customer.save
-  #   token
-  # end
-
-  def pro?
-    plan == 'pro'
-  end
-
-  def free?
-    plan == 'free'
+  def casual?
+    not plan_id?
   end
 
   def customer?
-    customer_id?
+    stripe_id?
   end
+
+  def customer_description
+    [id, safe_username].join('-')
+  end
+
+  def card?
+    not card.nil?
+  end
+
+  def customer
+    @customer ||= Stripe::Customer.retrieve(stripe_id) if customer?
+  end
+
+  def create_customer
+    @customer = Stripe::Customer.create email: email,
+                                  description: customer_description,
+                                         plan: plan_id,
+                                       coupon: coupon,
+                                         card: stripe_token
+    self.stripe_id = @customer.id
+    build_card_from_stripe(@customer.active_card)
+    self.stripe_token = nil
+  end
+
+  def update_subscription
+    if plan_id?
+      subscription = customer.update_subscription(
+        plan: plan_id,
+        coupon: coupon,
+        card: stripe_token,
+        prorate: false
+      )
+
+      if not stripe_token.nil?
+        build_card_from_stripe!(subscription.card)
+      end
+
+      subscription
+    else
+      customer.cancel_subscription
+    end
+  end
+
+  before_save do
+    if plan_id_changed?
+      if customer?
+        update_subscription
+      else
+        create_customer
+      end
+    end
+  end
+
+  def create_charge!(amount)
+    charge = Stripe::Charge.create(
+      amount: amount,
+      currency: 'usd',
+      customer: stripe_id,
+      card: stripe_token,
+      description: "Minefold.com time"
+    )
+
+    create_card_from_stripe(charge.card)
+
+    charge
+  end
+
+  def build_card_from_stripe(card)
+    build_card Card.attributes_from_stripe(card)
+  end
+
+  def create_card_from_stripe(card)
+    create_card Card.attributes_from_stripe(card)
+  end
+
 
   def self.paid_for_minecraft?(username)
     response = RestClient.get "http://www.minecraft.net/haspaid.jsp", params: {user: username}
     return response == 'true'
   rescue RestClient::Exception
-    false
+    return false
   end
 
+  def buy_hours!(amount, hours)
+    # The order is important here. If the charge fails for some reason we
+    # don't want the credits to be applied.
+    create_charge! amount
+    increment_hours! hours
+  end
+
+  def recurring_payment_succeeded! plan_id
+    # TODO check to see if plan has changed
+    increment_hours! Plan.find(plan_id).hours
+  end
+
+  def recurring_payment_failed! attempt
+    self.failed_payment_attempts = attempt
+    self.last_failed_payment_at = Time.now
+    save!
+  end
 
 
 # CREDITS
 
-  # scope :free, where(:orders.size => 0)
+  # Kicks off the audit trail for any credits the user starts off with
+  before_create do
+    self.credit_events.build(delta: self.credits)
+  end
 
-  # Gives away the free credits and starts off the credit history
-  after_create do
-    increment_credits! FREE_HOURS.hours / BILLING_PERIOD
+  def increment_hours!(n, time=Time.now.utc)
+    increment_credits! self.class.hours_to_credits(n), time
   end
 
   def increment_credits!(n, time=Time.now.utc)
-    event = CreditEvent.new(delta: n.to_i)
+    event = CreditEvent.new(delta: n.to_i, created_at: time)
 
     self.class.collection.update({_id: id}, {
-      '$inc' => {
-        credits: n.to_i
-      },
-      '$push' => {
-        credit_events: event.attributes.merge(
-          created_at: time
-        )
-      }
+      '$inc' => {credits: n.to_i},
+      '$push' => {credit_events: event.attributes}
     })
   end
 
-  def hours
-    (credits * BILLING_PERIOD) / 1.hour
+  def plan_credits
+    Plan.find(plan).credits
   end
 
-  def minutes
-    credits - (hours * (1.hour / BILLING_PERIOD))
+  def referral_credits
+    cr = REFERRAL_HOURS.hours / BILLING_PERIOD
+    (referrer.nil? ? 0 : cr) + (referrals.empty? ? 0 : referrals.length * cr)
   end
 
-  # TODO: Get rid of hours and minutes
-  def time_left
-    [hours, minutes]
+
+  def total_credits
+    plan_credits + referral_credits
+  end
+
+  def hours_left
+    credits / User::BILLING_PERIOD
   end
 
 
@@ -189,15 +286,19 @@ class User
     Resque.enqueue(FetchAvatar, id)
   end
 
-  # def avatar_url(options={width:24})
-  #   "http://minotar.com/avatar/#{safe_username}/#{options[:width]}.png"
-  # end
-
   before_save do
-    Resque.enqueue(FetchAvatar, id) if safe_username_changed?
+    async_fetch_avatar! if safe_username_changed?
   end
 
 # REFERRALS
+
+  belongs_to :referrer,  class_name: 'User', inverse_of: :referrals
+  has_many   :referrals, class_name: 'User', inverse_of: :referrer
+
+  def played!
+    self.referral_state = 'played'
+    save!
+  end
 
 # USER_REFERRAL_BONUS = 1.hour
 # FRIEND_REFERRAL_BONUS = 4.hours
@@ -246,7 +347,7 @@ protected
 
   def self.find_for_database_authentication(conditions)
     login = conditions.delete(:email_or_username)
-    any_of({safe_username: sanitize_username(login)}, {email: login}).first
+    by_email_or_username(login).first
   end
 
   def self.chris
@@ -260,7 +361,15 @@ protected
 private
 
   def self.sanitize_username(str)
-    str.downcase
+    str.downcase.strip
+  end
+
+  def self.sanitize_email(str)
+    str.downcase.strip
+  end
+
+  def self.hours_to_credits(n)
+    n.hours / BILLING_PERIOD
   end
 
 end

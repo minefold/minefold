@@ -1,14 +1,14 @@
 class PlayersController < ApplicationController
 
-  expose(:creator) {User.find_by_slug!(params[:user_id])}
-  expose(:world) {creator.created_worlds.find_by_slug!(params[:world_id])}
+  expose(:world) {
+    World.find_by_slug! params[:world_id]
+  }
+
   expose(:player) do
-    world.whitelisted_players.find_by_slug(params[:id]) or
-    User.find(params[:player_id])
+    world.whitelisted_players.find_by_slug(params[:id]) or User.find(params[:player_id])
   end
 
   def search
-    not_found unless current_user == world.creator
     user = world.available_player(params[:username]).first
 
     if user
@@ -22,14 +22,14 @@ class PlayersController < ApplicationController
     world.play_requests.new user: current_user
     world.save
 
-    redirect_to user_world_path(world.creator, world)
+    redirect_to world_path(world)
   end
 
   def add
     world.whitelisted_players << player
     world.save
 
-    redirect_to user_world_players_path(world.creator, world)
+    redirect_to world_players_path(world)
   end
 
   def approve
@@ -51,7 +51,7 @@ class PlayersController < ApplicationController
     world.whitelisted_players.delete(player)
     world.save
 
-    redirect_to user_world_players_path(world.creator, world)
+    redirect_to world_players_path(world)
   end
 
 end

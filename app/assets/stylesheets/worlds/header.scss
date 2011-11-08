@@ -1,0 +1,11 @@
+#masthead nav .settings {
+  margin-left: $gutter;
+}
+
+#worlds-show .chat,
+#worlds-map .map,
+#players-index .players,
+#worlds-edit .settings {
+  @include active-masthead-menu;
+}
+

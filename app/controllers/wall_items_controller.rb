@@ -1,6 +1,6 @@
 class WallItemsController < ApplicationController
 
-  expose(:world) { World.find_by_slug!(params[:world_id] || params[:id]) }
+  expose(:world) { World.find_by_slug!(params[:world_id]) }
 
   def create
     chat = Chat.new(params[:chat])

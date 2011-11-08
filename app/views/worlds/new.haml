@@ -19,7 +19,7 @@
       = f.text_field :name
 
   %section.game-mode
-    %h3 Game Mode
+    %h3 Default game mode
 
     %fieldset.inline
       %div
@@ -30,7 +30,7 @@
         = f.radio_button :game_mode, 1
         = f.label :game_mode_1, 'Creative'
 
-      %p.hint This can't be changed later so pick wisely.
+      %p.hint (Can be changed later for individual players)
 
 
   %section.show-advanced
@@ -61,7 +61,7 @@
           = f.label :difficulty_level_3, 'Hard'
 
     %section.game-settings
-      %h3 Game Settings
+      %h3 Game settings
 
       %fieldset
         %div

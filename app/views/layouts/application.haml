@@ -25,12 +25,14 @@
 
     = yield :head
 
+    = render partial: 'shared/mixpanel'
   %body{lang: 'en', id: page_css_selector}
     %header
       .wrapper
         %h1
           = link_to root_url do
             Minefold
+            %span.beta Beta
         %aside
           = render partial: 'shared/nav'
 
@@ -39,23 +41,16 @@
     %section#masthead
       .wrapper= yield :masthead
 
-    %section#subhead
-      .wrapper= yield :subhead
+    %section#before= yield :before
 
-    %section#content
-      .wrapper
-        #before-page= yield :before
-        #page= yield
-        #after-page= yield :after
+    %section#page
+      .wrapper= yield
+
+    %section#after= yield :after
 
     %footer
       .wrapper
         %ul
-          %li
-            %a{href: 'http://flickr.com/photos/toolmantim/3451060043/'} Made in Sydney, Australia
-
-          .spaceball
-
           %li= link_to 'About', about_page_path
 
           .spaceball
@@ -75,7 +70,6 @@
 
           %li.twitter
             %a{href: '//twitter.com/minefold'} Follow us
-
 
         %p.fineprint
           &copy; #{Time.now.year} Minefold.

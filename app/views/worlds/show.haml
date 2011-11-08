@@ -1,7 +1,7 @@
 - title world.name do
   = render partial: 'worlds/header'
 
-- after do
+%aside
   %ul.players.playing-now{class: ('empty' if world.current_players_count.zero?)}
     %h3
       Playing Now
@@ -23,17 +23,17 @@
     #invite
       %h2 Now, show off what you build!
       %p It's easy to start sharing #{world.name} with your friends. If they are already on Minefold you can #{link_to 'add them to the whitelist', world_players_path(world)}. Otherwise, if you enter their emails below, we can let them know that you want them to join you in #{world.name}.
-      = form_for :invite, url: user_world_invite_path(world.creator, world), method: 'post' do |f|
+      = form_for :invite, url: world_invite_path(world), method: 'post' do |f|
         %section
           = f.text_area :emails, rows: 1, placeholder: 'chris@minefold.com, dave@minefold.com'
 
         %section
           = f.submit 'Send invites'
 
-#stream
+#activity-stream
   - if signed_in?
     #share
-      = form_tag [world.creator, world, :wall_items], method: :post do |f|
+      = form_tag [world, :wall_items], method: :post do |f|
         .avatar
           = image_tag current_user.avatar.head.s36.url, with: 36, height: 36
         = text_area_tag :body, nil, rows: 2, autofocus: true, required: true
@@ -71,7 +71,10 @@
 
         cId = _.uniqueId()
 
-        socket_id = pusher and pusher.connection.socket_id
+        socketID = if pusher?
+          pusher.connection.socket_id
+        else
+          ''
 
         $.ajax
           type: f.attr('method')
@@ -79,7 +82,7 @@
           data:
             chat:
               raw: f.find('textarea').val()
-            socket_id: socket_id
+            socket_id: socketID
           dataType: 'json'
           success: (data) ->
             $('#wall-items #chat_'+cId)
@@ -120,13 +123,14 @@
           %time= chat.created_at
 
   - head do
-    = javascript_include_tag '//d3ds63zw57jt09.cloudfront.net/1.7/pusher.min.js'
+    = javascript_include_tag '//d3ds63zw57jt09.cloudfront.net/1.9/pusher.min.js'
 
   :coffeescript
     window.pusher = new Pusher(#{Pusher.key.to_json}, encrypted: true);
     window.channel = pusher.subscribe(#{Pusher[world.pusher_key].name.to_json});
 
     channel.bind 'chat-create', (data) ->
+      console.log data
       data.id = data._id
       data.body = data.raw
 

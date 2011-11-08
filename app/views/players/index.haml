@@ -4,6 +4,8 @@
 - if world.creator == current_user
   - before do
     %nav.sub
+      / %a.invite Invite friends
+
       %a.whitelist
         Whitelisted
         %span.size{class: ('zero' if world.whitelisted_players.size.zero?)}
@@ -12,7 +14,6 @@
         Need Approval
         %span.size{class: ('zero' if world.play_requests.size.zero?)}
           = world.play_requests.size
-      %a.share Share
 
     :coffeescript
       $(document).ready ->
@@ -29,7 +30,7 @@
 
           self.addClass('active')
 
-        menuLinks.filter('.whitelist').click()
+        menuLinks.filter('.invite').click()
 
 
 %article.nav.whitelist{style: ('display:none' if world.creator == current_user)}
@@ -122,38 +123,37 @@
 
           debouncedComplete(u)
 
-- if world.creator == current_user
-  %article.nav.share{hidden}
-    #invite
-      %h2 Show off what you've built!
-      %p Share #{world.name} with your friends by entering their emails below.
-      = form_for :invite, url: user_world_invite_path(world.creator, world), method: 'post' do |f|
+/ %article.nav.invite{hidden}
+/   #invite
+/     %h2 Invite your friends!
+/     %p Enter their emails below.
+/     = form_for :invite, url: world_invite_path(world), method: 'post' do |f|
+/
+/       %section
+/         = f.text_area :emails, rows: 1, placeholder: 'chris@minefold.com, dave@minefold.com'
+/
+/         .hint
+/           %p
+/             - if invites.length == 1
+/               An invite has already been sent to
+/               = world.invites.map {|i| i.email}.to_sentence
+/             - elsif invites.length > 0
+/               Invites have already been sent to
+/               = world.invites.map {|i| i.email}.to_sentence
+/
+/       %section
+/         = f.submit 'Send invites'
+/
 
-        %section
-          = f.text_area :emails, rows: 1, placeholder: 'chris@minefold.com, dave@minefold.com'
-
-          .hint
-            %p
-              - if world.invites.length == 1
-                An invite has already been sent to
-                = world.invites.map {|i| i.email}.to_sentence
-              - elsif world.invites.length > 0
-                Invites have already been sent to
-                = world.invites.map {|i| i.email}.to_sentence
-
-        %section
-          = f.submit 'Send invites'
-
-
-  %article.nav.approve{hidden}
-    %h2 Wait List
-    - if world.play_requests.empty?
-      %p.empty Empty!
-    - else
-      %ul#play-requests.users
-        - world.play_requests.each do |req|
-          %li
-            = link_to req.user do
-              .avatar= image_tag req.user.avatar.head.s60.url, width: 60, height: 60
-            .username= req.user.username
-            = link_to 'Approve', approve_play_request_user_world_players_path(world.creator, world, req), method: 'put', class: 'approve'
+%article.nav.approve{hidden}
+  %h2 Wait List
+  - if world.play_requests.empty?
+    %p.empty Empty!
+  - else
+    %ul#play-requests.users
+      - world.play_requests.each do |req|
+        %li
+          = link_to req.user do
+            .avatar= image_tag req.user.avatar.head.s60.url, width: 60, height: 60
+          .username= req.user.username
+          = link_to 'Approve', approve_play_request_world_players_path(world, req), method: 'put', class: 'approve'

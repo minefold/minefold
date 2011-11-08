@@ -1,30 +1,59 @@
 require 'spec_helper'
 
 describe WorldsController do
-  let(:dave) { User.create username: 'whatupdave',
-                              email: 'dave@minefold.com',
-                           password: 'carlsmum',
-              password_confirmation: 'carlsmum'}
+  render_views
+  
+  let(:user)  { create :user }
+  let(:world) { create :world, creator: user }
+
   before do
-    @request.env["devise.mapping"] = Devise.mappings[:user]
-    sign_in dave
+    world.wall_items.push Chat.new(raw: 'wasssuuuuuuuup', user: user)
+  end
+  
+  describe '#show' do
+    context 'user signed in' do
+      before do
+        @request.env["devise.mapping"] = Devise.mappings[:user]
+        sign_in user
+      end
+      
+      it "should succeed" do
+        get :show, { user_id: user.slug, id: world.slug }, nil, { new: true }
+        response.should be_success
+      end
+    end
+    
+    context 'user not signed in' do
+      context 'without invite code' do
+        it "should succeed" do
+          get :show, user_id: user.slug, id: world.slug
+          response.should be_success
+        end
+      end
+      
+      context 'with invite code' do
+        it "should succeed" do
+          get :show, user_id: user.slug, id: world.slug, i: 'C0D3'
+          response.should be_success
+        end
+        
+        it 'should set cookie' do
+          get :show, user_id: user.slug, id: world.slug, i: 'C0D3'
+          cookies['invite'].should == 'C0D3'
+        end
+      end
+    end
   end
   
   describe "create" do
-    it "creates a world" do
-      
-      # lambda {
-      #   post :create, world: { name:'jupiter' }
-      # }.should change(World, :count).by(1)
-      
-      post :create, world: { name:'jupiter' }
-      p request.env['warden']
-      p request.env['warden.options']
-      
-      response.should redirect_to("/world/jupiter")
-      
-      # new_world = World.first
-      # new_world.creator_slug.should == 'whatupdave'
+    before do
+      @request.env["devise.mapping"] = Devise.mappings[:user]
+      sign_in user
+    end
+    
+    it "redirects to the world's page" do
+      post :create, world: { name: 'Sluggy' }
+      response.should redirect_to(world_path('sluggy'))
     end
   end
 end

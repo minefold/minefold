@@ -66,7 +66,7 @@
                 .attr(id: "chat_"+data._id)
 
           data.chat.body = data.chat.raw
-          data.chat.user = current_user
+          data.chat.creator = current_user
           data.chat.id = cId
 
           html = Mustache.renderTemplate('worlds/_wall_item', data.chat)
