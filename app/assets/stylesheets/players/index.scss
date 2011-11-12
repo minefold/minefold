@@ -1,9 +1,30 @@
+#before nav {
+  overflow: auto;
+  border-bottom: 1px solid darken(white, 5%);
+
+  li {
+    float: left;
+
+    a {
+      display: block;
+      padding: $line $gutter;
+      line-height: 24px;
+      font-size: 12px;
+      color: darken($blue, 10%);
+      cursor: pointer;
+
+      &:hover {
+        color: black;
+      }
+    }
+  }
+
+}
+
+
 #players-index {
 
   nav.sub {
-    padding: $line 0 $line ($gutter/2);
-    background: darken(white, 5%);
-    @include border-radius($radius);
 
     a {
       display: block;
@@ -31,18 +52,15 @@
   }
 
   .users {
-    list-style: none;
     overflow: auto;
-    margin: 0 (-$gutter);
-    padding: 0;
 
     li {
       float: left;
-      width: 60px;
       overflow: hidden;
-      margin: 0 $gutter (2*$line) $gutter;
 
       .avatar {
+        float: left;
+        margin-right: $gutter;
         img {
           display: block;
           @include border-radius($radius);
@@ -50,6 +68,7 @@
       }
 
       .username {
+        float: left;
         font-size: 12px;
         text-align: center;
         font-weight: 600;
@@ -60,6 +79,11 @@
       }
 
       a, .creator {
+        color: darken($blue, 10%);
+        &:hover {
+          color: black;
+        };
+
         display: block;
         text-align: center;
         font-weight: 600;

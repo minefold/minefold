@@ -1,6 +1,18 @@
 - title "#{world.name} settings" do
   = render partial: 'header'
 
+- before do
+  %nav.subnav
+    .wrapper
+      %ul
+        %li
+          %a.current{href: '#general'} General
+
+        %li
+          %a{href: '#players'} Players
+
+
+
 = form_for world do |f|
   %section.name
     %h3

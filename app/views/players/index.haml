@@ -1,57 +1,78 @@
 - title "#{world.name} players" do
   = render partial: 'worlds/header'
 
-- if world.creator == current_user
-  - before do
-    %nav.sub
-      / %a.invite Invite friends
+/ - if world.creator == current_user
+/   - before do
+/     %nav
+/       .wrapper
+/         %ul
+/           %li
+/             %a.whitelist
+/               Whitelisted
+/               (#{world.players.size})
+/
+/           %li
+/             %a.approve
+/               Waiting
+/               (#{world.play_requests.size})
+/
+/     :coffeescript
+/       $(document).ready ->
+/         menuLinks = $('nav.sub a')
+/         # articles  = $('article.nav').hide()
+/         menuLinks.click (e) ->
+/           self = $(e.target)
+/
+/           menuLinks.removeClass('active')
+/
+/           articles.hide()
+/           a = articles.filter('.' + self.attr('class'))
+/           a.show()
+/
+/           self.addClass('active')
+/
+/         menuLinks.filter('.invite').click()
 
-      %a.whitelist
-        Whitelisted
-        %span.size{class: ('zero' if world.whitelisted_players.size.zero?)}
-          = world.whitelisted_players.size
-      %a.approve
-        Need Approval
-        %span.size{class: ('zero' if world.play_requests.size.zero?)}
-          = world.play_requests.size
 
-    :coffeescript
-      $(document).ready ->
-        menuLinks = $('nav.sub a')
-        articles  = $('article.nav').hide()
-        menuLinks.click (e) ->
-          self = $(e.target)
+%section
+  %h2 Authorized (Whitelisted)
+  %ul#authorized-players.players
 
-          menuLinks.removeClass('active')
-
-          articles.hide()
-          a = articles.filter('.' + self.attr('class'))
-          a.show()
-
-          self.addClass('active')
-
-        menuLinks.filter('.invite').click()
-
-
-%article.nav.whitelist{style: ('display:none' if world.creator == current_user)}
-  %ul#players.users
     %li.creator
       = link_to world.creator do
-
-        .avatar= image_tag world.creator.avatar.head.s60.url, width: 60, height: 60
-
-        .username= world.creator.username
+        .avatar
+          = image_tag world.creator.avatar.head.s24.url, width: 24, height: 24
+        .username
+          = world.creator.username
 
     - world.whitelisted_players.each do |player|
       %li
         = link_to player do
-          .avatar= image_tag player.avatar.head.s60.url, width: 60, height: 60
-          .username= player.username
+          .avatar
+            = image_tag player.avatar.head.s24.url, width: 24, height: 24
+          .username
+            = player.username
 
-        - if world.creator == current_user
-          = link_to 'Kick', world_player_path(world, player), method: 'delete', class: 'remove', confirm: "Are you sure you want to kick #{player.username} from #{world.name}?"
+          - if current_user == world.creator
+            = link_to 'Kick', world_player_path(world, player), method: 'delete', class: 'remove', confirm: "Are you sure you want to kick #{player.username} from #{world.name}?"
 
-  - if world.creator == current_user
+- if world.play_requests.empty?
+  %section
+  %h2 Waiting for approval
+  - if world.play_requests.empty?
+    %p.empty Empty!
+  - else
+    %ul#play-requests.users
+      - world.play_requests.each do |req|
+        %li
+          = link_to req.user do
+            .avatar= image_tag req.user.avatar.head.s60.url, width: 60, height: 60
+          .username= req.user.username
+          = link_to 'Approve', approve_play_request_world_players_path(world, req), method: 'put', class: 'approve'
+
+
+
+  - if current_user == world.creator
 
     = form_for :user, url: add_world_players_path(world), method: 'post', html: {id: 'add_user'} do |f|
       = hidden_field_tag :player_id
@@ -144,16 +165,3 @@
 /       %section
 /         = f.submit 'Send invites'
 /
-
-%article.nav.approve{hidden}
-  %h2 Wait List
-  - if world.play_requests.empty?
-    %p.empty Empty!
-  - else
-    %ul#play-requests.users
-      - world.play_requests.each do |req|
-        %li
-          = link_to req.user do
-            .avatar= image_tag req.user.avatar.head.s60.url, width: 60, height: 60
-          .username= req.user.username
-          = link_to 'Approve', approve_play_request_world_players_path(world, req), method: 'put', class: 'approve'

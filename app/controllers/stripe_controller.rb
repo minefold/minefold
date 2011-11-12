@@ -27,7 +27,7 @@ class StripeController < ApplicationController
   def new
   end
 
-  before_filter :require_customer!, only: [:charge, :subscription]
+  before_filter :require_card!, only: [:charge, :subscribe]
 
   def charge
     # TODO: Check that the hours exist in AMOUNTS
@@ -60,6 +60,25 @@ class StripeController < ApplicationController
       render nothing: true, status: :unprocessable_entity
     end
   end
+
+
+protected
+
+  def require_card!
+    if not current_user.customer? or not current_user.card?
+      if params[:stripe_token]
+        current_user.stripe_token = params[:stripe_token]
+        current_user.create_customer
+        current_user.save
+      else
+        # This amount that will be guarenteed by Stripe
+        @amount = StripeController::AMOUNTS[params[:plan_id] || params[:hours]]
+
+        render controller: :stripe, action: :new, status: :payment_required
+      end
+    end
+  end
+
 
 private
 

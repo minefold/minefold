@@ -1,9 +1,11 @@
-Hi <%= @owner.username %>,
+Hi <%= @creator.username %>,
 
-<%= @requestor.username %> would like to play in "<%= @world.name %>". You can let them play in your world by going to
+<%= @player.username %> would like to play in "<%= @world.name %>". You can let them play in your world by going to:
 
-    <%= edit_world_url(@world) %>
+    <%= world_players_url(@world) %>
 
-and adding <%= @requestor.username %> to the list of players. You can also stalk <%= @requestor.username %> first at
+You can also stalk <%= @player.username %> first at
 
-    <%= user_url(@requestor) %>
+    <%= user_url(@player) %>
+
+<%= render partial: 'shared/email_sig' %>

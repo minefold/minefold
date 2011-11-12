@@ -4,14 +4,6 @@ Minefold::Application.routes.draw do
 
   # Admin
   get '/admin' => 'admin#index'
-  namespace :admin do
-    if Rails.env.development?
-      namespace :mail do
-        mount UserMailer::Preview => 'user'
-        mount WorldMailer::Preview => 'world'
-      end
-    end
-  end
 
   # Static Pages
   { '/time'     => :time,

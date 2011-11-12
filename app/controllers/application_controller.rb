@@ -4,13 +4,13 @@ class ApplicationController < ActionController::Base
   rescue_from Mongoid::Errors::DocumentNotFound, with: :not_found
 
   extend StatsD::Instrument
-  
+
   def track event_name, properties={}
     properties[:distinct_id] = current_user.id if current_user
 
     mixpanel.track event_name, properties
   end
-  
+
 
 private
 
@@ -28,23 +28,8 @@ private
       redirect_to after_sign_in_path_for(resource)
     end
   end
-  
+
   def mixpanel
     @mixpanel ||= Mixpanel::Tracker.new(ENV['MIXPANEL_TOKEN'], request.env)
-  end
-
-  def require_customer!
-    if not current_user.customer?
-      if params[:stripe_token]
-        current_user.stripe_token = params[:stripe_token]
-        current_user.create_customer
-        current_user.save
-      else
-        # This amount that will be guarenteed by Stripe
-        @amount = StripeController::AMOUNTS[params[:plan_id] || params[:hours]]
-
-        render controller: :stripe, action: :new, status: :payment_required
-      end
-    end
   end
 end

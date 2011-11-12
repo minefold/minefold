@@ -58,10 +58,11 @@ em {
 }
 
 h2 {
-  margin: (3*$line) 0 $line;
+  margin: 0 0 (2*$line);
   line-height: 24px;
-  font-size: 18px;
+  font-size: 21px;
   font-weight: 400;
+  color: darken(white, 40%);
 }
 
 code {
@@ -89,15 +90,15 @@ textarea {
   outline: none;
   margin: 0;
   padding: $line $gutter;
-  @include border-radius(3px);
+  @include border-radius(0px);
 
   &:hover {
     border-color: rgba(black, 0.2);
   }
 
   &:focus {
-    border-color: lighten($blue, 20%);
-    border-bottom-color: lighten($blue, 10%);
+    border-color: darken($blue, 10%);
+    border-bottom-color: darken($blue, 20%);
   }
 }
 
@@ -222,3 +223,20 @@ iframe.youtube {
     }
   }
 }
+
+.subnav {
+  a {
+    text-decoration: none;
+    display: block;
+    line-height: 18px;
+    padding: $line $gutter;
+    padding-bottom: $line - 1px;
+
+    &.current {
+      font-weight: bold;
+    }
+  }
+
+}
+
+

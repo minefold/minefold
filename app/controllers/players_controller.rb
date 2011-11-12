@@ -4,9 +4,9 @@ class PlayersController < ApplicationController
     World.find_by_slug! params[:world_id]
   }
 
-  expose(:player) do
+  expose(:player) {
     world.whitelisted_players.find_by_slug(params[:id]) or User.find(params[:player_id])
-  end
+  }
 
   def search
     user = world.available_player(params[:username]).first
@@ -22,12 +22,16 @@ class PlayersController < ApplicationController
     world.play_requests.new user: current_user
     world.save
 
+    WorldMailer.play_request(world.id, current_user.id).deliver
+
     redirect_to world_path(world)
   end
 
   def add
     world.whitelisted_players << player
     world.save
+
+    WorldMailer.player_added(world.id, player.id).deliver
 
     redirect_to world_players_path(world)
   end
@@ -38,6 +42,8 @@ class PlayersController < ApplicationController
     world.whitelisted_players << @play_request.user
     world.play_requests.delete(@play_request)
     world.save
+
+    WorldMailer.player_added(world.id, @play_request.user.id).deliver
 
     redirect_to :back
   end

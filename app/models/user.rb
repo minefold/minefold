@@ -133,7 +133,10 @@ class User
                                        coupon: coupon,
                                          card: stripe_token
     self.stripe_id = @customer.id
-    build_card_from_stripe(@customer.active_card)
+    # This conditional helps 
+    if @customer.respond_to?(:active_card)
+      build_card_from_stripe(@customer.active_card)
+    end
     self.stripe_token = nil
   end
 
