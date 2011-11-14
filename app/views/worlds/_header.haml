@@ -32,9 +32,8 @@
 
   %nav
     %ol
-      %li.chat= link_to 'Chat', world
+      %li.activity= link_to 'Activity', world
       %li.map= link_to 'Map', map_world_path(world)
-      %li.players= link_to 'Players', world_players_path(world)
 
       - if signed_in? and world.creator == current_user
         %li.settings= link_to 'Settings', edit_world_path(world)

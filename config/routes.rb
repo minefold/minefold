@@ -47,7 +47,7 @@ Minefold::Application.routes.draw do
   controller :stripe, :path => 'order', :as => :customer do
     get :new
     post :charge
-    put :subscribe
+    post :subscribe
     delete :unsubscribe
   end
 

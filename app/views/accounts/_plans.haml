@@ -20,7 +20,7 @@
         = number_to_currency 4.95
         \/ mo
 
-      = form_tag customer_subscribe_path, method: :put do
+      = form_tag customer_subscribe_path do
         = hidden_field_tag :plan_id, 'small'
         - case plan_change_action(current_user.plan_id, 'small')
         - when :upgrade
@@ -37,7 +37,7 @@
         = number_to_currency 9.95
         \/ mo
 
-      = form_tag customer_subscribe_path, method: :put do
+      = form_tag customer_subscribe_path do
         = hidden_field_tag :plan_id, 'medium'
         - case plan_change_action(current_user.plan_id, 'medium')
         - when :upgrade
@@ -54,7 +54,7 @@
         = number_to_currency 19.95
         \/ mo
 
-      = form_tag customer_subscribe_path, method: :put do
+      = form_tag customer_subscribe_path do
         = hidden_field_tag :plan_id, 'large'
         - case plan_change_action(current_user.plan_id, 'large')
         - when :upgrade
