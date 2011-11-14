@@ -1,1 +1,44 @@
 @import 'shared';
+
+form#add-player {
+  overflow: auto;
+
+  section {
+    float: left;
+
+    &.submit {
+      margin-left: 2*$gutter;
+    }
+  }
+}
+
+ul.players {
+  li {
+    overflow: auto;
+    padding: $line $gutter 0 $gutter;
+    border-bottom: 1px solid darken(white, 5%);
+
+    &:nth-child(even) {
+      background: lighten($blue, 55%);
+    }
+
+    .avatar, .username {
+      float: left;
+    }
+
+    .avatar {
+      margin-right: $gutter;
+    }
+
+    .controls {
+      float: right;
+      input[type=submit] {
+        font-size: 12px;
+        line-height: 18px;
+        padding: 0 $gutter;
+
+      }
+    }
+  }
+}
+

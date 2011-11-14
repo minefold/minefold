@@ -98,36 +98,24 @@
           Settings will be applied next time the server is empty.
 
 %section.tabby.players{hidden}
-  = form_for :user, url: add_world_players_path(world), method: 'post', html: {id: 'add_user'} do |f|
+  = form_for :user, url: add_world_players_path(world), method: 'post', html: {id: 'add-player'} do |f|
     = hidden_field_tag :player_id
     %h2 Add a player
+    .avatar
     %section
       = f.text_field :username, placeholder: 'username', autocomplete: 'off'
-    %section
+    %section.submit
       = f.submit 'Add player', disabled: true
 
   :coffeescript
-    template = _.template """
-      <li class="tmp">
-        <a>
-          <div class="avatar">
-            <img src="<%= avatar_head_60_url %>" width="60" height="60" />
-          </div>
-          <div class="username">
-            <%= username %>
-          </div>
-        </a>
-      </li>
-    """
-
     default_avatar = #{image_path('question.png').to_json}
 
     $(document).ready ->
-      form = $('#add_user')
+      form = $('form#add-player')
       username = form.find('input#user_username')
       players = $('#players')
 
-      node = $(template({avatar_head_60_url: default_avatar, username: ''}))
+      # node = $(template({avatar_head_60_url: default_avatar, username: ''}))
 
       player_id = form.find('input#player_id')
       player_id.change ->
@@ -143,42 +131,35 @@
 
       complete = (username) ->
         $.ajax
-          url: (window.location.pathname + "/search.json")
+          url: ("#{url_for(world)}/players/search.json")
           data:
             username: username
           dataType: 'json'
+          error: ->
+            form.find('.avatar').empty()
           success: (data) ->
-            node.find('.avatar img').attr(src: data.avatar_head_60_url)
+            # node.find('.avatar img').attr(src: data.avatar_head_60_url)
             player_id.val(data.id).change()
+
+            a = $('<img/>').attr(src: data.avatar_head_60_url)
+            form.find('.avatar').empty().append(a)
 
       debouncedComplete = _.debounce(complete, 300)
 
       username.keyup ->
         u = username.val()
-
         player_id.val('').change()
-        node.find('.avatar img').attr(src: default_avatar)
-
-        if u is ''
-          node.detach()
-          return
-        else
-          node.appendTo(players) if node.parent().length is 0
-          node.find('.username').text(u)
-
         debouncedComplete(u)
 
-
-
-  %h2 Authorized (Whitelisted)
   %ul#authorized-players.players
-
     %li.creator
       = link_to world.creator do
         .avatar
           = image_tag world.creator.avatar.head.s24.url, width: 24, height: 24
         .username
           = world.creator.username
+        .controls
+          %input{type: 'submit', value: 'Kick', disabled: true}
 
     - world.whitelisted_players.each do |player|
       %li
@@ -188,19 +169,16 @@
           .username
             = player.username
 
-          - if current_user == world.creator
-            = link_to 'Kick', world_player_path(world, player), method: 'delete', class: 'remove', confirm: "Are you sure you want to kick #{player.username} from #{world.name}?"
+        .controls
+          = button_to 'Kick', world_player_path(world, player), method:'delete', class: 'remove', confirm: "Are you sure you want to kick #{player.username} from #{world.name}?"
 
-  - if world.play_requests.empty?
-    %h2 Waiting for approval
-    - if world.play_requests.empty?
-      %p.empty Empty!
-    - else
-      %ul#play-requests.users
-        - world.play_requests.each do |req|
-          %li
-            = link_to req.user do
-              .avatar= image_tag req.user.avatar.head.s60.url, width: 60, height: 60
-            .username= req.user.username
-            = link_to 'Approve', approve_play_request_world_players_path(world, req), method: 'put', class: 'approve'
+    - world.play_requests.each do |req|
+      %li.requested
+        = link_to req.user do
+          .avatar
+            = image_tag req.user.avatar.head.s24.url, width: 24, height: 24
+          .username
+            = req.user.username
 
+        .controls
+          = button_to 'Accept', approve_world_players_path(world, play_request_id: req.id), method: :put, class: 'accept'

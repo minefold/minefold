@@ -29,7 +29,7 @@ class PlayersController < ApplicationController
     world.whitelisted_players << player
     world.save
 
-    redirect_to world_players_path(world)
+    redirect_to edit_world_path(world, anchor: 'players')
   end
 
   def approve
@@ -39,7 +39,7 @@ class PlayersController < ApplicationController
     world.play_requests.delete(@play_request)
     world.save
 
-    redirect_to :back
+    redirect_to edit_world_path(world, anchor: 'players')
   end
 
   def destroy
@@ -51,7 +51,7 @@ class PlayersController < ApplicationController
     world.whitelisted_players.delete(player)
     world.save
 
-    redirect_to world_players_path(world)
+    redirect_to edit_world_path(world, anchor: 'players')
   end
 
 end

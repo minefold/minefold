@@ -72,10 +72,7 @@ Minefold::Application.routes.draw do
       post :add, :action => :add, :on => :collection
       get  :search, :action => :search, :on => :collection
 
-      put '/approve/:play_request_id',
-        :action => :approve,
-        :on => :collection,
-        :as => :approve_play_request
+      put :approve, :on => :collection
     end
 
     resource :invite, :only => :create
