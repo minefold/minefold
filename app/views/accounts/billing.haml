@@ -1,7 +1,10 @@
 = render partial: 'header'
 
 - before do
-  = render partial: 'plans'
+  #plans
+    = render partial: 'time'
+  #plans
+    = render partial: 'plans'
 
 = image_tag 'card.png'
 - if current_user.card.nil?
