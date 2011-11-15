@@ -2,12 +2,12 @@
 
 #uploads-new {
 
-  #after-page {
-    @include span(4);
-  }
-
+//  #after-page {
+//    @include span(4);
+//  }
+//
   #page {
-    @include span(4);
+//    @include span(4);
 
     .instructions {
       list-style-type: decimal;
