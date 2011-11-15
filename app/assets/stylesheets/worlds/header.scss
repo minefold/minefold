@@ -1,5 +1,20 @@
-#masthead nav .settings {
-  margin-left: 2*$gutter;
+#masthead nav {
+  .settings {
+    margin-left: 2*$gutter;
+  }
+
+  .invites {
+    float: right;
+    font-size: 12px;
+    background: $yellow;
+    a {
+      color: desaturate(darken($yellow, 40%), 50%);
+      &:hover {
+        color: desaturate(darken($yellow, 40%), 70%);
+      }
+    }
+
+  }
 }
 
 #worlds-show .activity,
