@@ -17,7 +17,11 @@ class WorldsController < ApplicationController
     if world.save
       current_user.current_world = world
       current_user.save
-      flash[:new] = true
+      flash[:new] = <<-HTML
+<strong>Awesome, now you can show off what you build!</strong>
+
+Share this page with your friends and they can start playing here too.
+HTML
       redirect_to world_path(world)
     else
       render :new

@@ -45,7 +45,7 @@
       %section.flash{class: type}
         .wrapper
           %a.close{href: '#'}
-          %p= message
+          = simple_format(message)
 
     :coffeescript
       $(document).ready ->
