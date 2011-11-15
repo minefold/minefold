@@ -24,11 +24,11 @@ class User
   attr_accessor :stripe_token
   attr_accessor :coupon
 
-  field :stripe_id,       type: String
-  field :plan_id,         type: String
-  field :failed_payment_attempts, type: Integer
+  field :stripe_id,               type: String
+  field :plan_id,                 type: String
+  field :failed_payments,         type: Integer, default: 0
   field :last_failed_payment_at,  type: DateTime
-  field :next_recurring_charge_date, type: DateTime
+  field :next_charge_on,          type: DateTime
 
   embeds_one :card
 
@@ -152,7 +152,7 @@ class User
         card: stripe_token,
         prorate: false
       )
-      self.next_recurring_charge_date = Time.at subscription.current_period_end
+      self.next_charge_on = Time.at subscription.current_period_end
 
       if not stripe_token.nil?
         build_card_from_stripe!(subscription.card)
@@ -214,22 +214,22 @@ class User
     return false
   end
 
-  def buy_hours!(amount, hours)
+  def buy_hours! hours
+    pack = TimePack.find(hours)
     # The order is important here. If the charge fails for some reason we
     # don't want the credits to be applied.
-    create_charge! amount
-    increment_hours! hours
+    create_charge! pack.price
+    increment_hours! pack.hours
   end
 
   def recurring_payment_succeeded! plan_id
     # TODO check to see if plan has changed
-    self.next_recurring_charge_date = Date.today + 1.month
-
+    self.next_charge_on = Date.today + 1.month
     increment_hours! Plan.find(plan_id).hours
   end
 
   def recurring_payment_failed! attempt
-    self.failed_payment_attempts = attempt
+    self.failed_payments = attempt
     self.last_failed_payment_at = Time.now
     save!
   end
