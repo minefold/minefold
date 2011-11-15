@@ -1,7 +1,11 @@
 - title world.name do
   = render partial: 'worlds/header'
 
-%p You can now invite your friends to play in this world
+%p You can invite your friends to play in this world by sharing this URL with them:
 
-= form_for world, url: world_invite_path(world) do |f|
-  = f.email_field :email
+= link_to world_url(world, i: current_user.referral_code), world_url(world, i: current_user.referral_code), id: 'invite-url'
+
+%a.twitter-share-button{href: 'https://twitter.com/share', data: {url: world_url(world, i: current_user.referral_code), text: world.name, count: 'horizontal', via: 'minefold'}} Tweet
+%script{type: 'text/javascript', src: '//platform.twitter.com/widgets.js'}
+
+.fb-like{data: {href: world_url(world, i: current_user.referral_code), send: false, width: 450, show_faces: true, font: 'arial'}}

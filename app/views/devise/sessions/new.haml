@@ -1,9 +1,5 @@
 - title  'Login'
 
-- if flash[:alert]
-  #errors
-    .alert= flash[:alert]
-
 = form_for :user, as: :user, url: session_path(:user) do |f|
   .email
     = f.label :email_or_username, 'Email or username'

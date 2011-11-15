@@ -12,7 +12,11 @@ class UsersController < ApplicationController
     end
   }
 
-  expose(:referrer) { User.first(conditions: {referral_code: cookies[:invite]}) if cookies[:invite] }
+  expose(:referrer) {
+    if cookies[:invite]
+      User.first(conditions: {referral_code: cookies[:invite]})
+    end
+  }
 
   def show
     respond_to do |format|

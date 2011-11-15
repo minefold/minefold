@@ -2,6 +2,7 @@ class WorldsController < ApplicationController
   respond_to :html
 
   prepend_before_filter :authenticate_user!, except: [:show, :map]
+  before_filter :set_invite_code, :only => [:show, :map]
 
   expose(:world) do
      if params[:id]
@@ -29,15 +30,6 @@ HTML
   end
 
   def show
-    if params[:i]
-      if signed_in?
-        # if they havent claimed an invite, claim this one?
-        # set world to this world?
-      else
-        # set cookie so when user signs up at a later stage they can claim this invite
-        cookies[:invite] = params[:i]
-      end
-    end
     respond_with world
   end
 
@@ -66,11 +58,17 @@ HTML
   def play
     raise 'Not whitelisted for world' unless world.whitelisted?(current_user)
 
-    p "Setting user to world:#{world}"
-
     current_user.current_world = world
     current_user.save
+
     redirect_to :back
+  end
+
+private
+
+  def set_invite_code
+    # THINK: Should we retroactively apply invite codes?
+    cookies[:invite] = params[:i] if params[:i] and not signed_in?
   end
 
 end

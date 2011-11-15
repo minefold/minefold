@@ -46,4 +46,4 @@
         %li.settings= link_to 'Settings', edit_world_path(world)
 
       - if signed_in?
-        %li.invites= link_to 'Invite your friends', '#'
+        %li.invites= link_to 'Invite your friends', invite_world_path(world)

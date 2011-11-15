@@ -6,10 +6,7 @@ Minefold::Application.routes.draw do
   get '/admin' => 'admin#index'
 
   # Static Pages
-  { '/time'     => :time,
-    #'/features' => :features,
-    '/about'    => :about,
-    #'/jobs'     => :jobs,
+  { '/about'    => :about,
     '/contact'  => :contact,
     '/help'     => :help,
     '/privacy'  => :privacy,
@@ -29,13 +26,10 @@ Minefold::Application.routes.draw do
     post '/users' => 'users#create', :as => :users
   end
 
-  get  '/worlds/new' => 'worlds#new', :as => :new_world
-  post '/worlds' => 'worlds#create', :as => :worlds
-
   resource :upload, :path => '/worlds/upload', :only => [:new, :create], :path_names => {:new => '/'} do
     get :policy
   end
-  
+
   controller :stripe, :path => :customer, :as => :customer do
     get :new
     post :create
@@ -45,15 +39,16 @@ Minefold::Application.routes.draw do
     get :billing
     resources :plans, :only => :show
   end
-  
+
   as :user do
     resources :users, :path => 'players', :only => [:show]
   end
 
-  resources :worlds, :only => [:show, :edit, :update] do
+  resources :worlds, :except => :destroy do
 
     member do
       get  :map
+      get  :invite
       put :play
     end
 
@@ -68,7 +63,7 @@ Minefold::Application.routes.draw do
 
     resource :invite, :only => :create
   end
-  
+
   resources :orders, :only => [:create]
 
   post '/stripe/webhook' => 'stripe#webhook'
