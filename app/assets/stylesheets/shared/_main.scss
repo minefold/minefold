@@ -265,4 +265,10 @@ iframe.youtube {
   p {
     margin-bottom: 2*$line;
   }
+
+  &.alert {
+    background-color: lighten($yellow, 10%);
+    border-bottom-color: desaturate($yellow, 50%);
+    color: $red;
+  }
 }
