@@ -115,8 +115,6 @@
       username = form.find('input#user_username')
       players = $('#players')
 
-      # node = $(template({avatar_head_60_url: default_avatar, username: ''}))
-
       player_id = form.find('input#player_id')
       player_id.change ->
         id = player_id.val()
@@ -138,10 +136,12 @@
           error: ->
             form.find('.avatar').empty()
           success: (data) ->
-            # node.find('.avatar img').attr(src: data.avatar_head_60_url)
             player_id.val(data.id).change()
 
-            a = $('<img/>').attr(src: data.avatar_head_60_url)
+            a = $('<img/>').attr(src: data.avatar_head_60_url).attr
+              width: 24
+              height: 24
+
             form.find('.avatar').empty().append(a)
 
       debouncedComplete = _.debounce(complete, 300)

@@ -3,6 +3,11 @@
 form#add-player {
   overflow: auto;
 
+  .avatar {
+    float: left;
+    margin: ($line) $gutter;
+  }
+
   section {
     float: left;
 
