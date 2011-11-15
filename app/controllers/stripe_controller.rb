@@ -31,32 +31,10 @@ class StripeController < ApplicationController
         account_plan_path(params[:plan])
         
       when params[:hours]
-        account_time_path(params[:hours])
+        account_time_pack_path(params[:hours])
       else
     end
   end
-
-  before_filter :require_card!, only: [:charge, :subscribe]
-
-  def charge
-    # TODO: Check that the hours exist in AMOUNTS
-    current_user.buy_hours! AMOUNTS[params[:hours]], params[:hours].to_i
-
-    redirect_to billing_account_path
-  end
-
-  def subscribe
-    current_user.update_attribute :plan_id, params[:plan_id]
-
-    redirect_to billing_account_path
-  end
-
-  def unsubscribe
-    current_user.update_attribute :plan_id, nil
-
-    redirect_to billing_account_path
-  end
-
 
   # Processes Stripe webhooks
   def webhook

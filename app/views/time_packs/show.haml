@@ -1,0 +1,13 @@
+- title "Purchase #{pack.hours} Hours"
+- price = number_to_currency(pack.price * 0.01)
+
+= form_tag purchase_time_order_path do
+  = hidden_field_tag 'user[hours]', pack.hours
+
+  %p You are about to be charged <strong>#{price}</strong>
+
+  %p This change will take effect <strong>immediately</strong>
+
+  %p Your new balance will be <strong>#{current_user.hours_left + pack.hours} hours</strong>
+
+  = submit_tag "Buy Now #{price}"

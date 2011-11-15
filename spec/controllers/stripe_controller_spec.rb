@@ -67,7 +67,7 @@ describe StripeController do
       end
       
       it "should set flag on user" do
-        user.reload.failed_payment_attempts.should == 1
+        user.reload.failed_payments.should == 1
       end
     end
   end

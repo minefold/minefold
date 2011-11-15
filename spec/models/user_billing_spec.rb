@@ -36,11 +36,11 @@ describe User do
         user.reload.credits.should == starting_credits + Plan.small.credits
       end
       
-      it "should set next_recurring_charge_date" do
+      it "should set next_charge_on" do
         starting_credits = user.credits
         set_initial_plan user, Plan.small
         user.save!
-        user.reload.next_recurring_charge_date.to_date.should == Date.parse('2011-12-04')
+        user.reload.next_charge_on.to_date.should == Date.parse('2011-12-04')
       end
     end
   
