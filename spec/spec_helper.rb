@@ -23,7 +23,17 @@ RSpec.configure do |config|
   Fog.mock!
 end
 
-def expect_stripe_create user, plan, next_charge_date = '2011-12-04'
+def fake_customer
+  @@fake_customer ||= Struct.new(:id, :active_card).new(
+    'cus_1', Struct.new(:type, :country, :exp_month, :exp_year, :last4).new('visa', 'US', 11, 2012, '4242')
+  )
+end
+
+def expect_stripe_retrieve user
+  Stripe::Customer.should_receive(:retrieve).with(user.stripe_id) { fake_customer }
+end
+
+def expect_stripe_create_with_plan user, plan, next_charge_date = '2011-12-04'
   Stripe::Customer.should_receive(:create).with(
     description: user.customer_description,
           email: user.email,
@@ -33,6 +43,19 @@ def expect_stripe_create user, plan, next_charge_date = '2011-12-04'
   ) { Struct.new(:id, :next_recurring_charge, :active_card).new(
         'cus_1', 
         Struct.new(:date, :amount).new(next_charge_date, plan.price),
+        Struct.new(:type, :country, :exp_month, :exp_year, :last4).new('visa', 'US', 11, 2012, '4242')
+      )
+    }
+end
+
+def expect_stripe_create user, token = 'tok_12345'
+  Stripe::Customer.should_receive(:create).with(
+    description: user.customer_description,
+          email: user.email,
+         coupon: nil,
+           card: token
+  ) { Struct.new(:id, :active_card).new(
+        'cus_1', 
         Struct.new(:type, :country, :exp_month, :exp_year, :last4).new('visa', 'US', 11, 2012, '4242')
       )
     }
@@ -56,8 +79,9 @@ def expect_stripe_charge user, amount
   )
 end
 
-def set_plan user, plan
-  expect_stripe_create user, plan
+def set_initial_plan user, plan
+  user.stub(:customer) { fake_customer }
+  expect_stripe_update user, plan
   user.plan_id = plan.id
-  user.stripe_token = 'tok_12345'
+  user.stripe_id = 'cus_1'
 end

@@ -53,10 +53,11 @@ Minefold::Application.routes.draw do
 
   resource :account, :except => [:new, :edit, :destroy] do
     get :billing
+    resources :plans, :only => :show
   end
-
+  
   as :user do
-    resources :users, :path => 'players', :only => :show
+    resources :users, :path => 'players', :only => [:show]
   end
 
   resources :worlds, :only => [:show, :edit, :update] do

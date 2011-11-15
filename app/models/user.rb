@@ -90,13 +90,14 @@ class User
   validates_confirmation_of :password
   validates_numericality_of :credits
   validates_numericality_of :minutes_played, greater_than_or_equal_to: 0
-  # validates_inclusion_of :plan, in: Plan.stripe_ids, allow_blank: true
+  validates_inclusion_of :plan_id, in: Plan.stripe_ids, allow_nil: true
 
 
 # Security
 
   attr_accessible :email,
                   :username,
+                  :plan_id,
                   :password,
                   :password_confirmation
 
@@ -110,10 +111,6 @@ class User
     not plan_id?
   end
 
-  def customer?
-    stripe_id?
-  end
-
   def customer_description
     [id, safe_username].join('-')
   end
@@ -123,15 +120,19 @@ class User
   end
 
   def customer
-    @customer ||= Stripe::Customer.retrieve(stripe_id) if customer?
+    @customer ||= Stripe::Customer.retrieve(stripe_id) if stripe_id?
   end
 
   def create_customer
-    @customer = Stripe::Customer.create email: email,
-                                  description: customer_description,
-                                         plan: plan_id,
-                                       coupon: coupon,
-                                         card: stripe_token
+    options = {
+            email: email,
+      description: customer_description,
+           coupon: coupon,
+             card: stripe_token
+    }
+    options[:plan] = plan_id if plan_id
+    
+    @customer = Stripe::Customer.create options
     self.stripe_id = @customer.id
     build_card_from_stripe(@customer.active_card)
     self.stripe_token = nil
@@ -149,20 +150,30 @@ class User
       if not stripe_token.nil?
         build_card_from_stripe!(subscription.card)
       end
-
+      
       subscription
     else
       customer.cancel_subscription
     end
   end
+  
+  before_validation do
+    self.plan_id = nil if plan_id == Plan.free.id
+  end
 
   before_save do
-    if plan_id_changed?
-      if customer?
+    if plan_id_changed? || stripe_token
+      if customer
         update_subscription
       else
         create_customer
       end
+    end
+  end
+  
+  after_save do
+    if plan_id_changed?
+      increment_hours! Plan.find(plan_id).hours if plan_id_was == nil
     end
   end
 

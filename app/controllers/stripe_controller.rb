@@ -13,10 +13,7 @@ class StripeController < ApplicationController
   AMOUNTS = {
     '10'  => 295,
     '40'  => 795,
-    '120' => 1195,
-    'small' => 495,
-    'medium' => 995,
-    'large' => 1995
+    '120' => 1195
   }
 
   protect_from_forgery except: [:webhook]
@@ -25,6 +22,10 @@ class StripeController < ApplicationController
 
   # Renders page that gets the card token
   def new
+  end
+  
+  def create
+    
   end
 
   before_filter :require_customer!, only: [:charge, :subscription]

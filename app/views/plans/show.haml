@@ -1,0 +1,15 @@
+- action = current_plan.price < plan.price ? 'Upgrade' : 'Downgrade'
+- title "#{action} to #{plan.name}"
+
+- price = number_to_currency(plan.price * 0.01)
+%p You are about to be charged <strong>#{price}</strong>
+
+%p This plan change will take effect <strong>immediately</strong>
+
+%p Your new monthly hours will be <strong>#{plan.hours}</strong>
+
+= form_for current_user, url: account_path do |f|
+  = f.hidden_field :plan_id, value: plan.id
+  = hidden_field_tag :return_url, user_root_path
+  
+  = submit_tag "Buy Now #{price}"

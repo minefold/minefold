@@ -23,7 +23,7 @@ private
   end
 
   def require_customer!
-    if not current_user.customer?
+    if not current_user.customer
       if params[:stripe_token]
         current_user.stripe_token = params[:stripe_token]
         current_user.create_customer
@@ -36,5 +36,5 @@ private
       end
     end
   end
-
+  
 end
