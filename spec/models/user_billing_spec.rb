@@ -20,10 +20,6 @@ describe User do
   end
   
   context 'with stripe customer' do
-    before do
-      
-    end
-    
     context 'Plan changed from free to paid' do
       it "should update stripe subscription" do
         user.stub(:customer) { fake_customer }
@@ -38,6 +34,13 @@ describe User do
         set_initial_plan user, Plan.small
         user.save!
         user.reload.credits.should == starting_credits + Plan.small.credits
+      end
+      
+      it "should set next_recurring_charge_date" do
+        starting_credits = user.credits
+        set_initial_plan user, Plan.small
+        user.save!
+        user.reload.next_recurring_charge_date.to_date.should == Date.parse('2011-12-04')
       end
     end
   

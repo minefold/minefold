@@ -2,14 +2,29 @@
 - title "#{action} to #{plan.name}"
 
 - price = number_to_currency(plan.price * 0.01)
-%p You are about to be charged <strong>#{price}</strong>
 
-%p This plan change will take effect <strong>immediately</strong>
-
-%p Your new monthly hours will be <strong>#{plan.hours}</strong>
-
-= form_for current_user, url: account_path do |f|
-  = f.hidden_field :plan_id, value: plan.id
+= form_tag orders_path do
+  = hidden_field_tag 'user[plan_id]', plan.id
   = hidden_field_tag :return_url, user_root_path
+
+  - if current_plan.free?
+    %p You are about to be charged <strong>#{price}</strong>
+
+    %p This plan change will take effect <strong>immediately</strong>
+
+    %p Your new monthly hours will be <strong>#{plan.hours}</strong>
+
+    = submit_tag "Buy Now #{price}"
+
+  - elsif plan.free?
+    %p You are about to cancel your subscription
+
+    %p This will take effect <strong>immediately</strong>
+
+    = submit_tag "Cancel Subscription"
   
-  = submit_tag "Buy Now #{price}"
+  - else
+    %p This plan change will take effect on <strong>#{current_user.next_recurring_charge_date}</strong>
+
+    = submit_tag "Change Plan"
+  

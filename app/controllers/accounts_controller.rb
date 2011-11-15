@@ -8,20 +8,7 @@ class AccountsController < ApplicationController
 
   def update
     current_user.update_attributes! params[:user]
-    current_user.save!
-    
-    redirect_to case
-      when params[:return_url]
-        params[:return_url]
-
-      when params[:plan]
-        account_plan_path(params[:plan])
-        
-      when params[:hours]
-        account_time_path(params[:hours])
-      else
-        account_path
-      end
+    redirect_to account_path
   end
 
   def billing

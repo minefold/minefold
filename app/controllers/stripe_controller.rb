@@ -25,7 +25,15 @@ class StripeController < ApplicationController
   end
   
   def create
-    
+    current_user.update_attributes! params[:user]
+    redirect_to case
+      when params[:plan]
+        account_plan_path(params[:plan])
+        
+      when params[:hours]
+        account_time_path(params[:hours])
+      else
+    end
   end
 
   before_filter :require_card!, only: [:charge, :subscribe]
