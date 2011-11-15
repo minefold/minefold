@@ -34,4 +34,8 @@ class Plan < Struct.new(:id, :stripe_id, :name, :price, :hours)
   def credits
     hours * 60
   end
+  
+  def free?
+    price == 0
+  end
 end

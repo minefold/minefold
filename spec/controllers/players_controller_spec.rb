@@ -23,7 +23,7 @@ describe PlayersController do
   describe '#add' do
     it "should redirect to world" do
       post :add, world_id: world.slug, player_id: user.id
-      response.should redirect_to(world_players_path(world))
+      response.should redirect_to(edit_world_path(world, anchor: 'players'))
     end
   end
 
@@ -35,7 +35,7 @@ describe PlayersController do
 
     it "should redirect to world" do
       delete :destroy, world_id: world.slug, id: user.slug
-      response.should redirect_to(world_players_path(world))
+      response.should redirect_to(edit_world_path(world, anchor: 'players'))
     end
   end
 end

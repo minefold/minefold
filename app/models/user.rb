@@ -28,6 +28,7 @@ class User
   field :plan_id,         type: String
   field :failed_payment_attempts, type: Integer
   field :last_failed_payment_at,  type: DateTime
+  field :next_recurring_charge_date, type: DateTime
 
   embeds_one :card
 
@@ -134,6 +135,7 @@ class User
     
     @customer = Stripe::Customer.create options
     self.stripe_id = @customer.id
+
     build_card_from_stripe(@customer.active_card)
     self.stripe_token = nil
   end
@@ -146,6 +148,7 @@ class User
         card: stripe_token,
         prorate: false
       )
+      self.next_recurring_charge_date = Time.at subscription.current_period_end
 
       if not stripe_token.nil?
         build_card_from_stripe!(subscription.card)
@@ -216,6 +219,8 @@ class User
 
   def recurring_payment_succeeded! plan_id
     # TODO check to see if plan has changed
+    self.next_recurring_charge_date = Date.today + 1.month
+    
     increment_hours! Plan.find(plan_id).hours
   end
 

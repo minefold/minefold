@@ -43,12 +43,10 @@ Minefold::Application.routes.draw do
   resource :upload, :path => '/worlds/upload', :only => [:new, :create], :path_names => {:new => '/'} do
     get :policy
   end
-
-  controller :stripe, :path => 'order', :as => :customer do
+  
+  controller :stripe, :path => :customer, :as => :customer do
     get :new
-    post :charge
-    post :subscribe
-    delete :unsubscribe
+    post :create
   end
 
   resource :account, :except => [:new, :edit, :destroy] do
@@ -77,8 +75,9 @@ Minefold::Application.routes.draw do
     end
 
     resource :invite, :only => :create
-
   end
+  
+  resources :orders, :only => [:create]
 
   post '/stripe/webhook' => 'stripe#webhook'
 

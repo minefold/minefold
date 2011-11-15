@@ -51,7 +51,7 @@
   Secured by
   = image_tag 'stripe.png', width: 72, height: 31
 
-= form_for current_user, url: account_path, :id => 'new_order' do
+= form_for current_user, url: customer_create_path, :id => 'new_order' do
   - if params[:plan]
     = hidden_field_tag :plan, params[:plan]
   - elsif params[:hours]

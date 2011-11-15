@@ -67,7 +67,11 @@ def expect_stripe_update user, plan, next_charge_date = '2011-12-04'
       coupon: user.coupon,
         card: user.stripe_token,
      prorate: false
-  )
+  ) { Struct.new(:id, :current_period_end).new(
+           'cus_1', 
+           Time.parse(next_charge_date).to_i
+      ) 
+    }
 end
 
 def expect_stripe_charge user, amount 
