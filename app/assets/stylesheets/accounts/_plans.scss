@@ -21,9 +21,10 @@
       margin: 0 0 $line 0;
       padding: 0;
     }
-
-    button {
-      margin-top: $line;
+    
+    .action { margin-top: 2*$line; }
+    
+    button, a.button {
       font-size: 12px;
       padding: ($line / 2) (2*$gutter);
       margin-left: -$gutter;

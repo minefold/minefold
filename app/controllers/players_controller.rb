@@ -33,7 +33,7 @@ class PlayersController < ApplicationController
 
     WorldMailer.player_added(world.id, player.id).deliver
 
-    redirect_to world_players_path(world)
+    redirect_to edit_world_path(world, anchor: 'players')
   end
 
   def approve
@@ -45,7 +45,7 @@ class PlayersController < ApplicationController
 
     WorldMailer.player_added(world.id, @play_request.user.id).deliver
 
-    redirect_to :back
+    redirect_to edit_world_path(world, anchor: 'players')
   end
 
   def destroy
@@ -57,7 +57,7 @@ class PlayersController < ApplicationController
     world.whitelisted_players.delete(player)
     world.save
 
-    redirect_to world_players_path(world)
+    redirect_to edit_world_path(world, anchor: 'players')
   end
 
 end

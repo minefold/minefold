@@ -6,76 +6,179 @@
     .wrapper
       %ul
         %li
-          %a.current{href: '#general'} General
-
+          %a.general{href: '#general'} General
         %li
-          %a{href: '#players'} Players
+          %a.players{href: '#players'} Players
+
+  :coffeescript
+    $(document).ready ->
+      sections = $('section.tabby')
+      buttons  = $('nav.subnav a')
+
+      buttons.click (e) ->
+        buttons.removeClass('active')
+        target = $(e.target)
+        sections.hide().filter("."+ target.attr('class')).show()
+        target.addClass('active')
+
+      current = window.location.hash.substring(1)
+
+      if current isnt ''
+        buttons.filter("."+current).click()
+      else
+        buttons.first().click()
 
 
+%section.tabby.general{hidden}
 
-= form_for world do |f|
-  %section.name
-    %h3
-      = f.label :name
+  = form_for world do |f|
+    %section.name
+      %h3
+        = f.label :name
 
-    %fieldset
-      = f.text_field :name
+      %fieldset
+        = f.text_field :name
 
-  %section.game-mode
-    %h3 Default game mode
+    %section.game-mode
+      %h3 Default game mode
 
-    %fieldset.inline
-      %div
-        = f.radio_button :game_mode, 0
-        = f.label :game_mode_0, 'Survival'
+      %fieldset.inline
+        %div
+          = f.radio_button :game_mode, 0
+          = f.label :game_mode_0, 'Survival'
 
-      %div
-        = f.radio_button :game_mode, 1
-        = f.label :game_mode_1, 'Creative'
+        %div
+          = f.radio_button :game_mode, 1
+          = f.label :game_mode_1, 'Creative'
 
-      %p.hint (Can be changed by ops for individual players)
+        %p.hint (Can be changed by ops for individual players)
 
-  %section.difficulty
-    %h3 Difficulty
+    %section.difficulty
+      %h3 Difficulty
 
-    %fieldset.inline
-      %div
-        = f.radio_button :difficulty_level, 0
-        = f.label :difficulty_level_0, 'Peaceful'
+      %fieldset.inline
+        %div
+          = f.radio_button :difficulty_level, 0
+          = f.label :difficulty_level_0, 'Peaceful'
 
-      %div
-        = f.radio_button :difficulty_level, 1
-        = f.label :difficulty_level_1, 'Easy'
+        %div
+          = f.radio_button :difficulty_level, 1
+          = f.label :difficulty_level_1, 'Easy'
 
-      %div
-        = f.radio_button :difficulty_level, 2
-        = f.label :difficulty_level_2, 'Normal'
+        %div
+          = f.radio_button :difficulty_level, 2
+          = f.label :difficulty_level_2, 'Normal'
 
-      %div
-        = f.radio_button :difficulty_level, 3
-        = f.label :difficulty_level_3, 'Hard'
+        %div
+          = f.radio_button :difficulty_level, 3
+          = f.label :difficulty_level_3, 'Hard'
 
-  %section.game-settings
-    %h3 Game settings
+    %section.game-settings
+      %h3 Game settings
 
-    %fieldset
-      %div
-        = f.check_box :pvp
-        = f.label :pvp, 'Player vs. Player'
+      %fieldset
+        %div
+          = f.check_box :pvp
+          = f.label :pvp, 'Player vs. Player'
 
-      %div
-        = f.check_box :spawn_monsters
-        = f.label :spawn_monsters, 'Spawn monsters'
+        %div
+          = f.check_box :spawn_monsters
+          = f.label :spawn_monsters, 'Spawn monsters'
 
-      %div
-        = f.check_box :spawn_animals
-        = f.label :spawn_animals, 'Spawn animals'
+        %div
+          = f.check_box :spawn_animals
+          = f.label :spawn_animals, 'Spawn animals'
 
-  .submit
-    = f.submit 'Save settings'
+    .submit
+      = f.submit 'Save settings'
 
-    - unless world.current_players_count.zero?
-      .note
-        %strong Note:
-        Settings will be applied next time the server is empty.
+      - unless world.current_players_count.zero?
+        .note
+          %strong Note:
+          Settings will be applied next time the server is empty.
 
+%section.tabby.players{hidden}
+  = form_for :user, url: add_world_players_path(world), method: 'post', html: {id: 'add-player'} do |f|
+    = hidden_field_tag :player_id
+    %h2 Add a player
+    .avatar
+    %section
+      = f.text_field :username, placeholder: 'username', autocomplete: 'off'
+    %section.submit
+      = f.submit 'Add player', disabled: true
+
+  :coffeescript
+    default_avatar = #{image_path('question.png').to_json}
+
+    $(document).ready ->
+      form = $('form#add-player')
+      username = form.find('input#user_username')
+      players = $('#players')
+
+      player_id = form.find('input#player_id')
+      player_id.change ->
+        id = player_id.val()
+        form.find('input[type=submit]').attr disabled: (!id? or id is '')
+
+      form.submit ->
+        id = player_id.val()
+        if id? and id isnt ''
+          username.blur()
+        else
+          false
+
+      complete = (username) ->
+        $.ajax
+          url: ("#{url_for(world)}/players/search.json")
+          data:
+            username: username
+          dataType: 'json'
+          error: ->
+            form.find('.avatar').empty()
+          success: (data) ->
+            player_id.val(data.id).change()
+
+            a = $('<img/>').attr(src: data.avatar_head_60_url).attr
+              width: 24
+              height: 24
+
+            form.find('.avatar').empty().append(a)
+
+      debouncedComplete = _.debounce(complete, 300)
+
+      username.keyup ->
+        u = username.val()
+        player_id.val('').change()
+        debouncedComplete(u)
+
+  %ul#authorized-players.players
+    %li.creator
+      = link_to world.creator do
+        .avatar
+          = image_tag world.creator.avatar.head.s24.url, width: 24, height: 24
+        .username
+          = world.creator.username
+        .controls
+          %input{type: 'submit', value: 'Kick', disabled: true}
+
+    - world.whitelisted_players.each do |player|
+      %li
+        = link_to player do
+          .avatar
+            = image_tag player.avatar.head.s24.url, width: 24, height: 24
+          .username
+            = player.username
+
+        .controls
+          = button_to 'Kick', world_player_path(world, player), method:'delete', class: 'remove', confirm: "Are you sure you want to kick #{player.username} from #{world.name}?"
+
+    - world.play_requests.each do |req|
+      %li.requested
+        = link_to req.user do
+          .avatar
+            = image_tag req.user.avatar.head.s24.url, width: 24, height: 24
+          .username
+            = req.user.username
+
+        .controls
+          = button_to 'Accept', approve_world_players_path(world, play_request_id: req.id), method: :put, class: 'accept'

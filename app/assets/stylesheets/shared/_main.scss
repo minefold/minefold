@@ -57,12 +57,12 @@ em {
   height: 16px;
 }
 
-h2 {
+h2, dt {
   margin: 0 0 (2*$line);
   line-height: 24px;
   font-size: 21px;
   font-weight: 400;
-  color: darken(white, 40%);
+  color: darken($blue, 20%);
 }
 
 code {
@@ -224,19 +224,45 @@ iframe.youtube {
   }
 }
 
-.subnav {
-  a {
-    text-decoration: none;
-    display: block;
-    line-height: 18px;
-    padding: $line $gutter;
-    padding-bottom: $line - 1px;
+#before nav.subnav {
+  overflow: auto;
+  border-bottom: 1px solid darken(white, 5%);
 
-    &.current {
-      font-weight: bold;
+  li {
+    float: left;
+
+    a {
+      display: block;
+      padding: $line $gutter;
+      padding-bottom: $line - 1px;
+      line-height: 24px;
+      font-size: 12px;
+      color: darken($blue, 10%);
+      cursor: pointer;
+      text-decoration: none;
+
+      &:hover {
+        color: black;
+      }
+
+      &.active {
+        font-weight: bold;
+      }
     }
   }
 
 }
 
-
+.flash {
+  border-top: 1px solid white;
+  border-bottom: 1px solid lighten($blue, 40%);
+  background-color: lighten($blue, 52%);
+  padding-top: 2*$line;
+  color: desaturate(lighten($blue, 0%), 50%);
+  .close {
+    float: right;
+  }
+  p {
+    margin-bottom: 2*$line;
+  }
+}

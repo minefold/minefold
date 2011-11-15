@@ -39,16 +39,17 @@ Minefold::Application.routes.draw do
   controller :stripe, :path => 'order', :as => :customer do
     get :new
     post :charge
-    put :subscribe
+    post :subscribe
     delete :unsubscribe
   end
 
   resource :account, :except => [:new, :edit, :destroy] do
     get :billing
+    resources :plans, :only => :show
   end
-
+  
   as :user do
-    resources :users, :path => 'players', :only => :show
+    resources :users, :path => 'players', :only => [:show]
   end
 
   resources :worlds, :only => [:show, :edit, :update] do
@@ -64,10 +65,7 @@ Minefold::Application.routes.draw do
       post :add, :action => :add, :on => :collection
       get  :search, :action => :search, :on => :collection
 
-      put '/approve/:play_request_id',
-        :action => :approve,
-        :on => :collection,
-        :as => :approve_play_request
+      put :approve, :on => :collection
     end
 
     resource :invite, :only => :create

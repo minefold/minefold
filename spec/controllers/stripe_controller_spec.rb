@@ -25,7 +25,7 @@ describe StripeController do
   
   describe '#webhook' do
     let(:user) do
-      build(:user).tap {|u| set_plan u, Plan.large }
+      build(:user).tap {|u| set_initial_plan u, Plan.large }
     end
     
     context 'recurring_payment_succeeded' do

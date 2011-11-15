@@ -32,7 +32,7 @@
 
   %nav
     %ol
-      %li.chat= link_to 'Chat', world
+      %li.activity= link_to 'Activity', world
       %li.map= link_to 'Map', map_world_path(world)
 
       - if signed_in? and world.creator == current_user

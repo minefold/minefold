@@ -2,11 +2,7 @@ require 'spec_helper'
 
 feature "Static pages" do
   context 'not signed in' do
-    [#'/plans',  # TODO doesnt work signed out
-     '/features',
-     #'/about',  # Relies on User.dave and User.chris
-     '/jobs',
-     '/contact',
+    ['/contact',
      '/help',
      '/privacy',
      '/terms',
