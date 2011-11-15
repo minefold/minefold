@@ -41,6 +41,20 @@
     %section#masthead
       .wrapper= yield :masthead
 
+    - flash.each do |type, message|
+      %section.flash{class: type}
+        .wrapper
+          %a.close{href: '#'}
+          %p= message
+
+    :coffeescript
+      $(document).ready ->
+        $('.flash a.close').click (e) ->
+          e.preventDefault()
+          $(e.target).parent().parent('.flash').slideUp()
+
+
+
     %section#before= yield :before
 
     %section#page
