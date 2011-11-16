@@ -1,0 +1,91 @@
+#pages-home {
+
+  header {
+    padding-top: 8 * $line;
+    padding-bottom: 0;
+
+    h1 a, aside {
+      line-height: 48px;
+    }
+
+    h1 a {
+      padding: 0 $gutter 0 (60px + $gutter);
+      font-size: 18px;
+      background: url(image-path('logo-48.png')) 2px center no-repeat;
+
+      .beta {
+        font-size: 11px;
+        right: $gutter;
+      }
+    }
+  }
+
+  #masthead {
+    text-align: center;
+    padding: (8*$line) 0;
+    text-shadow: 0 1px 0 white;
+
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 36px;
+      margin: 0;
+      float: none;
+    }
+
+    h2 {
+      margin-top: $line;
+      margin-bottom: $line;
+      color: rgba(black, 0.5);
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 24px;
+      float: none;
+    }
+
+    a.button {
+      font-size: 18px;
+      line-height: 24px;
+      @include inline-block;
+
+      .free {
+        font-size: 12px;
+        line-height: 18px;
+        color: rgba($blue, 0.5);
+        font-weight: 400;
+      }
+
+      strong {
+        font-weight: 500;
+      }
+    }
+  }
+
+  #features {
+    overflow: auto;
+    margin: 0 (-$gutter);
+    margin-top: 6*$gutter;
+
+    strong {
+      color: rgba(black, 0.9);
+      padding: 1px 2px;
+      background-color: #FFC;
+    }
+
+    li {
+      float: left;
+      @include span(4);
+      margin-bottom: $line;
+
+      h2 {
+        margin-top: 0;
+        font-weight: 600;
+      }
+      p {
+        color: darken(white, 60%);
+        text-align: justify;
+      }
+
+    }
+  }
+}

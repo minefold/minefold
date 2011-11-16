@@ -1,98 +1,37 @@
 //#plans {
-//  overflow: auto;
-//  margin-bottom: 2*$line;
+//  color: rgba(black, 0.6);
+//  text-align: center;
+//  margin: (4*$line) 0;
+//  @include box-sizing(border-box);
+//  width: 100%;
 //
-//  .plan {
-//    overflow: auto;
-//    padding: $line $gutter;
-//    margin-bottom: 2*$line;
-//    @include border-radius($radius);
+//  p {
+//    margin: 0;
+//  }
 //
-//    .price {
-//      float: left;
-//      @include border-radius($radius);
+//  strong {
+//    color: #000;
+//  }
+//
+//  table {
+//    width: 100%;
+//    padding: (4*$line) 0;
+//
+//    th {
+//      padding-top: $line;
+//      font-weight: bold;
+//      font-size: 16px;
 //      line-height: 24px;
-//      padding: $line $gutter;
-//      margin-right: $gutter;
-//      overflow: auto;
-//      text-shadow: 0 1px 0 rgba(white, 0.6);
-//      background: white;
-//      height: 36px;
-//
-//      .dollar-sign {
-//        color: rgba(black, 0.4);
-//        line-height: 2*$line;
-//        display: block;
-//        float: left;
-//        margin-top: $line;
-//        margin-right: $line/2;
-//      }
-//      .amount {
-//        font-size: 36px;
-//        line-height: 24px;
-//        margin-top: 5px;
-//        font-weight: 800;
-//        @include inline-block;
-//      }
-//      .period {
-//        color: rgba(black, 0.4);
-//        font-weight: 600;
-//      }
+//      color: #000;
+//      border-bottom: 1px solid darken(white, 10%);
 //    }
 //
-//    .details {
-//      float: left;
-//      color: rgba(black, 0.6);
-//      line-height: 24px;
-//
-//      h2 {
-//        margin: 0;
-//        color: black;
-//        line-height: 24px;
-//        padding: 0;
-//        font-weight: 600;
-//      }
-//      p {
-//        margin-bottom: 0;
-//      }
+//    .price td {
+//      color: black;
 //    }
 //
-//    a.button {
-//      float: right;
-//      color: white;
-//      margin: (1.5*$line) 0;
-//    }
-//
-//    &.free {
-//      background: darken(white, 5%);
-//      .price {
-//        border-color: darken(white, 10%);
-//      }
-//    }
-//
-//    &.pro {
-//      background: darken($blue, 30%);
-//      .details {
-//        color: lighten($blue, 40%);
-//        h2 {
-//          color: white;
-//          .beta {
-//            color: #FFC;
-//            font-weight: 600;
-//            font-size: 12px;
-//            text-transform: uppercase;
-//            line-height: 12px;
-//          }
-//        }
-//      }
-//
-//      a.button {
-//        background-color: darken($red, 10%);
-//        text-shadow: 0 1px 0 darken($red, 30%);
-//        &:hover {
-//          background-color: darken(darken($red, 10%), 10%);
-//        }
-//      }
+//    .buy {
+//      color: rgba(black, 0.2);
 //    }
 //
 //  }

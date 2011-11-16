@@ -1,0 +1,29 @@
+- action = current_plan.price < plan.price ? 'Upgrade' : 'Downgrade'
+- title "#{action} to #{plan.name}"
+
+- price = number_to_currency(plan.price * 0.01)
+
+= form_tag subscribe_order_path do
+  = hidden_field_tag 'user[plan_id]', plan.id
+
+  - if current_plan.free?
+    %p You are about to be charged <strong>#{price}</strong>
+
+    %p This plan change will take effect <strong>immediately</strong>
+
+    %p Your new monthly hours will be <strong>#{plan.hours}</strong>
+
+    = submit_tag "Buy Now #{price}"
+
+  - elsif plan.free?
+    %p You are about to cancel your subscription
+
+    %p This will take effect <strong>immediately</strong>
+
+    = submit_tag "Cancel Subscription"
+  
+  - else
+    %p This plan change will take effect on <strong>#{l current_user.next_charge_on.to_date}</strong>
+
+    = submit_tag "Change Plan"
+  

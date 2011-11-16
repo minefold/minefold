@@ -1,3 +1,10 @@
+- head do
+  %meta{property: 'og:title', content: world.name}
+  %meta{property: 'og:type',  content: 'fold'}
+  %meta{property: 'og:url', content: world_path(world)}
+  %meta{property: 'og:image', content: image_path('logo-48.png')}
+  %meta{property: 'og:site_name', content: 'Minefold'}
+
 - masthead do
   %h1
     = link_to world.name, world
@@ -11,7 +18,7 @@
             %strong= current_user.host
           %p.hint
             = link_to help_page_path(anchor: 'connecting') do
-              Don't know how to connect?
+              How do I connect?
         - else
           = button_to 'Play here', [:play, world], method: :put
 
@@ -30,17 +37,13 @@
 
       = link_to 'Join them by signing up now', root_path(anchor: 'plans'), class: 'button'
 
-- subhead do
-  %ol#subnav
-    %li.chat
-      = link_to 'Chat', world
+  %nav
+    %ol
+      %li.activity= link_to 'Activity', world
+      %li.map= link_to 'Map', map_world_path(world)
 
-    %li.map
-      = link_to 'Map', [:map, world]
+      - if signed_in? and world.creator == current_user
+        %li.settings= link_to 'Settings', edit_world_path(world)
 
-    %li.players
-      = link_to 'Players', [world, :players]
-
-    - if signed_in? and world.creator == current_user
-      %li.edit
-        = link_to 'Settings', [:edit, world]
+      - if signed_in?
+        %li.invites= link_to 'Invite your friends', invite_world_path(world)

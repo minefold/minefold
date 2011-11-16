@@ -11,10 +11,6 @@ module ApplicationHelper
     {style: 'display:none'}
   end
 
-  def time_left_for user
-    "%02d' %02d\"" % user.time_left
-  end
-
   def template(name, options)
     view = Mustache.new
     view.template_name = name.to_sym
@@ -74,10 +70,6 @@ module ApplicationHelper
 
   def masthead &blk
     content_for :masthead, capture_haml(&blk)
-  end
-
-  def subhead &blk
-    content_for :subhead, capture_haml(&blk)
   end
 
   def before &blk

@@ -23,25 +23,33 @@ header {
 
     a {
       display: block;
-      color: #000;
+      color: darken($blue, 10%);
       text-decoration: none;
       float: left;
+
+      position: relative;
 
       margin: (-$line) 0;
       padding: $line ($gutter/2) $line (27px + $gutter);
       background: url(image-path('logo-24.png')) center left no-repeat;
 
       &:hover {
-        color: $blue;
+        color: black;
       }
     }
 
     .beta {
-      color: darken(white, 20%);
-      float: right;
-      font-size: 11px;
-      line-height: 24px;
+      display: block;
+      color: darken(white, 40%);
       font-weight: 400;
+      margin-left: 0.5em;
+      font-size: 12px;
+
+      position: absolute;
+      line-height: 12px;
+      font-size: 9px;
+      bottom: 0;
+      right: $gutter/2;
     }
   }
 
@@ -62,7 +70,7 @@ header {
         color: darken($blue, 10%);
         text-decoration: none;
         &:hover {
-          color: $blue;
+          color: black;
         }
       }
 
@@ -72,14 +80,16 @@ header {
         font-weight: 600;
       }
 
-      .go-pro a {
-        background-color: darken($red, 10%);
-        padding: ($line/2) $gutter;
-        @include border-radius($radius);
-        color: white;
-        font-weight: 600;
-        &:hover, &:focus {
-          background-color: darken($red, 20%);
+      .time a {
+        padding-left: 18px + ($gutter/2);
+        font-weight: 400;
+        background: url(image-path('clock.png')) left -1px no-repeat;
+        @include border-radius(6px);
+        color: lighten($blue, 10%);
+        text-shadow: 0 1px 0 rgba(white, 0.4);
+        font-weight: 500;
+        &:hover {
+          color: black;
         }
       }
 

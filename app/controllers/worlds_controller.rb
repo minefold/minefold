@@ -1,20 +1,16 @@
 class WorldsController < ApplicationController
-  prepend_before_filter :authenticate_user!, except: [:show, :map]
-
-  expose(:creator) { User.find_by_slug!(params[:user_id])}
-  expose(:world) do
-    if creator
-      creator.created_worlds.find_by_slug!(params[:id])
-    else
-      World.new(params[:world])
-    end
-  end
-
   respond_to :html
 
-  def new
-    world.creator = current_user
-  end
+  prepend_before_filter :authenticate_user!, except: [:show, :map]
+  before_filter :set_invite_code, :only => [:show, :map]
+
+  expose(:world) do
+     if params[:id]
+       World.find_by_slug!(params[:id])
+     else
+       World.new(params[:world])
+     end
+   end
 
   def create
     world.creator = current_user
@@ -22,8 +18,12 @@ class WorldsController < ApplicationController
     if world.save
       current_user.current_world = world
       current_user.save
-      flash[:new] = true
-      redirect_to user_world_path(world.creator, world)
+      flash[:new] = <<-HTML
+<strong>Awesome, now you can show off what you build!</strong>
+
+Share this page with your friends and they can start playing here too.
+HTML
+      redirect_to world_path(world)
     else
       render :new
     end
@@ -40,7 +40,7 @@ class WorldsController < ApplicationController
     world.update_attributes params[:world]
     if world.save
       flash[:success] = "Settings successfully updated."
-      redirect_to params['return_url'] || user_world_path(world.creator, world)
+      redirect_to params['return_url'] || world_path(world)
     else
       render json: {errors: world.errors}
     end
@@ -53,23 +53,22 @@ class WorldsController < ApplicationController
   end
 
   def invite
-    @invite = Invite.new(world: world, from: current_user)
   end
 
   def play
-    if world.whitelisted?(current_user)
-      current_user.current_world = world
-      current_user.save
-    end
+    raise 'Not whitelisted for world' unless world.whitelisted?(current_user)
+
+    current_user.current_world = world
+    current_user.save
+
     redirect_to :back
   end
 
-  # def play_request
-  #   @invite = world.invites.create from: current_user, to: world.owner
-  #
-  #   # WorldMailer.play_request(world.id,
-  #   #                          world.owner.id,
-  #   #                          current_user.id).deliver
-  #   redirect_to user_world_path(world.owner, world)
-  # end
+private
+
+  def set_invite_code
+    # THINK: Should we retroactively apply invite codes?
+    cookies[:invite] = params[:i] if params[:i] and not signed_in?
+  end
+
 end

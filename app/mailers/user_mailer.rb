@@ -4,13 +4,11 @@ class UserMailer < ActionMailer::Base
   default from: 'team@minefold.com'
   layout 'email'
 
-  def invite(invite_id)
-    @invite = Invite.find(invite_id)
-    @world = @invite.world
-    @creator = @world.creator
+  def invite invitor, world, invitee_email
+    @invitor, @world, @invitee_email = invitor, world, invitee_email
 
-    mail to: @invite.email,
-         subject: "#{@creator.username} wants you to play in #{@world.name}"
+    mail to: @invitee_email,
+         subject: "#{@invitor.username} wants you to play in #{@world.name}"
   end
 
   def welcome(user_id)
@@ -22,22 +20,22 @@ class UserMailer < ActionMailer::Base
     @user = User.find user_id
     mail(to: @user.email, subject: 'Buy more Minefold time (running low)')
   end
-
+  
   # TODO
   def thanks(order_id)
     # @order = Order.find(order_id)
     # mail(to: @order.user.email, subject: 'Thank you for buying Minefold minutes!')
   end
+  
+  # TODO
+  def payment_failed user_id
+    
+  end
 
   class Preview < MailView
 
     def invite
-      invite = Invite.create
-      chris = User.chris
-      referral = chris.referrals.new email: 'christopher.lloyd@gmail.com'
-      referral.creator = chris
-
-      ::UserMailer.referral(referral)
+      ::UserMailer.invite User.chris, User.chris.created_worlds.first, 'dave@minefold.com'
     end
 
     def welcome

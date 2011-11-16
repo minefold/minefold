@@ -1,8 +1,9 @@
 #masthead {
   overflow: auto;
+  background: url(image-path('cubes.png')) center top;
 
   .wrapper {
-    width: cols(8);
+//    width: cols(8);
   }
 
   h1 {

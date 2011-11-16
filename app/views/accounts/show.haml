@@ -1,0 +1,33 @@
+= render partial: 'header'
+
+= form_for account_path, object: current_user, method: :put, class: 'stripe-target' do |f|
+  %section
+    %h3
+      = f.label :username
+    %fieldset
+      = f.text_field :username, value: current_user.username
+      :coffeescript
+        username = $('input#user_username')
+        fetchUser = ->
+          u = username.val()
+          if u isnt ''
+            $.getJSON '/signup/check', {username: u}, (data, status) ->
+                username.siblings('.hint').toggle(not data.paid)
+
+        username.keyup _.debounce(fetchUser, 300)
+
+      .hint{hidden}
+        %p
+          You need a <em>paid</em> Minecraft account to play on Minefold. They are €14.95 at
+          %a{href: 'http://minecraft.net/store', target: '_blank'} http://minecraft.com/store
+          or you can change your username later.
+
+  %section
+    %h3
+      = f.label :avatar
+    %fieldset
+      = image_tag current_user.avatar.head.s48.url
+      %p Change your avatar at #{link_to 'http://minecraft.net/profile', 'http://minecraft.net/profile', target: '_blank'}
+
+  %section
+    = f.submit 'Update account'

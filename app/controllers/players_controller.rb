@@ -1,14 +1,14 @@
 class PlayersController < ApplicationController
 
-  expose(:creator) {User.find_by_slug!(params[:user_id])}
-  expose(:world) {creator.created_worlds.find_by_slug!(params[:world_id])}
-  expose(:player) do
-    world.whitelisted_players.find_by_slug(params[:id]) or
-    User.find(params[:player_id])
-  end
+  expose(:world) {
+    World.find_by_slug! params[:world_id]
+  }
+
+  expose(:player) {
+    world.whitelisted_players.find_by_slug(params[:id]) or User.find(params[:player_id])
+  }
 
   def search
-    not_found unless current_user == world.creator
     user = world.available_player(params[:username]).first
 
     if user
@@ -22,14 +22,18 @@ class PlayersController < ApplicationController
     world.play_requests.new user: current_user
     world.save
 
-    redirect_to user_world_path(world.creator, world)
+    WorldMailer.play_request(world.id, current_user.id).deliver
+
+    redirect_to world_path(world)
   end
 
   def add
     world.whitelisted_players << player
     world.save
 
-    redirect_to user_world_players_path(world.creator, world)
+    WorldMailer.player_added(world.id, player.id).deliver
+
+    redirect_to edit_world_path(world, anchor: 'players')
   end
 
   def approve
@@ -39,7 +43,9 @@ class PlayersController < ApplicationController
     world.play_requests.delete(@play_request)
     world.save
 
-    redirect_to :back
+    WorldMailer.player_added(world.id, @play_request.user.id).deliver
+
+    redirect_to edit_world_path(world, anchor: 'players')
   end
 
   def destroy
@@ -51,7 +57,7 @@ class PlayersController < ApplicationController
     world.whitelisted_players.delete(player)
     world.save
 
-    redirect_to user_world_players_path(world.creator, world)
+    redirect_to edit_world_path(world, anchor: 'players')
   end
 
 end

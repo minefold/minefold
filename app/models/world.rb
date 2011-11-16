@@ -7,7 +7,7 @@ class World
   DIFFICULTIES = [:peaceful, :easy, :normal, :hard]
 
   field :name, type: String
-  slug  :name, scope: :creator, index: true
+  slug  :name, index: true
 
   field :seed,             type: String, default: ''
   field :game_mode,        type: Integer, default: GAME_MODES.index(:survival)
@@ -25,15 +25,14 @@ class World
                           class_name: 'User'
 
   embeds_many :play_requests
-  has_many :invites
 
   embeds_many :wall_items, as: :wall
 
   default_scope includes(:creator)
 
-
 # VALIDATIONS
 
+  validates_uniqueness_of :name
   validates_presence_of :name
   validates_numericality_of :game_mode,
     only_integer: true,

@@ -24,15 +24,26 @@
     %meta{name:'keywords', content:%w(gaming games game minecraft server hosting multiplayer).join(',')}
 
     = yield :head
-    
     = render partial: 'shared/mixpanel'
-    
+
   %body{lang: 'en', id: page_css_selector}
+    <div id="fb-root"></div>
+    <script>
+    (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=160107270726261";
+    fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    </script>
+
     %header
       .wrapper
         %h1
           = link_to root_url do
             Minefold
+            %span.beta Beta
         %aside
           = render partial: 'shared/nav'
 
@@ -41,23 +52,28 @@
     %section#masthead
       .wrapper= yield :masthead
 
-    %section#subhead
-      .wrapper= yield :subhead
+    - flash.each do |type, message|
+      %section.flash{class: type}
+        .wrapper
+          %a.close{href: '#'}
+          = simple_format(message)
 
-    %section#content
-      .wrapper
-        #before-page= yield :before
-        #page= yield
-        #after-page= yield :after
+    :coffeescript
+      $(document).ready ->
+        $('.flash a.close').click (e) ->
+          e.preventDefault()
+          $(e.target).parent().parent('.flash').slideUp()
+
+    %section#before= yield :before
+
+    %section#page
+      .wrapper= yield
+
+    %section#after= yield :after
 
     %footer
       .wrapper
         %ul
-          %li
-            %a{href: 'http://flickr.com/photos/toolmantim/3451060043/'} Made in Sydney, Australia
-
-          .spaceball
-
           %li= link_to 'About', about_page_path
 
           .spaceball
@@ -77,7 +93,6 @@
 
           %li.twitter
             %a{href: '//twitter.com/minefold'} Follow us
-
 
         %p.fineprint
           &copy; #{Time.now.year} Minefold.

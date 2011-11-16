@@ -1,13 +1,13 @@
 source 'https://code.stripe.com'
 source 'https://rubygems.org'
 
-gem 'rake', '0.8.7'
+gem 'rake', '0.9.2.2'
 gem 'thin'
 gem 'rails', '3.1.0'
 gem 'sprockets', '2.0.2'
 
 # ORM
-gem 'mongoid', git: 'https://github.com/pyromaniac/mongoid.git'
+gem 'mongoid'
 gem 'bson_ext'
 gem 'mongoid_slug'
 
@@ -24,9 +24,6 @@ gem 'twitter'
 gem 'pusher'
 gem 'em-http-request'
 
-# Pages
-gem 'high_voltage'
-
 # Views
 gem 'haml'
 gem 'mustache'
@@ -34,8 +31,7 @@ gem 'bourbon'
 gem 'jquery-rails'
 gem 'backbone-rails'
 gem 'coffee-filter'
-gem 'decent_exposure', git: 'https://github.com/chrislloyd/decent_exposure.git'
-gem 'fancybox-rails'
+gem 'decent_exposure'
 
 # Uploads
 gem 'carrierwave'
@@ -74,10 +70,12 @@ group :worker do
 end
 
 group :test do
-  gem 'spork', '~> 0.9.0.rc'
   gem 'rspec'
   gem 'rspec-rails'
-  gem 'autotest'
-  gem 'autotest-rails'
+  gem 'factory_girl_rails'
   gem 'mongoid-rspec'
+  gem 'autotest-rails'
+  gem 'database_cleaner'
+  gem 'capybara', '~> 1.1.1'
+  gem 'timecop'
 end

@@ -1,0 +1,7 @@
+Hi <%= @player.username %>,
+
+<%= @creator.username %> has let you play in "<%= @world.name %>". You can choose to play here by going to:
+
+    <%= world_url(@world) %>
+
+<%= render partial: 'shared/email_sig' %>

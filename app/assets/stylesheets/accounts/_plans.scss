@@ -1,0 +1,33 @@
+#plans {
+  overflow: auto;
+  border-bottom: 1px solid darken(white, 5%);
+  padding-top: 4*$line;
+  padding-bottom: 4*$line;
+
+  section {
+    float: left;
+    margin: 0 $gutter;
+    width: cols(2) - (2*$gutter);
+    @include edgeless;
+
+    font-size: 12px;
+    line-height: 18px;
+    color: #666;
+
+    h3 {
+      display: block;
+      color: #000;
+      font-size: 18px;
+      margin: 0 0 $line 0;
+      padding: 0;
+    }
+    
+    .action { margin-top: 2*$line; }
+    
+    button, a.button {
+      font-size: 12px;
+      padding: ($line / 2) (2*$gutter);
+      margin-left: -$gutter;
+    }
+  }
+}

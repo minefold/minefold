@@ -1,11 +1,4 @@
 #devise-sessions-new #page, #devise-sessions-create #page {
-  width: 4 * ($gutter + $col + $gutter) - (2 * $gutter);
-  padding: 0 $gutter;
-  margin: 0 auto;
-
-  #errors {
-    color: $red;
-  }
 
   div {
     margin-bottom: 2 * $line;

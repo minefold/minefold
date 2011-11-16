@@ -1,7 +1,5 @@
 Minefold::Application.configure do
-
-  config.map_tiles_url = "/maps"
-
+  config.map_tiles_url = "//s3.amazonaws.com/minefold.production.world-tiles"
 
   # In the development environment your application's code is reloaded on
   # every request.  This slows down response time but is perfect for development
@@ -29,23 +27,4 @@ Minefold::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
-
-  config.action_mailer.default_url_options = { host: 'localhost:5000' }
-  config.action_mailer.delivery_method = :smtp
-
-  config.action_mailer.smtp_settings = {
-    address:              "smtp.gmail.com",
-    port:                 587,
-    domain:               "minefold.com",
-    user_name:            "admin@minefold.com",
-    password:             "minefold",
-    authentication:       "plain",
-    enable_starttls_auto: true
-  }
-
-  config.action_mailer.perform_deliveries = false
-
-  config.action_mailer.raise_delivery_errors = true
 end
-
-
