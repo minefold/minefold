@@ -1,10 +1,13 @@
-.wrapper
-  %section
-    %h3 Prepaid
-    %p Buy packs of time as you need them.
-
-  - TimePack.all.each do |pack|
+#buy-time
+  .wrapper
     %section
-      %h3 #{pack.hours} Hours
-      %p #{"%.2f" % (pack.hours / pack.price.to_f)}
-      %a.button{href: account_time_pack_path(pack.hours)} Buy for #{number_to_currency(pack.price * 0.01)}
+      %h3 Prepay
+      %p Time as you need it.
+
+    - TimePack.all.each do |pack|
+      %section
+        %h3
+          %strong= pack.hours
+          hours
+        %p.rate #{pack.rate}&nbsp;&cent;/h
+        %a.button{href: account_time_pack_path(pack.hours)} Buy for #{number_to_currency(pack.price * 0.01)}
