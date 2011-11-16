@@ -2,12 +2,10 @@ require 'spec_helper'
 
 describe PlayersController do
   render_views
-  
+
   let(:user)  { create :user }
   let(:world) { create :world, creator: user }
-  
-  
-  
+
   context 'not signed in' do
     describe '#index' do
       it "should succeed" do
@@ -16,15 +14,15 @@ describe PlayersController do
       end
     end
   end
-  
+
   context 'signed in' do
     let(:current_user)  { create :user }
-    
+
     before do
       @request.env["devise.mapping"] = Devise.mappings[:user]
       sign_in current_user
     end
-    
+
     describe '#ask' do
       it "should redirect to world" do
         post :ask, world_id: world.slug
@@ -51,7 +49,7 @@ describe PlayersController do
       end
     end
   end
-  
-  
+
+
 
 end

@@ -2,14 +2,6 @@ class UserMailer < ActionMailer::Base
   include Resque::Mailer
 
   default from: 'team@minefold.com'
-  layout 'email'
-
-  def invite invitor, world, invitee_email
-    @invitor, @world, @invitee_email = invitor, world, invitee_email
-
-    mail to: @invitee_email,
-         subject: "#{@invitor.username} wants you to play in #{@world.name}"
-  end
 
   def welcome(user_id)
     @user = User.find user_id
@@ -20,41 +12,41 @@ class UserMailer < ActionMailer::Base
     @user = User.find user_id
     mail(to: @user.email, subject: 'Buy more Minefold time (running low)')
   end
-  
+
   # TODO
-  def thanks(order_id)
-    # @order = Order.find(order_id)
-    # mail(to: @order.user.email, subject: 'Thank you for buying Minefold minutes!')
-  end
-  
+  # def thanks(user_id)
+  #   # @order = Order.find(order_id)
+  #   # mail(to: @order.user.email, subject: 'Thank you for buying Minefold minutes!')
+  # end
+
   # TODO
-  def payment_failed user_id
-    
-  end
+  # def payment_failed user_id
+  #
+  # end
 
-  class Preview < MailView
-
-    def invite
-      ::UserMailer.invite User.chris, User.chris.created_worlds.first, 'dave@minefold.com'
-    end
-
-    def welcome
-      ::UserMailer.welcome User.chris.id
-    end
-
-    def reminder
-      ::UserMailer.reminder User.chris.id
-    end
-
-    def thanks
-      # order = Order.new
-      # order.transactions.new option_selection1: 8
-      # order.user = User.chris
-      # order.save
-      #
-      # ::OrderMailer.thanks(order.id)
-    end
-
-  end
+  # class Preview < MailView
+  #
+  #   def invite
+  #     ::UserMailer.invite User.chris, User.chris.created_worlds.first, 'dave@minefold.com'
+  #   end
+  #
+  #   def welcome
+  #     ::UserMailer.welcome User.chris.id
+  #   end
+  #
+  #   def reminder
+  #     ::UserMailer.reminder User.chris.id
+  #   end
+  #
+  #   def thanks
+  #     # order = Order.new
+  #     # order.transactions.new option_selection1: 8
+  #     # order.user = User.chris
+  #     # order.save
+  #     #
+  #     # ::OrderMailer.thanks(order.id)
+  #   end
+  #
+  # end
 
 end

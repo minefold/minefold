@@ -23,13 +23,13 @@ class StripeController < ApplicationController
   # Renders page that gets the card token
   def new
   end
-  
+
   def create
     current_user.update_attributes! params[:user]
     redirect_to case
       when params[:plan]
         account_plan_path(params[:plan])
-        
+
       when params[:hours]
         account_time_pack_path(params[:hours])
       else
@@ -81,10 +81,9 @@ private
   end
 
   def recurring_payment_failed_hook(params)
-
     @user.recurring_payment_failed! params['attempt'].to_i
 
-    UserMailer.payment_failed(@user.id).deliver!
+    # UserMailer.payment_failed(@user.id).deliver!
 
     render nothing: true, status: :success
   end
