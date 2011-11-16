@@ -5,47 +5,38 @@
   :coffeescript
     Stripe.setPublishableKey #{ENV['STRIPE_PUBLISHABLE'].to_json}
 
+%form
+  %section.card-number
+    %h3= label_tag :number, 'Card Number'
+    %fieldset
+      = text_field_tag :number, '', name: nil, size: 20, autocomplete: 'off', class: %w{stripe number}, id: 'stripe-number'
 
+      %p.card-types
+        We accept <span class="visa">Visa</span>, <span class="mastercard">MasterCard</span>, <span class="american-express">American Express</span>, <span class="discover">Discover</span>, <span class="jcb">JCB</span> and <span class="diners-club">Diners Club</span>.
 
-%section.card-number
-  = label_tag :number, 'Card Number'
-  = text_field_tag :number, '', name: nil, size: 20, autocomplete: 'off', class: %w{stripe number}, id: 'stripe-number'
+      :coffeescript
+        $('input.stripe.number').keyup (e) ->
+          target = $(e.target)
+          cardType = Stripe.cardType(target.val())
+            .toLowerCase()
+            .replace(/\s/,'-')
 
+          $('.card-types span')
+            .toggleClass('unknown', cardType isnt 'unknown')
+            .removeClass('active')
+            .filter(-> $(@).hasClass(cardType))
+            .addClass('active')
 
-%p.card-types
-  We accept <span class="visa">Visa</span>, <span class="mastercard">MasterCard</span>, <span class="american-express">American Express</span>, <span class="discover">Discover</span>, <span class="jcb">JCB</span> and <span class="diners-club">Diners Club</span>.
+  %section.card-cvc
+    %h3= label_tag :cvc, 'CVC'
+    %fieldset= text_field_tag :cvc, '', name: nil, size: 4, autocomplete: 'off', class: %w{stripe cvc}, id: 'stripe-cvc'
 
-:coffeescript
-  $('input.stripe.number').keyup (e) ->
-    target = $(e.target)
-    cardType = Stripe.cardType(target.val())
-      .toLowerCase()
-      .replace(/\s/,'-')
-
-    $('.card-types span')
-      .toggleClass('unknown', cardType isnt 'unknown')
-      .removeClass('active')
-      .filter(-> $(@).hasClass(cardType))
-      .addClass('active')
-
-%section.card-cvc
-  = label_tag :cvc, 'CVC'
-  = text_field_tag :cvc, '', name: nil, size: 4, autocomplete: 'off', class: %w{stripe cvc}, id: 'stripe-cvc'
-
-%section.card-expiration
-  = label_tag :expiry_month, 'Expiration (MM/YYYY)'
-  = text_field_tag :expiry_month, '', name: nil, size: 2, class: %w{stripe expiry-month}, id: 'stripe-exp-month'
-  %span /
-  = text_field_tag :expiry_year, '', name: nil, size: 4, class: %w{stripe expiry-year}, id: 'stripe-exp-year'
-
-  :coffeescript
-    # Skip to the next field
-
-    $('input.stripe.expiry-month').keyup (e) ->
-      return unless 48 <= e.keyCode <= 57
-
-      target = $(e.target)
-      $('input.stripe.expiry-year').focus() if target.val().length is parseInt(target.attr('size'), 10)
+  %section.card-expiration
+    %h3= label_tag :expiry_month, 'Expiration (MM/YYYY)'
+    %fieldset
+      = text_field_tag :expiry_month, '', name: nil, size: 2, class: %w{stripe expiry-month}, id: 'stripe-exp-month'
+      %span /
+      = text_field_tag :expiry_year, '', name: nil, size: 4, class: %w{stripe expiry-year}, id: 'stripe-exp-year'
 
 %a#secured-by{href: 'https://stripe.com', target: '_blank'}
   Secured by
@@ -57,7 +48,10 @@
   - elsif params[:hours]
     = hidden_field_tag :hours, params[:hours]
 
-  %button Continue
+  .errors
+
+  %fieldset
+    %input{type: 'submit', value: 'Continue'}
 
 :coffeescript
   form = $('form.edit_user')
@@ -65,7 +59,9 @@
   form.submit (e) ->
     e.preventDefault()
 
-    form.find('button').attr(disabled: true)
+    button = form.find('input[type=submit]')
+
+    button.attr(disabled: true)
     form.find('.spinner').show()
 
     card =
@@ -76,9 +72,9 @@
 
 
     Stripe.createToken card, #{@amount.to_i.to_json}, (status, response) ->
+      console.log status, response
       if status isnt 200
-        form.find('input[type=submit]').attr(disabled: false)
-        form.find('.spinner').hide()
+        button.attr(disabled: false)
 
         $('<p></p>')
           .addClass('stripe')

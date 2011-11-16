@@ -1,0 +1,20 @@
+#stripe-new #page {
+//  width: cols(8);
+}
+
+.card-types {
+  .unknown {
+    color: darken(white, 40%);
+  }
+  .active {
+    background-color: #FFC;
+    color: darken(desaturate(#FFC, 50%), 60%);
+  }
+}
+
+#secured-by {
+  float: right;
+  img {
+    display: block;
+  }
+}
