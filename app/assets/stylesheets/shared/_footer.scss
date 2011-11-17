@@ -1,23 +1,24 @@
 footer {
   clear: both;
-  text-align: center;
-  font: 12px/24px $helvetica;
+  font: 12px/18px $helvetica;
+
   padding: (12 * $line) 0;
-  color: #CCC;
 
   ul {
+    overflow: auto;
     li {
-      display: inline;
+      float: left;
       a {
-        color: #666;
+        color: rgba(black, 0.6);
         text-decoration: none;
+        margin-right: $gutter;
         &:hover {
           color: black;
         }
       }
-      &.spaceball {
-        @include inline-block;
-        width: $gutter;
+
+      &.facebook, &.twitter {
+        float: right;
       }
 
       &.facebook a {
@@ -34,9 +35,11 @@ footer {
   }
 
   .fineprint {
-    color: #CCC;
+    clear: both;
+    color: rgba(black, 0.1);
+
     a {
-      color: #CCC;
+      color: rgba(black, 0.1);
       text-decoration: none;
       &:hover {
         text-decoration: underline;

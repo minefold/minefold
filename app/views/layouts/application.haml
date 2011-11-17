@@ -74,29 +74,16 @@
     %footer
       .wrapper
         %ul
-          %li= link_to 'About', about_page_path
+          %li.help= link_to 'Help', help_page_path
+          %li.about= link_to 'About', about_page_path
+          %li.contact= link_to 'Contact', contact_page_path
 
-          .spaceball
-
-          %li= link_to 'Contact', contact_page_path
-
-          .spaceball
-
-          %li= link_to 'Help', help_page_path
-
-          .spaceball
-
-          %li.facebook
-            %a{href: '//facebook.com/minefold'} Become a fan
-
-          .spaceball
-
-          %li.twitter
-            %a{href: '//twitter.com/minefold'} Follow us
+          %li.facebook= link_to 'Become a fan', 'https://facebook.com/minefold'
+          %li.twitter= link_to 'Follow us', 'https://twitter.com/minefold'
 
         %p.fineprint
-          &copy; #{Time.now.year} Minefold.
-          #{link_to 'Privacy', privacy_page_path}, #{link_to 'Terms', terms_page_path}.
+          &copy; 2011 Minefold.
+          #{link_to 'Privacy', privacy_page_path} &amp; #{link_to 'Terms', terms_page_path}.
 
     - if Rails.env.production?
       = render partial: 'shared/analytics'
