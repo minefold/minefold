@@ -153,11 +153,11 @@ class User
   #       prorate: false
   #     )
   #     self.next_charge_on = Time.at subscription.current_period_end
-  # 
+  #
   #     if not stripe_token.nil?
   #       build_card_from_stripe!(subscription.card)
   #     end
-  # 
+  #
   #     subscription
   #   else
   #     customer.cancel_subscription
@@ -208,8 +208,7 @@ class User
     return false
   end
 
-  def buy_hours! hours
-    pack = TimePack.find(hours)
+  def buy_time_pack!(pack)
     # The order is important here. If the charge fails for some reason we
     # don't want the credits to be applied.
     create_charge! pack.price
