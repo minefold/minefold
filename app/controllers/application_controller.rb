@@ -6,7 +6,10 @@ class ApplicationController < ActionController::Base
   extend StatsD::Instrument
 
   def track event_name, properties={}
-    properties[:distinct_id] = current_user.id if current_user
+    if current_user
+      properties[:distinct_id] = current_user.id
+      properties[:mp_name_tag] = current_user.safe_username
+    end
 
     mixpanel.track event_name, properties
   end

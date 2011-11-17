@@ -5,4 +5,4 @@
   - if user_signed_in?
     :javascript
       mpq.identify(#{current_user.id.to_s.to_json});
-      mpq.name_tag(#{current_user.username.to_s.to_json});
+      mpq.name_tag(#{current_user.safe_username.to_s.to_json});
