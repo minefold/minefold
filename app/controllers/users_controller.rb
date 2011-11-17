@@ -39,6 +39,9 @@ class UsersController < ApplicationController
     user.referrer = referrer
     if user.save
       UserMailer.welcome(user.id).deliver
+
+      track 'signed up'
+
       sign_in :user, user
       respond_with user, :location => new_world_path
     else
