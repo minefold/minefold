@@ -40,7 +40,7 @@ class UsersController < ApplicationController
     if user.save
       UserMailer.welcome(user.id).deliver
 
-      track 'signed up'
+      track '$born'
 
       sign_in :user, user
       respond_with user, :location => new_world_path
