@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
 
     current_user.buy_time_pack! pack
 
-    track 'bought time', hours: pack.hours, price: pack.price
+    track 'paid', hours: pack.hours, amount: pack.price
 
     redirect_to user_root_path, notice: "You purchased #{pack.hours} hours"
   end
