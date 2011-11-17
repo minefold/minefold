@@ -50,6 +50,8 @@ gem 'rinku'
 # Logging
 gem 'airbrake'
 gem 'statsd-instrument'
+gem 'rpm_contrib'
+gem 'newrelic_rpm'
 
 group :development do
   gem 'heroku'

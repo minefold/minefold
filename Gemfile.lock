@@ -171,6 +171,7 @@ GEM
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-ssh (2.1.4)
+    newrelic_rpm (3.3.0)
     nokogiri (1.5.0)
     oauth (0.4.5)
     orm_adapter (0.0.5)
@@ -224,6 +225,9 @@ GEM
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rinku (1.2.2)
+    rpm_contrib (2.1.6)
+      newrelic_rpm (>= 3.1.1)
+      newrelic_rpm (>= 3.1.1)
     rspec (2.7.0)
       rspec-core (~> 2.7.0)
       rspec-expectations (~> 2.7.0)
@@ -332,6 +336,7 @@ DEPENDENCIES
   mongoid-rspec
   mongoid_slug
   mustache
+  newrelic_rpm
   pusher
   rack-ssl
   rails (= 3.1.0)
@@ -339,6 +344,7 @@ DEPENDENCIES
   resque
   resque_mailer
   rinku
+  rpm_contrib
   rspec
   rspec-rails
   rubyzip
