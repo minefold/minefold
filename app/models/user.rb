@@ -308,10 +308,10 @@ class User
   belongs_to :referrer,  class_name: 'User', inverse_of: :referrals
   has_many   :referrals, class_name: 'User', inverse_of: :referrer
 
-  def played!
-    self.referral_state = 'played'
-    save!
-  end
+  # def played!
+  #   self.referral_state = 'played'
+  #   save!
+  # end
 
 # USER_REFERRAL_BONUS = 1.hour
 # FRIEND_REFERRAL_BONUS = 4.hours
