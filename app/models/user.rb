@@ -41,9 +41,6 @@ class User
   validates_uniqueness_of :referral_code
 
 
-  STATUSES = %W(signed_up played payed)
-  field :referral_state, default: 'signed_up'
-
   belongs_to :current_world, class_name: 'World', inverse_of: nil
   has_many :created_worlds, class_name: 'World', inverse_of: :creator
 
@@ -91,7 +88,6 @@ class User
   validates_confirmation_of :password
   validates_numericality_of :credits
   validates_numericality_of :minutes_played, greater_than_or_equal_to: 0
-  validates_inclusion_of :plan_id, in: Plan.stripe_ids, allow_nil: true
 
 
 # Security
@@ -122,6 +118,10 @@ class User
 
   def customer
     @customer ||= Stripe::Customer.retrieve(stripe_id) if stripe_id?
+  end
+
+  def customer?
+    stripe_id?
   end
 
   def create_customer
@@ -164,9 +164,9 @@ class User
     end
   end
 
-  before_validation do
-    self.plan_id = nil if plan_id == Plan.free.id
-  end
+  # before_validation do
+  #   # self.plan_id = nil if plan_id == Plan.free.id
+  # end
 
   before_save do
     if plan_id_changed? || stripe_token

@@ -26,6 +26,7 @@ class StripeController < ApplicationController
 
   def create
     current_user.update_attributes! params[:user]
+
     redirect_to case
       when params[:plan]
         account_plan_path(params[:plan])
@@ -51,20 +52,21 @@ class StripeController < ApplicationController
 
 protected
 
-  def require_card!
-    if not current_user.customer? or not current_user.card?
-      if params[:stripe_token]
-        current_user.stripe_token = params[:stripe_token]
-        current_user.create_customer
-        current_user.save
-      else
-        # This amount that will be guarenteed by Stripe
-        @amount = StripeController::AMOUNTS[params[:plan_id] || params[:hours]]
-
-        render controller: :stripe, action: :new, status: :payment_required
-      end
-    end
-  end
+  # def require_card!
+  #   raise
+  #   if not current_user.customer? or not current_user.card?
+  #     if params[:stripe_token]
+  #       current_user.stripe_token = params[:stripe_token]
+  #       current_user.create_customer
+  #       current_user.save
+  #     else
+  #       # This amount that will be guarenteed by Stripe
+  #       # @amount = TimePack.find params[:hours]
+  #
+  #       render controller: :stripe, action: :new, status: :payment_required
+  #     end
+  #   end
+  # end
 
 
 private
@@ -72,16 +74,16 @@ private
   def recurring_payment_succeeded_hook(params)
     # # TODO
     # UserMailer.invoice(@user.id, @invoice.id).deliver!
-    subscriptions = params['invoice']['lines']['subscriptions']
-    plan_id = subscriptions.first['plan']['id']
-
-    @user.recurring_payment_succeeded! plan_id
+    # subscriptions = params['invoice']['lines']['subscriptions']
+    # plan_id = subscriptions.first['plan']['id']
+    #
+    # @user.recurring_payment_succeeded! plan_id
 
     render nothing: true, status: :success
   end
 
   def recurring_payment_failed_hook(params)
-    @user.recurring_payment_failed! params['attempt'].to_i
+    # @user.recurring_payment_failed! params['attempt'].to_i
 
     # UserMailer.payment_failed(@user.id).deliver!
 
