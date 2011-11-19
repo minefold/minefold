@@ -26,8 +26,8 @@
     %meta{property: 'og:site_name', content: 'Minefold'}
     %meta{property: 'fb:app_id', content: ENV['FB_APP_ID']}
 
-    = yield :head
     = render partial: 'shared/mixpanel'
+    = yield :head
 
   %body{lang: 'en', id: page_css_selector}
     <div id="fb-root"></div>

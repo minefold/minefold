@@ -41,6 +41,7 @@ class UsersController < ApplicationController
       UserMailer.welcome(user.id).deliver
 
       track '$born'
+      track 'signed up'
 
       sign_in :user, user
       respond_with user, :location => new_world_path
