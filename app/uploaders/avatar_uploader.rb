@@ -47,9 +47,8 @@ class AvatarUploader < CarrierWave::Uploader::Base
     end
   end
 
-  # TODO: Hack, needs to calculate the actual asset URL
   def default_url
-    ['/assets/avatar/', version_name, 'default.png'].compact.join('_')
+    File.join('avatar', [version_name, 'default.png'].compact.join('_'))
   end
 
   def sample(width, height)
