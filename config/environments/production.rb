@@ -1,5 +1,4 @@
 Minefold::Application.configure do
-
   StatsD.mode = :production
 
   config.map_tiles_url = "//s3.amazonaws.com/minefold.production.world-tiles"
@@ -61,7 +60,7 @@ Minefold::Application.configure do
   #       verbose: true
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
-  # config.action_controller.asset_host = "http://assets.example.com"
+  config.action_controller.asset_host = "https://d1gl6072w16l3y.cloudfront.net"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )

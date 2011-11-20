@@ -43,6 +43,9 @@ GEM
       activesupport
       builder
     arel (2.2.1)
+    asset_sync (0.2.0)
+      activemodel
+      fog
     autotest-rails (4.1.1)
       ZenTest (= 4.5)
     backbone-rails (0.5.3)
@@ -310,6 +313,7 @@ PLATFORMS
 
 DEPENDENCIES
   airbrake
+  asset_sync
   autotest-rails
   backbone-rails
   bourbon

@@ -4,5 +4,6 @@
 
 tmp
 .env
+public/assets
 public/maps
 public/uploads/*
