@@ -32,6 +32,8 @@ Minefold::Application.configure do
   # Compress JavaScripts and CSS
   config.assets.compress = true
 
+  config.assets.digest = true
+
   # Compress both stylesheets and JavaScripts
   # config.assets.js_compressor  = :uglifier
 
