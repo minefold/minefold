@@ -17,6 +17,8 @@ class User
 
   field :host,           default: 'pluto.minefold.com'
 
+  field :unlimited,      type: Boolean, default: false
+
   field :credits,        type: Integer, default: (FREE_HOURS.hours / BILLING_PERIOD)
   field :minutes_played, type: Integer, default: 0
   embeds_many :credit_events

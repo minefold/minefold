@@ -9,7 +9,10 @@
 
   - if user_signed_in?
     %li.time
-      = link_to "#{current_user.hours_left}h", billing_account_path
+      - if current_user.unlimited?
+        = link_to "&infin;h".html_safe, billing_account_path
+      - else
+        = link_to "#{current_user.hours_left}h", billing_account_path
 
     %li.account
       = link_to 'Settings', account_path
