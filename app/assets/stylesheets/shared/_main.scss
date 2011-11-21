@@ -12,7 +12,7 @@
 html {
   font: 400 14px/18px $helvetica;
   min-width: $width;
-  background: white;
+//  background: desaturate(lighten($blue, 60%), 60%);
 }
 
 @import 'header';
@@ -61,8 +61,8 @@ h2, dt {
   margin: 0 0 (2*$line);
   line-height: 24px;
   font-size: 21px;
-  font-weight: 400;
-  color: darken($blue, 20%);
+  font-weight: 600;
+  color: darken($blue, 0%);
 }
 
 code {
@@ -156,6 +156,7 @@ button, input[type=submit], a.button {
   &:disabled {
     color: darken(white, 15%);
     background-color: darken(white, 5%);
+    border-top-color: darken(white, 5%);
     border-bottom-color: darken(white, 10%);
     box-shadow: 0 1px 1px rgba(black, 0.1);
     cursor: default;
@@ -253,10 +254,13 @@ iframe.youtube {
 
 }
 
+#before, #page, #after {
+  background: white;
+}
+
 .flash {
-  border-top: 1px solid white;
-  border-bottom: 1px solid lighten($blue, 40%);
-  background-color: lighten($blue, 52%);
+  overflow: auto;
+  background-color: lighten($blue, 60%);
   padding-top: 2*$line;
   color: desaturate(lighten($blue, 0%), 50%);
   .close {
@@ -267,8 +271,7 @@ iframe.youtube {
   }
 
   &.alert {
-    background-color: lighten($yellow, 10%);
-    border-bottom-color: desaturate($yellow, 50%);
+    background-color: lighten($yellow, 40%);
     color: $red;
   }
 }

@@ -1,38 +1,6 @@
 - title "#{world.name} players" do
   = render partial: 'worlds/header'
 
-/ - if world.creator == current_user
-/   - before do
-/     %nav
-/       .wrapper
-/         %ul
-/           %li
-/             %a.whitelist
-/               Whitelisted
-/               (#{world.players.size})
-/
-/           %li
-/             %a.approve
-/               Waiting
-/               (#{world.play_requests.size})
-/
-/     :coffeescript
-/       $(document).ready ->
-/         menuLinks = $('nav.sub a')
-/         # articles  = $('article.nav').hide()
-/         menuLinks.click (e) ->
-/           self = $(e.target)
-/
-/           menuLinks.removeClass('active')
-/
-/           articles.hide()
-/           a = articles.filter('.' + self.attr('class'))
-/           a.show()
-/
-/           self.addClass('active')
-/
-/         menuLinks.filter('.invite').click()
-
 
 %section
   %h2 Authorized (Whitelisted)
@@ -143,25 +111,3 @@
             node.find('.username').text(u)
 
           debouncedComplete(u)
-
-/ %article.nav.invite{hidden}
-/   #invite
-/     %h2 Invite your friends!
-/     %p Enter their emails below.
-/     = form_for :invite, url: world_invite_path(world), method: 'post' do |f|
-/
-/       %section
-/         = f.text_area :emails, rows: 1, placeholder: 'chris@minefold.com, dave@minefold.com'
-/
-/         .hint
-/           %p
-/             - if invites.length == 1
-/               An invite has already been sent to
-/               = world.invites.map {|i| i.email}.to_sentence
-/             - elsif invites.length > 0
-/               Invites have already been sent to
-/               = world.invites.map {|i| i.email}.to_sentence
-/
-/       %section
-/         = f.submit 'Send invites'
-/
