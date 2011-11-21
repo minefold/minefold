@@ -1,6 +1,7 @@
 header {
   overflow: auto;
   border-bottom: 1px solid darken(white, 10%);
+  background: white;
 
   .wrapper {
     overflow: auto;
@@ -67,7 +68,7 @@ header {
       }
 
       a {
-        color: darken($blue, 10%);
+        color: $blue;
         text-decoration: none;
         &:hover {
           color: black;
