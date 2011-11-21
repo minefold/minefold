@@ -2,9 +2,6 @@ Minefold::Application.routes.draw do
   root :to => 'pages#home'
   get  '/dashboard' => 'accounts#dashboard', :as => :user_root
 
-  # Admin
-  get '/admin' => 'admin#index'
-
   # Static Pages
   { '/about'    => :about,
     '/contact'  => :contact,
