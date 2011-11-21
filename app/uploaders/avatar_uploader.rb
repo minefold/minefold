@@ -47,8 +47,12 @@ class AvatarUploader < CarrierWave::Uploader::Base
     end
   end
 
+  # TODO: Refactor!
   def default_url
-    File.join('avatar', [version_name, 'default.png'].compact.join('_'))
+    filename = ['', version_name, 'default.png'].compact.join('_')
+    path = File.join('avatar', filename)
+
+    Rails.application.assets[path].digest_path
   end
 
   def sample(width, height)
