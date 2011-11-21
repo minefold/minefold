@@ -19,7 +19,7 @@ module Mixpanel
     end
 
     def ip
-      env.has_key?("REMOTE_ADDR")  ? @env["REMOTE_ADDR"] : ""
+      env.has_key?("REMOTE_ADDR")  ? @env["REMOTE_ADDR"] : '1'
     end
 
     def default_properties
