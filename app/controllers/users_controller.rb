@@ -42,8 +42,10 @@ class UsersController < ApplicationController
 
       sign_in :user, user
       
-      track '$born'
-      track 'signed up'
+      properties = { distinct_id: user.id, mp_name_tag: user.safe_username }
+      
+      track '$born', properties
+      track 'signed up', properties
       
       respond_with user, :location => new_world_path
     else
