@@ -40,8 +40,13 @@
         advanced settings
 
   .advanced{hidden}
+    %section.seed
+      %h3= f.label :seed
+      %fieldset
+        = f.text_field :seed
+
     %section.difficulty
-      %h3 Difficulty
+      %h3= f.label :difficulty_level, 'Difficulty'
 
       %fieldset.inline
         %div
