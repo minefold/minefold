@@ -40,10 +40,11 @@ class UsersController < ApplicationController
     if user.save
       UserMailer.welcome(user.id).deliver
 
+      sign_in :user, user
+      
       track '$born'
       track 'signed up'
-
-      sign_in :user, user
+      
       respond_with user, :location => new_world_path
     else
       clean_up_passwords user
