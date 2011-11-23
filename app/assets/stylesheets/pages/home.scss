@@ -51,7 +51,7 @@
       .free {
         font-size: 12px;
         line-height: 18px;
-        color: rgba($blue, 0.5);
+        color: lighten($blue, 40%);
         font-weight: 400;
       }
 
