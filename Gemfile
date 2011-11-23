@@ -32,7 +32,6 @@ gem 'jquery-rails'
 gem 'backbone-rails'
 gem 'coffee-filter'
 gem 'decent_exposure'
-gem 'mustache'
 
 gem 'asset_sync'
 
