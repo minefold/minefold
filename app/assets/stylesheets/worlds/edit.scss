@@ -23,10 +23,6 @@ ul.players {
     padding: $line $gutter 0 $gutter;
     border-bottom: 1px solid darken(white, 5%);
 
-    &:nth-child(even) {
-      background: lighten($blue, 55%);
-    }
-
     .avatar, .username {
       float: left;
     }

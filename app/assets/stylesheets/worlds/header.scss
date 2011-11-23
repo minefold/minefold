@@ -10,6 +10,7 @@
     a {
       color: desaturate(darken($yellow, 40%), 50%);
       &:hover {
+        background-color: $yellow;
         color: desaturate(darken($yellow, 40%), 70%);
       }
     }

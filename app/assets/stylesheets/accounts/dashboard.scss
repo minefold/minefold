@@ -7,7 +7,6 @@
     width: cols(4) - (2*$gutter);
     float: left;
     margin: 0 ($gutter);
-    color: darken($blue, 10%);
     @include edgeless;
   }
 }
@@ -40,9 +39,9 @@
     float: right;
 
     input[type=submit], button {
-      margin-top: $line;
+      margin-left: $gutter;
       font-size: 12px;
-      line-height: 18px;
+//      line-height: 18px;
       padding: ($line/2) (2*$gutter);
     }
   }
