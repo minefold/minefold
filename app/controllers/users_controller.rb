@@ -42,7 +42,7 @@ class UsersController < ApplicationController
 
       sign_in :user, user
       
-      properties = { distinct_id: user.id, mp_name_tag: user.safe_username }
+      properties = { distinct_id: user.id.to_s, mp_name_tag: user.safe_username }
       
       track '$born', properties
       track 'signed up', properties

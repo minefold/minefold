@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   def track event_name, properties={}
     if current_user
-      properties[:distinct_id] = current_user.id
+      properties[:distinct_id] = current_user.id.to_s
       properties[:mp_name_tag] = current_user.safe_username
     end
 
