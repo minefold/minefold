@@ -1,168 +1,200 @@
-#worlds-show {
-
-  #page aside {
-    float: right;
-    width: cols(2) - (2*$gutter);
+form#new-activity {
+  .avatar {
+    float: left;
+    margin-right: $gutter;
+    img {
+      display: block;
+      @include border-radius($radius);
+    }
   }
 
-  ul.players {
+  input {
+    width: cols($ncols - 3) - (2 * $gutter) - 36px - $gutter;
 
-    h3 {
-      border-bottom: 1px solid darken(white, 10%);
-      font-size: 12px;
-      color: #999;
-      padding: 0 ($gutter/2);
-      margin-bottom: $line;
-    }
+    font-size: 16px;
+    line-height: 24px;
+    padding: ($line - 1px) ($gutter/2);
 
-    .count {
-      float: right;
-    }
+    @include box-sizing(border-box);
 
-    .empty {
-      font-size: 12px;
-      color: #CCC;
-      line-height: 18px;
-    }
+    border: 1px solid darken(white, 10%);
+  }
 
-
-    li {
-      padding: 0 ($gutter/2);
-      .avatar {
-        float: left;
-        margin-top: (24px - 16px)/2;
-        margin-right: $gutter/2;
-        img {
-          display: block;
-          @include border-radius($radius);
-        }
-      }
-    }
-
+  .note {
+    font-size: 12px;
+    padding: 0;
+    background: transparent;
+    color: lighten(black, 80%);
+    margin-left: 36px + $gutter;
+    clear: both;
   }
 }
 
-#activity-stream {
-  width: cols(6) - (2*$gutter);
-  float: left;
-
-  form, .item {
-    .avatar img {
-      border-radius: $radius;
-      width: 24px;
-      height: 24px;
-      background: darken(white, 4%);
-    }
-    .user {
-      .username {
-        color: #999;
-      }
-    }
-  }
-
-  form {
-    position: relative;
-    margin-bottom: 4 * $line;
-
-    // TODO Duplication
-    .avatar {
-      float: left;
-      margin-right: $gutter;
-    }
-
-    textarea {
-      @include box-sizing(border-box);
-      width: 100%;
-      resize: vertical;
-      width: cols(6) - (2*$gutter) - (24px + $gutter);
-    }
-
-    .submit {
-      margin-left: 4*$line + $gutter;
-      overflow: auto;
-
-      button {
-        font-size: 12px;
-        line-height: 18px;
-        padding: ($line/2) (2*$gutter);
-      }
-
-      button, .advice {
-        float: left;
-      }
-
-      .advice {
-        @include transition(opacity, 0.15s, ease-in-out);
-        font-size: 11px;
-        color: darken(white, 20%);
-        margin-left: $gutter;
-        opacity: 1;
-        line-height: 24px + $line;
-
-        &.hidden {
-          opacity: 0;
-        }
-      }
-    }
-  }
-
-  .item {
-    &.chat {
-      padding: $line 0 ($line - 1px) 0;
-      border-bottom: 1px solid darken(white, 4%);
-      margin-bottom: $line;
-      @include transition(opacity, 0.3s, ease-in-out);
-      opacity: 1;
-
-      .avatar {
-        float: left;
-        overflow: hidden;
-        img {
-          border-radius: $radius;
-          background: darken(white, 5%);
-          height: 4 * $line;
-          width: 4 * $line;
-        }
-      }
-
-      .body, .media, .meta {
-        margin-left: 4*$line + $gutter;
-        // TODO: Magic
-        width: gwidth(6) - (4*$line + $gutter + $gutter + $gutter + $gutter);
-      }
-
-      .media {
-        .thumbnail {
-          height: 10 * $line;
-          margin-right: $gutter;
-        }
-      }
-
-      .meta {
-        font-size: 12px;
-        color: #CCC;
-        line-height: 18px;
-
-        .user {
-          color: darken(#CCC, 10%);
-        }
-      }
-
-      &.loading {
-        opacity: 0.5;
-      }
-    }
-  }
-}
-
-a#invite-url {
-  font-size: 18px;
-  display: block;
-  text-align: center;
-  color: darken($blue, 0%);
-  margin-bottom: 2*$line;
-  font-weight: 600;
-  &:hover {
-    color: black;
-  }
-}
+//#worlds-show {
+//
+////  #page aside {
+////    float: right;
+////    width: cols(2) - (2*$gutter);
+////  }
+//
+//  ul.players {
+//
+//    h3 {
+//      border-bottom: 1px solid darken(white, 10%);
+//      font-size: 12px;
+//      color: #999;
+//      padding: 0 ($gutter/2);
+//      margin-bottom: $line;
+//    }
+//
+//    .count {
+//      float: right;
+//    }
+//
+//    .empty {
+//      font-size: 12px;
+//      color: #CCC;
+//      line-height: 18px;
+//    }
+//
+//
+//    li {
+//      padding: 0 ($gutter/2);
+//      .avatar {
+//        float: left;
+//        margin-top: (24px - 16px)/2;
+//        margin-right: $gutter/2;
+//        img {
+//          display: block;
+//          @include border-radius($radius);
+//        }
+//      }
+//    }
+//
+//  }
+//}
+//
+//#activity-stream {
+//  width: cols(6) - (2*$gutter);
+//  float: left;
+//
+//  form, .item {
+//    .avatar img {
+//      border-radius: $radius;
+//      width: 24px;
+//      height: 24px;
+//      background: darken(white, 4%);
+//    }
+//    .user {
+//      .username {
+//        color: #999;
+//      }
+//    }
+//  }
+//
+//  form {
+//    position: relative;
+//    margin-bottom: 4 * $line;
+//
+//    // TODO Duplication
+//    .avatar {
+//      float: left;
+//      margin-right: $gutter;
+//    }
+//
+//    textarea {
+//      @include box-sizing(border-box);
+//      width: 100%;
+//      resize: vertical;
+//      width: cols(6) - (2*$gutter) - (24px + $gutter);
+//    }
+//
+//    .submit {
+//      margin-left: 4*$line + $gutter;
+//      overflow: auto;
+//
+//      button {
+//        font-size: 12px;
+//        line-height: 18px;
+//        padding: ($line/2) (2*$gutter);
+//      }
+//
+//      button, .advice {
+//        float: left;
+//      }
+//
+//      .advice {
+//        @include transition(opacity, 0.15s, ease-in-out);
+//        font-size: 11px;
+//        color: darken(white, 20%);
+//        margin-left: $gutter;
+//        opacity: 1;
+//        line-height: 24px + $line;
+//
+//        &.hidden {
+//          opacity: 0;
+//        }
+//      }
+//    }
+//  }
+//
+//  .item {
+//    &.chat {
+//      padding: $line 0 ($line - 1px) 0;
+//      border-bottom: 1px solid darken(white, 4%);
+//      margin-bottom: $line;
+//      @include transition(opacity, 0.3s, ease-in-out);
+//      opacity: 1;
+//
+//      .avatar {
+//        float: left;
+//        overflow: hidden;
+//        img {
+//          border-radius: $radius;
+//          background: darken(white, 5%);
+//          height: 4 * $line;
+//          width: 4 * $line;
+//        }
+//      }
+//
+//      .body, .media, .meta {
+//        margin-left: 4*$line + $gutter;
+//        // TODO: Magic
+//        width: gwidth(6) - (4*$line + $gutter + $gutter + $gutter + $gutter);
+//      }
+//
+//      .media {
+//        .thumbnail {
+//          height: 10 * $line;
+//          margin-right: $gutter;
+//        }
+//      }
+//
+//      .meta {
+//        font-size: 12px;
+//        color: #CCC;
+//        line-height: 18px;
+//
+//        .user {
+//          color: darken(#CCC, 10%);
+//        }
+//      }
+//
+//      &.loading {
+//        opacity: 0.5;
+//      }
+//    }
+//  }
+//}
+//
+//a#invite-url {
+//  font-size: 18px;
+//  display: block;
+//  text-align: center;
+//  color: darken($blue, 0%);
+//  margin-bottom: 2*$line;
+//  font-weight: 600;
+//  &:hover {
+//    color: black;
+//  }
+//}

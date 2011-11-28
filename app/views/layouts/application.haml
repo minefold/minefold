@@ -102,9 +102,6 @@
     %section#masthead
       .wrapper= yield :masthead
 
-    #before
-      .wrapper= yield :before
-
     - flash.each do |type, message|
       %section.flash{class: type}
         .wrapper
@@ -120,7 +117,7 @@
     / %section#before= yield :before
 
     #page
-      %section= yield
+      = yield
 
     / %section#after= yield :after
 

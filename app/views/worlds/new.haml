@@ -1,98 +1,99 @@
 - title 'Create a new world'
 
-= form_for world do |f|
+%article
+  = form_for world do |f|
 
-  .errors
-    - unless world.errors.empty?
-      Whoops!
-      %ol
-        - world.errors.each do |key, desc|
-          %li
-            %strong= key
-            = desc
+    .errors
+      - unless world.errors.empty?
+        Whoops!
+        %ol
+          - world.errors.each do |key, desc|
+            %li
+              %strong= key
+              = desc
 
-  %section.name
-    %h3
-      = f.label :name
+    %section.name
+      %h3
+        = f.label :name
 
-    %fieldset
-      = f.text_field :name
-
-  %section.game-mode
-    %h3 Default game mode
-
-    %fieldset.inline
-      %div
-        = f.radio_button :game_mode, 0
-        = f.label :game_mode_0, 'Survival'
-
-      %div
-        = f.radio_button :game_mode, 1
-        = f.label :game_mode_1, 'Creative'
-
-      %p.hint (Can be changed later for individual players)
-
-
-  %section.show-advanced
-    %fieldset
-      %a#showadvanced{href: '#'}
-        %span.action Show
-        advanced settings
-
-  .advanced{hidden}
-    %section.seed
-      %h3= f.label :seed
       %fieldset
-        = f.text_field :seed
+        = f.text_field :name
 
-    %section.difficulty
-      %h3= f.label :difficulty_level, 'Difficulty'
+    %section.game-mode
+      %h3 Default game mode
 
       %fieldset.inline
         %div
-          = f.radio_button :difficulty_level, 0
-          = f.label :difficulty_level_0, 'Peaceful'
+          = f.radio_button :game_mode, 0
+          = f.label :game_mode_0, 'Survival'
 
         %div
-          = f.radio_button :difficulty_level, 1
-          = f.label :difficulty_level_1, 'Easy'
+          = f.radio_button :game_mode, 1
+          = f.label :game_mode_1, 'Creative'
 
-        %div
-          = f.radio_button :difficulty_level, 2
-          = f.label :difficulty_level_2, 'Normal'
+        %p.hint (Can be changed later for individual players)
 
-        %div
-          = f.radio_button :difficulty_level, 3
-          = f.label :difficulty_level_3, 'Hard'
 
-    %section.game-settings
-      %h3 Game settings
-
+    %section.show-advanced
       %fieldset
-        %div
-          = f.check_box :pvp
-          = f.label :pvp, 'Player vs. Player'
+        %a#showadvanced{href: '#'}
+          %span.action Show
+          advanced settings
 
-        %div
-          = f.check_box :spawn_monsters
-          = f.label :spawn_monsters, 'Spawn monsters'
+    .advanced{hidden}
+      %section.seed
+        %h3= f.label :seed
+        %fieldset
+          = f.text_field :seed
 
-        %div
-          = f.check_box :spawn_animals
-          = f.label :spawn_animals, 'Spawn animals'
+      %section.difficulty
+        %h3= f.label :difficulty_level, 'Difficulty'
 
-  :coffeescript
-    link = $('#showadvanced')
-    body = $('.advanced')
+        %fieldset.inline
+          %div
+            = f.radio_button :difficulty_level, 0
+            = f.label :difficulty_level_0, 'Peaceful'
 
-    link.click (e) ->
-      e.preventDefault()
-      body.toggle()
-      link.find('.action').text(
-        if body.is(':visible') then 'Hide' else 'Show'
-      )
+          %div
+            = f.radio_button :difficulty_level, 1
+            = f.label :difficulty_level_1, 'Easy'
 
-  .submit
-    = f.submit 'Create world'
+          %div
+            = f.radio_button :difficulty_level, 2
+            = f.label :difficulty_level_2, 'Normal'
+
+          %div
+            = f.radio_button :difficulty_level, 3
+            = f.label :difficulty_level_3, 'Hard'
+
+      %section.game-settings
+        %h3 Game settings
+
+        %fieldset
+          %div
+            = f.check_box :pvp
+            = f.label :pvp, 'Player vs. Player'
+
+          %div
+            = f.check_box :spawn_monsters
+            = f.label :spawn_monsters, 'Spawn monsters'
+
+          %div
+            = f.check_box :spawn_animals
+            = f.label :spawn_animals, 'Spawn animals'
+
+    :coffeescript
+      link = $('#showadvanced')
+      body = $('.advanced')
+
+      link.click (e) ->
+        e.preventDefault()
+        body.toggle()
+        link.find('.action').text(
+          if body.is(':visible') then 'Hide' else 'Show'
+        )
+
+    .submit
+      = f.submit 'Create world'
 
 

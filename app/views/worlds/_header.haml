@@ -5,8 +5,8 @@
   %meta{property: 'og:image', content: image_path('logo-48.png')}
 
 - masthead do
-  %h1
-    = link_to world.name, world
+  / %h1
+  /   = link_to world.name, world
 
   / %aside
   /   - if signed_in?
@@ -40,9 +40,3 @@
     %ol
       %li.activity= link_to 'Activity', world
       %li.map= link_to 'Map', map_world_path(world)
-
-      - if signed_in? and world.creator == current_user
-        %li.settings= link_to 'Settings', edit_world_path(world)
-
-      - if signed_in?
-        %li.invites= link_to 'Invite your friends', invite_world_path(world)
