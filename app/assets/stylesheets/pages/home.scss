@@ -74,7 +74,7 @@
 
     li {
       float: left;
-      @include span(4);
+      width: cols(4);
       margin-bottom: $line;
 
       h2 {

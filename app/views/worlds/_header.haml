@@ -8,33 +8,33 @@
   %h1
     = link_to world.name, world
 
-  %aside
-    - if signed_in?
-      - if world.whitelisted?(current_user)
-        - if current_user.current_world == world
-          %p
-            Connect to
-            %strong= current_user.host
-          %p.hint
-            = link_to help_page_path(anchor: 'connecting') do
-              How do I connect?
-        - else
-          = button_to 'Play here', [:play, world], method: :put
-
-      - else
-        - if world.play_requests.where(user: current_user).exists?
-          %p Waiting for #{world.creator.username}
-        - else
-          = button_to 'Ask to play here', [:ask, world, :players], method: :post
-
-    - else
-      %p.hint
-        - if world.whitelisted_players.size.zero?
-          #{world.creator.username} is playing here.
-        - else
-          #{world.players.size} other people are playing here.
-
-      = link_to 'Join them by signing up now', root_path(anchor: 'plans'), class: 'button'
+  / %aside
+  /   - if signed_in?
+  /     - if world.whitelisted?(current_user)
+  /       - if current_user.current_world == world
+  /         %p
+  /           Connect to
+  /           %strong= current_user.host
+  /         %p.hint
+  /           = link_to help_page_path(anchor: 'connecting') do
+  /             How do I connect?
+  /       - else
+  /         = button_to 'Play here', [:play, world], method: :put
+  /
+  /     - else
+  /       - if world.play_requests.where(user: current_user).exists?
+  /         %p Waiting for #{world.creator.username}
+  /       - else
+  /         = button_to 'Ask to play here', [:ask, world, :players], method: :post
+  /
+  /   - else
+  /     %p.hint
+  /       - if world.whitelisted_players.size.zero?
+  /         #{world.creator.username} is playing here.
+  /       - else
+  /         #{world.players.size} other people are playing here.
+  /
+  /     = link_to 'Join them by signing up now', root_path(anchor: 'plans'), class: 'button'
 
   %nav
     %ol

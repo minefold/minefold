@@ -3,39 +3,6 @@
 $helvetica: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 
-// Grid
-
-$line: 6px;
-
-$gutter: 10px;
-$pad:    20px;
-$col:    $pad + 20px + $pad;
-$ncols:  8;
-
-$radius: 3px;
-$border: 1px;
-
-$width: $ncols * ($gutter + $col + $gutter);
-
-@function cols($n) {
-  @return $n * ($gutter + $col + $gutter);
-}
-
-@mixin span($n) {
-  width: cols($n) - (2*$gutter);
-  padding-left: $gutter;
-  padding-right: $gutter;
-}
-
-@mixin edgeless {
-  &:first-child {
-    margin-left: 0;
-  }
-  &:last-child {
-    margin-right: 0;
-  }
-}
-
 // Colors
 
 $blue:   #084A94;
@@ -43,8 +10,36 @@ $yellow: #F1D710;
 $red:    #EE132D;
 
 
+// Grid
+
+$line: 6px;
+
+$gutter: 10px;
+$pad:    20px;
+$col:    $pad + 20px + $pad;
+$ncols:  10;
+
+$radius: 3px;
+
+@function cols($n) {
+  @return $n * ($gutter + $col + $gutter);
+}
+
+$width: cols($ncols);
+
+@mixin wrapper($n) {
+  width: cols($n) - (2*$gutter);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
 // Debugging
 
 @mixin debug {
   background: rgba(red, 0.2);
 }
+
+
+@import 'shared/global';
+@import 'shared/forms';

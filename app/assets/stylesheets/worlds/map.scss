@@ -13,7 +13,8 @@
   }
 
   #map {
-    margin-bottom: 25px;
+//    margin-bottom: 25px;
+    @include border-radius(2px);
 
     .infoWindow {
         height: 100px;

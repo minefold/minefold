@@ -2,6 +2,9 @@
   = render partial: 'worlds/header'
 
 %aside
+  %p
+    = link_to 'Play Here', '#'
+
   %ul.players.playing-now{class: ('empty' if world.current_players_count.zero?)}
     %h3
       Playing Now
@@ -15,7 +18,7 @@
           .avatar= image_tag player.avatar.head.s16.url, width: 16, height: 16
           = player.username
 
-#activity-stream
+%article#activity-stream
   - if signed_in?
     #share
       = form_tag [world, :wall_items], method: :post do |f|

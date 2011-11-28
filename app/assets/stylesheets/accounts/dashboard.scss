@@ -1,15 +1,15 @@
-#accounts-dashboard #before {
-  overflow: auto;
-  padding: 4*$line 0;
-  border-bottom: 1px solid darken(white, 5%);
-
-  a.button {
-    width: cols(4) - (2*$gutter);
-    float: left;
-    margin: 0 ($gutter);
-    @include edgeless;
-  }
-}
+//#accounts-dashboard #before {
+//  overflow: auto;
+//  padding: 4*$line 0;
+//  border-bottom: 1px solid darken(white, 5%);
+//
+//  a.button {
+//    width: cols(4) - (2*$gutter);
+//    float: left;
+//    margin: 0 ($gutter);
+//    @include edgeless;
+//  }
+//}
 
 #switch-worlds-dashboard {
 
