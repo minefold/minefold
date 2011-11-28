@@ -135,6 +135,13 @@ header + hr {
     color: lighten($blue, 10%);
   }
 
+  h2 {
+    font-size: 18px;
+    line-height: 18px;
+    margin-bottom: $line;
+    color: $blue;
+  }
+
   p, ul, ol, pre {
     margin-bottom: 2 * $line;
   }
