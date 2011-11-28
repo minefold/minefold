@@ -1,126 +1,117 @@
-- title world.name do
-  = render partial: 'worlds/header'
+- title world.name
+
+= render partial: 'worlds/header'
 
 %aside
   %p
     = link_to 'Play Here', '#'
+  %p
+    = link_to 'Invite your friends', '#'
 
   %ul.players.playing-now{class: ('empty' if world.current_players_count.zero?)}
     %h3
-      Playing Now
-      .count= world.current_players_count
+      Players
 
-    - if world.current_players_count.zero?
-      %li.empty Nobody is playing right now.
-    - else
-      - world.current_players.each do |player|
-        %li
-          .avatar= image_tag player.avatar.head.s16.url, width: 16, height: 16
-          = player.username
-
-%article#activity-stream
+%article
+  #activity-stream
   - if signed_in?
-    #share
-      = form_tag [world, :wall_items], method: :post do |f|
-        .avatar
-          = image_tag current_user.avatar.head.s36.url, with: 36, height: 36
-        = text_area_tag :body, nil, rows: 2, autofocus: true, required: true
+    = form_tag [world, :wall_items], method: :post, id: 'new-activity' do |f|
+      .avatar
+        = image_tag current_user.avatar.head.s36.url, with: 36, height: 36
+      = text_field :body, nil, rows: 2, maxlength: 100
+      .note Press enter to chat
 
-        .submit
-          %button Chat
-          .advice ENTER to chat, SHIFT-ENTER for a new line.
-
-    :coffeescript
-      window.current_user = #{current_user.to_json(only: [:id, :username, :email])}
-
-    :coffeescript
-      f = $('#share form')
-
-      window.template = _.template """
-        <div id="chat_<%= id %>" class="chat item">
-          <div class="avatar">
-            <img src="<%= avatar_head_24_url %>" width="24" height="24" />
-          </div>
-          <div class="body"><%= body %></div>
-          <div class="meta">
-            <span class="user">@<%= user.username %></span>
-            <time><%= created_at || '' %></time>
-          </div>
-        </div>
-      """
-
-      f.submit (e) ->
-        e.preventDefault()
-
-        data =
-          chat:
-            user_id: current_user.id
-            raw: f.find('textarea').val()
-
-        cId = _.uniqueId()
-
-        socketID = if pusher?
-          pusher.connection.socket_id
-        else
-          ''
-
-        $.ajax
-          type: f.attr('method')
-          url: f.attr('action')
-          data:
-            chat:
-              raw: f.find('textarea').val()
-            socket_id: socketID
-          dataType: 'json'
-          success: (data) ->
-            $('#wall-items #chat_'+cId)
-              .removeClass('loading')
-              .attr(id: "chat_"+data._id)
-
-        data.chat.body = data.chat.raw
-        data.chat.user = current_user
-        data.chat.id = cId
-        data.chat.created_at = 'just now'
-        data.chat.avatar_head_24_url = current_user.avatar_head_24_url
-
-        html = template(data.chat)
-        $('#wall-items').prepend $(html).addClass('loading')
-
-        f.find('textarea').val('')
-
-      f.find('textarea')
-        .focus ->
-          f.find('.advice').removeClass('hidden')
-        .blur ->
-          f.find('.advice').addClass('hidden')
-        .keydown (e) ->
-          if e.keyCode is 13 and !e.shiftKey and !e.ctrlKey and !e.altKey
-            e.preventDefault()
-            f.submit()
+/ :coffeescript
+/   window.current_user = #{current_user.to_json(only: [:id, :username, :email])}
+/
+/ :coffeescript
+/   f = $('#share form')
+/
+/   window.template = _.template """
+/     <div id="chat_<%= id %>" class="chat item">
+/       <div class="avatar">
+/         <img src="<%= avatar_head_24_url %>" width="24" height="24" />
+/       </div>
+/       <div class="body"><%= body %></div>
+/       <div class="meta">
+/         <span class="user">@<%= user.username %></span>
+/         <time><%= created_at || '' %></time>
+/       </div>
+/     </div>
+/   """
+/
+/   f.submit (e) ->
+/     e.preventDefault()
+/
+/     data =
+/       chat:
+/         user_id: current_user.id
+/         raw: f.find('textarea').val()
+/
+/     cId = _.uniqueId()
+/
+/     socketID = if pusher?
+/       pusher.connection.socket_id
+/     else
+/       ''
+/
+/     $.ajax
+/       type: f.attr('method')
+/       url: f.attr('action')
+/       data:
+/         chat:
+/           raw: f.find('textarea').val()
+/         socket_id: socketID
+/       dataType: 'json'
+/       success: (data) ->
+/         $('#wall-items #chat_'+cId)
+/           .removeClass('loading')
+/           .attr(id: "chat_"+data._id)
+/
+/     data.chat.body = data.chat.raw
+/     data.chat.user = current_user
+/     data.chat.id = cId
+/     data.chat.created_at = 'just now'
+/     data.chat.avatar_head_24_url = current_user.avatar_head_24_url
+/
+/     html = template(data.chat)
+/     $('#wall-items').prepend $(html).addClass('loading')
+/
+/     f.find('textarea').val('')
+/
+/   f.find('textarea')
+/     .focus ->
+/       f.find('.advice').removeClass('hidden')
+/     .blur ->
+/       f.find('.advice').addClass('hidden')
+/     .keydown (e) ->
+/       if e.keyCode is 13 and !e.shiftKey and !e.ctrlKey and !e.altKey
+/         e.preventDefault()
+/         f.submit()
 
 
-  #wall-items
-    - world.wall_items.order_by([:created_at, :desc]).limit(100).each do |chat|
-      .item[chat]
-        - if !chat.user.nil?
-          .avatar= image_tag chat.user.avatar.head.s24.url, width: 24, height: 24
-        .body= chat.body
-        .meta
-          - if !chat.user.nil?
-            %span.user @#{chat.user.username}
-          %time= chat.created_at
-
-  - head do
-    = javascript_include_tag '//d3ds63zw57jt09.cloudfront.net/1.9/pusher.min.js'
-
-  :coffeescript
-    window.pusher = new Pusher(#{Pusher.key.to_json}, encrypted: true);
-    window.channel = pusher.subscribe(#{Pusher[world.pusher_key].name.to_json});
-
-    channel.bind 'chat-create', (data) ->
-      console.log data
-      data.id = data._id
-      data.body = data.raw
-
-      html = template(data)
-      $('#wall-items').prepend $(html)
+/ #wall-items
+/   - world.wall_items.order_by([:created_at, :desc]).limit(100).each do |chat|
+/     .item[chat]
+/       - if !chat.user.nil?
+/         .avatar= image_tag chat.user.avatar.head.s24.url, width: 24, height: 24
+/       .body= chat.body
+/       .meta
+/         - if !chat.user.nil?
+/           %span.user @#{chat.user.username}
+/         %time= chat.created_at
+/
+/ - head do
+/   = javascript_include_tag '//d3ds63zw57jt09.cloudfront.net/1.9/pusher.min.js'
+/
+/ :coffeescript
+/   window.pusher = new Pusher(#{Pusher.key.to_json}, encrypted: true);
+/   window.channel = pusher.subscribe(#{Pusher[world.pusher_key].name.to_json});
+/
+/   channel.bind 'chat-create', (data) ->
+/     console.log data
+/     data.id = data._id
+/     data.body = data.raw
+/
+/     html = template(data)
+/     $('#wall-items').prepend $(html)

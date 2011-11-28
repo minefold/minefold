@@ -6,9 +6,6 @@
   %p
     The best way to get in contact with us at Minefold is to end us an email at #{mail_to 'team@minefold.com'}. You can also email the founders, Chris and Dave, directly at #{mail_to 'chris@minefold.com'} or #{mail_to 'dave@minefold.com'} respectively.
 
-  %p
-    For bite sized status updates you can #{link_to 'follow us on Twitter', 'http://twitter.com/minefold'} or read about our adventures on #{link_to 'our blog', 'http://blog.minefold.com'}.
-
   .vcard
     %h2 Address
     %p.adr
@@ -21,7 +18,9 @@
       %br
       %span.country-name Australia
 
-      %p.abn ABN: 37068433851
+      %p.abn
+        %abbr{title: 'Australian Business Number'} ABN
+        37068433851
 
     %script{src: '//maps.googleapis.com/maps/api/js?sensor=false'}
     #map_canvas

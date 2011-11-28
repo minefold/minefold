@@ -1,20 +1,24 @@
 - title "#{world.name} map" do
-  = render partial: 'header'
+  %h1= world.name
 
-- if world.mapped?
-  #map
-  - map_asset_path = "#{Rails.configuration.map_tiles_url}/#{world.id}"
+= render partial: 'header'
 
-  = javascript_include_tag '//maps.google.com/maps/api/js?sensor=false'
+%article
+  - if world.mapped?
+    #map
+    - map_asset_path = "#{Rails.configuration.map_tiles_url}/#{world.id}"
 
-  :coffeescript
-    $.world_map path:'#{map_asset_path}'
+    = javascript_include_tag '//maps.google.com/maps/api/js?sensor=false'
 
-- else
-  %p#nomap
-    %strong Marvin is still mapping this world!
-    %br
-    He apologises and whispers that he's folding as fast as his little hands can go. Perhaps you can help him out by playing here for a couple of minutes?
+    :coffeescript
+      $.world_map path:'#{map_asset_path}'
 
-  %center
-    = image_tag 'marvin.png'
+
+  - else
+    %p#nomap
+      %strong Marvin is still mapping this world!
+      %br
+      He apologises and whispers that he's folding as fast as his little hands can go. Perhaps you can help him out by playing here for a couple of minutes?
+
+    %center
+      = image_tag 'marvin.png'
