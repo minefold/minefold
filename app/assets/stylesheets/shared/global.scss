@@ -1,0 +1,128 @@
+.wrapper {
+  @include wrapper(10)
+}
+
+html {
+  font: 400 14px/18px $helvetica;
+  min-width: $width;
+  background: desaturate(lighten($blue, 65%), 60%) url(image-path('grain.png'));
+}
+
+.accessibility {
+  display: none;
+  width: 0; height: 0;
+  visibility: hidden;
+  position: absolute;
+}
+
+hr {
+  border: none;
+  margin: 0; padding: 0;
+}
+
+
+//@import 'header';
+//@import 'masthead';
+//@import 'subhead';
+//@import 'content';
+//@import 'footer';
+
+//strong {
+//  font-weight: 600;
+//
+//  &.highlight {
+//    background-color: #FFC;
+//    padding: 1px 2px;
+//  }
+//}
+//
+//em {
+//  font-style: italic;
+//}
+
+//
+//.spinner {
+//  background: url(image-path('spinner.gif')) center no-repeat;
+//  width: 16px;
+//  height: 16px;
+//}
+//
+
+//
+//iframe.youtube {
+//  margin: 24px 0;
+//  display: block;
+//}
+//
+//.callout {
+//  line-height: 18px;
+//  margin-bottom: 2*$line;
+//  color: darken(white, 60%);
+//
+//  a {
+//    color: $blue;
+//    text-decoration: none;
+//    &:hover {
+//      color: darken($blue, 10%);
+//    }
+//  }
+//}
+//
+//#before nav.subnav {
+//  overflow: auto;
+//  border-bottom: 1px solid darken(white, 5%);
+//
+//  li {
+//    float: left;
+//
+//    a {
+//      display: block;
+//      padding: $line $gutter;
+//      padding-bottom: $line - 1px;
+//      line-height: 24px;
+//      font-size: 12px;
+//      color: darken($blue, 10%);
+//      cursor: pointer;
+//      text-decoration: none;
+//
+//      &:hover {
+//        color: black;
+//      }
+//
+//      &.active {
+//        font-weight: bold;
+//      }
+//    }
+//  }
+//
+//}
+//
+//
+//
+
+//
+////#masthead {
+////  margin-top: 48px;
+////}
+//
+//#before, #page, #after {
+////  background: white;
+//}
+//
+//.flash {
+//  overflow: auto;
+//  background-color: lighten($blue, 60%);
+//  padding-top: 2*$line;
+//  color: desaturate(lighten($blue, 0%), 50%);
+//  .close {
+//    float: right;
+//  }
+//  p {
+//    margin-bottom: 2*$line;
+//  }
+//
+//  &.alert {
+//    background-color: lighten($yellow, 40%);
+//    color: $red;
+//  }
+//}

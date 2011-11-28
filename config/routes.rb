@@ -3,9 +3,11 @@ Minefold::Application.routes.draw do
   get  '/dashboard' => 'accounts#dashboard', :as => :user_root
 
   # Static Pages
-  { '/about'    => :about,
+  { '/help'     => :help,
+    '/about'    => :about,
+    '/press'    => :press,
+    '/jobs'    => :jobs,
     '/contact'  => :contact,
-    '/help'     => :help,
     '/privacy'  => :privacy,
     '/terms'    => :terms
   }.each do |url, name|

@@ -1,4 +1,15 @@
 !!!
+/
+  \
+  \ /'\_/`\  __                  /'___\     /\_ \     /\ \
+  \/\      \/\_\    ___      __ /\ \__/  ___\//\ \    \_\ \
+  \\ \ \__\ \/\ \ /' _ `\  /'__`\ \ ,__\/ __`\\ \ \   /'_` \
+  \ \ \ \_/\ \ \ \/\ \/\ \/\  __/\ \ \_/\ \L\ \\_\ \_/\ \L\ \
+  \  \ \_\\ \_\ \_\ \_\ \_\ \____\\ \_\\ \____//\____\ \___,_\
+  \   \/_/ \/_/\/_/\/_/\/_/\/____/ \/_/ \/___/ \/____/\/__,_ /
+  \
+  \      Digg it?
+  \
 %html{'xmlns:og' => 'http://ogp.me/ns#'}
   %head
     %meta{charset: 'utf-8'}
@@ -26,34 +37,73 @@
     %meta{property: 'og:site_name', content: 'Minefold'}
     %meta{property: 'fb:app_id', content: ENV['FB_APP_ID']}
 
+    <script type="text/javascript" src="https://use.typekit.com/qzl8aqw.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
     = render partial: 'shared/mixpanel'
     = yield :head
 
   %body{lang: 'en', id: page_css_selector}
-    <div id="fb-root"></div>
-    <script>
-    (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) {return;}
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=160107270726261";
-    fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-    </script>
+    #fb-root
+    :javascript
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_GB/all.js#xfbml=0&appId=#{ENV['FB_APP_ID'].to_i.to_json}";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+
+    %nav.accessibility
+      %ol
+        %li= link_to 'Skip to navigation', '#nav'
+        %li= link_to 'Skip to content', '#content'
+        %li= link_to 'Skip to footer', '#footer'
+
+    %hr
 
     %header
       .wrapper
         %h1
           = link_to root_url do
             Minefold
-            %span.beta Beta
-        %aside
-          = render partial: 'shared/nav'
+            %em Beta
 
-    #map-canvas
+        %ol#nav
+          / %li= link_to 'Blog', 'http://blog.minefold.com'
+          / %li= link_to 'Feedback', 'http://getsatisfaction.com/minefold'
+
+          - if user_signed_in?
+            %li.dashboard= link_to 'Dashboard', user_root_path
+            %li.time
+              / - if current_user.unlimited?
+              /   = link_to "&infin;h".html_safe, billing_account_path
+              / - else
+              = link_to "#{current_user.hours_left}h", billing_account_path
+
+            / %li.account
+            /   = link_to 'Settings', account_path
+
+            / %li.sign-out
+            /   = link_to 'Logout', destroy_user_session_path, method: :delete
+
+            %li.profile<
+              = link_to current_user do
+                %span.accessibility= current_user.username
+                = image_tag current_user.avatar_url(:head, :s18), width: 18, height:18, alt: current_user.username
+
+          - else
+            %li.login= link_to 'Login', new_user_session_path
+
+        /= render partial: 'shared/nav'
+
+    %hr
 
     %section#masthead
       .wrapper= yield :masthead
+
+    #before
+      .wrapper= yield :before
 
     - flash.each do |type, message|
       %section.flash{class: type}
@@ -67,22 +117,25 @@
           e.preventDefault()
           $(e.target).parent().parent('.flash').slideUp()
 
-    %section#before= yield :before
+    / %section#before= yield :before
 
-    %section#page
-      .wrapper= yield
+    #page
+      %section= yield
 
-    %section#after= yield :after
+    / %section#after= yield :after
 
-    %footer
+    %hr
+
+    %footer#footer
       .wrapper
         %ul
           %li.help= link_to 'Help/FAQ', help_page_path
           %li.about= link_to 'About', about_page_path
+          %li.press= link_to 'Press', press_page_path
+          %li.jobs= link_to 'Jobs', jobs_page_path
           %li.contact= link_to 'Contact', contact_page_path
 
-          %li.facebook= link_to 'Become a fan', 'https://facebook.com/minefold'
-          %li.twitter= link_to 'Follow us', 'https://twitter.com/minefold'
+          %li.twitter= link_to 'Follow us on Twitter', 'https://twitter.com/minefold'
 
         %p.fineprint
           &copy; 2011 Minefold.

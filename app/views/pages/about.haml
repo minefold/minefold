@@ -1,37 +1,39 @@
 - title  'About'
 
-- before do
-  %nav.about-page= render partial: 'pages/nav'
+= render partial: 'pages/nav'
 
-%p.byline Minefold was founded in 2011 by Dave Newman and Chris Lloyd, two nerds who love to play Minecraft.
+%article
+  %p.byline Minefold was founded in 2011 by Dave Newman and Chris Lloyd, two nerds who love to play Minecraft.
 
-%p We happily played Minecraft together for months. Dave built this wicked rollercoaster and Chris was exploring the outer edges of an infinite universe. It was beautiful. We had rented a server, setup SSH access, configured a RAM disk, monitored the JVM and <em>oh God my brain hurts</em>. It was all too complicated. It wasn't long before Chris mistyped a command and all our hard work was lost.
+  %p TODO: Re-write in the context of change the world stuff. I.E. It was too hard to play together. We want to fix that. Remove story about loosing all our work.
 
-%p After we had wiped away the tears, we decided to rid the world of boring, difficult Minecraft hosting and let people just have fun building awesome stuff!
+  %p We happily played Minecraft together for months. Dave built this wicked rollercoaster and Chris was exploring the outer edges of an infinite universe. It was beautiful. We had rented a server, setup SSH access, configured a RAM disk, monitored the JVM and <em>oh God my brain hurts</em>. It was all too complicated. It wasn't long before Chris mistyped a command and all our hard work was lost.
 
-%h2 The Team
+  %p After we had wiped away the tears, we decided to rid the world of boring, difficult Minecraft hosting and let people just have fun building awesome stuff!
 
-.founder.dave
-  = image_tag User.dave.avatar.head.s48.url, width: 48, height: 48
-  %p <strong>Dave</strong> is the closest thing you'll find to the “rockstar programmer” cliché. When he's taking time out from learning new programming languages or working on a tricky back-end problem, he can often be found shirtless in #{link_to 'Ding Dong Dang', 'http://www.au.timeout.com/sydney/bars/venues/2178/ding-dong-dang'} singing karaoke with his eyes closed.
-
-  %p.contact
-    = link_to '@whatupdave', '//twitter.com/whatupdave'
-    = mail_to 'dave@minefold.com'
-
-.founder.chris
-  = image_tag User.chris.avatar.head.s48.url, width: 48, height: 48
-  %p <strong>Chris</strong> has always seen himself as a slashie. That's Designer / Developer, not the other way around. Chris is passionate about clean design, minimalism and hipster music. He'd share a band with you but you wouldn't have heard of them yet.
-
-  %p.contact
-    = link_to '@chrislloyd', '//twitter.com/chrislloyd'
-    = mail_to 'chris@minefold.com'
-
-
-%h2 Logo
-
-%p Our logo was graciously donated by #{link_to 'Cameron Adams', '//twitter.com/themaninblue'}.
-
-%ol
-  %li= link_to 'Raster (PNG)', image_path('minefold-logo.png')
-  %li= link_to 'Vector (EPS)', image_path('minefold-logo.eps')
+  / %h1 The Team
+  /
+  / .founder.dave
+  /   = image_tag User.dave.avatar.head.s48.url, width: 48, height: 48
+  /   %p <strong>Dave</strong> is the closest thing you'll find to the “rockstar programmer” cliché. When he's taking time out from learning new programming languages or working on a tricky back-end problem, he can often be found shirtless in #{link_to 'Ding Dong Dang', 'http://www.au.timeout.com/sydney/bars/venues/2178/ding-dong-dang'} singing karaoke with his eyes closed.
+  /
+  /   %p.contact
+  /     = link_to '@whatupdave', '//twitter.com/whatupdave'
+  /     = mail_to 'dave@minefold.com'
+  /
+  / .founder.chris
+  /   = image_tag User.chris.avatar.head.s48.url, width: 48, height: 48
+  /   %p <strong>Chris</strong> has always seen himself as a slashie. That's Designer / Developer, not the other way around. Chris is passionate about clean design, minimalism and hipster music. He'd share a band with you but you wouldn't have heard of them yet.
+  /
+  /   %p.contact
+  /     = link_to '@chrislloyd', '//twitter.com/chrislloyd'
+  /     = mail_to 'chris@minefold.com'
+  /
+  /
+  / %h2 Logo
+  /
+  / %p Our logo was graciously donated by #{link_to 'Cameron Adams', '//twitter.com/themaninblue'}.
+  /
+  / %ol
+  /   %li= link_to 'Raster (PNG)', image_path('minefold-logo.png')
+  /   %li= link_to 'Vector (EPS)', image_path('minefold-logo.eps')

@@ -1,11 +1,4 @@
 #users-edit {
-  #page {
-    @include span(4);
-  }
-
-  #after-page {
-    @include span(4);
-  }
 
   .billing {
     margin-bottom: 2*$line;

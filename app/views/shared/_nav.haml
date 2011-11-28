@@ -5,8 +5,6 @@
   %li= link_to 'Blog', 'http://blog.minefold.com'
   %li= link_to 'Feedback', 'http://getsatisfaction.com/minefold'
 
-  .pipe
-
   - if user_signed_in?
     %li.time
       - if current_user.unlimited?
@@ -20,9 +18,9 @@
     %li.sign-out
       = link_to 'Logout', destroy_user_session_path, method: :delete
 
-    %li.profile<
-      = link_to current_user do
-        = image_tag current_user.avatar_url(:head, :s24), width: 24, height: 24
+    / %li.profile<
+    /   = link_to current_user do
+    /     = image_tag current_user.avatar_url(:head, :s24), width: 24, height:24
 
   - else
     %li.login= link_to 'Login', new_user_session_path

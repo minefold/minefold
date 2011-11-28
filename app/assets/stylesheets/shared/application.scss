@@ -1,0 +1,216 @@
+header {
+  position: fixed;
+  overflow: auto;
+  border-bottom: 1px solid darken(desaturate($blue, 60%), 10%);
+  background: white;
+  z-index: 99;
+  top: 0; left: 0; right: 0;
+
+  @include linear-gradient(
+    desaturate($blue, 60%),
+    darken(desaturate($blue, 60%), 5%)
+  );
+
+  h1 {display: none;}
+//  h1 a, aside {
+//    line-height: 24px;
+//  }
+//
+//  h1 {
+//    overflow: visible;
+//    float: left;
+//    margin: 0;
+//    font-size: 16px;
+//    letter-spacing: 0.05em;
+//    line-height: 18px;
+//    font-weight: 600;
+//
+//    a {
+//      display: block;
+//      color: white; //darken($blue, 0%);
+//      text-decoration: none;
+//      float: left;
+//
+//      position: relative;
+//
+//      margin: (-$line) 0;
+//      padding: $line ($gutter/2) $line (27px + $gutter);
+//      background: url(image-path('logo-24.png')) center left no-repeat;
+//
+//      &:hover {
+//        color: black;
+//      }
+//    }
+//
+//    .beta {
+//      display: block;
+//      color: rgba(white, 0.4);
+//      font-weight: 400;
+//      margin-left: 0.5em;
+//      font-size: 12px;
+//
+//      position: absolute;
+//      line-height: 12px;
+//      font-size: 9px;
+//      bottom: 0;
+//      right: $gutter/2;
+//    }
+//  }
+
+  ol {
+    overflow: auto;
+    li {
+      float: left;
+    }
+
+    a {
+      color: lighten(desaturate($blue, 60%), 30%);
+      text-decoration: none;
+      line-height: 18px;
+      padding: (1.5*$line) $gutter (1.5*$line - 1px);
+      display: block;
+      font-size: 14px;
+      &:hover {
+        color: white;
+        background-color: darken(desaturate($blue, 60%), 10%);
+      }
+      border-left: 1px solid darken(desaturate($blue, 60%), 10%);
+    }
+
+    .profile img {
+      display: block;
+      border-radius: $radius;
+    }
+  }
+}
+
+header + hr {
+  margin-top: 6*$line;
+}
+
+#masthead {
+  padding: 4*$line;
+
+  h1 {
+    font-size: 24px;
+    font-weight: 500;
+  }
+}
+
+#page {
+  line-height: 24px;
+
+  section {
+    width: $width;
+    margin: 0 auto;
+    padding: 0 $gutter;
+    @include box-sizing(border-box);
+
+    background-color: white;
+    box-shadow: 0 1px 1px rgba(black, 0.1);
+    @include border-radius($radius);
+    overflow: auto;
+  }
+
+  article {
+    float: left;
+    width: cols($ncols - 3);
+    @include box-sizing(border-box);
+    padding: (2*$line) $gutter;
+    margin-left: -$gutter;
+  }
+
+  aside {
+    float: right;
+    width: cols(3);
+    @include box-sizing(border-box);
+    padding: (2*$line) $gutter;
+    margin-right: -$gutter;
+
+    border-left: 1px solid darken(white, 5%);
+  }
+
+  h1 {
+    font-size: 21px;
+    color: lighten($blue, 10%);
+  }
+
+  p, ul, ol, pre {
+    margin-bottom: 2 * $line;
+  }
+
+  a {
+    color: $blue;
+    text-decoration: none;
+    &:hover {
+      color: black;
+      text-decoration: underline;
+    }
+  }
+
+  dl {
+    dt {
+      font-weight: 600;
+    }
+
+    dd {
+      margin-bottom: 2*$line;
+    }
+  }
+
+  .note {
+    background: lighten($yellow, 40%);
+    color: darken($yellow, 30%);
+    margin: 0 (-$gutter) (2*$line) (-$gutter);
+    padding: $line $gutter;
+  }
+
+}
+
+
+footer {
+  clear: both;
+  font: 13px/18px $helvetica;
+
+  padding: (2*$line) $gutter;
+  margin: 0 $gutter;
+
+  ul {
+    overflow: auto;
+    li {
+      float: left;
+      a {
+        color: $blue;
+        text-decoration: none;
+        margin-right: $gutter;
+        &:hover {
+          color: black;
+          text-decoration: underline;
+        }
+      }
+
+      &.twitter {
+        float: right;
+        a {
+          background: url(image-path('twitter.png')) left center no-repeat;
+          padding-left: 12px + ($gutter/2);
+          margin-right: 0;
+        }
+      }
+
+    }
+  }
+
+  .fineprint {
+    clear: both;
+    color: rgba(black, 0.2);
+
+    a {
+      color: rgba(black, 0.4);
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
