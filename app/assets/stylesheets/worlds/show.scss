@@ -2,7 +2,7 @@
   @include active-masthead-menu-item;
 }
 
-aside {
+#page aside {
 
   // Sweet rotating animation for the "play here" button
   .play.btn {
@@ -13,6 +13,10 @@ aside {
     &:hover .icon img {
       -webkit-transform: rotate(90deg);
     }
+  }
+
+  .invite.btn {
+    @include btn(lighten($blue, 30%), white);
   }
 
 }

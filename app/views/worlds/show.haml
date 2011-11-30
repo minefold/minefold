@@ -11,11 +11,14 @@
       - else
         Ask to play here
   %p
-    = link_to 'Invite your friends', '#'
+    = link_to '#', class: %w(btn invite) do
+      %span.icon= image_tag 'friends.png'
+      Invite your friends
 
-  %ul.players.playing-now{class: ('empty' if world.current_players_count.zero?)}
-    %h3
-      Players
+  %h2 Friends playing here
+  %ul.players
+    - world.players.each do |player|
+      %li= player.username
 
 %article
   #activity-stream
