@@ -2,13 +2,17 @@
 
 $helvetica: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
+@mixin antialiasing {
+  -webkit-font-smoothing: antialiased;
+}
+
 
 // Colors
 
 $blue:   #084A94;
 $yellow: #F1D710;
 $red:    #EE132D;
-
+$green:  #BADA55;
 
 // Grid
 
@@ -40,6 +44,7 @@ $width: cols($ncols);
   background: rgba(red, 0.2);
 }
 
-
 @import 'shared/global';
+@import 'shared/buttons';
 @import 'shared/forms';
+

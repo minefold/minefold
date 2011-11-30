@@ -1,61 +1,36 @@
 header {
   position: fixed;
   overflow: auto;
-  border-bottom: 1px solid darken(desaturate($blue, 60%), 10%);
-  background: white;
+  border-bottom: 1px solid darken(white, 10%);
   z-index: 99;
   top: 0; left: 0; right: 0;
 
-  @include linear-gradient(
-    desaturate($blue, 60%),
-    darken(desaturate($blue, 60%), 5%)
-  );
+  background-color: white;
 
-  h1 {display: none;}
-//  h1 a, aside {
-//    line-height: 24px;
-//  }
-//
-//  h1 {
-//    overflow: visible;
-//    float: left;
-//    margin: 0;
-//    font-size: 16px;
-//    letter-spacing: 0.05em;
-//    line-height: 18px;
-//    font-weight: 600;
-//
-//    a {
-//      display: block;
-//      color: white; //darken($blue, 0%);
-//      text-decoration: none;
-//      float: left;
-//
-//      position: relative;
-//
-//      margin: (-$line) 0;
-//      padding: $line ($gutter/2) $line (27px + $gutter);
-//      background: url(image-path('logo-24.png')) center left no-repeat;
-//
-//      &:hover {
-//        color: black;
-//      }
-//    }
-//
-//    .beta {
-//      display: block;
-//      color: rgba(white, 0.4);
-//      font-weight: 400;
-//      margin-left: 0.5em;
-//      font-size: 12px;
-//
-//      position: absolute;
-//      line-height: 12px;
-//      font-size: 9px;
-//      bottom: 0;
-//      right: $gutter/2;
-//    }
-//  }
+  h1 {
+    float: left;
+    line-height: 22px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 24px;
+
+    a {
+      color: $blue;
+      text-decoration: none;
+
+      padding: $line (2*$gutter) ($line - 1px) 0;
+      display: block;
+
+      &:hover {
+        color: black;
+      }
+    }
+
+    em {
+      display: none;
+    }
+  }
 
   ol {
     overflow: auto;
@@ -64,17 +39,19 @@ header {
     }
 
     a {
-      color: lighten(desaturate($blue, 60%), 30%);
+      display: block;
+      padding: (1.5*$line) $gutter (1.5*$line - 1px);
+
+      color: lighten($blue, 10%);
       text-decoration: none;
       line-height: 18px;
-      padding: (1.5*$line) $gutter (1.5*$line - 1px);
-      display: block;
-      font-size: 14px;
+      font-size: 12px;
+      font-weight: 600;
+      @include antialiasing;
+
       &:hover {
-        color: white;
-        background-color: darken(desaturate($blue, 60%), 10%);
+        color: lighten($blue, 0%);
       }
-      border-left: 1px solid darken(desaturate($blue, 60%), 10%);
     }
 
     .profile img {
@@ -88,26 +65,72 @@ header + hr {
   margin-top: 6*$line;
 }
 
+
+@mixin active-masthead-menu-item {
+  a {
+    color: black;
+    background-color: white;
+    font-weight: bold;
+
+    &:hover {
+      background-color: white;
+    }
+  }
+}
+
 #masthead {
-  padding: 4*$line;
+  padding: (4*$line) 0;
 
   h1 {
     font-size: 24px;
     font-weight: 500;
   }
+
+  nav {
+    margin-top: 4*$line;
+    margin-bottom: -4*$line;
+
+    ol {
+      overflow: auto;
+      clear: both;
+
+      li {
+        float: left;
+        margin-right: 1px;
+        padding: 0;
+
+        a {
+          display: block;
+          padding: ($line/2) $gutter;
+
+          line-height: 24px;
+          background-color: rgba(white, 0);
+          color: $blue;
+          text-decoration: none;
+
+          &:hover {
+            color: black;
+            background-color: rgba(white, 0.5);
+          }
+        }
+      }
+    }
+  }
 }
 
 #page {
-  width: $width;
+  width: $width + 2px;
   margin: 0 auto;
   padding: 0 $gutter;
   @include box-sizing(border-box);
 
   background-color: white;
-  box-shadow: 0 1px 1px rgba(black, 0.1);
+  @include box-shadow(0 1px 1px rgba(black, 0.1));
+  border: 1px solid rgba(black, 0.1);
   @include border-radius($radius);
   overflow: auto;
 
+  color: rgba(black, 0.6);
   line-height: 24px;
 
 
@@ -130,12 +153,13 @@ header + hr {
   }
 
   h1 {
-    font-size: 21px;
+    font-size: 18px;
     color: lighten($blue, 10%);
+    margin: (2*$line) 0 0;
   }
 
   h2 {
-    font-size: 18px;
+    font-size: 16px;
     line-height: 18px;
     margin-bottom: $line;
     color: $blue;
@@ -157,6 +181,7 @@ header + hr {
   dl {
     dt {
       font-weight: 600;
+      color: rgba(black, 1);
     }
 
     dd {
@@ -169,6 +194,10 @@ header + hr {
     color: darken($yellow, 30%);
     margin: 0 (-$gutter) (2*$line) (-$gutter);
     padding: $line $gutter;
+  }
+
+  .btn {
+    @include btn($green, white);
   }
 
 }

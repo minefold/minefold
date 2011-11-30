@@ -4,7 +4,9 @@
 
 %aside
   %p
-    = link_to 'Play Here', '#'
+    = link_to '#', class: 'btn' do
+      %span.icon= image_tag 'play.png'
+      Play Here
   %p
     = link_to 'Invite your friends', '#'
 
@@ -15,10 +17,10 @@
 %article
   #activity-stream
   - if signed_in?
-    = form_tag [world, :wall_items], method: :post, id: 'new-activity' do |f|
+    = form_tag [world, :wall_items], method: :post, id: 'new-chat' do |f|
       .avatar
         = image_tag current_user.avatar.head.s36.url, with: 36, height: 36
-      = text_field :body, nil, rows: 2, maxlength: 100
+      = text_field :body, nil, rows: 2, maxlength: 100, autocomplete: :off
       .note Press enter to chat
 
 / :coffeescript
