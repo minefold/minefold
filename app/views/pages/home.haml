@@ -10,8 +10,8 @@
       %strong 4 hours free
 
   #avatars
-    - %W(head_s60_brenda0006.png head_s60_chaolover91.png head_s60_ciner.png head_s60_darknagzul.png head_s60_dwi.png head_s60_gtar.png head_s60_hardhatmack.png head_s60_lexi517.png head_s60_link47741.png head_s60_mattacrazy108.png head_s60_neo1616.png head_s60_ribs246.png head_s60_that1guy2112.png).shuffle[0...10].each do |path|
-      = image_tag File.join("avatars", path)
+    - @avatars.each do |username|
+      = image_tag File.join("avatars", "head_s60_#{username}.png"), width: 60, height: 60, alt: username
 
 %ol#features
   %li.feature
@@ -19,7 +19,7 @@
     %p We do it all for you. No servers, RAM, Java or SSH. <strong>No more mumbojumbo</strong>. Just sign up and start playing, grasshopper.
 
   %li.feature
-    %h1 Prepaid Time
+    %h1 Buy Time Individually
     %p <strong>Don't pay for Frank</strong> who faked a sickie and played for a week straight. Buy only enough time to suit <em>your</em> habits, not Frank's habit.
 
   %li.feature
@@ -32,7 +32,7 @@
 
   %li.feature
     %h1 Make love, not grief
-    %p Keep pesky griefers out by only inviting <strong>people you trust</strong> to play with you.
+    %p Keep pesky griefers out by only inviting <strong>friends you trust</strong> to play with you.
 
   %li.feature
     %h1 Peace of mind
