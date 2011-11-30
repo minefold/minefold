@@ -1,4 +1,8 @@
-form#new-activity {
+#worlds-show #masthead .activity {
+  @include active-masthead-menu-item;
+}
+
+form#new-chat {
   .avatar {
     float: left;
     margin-right: $gutter;

@@ -1,0 +1,38 @@
+@mixin btn($bg, $fg) {
+  color: $fg;
+  background-color: $bg;
+
+  display: block;
+  padding: $line $gutter;
+
+  font-size: 15px;
+  line-height: 24px;
+  font-weight: 600;
+
+  @include border-radius($radius);
+
+  .icon {
+    background-color: darken($bg, 10%);
+    display: block;
+    float: left;
+
+
+    padding: $line $gutter;
+    margin: (-$line) $gutter (-$line) (-$gutter);
+
+
+    @include border-radius($radius 0 0 $radius);
+
+    img {
+      display: block;
+      margin: ($line/2) 0;
+      width: 3*$line; height: 3*$line;
+    }
+  }
+
+  &:hover {
+    color: $fg;
+    background-color: darken($bg, 10%);
+    text-decoration: none;
+  }
+}

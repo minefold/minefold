@@ -342,6 +342,10 @@ class User
     end
   end
 
+  def current_world?(world)
+    current_world == world
+  end
+
   def first_sign_in?
     sign_in_count <= 1
   end

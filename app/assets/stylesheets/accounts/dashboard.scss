@@ -1,3 +1,17 @@
+#worlds {
+  li {
+    clear: both;
+    img {
+      float: left;
+      margin-right: $gutter;
+    }
+
+    .info {
+      float: left;
+    }
+  }
+}
+
 //#accounts-dashboard #before {
 //  overflow: auto;
 //  padding: 4*$line 0;
@@ -11,46 +25,46 @@
 //  }
 //}
 
-#switch-worlds-dashboard {
-
-  li {
-    padding: $line $gutter;
-    padding-bottom: $line - 1px;
-    border-bottom: 1px solid darken(white, 5%);
-
-    &:nth-child(even) {
-      background-color: lighten($blue, 65%);
-    }
-  }
-
-  h3 {
-    float: left;
-    font-size: 18px;
-  }
-
-  a {
-    color: darken($blue, 10%);
-    &:hover {
-      color: black;
-    }
-  }
-
-  .current {
-    float: right;
-
-    input[type=submit], button {
-      margin-left: $gutter;
-      font-size: 12px;
-//      line-height: 18px;
-      padding: ($line/2) (2*$gutter);
-    }
-  }
-
-  .players {
-    clear: left;
-    font-size: 12px;
-    line-height: 18px;
-    color: rgba(black, 0.4);
-  }
-
-}
+//#switch-worlds-dashboard {
+//
+//  li {
+//    padding: $line $gutter;
+//    padding-bottom: $line - 1px;
+//    border-bottom: 1px solid darken(white, 5%);
+//
+//    &:nth-child(even) {
+//      background-color: lighten($blue, 65%);
+//    }
+//  }
+//
+//  h3 {
+//    float: left;
+//    font-size: 18px;
+//  }
+//
+//  a {
+//    color: darken($blue, 10%);
+//    &:hover {
+//      color: black;
+//    }
+//  }
+//
+//  .current {
+//    float: right;
+//
+//    input[type=submit], button {
+//      margin-left: $gutter;
+//      font-size: 12px;
+////      line-height: 18px;
+//      padding: ($line/2) (2*$gutter);
+//    }
+//  }
+//
+//  .players {
+//    clear: left;
+//    font-size: 12px;
+//    line-height: 18px;
+//    color: rgba(black, 0.4);
+//  }
+//
+//}
