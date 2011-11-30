@@ -71,6 +71,11 @@ header + hr {
     color: black;
     background-color: white;
     font-weight: bold;
+    z-index: 1;
+    position: relative;
+    border-color: darken(white, 10%);
+    border-bottom: 1px solid white;
+    margin-bottom: -1px;
 
     &:hover {
       background-color: white;
@@ -91,8 +96,10 @@ header + hr {
     margin-bottom: -4*$line;
 
     ol {
-      overflow: auto;
       clear: both;
+      position: relative;
+      margin-bottom: -1px;
+      background: green;
 
       li {
         float: left;
@@ -108,9 +115,14 @@ header + hr {
           color: $blue;
           text-decoration: none;
 
+          @include border-radius($radius $radius 0 0);
+          border: 1px solid darken(white, 5%);
+          border-bottom: none;
+
           &:hover {
             color: black;
             background-color: rgba(white, 0.5);
+            border-color: darken(white, 10%);
           }
         }
       }
@@ -119,6 +131,7 @@ header + hr {
 }
 
 #page {
+  clear: both;
   width: $width + 2px;
   margin: 0 auto;
   padding: 0 $gutter;

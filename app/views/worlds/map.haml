@@ -3,8 +3,8 @@
 
 = render partial: 'header'
 
-%article
-  - if world.mapped?
+- if world.mapped?
+  %article
     #map
     - map_asset_path = "#{Rails.configuration.map_tiles_url}/#{world.id}"
 
@@ -14,9 +14,9 @@
       $.world_map path:'#{map_asset_path}'
 
 
-  - else
+- else
+  %center
     %h1 Marvin is still mapping this world!
     %p He apologises and whispers that he's folding as fast as his little hands can go. Perhaps you can help him out by playing here for a couple of minutes?
 
-    %center
-      = image_tag 'marvin.png'
+    = image_tag 'marvin.png'

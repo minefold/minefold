@@ -6,7 +6,10 @@
   %p
     = link_to '#', class: 'btn' do
       %span.icon= image_tag 'play.png'
-      Play Here
+      - if world.players.include?(current_user)
+        Play here
+      - else
+        Ask to play here
   %p
     = link_to 'Invite your friends', '#'
 
