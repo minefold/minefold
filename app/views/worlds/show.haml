@@ -4,12 +4,16 @@
 
 %aside
   %p
-    = link_to '#', class: %w(btn play) do
+    = link_to [:play, world], method: 'put', class: ['btn', 'play'], disabled: true do
       %span.icon= image_tag 'play.png'
-      - if world.players.include?(current_user)
+      - case
+      - when current_user.current_world == world
+        Playing here
+      - when world.players.include?(current_user)
         Play here
       - else
         Ask to play here
+
   %p
     = link_to '#', class: %w(btn invite) do
       %span.icon= image_tag 'friends.png'
