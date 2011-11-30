@@ -4,7 +4,7 @@
 
 %aside
   %p
-    = link_to '#', class: 'btn' do
+    = link_to '#', class: %w(btn play) do
       %span.icon= image_tag 'play.png'
       - if world.players.include?(current_user)
         Play here
