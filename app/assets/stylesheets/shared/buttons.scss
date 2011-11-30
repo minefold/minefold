@@ -8,6 +8,7 @@
   font-size: 15px;
   line-height: 24px;
   font-weight: 600;
+  text-decoration: none;
 
   @include border-radius($radius);
 
@@ -34,6 +35,14 @@
     color: $fg;
     background-color: darken($bg, 10%);
     text-decoration: none;
+  }
+
+  &:disabled, &.disabled {
+    background-color: darken(white, 5%);
+    color: darken(white, 15%);
+    .icon {
+      background-color: darken(white, 10%);
+    }
   }
 
 }
