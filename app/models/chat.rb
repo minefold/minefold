@@ -2,7 +2,7 @@ class Chat < WallItem
   field :raw
   field :html
 
-  def body
+  def text
     html || raw
   end
 

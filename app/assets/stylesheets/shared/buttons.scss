@@ -4,11 +4,13 @@
 
   display: block;
   padding: $line $gutter;
+  margin: 0;
 
-  font-size: 15px;
-  line-height: 24px;
-  font-weight: 600;
+  font: 600 15px/24px $helvetica;
   text-decoration: none;
+  text-align: left;
+
+  border: none;
 
   @include border-radius($radius);
 

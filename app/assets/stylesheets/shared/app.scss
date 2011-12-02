@@ -52,7 +52,7 @@ header {
       border-left: 1px solid darken(white, 5%);
 
       &:hover {
-        color: lighten($blue, 0%);
+        color: black;
       }
     }
 
@@ -177,7 +177,13 @@ header + hr {
     font-size: 16px;
     line-height: 18px;
     margin-bottom: $line;
-    color: $blue;
+    color: lighten($blue, 10%);
+  }
+
+  h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: black;
   }
 
   p, ul, ol, pre {
@@ -196,7 +202,7 @@ header + hr {
   dl {
     dt {
       font-weight: 600;
-      color: rgba(black, 1);
+      color: black;
     }
 
     dd {

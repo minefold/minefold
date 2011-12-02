@@ -3,8 +3,8 @@
 = render partial: 'worlds/header'
 
 %aside
-  %p
-    = link_to [:play, world], method: 'put', class: ['btn', 'play'], disabled: true do
+  = form_for [:play, world], method: 'put', html: {id: 'play-here'} do
+    %button{disabled: (current_user.current_world == world)}
       %span.icon= image_tag 'play.png'
       - case
       - when current_user.current_world == world
@@ -14,15 +14,18 @@
       - else
         Ask to play here
 
-  %p
-    = link_to '#', class: %w(btn invite) do
-      %span.icon= image_tag 'friends.png'
-      Invite your friends
+  %p.social
+    %a.twitter-share-button{href: 'https://twitter.com/share', data: {text: "Play Minecraft with me in #{world.name} - #{world_url(world)}", url: world_url(world), count: 'horizontal', via: 'minefold'}} Tweet
+    %script{type: 'text/javascript', src: '//platform.twitter.com/widgets.js'}
+
+    %iframe.facebook-like-button{src: "//www.facebook.com/plugins/like.php?href=#{world_url(world)}&send=true&layout=button_count&show_faces=false&height=50&action=like&colorscheme=light&appId=#{ENV['FB_APP_ID'].to_i}", allowTransparency: true, scrolling: 'no', frameborder: 0}
+
+
 
   %h2 Friends playing here
   %ul.players
     - world.players.each do |player|
-      %li= player.username
+      %li= link_to player.username, player
 
 %article
   #activity-stream
@@ -33,86 +36,87 @@
       = text_field :body, nil, rows: 2, maxlength: 100, autocomplete: :off
       .note Press enter to chat
 
-/ :coffeescript
-/   window.current_user = #{current_user.to_json(only: [:id, :username, :email])}
-/
-/ :coffeescript
-/   f = $('#share form')
-/
-/   window.template = _.template """
-/     <div id="chat_<%= id %>" class="chat item">
-/       <div class="avatar">
-/         <img src="<%= avatar_head_24_url %>" width="24" height="24" />
-/       </div>
-/       <div class="body"><%= body %></div>
-/       <div class="meta">
-/         <span class="user">@<%= user.username %></span>
-/         <time><%= created_at || '' %></time>
-/       </div>
-/     </div>
-/   """
-/
-/   f.submit (e) ->
-/     e.preventDefault()
-/
-/     data =
-/       chat:
-/         user_id: current_user.id
-/         raw: f.find('textarea').val()
-/
-/     cId = _.uniqueId()
-/
-/     socketID = if pusher?
-/       pusher.connection.socket_id
-/     else
-/       ''
-/
-/     $.ajax
-/       type: f.attr('method')
-/       url: f.attr('action')
-/       data:
-/         chat:
-/           raw: f.find('textarea').val()
-/         socket_id: socketID
-/       dataType: 'json'
-/       success: (data) ->
-/         $('#wall-items #chat_'+cId)
-/           .removeClass('loading')
-/           .attr(id: "chat_"+data._id)
-/
-/     data.chat.body = data.chat.raw
-/     data.chat.user = current_user
-/     data.chat.id = cId
-/     data.chat.created_at = 'just now'
-/     data.chat.avatar_head_24_url = current_user.avatar_head_24_url
-/
-/     html = template(data.chat)
-/     $('#wall-items').prepend $(html).addClass('loading')
-/
-/     f.find('textarea').val('')
-/
-/   f.find('textarea')
-/     .focus ->
-/       f.find('.advice').removeClass('hidden')
-/     .blur ->
-/       f.find('.advice').addClass('hidden')
-/     .keydown (e) ->
-/       if e.keyCode is 13 and !e.shiftKey and !e.ctrlKey and !e.altKey
-/         e.preventDefault()
-/         f.submit()
+  :coffeescript
+    window.current_user = #{current_user.to_json(only: [:id, :username, :email])}
 
+  / :coffeescript
+  /   f = $('#share form')
+  /
+  /   window.template = _.template """
+  /     <div id="chat_<%= id %>" class="chat item">
+  /       <div class="avatar">
+  /         <img src="<%= avatar_head_24_url %>" width="24" height="24" />
+  /       </div>
+  /       <div class="body"><%= body %></div>
+  /       <div class="meta">
+  /         <span class="user">@<%= user.username %></span>
+  /         <time><%= created_at || '' %></time>
+  /       </div>
+  /     </div>
+  /   """
+  /
+  /   f.submit (e) ->
+  /     e.preventDefault()
+  /
+  /     data =
+  /       chat:
+  /         user_id: current_user.id
+  /         raw: f.find('textarea').val()
+  /
+  /     cId = _.uniqueId()
+  /
+  /     socketID = if pusher?
+  /       pusher.connection.socket_id
+  /     else
+  /       ''
+  /
+  /     $.ajax
+  /       type: f.attr('method')
+  /       url: f.attr('action')
+  /       data:
+  /         chat:
+  /           raw: f.find('textarea').val()
+  /         socket_id: socketID
+  /       dataType: 'json'
+  /       success: (data) ->
+  /         $('#wall-items #chat_'+cId)
+  /           .removeClass('loading')
+  /           .attr(id: "chat_"+data._id)
+  /
+  /     data.chat.body = data.chat.raw
+  /     data.chat.user = current_user
+  /     data.chat.id = cId
+  /     data.chat.created_at = 'just now'
+  /     data.chat.avatar_head_24_url = current_user.avatar_head_24_url
+  /
+  /     html = template(data.chat)
+  /     $('#wall-items').prepend $(html).addClass('loading')
+  /
+  /     f.find('textarea').val('')
+  /
+  /   f.find('textarea')
+  /     .focus ->
+  /       f.find('.advice').removeClass('hidden')
+  /     .blur ->
+  /       f.find('.advice').addClass('hidden')
+  /     .keydown (e) ->
+  /       if e.keyCode is 13 and !e.shiftKey and !e.ctrlKey and !e.altKey
+  /         e.preventDefault()
+  /         f.submit()
 
-/ #wall-items
-/   - world.wall_items.order_by([:created_at, :desc]).limit(100).each do |chat|
-/     .item[chat]
-/       - if !chat.user.nil?
-/         .avatar= image_tag chat.user.avatar.head.s24.url, width: 24, height: 24
-/       .body= chat.body
-/       .meta
-/         - if !chat.user.nil?
-/           %span.user @#{chat.user.username}
-/         %time= chat.created_at
-/
+  #wall-items
+    - world.wall_items.order_by([:created_at, :desc]).limit(20).each do |item|
+      .item[item]
+        - if item.user
+          .avatar= image_tag item.user.avatar.head.s24.url, width: 24, height: 24
+
+        .body
+          .meta
+            = link_to item.user.username, item.user
+            = time_ago_in_words(item.created_at)
+
+          %p= item.text
+
 / - head do
 /   = javascript_include_tag '//d3ds63zw57jt09.cloudfront.net/1.9/pusher.min.js'
 /

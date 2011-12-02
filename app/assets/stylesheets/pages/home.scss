@@ -8,14 +8,17 @@
       font-size: 24px;
       font-weight: 600;
       line-height: 36px;
-      margin: (4*$line) 0;
+      margin: (12*$line) 0 (4*$line);
       float: none;
     }
 
     .btn {
       @include btn(lighten($blue, 10%), white);
       width: cols(4) - (4*$gutter);
-      margin: (8*$line) auto (12*$line);
+      margin: 0 auto;
+      margin-bottom: 16*$line;
+
+      text-align: center;
 
       font-size: 16px;
       @include antialiasing;

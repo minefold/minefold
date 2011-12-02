@@ -4,8 +4,22 @@
 
 #page aside {
 
+  h2 {
+    border-bottom: 1px solid darken(white, 5%);
+    padding: $line $gutter;
+    padding-top: 0;
+
+    margin: 0 (-$gutter);
+    margin-bottom: 2*$line;
+
+  }
+
   // Sweet rotating animation for the "play here" button
-  .play.btn {
+  #play-here button {
+    @include btn($green, white);
+    width: 100%;
+    margin-bottom: 2*$line;
+
     .icon img {
       @include transition(transform, 0.3s, ease-in-out);
     }
@@ -15,10 +29,22 @@
     }
   }
 
-  .invite.btn {
-    @include btn(lighten($blue, 30%), white);
-  }
+  .social {
+    overflow: auto;
+    margin-bottom: 4*$line;
 
+    .twitter-share-button, .facebook-like-button {
+      display: block;
+      float: left;
+      width: 50%;
+      height: 24px;
+    }
+
+    .facebook-like-button {
+      height: 24px;
+      overflow: hidden;
+    }
+  }
 }
 
 form#new-chat {
@@ -52,3 +78,47 @@ form#new-chat {
     clear: both;
   }
 }
+
+#wall-items {
+
+  .item {
+    clear: both;
+    overflow: auto;
+    border-bottom: 1px solid darken(white, 5%);
+
+    padding: 0 $gutter;
+    margin: 0 (-$gutter);
+
+    padding-bottom: $line;
+    margin-bottom: $line;
+  }
+
+  .avatar {
+    float: left;
+    margin-right: (36px - 24px) + $gutter;
+    img {
+      @include border-radius($radius);
+      display: block;
+    }
+  }
+
+  .body {
+    width: cols(7) - (2*$gutter) - 48px;
+    float: left;
+
+    .meta {
+      font-size: 12px;
+      color: darken(white, 20%);
+
+      .timeago {
+        float: right;
+      }
+    }
+
+    p {
+      margin-bottom: 0;
+    }
+  }
+}
+
+
