@@ -3,16 +3,17 @@
 = render partial: 'worlds/header'
 
 %aside
-  = form_for [:play, world], method: 'put', html: {id: 'play-here'} do
-    %button{disabled: (current_user.current_world == world)}
-      %span.icon= image_tag 'play.png'
-      - case
-      - when current_user.current_world == world
-        Playing here
-      - when world.players.include?(current_user)
-        Play here
-      - else
-        Ask to play here
+  - if signed_in?
+    = form_for [:play, world], method: 'put', html: {id: 'play-here'} do
+      %button{disabled: (current_user.current_world == world)}
+        %span.icon= image_tag 'play.png'
+        - case
+        - when current_user.current_world == world
+          Playing here
+        - when world.players.include?(current_user)
+          Play here
+        - else
+          Ask to play here
 
   %p.social
     %a.twitter-share-button{href: 'https://twitter.com/share', data: {text: "Play Minecraft with me in #{world.name} - #{world_url(world)}", url: world_url(world), count: 'horizontal', via: 'minefold'}} Tweet
