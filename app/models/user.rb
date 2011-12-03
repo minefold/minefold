@@ -5,7 +5,7 @@ class User
   include Mongoid::Paranoia
 
   BILLING_PERIOD = 1.minute
-  FREE_HOURS  = 4
+  FREE_HOURS  = 10
 
   REFERRAL_CODE_LENGTH = 6
   REFERRAL_HOURS = 2
