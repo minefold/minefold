@@ -17,7 +17,7 @@ Minefold::Application.configure do
     domain:         ENV['SENDGRID_DOMAIN']
   }
 
-  config.force_ssl = true
+  # config.force_ssl = true
 
   # Code is not reloaded between requests
   config.cache_classes = true

@@ -6,7 +6,7 @@ r.list_of :events, world.events do |event|
     r.element :id
     r.element :url, url_for(event.source)
     r.element :username
-    r.element :avatar, event.source.avatar.head.s60.url
+    r.element :avatar, event.source.avatar.head.s24.url
   end
 
   case event

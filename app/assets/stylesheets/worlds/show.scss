@@ -58,15 +58,23 @@ form#share {
   }
 
   input {
-    width: cols($ncols - 3) - (2 * $gutter) - 36px - $gutter;
+    width: cols($ncols - 3) - (2 * $gutter) - 24px - $gutter;
 
-    font-size: 16px;
+    color: black;
     line-height: 24px;
-    padding: ($line - 1px) ($gutter/2);
+    padding: ($line - 1px) ($gutter);
 
     @include box-sizing(border-box);
 
     border: 1px solid darken(white, 10%);
+    @include border-radius($radius);
+
+    outline: none;
+
+    &:focus {
+      border-color: darken($green, 10%);
+      @include box-shadow(0 0 1px $green);
+    }
   }
 
   .note {
@@ -105,9 +113,11 @@ form#share {
   .body {
     width: cols(7) - (2*$gutter) - 48px;
     float: left;
+    color: lighten(black, 20%);
 
     .meta {
-      font-size: 12px;
+      font-size: 11px;
+      line-height: 18px;
       color: darken(white, 20%);
 
       .timeago {

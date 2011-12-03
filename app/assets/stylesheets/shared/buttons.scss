@@ -14,6 +14,8 @@
 
   @include border-radius($radius);
 
+  cursor: pointer;
+
   .icon {
     background-color: darken($bg, 10%);
     display: block;
@@ -37,6 +39,7 @@
     color: $fg;
     background-color: darken($bg, 10%);
     text-decoration: none;
+    cursor: pointer;
   }
 
   &:disabled, &.disabled {

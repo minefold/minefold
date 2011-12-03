@@ -10,7 +10,7 @@ class MF.ChatView extends MF.EventView
     </div>
     <div class="body">
       <div class="meta">
-        <a href="<%= source.url %>"><%= source.username %></a>
+
         <abbr class="timeago"><%= created_at %></abbr>
       </div>
 

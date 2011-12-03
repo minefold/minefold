@@ -9,9 +9,9 @@ test:
   identity_map_enabled: true
 
 staging:
-  identity_map_enabled: true
   uri: <%= ENV['MONGOLAB_URI'] || 'mongodb://heroku_app650862:96gg63iarmqm0tuq46knv4a8mb@dbh18.mongolab.com:27187/heroku_app650862' %>
+  identity_map_enabled: true
 
 production:
-  identity_map_enabled: true
   uri: <%= ENV['MONGOLAB_URI'] || 'mongodb://heroku_app650862:96gg63iarmqm0tuq46knv4a8mb@dbh18.mongolab.com:27187/heroku_app650862' %>
+  identity_map_enabled: true

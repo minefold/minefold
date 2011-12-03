@@ -11,18 +11,21 @@ class MF.ShareView extends Backbone.View
   submit: (e) -> false
 
   type: (e) =>
-    if e.keyCode is 13
+    input = $(e.target)
+
+    if isEnterKey(e) and input.val() isnt ''
       e.preventDefault()
 
-      input = $(@el).find('input[name=text]')
-
-      text = input.val()
-
-      chat = new MF.Chat(text: text)
-
+      chat = new MF.Chat(text: input.val())
       @collection.add(chat)
-
       chat.save()
 
       input.val('')
 
+
+  isEnterKey = (event) ->
+    event.keyCode is 13 and
+      not event.ctrlKey and
+      not event.altKey and
+      not event.metaKey and
+      not event.shiftKey
