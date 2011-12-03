@@ -21,7 +21,7 @@ class User
 
   field :credits,        type: Integer, default: (FREE_HOURS.hours / BILLING_PERIOD)
   field :minutes_played, type: Integer, default: 0
-  embeds_many :credit_events
+  # embeds_many :credit_events
 
   attr_accessor :stripe_token
   attr_accessor :coupon
@@ -76,10 +76,10 @@ class User
     where(stripe_id: stripe_id)
   }
 
-  index :plan_id
-  scope :by_plan_id, ->(plan_id) {
-    where(plan_id: plan_id)
-  }
+  # index :plan_id
+  # scope :by_plan_id, ->(plan_id) {
+  #   where(plan_id: plan_id)
+  # }
 
 
 # Validations
@@ -237,12 +237,13 @@ class User
     self.credit_events.build(delta: self.credits)
   end
 
+  # TODO: MUST FIX
   def increment_hours!(n, time=Time.now.utc)
     increment_credits! self.class.hours_to_credits(n), time
   end
 
   def increment_credits!(n, time=Time.now.utc)
-    event = CreditEvent.new(delta: n.to_i, created_at: time)
+    # event = CreditEvent.new(delta: n.to_i, created_at: time)
 
     self.class.collection.update({_id: id}, {
       '$inc' => {credits: n.to_i},
@@ -352,14 +353,6 @@ class User
 
   def to_param
     slug
-  end
-
-  def as_json(options={})
-    {
-      avatar_head_24_url: avatar.head.s24.url,
-      avatar_head_60_url: avatar.head.s60.url,
-      id: id
-    }.merge(super(options))
   end
 
 protected

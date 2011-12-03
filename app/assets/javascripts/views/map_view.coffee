@@ -1,4 +1,4 @@
-class window.Map extends Backbone.View
+class window.MapView extends Backbone.View
   id: 'map'
 
   options:

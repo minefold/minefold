@@ -11,6 +11,8 @@
 #= require_tree ./collections
 #= require_tree ./views
 
+window.MF = {}
+
 delay = (ms, fn) -> setTimeout(fn, ms)
 every = (ms, fn) -> setInterval(fn, ms)
 

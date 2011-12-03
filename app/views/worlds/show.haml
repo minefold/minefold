@@ -28,16 +28,14 @@
       %li= link_to player.username, player
 
 %article
-  #activity-stream
   - if signed_in?
-    = form_tag [world, :wall_items], method: :post, id: 'new-chat' do |f|
+    %form#share
       .avatar
         = image_tag current_user.avatar.head.s36.url, with: 36, height: 36
-      = text_field :body, nil, rows: 2, maxlength: 100, autocomplete: :off
-      .note Press enter to chat
 
-  :coffeescript
-    window.current_user = #{current_user.to_json(only: [:id, :username, :email])}
+      %input{type: 'text', name: 'text', rows: 2, maxlength: 100, autocomplete: 'off'}
+
+      .note Press enter to chat
 
   / :coffeescript
   /   f = $('#share form')
@@ -104,18 +102,28 @@
   /         e.preventDefault()
   /         f.submit()
 
-  #wall-items
-    - world.wall_items.order_by([:created_at, :desc]).limit(20).each do |item|
-      .item[item]
-        - if item.user
-          .avatar= image_tag item.user.avatar.head.s24.url, width: 24, height: 24
+  #events
 
-        .body
-          .meta
-            = link_to item.user.username, item.user
-            = time_ago_in_words(item.created_at)
+  :javascript
+    window.events = new MF.EventsCollection();
+    events.fetch({
+      success: function() {
 
-          %p= item.text
+        activityView = new MF.ActivityView({
+          collection: events
+        });
+
+        $('#events').append(activityView.el);
+
+        activityView.render();
+      }
+    });
+
+    window.shareView = new MF.ShareView({
+      el: $('form#share'),
+      collection: window.events
+    });
+
 
 / - head do
 /   = javascript_include_tag '//d3ds63zw57jt09.cloudfront.net/1.9/pusher.min.js'

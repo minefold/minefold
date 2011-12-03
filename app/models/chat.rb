@@ -1,19 +1,7 @@
-class Chat < WallItem
-  field :raw
-  field :html
-
-  def text
-    html || raw
-  end
+class Chat < Event
+  field :text
 
   def msg
-    "<#{user.username}> #{raw}"
+    "<#{source.username}> #{text}"
   end
-
-  def as_json(opts={})
-    {
-      avatar_head_24_url: user.avatar.head.s24.url
-    }.merge(super(opts))
-  end
-
 end

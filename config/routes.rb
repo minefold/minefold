@@ -52,7 +52,7 @@ Minefold::Application.routes.draw do
       put :play
     end
 
-    resources :wall_items, :only => [:index, :create]
+    resources :events, :only => [:index, :create]
     resources :players, :only => [:index, :create, :destroy] do
       post :ask, :action => :ask, :on => :collection
       post :add, :action => :add, :on => :collection

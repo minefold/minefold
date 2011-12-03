@@ -47,7 +47,7 @@
   }
 }
 
-form#new-chat {
+form#share {
   .avatar {
     float: left;
     margin-right: $gutter;
@@ -79,9 +79,9 @@ form#new-chat {
   }
 }
 
-#wall-items {
+#events {
 
-  .item {
+  .event {
     clear: both;
     overflow: auto;
     border-bottom: 1px solid darken(white, 5%);

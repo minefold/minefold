@@ -11,7 +11,7 @@ class World
 
   field :seed,             type: String, default: ''
   field :game_mode,        type: Integer, default: GAME_MODES.index(:survival)
-  # TODO: Create migration
+
   field :difficulty_level, type: Integer, default: DIFFICULTIES.index(:easy)
   field :pvp,              type: Boolean, default: true
   field :spawn_monsters,   type: Boolean, default: true
@@ -26,7 +26,10 @@ class World
 
   embeds_many :play_requests
 
-  embeds_many :wall_items, as: :wall
+
+  has_many :events, as: :target,
+                    order: [:created_at, :desc]
+
 
   default_scope includes(:creator)
 

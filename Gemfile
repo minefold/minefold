@@ -32,6 +32,8 @@ gem 'jquery-rails'
 gem 'backbone-rails'
 gem 'coffee-filter'
 gem 'decent_exposure'
+gem 'representative', require: 'representative/json'
+gem 'representative_view'
 
 gem 'asset_sync'
 
@@ -44,8 +46,6 @@ gem 'mini_magick'
 gem 'fog'
 gem 'resque', require: 'resque/server'
 gem 'resque_mailer'
-
-gem 'mail_view', git: 'https://github.com/37signals/mail_view.git'
 
 gem 'rinku'
 
