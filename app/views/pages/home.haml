@@ -1,13 +1,15 @@
 - track 'visited home page'
 
 - masthead do
-  %h1 The easiest way to play Minecraft with your friends
+  %h1 Minefold is the easiest way to play Minecraft with your friends.
 
   = link_to new_user_path, class: 'btn' do
     Start playing now!
     .free
       Try it out for
-      %strong 4 hours free
+      %strong
+        = pluralize User::FREE_HOURS, 'hour', 'hours'
+        free
 
   #avatars
     - @avatars.each do |username|
