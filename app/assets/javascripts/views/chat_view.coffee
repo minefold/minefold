@@ -31,6 +31,8 @@ class MF.ChatView extends MF.EventView
       avatar: $('form#share .avatar img').attr('src')
     attrs.created_at or= iso8601DateString(new Date())
 
+    attrs.text = _.escape(attrs.text)
+
     $(@el)
       .html @template(attrs)
 
