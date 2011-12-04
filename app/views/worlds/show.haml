@@ -22,7 +22,6 @@
     %iframe.facebook-like-button{src: "//www.facebook.com/plugins/like.php?href=#{world_url(world)}&send=true&layout=button_count&show_faces=false&height=50&action=like&colorscheme=light&appId=#{ENV['FB_APP_ID'].to_i}", allowTransparency: true, scrolling: 'no', frameborder: 0}
 
 
-
   %h2 Friends playing here
   %ul.players
     - world.players.each do |player|
@@ -38,78 +37,12 @@
 
       .note Press enter to chat
 
-  / :coffeescript
-  /   f = $('#share form')
-  /
-  /   window.template = _.template """
-  /     <div id="chat_<%= id %>" class="chat item">
-  /       <div class="avatar">
-  /         <img src="<%= avatar_head_24_url %>" width="24" height="24" />
-  /       </div>
-  /       <div class="body"><%= body %></div>
-  /       <div class="meta">
-  /         <span class="user">@<%= user.username %></span>
-  /         <time><%= created_at || '' %></time>
-  /       </div>
-  /     </div>
-  /   """
-  /
-  /   f.submit (e) ->
-  /     e.preventDefault()
-  /
-  /     data =
-  /       chat:
-  /         user_id: current_user.id
-  /         raw: f.find('textarea').val()
-  /
-  /     cId = _.uniqueId()
-  /
-  /     socketID = if pusher?
-  /       pusher.connection.socket_id
-  /     else
-  /       ''
-  /
-  /     $.ajax
-  /       type: f.attr('method')
-  /       url: f.attr('action')
-  /       data:
-  /         chat:
-  /           raw: f.find('textarea').val()
-  /         socket_id: socketID
-  /       dataType: 'json'
-  /       success: (data) ->
-  /         $('#wall-items #chat_'+cId)
-  /           .removeClass('loading')
-  /           .attr(id: "chat_"+data._id)
-  /
-  /     data.chat.body = data.chat.raw
-  /     data.chat.user = current_user
-  /     data.chat.id = cId
-  /     data.chat.created_at = 'just now'
-  /     data.chat.avatar_head_24_url = current_user.avatar_head_24_url
-  /
-  /     html = template(data.chat)
-  /     $('#wall-items').prepend $(html).addClass('loading')
-  /
-  /     f.find('textarea').val('')
-  /
-  /   f.find('textarea')
-  /     .focus ->
-  /       f.find('.advice').removeClass('hidden')
-  /     .blur ->
-  /       f.find('.advice').addClass('hidden')
-  /     .keydown (e) ->
-  /       if e.keyCode is 13 and !e.shiftKey and !e.ctrlKey and !e.altKey
-  /         e.preventDefault()
-  /         f.submit()
-
   #events
 
   :javascript
-    window.events = new MF.EventsCollection();
+    var events = new MF.EventsCollection();
     events.fetch({
       success: function() {
-
         activityView = new MF.ActivityView({
           collection: events
         });
@@ -120,9 +53,9 @@
       }
     });
 
-    window.shareView = new MF.ShareView({
+    var shareView = new MF.ShareView({
       el: $('form#share'),
-      collection: window.events
+      collection: events
     });
 
 

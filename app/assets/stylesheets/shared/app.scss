@@ -5,6 +5,8 @@ header {
   z-index: 99;
   top: 0; left: 0; right: 0;
 
+  min-width: $width;
+
   background-color: white;
 
   h1 {
@@ -19,7 +21,12 @@ header {
       color: #CCC;
       text-decoration: none;
 
-      padding: $line (2*$gutter) ($line - 1px) 0;
+      padding: $line $gutter;
+      padding-bottom: $line - 1px;
+
+      margin-left: -$gutter;
+      margin-right: $gutter;
+
       display: block;
 
       &:hover {
@@ -53,7 +60,12 @@ header {
 
       &:hover {
         color: black;
+        background-color: darken(white, 5%);
       }
+    }
+
+    .signin {
+      float: right;
     }
 
     .profile img {
@@ -63,8 +75,46 @@ header {
   }
 }
 
+
 header + hr {
   margin-top: 6*$line;
+}
+
+
+#flash {
+  width: $width;
+  @include border-radius(0 0 $radius $radius);
+
+  .message {
+    padding: $line $gutter;
+    line-height: 24px;
+    font-size: 12px;
+    font-weight: 600;
+
+    a.hide {
+      float: right;
+      font-size: 11px;
+      color: rgba(black, 0.4);
+      font-weight: 600;
+      text-decoration: none;
+
+      display: block;
+      padding: $line (2*$gutter);
+      margin: (-$line) (-$gutter);
+
+      &:hover, &:focus {
+        color: rgba(black, 0.8);
+      }
+    }
+  }
+
+  .notice, .success {
+    background: lighten($green, 30%);
+  }
+
+  .alert, .error {
+    background: lighten($yellow, 40%);
+  }
 }
 
 

@@ -13,8 +13,8 @@
 
 window.MF = {}
 
-delay = (ms, fn) -> setTimeout(fn, ms)
-every = (ms, fn) -> setInterval(fn, ms)
+window.delay = (ms, fn) -> setTimeout(fn, ms)
+window.every = (ms, fn) -> setInterval(fn, ms)
 
 jQuery ->
-  $('abbr.timeago').timeago()
+  $('time.timeago').timeago()

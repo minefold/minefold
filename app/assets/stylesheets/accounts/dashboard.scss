@@ -1,6 +1,12 @@
 #worlds {
+  margin-top: -$line;
+  margin-bottom: -3*$line;
   li {
-    clear: both;
+    overflow: auto;
+    padding: $line $gutter;
+    border-bottom: 1px solid darken(white, 5%);
+    margin: 0 (-$gutter);
+
     img {
       float: left;
       margin-right: $gutter;
@@ -8,7 +14,19 @@
 
     .info {
       float: left;
+      p {
+        margin-bottom: 0;
+      }
     }
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background-color: darken(white, 2%);
+    }
+
   }
 }
 

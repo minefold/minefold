@@ -3,10 +3,12 @@
   %head
     %meta{charset: 'utf-8'}
     = stylesheet_link_tag 'application'
-    %title= content_for?(:title) ? "#{content_for(:title)} — Minefold" : 'Minefold'
 
-    - %w{d1gl6072w16l3y.cloudfront.net api.mixpanel.com connect.facebook.net html5shim.googlecode.com}.each do |host|
-      %link{rel: 'dns-prefetch', href: "//#{host}"}
+    %title
+      - if content_for? :title
+        = content_for(:title)
+        —
+      Minefold
 
     /
       \
@@ -20,42 +22,32 @@
       \      Digg it?
       \
 
-    = csrf_meta_tags
-    %meta{'http-equiv' => 'X-UA-Compatible', :content => 'IE=edge,chrome=1'}
-    %meta{name: 'viewport', content: 'width=device-width, initial-scale=1'}
-
     %meta{name:'description', content:'Play Minecraft on demand with friends.'}
     %meta{name:'keywords', content:%w(gaming games game minecraft server hosting multiplayer).join(',')}
-
     = favicon_link_tag
 
-    = javascript_include_tag '//maps.google.com/maps/api/js?sensor=false'
+    %meta{'http-equiv' => 'X-UA-Compatible', :content => 'IE=edge,chrome=1'}
+    %meta{name: 'viewport', content: 'width=device-width, initial-scale=1'}
+    %meta{property: 'og:site_name', content: 'Minefold'}
+    %meta{property: 'fb:app_id', content: ENV['FB_APP_ID']}
+    = csrf_meta_tags
 
+    = javascript_include_tag '//d3ds63zw57jt09.cloudfront.net/1.9/pusher.min.js'
+    = javascript_include_tag '//maps.google.com/maps/api/js?sensor=false'
     = javascript_include_tag 'application'
 
     /[if lt IE 9]
       = javascript_include_tag '//html5shim.googlecode.com/svn/trunk/html5.js'
 
-    %meta{property: 'og:site_name', content: 'Minefold'}
-    %meta{property: 'fb:app_id', content: ENV['FB_APP_ID']}
-
-    <script type="text/javascript" src="https://use.typekit.com/qzl8aqw.js"></script>
-    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    = javascript_include_tag '//use.typekit.com/qzl8aqw.js'
+    :javascript
+      try{Typekit.load();}catch(e){}
 
     = render partial: 'shared/mixpanel'
+
     = yield :head
 
   %body{lang: 'en', id: page_css_selector}
-    / #fb-root
-    / :javascript
-    /   (function(d, s, id) {
-    /     var js, fjs = d.getElementsByTagName(s)[0];
-    /     if (d.getElementById(id)) {return;}
-    /     js = d.createElement(s); js.id = id;
-    /     js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=#{ENV['FB_APP_ID'].to_i.to_json}";
-    /     fjs.parentNode.insertBefore(js, fjs);
-    /   }(document, 'script', 'facebook-jssdk'));
-
     %nav.accessibility
       %ol
         %li= link_to 'Skip to navigation', '#nav'
@@ -72,19 +64,16 @@
             %em Beta
 
         %ol#nav
-          / %li= link_to 'Blog', 'http://blog.minefold.com'
-          / %li= link_to 'Feedback', 'http://getsatisfaction.com/minefold'
+          - if not user_signed_in?
+            %li.pricing= link_to 'Pricing', pricing_page_path
+            %li.blog= link_to 'Blog', 'http://blog.minefold.com'
+            %li.feedback= link_to 'Feedback', 'http://getsatisfaction.com/minefold'
+            %li.signin= link_to 'Sign In', new_user_session_path
 
-          - if user_signed_in?
+          - else
             %li.dashboard= link_to 'Dashboard', user_root_path
             %li.time
-              / - if current_user.unlimited?
-              /   = link_to "&infin;h".html_safe, billing_account_path
-              / - else
               = link_to "#{current_user.hours_left}h", billing_account_path
-
-            / %li.account
-            /   = link_to 'Settings', account_path
 
             %li.sign-out
               = link_to 'Signout', destroy_user_session_path, method: :delete
@@ -94,34 +83,29 @@
                 %span.accessibility= current_user.username
                 = image_tag current_user.avatar_url(:head, :s18), width: 18, height:18, alt: current_user.username
 
-          - else
-            %li.login= link_to 'Login', new_user_session_path
-
-        /= render partial: 'shared/nav'
-
     %hr
+
+    - if not flash.empty?
+      #flash.wrapper
+        - flash.each do |type, message|
+          %div.message{class: type}
+            %a.hide{href: '#'} Hide
+            = simple_format(message)
+
+      :javascript
+        // Manual hide
+        $('#flash a.hide').click(function() { $(this).parent().hide(); });
+
+        // Timeout hide
+        $('#flash .message').each(function(i){
+          var elm = $(this), t = 8000 + (i + 250);
+          delay(t, function(){ elm.hide(); });
+        });
 
     %section#masthead
       .wrapper= yield :masthead
 
-    - flash.each do |type, message|
-      %section.flash{class: type}
-        .wrapper
-          %a.close{href: '#'}
-          = simple_format(message)
-
-    :coffeescript
-      $(document).ready ->
-        $('.flash a.close').click (e) ->
-          e.preventDefault()
-          $(e.target).parent().parent('.flash').slideUp()
-
-    / %section#before= yield :before
-
-    #page
-      = yield
-
-    / %section#after= yield :after
+    #page= yield
 
     %hr
 
