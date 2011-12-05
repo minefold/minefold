@@ -69,19 +69,30 @@
             %li.blog= link_to 'Blog', 'http://blog.minefold.com'
             %li.feedback= link_to 'Feedback', 'http://getsatisfaction.com/minefold'
             %li.signin= link_to 'Sign In', new_user_session_path
-
           - else
             %li.dashboard= link_to 'Dashboard', user_root_path
-            %li.time
-              = link_to "#{current_user.hours_left}h", billing_account_path
+            %li.blog= link_to 'Blog', 'http://blog.minefold.com'
+            %li.feedback= link_to 'Feedback', 'http://getsatisfaction.com/minefold'
 
-            %li.sign-out
-              = link_to 'Signout', destroy_user_session_path, method: :delete
-
-            %li.profile<
+            %li.user
               = link_to current_user do
-                %span.accessibility= current_user.username
                 = image_tag current_user.avatar_url(:head, :s18), width: 18, height:18, alt: current_user.username
+
+              %ol
+                %li.profile= link_to 'Profile', current_user
+                %li.settings= link_to 'Settings', account_path
+                %li.sign-out= link_to 'Signout', destroy_user_session_path, method: :delete
+
+
+            %li.buy= link_to 'Buy time', billing_account_path
+            %li.time
+              .hours #{current_user.hours_left}h left
+
+        :javascript
+          var userMenuView = new MF.UserMenuView({
+            el: $('header #nav .user')
+          });
+
 
     %hr
 
@@ -98,7 +109,7 @@
 
         // Timeout hide
         $('#flash .message').each(function(i){
-          var elm = $(this), t = 6000 + (i + 250);
+          var elm = $(this), t = 4000 + (i + 250);
           delay(t, function(){ elm.hide(); });
         });
 

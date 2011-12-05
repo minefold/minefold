@@ -1,6 +1,6 @@
 header {
   position: fixed;
-  overflow: auto;
+  overflow: visible;
   border-bottom: 1px solid darken(white, 10%);
   z-index: 99;
   top: 0; left: 0; right: 0;
@@ -40,7 +40,7 @@ header {
   }
 
   ol {
-    overflow: auto;
+    overflow: visible;
     li {
       float: left;
     }
@@ -56,6 +56,8 @@ header {
       font-weight: 600;
       @include antialiasing;
 
+      border-color: darken(white, 5%);
+      border-type: solid;
       border-left: 1px solid darken(white, 5%);
 
       &:hover {
@@ -64,14 +66,61 @@ header {
       }
     }
 
-    .signin {
+    .signin, .user, .time, .buy {
       float: right;
+      position: relative;
     }
 
-    .profile img {
-      display: block;
-      border-radius: $radius;
+    .hours {
+      padding: $line $gutter;
+      padding-bottom: $line - 1px;
+      line-height: 24px;
+
+      font-size: 12px;
+      font-weight: 600;
     }
+
+    .user {
+      img {
+        display: block;
+        border-radius: $radius;
+      }
+
+      &.active {
+        > a {
+          background-color: darken(white, 5%);
+        }
+        ol {
+          display: block;
+        }
+      }
+    }
+
+    ol {
+      display: none;
+
+      right: 0;
+      top: (6*$line) - 1px;
+      width: cols(2) - (2*$gutter);
+      position: absolute;
+
+      @include border-radius(0 0 $radius $radius);
+
+      z-index: 100;
+      background: white;
+      border: 1px solid darken(white, 10%);
+      border-top-color: darken(white, 5%);
+      @include box-sizing(border-box);
+
+      li {
+        float: none;
+      }
+
+      a {
+        border: none;
+      }
+    }
+
   }
 }
 
@@ -187,7 +236,7 @@ header + hr {
 
           &:hover {
             color: black;
-            background-color: rgba(white, 0.5);
+            background-color: darken(white, 5%);
             border-color: darken(white, 10%);
           }
         }
