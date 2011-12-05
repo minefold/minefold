@@ -1,9 +1,6 @@
 - title 'Settings'
 
-%aside
-  %ol
-    %li.overview= link_to 'Overview', account_path
-    %li.billing= link_to 'Time & Billing', billing_account_path
+= render partial: 'nav'
 
 %article
   = form_for current_user, url: account_path, method: :put do |f|

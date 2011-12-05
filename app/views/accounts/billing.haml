@@ -1,13 +1,15 @@
-= render partial: 'header'
+- title 'Settings'
 
-- before do
+= render partial: 'nav'
+
+%article
   #plans
     = render partial: 'time'
 
-= image_tag 'card.png'
-- if current_user.card.nil?
-  %p No card on file
-- else
-  %p
-    %strong Card on file:
-    = current_user.card.type
+  = image_tag 'card.png'
+  - if current_user.card.nil?
+    %p No card on file
+  - else
+    %p
+      %strong Card on file:
+      = current_user.card.type

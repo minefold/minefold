@@ -41,3 +41,32 @@
   / %ol
   /   %li= link_to 'Raster (PNG)', image_path('minefold-logo.png')
   /   %li= link_to 'Vector (EPS)', image_path('minefold-logo.eps')
+
+  %p
+    The best way to get in contact with us at Minefold is to end us an email at #{mail_to 'team@minefold.com'}. You can also email the founders, Chris and Dave, directly at #{mail_to 'chris@minefold.com'} or #{mail_to 'dave@minefold.com'} respectively.
+
+  .vcard
+    %h2 Address
+    %p.adr
+      %a.fn.org.url{href: root_url} Minefold
+      %br
+      %span.locality Tamarama
+      %br
+      %abbr.region{title: 'New South Wales'} NSW
+      %span.postal-code 2026
+      %br
+      %span.country-name Australia
+
+      %p.abn
+        %abbr{title: 'Australian Business Number'} ABN
+        37068433851
+
+    %script{src: '//maps.googleapis.com/maps/api/js?sensor=false'}
+    #map_canvas
+    :coffeescript
+      new google.maps.Map $('#map_canvas')[0],
+        zoom: 14
+        center: new google.maps.LatLng(-33.899692, 151.27062)
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+        disableDefaultUI: true
+

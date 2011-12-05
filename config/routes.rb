@@ -4,7 +4,6 @@ Minefold::Application.routes.draw do
 
   # Static Pages
   { '/about'   => :about,
-    '/contact' => :contact,
     '/help'    => :help,
     '/jobs'    => :jobs,
     '/press'   => :press,

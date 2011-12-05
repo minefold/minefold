@@ -49,8 +49,6 @@ class WorldsController < ApplicationController
   def map
   end
 
-  def members
-  end
 
   def invite
   end
