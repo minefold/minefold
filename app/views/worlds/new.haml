@@ -1,99 +1,77 @@
 - title 'Create a new world'
 
+%aside
+  %p Do you have a world already? You can upload a <code>.zip</code> file of it and play it instantly.
+
 %article
   = form_for world do |f|
-
-    .errors
-      - unless world.errors.empty?
-        Whoops!
-        %ol
-          - world.errors.each do |key, desc|
-            %li
-              %strong= key
-              = desc
 
     %section.name
       %h3
         = f.label :name
 
       %fieldset
-        = f.text_field :name
+        = error_messages_for f.object, :name
+        = f.text_field :name, tabindex: 1
 
     %section.game-mode
       %h3 Default game mode
 
       %fieldset.inline
         %div
-          = f.radio_button :game_mode, 0
+          = f.radio_button :game_mode, 0, tabindex: 2
           = f.label :game_mode_0, 'Survival'
 
         %div
-          = f.radio_button :game_mode, 1
+          = f.radio_button :game_mode, 1, tabindex: 3
           = f.label :game_mode_1, 'Creative'
 
         %p.hint (Can be changed later for individual players)
 
 
-    %section.show-advanced
+    %section.seed
+      %h3= f.label :seed
       %fieldset
-        %a#showadvanced{href: '#'}
-          %span.action Show
-          advanced settings
+        = f.text_field :seed, tabindex: 4
 
-    .advanced{hidden}
-      %section.seed
-        %h3= f.label :seed
-        %fieldset
-          = f.text_field :seed
+    %section.difficulty
+      %h3= f.label :difficulty_level, 'Difficulty'
 
-      %section.difficulty
-        %h3= f.label :difficulty_level, 'Difficulty'
+      %fieldset.inline
+        %div
+          = f.radio_button :difficulty_level, 0, tabindex: 5
+          = f.label :difficulty_level_0, 'Peaceful'
 
-        %fieldset.inline
-          %div
-            = f.radio_button :difficulty_level, 0
-            = f.label :difficulty_level_0, 'Peaceful'
+        %div
+          = f.radio_button :difficulty_level, 1, tabindex: 6
+          = f.label :difficulty_level_1, 'Easy'
 
-          %div
-            = f.radio_button :difficulty_level, 1
-            = f.label :difficulty_level_1, 'Easy'
+        %div
+          = f.radio_button :difficulty_level, 2, tabindex: 7
+          = f.label :difficulty_level_2, 'Normal'
 
-          %div
-            = f.radio_button :difficulty_level, 2
-            = f.label :difficulty_level_2, 'Normal'
+        %div
+          = f.radio_button :difficulty_level, 3, tabindex: 8
+          = f.label :difficulty_level_3, 'Hard'
 
-          %div
-            = f.radio_button :difficulty_level, 3
-            = f.label :difficulty_level_3, 'Hard'
+    %section.game-settings
+      %h3 Game settings
 
-      %section.game-settings
-        %h3 Game settings
+      %fieldset
+        %div
+          = f.check_box :pvp, tabindex: 9
+          = f.label :pvp, 'Player vs. Player'
 
-        %fieldset
-          %div
-            = f.check_box :pvp
-            = f.label :pvp, 'Player vs. Player'
+        %div
+          = f.check_box :spawn_monsters, tabindex: 10
+          = f.label :spawn_monsters, 'Spawn monsters'
 
-          %div
-            = f.check_box :spawn_monsters
-            = f.label :spawn_monsters, 'Spawn monsters'
+        %div
+          = f.check_box :spawn_animals, tabindex: 11
+          = f.label :spawn_animals, 'Spawn animals'
 
-          %div
-            = f.check_box :spawn_animals
-            = f.label :spawn_animals, 'Spawn animals'
-
-    :coffeescript
-      link = $('#showadvanced')
-      body = $('.advanced')
-
-      link.click (e) ->
-        e.preventDefault()
-        body.toggle()
-        link.find('.action').text(
-          if body.is(':visible') then 'Hide' else 'Show'
-        )
-
-    .submit
-      = f.submit 'Create world'
+    %section.submit
+      %fieldset
+        = f.submit 'Create world', tabindex: 12
 
 
