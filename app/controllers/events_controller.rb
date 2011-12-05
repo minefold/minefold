@@ -19,6 +19,7 @@ class EventsController < ApplicationController
     if chat.valid?
       world.events.push(chat)
 
+      # TODO: Re-implement
       # chat.wall.broadcast 'chat-create',
       #                     chat.to_json(include: :user),
       #                     params[:socket_id]

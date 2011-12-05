@@ -1,20 +1,12 @@
 = form_for new_user do |f|
-  .errors
-    - unless new_user.errors.empty?
-      %p
-        Whoops a daisy! Your:
-      %ol
-        - new_user.errors.each do |key, desc|
-          %li
-            %strong= key
-            = desc
-
   - if referrer
     %section.referral
       %p You've been referred by #{referrer.username}
 
-  %section
+  %section.username
     = f.label :username, 'Minecraft Username'
+    = error_messages_for(f.object, :username)
+
     = f.text_field :username, tabindex: 1, placeholder: 'notch'
     :coffeescript
       username = $('input#user_username')
@@ -30,17 +22,24 @@
       %p
         You need a <em>paid</em> Minecraft account to play on Minefold. They are €14.95 at #{link_to 'http://minecraft.net/store', 'http://minecraft.net/store', target: '_blank'}.
 
-  %section
+  %section.email
     = f.label :email
+    = error_messages_for(f.object, :email)
+
     = f.email_field :email, tabindex:2, value: new_user.email || '', placeholder: 'notch@mojang.com'
 
-  %section
+  %section.password
     = f.label :password, 'Choose a password'
+    = error_messages_for(f.object, :password)
+
     = f.password_field :password, tabindex: 3
 
+  %section.password-confirmation
     = f.label :password_confirmation, 'Confirm password'
+    = error_messages_for(f.object, :password_confirmation)
+
     = f.password_field :password_confirmation, tabindex: 4
 
   %section
-    = f.submit 'Start playing now'
+    = f.submit 'Start playing now', tabindex: 5
     .spinner{hidden}

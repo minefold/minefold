@@ -1,5 +1,5 @@
 !!!
-%html{'xmlns:og' => 'http://ogp.me/ns#'}
+%html{'xmlns:og' => 'http://ogp.me/ns#', id: page_css_selector}
   %head
     %meta{charset: 'utf-8'}
     = stylesheet_link_tag 'application'
@@ -47,7 +47,7 @@
 
     = yield :head
 
-  %body{lang: 'en', id: page_css_selector}
+  %body{lang: 'en'}
     %nav.accessibility
       %ol
         %li= link_to 'Skip to navigation', '#nav'
@@ -98,7 +98,7 @@
 
         // Timeout hide
         $('#flash .message').each(function(i){
-          var elm = $(this), t = 8000 + (i + 250);
+          var elm = $(this), t = 6000 + (i + 250);
           delay(t, function(){ elm.hide(); });
         });
 

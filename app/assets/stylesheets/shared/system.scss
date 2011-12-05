@@ -1,0 +1,26 @@
+#system {
+  #masthead .wrapper, #page, footer .wrapper {
+    width: cols(4);
+  }
+
+  #masthead {
+    text-align: center;
+  }
+
+  #page {
+    padding: (4*$line) (2*$gutter);
+
+    article {
+      width: cols(4) - (4*$gutter);
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  footer {
+    text-align: center;
+    ul {
+      display: none;
+    }
+  }
+}

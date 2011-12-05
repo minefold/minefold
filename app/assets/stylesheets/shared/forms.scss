@@ -106,14 +106,47 @@ form {
     }
   }
 
-  .field_with_errors {
-    color: $red;
-  }
-
   .hint {
     font-size: 12px;
     color: #999;
     line-height: 18px;
     margin-top: $line;
   }
+
+  input[type=text], input[type=password], input[type=email] {
+    border: 1px solid darken(white, 10%);
+    outline: none;
+    @include border-radius($radius);
+
+    &:focus {
+      border-color: $green;
+      @include box-shadow(0 0 1px $green);
+    }
+  }
+
+  input[type=submit] {
+    @include btn($green, white);
+    padding: $line (2*$gutter);
+  }
+
+  .errors {
+    background: lighten($yellow, 40%);
+    margin: 0 (-$gutter/2);
+    padding: ($line/2) ($gutter/2);
+    margin-bottom: $line;
+
+    color: darken($yellow, 20%);
+    line-height: 18px;
+  }
+
+  .field_with_errors {
+    label {
+      color: black;
+    }
+
+    input {
+      border-color: lighten($blue, 20%);
+    }
+  }
+
 }

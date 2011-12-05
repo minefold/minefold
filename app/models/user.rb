@@ -76,18 +76,11 @@ class User
     where(stripe_id: stripe_id)
   }
 
-  # index :plan_id
-  # scope :by_plan_id, ->(plan_id) {
-  #   where(plan_id: plan_id)
-  # }
-
 
 # Validations
 
   validates_presence_of :username
-  validates_uniqueness_of :email, case_sensitive: false
   validates_uniqueness_of :username, case_sensitive: false
-  validates_confirmation_of :password
   validates_numericality_of :credits
   validates_numericality_of :minutes_played, greater_than_or_equal_to: 0
 

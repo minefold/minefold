@@ -1,22 +1,9 @@
 #users-new, #users-create {
-  #page {
+  @extend #system;
 
-    form {
-      input[type=email], input[type=text], input[type=password] {
-        width: cols(4);
-      }
-
-      .errors p.stripe {
-        color: $red;
-        padding-bottom: 2*$line;
-      }
-
-      .spinner {
-        display: block;
-        float: right;
-        margin-top: $line;
-      }
-
+  form {
+    input[type=text], input[type=email], input[type=password] {
+      width: 100%;
     }
   }
 

@@ -140,7 +140,22 @@ header + hr {
 
   h1 {
     font-size: 24px;
+    line-height: 48px;
     font-weight: 500;
+  }
+
+  h2 {
+    font-size: 18px;
+    line-height: 24px;
+    color: lighten(black, 60%);
+  }
+
+  a {
+    color: $blue;
+    text-decoration: none;
+    &:hover, &:focus {
+      color: black;
+    }
   }
 
   nav {

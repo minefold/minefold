@@ -1,7 +1,7 @@
-- title  'Sign up now'
-
-- masthead do
-  %aside
-    = link_to 'Log in to an existing account', new_user_session_path, class: 'button subtle'
+- title  'Sign up now' do
+  %h1 Sign up now
+  %p
+    or
+    = link_to 'sign in to an existing account', new_user_session_path
 
 = render partial: 'new_user', object: user

@@ -44,8 +44,6 @@
       @include border-radius($radius);
 
       // TODO: Natively resize the avatars on the homepage.
-      width: 24px;
-      height: 24px;
       margin: ((60px - 24px)/2) (((60px - 24px)/2) + $gutter);
     }
   }

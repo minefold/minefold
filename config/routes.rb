@@ -17,9 +17,9 @@ Minefold::Application.routes.draw do
 
   # Authentication
   devise_for :users, :skip => :all do
-    get    '/login' => 'devise/sessions#new', :as => :new_user_session
-    post   '/logout' => 'devise/sessions#create', :as => :user_session
-    delete '/logout' => 'devise/sessions#destroy', :as => :destroy_user_session
+    get    '/signin' => 'devise/sessions#new', :as => :new_user_session
+    post   '/signin' => 'devise/sessions#create', :as => :user_session
+    delete '/signout' => 'devise/sessions#destroy', :as => :destroy_user_session
 
     get  '/signup/check' => 'users#check'
     get  '/signup' => 'users#new', :as => :new_user

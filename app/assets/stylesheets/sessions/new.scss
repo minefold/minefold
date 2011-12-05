@@ -1,18 +1,20 @@
-#devise-sessions-new #page, #devise-sessions-create #page {
+#devise-sessions-new, #devise-sessions-create {
+  @extend #system;
 
-  div {
-    margin-bottom: 2 * $line;
-  }
+  form {
+    width: 100%;
 
-  input + label {
-    display: inline;
-    margin-left: $gutter / 2;
-  }
+    input[type=text], input[type=password] {
+      width: 100%;
+    }
 
-  .remember-me {
-    display: inline;
-    margin-left: $gutter;
-    text-align: center;
-    font-size: 12px;
+    input[type=submit], .remember-me {
+      float: left;
+    }
+
+    .remember-me {
+      margin-top: $line;
+      margin-left: 2*$gutter;
+    }
   }
 }
