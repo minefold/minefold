@@ -30,12 +30,16 @@ class WorldsController < ApplicationController
   end
 
   def edit
+    # TODO: Make this more robust
+    not_found unless world.opped?(current_user)
   end
 
   def update
+    not_found unless world.opped?(current_user)
+
     world.update_attributes params[:world]
     if world.save
-      flash[:success] = "Settings successfully updated."
+      flash[:success] = "World updated"
       redirect_to params['return_url'] || world_path(world)
     else
       render json: {errors: world.errors}

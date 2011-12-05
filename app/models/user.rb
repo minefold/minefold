@@ -49,6 +49,11 @@ class User
   has_and_belongs_to_many :whitelisted_worlds,
                           inverse_of: :whitelisted_players,
                           class_name: 'World'
+
+  has_and_belongs_to_many :opped_worlds,
+                          inverse_of: :ops,
+                          class_name: 'World'
+
   attr_accessor :email_or_username
 
   # FREE_HOURS = Plan.free.hours

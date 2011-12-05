@@ -24,6 +24,11 @@ class World
                           inverse_of: :whitelisted_worlds,
                           class_name: 'User'
 
+  has_and_belongs_to_many :ops,
+                          inverse_of: :opped_worlds,
+                          class_name: 'User'
+
+
   embeds_many :play_requests
 
 
@@ -81,6 +86,11 @@ class World
 
   def whitelisted?(user)
     players.include? user
+  end
+
+  # TODO: Refactor
+  def opped?(user)
+    ([creator] + ops).include? user
   end
 
   def players

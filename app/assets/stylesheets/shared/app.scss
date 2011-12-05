@@ -166,7 +166,6 @@ header + hr {
       clear: both;
       position: relative;
       margin-bottom: -1px;
-      background: green;
 
       li {
         float: left;
@@ -193,6 +192,11 @@ header + hr {
           }
         }
       }
+
+      .settings {
+        float: right;
+      }
+
     }
   }
 }

@@ -1,0 +1,70 @@
+%section.name
+  %h3
+    = form.label :name
+
+  %fieldset
+    = error_messages_for form.object, :name
+    = form.text_field :name, tabindex: 1
+
+%section.game-mode
+  %h3 Default game mode
+
+  %fieldset.inline
+    %div
+      = form.radio_button :game_mode, 0, tabindex: 2
+      = form.label :game_mode_0, 'Survival'
+
+    %div
+      = form.radio_button :game_mode, 1, tabindex: 3
+      = form.label :game_mode_1, 'Creative'
+
+%section.difficulty
+  %h3= form.label :difficulty_level, 'Difficulty'
+
+  %fieldset.inline
+    %div
+      = form.radio_button :difficulty_level, 0, tabindex: 4
+      = form.label :difficulty_level_0, 'Peaceful'
+
+    %div
+      = form.radio_button :difficulty_level, 1, tabindex: 5
+      = form.label :difficulty_level_1, 'Easy'
+
+    %div
+      = form.radio_button :difficulty_level, 2, tabindex: 6
+      = form.label :difficulty_level_2, 'Normal'
+
+    %div
+      = form.radio_button :difficulty_level, 3, tabindex: 7
+      = form.label :difficulty_level_3, 'Hard'
+
+- if form.object.new?
+  %section.seed
+    %h3= form.label :seed
+    %fieldset
+      = form.text_field :seed, tabindex: 8
+
+%section.game-settings
+  %h3 Game settings
+
+  %fieldset
+    %div
+      = form.check_box :pvp, tabindex: 9
+      = form.label :pvp, 'Player vs. Player'
+
+    %div
+      = form.check_box :spawn_monsters, tabindex: 10
+      = form.label :spawn_monsters, 'Spawn monsters'
+
+    %div
+      = form.check_box :spawn_animals, tabindex: 11
+      = form.label :spawn_animals, 'Spawn animals'
+
+%section.submit
+  %fieldset
+    - if form.object.new?
+      = form.submit 'Create world', tabindex: 12
+    - else
+      = form.submit 'Update world', tabindex: 12
+
+

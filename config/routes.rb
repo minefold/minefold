@@ -45,7 +45,7 @@ Minefold::Application.routes.draw do
     resources :users, :path => 'players', :only => [:show]
   end
 
-  resources :worlds, :except => :destroy do
+  resources :worlds, :except => :destroy, :path_names => {:edit => 'settings'} do
 
     member do
       get  :map

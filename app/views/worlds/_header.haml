@@ -5,50 +5,10 @@
   %meta{property: 'og:image', content: image_path('logo-48.png')}
 
 - masthead do
-  / %h1
-  /   = link_to world.name, world
-
-  / %aside
-  /   - if signed_in?
-  /     - if world.whitelisted?(current_user)
-  /       - if current_user.current_world == world
-  /         %p
-  /           Connect to
-  /           %strong= current_user.host
-  /         %p.hint
-  /           = link_to help_page_path(anchor: 'connecting') do
-  /             How do I connect?
-  /       - else
-  /         = button_to 'Play here', [:play, world], method: :put
-  /
-  /     - else
-  /       - if world.play_requests.where(user: current_user).exists?
-  /         %p Waiting for #{world.creator.username}
-  /       - else
-  /         = button_to 'Ask to play here', [:ask, world, :players], method: :post
-  /
-  /   - else
-  /     %p.hint
-  /       - if world.whitelisted_players.size.zero?
-  /         #{world.creator.username} is playing here.
-  /       - else
-  /         #{world.players.size} other people are playing here.
-  /
-  /     = link_to 'Join them by signing up now', root_path(anchor: 'plans'), class: 'button'
-
   %nav
     %ol
       %li.activity= link_to 'Activity', world
       %li.map= link_to 'Map', map_world_path(world)
 
-    / TODO: Move to the sidebar where the spacing is more friendly.
-
-    / %ol.social
-    /   %li.facebook
-    /     %a.fb-like{data: {:href => world_url(world), :send => false, :width => 0, 'show-faces' => false, :layout => 'button_count'}}
-    /
-    /   %li.twitter
-    /     %a.twitter-share-button{href: 'https://twitter.com/share', data: {url: world_url(world), count: 'horizontal', via: 'minefold'}} Tweet
-    /     %script{src: '//platform.twitter.com/widgets.js'}
-    /
-    /
+      - if world.opped?(current_user)
+        %li.settings= link_to 'Settings', edit_world_path(world)
