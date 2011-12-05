@@ -130,12 +130,10 @@ form {
   }
 
   .errors {
-    background: lighten($yellow, 40%);
-    margin: 0 (-$gutter/2);
-    padding: ($line/2) ($gutter/2);
+    padding: ($line/2) 0;
     margin-bottom: $line;
 
-    color: darken($yellow, 20%);
+    color: lighten($blue, 20%);
     line-height: 18px;
   }
 
