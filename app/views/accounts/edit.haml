@@ -1,0 +1,29 @@
+- title 'Settings'
+
+%aside
+  %ol
+    %li.overview= link_to 'Overview', account_path
+    %li.billing= link_to 'Time & Billing', billing_account_path
+
+%article
+  = form_for current_user, url: account_path, method: :put do |f|
+    %section
+      %h3
+        = f.label :username
+      %fieldset
+        = f.text_field :username, value: current_user.username
+        = error_messages_for(f.object, :username)
+
+        = render partial: 'users/check_username'
+
+
+    %section
+      %h3
+        = f.label :avatar
+      %fieldset
+        = image_tag current_user.avatar.head.s48.url
+        %p Change your avatar at #{link_to 'http://minecraft.net/profile', 'http://minecraft.net/profile', target: '_blank'}
+
+    %section
+      %fieldset
+        = f.submit 'Update settings'

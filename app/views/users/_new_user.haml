@@ -8,19 +8,7 @@
     = error_messages_for(f.object, :username)
 
     = f.text_field :username, tabindex: 1, placeholder: 'notch'
-    :coffeescript
-      username = $('input#user_username')
-      fetchUser = ->
-        u = username.val()
-        if u isnt ''
-          $.getJSON '/signup/check', {username: u}, (data, status) ->
-              username.siblings('.hint').toggle(not data.paid)
-
-      username.keyup _.debounce(fetchUser, 300)
-
-    .hint{hidden}
-      %p
-        You need a <em>paid</em> Minecraft account to play on Minefold. They are €14.95 at #{link_to 'http://minecraft.net/store', 'http://minecraft.net/store', target: '_blank'}.
+    = render partial: 'users/check_username'
 
   %section.email
     = f.label :email
