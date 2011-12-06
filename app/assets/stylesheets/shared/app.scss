@@ -296,7 +296,8 @@ header + hr {
   h1 {
     font-size: 18px;
     color: lighten($blue, 10%);
-    margin: (2*$line) 0 $line;
+    margin: (2*$line) 0;
+    font-weight: 500;
   }
 
   h2 {

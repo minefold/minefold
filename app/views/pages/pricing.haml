@@ -31,9 +31,13 @@
   %p.extras
     Everybody gets
     <strong>#{pluralize User::FREE_HOURS, 'hour', 'hours'}</strong>,
-    <em>unlimited worlds</em>, <em>real-time chat</em> & <em>beautiful maps</em> <strong>for free</strong>.
+    <em>unlimited worlds</em>, <em>real-time chat</em>, <em>beautiful maps</em> & more <strong>for free</strong>.
 
-  = link_to 'Sign up and start playing now!', new_user_path, class: 'btn'
+  - if signed_in?
+    = link_to 'Buy some time now!', time_account_path, class: 'btn'
+  - else
+    = link_to 'Sign up and start playing now!', new_user_path, class: 'btn'
+
 
 
 %aside
