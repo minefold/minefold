@@ -133,6 +133,10 @@ header + hr {
 #flash {
   width: $width;
   @include border-radius(0 0 $radius $radius);
+  position: absolute;
+  top: 36px;
+  left: 50%;
+  margin-left: -$width/2;
 
   .message {
     padding: $line $gutter;
@@ -158,11 +162,15 @@ header + hr {
   }
 
   .notice, .success {
-    background: lighten($green, 30%);
+    border: 1px solid $green;
+    border-top: none;
+//    background: lighten($green, 30%);
   }
 
   .alert, .error {
-    background: lighten($yellow, 40%);
+    border: 1px solid lighten($red, 40%);
+    border-top: none;
+//    background: lighten($yellow, 40%);
   }
 }
 
