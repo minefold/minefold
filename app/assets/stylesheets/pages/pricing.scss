@@ -63,11 +63,14 @@
     dl {
       font-size: 13px;
     }
+    .note {
+      font-size: 13px;
+      line-height: 18px;
+    }
   }
 
   #testimonials {
-    margin-top: 2*$line;
-    margin-bottom: 4*$line;
+    margin: (4*$line) 0;
 
     .testimonial {
       margin-bottom: 2*$line;
