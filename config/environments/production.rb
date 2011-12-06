@@ -1,7 +1,7 @@
 Minefold::Application.configure do
   StatsD.mode = :production
 
-  config.map_tiles_url = "//s3.amazonaws.com/minefold.production.world-tiles"
+  config.map_tiles_url = "//s3.amazonaws.com/minefold-production-maps"
 
   config.action_mailer.default_url_options = {
     host: 'minefold.com'
