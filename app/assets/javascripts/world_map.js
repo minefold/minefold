@@ -174,7 +174,7 @@
        *      {'label': 'Overlay', 'path': 'overlay/tiles', 'overlay': true}
        *  ]
        */
-      'mapTypes':         [{"imgformat": "png", "overlay": false, "label": "Lighting", "bg_color": "#1A1A1A", "path": "tiles", "shortname": "lighting"}]
+      'mapTypes':         [{"imgformat": "png", "overlay": false, "label": "Lighting", "bg_color": "#FFF", "path": "tiles", "shortname": "lighting"}]
   };
   
   

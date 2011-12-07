@@ -1,6 +1,6 @@
 Minefold::Application.configure do
-  config.map_tiles_url = "//s3.amazonaws.com/minefold-production-maps"
-  # config.map_tiles_url = "/world-tiles"
+  # config.map_tiles_url = "//s3.amazonaws.com/minefold-production-maps"
+  config.map_tiles_url = "/world-tiles"
 
   # In the development environment your application's code is reloaded on
   # every request.  This slows down response time but is perfect for development
