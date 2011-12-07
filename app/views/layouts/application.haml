@@ -84,7 +84,7 @@
                 %li.sign-out= link_to 'Signout', destroy_user_session_path, method: :delete
 
 
-            %li.buy= link_to 'Buy time', billing_account_path
+            %li.buy= link_to 'Buy time', time_account_path
             %li.time
               .hours #{current_user.hours_left}h left
 

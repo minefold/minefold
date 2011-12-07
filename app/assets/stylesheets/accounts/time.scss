@@ -1,0 +1,135 @@
+#buy {
+  border-bottom: 1px solid darken(white, 10%);
+  margin: 0 (-$gutter);
+
+  ol {
+    overflow: auto;
+    margin-bottom: 0;
+
+    li {
+      float: left;
+
+      a {
+        display: block;
+        text-align: center;
+        width: cols(10)/3 + 1px;
+        padding: (4*$line) 0;
+        @include box-sizing(border-box);
+
+        border-left: 1px solid darken(white, 10%);
+
+        cursor: pointer;
+
+        h1.time {
+          font-size: 28px;
+          font-weight: 400;
+          line-height: 24px;
+          color: $blue;
+        }
+
+        .call-to-action {
+          display: block;
+          color: darken(white, 20%);
+          font: 13px/18px $helvetica;
+          margin-bottom: $line;
+        }
+
+        .price {
+          font-size: 24px;
+          line-height: 24px;
+          color: lighten($blue, 20%);
+        }
+
+        .rate {
+          color: rgba(black, 0.2);
+          font-size: 13px;
+        }
+
+        &:hover {
+          background-color: rgba(black, 0.05);
+          text-decoration: none;
+        }
+
+        &.active {
+          background: $green;
+          color: white;
+          h1 {
+            color: white;
+          }
+          .price {
+            color: rgba(white, 0.8);
+          }
+          .rate {
+            color: rgba(white, 0.6);
+          }
+        }
+      }
+
+      &:first-child a {
+        border-left: none;
+
+        width: cols(10) / 3;
+      }
+
+    }
+  }
+
+  #card {
+    overflow: auto;
+    border-top: 1px solid darken(white, 10%);
+    background: darken(white, 5%);
+
+    aside {
+      float: left;
+      border-left: none;
+      border-right: 1px solid white;
+      margin-right: $gutter;
+      padding: (4*$line) $gutter;
+      padding-top: 7*$line;
+      line-height: 18px;
+
+      .security {
+        font-size: 11px;
+        color: rgba(black, 0.2);
+        line-height: 24px;
+        margin-top: $line;
+        margin-bottom: $line;
+      }
+
+    }
+
+    form {
+      overflow: auto;
+      padding: (4*$line) 0;
+
+      section {
+        float: left;
+        margin-right: $gutter;
+      }
+      label {
+        display: block;
+      }
+
+      input[type=checkbox] + label {
+        display: inline;
+      }
+
+      input[type=reset] {
+        @include btn(#FFF, #999);
+      }
+
+      section.submit {
+        clear: left;
+
+        input[type=submit], input[type=reset], .save-card {
+          float: left;
+          margin-right: $gutter;
+        }
+
+        .save-card {
+          margin-top: $line;
+        }
+      }
+    }
+  }
+}

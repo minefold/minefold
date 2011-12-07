@@ -1,0 +1,105 @@
+- title 'Time'
+
+#buy
+  %ol
+    %li
+      %a{data: {hours: 10}}
+        %h1.time
+          Buy
+          %strong 10
+          hours
+        %h2
+          %span.price= number_to_currency(2.95)
+          %span.rate 30¢/h
+
+    %li
+      %a{data: {hours: 40}}
+        %h1.time
+          Buy
+          %strong 40
+          hours
+        %h2
+          %span.price= number_to_currency(7.95)
+          %span.rate 20¢/h
+
+    %li
+      %a{data: {hours: 200}}
+        %h1.time
+          Buy
+          %strong 200
+          hours
+        %h2
+          %span.price= number_to_currency(19.95)
+          %span.rate 10¢/h
+
+  #card{hidden}
+    %aside
+      %p
+        You will be charged
+        %strong $19.95
+        for
+        %strong 200
+        hours.
+
+      %p.security AES-256 Secure payment by #{link_to 'Stripe', 'https://stripe.com/help/security', target: '_blank'}.
+
+    %form
+      %section.card-number
+        = label_tag :number, 'Card Number'
+        = text_field_tag :number, '', name: nil, size: 20, autocomplete: 'off', class: %w{stripe number}, id: 'stripe-number'
+
+        / %p.card-types
+        /   We accept <span class="visa">Visa</span>, <span class="mastercard">MasterCard</span>, <span class="american-express">American Express</span>, <span class="discover">Discover</span>, <span class="jcb">JCB</span> and <span class="diners-club">Diners Club</span>.
+        /
+        / :coffeescript
+        /   $('input.stripe.number').keyup (e) ->
+        /     target = $(e.target)
+        /     cardType = Stripe.cardType(target.val())
+        /       .toLowerCase()
+        /       .replace(/\s/,'-')
+        /
+        /     $('.card-types span')
+        /       .toggleClass('unknown', cardType isnt 'unknown')
+        /       .removeClass('active')
+        /       .filter(-> $(@).hasClass(cardType))
+        /       .addClass('active')
+
+      %section.card-expiry
+        = label_tag :expiry_month, 'Expiry Date'
+        = text_field_tag :expiry_month, '', name: nil, size: 2, class: %w{stripe expiry-month}, id: 'stripe-exp-month', placeholder: 'MM'
+        %span /
+        = text_field_tag :expiry_year, '', name: nil, size: 4, class: %w{stripe expiry-year}, id: 'stripe-exp-year', placeholder: 'YYYY'
+
+
+      %section.card-cvc
+        = label_tag :cvc, 'CVC'
+        = text_field_tag :cvc, '', name: nil, size: 4, autocomplete: 'off', class: %w{stripe cvc}, id: 'stripe-cvc'
+
+      %section.submit
+        = submit_tag 'Confirm order'
+        %input{type: 'reset', value: 'Cancel'}
+        .save-card
+          = check_box_tag :save_card, '', checked: true
+          = label_tag :save_card, 'Save card details'
+
+
+:coffeescript
+  buy = $('#buy')
+  products = buy.find('ol')
+  card = buy.find('#card')
+
+  products.find('a').click (e) ->
+    product = $(e.target).parents('a')
+    products.find('a').removeClass('active')
+    product.addClass('active')
+
+    card.slideDown ->
+      card.find('input#stripe-number').focus()
+
+
+  card.find('input[type=reset]').click ->
+    card.slideUp ->
+      products.find('a').removeClass('active')
+
+%article
+  %h1 Gift time

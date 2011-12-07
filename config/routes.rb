@@ -35,7 +35,7 @@ Minefold::Application.routes.draw do
   end
 
   resource :account, :except => [:new, :show, :destroy], :path_names => {:edit => '/'} do
-    get :billing
+    get :time
     resources :plans, :only => :show
     resources :time_packs,  :only => :show
   end

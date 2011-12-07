@@ -16,7 +16,7 @@ class AccountsController < ApplicationController
     respond_with current_user, :location => account_path
   end
 
-  def billing
+  def time
   end
 
 end

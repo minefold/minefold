@@ -144,30 +144,6 @@ class User
     self.stripe_token = nil
   end
 
-  # def update_subscription
-  #   if plan_id?
-  #     subscription = customer.update_subscription(
-  #       plan: plan_id,
-  #       coupon: coupon,
-  #       card: stripe_token,
-  #       prorate: false
-  #     )
-  #     self.next_charge_on = Time.at subscription.current_period_end
-  #
-  #     if not stripe_token.nil?
-  #       build_card_from_stripe!(subscription.card)
-  #     end
-  #
-  #     subscription
-  #   else
-  #     customer.cancel_subscription
-  #   end
-  # end
-
-  # before_validation do
-  #   # self.plan_id = nil if plan_id == Plan.free.id
-  # end
-
   before_save do
     create_customer if stripe_token
   end
