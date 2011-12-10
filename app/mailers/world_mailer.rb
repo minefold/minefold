@@ -21,4 +21,19 @@ class WorldMailer < ActionMailer::Base
     mail   to: @player.email,
       subject: "#{@creator.username} has added you #{@world.name}"
   end
+  
+  def self.deliver_to_all!(world, ignore)
+    world.players
+  end
+  
+  def world_started world_id, player_id
+    @world  = World.find world_id
+    @player = User.find player_id
+    
+    @online_players  = @world.current_players
+    @recent_activity = @world.wall_items.last(5)
+    
+    mail     to: @player.email,
+        subject: "Your friends are playing on Minefold in #{@world.name}"
+  end
 end

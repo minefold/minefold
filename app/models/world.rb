@@ -171,8 +171,6 @@ class World
     slug.to_param
   end
 
-private
-
   def pusher_channel
     Pusher[pusher_key]
   end
@@ -180,6 +178,8 @@ private
   def current_player_ids
     REDIS.smembers("#{redis_key}:connected_players")
   end
+
+private
 
   def send_cmd(str)
     world_data = REDIS.hget "worlds:running", id

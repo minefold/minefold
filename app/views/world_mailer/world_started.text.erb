@@ -1,0 +1,12 @@
+Hi <%= @player.username %>,
+
+<%= @online_players.map(&:username).to_sentence(:last_word_connector => ' and ') %> just started playing in <%= @world.name %>.
+
+<% if @recent_activity.any? %>
+Here's what's been happening in <%= @world.name %> recently:
+<% @recent_activity.each do |item| %>
+  - <%= item.user.username %> said: “<%= item.raw %>” (<%= time_ago_in_words item.created_at %> ago)
+<% end %>
+<% end %>
+
+<%= render partial: 'shared/email_sig' %>
