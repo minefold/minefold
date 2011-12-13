@@ -1,14 +1,14 @@
 class AvatarUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
-
-  if Rails.env.development?
-    storage :file
-  else
+  
+  if Rails.env.production?
     storage :fog
+  else
+    storage :file
   end
-
+  
   def fog_directory
-    "avatars-production-minefold"
+    mounted_as.to_s
   end
 
   def store_dir
@@ -46,10 +46,10 @@ class AvatarUploader < CarrierWave::Uploader::Base
       process :sample => [16, 16]
     end
   end
-
-  # TODO: Refactor!
+  
+  # Returns the digest path of the default image so that it can be served out from CloudFront like the other static assets.
   def default_url
-    filename = ['', version_name, 'default.png'].compact.join('_')
+    filename = [version_name, 'default.png'].compact.join('_')
     path = File.join('avatar', filename)
 
     Rails.application.assets[path].digest_path

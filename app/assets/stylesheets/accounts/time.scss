@@ -51,7 +51,7 @@
         }
 
         &.active {
-          background: $green;
+          background: darken($green, 10%);
           color: white;
           h1 {
             color: white;
@@ -67,8 +67,12 @@
 
       &:first-child a {
         border-left: none;
-
         width: cols(10) / 3;
+        @include border-radius($radius 0 0 0);
+      }
+
+      &:last-child a {
+        @include border-radius(0 $radius 0 0);
       }
 
     }
@@ -76,17 +80,13 @@
 
   #card {
     overflow: auto;
-    border-top: 1px solid darken(white, 10%);
-    background: darken(white, 5%);
+    border-top: $line solid darken($green, 10%);
 
     aside {
       float: left;
       border-left: none;
-      border-right: 1px solid white;
-      margin-right: $gutter;
-      padding: (4*$line) $gutter;
-      padding-top: 7*$line;
-      line-height: 18px;
+      padding: (2*$line) $gutter;
+      line-height: 24px;
 
       .security {
         font-size: 11px;
@@ -100,7 +100,9 @@
 
     form {
       overflow: auto;
-      padding: (4*$line) 0;
+      padding: (2*$line) 0;
+      padding-left: $gutter;
+      border-left: 1px solid darken(white, 5%);
 
       section {
         float: left;

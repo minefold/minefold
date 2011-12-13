@@ -5,48 +5,16 @@
 - # TODO: Incorporate advice from http://www.inc.com/guides/2010/10/how-to-design-a-great-about-us-page.html
 
 %article
-  %h1 Minefold helps you connect and play games with your friends.
+  %h1 We help you play games with your friends.
 
-  %p Launched in November, 2011, Minefold is the easiest was to play multiplayer Minecraft. We remove all the boring stuff like running a server and just give you a georgous way to track and play.
-
-  / %p TODO: Re-write in the context of change the world stuff. I.E. It was too hard to play together. We want to fix that. Remove story about loosing all our work.
-  /
-  / %p We happily played Minecraft together for months. Dave built this wicked rollercoaster and Chris was exploring the outer edges of an infinite universe. It was beautiful. We had rented a server, setup SSH access, configured a RAM disk, monitored the JVM and <em>oh God my brain hurts</em>. It was all too complicated. It wasn't long before Chris mistyped a command and all our hard work was lost.
-  /
-  / %p After we had wiped away the tears, we decided to rid the world of boring,difficult Minecraft hosting and let people just have fun building awesome stuff!
-
-  / %h1 The Team
-  /
-  / .founder.dave
-  /   = image_tag User.dave.avatar.head.s48.url, width: 48, height: 48
-  /   %p <strong>Dave</strong> is the closest thing you'll find to the “rockstar programmer” cliché. When he's taking time out from learning new programming languages or working on a tricky back-end problem, he can often be found shirtless in #{link_to 'Ding Dong Dang', 'http://www.au.timeout.com/sydney/bars/venues/2178/ding-dong-dang'} singing karaoke with his eyes closed.
-  /
-  /   %p.contact
-  /     = link_to '@whatupdave', '//twitter.com/whatupdave'
-  /     = mail_to 'dave@minefold.com'
-  /
-  / .founder.chris
-  /   = image_tag User.chris.avatar.head.s48.url, width: 48, height: 48
-  /   %p <strong>Chris</strong> has always seen himself as a slashie. That's Designer / Developer, not the other way around. Chris is passionate about clean design, minimalism and hipster music. He'd share a band with you but you wouldn't have heard of them yet.
-  /
-  /   %p.contact
-  /     = link_to '@chrislloyd', '//twitter.com/chrislloyd'
-  /     = mail_to 'chris@minefold.com'
-  /
-  /
-  / %h2 Logo
-  /
-  / %p Our logo was graciously donated by #{link_to 'Cameron Adams', '//twitter.com/themaninblue'}.
-  /
-  / %ol
-  /   %li= link_to 'Raster (PNG)', image_path('minefold-logo.png')
-  /   %li= link_to 'Vector (EPS)', image_path('minefold-logo.eps')
-
+  %p Minefold is the easiest was to play multiplayer Minecraft. We remove all the boring stuff like running a server and just give you a georgous way to track and play your games.
+  
+  %h2 Contact
+  
   %p
     The best way to get in contact with us at Minefold is to end us an email at #{mail_to 'team@minefold.com'}. You can also email the founders, Chris and Dave, directly at #{mail_to 'chris@minefold.com'} or #{mail_to 'dave@minefold.com'} respectively.
-
+  
   .vcard
-    %h2 Address
     %p.adr
       %a.fn.org.url{href: root_url} Minefold
       %br
@@ -57,16 +25,13 @@
       %br
       %span.country-name Australia
 
-      %p.abn
-        %abbr{title: 'Australian Business Number'} ABN
-        37068433851
-
     %script{src: '//maps.googleapis.com/maps/api/js?sensor=false'}
-    #map_canvas
-    :coffeescript
-      new google.maps.Map $('#map_canvas')[0],
-        zoom: 14
-        center: new google.maps.LatLng(-33.899692, 151.27062)
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+    #map_canvas{style: "width:100px;height:100px"}
+    :javascript
+      new google.maps.Map($('#map_canvas')[0], {
+        zoom: 14,
+        center: new google.maps.LatLng(-33.899692, 151.27062),
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
         disableDefaultUI: true
+      });
 

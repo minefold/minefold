@@ -3,7 +3,7 @@
 %article
   = form_for :user, as: :user, url: session_path(:user) do |f|
     %section.email
-      = f.label :email_or_username, 'Email or username'
+      = f.label :email_or_username, 'Email or Minecraft username'
       = f.text_field :email_or_username, tabindex: 1
 
     %section.password

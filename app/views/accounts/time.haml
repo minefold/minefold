@@ -3,7 +3,7 @@
 #buy
   %ol
     %li
-      %a{data: {hours: 10}}
+      %a{data: {hours: 10, amount: 295}}
         %h1.time
           Buy
           %strong 10
@@ -13,7 +13,7 @@
           %span.rate 30¢/h
 
     %li
-      %a{data: {hours: 40}}
+      %a{data: {hours: 40, amount: 795}}
         %h1.time
           Buy
           %strong 40
@@ -23,7 +23,7 @@
           %span.rate 20¢/h
 
     %li
-      %a{data: {hours: 200}}
+      %a{data: {hours: 200, amount: 1995}}
         %h1.time
           Buy
           %strong 200
@@ -36,9 +36,9 @@
     %aside
       %p
         You will be charged
-        %strong $19.95
+        %strong.dollar-amount $19.95
         for
-        %strong 200
+        %strong.hours 200
         hours.
 
       %p.security AES-256 Secure payment by #{link_to 'Stripe', 'https://stripe.com/help/security', target: '_blank'}.
@@ -89,9 +89,14 @@
   card = buy.find('#card')
 
   products.find('a').click (e) ->
-    product = $(e.target).parents('a')
+    product = $(@)
     products.find('a').removeClass('active')
     product.addClass('active')
+
+    price = product.data('amount') / 100
+
+    card.find('aside .dollar-amount').text("$" + price)
+    card.find('aside .hours').text(product.data('hours'))
 
     card.slideDown ->
       card.find('input#stripe-number').focus()
