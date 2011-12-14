@@ -8,9 +8,9 @@ class ProcessChatJob
 # private
 
   def process! chat
-    urls = []
-    chat.html = Rinku.auto_link(chat.raw) {|url| urls << url; url }
-    chat.save!
+    # urls = []
+    # chat.html = Rinku.auto_link(chat.raw) {|url| urls << url; url }
+    # chat.save!
   end
 
 end

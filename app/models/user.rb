@@ -21,17 +21,9 @@ class User
 
   field :credits,        type: Integer, default: (FREE_HOURS.hours / BILLING_PERIOD)
   field :minutes_played, type: Integer, default: 0
-  # embeds_many :credit_events
 
   attr_accessor :stripe_token
-  attr_accessor :coupon
-
   field :stripe_id,               type: String
-  field :plan_id,                 type: String
-  field :failed_payments,         type: Integer, default: 0
-  field :last_failed_payment_at,  type: DateTime
-  field :next_charge_on,          type: DateTime
-
   embeds_one :card
 
   field :referral_code,   type: String, default: -> {
@@ -41,6 +33,9 @@ class User
     c
   }
   validates_uniqueness_of :referral_code
+  
+  belongs_to :referrer,  class_name: 'User', inverse_of: :referrals
+  has_many   :referrals, class_name: 'User', inverse_of: :referrer
 
 
   belongs_to :current_world, class_name: 'World', inverse_of: nil
@@ -55,8 +50,7 @@ class User
                           class_name: 'World'
 
   attr_accessor :email_or_username
-
-  # FREE_HOURS = Plan.free.hours
+  
 
 # Finders
 
@@ -104,12 +98,8 @@ class User
 
 # Plans
 
-  def casual?
-    not plan_id?
-  end
-
   def customer_description
-    [id, safe_username].join('-')
+    [safe_username, id].join('-')
   end
 
   def card?
@@ -119,24 +109,21 @@ class User
   def customer
     @customer ||= Stripe::Customer.retrieve(stripe_id) if stripe_id?
   end
-
-  def customer?
-    stripe_id?
-  end
+  
+  alias_method :customer?, :stripe_id?
 
   def create_customer
     options = {
-            email: email,
-      description: customer_description,
-           coupon: coupon,
-             card: stripe_token
+      card: stripe_token,
+      coupon: coupon,
+      email: email,
+      description: customer_description
     }
-    options[:plan] = plan_id if plan_id
 
-    @customer = Stripe::Customer.create options
+    @customer = Stripe::Customer.create(options)
     self.stripe_id = @customer.id
 
-    # This conditional helps
+    # TODO: Document why this conitional helps
     if @customer.respond_to?(:active_card)
       build_card_from_stripe(@customer.active_card)
     end
@@ -144,22 +131,13 @@ class User
     self.stripe_token = nil
   end
 
-  before_save do
-    create_customer if stripe_token
-  end
-
-  after_save do
-    if plan_id_changed?
-      increment_hours! Plan.find(plan_id).hours if plan_id_was == nil
-    end
-  end
-
   def create_charge!(amount)
+    create_customer unless customer?
+    
     charge = Stripe::Charge.create(
+      customer: stripe_id,
       amount: amount,
       currency: 'usd',
-      customer: stripe_id,
-      card: stripe_token,
       description: "Minefold.com time"
     )
 
@@ -184,67 +162,35 @@ class User
     return false
   end
 
-  def buy_time_pack!(pack)
-    # The order is important here. If the charge fails for some reason we
-    # don't want the credits to be applied.
-    create_charge! pack.price
+  def buy_time!(pack)
+    # The order is important here. If the charge fails for some reason we don't want the credits to be applied.
+    create_charge! pack.amount
     increment_hours! pack.hours
   end
+  
 
-  def recurring_payment_succeeded! plan_id
-    # TODO check to see if plan has changed
-    self.next_charge_on = Date.today + 1.month
-    increment_hours! Plan.find(plan_id).hours
-  end
-
-  def recurring_payment_failed! attempt
-    self.failed_payments = attempt
-    self.last_failed_payment_at = Time.now
-    save!
-  end
-
-
-# CREDITS
+# Credits
 
   # Kicks off the audit trail for any credits the user starts off with
-  before_create do
-    self.credit_events.build(delta: self.credits)
+  after_create do
+    CreditTrail.log(self, self.credits)
   end
 
   # TODO: MUST FIX
-  def increment_hours!(n, time=Time.now.utc)
-    increment_credits! self.class.hours_to_credits(n), time
+  def increment_hours!(n)
+    increment_credits! self.class.hours_to_credits(n)
   end
 
-  def increment_credits!(n, time=Time.now.utc)
-    # event = CreditEvent.new(delta: n.to_i, created_at: time)
-
-    self.class.collection.update({_id: id}, {
-      '$inc' => {credits: n.to_i},
-      '$push' => {credit_events: event.attributes}
-    })
+  def increment_credits!(n)
+    inc(:credits, n.to_i).tap { CreditTrail.log(self, n.to_i) }
   end
-
-  def plan_credits
-    Plan.find(plan).credits
-  end
-
-  def referral_credits
-    cr = REFERRAL_HOURS.hours / BILLING_PERIOD
-    (referrer.nil? ? 0 : cr) + (referrals.empty? ? 0 : referrals.length * cr)
-  end
-
-
-  def total_credits
-    plan_credits + referral_credits
-  end
-
+  
   def hours_left
     credits / User::BILLING_PERIOD
   end
 
 
-# AUTHENTICATION
+# Authentication
 
   devise :registerable,
          :database_authenticatable,
@@ -253,63 +199,32 @@ class User
          :trackable,
          :validatable
 
-  def first_sign_in?
-    sign_in_count <= 1
-  end
-
   def username=(str)
     super(str)
     self.safe_username = self.class.sanitize_username(str)
   end
 
 
-# AVATARS
+# Avatars
 
   mount_uploader :avatar, AvatarUploader
 
   def fetch_avatar!
     self.remote_avatar_url = "http://minecraft.net/skin/#{safe_username}.png"
-  rescue OpenURI::HTTPError # User has a default skin
+    # Minecraft doesn't store default skins so it raises a HTTPError
+  rescue OpenURI::HTTPError
   end
 
   def async_fetch_avatar!
-    Resque.enqueue(FetchAvatar, id)
+    Resque.enqueue(FetchAvatarJob, id)
   end
 
   before_save do
     async_fetch_avatar! if safe_username_changed?
-  end
+  end  
 
-# REFERRALS
 
-  belongs_to :referrer,  class_name: 'User', inverse_of: :referrals
-  has_many   :referrals, class_name: 'User', inverse_of: :referrer
-
-  # def played!
-  #   self.referral_state = 'played'
-  #   save!
-  # end
-
-# USER_REFERRAL_BONUS = 1.hour
-# FRIEND_REFERRAL_BONUS = 4.hours
-#
-# def referrals_left?
-#   referrals.length < total_referrals
-# end
-#
-# def referrals_left
-#   total_referrals - referrals.length
-# end
-
-#   def verify!
-#     decrement referrals: 1
-#     invite.set claimed: true
-#
-#     add_credits USER_REFERRAL_BONUS
-#     invite.creator.add_credits FRIEND_REFERRAL_BONUS
-#   end
-
-# OTHER
+# Other
 
   def worlds
     (created_worlds | whitelisted_worlds).sort_by do |world|
@@ -319,10 +234,6 @@ class User
 
   def current_world?(world)
     current_world == world
-  end
-
-  def first_sign_in?
-    sign_in_count <= 1
   end
 
   def to_param

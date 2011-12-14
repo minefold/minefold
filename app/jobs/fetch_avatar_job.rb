@@ -1,11 +1,11 @@
-class FetchAvatar
+class FetchAvatarJob
   @queue = :low
 
-  def self.perform user_id
-    new.process User.find(user_id)
+  def self.perform(user_id)
+    new.process! User.find(user_id)
   end
 
-  def process(user)
+  def process!(user)
     user.fetch_avatar!
     user.save
     puts "downloaded skin for #{user.safe_username}"

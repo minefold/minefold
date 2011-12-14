@@ -1,10 +1,10 @@
 source 'https://code.stripe.com'
 source 'https://rubygems.org'
 
-gem 'rake', '0.9.2.2'
+gem 'rake'
 gem 'thin'
-gem 'rails', '3.1.0'
-gem 'sprockets', '2.0.2'
+gem 'rails'
+gem 'sprockets'
 
 # ORM
 gem 'mongoid'
@@ -12,7 +12,6 @@ gem 'bson_ext'
 gem 'mongoid_slug'
 
 # Authentication
-gem 'rack-ssl'
 gem 'devise'
 
 # Payment Processing
@@ -22,11 +21,9 @@ gem 'stripe'
 gem 'sendgrid'
 gem 'twitter'
 gem 'pusher'
-gem 'em-http-request'
 
 # Views
 gem 'haml'
-gem 'mustache'
 gem 'bourbon'
 gem 'jquery-rails'
 gem 'backbone-rails'
@@ -43,17 +40,15 @@ gem 'carrierwave-mongoid', require: 'carrierwave/mongoid'
 gem 'mini_magick'
 
 # Job Processing
-gem 'fog'
-gem 'resque', require: 'resque/server'
+gem 'resque', require: 'resque/server', git: 'https://github.com/defunkt/resque.git'
 gem 'resque_mailer'
 
-gem 'rinku'
-
-# Logging
+# Logs & Stats
 gem 'airbrake'
 gem 'statsd-instrument'
 gem 'rpm_contrib'
 gem 'newrelic_rpm'
+gem 'em-mixpanel', require: 'em/mixpanel'
 
 group :development do
   gem 'heroku'
@@ -70,7 +65,7 @@ end
 
 group :worker do
   gem 'rubyzip'
-  gem 'embedly'
+  gem 'fog'  
 end
 
 group :test do

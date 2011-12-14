@@ -1,4 +1,4 @@
-class EventsController < ApplicationController
+class Worlds::EventsController < ApplicationController
 
   expose(:world) { World.find_by_slug!(params[:world_id]) }
 

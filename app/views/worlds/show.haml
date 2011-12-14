@@ -31,7 +31,7 @@
   - if signed_in?
     %form#share
       .avatar
-        = image_tag current_user.avatar.head.s24.url, with: 24, height: 24
+        = image_tag current_user.avatar.head.s24.url, width: 24, height: 24
 
       %input{type: 'text', name: 'text', rows: 2, maxlength: 100, autocomplete: 'off', placeholder: 'Chat with other players'}
 

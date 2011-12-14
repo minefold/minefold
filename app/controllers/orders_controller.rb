@@ -1,18 +1,16 @@
 class OrdersController < ApplicationController
-  def purchase_time
+  
+  def create
+    # TODO: Validate that this exists
+    current_user.stripe_token = params[:stripe_token]
+    
     pack = TimePack.find(params[:user][:hours].to_i)
-
-    current_user.buy_time_pack! pack
-
-    track 'paid', hours: pack.hours, amount: pack.price
-
-    redirect_to user_root_path, notice: "You purchased #{pack.hours} hours"
-  end
-
-  def subscribe
-    current_user.update_attributes! params[:user]
-    new_plan = Plan.find(params[:user][:plan_id])
-    redirect_to user_root_path, notice: "Plan changed to #{new_plan.name}"
+    current_user.buy_time! pack
+    
+    track 'paid', hours: pack.hours, amount: pack.amount
+    
+    # TODO: Pluralisation
+    redirect_to user_root_path, notice: "Thank you for buying #{pack.hours} hours"
   end
 
 end

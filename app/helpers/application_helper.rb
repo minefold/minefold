@@ -1,31 +1,12 @@
-# encoding: utf-8
-
 module ApplicationHelper
-
-  def page_css_selector
-    [params[:controller].gsub('/', '-').dasherize,
-     params[:action].dasherize].join('-')
-  end
-
+  
   def hidden
     {style: 'display:none'}
   end
-
-  def template(name, options)
-    view = Mustache.new
-    view.template_name = name.to_sym
-
-    contexts = [*(options[:object] || options[:collection] || [])]
-
-    capture_haml do
-      contexts.each do |ctx|
-        haml_concat view.render(view.template, ctx).html_safe
-      end unless contexts.empty?
-
-      haml_tag(:script, {type: 'text/x-mustache', data: {name: name}}) do
-        haml_concat view.template.source
-      end
-    end
+  
+  def page_css_selector
+    [params[:controller].gsub('/', '-').dasherize,
+     params[:action].dasherize].join('-')
   end
 
   def flash_upload_options(opts)
@@ -39,11 +20,6 @@ module ApplicationHelper
     }.merge(opts)
   end
 
-  def time_ago(time, options = {})
-    options[:class] ||= 'timeago'
-    content_tag(:abbr, time.to_s, options.merge(:title => time.getutc.iso8601))
-  end
-
   def youtube_vid
     content_tag(:iframe, nil,
       width: 480,
@@ -55,7 +31,7 @@ module ApplicationHelper
     ).html_safe
   end
 
-  def title page_title, masthead_title=page_title, &blk
+  def title(page_title, masthead_title=page_title, &blk)
     content_for :title, page_title.to_s
     if block_given?
       masthead &blk
@@ -64,28 +40,20 @@ module ApplicationHelper
     end
   end
 
-  def head &blk
+  def head(&blk)
     content_for :head, capture_haml(&blk)
   end
 
-  def masthead &blk
+  def masthead(&blk)
     content_for :masthead, capture_haml(&blk)
   end
 
-  def before &blk
+  def before(&blk)
     content_for :before, &blk
   end
 
-  def after &blk
+  def after(&blk)
     content_for :after, &blk
-  end
-
-  def current_user_needs_help?
-    current_user.first_sign_in? and
-    not (
-      current_user.current_world or
-      not current_user.whitelisted_worlds.empty?
-    )
   end
 
 end

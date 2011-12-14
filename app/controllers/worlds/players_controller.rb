@@ -1,4 +1,4 @@
-class PlayersController < ApplicationController
+class Worlds::PlayersController < ApplicationController
 
   expose(:world) {
     World.find_by_slug! params[:world_id]

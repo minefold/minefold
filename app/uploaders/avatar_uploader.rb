@@ -1,23 +1,19 @@
 class AvatarUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
-  
-  if Rails.env.production?
-    storage :fog
-  else
-    storage :file
-  end
+  storage :fog
   
   def fog_directory
-    mounted_as.to_s
+    ENV['USER_AVATARS_BUCKET']
   end
-
+  
+  def fog_host
+    ENV['USER_AVATARS_HOST']
+  end
+  
   def store_dir
-    if Rails.env.development?
-      "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
-    else
-      nil
-    end
+    model.id.to_s
   end
+  
 
   version :head do
     process :crop_head!
@@ -48,12 +44,12 @@ class AvatarUploader < CarrierWave::Uploader::Base
   end
   
   # Returns the digest path of the default image so that it can be served out from CloudFront like the other static assets.
-  def default_url
-    filename = [version_name, 'default.png'].compact.join('_')
-    path = File.join('avatar', filename)
-
-    Rails.application.assets[path].digest_path
-  end
+  # def default_url
+  #   filename = [version_name, 'default.png'].compact.join('_')
+  #   path = File.join('avatar', filename)
+  # 
+  #   # Rails.application.assets[path].digest_path
+  # end
 
   def sample(width, height)
     manipulate! do |img|

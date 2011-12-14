@@ -9,7 +9,6 @@ CarrierWave.configure do |config|
   }
   
   config.fog_public = true
-  config.fog_host   = 'https://d1gl6072w16l3y.cloudfront.net'
   config.fog_attributes = {
     'Cache-Control' => "max-age=#{10.years.to_i}"
   }

@@ -25,20 +25,18 @@ Minefold::Application.routes.draw do
     post '/users' => 'users#create', :as => :users
   end
 
-  resource :upload, :path => '/worlds/upload', :only => [:new, :create], :path_names => {:new => '/'} do
-    get :policy
-  end
-
   controller :stripe, :path => :customer, :as => :customer do
     get :new
     put :create
   end
 
-  resource :account, :except => [:new, :show, :destroy], :path_names => {:edit => '/'} do
+  resource :account, :only => [:edit, :update], :path_names => {:edit => '/'} do
     get :time
-    resources :plans, :only => :show
-    resources :time_packs,  :only => :show
   end
+
+  resource :order, :only => [:create]
+
+  post '/stripe/webhook' => 'stripe#webhook'
 
   as :user do
     resources :users, :path => 'players', :only => [:show]
@@ -51,24 +49,21 @@ Minefold::Application.routes.draw do
       get  :invite
       put :play
     end
+    
+    scope :module => :worlds do
+      resources :events, :only => [:index, :create]
+      resources :players, :only => [:index, :create, :destroy] do
+        post :ask, :action => :ask, :on => :collection
+        post :add, :action => :add, :on => :collection
+        get  :search, :action => :search, :on => :collection
 
-    resources :events, :only => [:index, :create]
-    resources :players, :only => [:index, :create, :destroy] do
-      post :ask, :action => :ask, :on => :collection
-      post :add, :action => :add, :on => :collection
-      get  :search, :action => :search, :on => :collection
-
-      put :approve, :on => :collection
+        put :approve, :on => :collection
+      end
     end
-
-    resource :invite, :only => :create
   end
-
-  resource :order, :only => [] do
-    post :subscribe
-    post :purchase_time
+  
+  resource :upload, :path => '/worlds/upload', :only => [:new, :create], :path_names => {:new => '/'} do
+    get :policy
   end
-
-  post '/stripe/webhook' => 'stripe#webhook'
-
+  
 end

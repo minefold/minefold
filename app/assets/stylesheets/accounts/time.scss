@@ -123,12 +123,12 @@
       section.submit {
         clear: left;
 
-        input[type=submit], input[type=reset], .save-card {
+        input[type=submit], input[type=reset], .remember-card {
           float: left;
           margin-right: $gutter;
         }
 
-        .save-card {
+        .remember-card {
           margin-top: $line;
         }
       }

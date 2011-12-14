@@ -2,91 +2,67 @@
 
 #buy
   %ol
-    %li
-      %a{data: {hours: 10, amount: 295}}
-        %h1.time
-          Buy
-          %strong 10
-          hours
-        %h2
-          %span.price= number_to_currency(2.95)
-          %span.rate 30¢/h
-
-    %li
-      %a{data: {hours: 40, amount: 795}}
-        %h1.time
-          Buy
-          %strong 40
-          hours
-        %h2
-          %span.price= number_to_currency(7.95)
-          %span.rate 20¢/h
-
-    %li
-      %a{data: {hours: 200, amount: 1995}}
-        %h1.time
-          Buy
-          %strong 200
-          hours
-        %h2
-          %span.price= number_to_currency(19.95)
-          %span.rate 10¢/h
+    - TimePack.all.each do |pack|
+      %li
+        %a{data: {hours: pack.hours, amount: pack.amount}}
+          %h1.time
+            Buy
+            %strong= pack.hours
+            hours
+          %h2
+            %span.price= number_to_currency(pack.dollars)
+            %span.rate #{pack.rate}¢/h
 
   #card{hidden}
     %aside
       %p
         You will be charged
-        %strong.dollar-amount $19.95
+        %strong.dollar-amount $74.95
         for
-        %strong.hours 200
+        %strong.hours 500
         hours.
 
       %p.security AES-256 Secure payment by #{link_to 'Stripe', 'https://stripe.com/help/security', target: '_blank'}.
 
-    %form
+    %form{action: order_path, method: :post}
+      %p.errors
+      
       %section.card-number
         = label_tag :number, 'Card Number'
-        = text_field_tag :number, '', name: nil, size: 20, autocomplete: 'off', class: %w{stripe number}, id: 'stripe-number'
-
-        / %p.card-types
-        /   We accept <span class="visa">Visa</span>, <span class="mastercard">MasterCard</span>, <span class="american-express">American Express</span>, <span class="discover">Discover</span>, <span class="jcb">JCB</span> and <span class="diners-club">Diners Club</span>.
-        /
-        / :coffeescript
-        /   $('input.stripe.number').keyup (e) ->
-        /     target = $(e.target)
-        /     cardType = Stripe.cardType(target.val())
-        /       .toLowerCase()
-        /       .replace(/\s/,'-')
-        /
-        /     $('.card-types span')
-        /       .toggleClass('unknown', cardType isnt 'unknown')
-        /       .removeClass('active')
-        /       .filter(-> $(@).hasClass(cardType))
-        /       .addClass('active')
+        = text_field_tag :number, nil, name: nil, size: 20, autocomplete: 'off', class: %w{stripe number}, id: 'stripe-number', placeholder: (current_user.card? ? current_user.card.number : nil)
+        
+        :javascript
+          var number = $('#stripe-number');
+          number.blur(function(){
+            number.val(number.val().replace(/[^0-9]/g, ''));
+          });
 
       %section.card-expiry
         = label_tag :expiry_month, 'Expiry Date'
-        = text_field_tag :expiry_month, '', name: nil, size: 2, class: %w{stripe expiry-month}, id: 'stripe-exp-month', placeholder: 'MM'
+        = text_field_tag :expiry_month, nil, name: nil, size: 2, class: %w{stripe expiry-month}, id: 'stripe-exp-month', placeholder: (current_user.card? ? current_user.card.exp_month : 'MM')
         %span /
-        = text_field_tag :expiry_year, '', name: nil, size: 4, class: %w{stripe expiry-year}, id: 'stripe-exp-year', placeholder: 'YYYY'
+        = text_field_tag :expiry_year, nil, name: nil, size: 4, class: %w{stripe expiry-year}, id: 'stripe-exp-year', placeholder: (current_user.card? ? current_user.card.exp_year : 'YYYY')
 
 
       %section.card-cvc
         = label_tag :cvc, 'CVC'
-        = text_field_tag :cvc, '', name: nil, size: 4, autocomplete: 'off', class: %w{stripe cvc}, id: 'stripe-cvc'
+        = text_field_tag :cvc, nil, name: nil, size: 4, autocomplete: 'off', class: %w{stripe cvc}, id: 'stripe-cvc'
 
       %section.submit
-        = submit_tag 'Confirm order'
+        = submit_tag 'Confirm order', disabled: (not current_user.card?)
         %input{type: 'reset', value: 'Cancel'}
-        .save-card
-          = check_box_tag :save_card, '', checked: true
-          = label_tag :save_card, 'Save card details'
+        .remember-card
+          = hidden_field_tag :card, current_user.card?, id: nil
+          
+          = check_box_tag :remember_card, '', checked: true
+          = label_tag :remember_card, 'Remember card'
 
 
 :coffeescript
   buy = $('#buy')
   products = buy.find('ol')
   card = buy.find('#card')
+  form = card.find('form')
 
   products.find('a').click (e) ->
     product = $(@)
@@ -99,12 +75,55 @@
     card.find('aside .hours').text(product.data('hours'))
 
     card.slideDown ->
-      card.find('input#stripe-number').focus()
+      card.find('input#stripe-number')
 
 
   card.find('input[type=reset]').click ->
     card.slideUp ->
       products.find('a').removeClass('active')
+  
+  form.submit (e) ->
+    return if form.find('input[name=card]').val() == 'true'
+
+    e.preventDefault()
+
+    button = form.find('input[type=submit]')
+
+    button.attr(disabled: true)
+    form.find('.spinner').show()
+
+    card =
+      number:    form.find('#stripe-number').val()
+      cvc:       form.find('#stripe-cvc').val()
+      exp_month: form.find('#stripe-exp-month').val()
+      exp_year:  form.find('#stripe-exp-year').val()
+    
+    hours = parseInt(products.find('.active').data('hours'), 10)
+    
+    amount = _(timePacks).find((pack) -> pack.hours is hours).amount
+    
+    return unless amount
+
+    Stripe.createToken card, amount, (status, response) ->
+      if status isnt 200
+        button.attr(disabled: false)
+    
+        $('<p></p>')
+          .addClass('stripe')
+          .text(response.error.message)
+          .appendTo form.find('.errors').empty()
+    
+      else
+        token = response.id
+        $('<input></input>')
+          .attr(type: 'hidden', name: 'stripe_token')
+          .val(token)
+          .appendTo(form)
+    
+        form.get(0).submit()
+
+
 
 %article
   %h1 Gift time
+  %p If you would like to "gift" time from your account to another, please email #{mail_to 'team@minefold.com'}.

@@ -4,29 +4,14 @@
 
 #products
   %ol
-    %li
-      %h1.time
-        %strong 10
-        hours
-      %h2.price
-        = number_to_currency(2.95)
-        %span.rate 30¢/h
-
-    %li
-      %h1.time
-        %strong 40
-        hours
-      %h2.price
-        = number_to_currency(7.95)
-        %span.rate 20¢/h
-
-    %li
-      %h1.time
-        %strong 200
-        hours
-      %h2.price
-        = number_to_currency(19.95)
-        %span.rate 10¢/h
+    - TimePack.all.each do |pack|
+      %li
+        %h1.time
+          %strong= pack.hours
+          hours
+        %h2.price
+          = number_to_currency(pack.dollars)
+          %span.rate #{pack.rate}¢/h
 
   %p.extras
     Everybody also gets
@@ -38,17 +23,15 @@
   - else
     = link_to 'Sign up and start playing now!', new_user_path, class: 'btn'
 
-
-
 %aside
   %h2 Common Questions
 
   %dl
     %dt Can I pay for my friends?
     %dd
-      %p Not yet.
+      %p Not yet, sorry.
 
-    %dt When does my time start?
+    %dt When is my time used?
     %dd
       %p Your time only gets deducted when you're actually <em>playing</em> on Minefold.
 

@@ -5,16 +5,6 @@ class ApplicationController < ActionController::Base
 
   extend StatsD::Instrument
 
-  def track(event_name, properties={})
-    if current_user
-      properties[:distinct_id] = current_user.id.to_s
-      properties[:mp_name_tag] = current_user.safe_username
-    end
-
-    mixpanel.track(event_name, properties)
-  end
-
-
   def not_found
     render template: 'errors/not_found', status: :not_found
   end
@@ -32,22 +22,16 @@ private
   end
 
   def mixpanel
-    @mixpanel ||= Mixpanel::Tracker.new(ENV['MIXPANEL_TOKEN'], request.env)
+    @mixpanel ||= EM::Mixpanel::Tracker.new(ENV['MIXPANEL_TOKEN'], request.env)
   end
+  
+  def track(event_name, properties={})
+    if current_user
+      properties[:distinct_id] = current_user.id.to_s
+      properties[:mp_name_tag] = current_user.safe_username
+    end
 
-  # def require_customer!
-  #   if not current_user.customer
-  #     if params[:stripe_token]
-  #       current_user.stripe_token = params[:stripe_token]
-  #       current_user.create_customer
-  #       current_user.save
-  #     else
-  #       # This amount that will be guarenteed by Stripe
-  #       @amount = StripeController::AMOUNTS[params[:plan_id] || params[:hours]]
-  #
-  #       render controller: :stripe, action: :new, status: :payment_required
-  #     end
-  #   end
-  # end
+    mixpanel.track(event_name, properties)
+  end
 
 end

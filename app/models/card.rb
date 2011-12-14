@@ -18,5 +18,9 @@ class Card
       last4: stripe_card.last4
     }
   end
+  
+  def number
+    "**** **** **** #{last4}"
+  end
 
 end

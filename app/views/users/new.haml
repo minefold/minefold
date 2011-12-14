@@ -4,4 +4,5 @@
     or
     = link_to 'sign in to an existing account', new_user_session_path
 
-= render partial: 'new_user', object: user
+= form_for user do |f|
+  = render partial: 'form', object: f
