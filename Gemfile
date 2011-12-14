@@ -11,6 +11,8 @@ gem 'mongoid'
 gem 'bson_ext'
 gem 'mongoid_slug'
 
+gem 'rack-www'
+
 # Authentication
 gem 'rack-ssl'
 gem 'devise'

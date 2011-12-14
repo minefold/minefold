@@ -192,6 +192,8 @@ GEM
       rack
     rack-test (0.6.1)
       rack (>= 1.0)
+    rack-www (1.4.0)
+      rack
     rails (3.1.0)
       actionmailer (= 3.1.0)
       actionpack (= 3.1.0)
@@ -339,6 +341,7 @@ DEPENDENCIES
   newrelic_rpm
   pusher
   rack-ssl
+  rack-www
   rails (= 3.1.0)
   rake (= 0.9.2.2)
   resque
