@@ -328,11 +328,11 @@ DEPENDENCIES
   mongoid_slug
   newrelic_rpm
   pusher
-  rails
-  rake
-  representative
-  representative_view
-  resque!
+  rack-ssl
+  rack-www
+  rails (= 3.1.0)
+  rake (= 0.9.2.2)
+  resque
   resque_mailer
   rpm_contrib
   rspec
