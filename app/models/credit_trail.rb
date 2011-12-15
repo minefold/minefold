@@ -4,7 +4,6 @@ class CreditTrail
 
   belongs_to :user
   field :delta, type: Integer
-  field :src, type: String, default: 'sys'
   
   def self.log(user, delta)
     create(user: user, delta: delta)

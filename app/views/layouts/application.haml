@@ -106,10 +106,15 @@
       :javascript
         // Manual hide
         $('#flash a.hide').click(function() { $(this).parent().hide(); });
-
+        
+        // Staggers multiple messages from hiding.
+        var t = 0;
+        
         // Timeout hide
         $('#flash .message').each(function(i){
-          var elm = $(this), t = 4000 + (i + 250);
+          var elm = $(this);
+          // Counts the number of words in the message, giving 600ms to read each word.
+          t += (elm.text().split(/\s+/).length * 600) + (i * 300);
           delay(t, function(){ elm.hide(); });
         });
 

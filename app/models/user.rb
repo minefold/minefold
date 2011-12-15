@@ -22,9 +22,9 @@ class User
   field :credits,        type: Integer, default: (FREE_HOURS.hours / BILLING_PERIOD)
   field :minutes_played, type: Integer, default: 0
 
-  attr_accessor :stripe_token
-  field :stripe_id,               type: String
-  embeds_one :card
+  # attr_accessor :stripe_token
+  # field :stripe_id,               type: String
+  # embeds_one :card
 
   field :referral_code,   type: String, default: -> {
     begin
@@ -96,64 +96,27 @@ class User
                   :email_or_username,
                   :remember_me
 
-# Plans
+# Credits
+
+  # Kicks off the audit trail for any credits the user starts off with
+  after_create do
+    CreditTrail.log(self, self.credits)
+  end
 
   def customer_description
     [safe_username, id].join('-')
   end
 
-  def card?
-    not card.nil?
-  end
-
-  def customer
-    @customer ||= Stripe::Customer.retrieve(stripe_id) if stripe_id?
-  end
-  
-  alias_method :customer?, :stripe_id?
-
-  def create_customer
-    options = {
+  def create_charge!(stripe_token, pack)
+    Stripe::Charge.create(
       card: stripe_token,
-      coupon: coupon,
-      email: email,
-      description: customer_description
-    }
-
-    @customer = Stripe::Customer.create(options)
-    self.stripe_id = @customer.id
-
-    # TODO: Document why this conitional helps
-    if @customer.respond_to?(:active_card)
-      build_card_from_stripe(@customer.active_card)
-    end
-
-    self.stripe_token = nil
-  end
-
-  def create_charge!(amount)
-    create_customer unless customer?
-    
-    charge = Stripe::Charge.create(
-      customer: stripe_id,
-      amount: amount,
+      amount: pack.amount,
       currency: 'usd',
-      description: "Minefold.com time"
+      description: "#{customer_description}: #{pack.hours}h"
     )
-
-    create_card_from_stripe(charge.card)
-
-    charge
+  rescue StripeError
+    false
   end
-
-  def build_card_from_stripe(card)
-    build_card Card.attributes_from_stripe(card)
-  end
-
-  def create_card_from_stripe(card)
-    create_card Card.attributes_from_stripe(card)
-  end
-
 
   def self.paid_for_minecraft?(username)
     response = RestClient.get "http://www.minecraft.net/haspaid.jsp", params: {user: username}
@@ -162,18 +125,8 @@ class User
     return false
   end
 
-  def buy_time!(pack)
-    # The order is important here. If the charge fails for some reason we don't want the credits to be applied.
-    create_charge! pack.amount
-    increment_hours! pack.hours
-  end
-  
-
-# Credits
-
-  # Kicks off the audit trail for any credits the user starts off with
-  after_create do
-    CreditTrail.log(self, self.credits)
+  def buy_time!(stripe_token, pack)
+    create_charge!(stripe_token, pack) and increment_hours!(pack.hours)
   end
 
   # TODO: MUST FIX
@@ -182,7 +135,7 @@ class User
   end
 
   def increment_credits!(n)
-    inc(:credits, n.to_i).tap { CreditTrail.log(self, n.to_i) }
+    inc(:credits, n.to_i).tap { CreditTrail.log(self, n.to_i)}
   end
   
   def hours_left

@@ -1,5 +1,10 @@
 - title 'Time'
 
+- head do
+  = javascript_include_tag 'https://js.stripe.com/v1'
+  :javascript
+    Stripe.setPublishableKey(#{ENV['STRIPE_PUBLISHABLE'].to_json});
+
 #buy
   %ol
     - TimePack.all.each do |pack|
@@ -23,13 +28,14 @@
         hours.
 
       %p.security AES-256 Secure payment by #{link_to 'Stripe', 'https://stripe.com/help/security', target: '_blank'}.
-
-    %form{action: order_path, method: :post}
+	
+    = form_tag order_path, method: :post do
+      %input{type: 'hidden', name: 'hours'}
       %p.errors
       
       %section.card-number
         = label_tag :number, 'Card Number'
-        = text_field_tag :number, nil, name: nil, size: 20, autocomplete: 'off', class: %w{stripe number}, id: 'stripe-number', placeholder: (current_user.card? ? current_user.card.number : nil)
+        = text_field_tag :number, nil, name: nil, size: 20, autocomplete: 'off', class: %w{stripe number}, id: 'stripe-number'
         
         :javascript
           var number = $('#stripe-number');
@@ -39,9 +45,9 @@
 
       %section.card-expiry
         = label_tag :expiry_month, 'Expiry Date'
-        = text_field_tag :expiry_month, nil, name: nil, size: 2, class: %w{stripe expiry-month}, id: 'stripe-exp-month', placeholder: (current_user.card? ? current_user.card.exp_month : 'MM')
+        = text_field_tag :expiry_month, nil, name: nil, size: 2, class: %w{stripe expiry-month}, id: 'stripe-exp-month', placeholder: 'MM'
         %span /
-        = text_field_tag :expiry_year, nil, name: nil, size: 4, class: %w{stripe expiry-year}, id: 'stripe-exp-year', placeholder: (current_user.card? ? current_user.card.exp_year : 'YYYY')
+        = text_field_tag :expiry_year, nil, name: nil, size: 4, class: %w{stripe expiry-year}, id: 'stripe-exp-year', placeholder: 'YYYY'
 
 
       %section.card-cvc
@@ -49,13 +55,8 @@
         = text_field_tag :cvc, nil, name: nil, size: 4, autocomplete: 'off', class: %w{stripe cvc}, id: 'stripe-cvc'
 
       %section.submit
-        = submit_tag 'Confirm order', disabled: (not current_user.card?)
+        = submit_tag 'Confirm order'
         %input{type: 'reset', value: 'Cancel'}
-        .remember-card
-          = hidden_field_tag :card, current_user.card?, id: nil
-          
-          = check_box_tag :remember_card, '', checked: true
-          = label_tag :remember_card, 'Remember card'
 
 
 :coffeescript
@@ -63,6 +64,8 @@
   products = buy.find('ol')
   card = buy.find('#card')
   form = card.find('form')
+  
+  timePacks = #{TimePack.all.to_json}
 
   products.find('a').click (e) ->
     product = $(@)
@@ -70,27 +73,26 @@
     product.addClass('active')
 
     price = product.data('amount') / 100
+    hours = product.data('hours')
 
     card.find('aside .dollar-amount').text("$" + price)
-    card.find('aside .hours').text(product.data('hours'))
+    card.find('aside .hours').text(hours)
+    
+    form.find('input[name=hours]').val(hours)
 
-    card.slideDown ->
-      card.find('input#stripe-number')
+    card.show()
 
 
   card.find('input[type=reset]').click ->
-    card.slideUp ->
-      products.find('a').removeClass('active')
+    card.hide()
+    products.find('a').removeClass('active')
   
   form.submit (e) ->
-    return if form.find('input[name=card]').val() == 'true'
-
     e.preventDefault()
 
     button = form.find('input[type=submit]')
 
     button.attr(disabled: true)
-    form.find('.spinner').show()
 
     card =
       number:    form.find('#stripe-number').val()
@@ -102,6 +104,7 @@
     
     amount = _(timePacks).find((pack) -> pack.hours is hours).amount
     
+    # Protects against DOM modification attacks
     return unless amount
 
     Stripe.createToken card, amount, (status, response) ->
@@ -121,9 +124,3 @@
           .appendTo(form)
     
         form.get(0).submit()
-
-
-
-%article
-  %h1 Gift time
-  %p If you would like to "gift" time from your account to another, please email #{mail_to 'team@minefold.com'}.

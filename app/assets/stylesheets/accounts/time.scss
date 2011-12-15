@@ -51,16 +51,16 @@
         }
 
         &.active {
-          background: darken($green, 10%);
-          color: white;
+          background: darken(white, 5%);
+          color: black;
           h1 {
-            color: white;
+            color: black;
           }
           .price {
-            color: rgba(white, 0.8);
+            color: rgba(black, 0.6);
           }
           .rate {
-            color: rgba(white, 0.6);
+            color: rgba(black, 0.4);
           }
         }
       }
@@ -80,13 +80,16 @@
 
   #card {
     overflow: auto;
-    border-top: $line solid darken($green, 10%);
+    border-top: 1px solid darken(white, 10%);
 
     aside {
-      float: left;
-      border-left: none;
-      padding: (2*$line) $gutter;
+      float: right;
+      margin-right: 0;
       line-height: 24px;
+	  
+      strong {
+        color: black;
+      }
 
       .security {
         font-size: 11px;
@@ -100,14 +103,14 @@
 
     form {
       overflow: auto;
-      padding: (2*$line) 0;
-      padding-left: $gutter;
-      border-left: 1px solid darken(white, 5%);
+      padding: 0 $gutter;
+      margin-bottom: 2*$line;
 
       section {
         float: left;
         margin-right: $gutter;
       }
+	  
       label {
         display: block;
       }

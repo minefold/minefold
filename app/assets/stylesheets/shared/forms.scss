@@ -125,7 +125,7 @@ form {
   }
 
   input[type=submit] {
-    @include btn($green, white);
+    @include btn(lighten($blue,10%), white);
     padding: $line (2*$gutter);
   }
 
