@@ -68,11 +68,6 @@ class User
     )
   }
 
-  index :stripe_id, unique: true
-  scope :by_stripe_id, ->(stripe_id) {
-    where(stripe_id: stripe_id)
-  }
-
 
 # Validations
 

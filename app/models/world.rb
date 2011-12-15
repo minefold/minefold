@@ -53,7 +53,6 @@ class World
 
 # Finders
 
-  index :name, unique: true
   scope :by_name, ->(name) {
     where(name: name)
   }
