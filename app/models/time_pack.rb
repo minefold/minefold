@@ -8,7 +8,7 @@ class TimePack < Struct.new(:amount, :hours)
   end
 
   def rate
-    (amount / hours).round(-1)
+    (amount / hours.to_f).round
   end
 
   alias_method :cents, :amount
