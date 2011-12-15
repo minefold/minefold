@@ -27,11 +27,9 @@ class User
   # embeds_one :card
 
   field :referral_code,   type: String, default: -> {
-    begin
-      c = rand(36 ** REFERRAL_CODE_LENGTH).to_s(36).rjust(REFERRAL_CODE_LENGTH, '0').upcase
-    end while self.class.where(code: c).exists?
-    c
+    self.class.free_referral_code
   }
+  
   validates_uniqueness_of :referral_code
   
   belongs_to :referrer,  class_name: 'User', inverse_of: :referrals
@@ -175,6 +173,16 @@ class User
   before_save do
     async_fetch_avatar! if safe_username_changed?
   end  
+
+
+# Referrals
+
+  def self.free_referral_code
+    begin
+      c = rand(36 ** REFERRAL_CODE_LENGTH).to_s(36)
+    end while self.where(referral_code: c).exists?
+    c
+  end
 
 
 # Other

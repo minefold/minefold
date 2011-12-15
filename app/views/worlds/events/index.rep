@@ -1,4 +1,4 @@
-r.list_of :events, world.events do |event|
+r.list_of :events, world.events.limit(100) do |event|
   r.element :type, event.class.name.downcase
   r.element :created_at
 

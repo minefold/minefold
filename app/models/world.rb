@@ -36,9 +36,7 @@ class World
                     order: [:created_at, :desc]
 
 
-  default_scope includes(:creator)
-
-# VALIDATIONS
+# Validations
 
   validates_uniqueness_of :name
   validates_presence_of :name
@@ -53,7 +51,15 @@ class World
     less_than: DIFFICULTIES.size
 
 
-# SETTINGS
+# Finders
+
+  index :name, unique: true
+  scope :by_name, ->(name) {
+    where(name: name)
+  }
+
+
+# Settings
 
   GAME_MODES.each do |mode|
     define_method("#{mode}?") do
@@ -72,7 +78,7 @@ class World
   end
 
 
-# PLAYERS
+# Players
 
   def can_play?(user)
     not players.include?(user)
@@ -106,7 +112,7 @@ class World
   end
 
 
-# COMMUNICATION
+# Communication
 
   def broadcast(event_name, data, socket_id=nil)
     pusher_channel.trigger event_name, data, socket_id
@@ -121,7 +127,7 @@ class World
   end
 
 
-# MAPS
+# Maps
 
   def mapped?
     not last_mapped_at.nil?

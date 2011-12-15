@@ -3,7 +3,7 @@ class PivotGenerator < Rails::Generators::Base
     timestamp = Time.now.utc.strftime("%Y%m%d%H%M%S")
     filename = "#{timestamp}.rb"
     create_file File.join('db', 'pivots', filename), <<-EOF
-# Add pivot here
+# Describe pivot
 EOF
   end
 end

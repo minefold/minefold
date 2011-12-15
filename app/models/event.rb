@@ -7,4 +7,6 @@ class Event
 
   index :source
   index :target
+  
+  default_scope includes(:source, :target)
 end
