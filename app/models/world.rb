@@ -140,13 +140,13 @@ class World
   end
 
 # Other
-
-  def pusher_channel
-    Pusher[pusher_key]
-  end
-
+  
   def pusher_key
     "#{collection.name.downcase}-#{id}"
+  end
+  
+  def broadcast(event_name, data, socket_id=nil)
+    pusher_channel.trigger(event_name, data.to_json, socket_id)
   end
 
   def redis_key
@@ -158,6 +158,10 @@ class World
   end
 
 private
+
+  def pusher_channel
+    Pusher[pusher_key]
+  end
 
   def current_player_ids
     REDIS.smembers("#{redis_key}:connected_players")

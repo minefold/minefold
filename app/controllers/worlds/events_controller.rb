@@ -18,11 +18,22 @@ class Worlds::EventsController < ApplicationController
 
     if chat.valid?
       world.events.push(chat)
-
+      
+      # TODO Massive hack because representative sucks
+      chat_data = {
+        id: chat.id,
+        created_at: chat.created_at,
+        text: chat.text,
+        source: {
+          id: chat.source.id,
+          url: url_for(chat.source),
+          username: chat.source.username,
+          avatar: chat.source.avatar.head.s24.url
+        }
+      }
+      
       # TODO: Re-implement
-      # chat.wall.broadcast 'chat-create',
-      #                     chat.to_json(include: :user),
-      #                     params[:socket_id]
+      world.broadcast 'chat-create', chat_data, params[:socket_id]
 
       # chat.wall.say chat.msg
 

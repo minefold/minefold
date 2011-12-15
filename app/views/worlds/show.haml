@@ -40,36 +40,40 @@
   #events
 
   :javascript
-    var events = new MF.EventsCollection();
+    var events, eventsView, shareView, pusher, channel;
+
+    events = new MF.EventsCollection();
     events.fetch({
       success: function() {
-        activityView = new MF.ActivityView({
+        eventsView = new MF.EventsView({
           collection: events
         });
 
-        $('#events').append(activityView.el);
+        $('#events').append(eventsView.el);
 
-        activityView.render();
+        eventsView.render();
       }
     });
 
-    var shareView = new MF.ShareView({
+    shareView = new MF.ShareView({
       el: $('form#share'),
       collection: events
     });
 
+    pusher = new Pusher(#{Pusher.key.to_json}, {
+      encrypted: true
+    });
+    
+    channel = pusher.subscribe(#{world.pusher_key.to_json});
+    
+    channel.bind('chat-create', function(chat) {
+      var sameChat = events.find(function(e){
+        return e.id == chat.id || (!e.id && e.get('text') == chat.text);
+      })
+    
+      if(!sameChat) {
+        var chatModel = new MF.Chat(chat);
+        events.add(chatModel);
+      }
+    });
 
-/ - head do
-/   = javascript_include_tag '//d3ds63zw57jt09.cloudfront.net/1.9/pusher.min.js'
-/
-/ :coffeescript
-/   window.pusher = new Pusher(#{Pusher.key.to_json}, encrypted: true);
-/   window.channel = pusher.subscribe(#{Pusher[world.pusher_key].name.to_json});
-/
-/   channel.bind 'chat-create', (data) ->
-/     console.log data
-/     data.id = data._id
-/     data.body = data.raw
-/
-/     html = template(data)
-/     $('#wall-items').prepend $(html)

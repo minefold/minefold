@@ -2,7 +2,7 @@
 #= require views/event_view
 #= require views/chat_view
 
-class MF.ActivityView extends Backbone.View
+class MF.EventsView extends Backbone.View
   id: 'events'
 
   collection: MF.EventsCollection
