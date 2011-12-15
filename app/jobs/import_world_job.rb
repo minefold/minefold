@@ -84,8 +84,10 @@ class ImportWorldJob
     local_filename = "#{tmp_dir}/#{s3_key}"
     puts "Downloading #{s3_key} => #{local_filename}"
 
-    worlds_to_import = storage.directories.create :key => "minefold.#{Rails.env}.worlds.uploads"
-    remote_file = worlds_to_import.files.get s3_key
+    worlds_to_import = storage.directories.create :key => ENV['WORLD_UPLOADS_BUCKET']
+    
+    remote_file = worlds_to_import.files.get(s3_key)
+    
     File.open(local_filename, 'wb') {|local_file| local_file.write remote_file.body }
     puts "Download finished"
 
@@ -94,7 +96,7 @@ class ImportWorldJob
 
   def upload_world_archive world_archive, world_id
     puts "Uploading #{world_archive}"
-    directory = storage.directories.create :key => "minefold.#{Rails.env}.worlds"
+    directory = storage.directories.create :key => ENV['WORLDS_BUCKET']
     directory.files.create key:"#{world_id}.tar.gz",
                           body:File.open(world_archive),
                         public:false
@@ -145,6 +147,6 @@ private
   end
 
   def tmp_dir
-    File.join Rails.root, "tmp", "world_uploads"
+    Rails.root.join('tmp', 'world_uploads')
   end
 end

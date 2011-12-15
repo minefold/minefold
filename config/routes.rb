@@ -43,10 +43,15 @@ Minefold::Application.routes.draw do
   end
 
   resources :worlds, :except => :destroy, :path_names => {:edit => 'settings'} do
-
+    collection do
+      resource :upload, :module => :worlds, :only => [:new, :create] do
+        get :policy
+      end
+    end
+    
     member do
-      get  :map
-      get  :invite
+      get :map
+      get :invite
       put :play
     end
     
@@ -60,10 +65,9 @@ Minefold::Application.routes.draw do
         put :approve, :on => :collection
       end
     end
-  end
   
-  resource :upload, :path => '/worlds/upload', :only => [:new, :create], :path_names => {:new => '/'} do
-    get :policy
+
+    
   end
   
 end

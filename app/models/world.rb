@@ -133,7 +133,13 @@ class World
   end
 
 
-# OTHER
+# Uploads
+
+  def upload_filename_prefix
+    [creator.safe_username, creator.id, Time.now.strftime('%Y%m%d%H%M%S'), nil].join('-')
+  end
+
+# Other
 
   def pusher_channel
     Pusher[pusher_key]

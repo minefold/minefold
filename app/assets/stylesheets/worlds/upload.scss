@@ -1,0 +1,18 @@
+#worlds-uploads-new {
+  
+  .instructions {
+    list-style-type: decimal;
+    
+    li {
+      margin-left: 4*$gutter;
+    }
+  }
+  
+  aside {
+    #world_upload_path {
+      width: 100%;
+	  @include btn($blue, white);
+    }
+  }
+  
+}
