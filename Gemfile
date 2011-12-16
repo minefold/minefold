@@ -42,7 +42,8 @@ gem 'carrierwave-mongoid', require: 'carrierwave/mongoid'
 gem 'mini_magick'
 
 # Job Processing
-gem 'resque', require: 'resque/server', git: 'https://github.com/defunkt/resque.git'
+gem 'resque', git: 'https://github.com/defunkt/resque.git',
+          require: 'resque/server'
 gem 'resque_mailer'
 
 # Logs & Stats
