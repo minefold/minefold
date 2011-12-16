@@ -51,6 +51,6 @@ module Minefold
 
     config.assets.paths << Rails.root.join('app', 'assets', 'flash')
     
-    config.middleware.use Rack::WWW, www: true
+    config.middleware.use Rack::WWW, www: false
   end
 end
