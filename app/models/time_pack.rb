@@ -1,6 +1,6 @@
 class TimePack < Struct.new(:amount, :hours)
   def self.all
-    [new(595, 20), new(1995, 100), new(7495, 500)]
+    [new(595, 20), new(1995, 100), new(4995, 500)]
   end
 
   def self.find(hours)
