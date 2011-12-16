@@ -14,10 +14,11 @@ class WorldMailer < ActionMailer::Base
 
   def player_added(world_id, player_id)
     @world   = World.find(world_id)
-    @creator = @world.creator
     @player  = User.find(player_id)
+    
+    @creator = @world.creator
 
     mail   to: @player.email,
-      subject: "#{@creator.username} has let you play in #{@world.name}"
+      subject: "#{@creator.username} has added you #{@world.name}"
   end
 end
