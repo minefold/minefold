@@ -1,16 +1,15 @@
 class ProcessChatJob
   @queue = :high
 
-  def self.perform chat_id
-    new.process! Chat.find(chat_id)
+  def self.perform(world_id, username, text)
+    world, user = World.find(world_id), User.by_username(username).first
+    
+    new.process!(world, user, text)
   end
 
-# private
-
-  def process! chat
-    # urls = []
-    # chat.html = Rinku.auto_link(chat.raw) {|url| urls << url; url }
-    # chat.save!
+  def process!(world, user, text)
+    world.record_event! Chat, source: user,
+                              text: text
   end
-
+  
 end

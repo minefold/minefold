@@ -113,7 +113,16 @@ class World
 
 
 # Communication
-
+  
+  def record_event!(type, data)
+    event = type.new(data)
+    self.events.push(event)
+    
+    event_name = [event.pusher_key, 'created'].join('-')
+    
+    broadcast event_name, event.attributes
+  end
+  
   def broadcast(event_name, data, socket_id=nil)
     pusher_channel.trigger event_name, data, socket_id
   end

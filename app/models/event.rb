@@ -9,4 +9,9 @@ class Event
   index :target
   
   default_scope includes(:source, :target)
+  
+  def pusher_key
+    self.class.name.downcase
+  end
+  
 end
