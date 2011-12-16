@@ -83,7 +83,7 @@ class ImportWorldJob
     local_filename = "#{tmp_dir}/#{s3_key}"
     puts "Downloading #{s3_key} => #{local_filename}"
 
-    worlds_to_import = storage.directories.create :key => ENV['WORLD_UPLOADS_BUCKET']
+    worlds_to_import = storage.directories.create :key => ENV['UPLOADS_BUCKET']
     
     remote_file = worlds_to_import.files.get(s3_key)
     

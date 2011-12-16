@@ -19,7 +19,7 @@ class Worlds::UploadsController < ApplicationController
   def policy
     @policy = S3UploadPolicy.new ENV['S3_KEY'],
                                  ENV['S3_SECRET'],
-                                 ENV['WORLD_UPLOADS_BUCKET']
+                                 ENV['UPLOADS_BUCKET']
 
     @policy.key = params[:key]
     @policy.content_type = params[:contentType]

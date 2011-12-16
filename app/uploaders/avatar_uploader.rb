@@ -3,11 +3,11 @@ class AvatarUploader < CarrierWave::Uploader::Base
   storage :fog
   
   def fog_directory
-    ENV['USER_AVATARS_BUCKET']
+    ENV['AVATARS_BUCKET']
   end
   
   def fog_host
-    ENV['USER_AVATARS_HOST']
+    ENV['AVATARS_HOST']
   end
   
   def store_dir
