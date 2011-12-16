@@ -9,7 +9,7 @@ class Worlds::PlayersController < ApplicationController
   }
 
   def search
-    user = world.available_player(params[:username]).first
+    user = world.search_for_potential_player(params[:username])
 
     if user
       render json: user
@@ -28,36 +28,38 @@ class Worlds::PlayersController < ApplicationController
   end
 
   def add
-    world.whitelisted_players << player
+    @player = world.search_for_potential_player(params[:username])
+    
+    world.whitelisted_players << @player
     world.save
 
-    WorldMailer.player_added(world.id, player.id).deliver
+    WorldMailer.player_added(world.id, @player.id).deliver
 
-    redirect_to edit_world_path(world, anchor: 'players')
+    redirect_to world_path(world)
   end
 
-  def approve
-    @play_request = world.play_requests.find(params[:play_request_id])
-
-    world.whitelisted_players << @play_request.user
-    world.play_requests.delete(@play_request)
-    world.save
-
-    WorldMailer.player_added(world.id, @play_request.user.id).deliver
-
-    redirect_to edit_world_path(world, anchor: 'players')
-  end
-
-  def destroy
-    if player.current_world == world
-      player.current_world = nil
-      player.save
-    end
-
-    world.whitelisted_players.delete(player)
-    world.save
-
-    redirect_to edit_world_path(world, anchor: 'players')
-  end
+  # def approve
+  #   @play_request = world.play_requests.find(params[:play_request_id])
+  # 
+  #   world.whitelisted_players << @play_request.user
+  #   world.play_requests.delete(@play_request)
+  #   world.save
+  # 
+  #   WorldMailer.player_added(world.id, @play_request.user.id).deliver
+  # 
+  #   redirect_to edit_world_path(world, anchor: 'players')
+  # end
+  # 
+  # def destroy
+  #   if player.current_world == world
+  #     player.current_world = nil
+  #     player.save
+  #   end
+  # 
+  #   world.whitelisted_players.delete(player)
+  #   world.save
+  # 
+  #   redirect_to edit_world_path(world, anchor: 'players')
+  # end
 
 end

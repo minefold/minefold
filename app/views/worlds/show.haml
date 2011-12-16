@@ -26,6 +26,28 @@
   %ul.players
     - world.players.each do |player|
       %li= link_to player.username, player
+  
+  - if world.opped?(current_user)
+    %h2 Add a friend
+    = form_tag add_world_players_path(world), id: 'add-players' do
+      %section
+        = text_field_tag :username, nil, placeholder: 'Username'
+        .hint
+          The button will light up when you type a correct username.
+    
+      %section
+        = submit_tag 'Add friend', disabled: true
+  
+    :javascript
+      var form = $('form#add-players'),
+          searchPath = #{search_world_players_path(world).to_json};
+      form.find('input[name=username]').keydown(_.debounce(function() {
+        var username = $(this).val();
+        // TODO Fix to disable input when user types bad username
+        $.getJSON(searchPath, {username: username}, function(data, status) {
+          form.find('input[type=submit]').attr('disabled', false);
+        });
+      }, 300));
 
 %article
   - if signed_in?

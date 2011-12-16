@@ -195,6 +195,14 @@ class User
   def to_param
     slug
   end
+  
+  # Security. When searching for potential players in a world the results were returning emails and credit cards of users.
+  def as_json(options={})
+    {
+      username: safe_username,
+      avatar: avatar.head.as_json      
+    }
+  end
 
 protected
 

@@ -83,10 +83,11 @@ class World
     not players.include?(user)
   end
 
-  def available_player(username)
+  def search_for_potential_player(username)
     User
+      .where(safe_username: User.sanitize_username(username))
       .not_in(_id: players.map {|p| p.id})
-      .where(safe_username: username.downcase)
+      .first
   end
 
   def whitelisted?(user)
