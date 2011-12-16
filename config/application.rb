@@ -50,7 +50,5 @@ module Minefold
     config.assets.version = '1.0'
 
     config.assets.paths << Rails.root.join('app', 'assets', 'flash')
-    
-    config.middleware.use Rack::WWW, www: false
   end
 end
