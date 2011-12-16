@@ -4,14 +4,13 @@
 = render partial: 'header'
 
 - if world.mapped?
-  - map_asset_path = "#{Rails.configuration.map_tiles_url}/#{world.id}"
   = javascript_include_tag '//maps.google.com/maps/api/js?sensor=false'
   = javascript_include_tag 'world_map'
   
   %article#world_map
     :javascript
       $(function(){
-        $('#page article#world_map').world_map({ path:'#{map_asset_path}'})
+        $('#page article#world_map').world_map({ path:'#{world.map_assets_url}'})
       })
 
 - else

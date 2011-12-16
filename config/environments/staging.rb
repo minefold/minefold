@@ -14,8 +14,6 @@ Minefold::Application.configure do
     domain:         ENV['SENDGRID_DOMAIN']
   }
 
-  config.map_tiles_url = "//s3.amazonaws.com/minefold.staging.world-tiles"
-
 
   # Code is not reloaded between requests
   config.cache_classes = true
