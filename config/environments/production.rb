@@ -4,7 +4,8 @@ Minefold::Application.configure do
   config.map_tiles_url = "//s3.amazonaws.com/minefold-production-maps"
 
   config.action_mailer.default_url_options = {
-    host: 'minefold.com'
+    host: 'www.minefold.com',
+    protocol: 'https'
   }
 
   config.action_mailer.delivery_method = :smtp
