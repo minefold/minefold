@@ -136,14 +136,15 @@ header + hr {
 
 #flash {
   width: $width;
-  @include border-radius(0 0 $radius $radius);
+  @include border-radius($radius);
   overflow: auto;
 
   .message {
     padding: $line $gutter;
     line-height: 24px;
-    font-size: 12px;
-    font-weight: 600;
+    font-size: 13px;
+    margin-top: $line;
+    border-bottom: 1px solid rgba(black, 0.05);
     
     a.hide {
       float: right;
@@ -155,6 +156,7 @@ header + hr {
       display: block;
       padding: $line (2*$gutter);
       margin: (-$line) (-$gutter);
+      text-align: center;
 
       &:hover, &:focus {
         color: rgba(black, 0.8);
@@ -163,13 +165,13 @@ header + hr {
   }
 
   .notice, .success {
-    color: black;
-    background-color: $green;
+    color: lighten($blue, 10%);
+    background-color: lighten($blue, 65%);
   }
 
   .alert, .error {
-	  color: darken($yellow, 40%);
-    background-color: $yellow;
+	  color: $red;
+    background-color: lighten($yellow, 40%);
   }
 }
 
@@ -266,7 +268,8 @@ header + hr {
 
   background-color: white;
   border: 1px solid rgba(black, 0.1);
-  @include box-shadow(0 1px 2px rgba(black, 0.05));
+  border-bottom-color: rgba(black, 0.15);
+  @include box-shadow(0 1px 2px rgba(black, 0.1));
   @include border-radius($radius);
   overflow: auto;
 

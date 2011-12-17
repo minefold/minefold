@@ -5,6 +5,23 @@
   %meta{property: 'og:image', content: image_path('logo-48.png')}
 
 - masthead do
+  - if not signed_in?
+    #welcome
+      %aside
+        = link_to new_user_path, class: 'btn' do
+          Sign up now!
+          %span (First 10 hrs free)
+    
+      %p
+        %strong= world.creator.username
+        - unless world.whitelisted_players.length.zero?
+          and
+          = pluralize world.whitelisted_players.length, 'friend', 'friends'
+          are
+        - else
+          is
+        playing Minecraft here. You can too, just sign up!
+  
   %nav
     %ol
       %li.activity= link_to 'Activity', world
