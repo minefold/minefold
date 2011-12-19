@@ -5,21 +5,36 @@
 %article
   = form_for current_user, url: account_path, method: :put do |f|
     %section
+      %h3 Server Host
+      %fieldset.inline
+        = current_user.host
+        %p.hint
+          Don't know
+          = link_to 'how to connect', help_page_path(anchor: 'connecting')
+          ?
+  
+    %section
       %h3
         = f.label :username
       %fieldset
-        = f.text_field :username, value: current_user.username
+        = f.text_field :username
         = error_messages_for(f.object, :username)
 
         = render partial: 'users/check_username'
-
-
+  
+    %section
+      %h3
+        = f.label :email
+      %fieldset
+        = f.text_field :email
+        = error_messages_for(f.object, :email)
+    
     %section
       %h3
         = f.label :avatar
       %fieldset
         = image_tag current_user.avatar.head.s48.url
-        %p Change your avatar at #{link_to 'http://minecraft.net/profile', 'http://minecraft.net/profile', target: '_blank'}
+        %p.hint Change your avatar at #{link_to 'http://minecraft.net/profile', 'http://minecraft.net/profile', target: '_blank'}
 
     %section
       %fieldset

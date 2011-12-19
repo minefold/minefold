@@ -9,10 +9,10 @@ $helvetica: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 // Colors
 
-$blue:   #084A94;
-$yellow: #F1D710;
-$red:    #EE132D;
-$green:  #BADA55;
+$blue:   lighten(#0A3F69, 20%);
+$yellow: #F1C440;
+$red:    #DD4B27;
+$green: $yellow;
 
 // Grid
 

@@ -89,8 +89,9 @@ class User
                   :email_or_username,
                   :remember_me
 
-# Credits
 
+# Credits
+  
   # Kicks off the audit trail for any credits the user starts off with
   after_create do
     CreditTrail.log(self, self.credits)
@@ -111,18 +112,10 @@ class User
     false
   end
 
-  def self.paid_for_minecraft?(username)
-    response = RestClient.get "http://www.minecraft.net/haspaid.jsp", params: {user: username}
-    return response == 'true'
-  rescue RestClient::Exception
-    return false
-  end
-
   def buy_time!(stripe_token, pack)
     create_charge!(stripe_token, pack) and increment_hours!(pack.hours)
   end
 
-  # TODO: MUST FIX
   def increment_hours!(n)
     increment_credits! self.class.hours_to_credits(n)
   end
@@ -178,10 +171,21 @@ class User
     end while self.where(referral_code: c).exists?
     c
   end
+  
+  def played?
+    false
+  end
 
 
 # Other
-
+  
+  def self.paid_for_minecraft?(username)
+    response = RestClient.get "http://www.minecraft.net/haspaid.jsp", params: {user: username}
+    return response == 'true'
+  rescue RestClient::Exception
+    return false
+  end
+  
   def worlds
     (created_worlds | whitelisted_worlds).sort_by do |world|
       world.creator.safe_username + world.name

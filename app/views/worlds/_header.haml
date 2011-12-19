@@ -11,7 +11,9 @@
         = link_to new_user_path, class: 'btn' do
           Sign up now!
           %span (First 10 hrs free)
-    
+      
+      %h2 Hey you!
+      
       %p
         %strong= world.creator.username
         - unless world.whitelisted_players.length.zero?
@@ -20,7 +22,25 @@
           are
         - else
           is
-        playing Minecraft here. You can too, just sign up!
+        playing Minecraft here.
+        You join in too, it just takes 30s to sign up.
+  
+  - if signed_in? and not current_user.played?
+    #welcome
+      %h2 Congratulations! Follow these steps to ephiphany:
+      %ol
+        %li
+          - if current_user.referrer
+            Join
+          - else
+            Create
+          a world.
+        %li
+          Invite 3 of your friends
+        
+        %li
+          Play!
+          
   
   %nav
     %ol

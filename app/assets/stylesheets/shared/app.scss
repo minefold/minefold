@@ -1,32 +1,32 @@
-img.avatar {
-
+html {
+  margin-top: 7*$line;
 }
 
 header {
   position: fixed;
   overflow: visible;
-  border-bottom: 1px solid darken(white, 20%);
+  border-bottom: 1px solid darken(white, 15%);
   z-index: 99;
   top: 0; left: 0; right: 0;
 
   min-width: $width;
 
   background-color: white;
+  @include box-shadow(0 0 6px rgba(black, 0.1));
 
   h1 {
     float: left;
-    line-height: 22px;
+    line-height: 18px;
     font-weight: 700;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    font-size: 14px;
+    font-size: 18px;
 
     a {
-      color: #CCC;
+      color: $red;
       text-decoration: none;
 
-      padding: $line $gutter;
-      padding-bottom: $line - 1px;
+      padding: (2*$line) $gutter;
 
       margin-left: -$gutter;
       margin-right: $gutter;
@@ -51,9 +51,9 @@ header {
 
     a {
       display: block;
-      padding: (1.5*$line) $gutter (1.5*$line - 1px);
+      padding: (2*$line) $gutter;
 
-      color: lighten($blue, 10%);
+      color: $blue;
       text-decoration: none;
       line-height: 18px;
       font-size: 12px;
@@ -66,7 +66,6 @@ header {
 
       &:hover {
         color: black;
-        background-color: darken(white, 5%);
       }
     }
 
@@ -76,9 +75,8 @@ header {
     }
 
     .hours {
-      padding: $line $gutter;
-      padding-bottom: $line - 1px;
-      line-height: 24px;
+      padding: (2*$line) $gutter;
+      line-height: 18px;
 
       font-size: 12px;
       font-weight: 600;
@@ -90,13 +88,8 @@ header {
         border-radius: $radius;
       }
 
-      &.active {
-        > a {
-          background-color: darken(white, 5%);
-        }
-        ol {
-          display: block;
-        }
+      &.active ol {
+        display: block;
       }
     }
 
@@ -104,17 +97,20 @@ header {
       display: none;
 
       right: 0;
-      top: (6*$line) - 1px;
+      top: 7*$line;
       width: cols(2) - (2*$gutter);
       position: absolute;
 
       @include border-radius(0 0 $radius $radius);
 
       z-index: 100;
-      background: white;
-      border: 1px solid darken(white, 10%);
+      background-color: white;
+      border: 1px solid darken(white, 15%);
       border-top-color: darken(white, 5%);
       @include box-sizing(border-box);
+
+      @include box-shadow(0 1px 3px rgba(black, 0.1));
+      
 
       li {
         float: none;
@@ -129,14 +125,8 @@ header {
 }
 
 
-header + hr {
-  margin-top: 6*$line;
-}
-
-
 #flash {
   width: $width;
-  @include border-radius($radius);
   overflow: auto;
 
   .message {
@@ -145,6 +135,8 @@ header + hr {
     font-size: 13px;
     margin-top: $line;
     border-bottom: 1px solid rgba(black, 0.05);
+    
+    @include border-radius($radius);
     
     a.hide {
       float: right;
@@ -165,13 +157,14 @@ header + hr {
   }
 
   .notice, .success {
-    color: lighten($blue, 10%);
-    background-color: lighten($blue, 65%);
+    color: black;
+    background-color: lighten($yellow, 35%);
   }
 
   .alert, .error {
-	  color: $red;
-    background-color: lighten($yellow, 40%);
+    font-weight: 600;
+    color: $red;
+    background-color: lighten($yellow, 30%);
   }
 }
 
@@ -188,7 +181,7 @@ header + hr {
     margin-bottom: -1px;
 
     &:hover {
-      background-color: white;
+      background: white;
     }
   }
 }
@@ -205,7 +198,7 @@ header + hr {
   h2 {
     font-size: 18px;
     line-height: 24px;
-    color: lighten(black, 60%);
+    color: rgba(black, 0.6);
   }
 
   a {
@@ -235,7 +228,7 @@ header + hr {
           padding: ($line/2) $gutter;
 
           line-height: 24px;
-          background-color: rgba(white, 0);
+          background-color: rgba(white, 0.6);
           color: $blue;
           text-decoration: none;
 
@@ -245,7 +238,6 @@ header + hr {
 
           &:hover {
             color: black;
-            background-color: darken(white, 5%);
             border-color: darken(white, 10%);
           }
         }
@@ -269,7 +261,7 @@ header + hr {
   background-color: white;
   border: 1px solid rgba(black, 0.1);
   border-bottom-color: rgba(black, 0.15);
-  @include box-shadow(0 1px 2px rgba(black, 0.1));
+  @include box-shadow(0 1px 3px rgba(black, 0.1));
   @include border-radius($radius);
   overflow: auto;
 
@@ -324,7 +316,6 @@ header + hr {
     text-decoration: none;
     &:hover {
       color: black;
-      text-decoration: underline;
     }
   }
 
@@ -340,14 +331,14 @@ header + hr {
   }
 
   .note {
-    background: lighten($yellow, 40%);
-    color: darken($yellow, 30%);
+    background: lighten($yellow, 35%);
+    color: rgba(black, 0.8);
     margin: 0 (-$gutter) (2*$line) (-$gutter);
     padding: $line $gutter;
   }
 
   .btn {
-    @include btn($green, white);
+    @include btn(lighten($blue, 10%), white);
   }
 
 }
@@ -368,9 +359,9 @@ footer {
         color: $blue;
         text-decoration: none;
         margin-right: $gutter;
+        display: block;
         &:hover {
           color: black;
-          text-decoration: underline;
         }
       }
 
@@ -378,7 +369,7 @@ footer {
         float: right;
         a {
           background: url(image-path('twitter.png')) left center no-repeat;
-          padding-left: 12px + ($gutter/2);
+          padding-left: 26px + ($gutter/2);
           margin-right: 0;
         }
       }
@@ -395,7 +386,7 @@ footer {
       color: rgba(black, 0.4);
       text-decoration: none;
       &:hover {
-        text-decoration: underline;
+        color: rgba(black, 0.6);
       }
     }
   }

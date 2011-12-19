@@ -76,14 +76,14 @@ input[type=checkbox] + label, input[type=radio] + label {
 //}
 
 form {
-  .errors {
+/*  .errors {
     p {
       margin: 0 !important;
     }
     ol {
       margin: 0 0 (2*$line) $gutter;
     }
-  }
+  }*/
 
   section {
     margin-bottom: 2*$line;
@@ -110,7 +110,8 @@ form {
     font-size: 12px;
     color: #999;
     line-height: 18px;
-    margin-top: $line;
+    margin-top: 0;
+    margin-bottom: 2*$line;
   }
 
   input[type=text], input[type=password], input[type=email] {
@@ -119,13 +120,13 @@ form {
     @include border-radius($radius);
 
     &:focus {
-      border-color: $green;
-      @include box-shadow(0 0 1px $green);
+      border-color: $yellow;
+      @include box-shadow(0 0 1px $yellow);
     }
   }
 
   input[type=submit] {
-    @include btn(lighten($blue,10%), white);
+    @include btn(lighten($blue, 10%), white);
     padding: $line (2*$gutter);
   }
 
@@ -143,7 +144,7 @@ form {
     }
 
     input {
-      border-color: lighten($blue, 20%);
+      border-color: $red;
     }
   }
 

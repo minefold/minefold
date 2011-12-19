@@ -116,11 +116,8 @@ class World
   
   def record_event!(type, data)
     event = type.new(data)
-    self.events.push(event)
-    
-    event_name = [event.pusher_key, 'created'].join('-')
-    
-    broadcast event_name, event.attributes
+    self.events.push(event) if event.valid?
+    event
   end
   
   def broadcast(event_name, data, socket_id=nil)
@@ -128,11 +125,11 @@ class World
   end
 
   def say(msg)
-    send_cmd "say #{msg}"
+    send_stdin "say #{msg}"
   end
 
   def tell(user, msg)
-    send_cmd "/tell #{user.username} #{msg}"
+    send_stdin "/tell #{user.username} #{msg}"
   end
 
 
@@ -153,23 +150,22 @@ class World
     [creator.safe_username, creator.id, Time.now.strftime('%Y%m%d%H%M%S'), nil].join('-')
   end
 
+
 # Other
+
+  def to_param
+    slug.to_param
+  end
   
   def pusher_key
     "#{collection.name.downcase}-#{id}"
-  end
-  
-  def broadcast(event_name, data, socket_id=nil)
-    pusher_channel.trigger(event_name, data.to_json, socket_id)
   end
 
   def redis_key
     "#{collection.name.downcase}:#{id}"
   end
-
-  def to_param
-    slug.to_param
-  end
+  
+private
 
   def pusher_channel
     Pusher[pusher_key]
@@ -179,9 +175,7 @@ class World
     REDIS.smembers("#{redis_key}:connected_players")
   end
 
-private
-
-  def send_cmd(str)
+  def send_stdin(str)
     world_data = REDIS.hget "worlds:running", id
     if world_data
       instance_id = JSON.parse(world_data)['instance_id']

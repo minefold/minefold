@@ -1,22 +1,24 @@
 #worlds {
-  margin-top: -$line;
-  margin-bottom: -3*$line;
+  margin-top: -2*$line;
+  margin-bottom: -4*$line;
+  
   li {
     overflow: auto;
     padding: $line $gutter;
     border-bottom: 1px solid darken(white, 5%);
     margin: 0 (-$gutter);
-
-    img {
-      float: left;
-      margin-right: $gutter;
+      
+    a {
+      display: block;
+      font-family: $helvetica;
+      line-height: 24px;
+      background: url(image-path('default-world.png')) no-repeat;
+      padding-left: 24px + $gutter;
     }
 
-    .info {
-      float: left;
-      p {
-        margin-bottom: 0;
-      }
+    p {
+      margin-bottom: 0;
+      margin-left: 24px + $gutter;
     }
 
     &:last-child {

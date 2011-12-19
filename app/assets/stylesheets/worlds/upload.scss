@@ -10,8 +10,8 @@
   
   aside {
     #world_upload_path {
+      @include btn(lighten($blue, 10%), white);
       width: 100%;
-	  @include btn($blue, white);
     }
   }
   

@@ -15,7 +15,7 @@
 
   // Sweet rotating animation for the "play here" button
   #play-here button {
-    @include btn($green, white);
+    @include btn($yellow, white);
     width: 100%;
     margin-bottom: 2*$line;
 
@@ -64,22 +64,8 @@ form#share {
 
   input {
     width: cols($ncols - 3) - (2 * $gutter) - 24px - $gutter;
-
-    color: black;
     line-height: 24px;
     padding: ($line - 1px) ($gutter);
-
-    @include box-sizing(border-box);
-
-    border: 1px solid darken(white, 10%);
-    @include border-radius($radius);
-
-    outline: none;
-
-    &:focus {
-      border-color: darken($green, 10%);
-      @include box-shadow(0 0 1px $green);
-    }
   }
 
   .note {

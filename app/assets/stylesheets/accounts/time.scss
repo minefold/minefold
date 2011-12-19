@@ -46,12 +46,12 @@
         }
 
         &:hover {
-          background-color: rgba(black, 0.05);
+          background-color: lighten($blue, 55%);
           text-decoration: none;
         }
 
         &.active {
-          background: darken(white, 5%);
+          background: lighten($blue, 50%);
           color: black;
           h1 {
             color: black;
