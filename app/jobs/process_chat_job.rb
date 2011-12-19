@@ -8,8 +8,10 @@ class ProcessChatJob
   end
 
   def process!(world, user, text)
-    world.record_event! Chat, source: user,
-                              text: text
+    chat = world.record_event! Chat, source: user,
+                                       text: text
+    
+    world.broadcast "#{chat.pusher_key}-created", chat.attributes
   end
   
 end
