@@ -173,7 +173,7 @@ class User
   end
   
   def played?
-    false
+    true
   end
 
 
