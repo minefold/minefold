@@ -12,79 +12,12 @@ input[type=password] {
   margin: 0;
 }
 
-//textarea {
-//  @include box-sizing(border-box);
-//  font: 400 14px/18px $helvetica;
-//  border: 1px solid rgba(black, 0.1);
-//  outline: none;
-//  margin: 0;
-//  padding: $line $gutter;
-//  @include border-radius(0px);
-//
-//  &:hover {
-//    border-color: rgba(black, 0.2);
-//  }
-//
-//  &:focus {
-//    border-color: lighten($blue, 20%);
-////    border-bottom-color: darken($blue, 20%);
-//  }
-//}
-
-input[type=checkbox] + label, input[type=radio] + label {
+input[type=checkbox] + label,
+input[type=radio] + label {
   display: inline;
 }
 
-//button, input[type=submit], a.button {
-//  margin: 0;
-//  border: none;
-//  text-align: center;
-//  padding: $line (4*$gutter);
-//  @include box-sizing(border-box);
-//  font-size: 16px;
-//  background-color: lighten($blue, 50%);
-//
-//  text-shadow: 0 0 0 rgba(black, 0.6);
-//  color: white;
-//  text-decoration: none;
-//  line-height: 18px;
-//  @include border-radius(4px);
-//
-//  background-color: $blue;
-//  font-weight: 600;
-//  font-family: $helvetica;
-//
-//  cursor: pointer;
-//
-//  &:focus {
-//    background-color: lighten($blue, 5%);
-//  }
-//
-//  &:hover {
-//    background-color: lighten($blue, 10%);
-//  }
-//
-//  &:active {
-//    background-color: lighten($blue, 15%);
-//  }
-//
-//  &:disabled {
-//    color: rgba(black, 0.2);
-//    background-color: darken(white, 5%);
-//    cursor: default;
-//  }
-//}
-
 form {
-/*  .errors {
-    p {
-      margin: 0 !important;
-    }
-    ol {
-      margin: 0 0 (2*$line) $gutter;
-    }
-  }*/
-
   section {
     margin-bottom: 2*$line;
 
@@ -134,7 +67,7 @@ form {
     padding: ($line/2) 0;
     margin-bottom: $line;
 
-    color: lighten($blue, 20%);
+    color: $red;
     line-height: 18px;
   }
 
