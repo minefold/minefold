@@ -164,15 +164,15 @@ class World
   def redis_key
     "#{collection.name.downcase}:#{id}"
   end
+
+  def current_player_ids
+    REDIS.smembers("#{redis_key}:connected_players")
+  end
   
 private
 
   def pusher_channel
     Pusher[pusher_key]
-  end
-
-  def current_player_ids
-    REDIS.smembers("#{redis_key}:connected_players")
   end
 
   def send_stdin(str)
