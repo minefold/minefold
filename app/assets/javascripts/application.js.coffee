@@ -7,6 +7,7 @@
 #= require backbone
 #= require jquery.timeago
 #= require jquery.s3upload
+#= require world_map
 #= require_self
 #= require_tree ./models
 #= require_tree ./collections
