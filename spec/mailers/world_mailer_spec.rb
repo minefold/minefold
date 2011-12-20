@@ -30,6 +30,7 @@ describe WorldMailer do
       w = create :world, creator:(online_players.first)
       w.stub(:whitelisted_player_ids) { (online_players + offline_players).map &:id }
       w.stub(:current_player_ids)     { (online_players).map &:id }
+      w.events.create source: online_players.first, text: 'come mine with me!'
       w
     end
     
@@ -44,6 +45,7 @@ describe WorldMailer do
       mail.body.encoded.should include(world.name)
       mail.body.encoded.should include(world.slug)
       mail.body.encoded.should include(to_player.username)
+      mail.body.encoded.should include('come mine with me!')
     end
   end
 

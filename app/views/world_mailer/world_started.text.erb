@@ -5,7 +5,7 @@ Hi <%= @player.username %>,
 <% if @recent_activity.any? %>
 Here's what's been happening in <%= @world.name %> recently:
 <% @recent_activity.each do |item| %>
-  - <%= item.user.username %> said: “<%= item.raw %>” (<%= time_ago_in_words item.created_at %> ago)
+  - <%= item.source.username %> said: “<%= item.text %>” (<%= time_ago_in_words item.created_at %> ago)
 <% end %>
 <% end %>
 
