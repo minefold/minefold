@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe WallItem do
+describe Event do
   it {should be_timestamped_document}
 
   it {should be_embedded_in(:wall)}

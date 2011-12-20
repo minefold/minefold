@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe PlayersController do
+describe Worlds::PlayersController do
   render_views
 
   let(:user)  { create :user }
