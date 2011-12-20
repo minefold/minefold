@@ -21,8 +21,4 @@ class Worlds::EventsController < ApplicationController
     respond_with chat
   end
 
-  def page
-    respond_with world.wall_items.paginate(page: params[:page].to_i)
-  end
-
 end

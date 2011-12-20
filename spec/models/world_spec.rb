@@ -16,7 +16,7 @@ describe World do
 
   it { should reference_and_be_referenced_in_many(:whitelisted_players).of_type(User)}
 
-  it { should embed_many(:wall_items)}
+  it { should reference_many(:events)}
 
 
 # VALIDATIONS

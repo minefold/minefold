@@ -2,8 +2,7 @@ require 'spec_helper'
 
 feature "Static pages" do
   context 'not signed in' do
-    ['/contact',
-     '/help',
+    ['/help',
      '/privacy',
      '/terms',
      '/signup'].each do |url|

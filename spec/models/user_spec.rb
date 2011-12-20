@@ -10,14 +10,10 @@ describe User do
   it { should have_field(:safe_username) }
   it { should have_field(:slug) }
                                 
-  it { should have_field(:plan_id) }
-                                
   it { should have_field(:host) }
        
   it { should have_field(:credits).of_type(Integer) }
   it { should have_field(:minutes_played).of_type(Integer).with_default_value_of(0) }
-  it { should embed_many(:credit_events) }
-  it { should embed_one(:card) }
        
   it { should belong_to(:current_world).of_type(World).as_inverse_of(nil) }
   it { should reference_many(:created_worlds).of_type(World).as_inverse_of(:creator) }
@@ -26,7 +22,7 @@ describe User do
 
 # Validations
 
-  it { should validate_uniqueness_of(:email).case_insensitive }
+  it { should validate_uniqueness_of(:email) }
   it { should validate_uniqueness_of(:username).case_insensitive }
   it { should validate_confirmation_of(:password ) }
   it { should validate_numericality_of(:credits)}
@@ -61,13 +57,13 @@ describe User do
   
     subject { user }
     
-    its(:referral_state) { should == 'signed_up' }
-    
-    context 'after played' do
-      before { user.played! }
-      its (:referral_state) { should == 'played' }
-    end
-
+    # its(:referral_state) { should == 'signed_up' }
+    # 
+    # context 'after played' do
+    #   before { user.played! }
+    #   its (:referral_state) { should == 'played' }
+    # end
+    # 
     # context 'after payed' do
     #   its (:referral_state) { should == 'payed' }
     # end
