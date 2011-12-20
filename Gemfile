@@ -23,6 +23,7 @@ gem 'stripe'
 gem 'sendgrid'
 gem 'twitter'
 gem 'pusher'
+gem 'em-http-request', require: 'em-http'
 
 # Views
 gem 'haml'

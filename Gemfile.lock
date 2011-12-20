@@ -317,6 +317,7 @@ DEPENDENCIES
   database_cleaner
   decent_exposure
   devise
+  em-http-request
   em-mixpanel
   factory_girl_rails
   fog
