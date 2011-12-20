@@ -16,8 +16,6 @@
           'image': {
               'defaultMarker':    '/signpost.png',
               'signMarker':       '/signpost_icon.png',
-              'compass':          '/compass_upper-right.png',
-              'spawnMarker':      'http://google-maps-icons.googlecode.com/files/home.png',
               'queryMarker':      'http://google-maps-icons.googlecode.com/files/regroup.png'
           },
           'mapDivId':             'map',
@@ -39,14 +37,6 @@
                * Zoom control is the zoom slider bar in the upper left.
                */
               'zoom':     true,
-              /**
-               * Spawn control is the "Spawn" button that centers the map on spawn.
-               */
-              'spawn':    true,
-              /**
-               * The compass in the upper right.
-               */
-              'compass':  false,
               /**
                * The mapType control is the slider for selecting different map types.
                */
@@ -471,17 +461,6 @@
                       var item = markerData[j];
                       // a default:
                       var iconURL = '';
-                      if (item.type == 'spawn') { 
-                          // don't filter spawn, always display
-                          var marker = new google.maps.Marker({
-                              'position': overviewer.util.fromWorldToLatLng(item.x,
-                                  item.y, item.z),
-                               'map':     overviewer.map,
-                               'title':   jQuery.trim(item.msg),
-                               'icon':    overviewerConfig.CONST.image.spawnMarker
-                          });
-                          continue;
-                      }
 
                       if (item.type == 'querypos') { 
                           // Set on page load if MC x/y/z coords are given in the
@@ -820,27 +799,6 @@
            * like the compass, current view link, etc.
            */
           'createMapControls': function() {
-              // compass rose, in the top right corner
-              var compassDiv = document.createElement('DIV');
-              compassDiv.style.padding = '5px';
-              var compassImg = document.createElement('IMG');
-              compassImg.src = overviewerConfig.CONST.image.compass;
-              compassDiv.appendChild(compassImg);
-              compassDiv.index = 0;
-              // add it to the map, top right.
-              if (overviewerConfig.map.controls.compass) {
-                  overviewer.map.controls[google.maps.ControlPosition.TOP_RIGHT].push(compassDiv);
-              }
-
-              // Spawn button
-              var homeControlDiv = document.createElement('DIV');
-              var homeControl = new overviewer.classes.HomeControl(homeControlDiv);  
-              $(homeControlDiv).addClass('customControl');
-              homeControlDiv.index = 1;
-              if (overviewerConfig.map.controls.spawn) {
-                  overviewer.map.controls[google.maps.ControlPosition.TOP_RIGHT].push(homeControlDiv);
-              }
-
               // Coords box
               var coordsDiv = document.createElement('DIV');
               coordsDiv.id = 'coordsDiv';
@@ -1212,36 +1170,6 @@
        */
       'classes': {
           /**
-           * This is the button that centers the map on spawn. Not sure why we
-           * need a separate class for this and not some of the other controls.
-           * 
-           * @param documentElement controlDiv
-           */
-          'HomeControl': function(controlDiv) {
-              controlDiv.style.padding = '5px';
-              // Set CSS for the control border
-              var control = document.createElement('DIV');
-              $(control).addClass('top');
-              control.title = 'Click to center the map on the Spawn';
-              controlDiv.appendChild(control);
-
-              // Set CSS for the control interior
-              var controlText = document.createElement('DIV');
-              controlText.innerHTML = 'Spawn';
-              $(controlText).addClass('button');
-              control.appendChild(controlText);
-
-              // Setup the click event listeners: simply set the map to map center
-              // as definned below
-              google.maps.event.addDomListener(control, 'click', function() {
-                      overviewer.map.panTo(overviewer.util.fromWorldToLatLng(
-                          overviewerConfig.map.center[0],
-                          overviewerConfig.map.center[1],
-                          overviewerConfig.map.center[2]));
-                      overviewer.util.updateHash();
-                  });
-          },
-          /**
            * Our custom projection maps Latitude to Y, and Longitude to X as
            * normal, but it maps the range [0.0, 1.0] to [0, tileSize] in both
            * directions so it is easier to position markers, etc. based on their
@@ -1307,18 +1235,14 @@
   };
   
 
-  $.world_map = function(options) {
+  $.fn.world_map = function(options) {
     var config = $.extend({
       path:        '.',
-      fileExt:     'png',
-      tileSize:     2048,
-      defaultZoom:  0,
-      B:            2,
-      T:            16,
-      maxZoom:      9
     }, options);
     
+    overviewerConfig.CONST.mapDivId = $(this).attr('id');
     overviewerConfig.mapTypes[0].path = config.path;
+    
     overviewer.util.initialize();
   }
 

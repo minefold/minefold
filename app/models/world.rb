@@ -140,7 +140,7 @@ class World
   end
   
   def map_assets_url
-    File.join('//s3.amazonaws.com', ENV['MAPS_BUCKET'], id.to_s)
+    File.join ENV['WORLD_MAPS_URL'], id.to_s
   end
 
 
