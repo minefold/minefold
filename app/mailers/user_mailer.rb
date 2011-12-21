@@ -1,7 +1,7 @@
 class UserMailer < ActionMailer::Base
   include Resque::Mailer
 
-  default from: 'team@minefold.com'
+  default from: 'Minefold <team@minefold.com>'
 
   def welcome(user_id)
     @user = User.find user_id
