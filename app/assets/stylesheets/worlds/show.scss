@@ -27,7 +27,7 @@
       -webkit-transform: rotate(90deg);
     }
   }
-
+  
   .social {
     overflow: auto;
     margin-bottom: 4*$line;
@@ -44,6 +44,8 @@
       overflow: hidden;
     }
   }
+  
+  ul.players li.offline a { color: #aaa }
   
   form#add-players {
     input[type=text] {

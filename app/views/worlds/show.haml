@@ -24,8 +24,10 @@
 
   %h2 Friends playing here
   %ul.players
-    - world.players.each do |player|
-      %li= link_to player.username, player
+    - world.current_players.sort_by(&:username).each do |player|
+      %li.online= link_to player.username, player
+    - world.offline_players.sort_by(&:username).each do |player|
+      %li.offline= link_to player.username, player
   
   - if world.opped?(current_user)
     %h2 Add a friend

@@ -106,6 +106,10 @@ class World
   def current_players
     User.find current_player_ids
   end
+  
+  def offline_players
+    User.find(whitelisted_player_ids - current_player_ids)
+  end
 
   def current_players_count
     current_player_ids.size
