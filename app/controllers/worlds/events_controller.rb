@@ -12,7 +12,7 @@ class Worlds::EventsController < ApplicationController
                                      text: params[:text]
     
     if chat.valid?
-      world.broadcast "#{event.pusher_key}-created",
+      world.broadcast "#{chat.pusher_key}-created",
                       chat.attributes,
                       params[:socket_id]
 
