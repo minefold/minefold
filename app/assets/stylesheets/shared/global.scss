@@ -5,7 +5,7 @@
 html {
   font: 400 14px/18px $helvetica;
   min-width: $width;
-  background: white;
+  background: darken(white, 1%) url(image-path('bg.png'));
 }
 
 .accessibility {
