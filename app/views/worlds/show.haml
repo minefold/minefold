@@ -14,7 +14,43 @@
           Play here
         - else
           Ask to play here
+    
+    - if world.opped?(current_user)
+      %button.add-friends(data-controls-modal="add-friends" data-backdrop="true" data-keyboard="true")
+        %span.icon= image_tag 'play.png'
+        Add Friends
+      
+      #add-friends.modal{hidden}
+        .modal-header
+          %a.close(href='#') &times;
+          %h2 Add Friends
+          
+        .modal-body
+          = form_tag add_world_players_path(world), id: 'add-players' do
+            %section
+              = text_field_tag :username, nil, placeholder: 'Username'
+              .hint
+                The button will light up when you type a correct username.
 
+            %section
+              = submit_tag 'Add friend', disabled: true
+                            
+        :javascript
+          $(function(){
+            // $('#add-friends').modal({ keyboard: true });
+            
+            var form = $('form#add-players'),
+                searchPath = #{search_world_players_path(world).to_json};
+            form.find('input[name=username]').keydown(_.debounce(function() {
+              var username = $(this).val();
+              // TODO Fix to disable input when user types bad username
+              $.getJSON(searchPath, {username: username}, function(data, status) {
+                form.find('input[type=submit]').attr('disabled', false);
+              });
+            }, 300));
+          });
+
+  %h2 Share this world
   %p.social
     %a.twitter-share-button{href: 'https://twitter.com/share', data: {text: "Play Minecraft with me in #{world.name} - #{world_url(world)}", url: world_url(world), count: 'horizontal', via: 'minefold'}} Tweet
     %script{type: 'text/javascript', src: '//platform.twitter.com/widgets.js'}
@@ -29,27 +65,6 @@
     - world.offline_players.sort_by(&:username).each do |player|
       %li.offline= link_to player.username, player
   
-  - if world.opped?(current_user)
-    %h2 Add a friend
-    = form_tag add_world_players_path(world), id: 'add-players' do
-      %section
-        = text_field_tag :username, nil, placeholder: 'Username'
-        .hint
-          The button will light up when you type a correct username.
-    
-      %section
-        = submit_tag 'Add friend', disabled: true
-  
-    :javascript
-      var form = $('form#add-players'),
-          searchPath = #{search_world_players_path(world).to_json};
-      form.find('input[name=username]').keydown(_.debounce(function() {
-        var username = $(this).val();
-        // TODO Fix to disable input when user types bad username
-        $.getJSON(searchPath, {username: username}, function(data, status) {
-          form.find('input[type=submit]').attr('disabled', false);
-        });
-      }, 300));
 
 %article
   - if signed_in?
