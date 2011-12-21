@@ -18,7 +18,8 @@ class Worlds::EventsController < ApplicationController
 
       world.say chat.msg
     end
-    respond_with chat
+    
+    respond_with chat, location: world_events_path(world)
   end
 
 end
