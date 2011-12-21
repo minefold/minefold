@@ -11,7 +11,12 @@
       %strong
         = pluralize User::FREE_HOURS, 'hour', 'hours'
       %em FREE
-
+  
+  #screenshots
+    %img.a{src: image_path('screen-a.png'), width: 240, height: 120}
+    %img.b{src: image_path('screen-b.png'), width: 340, height: 144}
+    %img.c{src: image_path('screen-c.png'), width: 240, height: 120}
+  
   #avatars
     - @avatars.each do |username|
       = image_tag File.join("home", "head_s24_#{username}.png"), width: 24, height: 24, alt: username

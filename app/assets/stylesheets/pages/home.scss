@@ -1,9 +1,8 @@
 #pages-home {
-
   #masthead {
     text-align: center;
-    padding-top: 16*$line;
-    padding-bottom: 4*$line;
+    padding-top: 12*$line;
+    padding-bottom: 0;
 
     h1 {
       font-size: 24px;
@@ -20,7 +19,7 @@
       @include btn(lighten($blue, 10%), white);
       width: cols(4) - (4*$gutter);
       margin: 0 auto;
-      margin-bottom: 16*$line;
+      margin-bottom: 12*$line;
 
       text-align: center;
 
@@ -33,27 +32,50 @@
         line-height: 18px;
       }
     }
-  }
+    
+    #screenshots {
+      position: relative;
+      overflow: visible;
+      z-index: -1;
+      height: 144px;
+      img {
+        display: block;
+        float: left;
+        position: relative;
+        @include box-shadow(0 12px 12px rgba(black, 0.5));
+      }
+      .a, .c {
+        top: 4*$line;
+      }
+      .b {
+        margin: 0 (-$pad);
 
-  #avatars {
-    clear: both;
-    overflow: auto;
-    margin: 0 (-$gutter);
-    margin-top: 4*$line;
-
-    img {
-      display: block;
-      float: left;
-      margin: 0 $gutter;
-      @include border-radius($radius);
-
-      margin: ((60px - 24px)/2) (((60px - 24px)/2) + $gutter);
+        z-index: 1;
+        
+      }
     }
+
+    #avatars {
+      position: absolute;
+      z-index: 1;
+      margin: (-0.5*(24px + 2px)) (-$gutter);
+
+      img {
+        display: block;
+        float: left;
+        margin: 0 $gutter;
+/*        @include border-radius($radius);*/
+        border: 2px solid white;
+
+        margin: 0 ((($col + 2*$gutter) - 24px - (2*2px))/2);
+      }
+    }
+    
   }
 
   #features {
     overflow: auto;
-    margin: (4*$line) (4*$gutter);
+    margin: (4*$gutter) (4*$gutter);
 
     strong {
       color: fade($yellow, 80%);
