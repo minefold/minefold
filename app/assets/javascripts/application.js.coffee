@@ -7,11 +7,14 @@
 #= require backbone
 #= require jquery.timeago
 #= require jquery.s3upload
+#= require bootstrap-modal
+
 #= require world_map
 #= require_self
 #= require_tree ./models
 #= require_tree ./collections
 #= require_tree ./views
+
 
 window.MF = {}
 
