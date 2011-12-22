@@ -55,6 +55,7 @@ gem 'newrelic_rpm'
 gem 'em-mixpanel', require: 'em/mixpanel'
 
 group :development do
+  gem 'letter_opener'
   gem 'heroku'
   gem 'foreman'
 end

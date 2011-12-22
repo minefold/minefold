@@ -23,9 +23,9 @@ describe WorldMailer do
   describe "world_started" do
     let(:online_players)  { [create(:user), create(:user)] }
     let(:offline_players) { [create(:user), create(:user)] }
-    
+  
     let(:to_player) { offline_players.first }
-    
+  
     let(:world) do 
       w = create :world, creator:(online_players.first)
       w.stub(:whitelisted_player_ids) { (online_players + offline_players).map &:id }
@@ -33,9 +33,9 @@ describe WorldMailer do
       w.events.create source: online_players.first, text: 'come mine with me!'
       w
     end
+  
+    let(:mail) { WorldMailer.world_started world.id, to_player.id }
     
-    let(:mail)      { WorldMailer.world_started world.id, to_player.id }
-
     it "renders the headers" do
       mail.subject.should eq("Your friends are playing on Minefold in #{world.name}")
       mail.to.should eq([to_player.email])
@@ -48,5 +48,6 @@ describe WorldMailer do
       mail.body.encoded.should include('come mine with me!')
     end
   end
-
+  
+  
 end

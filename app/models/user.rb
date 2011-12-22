@@ -3,7 +3,7 @@ class User
   include Mongoid::Timestamps
   include Mongoid::Slug
   include Mongoid::Paranoia
-
+  
   BILLING_PERIOD = 1.minute
   FREE_HOURS  = 10
 
@@ -175,7 +175,10 @@ class User
   def played?
     true
   end
+  
+# Mail throttling
 
+  field :last_world_started_mail_sent_at
 
 # Other
   

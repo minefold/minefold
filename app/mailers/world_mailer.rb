@@ -2,7 +2,7 @@ class WorldMailer < ActionMailer::Base
   include Resque::Mailer
 
   default from: 'Minefold <team@minefold.com>'
-
+  
   def play_request(world_id, player_id)
     @world    = World.find(world_id)
     @creator  = @world.creator
@@ -23,12 +23,12 @@ class WorldMailer < ActionMailer::Base
   end
   
   def world_started world_id, player_id
-    @world  = World.find world_id
     @player = User.find player_id
-    
+    @world  = World.find world_id
+  
     @online_players  = @world.current_players
     @recent_activity = @world.events.limit(5)
-    
+  
     mail     to: @player.email,
         subject: "Your friends are playing on Minefold in #{@world.name}"
   end
