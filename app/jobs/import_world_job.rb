@@ -30,6 +30,7 @@ class ImportWorldJob
       puts "Job failed. #{error}"
       pusher.trigger 'error', error
     else
+      Resque.push 'worlds_to_map', class: 'MapWorld', args: [world.id]
       puts "Work complete."
 
       world = world_upload.world
