@@ -90,7 +90,7 @@
     
     channel = pusher.subscribe(#{world.pusher_key.to_json});
     
-    channel.bind('chat-create', function(chat) {
+    channel.bind('chat-created', function(chat) {
       var sameChat = events.find(function(e){
         return e.id == chat.id || (!e.id && e.get('text') == chat.text);
       })
