@@ -22,7 +22,7 @@ class MF.AddFriendView extends Backbone.View
     $(@el).removeClass('expanded')
   
   validate: =>
-    return @form.find('input[name=id]').val().length > 0
+    @form.hasClass('valid') and @form.find('input[name=id]').val().length > 0
   
   search: (e) =>
     # Collapse when esc is pressed
