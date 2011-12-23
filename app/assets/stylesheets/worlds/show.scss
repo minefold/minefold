@@ -42,13 +42,12 @@
 
     .twitter-share-button, .facebook-like-button {
       display: block;
-      float: left;
-      width: 50%;
+      width: 100%;
       height: 24px;
+      margin-bottom: $line;
     }
 
     .facebook-like-button {
-      height: 24px;
       overflow: hidden;
     }
   }
