@@ -1,0 +1,34 @@
+- title "New photoset" do
+  = link_to world_photo_sets_path(world) do
+    &larr; Back to #{world.name} photos
+    
+  %h1 New photoset
+
+
+%article
+  = form_for @photo_set, url: world_photo_sets_path(world), method: :post, html: {multipart: true} do |f|
+    %section
+      %h3 Title
+      %fieldset
+        = f.text_field :title
+    
+    %section
+      %h3 Photos
+      %fieldset
+        Your Minecraft screenshots are located at
+        %pre
+          %code
+            - case os
+            - when :windows
+              \%appdata%\.minecraft\screenshots
+            - when :mac
+              \~/Library/Application Support/minecraft/screenshots
+            - when :linux
+              \~/.minecraft/screenshots
+      
+        = file_field_tag 'photo_set[photos][][file]'
+            
+    
+    %section
+      %fieldset= f.submit
+  

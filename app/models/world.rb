@@ -34,6 +34,8 @@ class World
 
   has_many :events, as: :target,
                     order: [:created_at, :desc]
+                    
+  embeds_many :photo_sets
 
 
 # Validations

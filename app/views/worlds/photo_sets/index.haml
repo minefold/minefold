@@ -1,0 +1,17 @@
+- title "#{world.name} photos" do
+  %h1= world.name
+
+= render partial: 'worlds/header'
+
+%article
+  %ol#photo-sets
+    %li.new
+      = link_to new_world_photo_set_path(world) do
+      
+        .title New Photoset
+      
+    - world.photo_sets.each do |photo_set|
+      %li
+        = image_tag photo_set.photos.first.file.url
+        .title= photo_set.title
+  

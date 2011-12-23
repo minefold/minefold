@@ -177,6 +177,7 @@ class User
   end
   
 # Mail throttling
+  # TODO Move to the top
 
   field :last_world_started_mail_sent_at
 

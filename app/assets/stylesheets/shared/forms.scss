@@ -20,6 +20,7 @@ input[type=radio] + label {
 form {
   section {
     margin-bottom: 2*$line;
+    clear: both;
 
     h3 {
       float: left;
