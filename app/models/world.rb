@@ -102,13 +102,17 @@ class World
   def players
     [creator] + whitelisted_players
   end
+  
+  def player_ids
+    [creator.id] + whitelisted_player_ids
+  end
 
   def current_players
     User.find current_player_ids
   end
   
   def offline_players
-    User.find(whitelisted_player_ids - current_player_ids)
+    User.find(player_ids - current_player_ids)
   end
 
   def current_players_count
