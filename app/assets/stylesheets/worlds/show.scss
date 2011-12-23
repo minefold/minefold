@@ -32,20 +32,80 @@
     .icon.ask {
       background-image: url(image-path('qmark.png'));
     }
-    
-/*    &:disabled, &:disabled .icon {
-      background-color: darken($yellow, 20%);
-    }*/
   }
   
-  #add-friends {
+  #add-friend {
+    .icon, .avatar {
+      background-image: url(image-path('plus.png'));
+    }
+    
     button {
       @include btn($blue, white);
       width: 100%;
       margin-bottom: 2*$line;
+    }
+    
+    form {
+      display: none;
+      margin-bottom: 4*$line;
       
-      .icon {
-        background-image: url(image-path('plus.png'));
+      section.search {
+        overflow: auto;
+        background-color: darken(white, 10%);
+        @include border-radius($radius);
+        
+        .avatar {
+          background-repeat: no-repeat;
+          background-position: center;
+          width: 18px;
+          height: 24px;
+          padding: $line $gutter;
+          float: left;
+          img {
+            display: block;
+            @include border-radius($radius);
+            // TODO Hack
+            margin-left: -3px;
+          }
+        }
+      
+        input {
+          height: 24px;
+          width: 170px;
+          font-size: 14px;
+          margin: $line 0;
+        }
+      }
+      
+      section.hint {
+        font-size: 11px;
+        margin: 0;
+        margin-left: 18px + 2*$gutter;
+        em {
+          font-style: normal;
+        }
+        p {
+          margin-bottom: 0;
+        }
+      }
+      
+      &.valid {
+        section.search {
+          background-color: darken($blue, 10%);
+        }
+        .hint em {
+          font-style: italic;
+          color: black;
+        }
+      }
+    }
+    
+    &.expanded {
+      button {
+        display: none;
+      }
+      form {
+        display: block;
       }
     }
   }

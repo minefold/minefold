@@ -7,7 +7,6 @@
 #= require backbone
 #= require jquery.timeago
 #= require jquery.s3upload
-#= require bootstrap-modal
 
 #= require world_map
 #= require_self

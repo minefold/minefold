@@ -206,8 +206,9 @@ class User
   # Security. When searching for potential players in a world the results were returning emails and credit cards of users.
   def as_json(options={})
     {
+      id: id,
       username: safe_username,
-      avatar: avatar.head.as_json      
+      avatar: avatar.head.as_json
     }
   end
 

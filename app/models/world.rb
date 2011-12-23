@@ -89,6 +89,12 @@ class World
       .not_in(_id: players.map {|p| p.id})
       .first
   end
+  
+  def find_potential_player(id)
+    User
+      .not_in(_id: players.map {|p| p.id})
+      .find(id)
+  end
 
   def whitelisted?(user)
     players.include? user

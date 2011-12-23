@@ -28,7 +28,7 @@ class Worlds::PlayersController < ApplicationController
   end
 
   def add
-    @player = world.search_for_potential_player(params[:username])
+    @player = world.find_potential_player(params[:id])
     
     world.whitelisted_players << @player
     world.save
