@@ -5,20 +5,32 @@
 %aside
   - if signed_in?
     = form_for [:play, world], method: 'put', html: {id: 'play-here'} do
-      %button{disabled: (current_user.current_world == world)}
-        %span.icon= image_tag 'play.png'
-        - case
-        - when current_user.current_world == world
+      - case
+      - when current_user.current_world == world    
+        %button{disabled: true}
+          %span.icon.current
           Playing here
-        - when world.players.include?(current_user)
+      - when world.players.include?(current_user)
+        %button
+          %span.icon.play
           Play here
-        - else
+      - else
+        %button
+          %span.icon.ask
           Ask to play here
+      
+      /
+        -# when world.user_waiting?(current_user)
+        %button
+        %span.icon.waiting
+        Request sent
+      
     
     - if world.opped?(current_user)
-      %button.add-friends(data-controls-modal="add-friends" data-backdrop="true" data-keyboard="true")
-        %span.icon= image_tag 'play.png'
-        Add Friends
+      #add-friends
+        %button(data-controls-modal="add-friends" data-backdrop="true" data-keyboard="true")
+          %span.icon
+          Add friends
       
       #add-friends.modal{hidden}
         .modal-header

@@ -21,19 +21,33 @@
     width: 100%;
     margin-bottom: 2*$line;
 
-    .icon img {
-      @include transition(transform, 0.3s, ease-in-out);
+    .icon.play {
+      background-image: url(image-path('play.png'));
     }
-
-    &:hover .icon img {
-      -webkit-transform: rotate(90deg);
+    
+    .icon.current {
+      background-image: url(image-path('tick.png'));
     }
+    
+    .icon.ask {
+      background-image: url(image-path('qmark.png'));
+    }
+    
+/*    &:disabled, &:disabled .icon {
+      background-color: darken($yellow, 20%);
+    }*/
   }
   
-  .add-friends {
-    @include btn($blue, white);
-    width: 100%;
-    margin-bottom: 2*$line;
+  #add-friends {
+    button {
+      @include btn($blue, white);
+      width: 100%;
+      margin-bottom: 2*$line;
+      
+      .icon {
+        background-image: url(image-path('plus.png'));
+      }
+    }
   }
 
   .social {

@@ -25,12 +25,11 @@
     margin: (-$line) $gutter (-$line) (-$gutter);
 
     @include border-radius($radius 0 0 $radius);
-
-    img {
-      display: block;
-      margin: ($line/2) 0;
-      width: 3*$line; height: 3*$line;
-    }
+    
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 18px;
+    height: 24px;
   }
 
   &:hover, &:focus {
@@ -48,15 +47,17 @@
   
   &:hover, &:focus, &:active {
     .icon {
-      background: transparent;
+      background-color: transparent;
     }
   }
 
   &:disabled, &.disabled {
     background-color: darken(white, 5%);
-    color: darken(white, 15%);
+    color: rgba(black, 0.1);
+    cursor: default;
     .icon {
       background-color: darken(white, 10%);
+      cursor: default;
     }
   }
 
