@@ -54,7 +54,12 @@
   &:disabled, &.disabled {
     background-color: darken(white, 5%);
     color: rgba(black, 0.1);
+    
+    @include box-shadow(none);
+    text-shadow: none;
+    
     cursor: default;
+    
     .icon {
       background-color: darken(white, 10%);
       cursor: default;
