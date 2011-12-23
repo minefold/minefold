@@ -104,7 +104,7 @@ class World
   end
   
   def player_ids
-    [creator.id] + whitelisted_player_ids
+    ([creator.id] + whitelisted_player_ids).uniq
   end
 
   def current_players
