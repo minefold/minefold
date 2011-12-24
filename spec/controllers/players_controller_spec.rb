@@ -25,7 +25,7 @@ describe Worlds::PlayersController do
 
     describe '#add' do
       it "should redirect to world" do
-        post :add, world_id: world.slug, username: applicant.username
+        post :add, world_id: world.slug, id: applicant.id
         response.should redirect_to(world_path(world))
       end
     end
