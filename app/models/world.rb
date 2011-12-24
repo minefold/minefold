@@ -91,9 +91,9 @@ class World
   end
   
   def find_potential_player(id)
-    User
-      .not_in(_id: players.map {|p| p.id})
-      .find(id)
+    # makes sure id is not a current player
+    raise Mongoid::Errors::DocumentNotFound if player_ids.map(&:to_s).include? id
+    User.find(id)
   end
 
   def whitelisted?(user)
