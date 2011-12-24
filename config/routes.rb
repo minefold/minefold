@@ -65,11 +65,8 @@ Minefold::Application.routes.draw do
         put :approve, :on => :collection
       end
       
-      resources :photo_sets
       resources :photos
     end
-  
-
     
   end
   

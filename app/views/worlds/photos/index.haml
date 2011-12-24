@@ -1,0 +1,31 @@
+- title "#{world.name} photos" do
+  %h1= world.name
+
+= render partial: 'worlds/header'
+
+- if world.opped?(current_user)
+  %aside
+    %h2 Upload a photo
+    = form_for [world, Photo.new], html: {multipart: true} do |f|
+      %section
+        = f.file_field :file
+    
+      %section
+        = f.label :title
+        = f.text_field :title
+    
+      %section
+        = f.label :caption
+        = f.text_area :caption, rows: 3
+    
+      %section.submit
+        = f.submit 'Upload'
+
+%article
+  #photos
+    - world.photos.each do |photo|
+      %figure
+        = link_to [world, photo] do
+          = image_tag photo.file_url(:thumb), width: 120, height: 120
+          %figcaption= photo.title
+  

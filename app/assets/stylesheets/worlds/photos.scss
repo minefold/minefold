@@ -1,0 +1,76 @@
+#worlds-photos-index #masthead .photos,
+#worlds-photos-show #masthead .photos {
+  @include active-masthead-menu-item;
+}
+
+#worlds-photos-show #page aside {
+  overflow: auto;
+  
+  .previous {
+    float: left;
+  }
+  .next {
+    float: right;
+  }
+}
+
+#photos {
+  margin: 0 (-$gutter);
+  overflow: auto;
+  
+  figure {
+    float: left;
+    margin: 0 $gutter;
+    margin-bottom: 2*$line;
+    
+    a {
+      border: 1px solid darken(white, 5%);
+      padding: ($line - 1px) ($gutter - 1px);
+    
+      text-align: center;
+      display: block;
+    
+      @include border-radius($radius);
+      @include box-sizing(border-box);
+    
+      
+      img {
+        display: block;
+        float: none;
+      }
+      
+      figcaption {
+        display: block;
+        font-size: 12px;
+      }
+      
+      &:hover {
+        border-color: darken(white, 20%);
+      }
+      
+    }
+  }
+
+}
+
+form#new_photo {
+  width: cols(3) - (2*$gutter);
+  
+  input, textarea {
+    width: 100%;
+  }
+  
+}
+
+#photo {
+  width: 800px;
+  margin: 0 (-$gutter);
+  padding-top: $line;
+  padding-bottom: $line - 1px;
+  border-bottom: 1px solid darken(white, 10%);
+  
+  img {
+    display: block;
+    margin: 0 auto;
+  }
+}

@@ -46,7 +46,7 @@
     %ol
       %li.activity= link_to 'Activity', world
       %li.map= link_to 'Map', map_world_path(world)
-      %li.photos= link_to 'Photos', world_photo_sets_path(world)
+      %li.photos= link_to 'Photos', world_photos_path(world)
 
       - if world.opped?(current_user)
         %li.settings= link_to 'Settings', edit_world_path(world)

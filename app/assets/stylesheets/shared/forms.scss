@@ -48,7 +48,8 @@ form {
     margin-bottom: 2*$line;
   }
 
-  input[type=text], input[type=password], input[type=email] {
+  input[type=text], input[type=password], input[type=email], textarea {
+    margin: 0;
     border: 1px solid darken(white, 10%);
     outline: none;
     @include border-radius($radius);
@@ -57,6 +58,14 @@ form {
       border-color: $yellow;
       @include box-shadow(0 0 1px $yellow);
     }
+  }
+  
+  textarea {
+    font-family: $helvetica;
+    font-size: 12px;
+    line-height: 18px;
+    padding: ($line/2) ($gutter/2);
+    @include box-sizing(border-box);
   }
 
   input[type=submit] {

@@ -1,0 +1,34 @@
+- title "#{world.name} photos" do
+  %h1= world.name
+
+= render partial: 'worlds/header'
+
+%figure#photo
+  .lightbox
+    = image_tag photo.file_url(:large), alt: photo.title
+
+
+%article
+  - if photo.title?
+    %h2= photo.title
+  - if photo.caption?
+    %p= photo.caption
+
+%aside
+  - if photo.previous?
+    = link_to '← Previous', [world, photo.previous], class: 'previous'
+  
+  - if photo.next?
+    = link_to 'Next →', [world, photo.next], class: 'next'
+
+:javascript
+  var previous = $('aside a.previous'),
+      next = $('aside a.next');
+  
+  $(window).keydown(function(e) {
+    if(e.keyCode == 37 && previous.length > 0) {
+      window.location = previous.attr('href');
+    } else if(e.keyCode == 39 && next.length > 0) {
+      window.location = next.attr('href');
+    }
+  });
