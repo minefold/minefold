@@ -14,8 +14,6 @@ describe World do
 
   it { should belong_to(:creator).of_type(User).as_inverse_of(:created_worlds)}
 
-  it { should reference_and_be_referenced_in_many(:whitelisted_players).of_type(User)}
-
   it { should reference_many(:events)}
 
 
@@ -23,6 +21,7 @@ describe World do
 
   it { should validate_presence_of(:name)}
 
+  it { should embed_many(:memberships) }
 
 
 end

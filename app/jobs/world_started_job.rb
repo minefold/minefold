@@ -4,9 +4,9 @@ class WorldStartedJob
   def self.perform world_id
     world   = World.find(world_id)
     online_players  = world.current_players
-    offline_players = User.find(world.whitelisted_player_ids - world.current_player_ids)
+    offline_players = world.offline_players
     
-    puts "world started:#{world.name}  whitelisted:#{world.whitelisted_player_ids.size}  online: #{online_players.size}  offline: #{offline_players.size}"
+    puts "world started:#{world.name}  whitelisted:#{world.player_ids.size}  online: #{online_players.size}  offline: #{offline_players.size}"
     
     if online_players.any?
       offline_players.each do |offline_player|
