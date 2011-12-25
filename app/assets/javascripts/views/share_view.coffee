@@ -1,5 +1,5 @@
 #= require collections/events_collection
-#= require models/chat
+#= require models/chat_event
 
 class MF.ShareView extends Backbone.View
   collection: MF.EventsCollection
@@ -16,7 +16,7 @@ class MF.ShareView extends Backbone.View
     if isEnterKey(e) and input.val() isnt ''
       e.preventDefault()
 
-      chat = new MF.Chat(text: input.val())
+      chat = new MF.ChatEvent(text: input.val())
       @collection.add(chat)
       chat.save()
 

@@ -1,14 +1,19 @@
 class PlayerConnectedJob < TweetJob
   @queue = :high
 
-  def self.perform username, connected_at
-    # if user = User.first(conditions: { username:username })
-    #   user.played!
-    # end
-    
-    # %W(whatupdave chrislloyd).each do |dude|
-    #   tweet dude, "#{username} just connected"
-    # end
+  # TODO Pass in user_id rather than username
+  # TODO Pass in world too
+  def self.perform(username, connected_at)
+    user = User.by_username(username).first
+    world = user.current_world
+    new.process!(user, world, conditions)
+  end
+  
+  def process!(user, world, connected_at)
+    world.record_event! Connection, source: user,
+                                created_at: connected_at
+
+    # TODO Broadcast pusher event
   end
 
 end

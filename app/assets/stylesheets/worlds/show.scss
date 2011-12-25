@@ -136,6 +136,12 @@
 }
 
 form#share {
+  margin: 0 (-$gutter);
+  padding: 0 $gutter;
+  border-bottom: 1px solid darken(white, 10%);
+  
+  margin-bottom: 2*$line;
+  
   .avatar {
     float: left;
     margin-right: $gutter;
@@ -152,11 +158,14 @@ form#share {
   }
 
   .note {
-    font-size: 12px;
     padding: 0;
+    
+    font-size: 12px;
+    padding-bottom: 0;
     background: transparent;
     color: lighten(black, 80%);
-    margin-left: 36px + $gutter;
+    margin-left: 24px + $gutter;
+    margin-bottom: $line;
     clear: both;
   }
 }
@@ -166,82 +175,67 @@ form#share {
   .event {
     clear: both;
     overflow: auto;
-    border-bottom: 1px solid darken(white, 5%);
 
     padding: 0 $gutter;
     margin: 0 (-$gutter);
 
-    padding-bottom: $line;
     margin-bottom: $line;
-  }
-
-  .avatar {
-    float: left;
-    margin-right: (36px - 24px) + $gutter;
-    img {
-      @include border-radius($radius);
-      display: block;
+    
+    
+    .body {
+      float: left;
     }
-  }
-
-  .body {
-    width: cols(7) - (2*$gutter) - 48px;
-    float: left;
-    color: lighten(black, 20%);
-
+    
     .meta {
+      float: right;
       font-size: 11px;
       line-height: 18px;
-      color: darken(white, 20%);
+      color: rgba(black, 0.2);
+    }
+    
+  
+  
+    &.chat {
+      .avatar {
+        float: left;
+        margin-right: $gutter;
+        img {
+          @include border-radius($radius);
+          display: block;
+        }
+      }
 
-      .timeago {
-        float: right;
+      .body {
+        width: cols(7) - (2*$gutter) - 24px - $gutter;
+        border: 1px solid darken(white, 5%);
+        padding: $line $gutter;
+        color: black;
+
+        @include box-sizing(border-box);
+
+        p {
+          margin-bottom: 0;
+        }
       }
     }
-
-    p {
-      margin-bottom: 0;
+    
+    &.connection, &.disconnection {
+      line-height: 18px;
+      color: darken(white, 40%);
+      
+      .body {
+        margin-left: 24px + 2*$gutter;
+        font-size: 12px;
+        
+        p {
+          margin-bottom: 0;
+        }
+      }
+      .meta {
+        float: right;
+        margin-right: $gutter;
+      }
     }
   }
 }
 
-
-// temp modal stuff
-.modal-header {
-  border-bottom: 1px solid #eee;
-  padding: $gutter 2*$gutter;
-  
-  .close {
-    float: right;
-    color: #000000;
-    font-size: 20px;
-    font-weight: bold;
-    line-height: 13.5px;
-    text-shadow: 0 1px 0 #ffffff;
-    filter: alpha(opacity=25);
-    -khtml-opacity: 0.25;
-    -moz-opacity: 0.25;
-    opacity: 0.25;
-    text-decoration:none;
-  }
-  .close:hover {
-    color: #000000;
-    text-decoration: none;
-    filter: alpha(opacity=40);
-    -khtml-opacity: 0.4;
-    -moz-opacity: 0.4;
-    opacity: 0.4;
-  }
-  h2 {
-    padding-top: 0;
-
-    font-size: 16px;
-    line-height: 18px;
-    color: lighten($blue, 10%);
-    
-  } 
-}
-
-.modal-body {
-  padding: $gutter 2*$gutter;
-}

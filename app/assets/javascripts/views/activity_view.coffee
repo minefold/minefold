@@ -1,19 +1,24 @@
 #= require collections/events_collection
 #= require views/event_view
+
 #= require views/chat_view
+#= require views/connection_view
+#= require views/disconnection_view
 
 class MF.EventsView extends Backbone.View
   id: 'events'
 
   collection: MF.EventsCollection
 
+  klassBindings =
+    chat:       MF.ChatView
+    connection: MF.ConnectionView
+    disconnection: MF.DisconnectionView
+
   initialize: (options) ->
     @subViews = @collection.map (model) =>
       type = model.get('type')
-
-      klass = switch type
-              when 'chat' then MF.ChatView
-              else MF.EventView
+      klass = klassBindings[type] || MF.EventView
 
       new klass(model: model)
 

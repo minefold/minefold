@@ -1,19 +1,14 @@
 #= require jquery.timeago
 #= require views/event_view
 
-class MF.ChatView extends MF.EventView
+class MF.ConnectionView extends MF.EventView
   template: _.template """
-    <div class="avatar">
-      <% if(source) { %>
-        <img src="<%= source.avatar %>" width="24" height="24" />
-      <% } %>
+    <div class="meta">
+      <time class="timeago" datetime="<%= created_at %>"></time>
     </div>
+    
     <div class="body">
-      <div class="meta">
-        <time class="timeago" datetime="<%= created_at %>"></time>
-      </div>
-
-      <p><%= text %></p>
+      <p><%= source.username %> joined the game</p>
     </div>
   """
 
@@ -25,8 +20,6 @@ class MF.ChatView extends MF.EventView
 
     # TODO: Refactor
     #       This is totally hacky.
-    attrs.source or=
-      avatar: $('form#share .avatar img').attr('src')
     attrs.created_at or= iso8601DateString(new Date())
 
     attrs.text = _.escape(attrs.text)
