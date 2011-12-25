@@ -224,11 +224,11 @@ protected
     where(username: 'whatupdave').cache.first
   end
 
-private
-
   def self.sanitize_username(str)
     str.downcase.strip
   end
+
+  private
 
   def self.sanitize_email(str)
     str.downcase.strip

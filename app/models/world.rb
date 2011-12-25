@@ -21,11 +21,6 @@ class World
 
   belongs_to :creator, inverse_of: :created_worlds, class_name: 'User'
 
-  has_and_belongs_to_many :ops,
-                          inverse_of: :opped_worlds,
-                          class_name: 'User'
-
-
   embeds_many :play_requests
 
 
@@ -107,8 +102,12 @@ class World
     memberships << Membership.new(user: user, role: 'player')
   end
   
+  def ops
+    [creator] + memberships.where(role: 'op').map(&:user)
+  end
+  
   def opped?(user)
-    ([creator] + ops).include? user
+    ops.include? user
   end
 
   def players
