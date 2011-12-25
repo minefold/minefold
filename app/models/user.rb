@@ -38,11 +38,7 @@ class User
 
   belongs_to :current_world, class_name: 'World', inverse_of: nil
   has_many :created_worlds, class_name: 'World', inverse_of: :creator
-
-  has_and_belongs_to_many :whitelisted_worlds,
-                          inverse_of: :whitelisted_players,
-                          class_name: 'World'
-
+  
   has_and_belongs_to_many :opped_worlds,
                           inverse_of: :ops,
                           class_name: 'World'
@@ -191,7 +187,7 @@ class User
   end
   
   def worlds
-    (created_worlds | whitelisted_worlds).sort_by do |world|
+    World.where('memberships.user_id' => id).sort_by do |world|
       world.creator.safe_username + world.name
     end
   end

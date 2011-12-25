@@ -18,8 +18,6 @@ describe User do
   it { should belong_to(:current_world).of_type(World).as_inverse_of(nil) }
   it { should reference_many(:created_worlds).of_type(World).as_inverse_of(:creator) }
        
-  it { should reference_and_be_referenced_in_many(:whitelisted_worlds).of_type(World) }
-
 # Validations
 
   it { should validate_uniqueness_of(:email) }

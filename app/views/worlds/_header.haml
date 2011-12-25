@@ -16,9 +16,9 @@
       
       %p
         %strong= world.creator.username
-        - unless world.whitelisted_players.length.zero?
+        - unless world.players.length.zero?
           and
-          = pluralize world.whitelisted_players.length, 'friend', 'friends'
+          = pluralize world.players.length, 'friend', 'friends'
           are
         - else
           is

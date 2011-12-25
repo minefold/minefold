@@ -20,9 +20,6 @@ class World
   field :last_mapped_at, type: DateTime
 
   belongs_to :creator, inverse_of: :created_worlds, class_name: 'User'
-  has_and_belongs_to_many :whitelisted_players,
-                          inverse_of: :whitelisted_worlds,
-                          class_name: 'User'
 
   has_and_belongs_to_many :ops,
                           inverse_of: :opped_worlds,
@@ -36,6 +33,8 @@ class World
                     order: [:created_at, :desc]
                     
   embeds_many :photos, order: [:created_at, :desc]
+  
+  embeds_many :memberships
 
 
 # Validations
@@ -102,17 +101,22 @@ class World
     players.include? user
   end
 
-  # TODO: Refactor
+  # Memberships TODO: Refactor
+  
+  def add_player user
+    memberships << Membership.new(user: user, role: 'player')
+  end
+  
   def opped?(user)
     ([creator] + ops).include? user
   end
 
   def players
-    [creator] + whitelisted_players
+    [creator] + memberships.map(&:user)
   end
   
   def player_ids
-    ([creator.id] + whitelisted_player_ids).uniq
+    ([creator.id] + memberships.map(&:user_id)).uniq
   end
 
   def current_players
@@ -126,8 +130,7 @@ class World
   def current_players_count
     current_player_ids.size
   end
-
-
+  
 # Communication
   
   def record_event!(type, data)
