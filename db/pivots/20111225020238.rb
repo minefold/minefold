@@ -6,6 +6,7 @@ end
 
 world_players.each do |world_id, player_ids|
   w = World.find(world_id)
+  w.memberships.destroy_all
   player_ids.each do |player_id|
     w.memberships << Membership.new(user_id: player_id, role: 'player')
   end
