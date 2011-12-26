@@ -23,7 +23,6 @@ gem 'stripe'
 gem 'sendgrid'
 gem 'twitter'
 gem 'pusher'
-gem 'em-http-request', require: 'em-http'
 
 # Views
 gem 'haml'
@@ -51,7 +50,7 @@ gem 'airbrake'
 gem 'statsd-instrument'
 gem 'rpm_contrib'
 gem 'newrelic_rpm'
-gem 'em-mixpanel', require: 'em/mixpanel'
+gem 'em-mixpanel'
 
 group :development do
   gem 'letter_opener'
