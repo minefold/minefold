@@ -1,6 +1,6 @@
 module MixpanelHelper
   
-  def track(name, properties={g})
+  def track(name, properties={})
     if Rails.env.production?
       code = "mpq.track(#{name.to_json}, #{properties.to_json});".html_safe
       head {haml_tag('script', code)}
