@@ -127,6 +127,7 @@
   }
   
   ul.players li.offline a { color: #aaa }
+  ul.players li.op a { font-weight: bold }
   
   form#add-players {
     input[type=text] {

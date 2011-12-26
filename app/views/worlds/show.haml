@@ -49,10 +49,9 @@
 
   %h2 Friends playing here
   %ul.players
-    - world.current_players.sort_by(&:username).each do |player|
-      %li.online= link_to player.username, player
-    - world.offline_players.sort_by(&:username).each do |player|
-      %li.offline= link_to player.username, player
+    - sorted_memberships(world).each do |membership|
+      - user = membership.user
+      %li{ class: [world.current_players.include?(user) ? :online : :offline, membership.role == 'op' && :op]}= link_to user.username, user
   
   %p.social
     %a.twitter-share-button{href: 'https://twitter.com/share', data: {text: "Play Minecraft with me in #{world.name} - #{world_url(world)}", url: world_url(world), count: 'horizontal', via: 'minefold'}} Tweet
