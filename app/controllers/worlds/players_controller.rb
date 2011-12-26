@@ -30,7 +30,8 @@ class Worlds::PlayersController < ApplicationController
     world.save
 
     WorldMailer.player_added(world.id, @player.id).deliver
-
+    track 'player added'
+    
     redirect_to world_path(world)
   end
 
