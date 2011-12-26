@@ -62,7 +62,7 @@ Minefold::Application.routes.draw do
         post :add, :action => :add, :on => :collection
         get  :search, :action => :search, :on => :collection
 
-        put :approve, :on => :collection
+        put :approve, :on => :member
       end
       
       resources :photos

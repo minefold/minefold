@@ -1,0 +1,10 @@
+%h2 Play Requests
+%ul.players.requests
+  - world.play_requests.each do |request|
+    %li= request.user.username
+    = form_for request, method: 'put', url: approve_world_player_path(world, request) do |f|
+      %button.approve
+        Approve
+    = form_for request, method: 'delete', url: world_player_path(world, request) do |f|
+      %button.ignore
+        Ignore

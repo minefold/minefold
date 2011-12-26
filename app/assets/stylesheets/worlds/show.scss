@@ -134,6 +134,18 @@
       width: 100%;
     }
   }
+  
+  .requests button {
+    width: 100%;
+    margin-bottom: 2*$line;
+  }
+  
+  .requests button.approve {
+    @include btn($green, white);
+  }
+  .requests button.ignore {
+    @include btn($red, white);
+  }
 }
 
 form#share {

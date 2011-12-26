@@ -9,14 +9,14 @@ describe Worlds::PlayersController do
   let(:applicant) { create :user }
 
   context 'signed in' do
-    let(:current_user)  { create :user }
-
-    before do
-      @request.env["devise.mapping"] = Devise.mappings[:user]
-      sign_in current_user
-    end
-
     describe '#ask' do
+      let(:current_user)  {create :user }
+
+      before do
+        @request.env["devise.mapping"] = Devise.mappings[:user]
+        sign_in current_user
+      end
+
       it "should redirect to world" do
         post :ask, world_id: world.slug
         response.should redirect_to(world_path(world))
@@ -24,6 +24,13 @@ describe Worlds::PlayersController do
     end
 
     describe '#add' do
+      let(:current_user)  { world.memberships << Membership.new(role: 'op', user: creator); creator }
+
+      before do
+        @request.env["devise.mapping"] = Devise.mappings[:user]
+        sign_in current_user
+      end
+      
       it "should redirect to world" do
         post :add, world_id: world.slug, id: applicant.id
         response.should redirect_to(world_path(world))

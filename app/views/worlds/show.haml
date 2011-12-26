@@ -4,26 +4,27 @@
 
 %aside
   - if signed_in?
-    = form_for [:play, world], method: 'put', html: {id: 'play-here'} do
-      - case
-      - when current_user.current_world == world    
+    - case
+    - when current_user.current_world == world    
+      %form#play-here
         %button{disabled: true}
           %span.icon.current
           Playing here
-      - when world.players.include?(current_user)
+    - when world.players.include?(current_user)
+      = form_for [:play, world], method: 'put', html: {id: 'play-here'} do
         %button
           %span.icon.play
           Play here
-      - else
+    - when world.play_requests.any?{|req| req.user == current_user }
+      %form#play-here
+        %button{disabled: true}
+          %span.icon.waiting
+          Request sent
+    - else
+      = form_for world, method: 'post', url: ask_world_players_path(world), html: {id: 'play-here'} do
         %button
           %span.icon.ask
           Ask to play here
-      
-      /
-        -# when world.user_waiting?(current_user)
-        %button
-        %span.icon.waiting
-        Request sent
     
     - if world.opped?(current_user)
       #add-friend
@@ -52,6 +53,9 @@
     - sorted_memberships(world).each do |membership|
       - user = membership.user
       %li{ class: [world.current_players.include?(user) ? :online : :offline, membership.role == 'op' && :op]}= link_to user.username, user
+  
+  - if world.opped?(current_user) and world.play_requests.any?
+    = render "play_requests", object: world.play_requests
   
   %p.social
     %a.twitter-share-button{href: 'https://twitter.com/share', data: {text: "Play Minecraft with me in #{world.name} - #{world_url(world)}", url: world_url(world), count: 'horizontal', via: 'minefold'}} Tweet
