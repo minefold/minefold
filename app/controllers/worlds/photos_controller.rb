@@ -16,6 +16,8 @@ class Worlds::PhotosController < ApplicationController
     photo.creator = current_user
     world.photos.push photo
     
+    track 'photo uploaded', world: world.slug
+    
     redirect_to world_photos_path(world)
   end
   
