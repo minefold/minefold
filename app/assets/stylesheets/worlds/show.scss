@@ -140,7 +140,7 @@ form#share {
   padding: 0 $gutter;
   border-bottom: 1px solid darken(white, 10%);
   
-  margin-bottom: 2*$line;
+  margin-bottom: 2*$line - 1px;
   
   .avatar {
     float: left;
@@ -193,6 +193,11 @@ form#share {
       color: rgba(black, 0.2);
     }
     
+    hr {
+/*      border-top: 1px dotted darken(white, 10%);*/
+/*      margin: ($line - 1px) (-$gutter) $line (-$gutter);*/
+    }
+    
   
   
     &.chat {
@@ -208,10 +213,13 @@ form#share {
       .body {
         width: cols(7) - (2*$gutter) - 24px - $gutter;
         border: 1px solid darken(white, 5%);
+        border-bottom-color: darken(white, 10%);
         padding: $line $gutter;
-        color: black;
+        color: rgba(black, 0.8);
+        line-height: 18px;
 
         @include box-sizing(border-box);
+        @include border-radius($radius);
 
         p {
           margin-bottom: 0;

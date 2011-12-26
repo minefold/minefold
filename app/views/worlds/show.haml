@@ -74,18 +74,20 @@
   #events
 
   :javascript
-    var events, eventsView, shareView, addFriendView, pusher, channel;
+    var events, activityView, shareView, addFriendView, pusher, channel;
 
     events = new MF.EventsCollection();
     events.fetch({
       success: function() {
-        eventsView = new MF.EventsView({
+        activityView = new MF.ActivityView({
           collection: events
         });
+        
+        events.bind('add', activityView.addEvent);
 
-        $('#events').append(eventsView.el);
+        $('#events').append(activityView.el);
 
-        eventsView.render();
+        activityView.render();
       }
     });
 
@@ -106,12 +108,13 @@
     channel = pusher.subscribe(#{world.pusher_key.to_json});
     
     channel.bind('chat-created', function(chat) {
+      // This is a hack to get around Backbone not sending Pusher's socket_id when saving a model.
       var sameChat = events.find(function(e){
         return e.id == chat.id || (!e.id && e.get('text') == chat.text);
       })
     
       if(!sameChat) {
-        var chatModel = new MF.Chat(chat);
+        var chatModel = new MF.ChatEvent(chat);
         events.add(chatModel);
       }
     });

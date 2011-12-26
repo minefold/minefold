@@ -5,7 +5,7 @@
 #= require views/connection_view
 #= require views/disconnection_view
 
-class MF.EventsView extends Backbone.View
+class MF.ActivityView extends Backbone.View
   id: 'events'
 
   collection: MF.EventsCollection
@@ -21,24 +21,21 @@ class MF.EventsView extends Backbone.View
       klass = klassBindings[type] || MF.EventView
 
       new klass(model: model)
+  
+  addEvent: (event) =>
+    type = event.get('type')
 
-    @collection.bind 'add', (model) =>
-      type = model.get('type')
+    klass = klassBindings[type] || MF.EventView
+    
+    view = new klass(model: event)
 
-      klass = switch type
-              when 'chat' then MF.ChatView
-              else MF.EventView
-
-      view = new klass(model: model)
-
-      @subViews.push(view)
-
-      @container.prepend(view.el)
-      view.render()
-
+    @subViews.push(view)
+    view.render()
+    @container.prepend(view.el)
+  
   render: ->
     @container = $(@el).empty()
 
     for view in @subViews
-      @container.append(view.el)
       view.render()
+      @container.prepend(view.el)

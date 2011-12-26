@@ -5,3 +5,4 @@ class MF.EventView extends Backbone.View
     $(@el)
       .addClass(@model.get('type'))
       .attr(id: @model.id)
+  

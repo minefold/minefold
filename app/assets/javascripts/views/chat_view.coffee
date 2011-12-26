@@ -19,7 +19,7 @@ class MF.ChatView extends MF.EventView
 
   initialize: (options) ->
     super()
-
+  
   render: ->
     attrs = @model.toJSON()
 

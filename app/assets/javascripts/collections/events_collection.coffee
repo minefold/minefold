@@ -5,3 +5,7 @@ class MF.EventsCollection extends Backbone.Collection
 
   url: ->
     "#{window.location.pathname}/events.json"
+  
+  parse: (events) ->
+    events.reverse()
+  
