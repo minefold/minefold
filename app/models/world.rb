@@ -45,6 +45,10 @@ class World
     only_integer: true,
     greater_than_or_equal_to: 0,
     less_than: DIFFICULTIES.size
+    
+  after_create do
+    memberships.create role: 'op', user: creator
+  end
 
 
 # Finders
