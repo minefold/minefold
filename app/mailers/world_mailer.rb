@@ -27,7 +27,7 @@ class WorldMailer < ActionMailer::Base
     @world  = World.find world_id
   
     @online_players  = @world.current_players
-    @recent_activity = @world.events.limit(5)
+    @recent_activity = @world.events.limit(5).select {|e| e.is_a?(Chat)}
   
     mail     to: @player.email,
         subject: "Your friends are playing on Minefold in #{@world.name}"
