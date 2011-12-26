@@ -12,7 +12,7 @@ class MF.ChatView extends MF.EventView
       <div class="meta">
         <time class="timeago" datetime="<%= created_at %>"></time>
       </div>
-
+      <strong><%= source.username %></strong>
       <p><%= text %></p>
     </div>
   """
