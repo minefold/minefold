@@ -10,6 +10,6 @@ describe PlayerOppedJob do
   
   it "should op player" do
     PlayerOppedJob.perform world.id, player.username
-    world.ops.to_a.should eq([creator, player])
+    world.ops.to_a.should eq([player])
   end
 end
