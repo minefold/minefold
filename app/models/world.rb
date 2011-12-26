@@ -182,7 +182,7 @@ class World
   end
 
   def current_player_ids
-    REDIS.smembers("#{redis_key}:connected_players")
+    REDIS.smembers("#{redis_key}:connected_players").map {|id| BSON::ObjectId(id)}
   end
   
 private
