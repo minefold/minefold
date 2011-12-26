@@ -1,4 +1,4 @@
-class PlayerConnectedJob < TweetJob
+class PlayerConnectedJob
   @queue = :high
 
   # TODO Pass in user_id rather than username
@@ -6,7 +6,7 @@ class PlayerConnectedJob < TweetJob
   def self.perform(username, connected_at)
     user = User.by_username(username).first
     world = user.current_world
-    new.process!(user, world, conditions)
+    new.process!(user, world, connected_at)
   end
   
   def process!(user, world, connected_at)
