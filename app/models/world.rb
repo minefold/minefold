@@ -103,7 +103,7 @@ class World
   end
   
   def ops
-    [creator] + memberships.where(role: 'op').map(&:user)
+    memberships.where(role: 'op').map(&:user)
   end
   
   def opped?(user)
@@ -111,11 +111,11 @@ class World
   end
 
   def players
-    [creator] + memberships.map(&:user)
+    memberships.map(&:user)
   end
   
   def player_ids
-    ([creator.id] + memberships.map(&:user_id)).uniq
+    memberships.map(&:user_id)
   end
 
   def current_players
