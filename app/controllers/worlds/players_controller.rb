@@ -4,10 +4,6 @@ class Worlds::PlayersController < ApplicationController
     World.find_by_slug! params[:world_id]
   }
 
-  expose(:player) {
-    world.whitelisted_players.find_by_slug(params[:id]) or User.find(params[:player_id])
-  }
-
   def search
     user = world.search_for_potential_player(params[:username])
 
@@ -30,7 +26,7 @@ class Worlds::PlayersController < ApplicationController
   def add
     @player = world.find_potential_player(params[:id])
     
-    world.whitelisted_players << @player
+    world.add_player @player
     world.save
 
     WorldMailer.player_added(world.id, @player.id).deliver
