@@ -109,11 +109,11 @@
     
     channel.bind('chat-created', function(chat) {
       // This is a hack to get around Backbone not sending Pusher's socket_id when saving a model.
-      var sameChat = events.find(function(e){
-        return e.id == chat.id || (!e.id && e.get('text') == chat.text);
-      })
-    
-      if(!sameChat) {
+      var previousChatIsSame = events.any(function(e) {
+        return e.id === chat._id || (!e.id && e.get('type') === 'chat' && e.get('text') === chat.text);
+      });
+      
+      if(!previousChatIsSame) {
         var chatModel = new MF.ChatEvent(chat);
         events.add(chatModel);
       }
