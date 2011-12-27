@@ -18,6 +18,8 @@ class WorldsController < ApplicationController
     if world.save
       current_user.current_world = world
       current_user.save
+      
+      track 'created world'
 
       redirect_to world_path(world)
     else
@@ -58,6 +60,8 @@ class WorldsController < ApplicationController
 
     current_user.current_world = world
     current_user.save
+    
+    track 'changed worlds'
 
     redirect_to :back
   end
