@@ -19,7 +19,7 @@ class WorldMailer < ActionMailer::Base
     @creator = @world.creator
 
     mail   to: @player.email,
-      subject: "#{@creator.username} has added you #{@world.name}"
+      subject: "#{@creator.username} has added you to #{@world.name}"
   end
   
   def world_started world_id, player_id
