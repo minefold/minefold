@@ -187,8 +187,7 @@ class User
   end
   
   def worlds
-    worlds = World.where('memberships.user_id' => id).to_a
-    (created_worlds.to_a + worlds).sort_by do |world|
+    World.where('memberships.user_id' => id).sort_by do |world|
       world.name.downcase
     end
   end
