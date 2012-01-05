@@ -1,0 +1,18 @@
+- title 'Change Passwords'
+
+%article
+  = form_for(:user, as: :user, :url => edit_password_path(:user), :method => :put) do |f|
+    = f.hidden_field :reset_password_token
+
+    = devise_error_messages!
+
+    %section
+      = f.label :password, 'New password'
+      = f.password_field :password
+
+    %section
+      = f.label :password, 'Confirm new password'
+      = f.password_field :password_confirmation
+
+    %section.submit
+      = f.submit 'Change password'

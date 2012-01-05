@@ -1,28 +1,28 @@
 %section.username
-= form.label :username, 'Minecraft Username'
-= error_messages_for(form.object, :username)
+  = form.label :username, 'Minecraft Username'
+  = error_messages_for(form.object, :username)
 
-= form.text_field :username, tabindex: 1, placeholder: 'notch'
-= render partial: 'users/check_username'
+  = form.text_field :username, tabindex: 1, placeholder: 'notch'
+  = render partial: 'users/check_username'
 
 %section.email
-= form.label :email
-= error_messages_for(form.object, :email)
+  = form.label :email
+  = error_messages_for(form.object, :email)
 
-= form.email_field :email, tabindex:2, placeholder: 'notch@mojang.com'
+  = form.email_field :email, tabindex:2, placeholder: 'notch@mojang.com'
 
 %section.password
-= form.label :password, 'Choose a password'
-= error_messages_for(form.object, :password)
+  = form.label :password, 'Choose a password'
+  = error_messages_for(form.object, :password)
 
-= form.password_field :password, tabindex: 3
+  = form.password_field :password, tabindex: 3
 
 %section.password-confirmation
-= form.label :password_confirmation, 'Confirm password'
-= error_messages_for(form.object, :password_confirmation)
+  = form.label :password_confirmation, 'Confirm password'
+  = error_messages_for(form.object, :password_confirmation)
 
-= form.password_field :password_confirmation, tabindex: 4
+  = form.password_field :password_confirmation, tabindex: 4
 
 %section
-= form.submit 'Start playing now', tabindex: 5
-.spinner{hidden}
+  = form.submit 'Start playing now', tabindex: 5
+  .spinner{hidden}

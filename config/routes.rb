@@ -1,3 +1,5 @@
+# Only use hash rockets here please.
+
 Minefold::Application.routes.draw do
   root :to => 'pages#home'
   get  '/dashboard' => 'accounts#dashboard', :as => :user_root
@@ -19,6 +21,11 @@ Minefold::Application.routes.draw do
     get    '/signin' => 'devise/sessions#new', :as => :new_user_session
     post   '/signin' => 'devise/sessions#create', :as => :user_session
     delete '/signout' => 'devise/sessions#destroy', :as => :destroy_user_session
+
+    get '/reset-password' => 'passwords#new', :as => :new_user_password
+    post '/reset-password' => 'passwords#create'
+    get '/edit-password' => 'passwords#edit', :as => :edit_user_password
+    put '/edit-password' => 'passwords#update'
 
     get  '/signup/check' => 'users#check'
     get  '/signup' => 'users#new', :as => :new_user
@@ -48,13 +55,13 @@ Minefold::Application.routes.draw do
         get :policy
       end
     end
-    
+
     member do
       get :map
       get :invite
       put :play
     end
-    
+
     scope :module => :worlds do
       resources :events, :only => [:index, :create]
       resources :players, :only => [:index, :create, :destroy] do
@@ -64,10 +71,10 @@ Minefold::Application.routes.draw do
 
         put :approve, :on => :member
       end
-      
+
       resources :photos
     end
-    
+
   end
-  
+
 end
