@@ -55,5 +55,4 @@ module ApplicationHelper
   def after(&blk)
     content_for :after, &blk
   end
-
 end
