@@ -24,7 +24,7 @@ private
   def mixpanel
     @mixpanel ||= EM::Mixpanel.new(ENV['MIXPANEL_TOKEN'], ip: request.ip)
   end
-  
+
   def track(event_name, properties={})
     if Rails.env.production?
       if signed_in?
@@ -34,7 +34,7 @@ private
 
       mixpanel.track(event_name, properties)
     else
-      Rails.logger.info "[Mixpanel] #{event_name}"
+      Rails.logger.info "[Mixpanel] <#{event_name}> #{properties}"
     end
   end
 
