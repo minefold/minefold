@@ -74,7 +74,10 @@ Minefold::Application.routes.draw do
 
       resources :photos
     end
-
+  end
+  
+  namespace :api do
+    resources :sessions, :only => [:create]
   end
 
 end
