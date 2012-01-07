@@ -3,12 +3,12 @@ class Worlds::PlayersController < ApplicationController
   expose(:world) {
     World.find_by_slug! params[:world_id]
   }
-  
+
   expose(:play_request) { world.play_requests.find params[:id] }
-  
-  before_filter :ensure_op, :only => [:add, :approve, :destroy]
 
   def search
+    authorize! :operate, world
+
     user = world.search_for_potential_player(params[:username])
 
     if user
@@ -28,18 +28,22 @@ class Worlds::PlayersController < ApplicationController
   end
 
   def add
+    authorize! :operate, world
+
     @player = world.find_potential_player(params[:id])
-    
+
     world.add_player @player
     world.save
 
     WorldMailer.player_added(world.id, @player.id).deliver
     track 'player added'
-    
+
     redirect_to world_path(world)
   end
 
   def approve
+    authorize! :operate, world
+
     player = play_request.user
     if player.current_world == nil
       player.current_world = world
@@ -47,17 +51,19 @@ class Worlds::PlayersController < ApplicationController
     end
 
     play_request.destroy
-    
+
     world.add_player player
     world.save
-  
+
     WorldMailer.player_added(world.id, player.id).deliver
     track 'player added'
-    
+
     redirect_to world_path(world)
   end
-  
+
   def destroy
+    authorize! :operate, world
+
     player = play_request.user
     if player.current_world == world
       player.current_world = nil
@@ -65,16 +71,11 @@ class Worlds::PlayersController < ApplicationController
     end
 
     play_request.destroy
-  
+
     world.memberships.where(user_id: player.id).destroy
     world.save
-  
+
     redirect_to world_path(world)
   end
 
-  private
-  
-  def ensure_op
-    raise 'Must be op to perform this operation' unless world.opped? current_user
-  end
 end

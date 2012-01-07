@@ -14,11 +14,13 @@ class UsersController < ApplicationController
 
   expose(:referrer) {
     if cookies[:invite]
-      User.first(conditions: {referral_code: cookies[:invite]})
+      User.where(referral_code: cookies[:invite]).first
     end
   }
 
   def show
+    authorize! :read, user
+
     respond_to do |format|
       format.html
       format.json { render json: user.as_json(only: [:username, :id]) }
@@ -41,22 +43,14 @@ class UsersController < ApplicationController
       UserMailer.welcome(user.id).deliver
 
       sign_in :user, user
-      
+
       track '$signup', distinct_id: user.id.to_s, mp_name_tag: user.safe_username
-      
+
       respond_with user, :location => new_world_path
     else
       clean_up_passwords user
       respond_with user, :location => users_path(code: params[:user][:invite_id])
     end
-  end
-
-  def edit
-  end
-
-  def update
-    current_user.update_attributes! params[:user]
-    redirect_to user_root_path
   end
 
 end

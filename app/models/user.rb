@@ -3,7 +3,7 @@ class User
   include Mongoid::Timestamps
   include Mongoid::Slug
   include Mongoid::Paranoia
-  
+
   BILLING_PERIOD = 1.minute
   FREE_HOURS  = 10
 
@@ -14,6 +14,8 @@ class User
   field :username,       type: String
   field :safe_username,  type: String
   slug  :username,       index: true
+
+  field :admin, type: Boolean, default: false
 
   field :host,           default: 'pluto.minefold.com'
 
@@ -29,22 +31,22 @@ class User
   field :referral_code,   type: String, default: -> {
     self.class.free_referral_code
   }
-  
+
   validates_uniqueness_of :referral_code
-  
+
   belongs_to :referrer,  class_name: 'User', inverse_of: :referrals
   has_many   :referrals, class_name: 'User', inverse_of: :referrer
 
 
   belongs_to :current_world, class_name: 'World', inverse_of: nil
   has_many :created_worlds, class_name: 'World', inverse_of: :creator
-  
+
   has_and_belongs_to_many :opped_worlds,
                           inverse_of: :ops,
                           class_name: 'World'
 
   attr_accessor :email_or_username
-  
+
 
 # Finders
 
@@ -87,7 +89,7 @@ class User
 
 
 # Credits
-  
+
   # Kicks off the audit trail for any credits the user starts off with
   after_create do
     CreditTrail.log(self, self.credits)
@@ -119,7 +121,7 @@ class User
   def increment_credits!(n)
     inc(:credits, n.to_i).tap { CreditTrail.log(self, n.to_i)}
   end
-  
+
   def hours_left
     credits / User::BILLING_PERIOD
   end
@@ -156,7 +158,7 @@ class User
 
   before_save do
     async_fetch_avatar! if safe_username_changed?
-  end  
+  end
 
 
 # Referrals
@@ -167,25 +169,33 @@ class User
     end while self.where(referral_code: c).exists?
     c
   end
-  
+
   def played?
     true
   end
-  
+
 # Mail throttling
   # TODO Move to the top
 
   field :last_world_started_mail_sent_at
 
+  def member?(world)
+    world.memberships.any? {|m| m.user == self}
+  end
+
+  def op?(world)
+    world.memberships.any? {|m| m.user == self && m.role == Memberships::OP}
+  end
+
 # Other
-  
+
   def self.paid_for_minecraft?(username)
     response = RestClient.get "http://www.minecraft.net/haspaid.jsp", params: {user: username}
     return response == 'true'
   rescue RestClient::Exception
     return false
   end
-  
+
   def worlds
     World.where('memberships.user_id' => id).sort_by do |world|
       world.name.downcase
@@ -199,7 +209,7 @@ class User
   def to_param
     slug
   end
-  
+
   # Security. When searching for potential players in a world the results were returning emails and credit cards of users.
   def as_json(options={})
     {
