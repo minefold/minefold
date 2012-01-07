@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include Mixpanel
+
   protect_from_forgery
 
   rescue_from Mongoid::Errors::DocumentNotFound, with: :not_found
@@ -18,23 +20,6 @@ private
       resource = warden.user(:user)
       flash[:alert] = I18n.t("devise.failure.already_authenticated")
       redirect_to after_sign_in_path_for(resource)
-    end
-  end
-
-  def mixpanel
-    @mixpanel ||= EM::Mixpanel.new(ENV['MIXPANEL_TOKEN'], ip: request.ip)
-  end
-
-  def track(event_name, properties={})
-    if Rails.env.production?
-      if signed_in?
-        properties[:distinct_id] = current_user.id.to_s
-        properties[:mp_name_tag] = current_user.safe_username
-      end
-
-      mixpanel.track(event_name, properties)
-    else
-      Rails.logger.info "[Mixpanel] <#{event_name}> #{properties}"
     end
   end
 
