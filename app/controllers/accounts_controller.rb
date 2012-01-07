@@ -6,7 +6,12 @@ class AccountsController < ApplicationController
   def dashboard
   end
 
+  def edit
+  end
+
   def update
+    authorize! :update, current_user
+
     current_user.update_attributes(params[:user])
 
     if current_user.save

@@ -13,12 +13,14 @@ class WorldsController < ApplicationController
    end
 
   def create
+    authorize! :create, world
+
     world.creator = current_user
 
     if world.save
       current_user.current_world = world
       current_user.save
-      
+
       track 'created world'
 
       redirect_to world_path(world)
@@ -28,16 +30,17 @@ class WorldsController < ApplicationController
   end
 
   def show
+    authorize! :read, world
+
     respond_with world
   end
 
   def edit
-    # TODO: Make this more robust
-    not_found unless world.opped?(current_user)
+    authorize! :update, world
   end
 
   def update
-    not_found unless world.opped?(current_user)
+    authorize! :update, world
 
     world.update_attributes params[:world]
     if world.save
@@ -49,18 +52,15 @@ class WorldsController < ApplicationController
   end
 
   def map
-  end
-
-
-  def invite
+    authorize! :read, world
   end
 
   def play
-    raise 'Not whitelisted for world' unless world.whitelisted?(current_user)
+    authorize! :update, world
 
     current_user.current_world = world
     current_user.save
-    
+
     track 'changed worlds'
 
     redirect_to :back

@@ -15,6 +15,7 @@ gem 'rack-www'
 
 # Authentication
 gem 'devise'
+gem 'cancan'
 
 # Payment Processing
 gem 'stripe'
@@ -68,7 +69,7 @@ end
 
 group :worker do
   gem 'rubyzip'
-  gem 'fog'  
+  gem 'fog'
 end
 
 group :test do

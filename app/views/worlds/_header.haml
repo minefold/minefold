@@ -11,9 +11,9 @@
         = link_to new_user_path, class: 'btn' do
           Sign up now!
           %span (First 10 hrs free)
-      
+
       %h2 Hey you!
-      
+
       %p
         %strong= world.creator.username
         - unless world.players.length.zero?
@@ -24,7 +24,7 @@
           is
         playing Minecraft here.
         You can join in too, it just takes 30s to sign up.
-  
+
   - if signed_in? and not current_user.played?
     #welcome
       %h2 Congratulations! Follow these steps to ephiphany:
@@ -37,16 +37,16 @@
           a world.
         %li
           Invite 3 of your friends
-        
+
         %li
           Play!
-          
-  
+
+
   %nav
     %ol
       %li.activity= link_to 'Activity', world
       %li.map= link_to 'Map', map_world_path(world)
       %li.photos= link_to 'Photos', world_photos_path(world)
 
-      - if world.opped?(current_user)
+      - if can? :edit, world
         %li.settings= link_to 'Settings', edit_world_path(world)

@@ -26,9 +26,9 @@ class World
 
   has_many :events, as: :target,
                     order: [:created_at, :desc]
-                    
+
   embeds_many :photos, order: [:created_at, :desc]
-  
+
   embeds_many :memberships
 
 
@@ -45,7 +45,7 @@ class World
     only_integer: true,
     greater_than_or_equal_to: 0,
     less_than: DIFFICULTIES.size
-    
+
   after_create do
     memberships.create role: 'op', user: creator
   end
@@ -89,7 +89,7 @@ class World
       .not_in(_id: players.map {|p| p.id})
       .first
   end
-  
+
   def find_potential_player(id)
     # makes sure id is not a current player
     raise Mongoid::Errors::DocumentNotFound if player_ids.map(&:to_s).include? id
@@ -101,31 +101,40 @@ class World
   end
 
   # Memberships TODO: Refactor
-  
+
   def add_player user
-    memberships << Membership.new(user: user, role: 'player')
+    memberships.new user: user
   end
-  
+
+  def member?(user)
+    memberships.any? {|m| m.user == user}
+  end
+
+  def op?(user)
+    memberships.any? {|m| m.user == user and m.role == Membership::OP}
+  end
+
+  # TODO Rename op role to admin
   def ops
     memberships.where(role: 'op').map(&:user)
   end
-  
+
   def opped?(user)
     ops.include? user
   end
 
   def players
-    memberships.map(&:user)
+    memberships.map {|m| m.user}
   end
-  
+
   def player_ids
-    memberships.map(&:user_id)
+    memberships.map {|m| m.user_id}
   end
 
   def current_players
     User.find current_player_ids
   end
-  
+
   def offline_players
     User.find(player_ids - current_player_ids)
   end
@@ -133,15 +142,15 @@ class World
   def current_players_count
     current_player_ids.size
   end
-  
+
 # Communication
-  
+
   def record_event!(type, data)
     event = type.new(data)
     self.events.push(event) if event.valid?
     event
   end
-  
+
   def broadcast(event_name, data, socket_id=nil)
     pusher_channel.trigger event_name, data, socket_id
   end
@@ -160,7 +169,7 @@ class World
   def mapped?
     not last_mapped_at.nil?
   end
-  
+
   def map_assets_url
     File.join ENV['WORLD_MAPS_URL'], id.to_s
   end
@@ -178,7 +187,7 @@ class World
   def to_param
     slug.to_param
   end
-  
+
   def pusher_key
     "#{collection.name.downcase}-#{id}"
   end
@@ -190,7 +199,7 @@ class World
   def current_player_ids
     REDIS.smembers("#{redis_key}:connected_players").map {|id| BSON::ObjectId(id)}
   end
-  
+
 private
 
   def pusher_channel
