@@ -10,10 +10,15 @@ class User
   REFERRAL_CODE_LENGTH = 6
   REFERRAL_HOURS = 2
 
-  field :email,          type: String
-  field :username,       type: String
-  field :safe_username,  type: String
-  slug  :username,       index: true
+  field :email, type: String
+
+  field :username, type: String
+  validates_presence_of :username
+  slug  :username, index: true
+
+  field :safe_username, type: String, unique: true
+  validates_uniqueness_of :safe_username, case_sensitive: false
+  validates_length_of :safe_username, within: 1..16
 
   field :admin, type: Boolean, default: false
 
@@ -69,8 +74,7 @@ class User
 
 # Validations
 
-  validates_presence_of :username
-  validates_uniqueness_of :username, case_sensitive: false
+
   validates_numericality_of :credits
   validates_numericality_of :minutes_played, greater_than_or_equal_to: 0
 
