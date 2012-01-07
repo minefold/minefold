@@ -7,7 +7,7 @@ class World
   DIFFICULTIES = [:peaceful, :easy, :normal, :hard]
 
   field :name, type: String
-  slug  :name, index: true
+  slug  :name, index: true, permanent: false
 
   field :seed,             type: String, default: ''
   field :game_mode,        type: Integer, default: GAME_MODES.index(:survival)

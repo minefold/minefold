@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe World do
+  let(:world) {create(:world)}
 
   it { should be_timestamped_document }
 
@@ -16,12 +17,14 @@ describe World do
 
   it { should reference_many(:events)}
 
-
-# VALIDATIONS
-
   it { should validate_presence_of(:name)}
-
   it { should embed_many(:memberships) }
 
 
+  it "changes the slug when changing the name" do
+    lambda {
+      world.name = world.name.reverse
+      world.save
+    }.should change(world, :slug)
+  end
 end
