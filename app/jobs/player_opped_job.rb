@@ -5,6 +5,8 @@ class PlayerOppedJob
     world = World.find(world_id)
     user = User.by_username(player_username).first
 
+    return unless user
+
     new.process! world, user
   end
 
