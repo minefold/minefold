@@ -6,6 +6,15 @@
 #worlds-photos-new, #worlds-photos-create {
   @extend #system;
 
+  #page {
+    width: cols(5);
+  }
+
+  // TODO Hack!
+  article {
+    width: 100% !important;
+  }
+
   form {
     width: 100%;
 
@@ -76,3 +85,25 @@
     margin: 0 auto;
   }
 }
+
+// TODO Hack!
+form section.instructions {
+  font-size: 12px;
+  background: darken(white, 5%) asset_data_url('icons/help.png') no-repeat (2*$gutter) ($line);
+  padding: $line (2*$gutter);
+  padding-left: (2*$gutter) + 24px + $gutter;
+  margin: 0 (-2 * $gutter);
+  margin-top: -4 * $line;
+  margin-bottom: 4 * $line;
+  pre {
+    overflow: auto;
+    // TODO Hack!
+    margin-bottom: 0 !important;
+  }
+  code {
+    color: black;
+  }
+}
+
+
+

@@ -6,6 +6,17 @@
 
 %article
   = form_for photo, url: world_photos_path(world), method: :post, html: {multipart: true} do |f|
+    %section.instructions
+      Take screenshots in game by pressing <code>F2</code>. They are saved to:
+      %pre
+        %code
+          - case os
+          - when :windows
+            \%appdata%\.minecraft\screenshots
+          - when :mac
+            \~/Library/Application&nbsp;Support/minecraft/screenshots
+          - when :linux
+            \~/.minecraft/screenshots
     %section
       = f.file_field :file
 
@@ -16,17 +27,6 @@
     %section
       = f.label :caption
       = f.text_area :caption, rows: 3
-
-    .hint
-      Your Minecraft screenshots are located at
-      %code
-        - case os
-        - when :windows
-          \%appdata%\.minecraft\screenshots
-        - when :mac
-          \~/Library/Application Support/minecraft/screenshots
-        - when :linux
-          \~/.minecraft/screenshots
 
     %section
       = f.submit 'Upload photo'
