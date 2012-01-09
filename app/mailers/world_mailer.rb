@@ -2,34 +2,32 @@ class WorldMailer < ActionMailer::Base
   include Resque::Mailer
 
   default from: 'Minefold <team@minefold.com>'
-  
-  def play_request(world_id, player_id)
-    @world    = World.find(world_id)
-    @creator  = @world.creator
-    @player   = User.find(player_id)
 
-    mail   to: @creator.email,
-      subject: "#{@player.username} would like to play in #{@world.name}"
-  end
-
-  def player_added(world_id, player_id)
-    @world   = World.find(world_id)
-    @player  = User.find(player_id)
-    
+  def membership_request_created(world_id, request_id)
+    @world = World.find(world_id)
     @creator = @world.creator
+    @user = @world.membership_requests.find(request_id).user
 
-    mail   to: @player.email,
-      subject: "#{@creator.username} has added you to #{@world.name}"
+    mail to: @creator.email,
+         subject: "#{@user.username} would like to play in #{@world.name}"
   end
-  
-  def world_started world_id, player_id
-    @player = User.find player_id
-    @world  = World.find world_id
-  
-    @online_players  = @world.current_players
-    @recent_activity = @world.events.limit(5).select {|e| e.is_a?(Chat)}
-  
-    mail     to: @player.email,
-        subject: "Your friends are playing on Minefold in #{@world.name}"
+
+  def membership_request_approved(world_id, user_id)
+    @world = World.find(world_id)
+    @creator = @world.creator
+    @user = User.find(user_id)
+
+    mail to: @user.email,
+         subject: "#{@creator.username} has added you to #{@world.name}"
+  end
+
+  def world_started(world_id, user_id)
+    @world  = World.find(world_id)
+    @user = User.find(user_id)
+
+    @recent_events = @world.events.where(_type: 'Chat').limit(5)
+
+    mail to: @user.email,
+         subject: "Your friends are playing on Minefold in #{@world.name}"
   end
 end

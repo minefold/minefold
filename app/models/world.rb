@@ -3,60 +3,64 @@ class World
   include Mongoid::Timestamps
   include Mongoid::Slug
 
-  GAME_MODES = [:survival, :creative]
-  DIFFICULTIES = [:peaceful, :easy, :normal, :hard]
 
   field :name, type: String
-  slug  :name, index: true, permanent: false
+  validates_uniqueness_of :name
+  validates_presence_of :name
 
-  field :seed,             type: String, default: ''
-  field :game_mode,        type: Integer, default: GAME_MODES.index(:survival)
+  slug  :name, index: true
 
-  field :difficulty_level, type: Integer, default: DIFFICULTIES.index(:easy)
-  field :pvp,              type: Boolean, default: true
-  field :spawn_monsters,   type: Boolean, default: true
-  field :spawn_animals,    type: Boolean, default: true
+  scope :by_name, ->(name) {
+    where(name: name)
+  }
 
-  field :last_mapped_at, type: DateTime
 
-  belongs_to :creator, inverse_of: :created_worlds, class_name: 'User'
+  belongs_to :creator,
+    inverse_of: :created_worlds,
+    class_name: 'User'
 
-  embeds_many :play_requests
-
+  embeds_many :memberships
+  embeds_many :membership_requests
 
   has_many :events, as: :target,
                     order: [:created_at, :desc]
 
   embeds_many :photos, order: [:created_at, :desc]
 
-  embeds_many :memberships
+  field :last_mapped_at, type: DateTime
 
 
-# Validations
+  # Game settings
 
-  validates_uniqueness_of :name
-  validates_presence_of :name
+  GAME_MODES = [:survival, :creative]
+  DIFFICULTIES = [:peaceful, :easy, :normal, :hard]
+
+  field :seed, type: String, default: ''
+
+  field :game_mode, type: Integer, default: GAME_MODES.index(:survival)
   validates_numericality_of :game_mode,
     only_integer: true,
     greater_than_or_equal_to: 0,
     less_than: GAME_MODES.size
 
+  field :difficulty_level, type: Integer, default: DIFFICULTIES.index(:easy)
   validates_numericality_of :difficulty_level,
     only_integer: true,
     greater_than_or_equal_to: 0,
     less_than: DIFFICULTIES.size
 
-  after_create do
-    memberships.create role: 'op', user: creator
-  end
+  field :pvp, type: Boolean, default: true
+  field :spawn_monsters, type: Boolean, default: true
+  field :spawn_animals, type: Boolean, default: true
 
 
-# Finders
+# Validations
 
-  scope :by_name, ->(name) {
-    where(name: name)
-  }
 
+
+  # after_create do
+  #   memberships.create role: 'op', user: creator
+  # end
 
 # Settings
 
@@ -79,74 +83,46 @@ class World
 
 # Players
 
-  def can_play?(user)
-    not players.include?(user)
+  def creator=(creator)
+    membership = memberships.find_or_initialize_by(user: creator)
+    membership.op!
+
+    write_attribute :creator_id, creator.id
   end
 
-  def search_for_potential_player(username)
-    User
-      .where(safe_username: User.sanitize_username(username))
-      .not_in(_id: players.map {|p| p.id})
-      .first
-  end
 
-  def find_potential_player(id)
-    # makes sure id is not a current player
-    raise Mongoid::Errors::DocumentNotFound if player_ids.map(&:to_s).include? id
-    User.find(id)
-  end
-
-  def whitelisted?(user)
-    players.include? user
-  end
-
-  # Memberships TODO: Refactor
-
-  def add_player user
+  def add_member(user)
     memberships.new user: user
   end
 
   def member?(user)
-    memberships.any? {|m| m.user == user}
+    memberships.where(user: user).exists?
   end
 
   def op?(user)
-    memberships.any? {|m| m.user == user and m.role == Membership::OP}
+    memberships.ops.where(user: user).exists?
   end
 
-  # TODO Rename op role to admin
   def ops
-    memberships.where(role: 'op').map(&:user)
+    memberships.ops.map(&:user)
   end
 
-  def opped?(user)
-    ops.include? user
-  end
-
-  def players
+  def members
     memberships.map {|m| m.user}
   end
 
-  def player_ids
-    memberships.map {|m| m.user_id}
-  end
-
-  def current_players
-    User.find current_player_ids
+  def players
+    User.find(current_player_ids)
   end
 
   def offline_players
-    User.find(player_ids - current_player_ids)
-  end
-
-  def current_players_count
-    current_player_ids.size
+    User.find(memberships.map {|m| m.user_id} - current_player_ids)
   end
 
 # Communication
 
-  def record_event!(type, data)
-    event = type.new(data)
+  def record_event!(type, attrs)
+    event = type.new(attrs)
     self.events.push(event) if event.valid?
     event
   end

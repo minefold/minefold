@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe World do
-  let(:world) {create(:world)}
+  let(:world) {build(:world)}
 
   it { should be_timestamped_document }
 
