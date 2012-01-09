@@ -96,11 +96,11 @@ class World
   end
 
   def member?(user)
-    memberships.where(user: user).exists?
+    memberships.where(user_id: user.id).exists?
   end
 
   def op?(user)
-    memberships.ops.where(user: user).exists?
+    memberships.ops.where(user_id: user.id).exists?
   end
 
   def ops
