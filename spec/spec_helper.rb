@@ -11,7 +11,8 @@ RSpec.configure do |config|
   config.include Mongoid::Matchers
   config.include Factory::Syntax::Methods
   config.include Devise::TestHelpers, type: :controller
-  
+  config.include ControllerMacros, type: :controller
+
   config.before(:each) do
     DatabaseCleaner.start
   end
@@ -41,7 +42,7 @@ def expect_stripe_create_with_plan user, plan, next_charge_date = '2011-12-04'
          coupon: nil,
            card: 'tok_12345'
   ) { Struct.new(:id, :next_recurring_charge, :active_card).new(
-        'cus_1', 
+        'cus_1',
         Struct.new(:date, :amount).new(next_charge_date, plan.price),
         Struct.new(:type, :country, :exp_month, :exp_year, :last4).new('visa', 'US', 11, 2012, '4242')
       )
@@ -55,7 +56,7 @@ def expect_stripe_create user, token = 'tok_12345'
          coupon: nil,
            card: token
   ) { Struct.new(:id, :active_card).new(
-        'cus_1', 
+        'cus_1',
         Struct.new(:type, :country, :exp_month, :exp_year, :last4).new('visa', 'US', 11, 2012, '4242')
       )
     }
@@ -68,13 +69,13 @@ def expect_stripe_update user, plan, next_charge_date = '2011-12-04'
         card: user.stripe_token,
      prorate: false
   ) { Struct.new(:id, :current_period_end).new(
-           'cus_1', 
+           'cus_1',
            Time.parse(next_charge_date).to_i
-      ) 
+      )
     }
 end
 
-def expect_stripe_charge user, amount 
+def expect_stripe_charge user, amount
   Stripe::Charge.should_receive(:create).with(
     :amount => amount,
     :currency => "usd",

@@ -46,11 +46,17 @@ class User
   belongs_to :current_world, class_name: 'World', inverse_of: nil
   has_many :created_worlds, class_name: 'World', inverse_of: :creator
 
-  has_and_belongs_to_many :opped_worlds,
-                          inverse_of: :ops,
-                          class_name: 'World'
+  # has_and_belongs_to_many :opped_worlds,
+  #                         inverse_of: :ops,
+  #                         class_name: 'World'
 
   attr_accessor :email_or_username
+
+
+  scope :potential_members, ->(world) {
+    not_in(_id: world.memberships.map {|p| p.user_id})
+  }
+
 
 
 # Finders

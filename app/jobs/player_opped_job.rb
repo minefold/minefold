@@ -9,8 +9,9 @@ class PlayerOppedJob
   end
 
   def process!(world, user)
-    membership = world.memberships.find_or_initialize_by(user_id: user.id)
-    membership.role = Membership::OP
+    membership = world.memberships.where(user_id: user.id).first
+    membership.op!
+
     world.save
   end
 end
