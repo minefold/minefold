@@ -90,3 +90,7 @@ def set_initial_plan user, plan
   user.plan_id = plan.id
   user.stripe_id = 'cus_1'
 end
+
+def basic_auth username, password
+  @request.env["HTTP_AUTHORIZATION"] = "Basic " + Base64::encode64("#{username}:#{password}")  
+end
