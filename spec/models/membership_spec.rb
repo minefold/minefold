@@ -15,6 +15,11 @@ describe Membership do
   it {should have_field(:role).of_type(Symbol)}
   it {should validate_inclusion_of(:role).to_allow(Membership::ROLES)}
 
+  it "is valid without a role" do
+    membership.role = nil
+    membership.should be_valid
+  end
+
   it "ops users" do
     membership.should_not be_op
     membership.op!

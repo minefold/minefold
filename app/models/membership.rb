@@ -11,7 +11,7 @@ class Membership
   validates_uniqueness_of :user
 
   field :role, type: Symbol
-  validates_inclusion_of :role, in: ROLES
+  validates_inclusion_of :role, in: ROLES, allow_nil: true
 
   scope :ops, where(role: :op)
 
