@@ -1,14 +1,15 @@
 class ApplicationController < ActionController::Base
+  extend StatsD::Instrument
   include Mixpanel
 
   protect_from_forgery
 
-  rescue_from Mongoid::Errors::DocumentNotFound, with: :not_found
+  rescue_from Mongoid::Errors::DocumentNotFound do
+    render status: :not_found, template: 'errors/not_found'
+  end
 
-  extend StatsD::Instrument
-
-  def not_found
-    render template: 'errors/not_found', status: :not_found
+  rescue_from(CanCan::AccessDenied) do
+    render status: :unauthorized, nothing: true
   end
 
 private

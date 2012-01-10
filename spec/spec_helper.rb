@@ -11,7 +11,7 @@ RSpec.configure do |config|
   config.include Mongoid::Matchers
   config.include Factory::Syntax::Methods
   config.include Devise::TestHelpers, type: :controller
-  config.include ControllerMacros, type: :controller
+  config.extend ControllerMacros, type: :controller
 
   config.before(:each) do
     DatabaseCleaner.start
