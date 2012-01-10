@@ -24,7 +24,7 @@
             %span.icon.waiting
             Request sent
       - else
-        = form_for world, method: 'post', url: ask_world_players_path(world), html: {id: 'play-here'} do
+        = form_for world, method: 'post', url: world_members_path(world), html: {id: 'play-here'} do
           %button
             %span.icon.ask
             Ask to play here
@@ -35,7 +35,7 @@
           %span.icon
           Add a friend
 
-        = form_tag add_world_players_path(world) do
+        = form_tag new_world_member_path(world) do
           = hidden_field_tag :id
 
           %section.search
@@ -56,10 +56,12 @@
     - # TODO Refactor
     - sorted_memberships(world).each do |membership|
       - user = membership.user
-      %li{ class: [world.players.include?(user) ? :online : :offline, membership.role == 'op' && :op]}= link_to user.username, user
+      %li{ class: [world.players.include?(user) ? :online : :offline, membership.op? && :op]}= link_to user.username, user
 
-  - if can?(:operate, world) and world.play_requests.any?
-    = render "play_requests", object: world.play_requests
+  - if can?(:operate, world) and world.membership_requests.any?
+    %h2 Pending Membership Requests
+    %ul.membership-requests
+      = render 'membership_request', collection: world.membership_requests
 
   %p.social
     %a.twitter-share-button{href: 'https://twitter.com/share', data: {text: "Play Minecraft with me in #{world.name} - #{world_url(world)}", url: world_url(world), count: 'horizontal', via: 'minefold'}} Tweet
@@ -105,7 +107,7 @@
 
     addFriendView = new MF.AddFriendView({
       el: $('#add-friend'),
-      searchPath: #{search_world_players_path(world, format: :json).to_json}
+      searchPath: #{search_world_members_path(world, format: :json).to_json}
     });
 
     pusher = new Pusher(#{Pusher.key.to_json}, {

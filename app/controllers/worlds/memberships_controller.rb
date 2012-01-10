@@ -3,6 +3,8 @@ class Worlds::MembershipsController < ApplicationController
     World.find_by_slug! params[:world_id]
   }
 
+  respond_to :json
+
   def search
     authorize! :operate, world
 

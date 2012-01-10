@@ -64,18 +64,18 @@ Minefold::Application.routes.draw do
 
     scope :module => :worlds do
       resources :events, :only => [:index, :create]
-      resources :players, :only => [:index, :create, :destroy] do
-        post :ask, :action => :ask, :on => :collection
-        post :add, :action => :add, :on => :collection
+      resources :memberships, :as => :members do
         get  :search, :action => :search, :on => :collection
+      end
 
-        put :approve, :on => :member
+      resources :membership_requests do
+        put :approve
       end
 
       resources :photos
     end
   end
-  
+
   namespace :api do
     resources :sessions, :only => [:create]
     resources :photos, :only => [:create]

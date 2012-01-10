@@ -5,8 +5,7 @@ describe Worlds::PhotosController do
 
   describe '#create' do
     context 'not signed in' do
-
-      it "is not allowed" do
+      it "is unauthorized" do
         post :create, world_id: world.slug
         response.status.should == 401
       end
