@@ -2,6 +2,30 @@ require "spec_helper"
 
 describe WorldMailer do
 
+  describe "#membership_created" do
+    let(:creator) { create(:user) }
+    let(:world) { create(:world, creator: creator) }
+
+    let(:membership) {
+      world.memberships.create(user: create(:user))
+    }
+
+    subject {
+      WorldMailer.membership_created(world.id, membership.id)
+    }
+
+    its(:to) { should include(membership.user.email) }
+
+    its(:subject) { should include(world.name) }
+
+    its(:body) { should include(membership.user.username) }
+    its(:body) { should include(membership.user.host) }
+    its(:body) { should include(creator.username) }
+    its(:body) { should include(world.name) }
+    its(:body) { should include(world.slug) }
+  end
+
+
   describe "#membership_request_created" do
     let(:creator) { create(:user) }
     let(:world) { create(:world, creator: creator) }

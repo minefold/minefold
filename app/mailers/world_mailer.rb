@@ -3,6 +3,16 @@ class WorldMailer < ActionMailer::Base
 
   default from: 'Minefold <team@minefold.com>'
 
+  def membership_created(world_id, membership_id)
+    @world = World.find(world_id)
+    @creator = @world.creator
+    @membership = @world.memberships.find(membership_id)
+    @user = @membership.user
+
+    mail to: @user.email,
+         subject: "You can now play in #{@world.name}"
+  end
+
   def membership_request_created(world_id, request_id)
     @world = World.find(world_id)
     @creator = @world.creator
