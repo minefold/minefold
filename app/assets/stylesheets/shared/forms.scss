@@ -7,7 +7,7 @@ input[type=email],
 input[type=textarea],
 input[type=password] {
   @include box-sizing(border-box);
-  font: 400 16px/18px $helvetica;
+  font: 400 14px/18px $helvetica;
   padding: $line ($gutter / 2);
   margin: 0;
 }
@@ -59,7 +59,7 @@ form {
       @include box-shadow(0 0 1px $yellow);
     }
   }
-  
+
   textarea {
     font-family: $helvetica;
     font-size: 12px;
