@@ -141,6 +141,7 @@ class User
 
   devise :registerable,
          :database_authenticatable,
+         :confirmable,
          :recoverable,
          :rememberable,
          :trackable,
