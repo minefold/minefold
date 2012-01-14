@@ -45,8 +45,10 @@
   %nav
     %ol
       %li.activity= link_to 'Activity', world
-      %li.map= link_to 'Map', map_world_path(world)
-      %li.photos= link_to 'Photos', world_photos_path(world)
+      - if world.mapped?
+        %li.map= link_to 'Map', map_world_path(world)
+      - if world.photos.any?
+        %li.photos= link_to 'Photos', world_photos_path(world)
 
       - if can? :edit, world
         %li.settings= link_to 'Settings', edit_world_path(world)
