@@ -73,7 +73,9 @@ Devise.setup do |config|
   # You can use this to let your user access some features of your application
   # without confirming the account, but blocking it after a certain period
   # (ie 2 days).
-  # config.confirm_within = 2.days
+  config.confirm_within = 2.weeks
+  # TODO Upgrade to Devise 2.0
+  # config.allow_unconfirmed_access_for = 2.weeks
 
   # Defines which key will be used when confirming an account
   # config.confirmation_keys = [ :email ]

@@ -1,13 +1,13 @@
 #worlds {
   margin-top: -2*$line;
   margin-bottom: -4*$line;
-  
+
   li {
     overflow: auto;
     padding: $line $gutter;
     border-bottom: 1px solid darken(white, 5%);
     margin: 0 (-$gutter);
-      
+
     a {
       display: block;
       font-family: $helvetica;

@@ -21,6 +21,12 @@ class AccountsController < ApplicationController
     respond_with current_user, :location => account_path
   end
 
+  def fetch_avatar
+    authorize! :update, current_user
+
+    current_user.fetch_avatar
+  end
+
   def time
   end
 

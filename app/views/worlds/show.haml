@@ -18,13 +18,13 @@
             Play here
 
     - else
-      - if world.membership_requests.where(user: current_user).empty?
+      - if world.membership_requests.include_user?(current_user)
         %form#play-here
           %button{disabled: true}
             %span.icon.waiting
             Request sent
       - else
-        = form_for world, method: 'post', url: world_members_path(world), html: {id: 'play-here'} do
+        = form_for world, url: world_members_path(world), method: :post, html: {id: 'play-here'} do
           %button
             %span.icon.ask
             Ask to play here
@@ -35,7 +35,7 @@
           %span.icon
           Add a friend
 
-        = form_tag new_world_member_path(world) do
+        = form_tag world_members_path(world), method: :post do
           = hidden_field_tag :id
 
           %section.search
@@ -78,6 +78,7 @@
 
       %input{type: 'text', name: 'text', rows: 2, maxlength: 100, autocomplete: 'off', placeholder: 'Chat with other players'}
 
+      = link_to 'Upload a photo', new_world_photo_path(world), class: 'photo'
       .note Press enter to chat
 
   #events
