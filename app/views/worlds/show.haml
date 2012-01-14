@@ -24,7 +24,7 @@
             %span.icon.waiting
             Request sent
       - else
-        = form_for world, url: world_members_path(world), method: :post, html: {id: 'play-here'} do
+        = form_for world, url: world_membership_requests_path(world), method: :post, html: {id: 'play-here'} do
           %button
             %span.icon.ask
             Ask to play here
@@ -74,7 +74,7 @@
   - if signed_in? and can?(:play, world)
     %form#share
       .avatar
-        = image_tag current_user.avatar.head.s24.url, width: 24, height: 24
+        = avatar_tag current_user, 24
 
       %input{type: 'text', name: 'text', rows: 2, maxlength: 100, autocomplete: 'off', placeholder: 'Chat with other players'}
 

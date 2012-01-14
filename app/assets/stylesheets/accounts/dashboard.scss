@@ -11,7 +11,7 @@
     a {
       display: block;
       font-family: $helvetica;
-      line-height: 24px;
+      line-height: 4*$line;
       background: url(image-path('default-world.png')) no-repeat;
       padding-left: 24px + $gutter;
     }

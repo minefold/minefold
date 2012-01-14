@@ -12,7 +12,7 @@
           Don't know
           = link_to 'how to connect', help_page_path(anchor: 'connecting')
           ?
-  
+
     %section
       %h3
         = f.label :username
@@ -21,19 +21,19 @@
         = error_messages_for(f.object, :username)
 
         = render partial: 'users/check_username'
-  
+
     %section
       %h3
         = f.label :email
       %fieldset
         = f.text_field :email
         = error_messages_for(f.object, :email)
-    
+
     %section
       %h3
         = f.label :avatar
       %fieldset
-        = image_tag current_user.avatar.head.s48.url
+        = avatar_tag current_user, 48
         %p.hint Change your avatar at #{link_to 'http://minecraft.net/profile', 'http://minecraft.net/profile', target: '_blank'}
 
     %section

@@ -3,9 +3,16 @@
 }
 
 html {
-  font: 400 14px/18px $helvetica;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 4*$line;
+  font-family: $helvetica;
   min-width: $width;
   background: white;
+}
+
+body {
+  margin: 0 auto;
 }
 
 .accessibility {

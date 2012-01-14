@@ -167,7 +167,7 @@ form#share {
 
   input {
     width: cols($ncols - 3) - (2 * $gutter) - 24px - $gutter;
-    line-height: 24px;
+    line-height: 4*$line;
     padding: ($line - 1px) ($gutter);
   }
 
@@ -208,7 +208,7 @@ form#share {
     .meta {
       float: right;
       font-size: 11px;
-      line-height: 18px;
+      line-height: 3*$line;
       color: rgba(black, 0.2);
     }
 
@@ -235,7 +235,7 @@ form#share {
         border-bottom-color: darken(white, 10%);
         padding: $line $gutter;
         color: rgba(black, 0.8);
-        line-height: 18px;
+        line-height: 3*$line;
 
         @include box-sizing(border-box);
         @include border-radius($radius);
@@ -247,7 +247,7 @@ form#share {
     }
 
     &.connection, &.disconnection {
-      line-height: 18px;
+      line-height: 3*$line;
       color: darken(white, 40%);
 
       .body {

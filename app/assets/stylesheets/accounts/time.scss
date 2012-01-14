@@ -23,7 +23,7 @@
         h1.time {
           font-size: 28px;
           font-weight: 400;
-          line-height: 24px;
+          line-height: 4*$line;
           color: $blue;
         }
 
@@ -36,7 +36,7 @@
 
         .price {
           font-size: 24px;
-          line-height: 24px;
+          line-height: 4*$line;
           color: lighten($blue, 20%);
         }
 
@@ -85,7 +85,7 @@
     aside {
       float: right;
       margin-right: 0;
-      line-height: 24px;
+      line-height: 4*$line;
 	  
       strong {
         color: black;
@@ -94,7 +94,7 @@
       .security {
         font-size: 11px;
         color: rgba(black, 0.2);
-        line-height: 24px;
+        line-height: 4*$line;
         margin-top: $line;
         margin-bottom: $line;
       }

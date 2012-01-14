@@ -11,17 +11,20 @@ class Worlds::MembershipRequestsController < ApplicationController
     end
   }
 
+  respond_to :json
+
   def create
     authorize! :read, world
-    membership_request.save
 
-    WorldMailer
-      .membership_request_created(world.id, membership_request.id)
-      .deliver
+    if membership_request.save and membership_request.new_record?
+      WorldMailer
+        .membership_request_created(world.id, membership_request.id)
+        .deliver
 
-    track 'created membership request'
+      track 'created membership request'
+    end
 
-    respond_with world
+    respond_with world, location: world_path(world)
   end
 
   def approve
@@ -36,7 +39,7 @@ class Worlds::MembershipRequestsController < ApplicationController
 
     track 'approved membership request'
 
-    redirect_to world_path(world)
+    respond_with world, location: world_path(world)
   end
 
   def destroy
@@ -46,7 +49,7 @@ class Worlds::MembershipRequestsController < ApplicationController
 
     track 'ignored membership request'
 
-    redirect_to world_path(world)
+    respond_with world, location: world_path(world)
   end
 
 end

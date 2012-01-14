@@ -2,7 +2,7 @@
 - track 'visited homepage'
 
 - masthead do
-  %h1 Minefold is the easiest way to play Minecraft with your friends.
+  %h1 The Easiest Way to Play Minecraft with Friends!
   %h2 No more server mumbojumbo.
 
   = link_to new_user_path, class: 'btn' do
@@ -12,38 +12,38 @@
       %strong
         = pluralize User::FREE_HOURS, 'hour', 'hours'
       %em FREE
-  
+
   #screenshots
     %img.a{src: image_path('screen-a.png'), width: 240, height: 120}
     %img.b{src: image_path('screen-b.png'), width: 340, height: 144}
     %img.c{src: image_path('screen-c.png'), width: 240, height: 120}
-  
+
   #avatars
     - @avatars.each do |username|
       = image_tag File.join("home", "head_s24_#{username}.png"), width: 24, height: 24, alt: username
 
 %ol#features
   %li.feature
-    %h1 Zen Simplicity
+    %h2 Zen Simplicity
     %p We do it all for you. No servers, RAM, Java or SSH. Sign up and just start playing Minecraft in <strong>less than 60 seconds</strong>, young grasshopper.
 
   %li.feature
-    %h1 Buy Time Individually
+    %h2 Buy Time Individually
     %p <strong>Don't pay for Frank</strong> who faked a sickie and played for a week straight. Buy only enough time to suit <em>your</em> habits, not Frank's habit.
 
   %li.feature
-    %h1 Show off
+    %h2 Show off
     %p We give you <strong>high quality maps</strong> of your worlds so you can quickly show your bros that rad 'coaster you've been working on.
 
   %li.feature
-    %h1 Realtime in-game chat
+    %h2 Realtime in-game chat
     %p See when your friends are playing online and chat with them straight from the web. You don't have to open Minecraft to shout <strong>“OMG”</strong>.
 
   %li.feature
-    %h1 Make love, not grief
+    %h2 Make love, not grief
     %p Keep pesky griefers out by only inviting <strong>friends you trust</strong> to play with you.
 
   %li.feature
-    %h1 Peace of mind
+    %h2 Peace of mind
     %p Your pieces of art are <strong>continuously backed up</strong> in multiple locations. Never lose anything.
 

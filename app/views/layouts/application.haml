@@ -18,9 +18,6 @@
       \ \ \ \_/\ \ \ \/\ \/\ \/\  __/\ \ \_/\ \L\ \\_\ \_/\ \L\ \
       \  \ \_\\ \_\ \_\ \_\ \_\ \____\\ \_\\ \____//\____\ \___,_\
       \   \/_/ \/_/\/_/\/_/\/_/\/____/ \/_/ \/___/ \/____/\/__,_ /
-      \
-      \      Digg it?
-      \
 
     %meta{name:'description', content:'Play Minecraft on demand with friends.'}
     %meta{name:'keywords', content:%w(gaming games game minecraft server hosting multiplayer).join(',')}
@@ -56,32 +53,38 @@
 
     %hr
 
+    #backside
+      #map
+      - # = yield :backside
+
     %header
-      .wrapper
-        %h1
-          = link_to root_url do
-            Minefold
-            %em Beta
+      %h1
+        = link_to root_url do
+          Minefold
+          %em Beta
 
-        %ol#nav
-          - if not user_signed_in?
-            %li.pricing= link_to 'Pricing', pricing_page_path
-            %li.blog= link_to 'Blog', 'http://blog.minefold.com'
-            %li.feedback= link_to 'Feedback', 'http://getsatisfaction.com/minefold'
-            %li.signin= link_to 'Sign In', new_user_session_path
-          - else
-            %li.dashboard= link_to 'Dashboard', user_root_path
-            %li.blog= link_to 'Blog', 'http://blog.minefold.com'
-            %li.feedback= link_to 'Feedback', 'http://getsatisfaction.com/minefold'
+      %ol#nav
+        - if not user_signed_in?
+          %li.pricing= link_to 'Pricing', pricing_page_path
+          %li.blog= link_to 'Blog', 'http://blog.minefold.com'
+          %li.feedback= link_to 'Feedback', 'http://getsatisfaction.com/minefold'
 
-            %li.user
-              = link_to current_user do
-                = image_tag current_user.avatar_url(:head, :s18), width: 18, height:18, alt: current_user.username
+          %li.signin= link_to 'Sign In', new_user_session_path
+          %li.signup= link_to 'Sign Up', new_user_path
 
-              %ol
-                %li.profile= link_to 'Profile', current_user
-                %li.settings= link_to 'Settings', account_path
-                %li.sign-out= link_to 'Signout', destroy_user_session_path, method: :delete
+        - else
+          %li.dashboard= link_to 'Dashboard', user_root_path
+          %li.blog= link_to 'Blog', 'http://blog.minefold.com'
+          %li.feedback= link_to 'Feedback', 'http://getsatisfaction.com/minefold'
+
+          %li.user
+            = link_to current_user do
+              = avatar_tag(current_user, 15)
+
+            %ol
+              %li.profile= link_to 'Profile', current_user
+              %li.settings= link_to 'Settings', account_path
+              %li.sign-out= link_to 'Signout', destroy_user_session_path, method: :delete
 
 
             %li.buy= link_to 'Buy time', time_account_path
@@ -97,7 +100,7 @@
     %hr
 
     - if not flash.empty?
-      #flash.wrapper
+      #flash
         - flash.each do |type, message|
           %div.message{class: type}
             %a.hide{href: '#'} Hide
@@ -106,10 +109,10 @@
       :javascript
         // Manual hide
         $('#flash a.hide').click(function() { $(this).parent().hide(); });
-        
+
         // Staggers multiple messages from hiding.
         var t = 2000;
-        
+
         // Timeout hide
         $('#flash .message').each(function(i){
           var elm = $(this);
@@ -118,28 +121,26 @@
           delay(t, function(){ elm.slideUp(); });
         });
 
-    %section#masthead
-      .wrapper= yield :masthead
+    %section#masthead= yield :masthead
 
     #page= yield
 
     %hr
 
     %footer#footer
-      .wrapper
-        %ul
-          %li.help= link_to 'Help & FAQ', help_page_path
-          %li.about= link_to 'About', about_page_path
-          %li.blog= link_to 'Blog', 'http://blog.minefold.com'
-          %li.feedback= link_to 'Feedback', 'http://getsatisfaction.com/minefold'
-          -# %li.press= link_to 'Press', press_page_path
-          -# %li.jobs= link_to 'Jobs', jobs_page_path
+      %ul
+        %li.about= link_to 'About', about_page_path
+        %li.help= link_to 'Help & FAQ', help_page_path
+        %li.blog= link_to 'Blog', 'http://blog.minefold.com'
+        %li.feedback= link_to 'Feedback', 'http://getsatisfaction.com/minefold'
+        -# %li.press= link_to 'Press', press_page_path
+        -# %li.jobs= link_to 'Jobs', jobs_page_path
 
-          %li.twitter= link_to 'Follow us on Twitter', 'https://twitter.com/minefold'
+        %li.twitter= link_to 'Follow us on Twitter', 'https://twitter.com/minefold'
 
-        %p.fineprint
-          &copy; 2011 Minefold.
-          #{link_to 'Privacy', privacy_page_path} &amp; #{link_to 'Terms', terms_page_path}.
+      %p.fineprint
+        &copy; 2011 Minefold.
+        #{link_to 'Privacy', privacy_page_path} &amp; #{link_to 'Terms', terms_page_path}.
 
     - if Rails.env.production?
       = render partial: 'shared/analytics'
