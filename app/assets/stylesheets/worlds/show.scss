@@ -24,36 +24,36 @@
     .icon.play {
       background-image: url(image-path('play.png'));
     }
-    
+
     .icon.current {
       background-image: url(image-path('tick.png'));
     }
-    
+
     .icon.ask {
       background-image: url(image-path('qmark.png'));
     }
   }
-  
+
   #add-friend {
     .icon, .avatar {
       background-image: url(image-path('plus.png'));
     }
-    
+
     button {
       @include btn($blue, white);
       width: 100%;
       margin-bottom: 2*$line;
     }
-    
+
     form {
       display: none;
       margin-bottom: 4*$line;
-      
+
       section.search {
         overflow: auto;
         background-color: darken(white, 10%);
         @include border-radius($radius);
-        
+
         .avatar {
           background-repeat: no-repeat;
           background-position: center;
@@ -68,7 +68,7 @@
             margin-left: -3px;
           }
         }
-      
+
         input {
           height: 24px;
           width: 170px;
@@ -76,7 +76,7 @@
           margin: $line 0;
         }
       }
-      
+
       section.hint {
         font-size: 11px;
         margin: 0;
@@ -88,7 +88,7 @@
           margin-bottom: 0;
         }
       }
-      
+
       &.valid {
         section.search {
           background-color: darken($blue, 10%);
@@ -99,7 +99,7 @@
         }
       }
     }
-    
+
     &.expanded {
       button {
         display: none;
@@ -125,21 +125,21 @@
       overflow: hidden;
     }
   }
-  
+
   ul.players li.offline a { color: #aaa }
   ul.players li.op a { font-weight: bold }
-  
+
   form#add-players {
     input[type=text] {
       width: 100%;
     }
   }
-  
+
   .requests button {
     width: 100%;
     margin-bottom: 2*$line;
   }
-  
+
   .requests button.approve {
     @include btn($green, white);
   }
@@ -149,12 +149,13 @@
 }
 
 form#share {
+  overflow: auto;
   margin: 0 (-$gutter);
   padding: 0 $gutter;
   border-bottom: 1px solid darken(white, 10%);
-  
+
   margin-bottom: 2*$line - 1px;
-  
+
   .avatar {
     float: left;
     margin-right: $gutter;
@@ -172,14 +173,19 @@ form#share {
 
   .note {
     padding: 0;
-    
+    float: left;
+
     font-size: 12px;
     padding-bottom: 0;
     background: transparent;
     color: lighten(black, 80%);
     margin-left: 24px + $gutter;
     margin-bottom: $line;
-    clear: both;
+  }
+
+  a.photo {
+    float: right;
+    font-size: 12px;
   }
 }
 
@@ -193,26 +199,26 @@ form#share {
     margin: 0 (-$gutter);
 
     margin-bottom: $line;
-    
-    
+
+
     .body {
       float: left;
     }
-    
+
     .meta {
       float: right;
       font-size: 11px;
       line-height: 18px;
       color: rgba(black, 0.2);
     }
-    
+
     hr {
 /*      border-top: 1px dotted darken(white, 10%);*/
 /*      margin: ($line - 1px) (-$gutter) $line (-$gutter);*/
     }
-    
-  
-  
+
+
+
     &.chat {
       .avatar {
         float: left;
@@ -239,15 +245,15 @@ form#share {
         }
       }
     }
-    
+
     &.connection, &.disconnection {
       line-height: 18px;
       color: darken(white, 40%);
-      
+
       .body {
         margin-left: 24px + 2*$gutter;
         font-size: 12px;
-        
+
         p {
           margin-bottom: 0;
         }

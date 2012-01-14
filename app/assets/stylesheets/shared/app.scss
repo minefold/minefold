@@ -305,6 +305,7 @@ header {
     font-size: 14px;
     font-weight: 600;
     color: black;
+    margin: $line 0;
   }
 
   p, ul, ol, pre {
@@ -331,14 +332,29 @@ header {
   }
 
   .note {
-    background: lighten($yellow, 35%);
+    background: #FFC;
     color: rgba(black, 0.8);
     margin: 0 (-$gutter) (2*$line) (-$gutter);
     padding: $line $gutter;
+
+    &.small {
+      font-size: 12px;
+      line-height: 18px;
+    }
   }
 
   .btn {
-    @include btn(lighten($blue, 10%), white);
+    @include btn(lighten($blue, 0%), white);
+  }
+
+  .placeholder {
+    padding: $line 0;
+    text-align: center;
+
+    h1 {
+      font-size: 28px;
+      color: black;
+    }
   }
 
 }

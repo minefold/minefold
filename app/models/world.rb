@@ -20,7 +20,11 @@ class World
     class_name: 'User'
 
   embeds_many :memberships
-  embeds_many :membership_requests
+  embeds_many :membership_requests do
+    def include_user?(user)
+      where(user_id: user.id).exists?
+    end
+  end
 
   has_many :events, as: :target,
                     order: [:created_at, :desc]
