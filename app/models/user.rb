@@ -155,21 +155,28 @@ class User
 
 # Avatars
 
-  mount_uploader :avatar, AvatarUploader
+  DEFAULT_AVATAR_SIZE = 120
 
-  def fetch_avatar!
-    self.remote_avatar_url = "http://minecraft.net/skin/#{safe_username}.png"
-    # Minecraft doesn't store default skins so it raises a HTTPError
-  rescue OpenURI::HTTPError
+  def avatar_url(size=DEFAULT_AVATAR_SIZE)
+    "http://asset.mcserverlist.net/avatar/#{safe_username}/#{size}"
   end
 
-  def async_fetch_avatar!
-    Resque.enqueue(FetchAvatarJob, id)
-  end
+  # field :skin_etag
+  # mount_uploader :skin, AvatarUploader
 
-  before_save do
-    async_fetch_avatar! if safe_username_changed?
-  end
+  # def fetch_avatar!
+  #   self.remote_avatar_url = "http://minecraft.net/skin/#{safe_username}.png"
+  #   # Minecraft doesn't store default skins so it raises a HTTPError
+  # rescue OpenURI::HTTPError
+  # end
+
+  # def async_fetch_avatar!
+  #   Resque.enqueue(FetchAvatarJob, id)
+  # end
+  #
+  # before_save do
+  #   async_fetch_avatar! if safe_username_changed?
+  # end
 
 
 # Referrals
@@ -226,7 +233,7 @@ class User
     {
       id: id,
       username: safe_username,
-      avatar: avatar.head.as_json
+      avatar: avatar_url
     }
   end
 

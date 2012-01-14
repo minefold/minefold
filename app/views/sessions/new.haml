@@ -7,10 +7,10 @@
       = f.text_field :email_or_username, tabindex: 1
 
     %section.password
-      = f.label :password
+      = f.label :password do
+        Password
+        = link_to 'Forgot your password?', new_user_password_path, class: 'forgot'
       = f.password_field :password, tabindex: 2
-
-      %p= link_to 'Forgot your password?', new_user_password_path
 
     %section
       = f.submit 'Sign in', tabindex: 4

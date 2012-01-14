@@ -12,6 +12,11 @@
       float: left;
     }
 
+    .forgot {
+      float: right;
+      font-size: 12px;
+    }
+
     .remember-me {
       margin-top: $line;
       margin-left: 2*$gutter;

@@ -18,12 +18,15 @@ class UsersController < ApplicationController
     end
   }
 
+  respond_to :html, :json
+
   def show
     authorize! :read, user
 
-    respond_to do |format|
-      format.html
-      format.json { render json: user.as_json(only: [:username, :id]) }
+    respond_with(user) do |format|
+      format.png {
+        redirect_to user.avatar_url(50)
+      }
     end
   end
 

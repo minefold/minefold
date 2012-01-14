@@ -1,39 +1,51 @@
 html {
-  margin-top: 7*$line;
+  margin-top: 12*$line;
+  background: darken(white, 5%) url(image-path('grain.png'));
+}
+
+body {
+  width: $width;
+}
+
+#backside {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  z-index: -1;
 }
 
 header {
   position: fixed;
   overflow: visible;
-  border-bottom: 2px solid darken(white, 10%);
   z-index: 99;
   top: 0; left: 0; right: 0;
 
+  width: $width;
+  margin: (2*$line) auto;
+
   min-width: $width;
+
+  @include box-shadow(0 1px 3px rgba(black, 0.4));
+  @include border-radius($radius);
 
   background-color: white;
 
   h1 {
     float: left;
-    line-height: 18px;
+    line-height: 4*$line;
     font-weight: 700;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     font-size: 18px;
 
+
     a {
+      display: block;
       color: $red;
       text-decoration: none;
-
-      padding: (2*$line) $gutter;
-
-      margin-left: -$gutter;
-      margin-right: $gutter;
-
-      display: block;
+      padding: (2*$line) (2*$gutter);
 
       &:hover {
-        color: black;
+        color: darken($red, 20%);
       }
     }
 
@@ -50,11 +62,11 @@ header {
 
     a {
       display: block;
-      padding: (2*$line) $gutter;
+      padding: (2*$line) (2*$gutter);
 
       color: $blue;
       text-decoration: none;
-      line-height: 18px;
+      line-height: 4*$line;
       font-size: 12px;
       font-weight: 600;
       @include antialiasing;
@@ -65,18 +77,18 @@ header {
 
       &:hover {
         color: black;
-        background: darken(white, 5%);
+        background-color: darken(white, 5%);
       }
     }
 
-    .signin, .user, .time, .buy {
+    .signin, .signup, .user, .time, .buy {
       float: right;
       position: relative;
     }
 
     .hours {
       padding: (2*$line) $gutter;
-      line-height: 18px;
+      line-height: 3*$line;
 
       font-size: 12px;
       font-weight: 600;
@@ -124,12 +136,11 @@ header {
 
 
 #flash {
-  width: $width;
   overflow: auto;
 
   .message {
     padding: $line $gutter;
-    line-height: 24px;
+    line-height: 4*$line;
     font-size: 13px;
     margin-top: $line;
     border-bottom: 1px solid rgba(black, 0.05);
@@ -185,17 +196,18 @@ header {
 }
 
 #masthead {
-  padding: (4*$line) 0;
+  padding: (4*$line) $pad;
 
   h1 {
-    font-size: 24px;
-    line-height: 48px;
+    font-size: 36px;
+    line-height: 8*$line;
     font-weight: 500;
+    text-shadow: 0 1px 0 rgba(white, 0.8);
   }
 
   h2 {
     font-size: 18px;
-    line-height: 24px;
+    line-height: 10*$line;
     color: rgba(black, 0.6);
   }
 
@@ -225,7 +237,7 @@ header {
           display: block;
           padding: ($line/2) $gutter;
 
-          line-height: 24px;
+          line-height: 4*$line;
           background-color: rgba(white, 0.6);
           color: $blue;
           text-decoration: none;
@@ -252,53 +264,45 @@ header {
 
 #page {
   clear: both;
-  width: $width + 2px;
   margin: 0 auto;
-  padding: 0 $gutter;
-  @include box-sizing(border-box);
 
   background-color: white;
-  border: 1px solid rgba(black, 0.1);
-  border-bottom-width: 2px;
-/*  border-bottom-color: rgba(black, 0.15);*/
-/*  @include box-shadow(0 1px 3px rgba(black, 0.1));*/
+
+  @include box-shadow(0 1px 3px rgba(black, 0.2));
   @include border-radius($radius);
   overflow: auto;
 
   color: rgba(black, 0.6);
-  line-height: 24px;
-
+  line-height: 5*$line;
 
   article {
     float: left;
     width: cols($ncols - 3);
     @include box-sizing(border-box);
-    padding: (2*$line) $gutter;
-    margin-left: -$gutter;
+    padding: (4*$line) $pad;
   }
 
   aside {
     float: right;
     width: cols(3);
-    @include box-sizing(border-box);
-    padding: (2*$line) $gutter;
-    margin-right: -$gutter;
 
+    @include box-sizing(border-box);
+    padding: (4*$line) $gutter;
     border-left: 1px solid darken(white, 5%);
   }
 
   h1 {
-    font-size: 18px;
-    color: lighten($blue, 10%);
-    margin: (2*$line) 0;
+    font-size: 24px; line-height: 8*$line;
+    color: darken($blue, 40%);
+    margin-bottom: 4*$line;
     font-weight: 500;
   }
 
   h2 {
-    font-size: 16px;
-    line-height: 18px;
-    margin-bottom: $line;
-    color: lighten($blue, 10%);
+    font-size: 19px;
+    line-height: 6*$line;
+    margin: (2 * $line) 0;
+    color: darken($blue, 20%);
   }
 
   h3 {
@@ -317,6 +321,20 @@ header {
     text-decoration: none;
     &:hover {
       color: black;
+    }
+  }
+
+  figure {
+    margin-bottom: 4*$line;
+
+    img, #map {
+      margin: 0 (-$pad);
+      width: cols($ncols - 3);
+    }
+
+    figcaption {
+      font-size: 12px;
+      line-height: 3*$line;
     }
   }
 
@@ -339,12 +357,12 @@ header {
 
     &.small {
       font-size: 12px;
-      line-height: 18px;
+      line-height: 3*$line;
     }
   }
 
   .btn {
-    @include btn(lighten($blue, 0%), white);
+    @include btn(darken($blue, 20%), white);
   }
 
   .placeholder {
@@ -362,10 +380,10 @@ header {
 
 footer {
   clear: both;
-  font: 13px/18px $helvetica;
+  font-size: 12px; line-height: 4*$line;
 
-  padding: (2*$line) $gutter;
-  margin: 0 $gutter;
+  padding: (2*$line) $pad;
+  padding-bottom: 10*$line;
 
   ul {
     overflow: auto;
@@ -373,9 +391,11 @@ footer {
       float: left;
       a {
         color: $blue;
+        font-weight: bold;
         text-decoration: none;
         margin-right: $gutter;
         display: block;
+        text-shadow: 0 1px 0 rgba(white, 0.6);
         &:hover {
           color: black;
         }

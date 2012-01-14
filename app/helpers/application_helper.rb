@@ -1,9 +1,9 @@
 module ApplicationHelper
-  
+
   def hidden
     {style: 'display:none'}
   end
-  
+
   def page_css_selector
     [params[:controller].gsub('/', '-').dasherize,
      params[:action].dasherize].join('-')
@@ -48,11 +48,8 @@ module ApplicationHelper
     content_for :masthead, capture_haml(&blk)
   end
 
-  def before(&blk)
-    content_for :before, &blk
+  def backside(&blk)
+    content_for :backside, capture_haml(&blk)
   end
 
-  def after(&blk)
-    content_for :after, &blk
-  end
 end

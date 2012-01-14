@@ -24,7 +24,7 @@
       .time {
         font-size: 28px;
         font-weight: 900;
-        line-height: 24px;
+        line-height: 4*$line;
         color: $blue;
 
         margin-bottom: 4*$line;
@@ -63,7 +63,7 @@
 
     h2 {
       margin-top: 2*$line;
-      line-height: 24px;
+      line-height: 4*$line;
     }
 
     dl {
@@ -71,7 +71,7 @@
     }
     .note {
       font-size: 13px;
-      line-height: 18px;
+      line-height: 3*$line;
     }
   }
 
@@ -95,7 +95,7 @@
       cite {
         display: block;
         font-size: 12px;
-        line-height: 24px;
+        line-height: 4*$line;
         margin: $line $gutter;
         margin-bottom: 0;
 

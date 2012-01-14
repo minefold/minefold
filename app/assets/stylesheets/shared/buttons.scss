@@ -1,12 +1,14 @@
+
 @mixin btn($bg, $fg) {
   color: $fg;
   background-color: $bg;
 
   display: block;
-  padding: $line $gutter;
+  padding: (2*$line) $gutter;
   margin: 0;
 
-  font: 600 15px/24px $helvetica;
+  font: 600 15px $helvetica;
+  line-height: 4*$line;
   text-decoration: none;
   text-align: left;
 
@@ -25,7 +27,7 @@
     margin: (-$line) $gutter (-$line) (-$gutter);
 
     @include border-radius($radius 0 0 $radius);
-    
+
     background-repeat: no-repeat;
     background-position: center;
     width: 18px;
@@ -38,13 +40,13 @@
     text-decoration: none;
     cursor: pointer;
   }
-  
+
   &:active {
     background-color: darken($bg, 15%);
     @include box-shadow(inset 0 3px 6px rgba(black, 0.2));
     text-shadow: 0 1px 0 rgba(black, 0.1);
   }
-  
+
   &:hover, &:focus, &:active {
     .icon {
       background-color: transparent;
@@ -54,12 +56,12 @@
   &:disabled, &.disabled {
     background-color: darken(white, 5%);
     color: rgba(black, 0.1);
-    
+
     @include box-shadow(none);
     text-shadow: none;
-    
+
     cursor: default;
-    
+
     .icon {
       background-color: darken(white, 10%);
       cursor: default;

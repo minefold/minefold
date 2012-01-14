@@ -1,37 +1,72 @@
-- title  'About'
-
+- title  'About Minefold'
 = render partial: 'pages/nav'
 
-- # TODO: Incorporate advice from http://www.inc.com/guides/2010/10/how-to-design-a-great-about-us-page.html
 
 %article
-  %h1 We help you play games with your friends.
+  %h1
+    We're party liasons.
 
-  %p Minefold is the easiest was to play multiplayer Minecraft. We remove all the boring stuff like running a server and just give you a georgous way to track and play your games.
-  
-  %h2 Contact
-  
   %p
-    The best way to get in contact with us at Minefold is to end us an email at #{mail_to 'team@minefold.com'}. You can also email the founders, Chris and Dave, directly at #{mail_to 'chris@minefold.com'} or #{mail_to 'dave@minefold.com'} respectively.
-  
+    Games are fun! We want to make playing them with your friends just as fun. It's difficult and nerdy to maintain a multiplayer server and get your friends into it. We're working to on making this as easy as possible. In fact, we don't want you to even to have to know what a "server" is! Wether you've formed a clan at school or want to spend time with your daughter or re-connect with a travelling friend, we can help you.
+
+  %p Originally from sunny Sydney, in 2012 Minefold made the pilgrimage to (the even sunnier) Mountain View in California.
+
+  %h2 The Team
+
+  %figure
+    = image_tag 'LDX04680.jpg', alt: 'Chris & Dave looking at videos of cats'
+
+    %figcaption Minefold was founded in 2011 by Chris Lloyd (left) & Dave Newman (right). We were frustrated at how difficult it was to play Minecraft together so we sat down and stared longingly at a screen.
+
+  %h3 Chris Lloyd
+
+  %p With degrees in Art History and Computer Science, Chris has always seen himself as a slashie. That's designer/developer, not the other way around. He's worked for companies in Chicago, Norway, Australia & Singapore making things that people love. Chris is passionate about clean design, minimalism and hipster music. He'd share a band with you but you wouldn't have heard of them yet.
+
+  %p
+    = link_to 'Follow @chrislloyd', 'https://twitter.com/chrislloyd', class: 'twitter-follow-button', data: {show_count: false}
+    %br
+    = mail_to 'chris@minefold.com'
+
+
+
+  %h3 Dave Newman
+
+  %p Dave is the closest thing you'll find to the “rockstar programmer” cliché. After founding a successful IT consultancy, he started writing hit iPad games and jumping out of planes. These days when he's taking time out from learning new languages or working on difficult scaling problems, he can be found topless in #{link_to 'Ding Dong Dang', 'http://www.au.timeout.com/sydney/bars/venues/2178/ding-dong-dang'} singing karaoke like the careless whisper of a good friend.
+
+  %p
+    = link_to 'Follow @whatupdave', 'https://twitter.com/whatupdave', class: 'twitter-follow-button', data: {show_count: false}
+    %br
+    = mail_to 'dave@minefold.com'
+
+  :javascript
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+
+  %h2 Our Address
+
+  %figure
+    #map{style: 'height:150px'}
+
   .vcard
     %p.adr
-      %a.fn.org.url{href: root_url} Minefold
+      %a.fn.org.url{href: root_url, style: 'display:none'} Minefold
+      %span.street 179 Stockwell Drive
       %br
-      %span.locality Tamarama
+      %span.locality Mountain View
+      \,
+      %abbr.region{title: 'New South Wales'} CA
+      %span.postal-code 94043
       %br
-      %abbr.region{title: 'New South Wales'} NSW
-      %span.postal-code 2026
-      %br
-      %span.country-name Australia
+      %span.country-name United States of America
 
-    %script{src: '//maps.googleapis.com/maps/api/js?sensor=false'}
-    #map_canvas{style: "width:100px;height:100px"}
-    :javascript
-      new google.maps.Map($('#map_canvas')[0], {
-        zoom: 14,
-        center: new google.maps.LatLng(-33.899692, 151.27062),
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-        disableDefaultUI: true
-      });
-
+%script{src: '//maps.googleapis.com/maps/api/js?sensor=false'}
+:javascript
+  var map = new google.maps.Map($('figure #map')[0], {
+    zoom: 13,
+    center: new google.maps.LatLng(37.3860517, -122.0838511),
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    disableDefaultUI: true,
+    styles: [{featureType: "all",
+              stylers: [
+                {saturation: -100},
+                {gamma: 2}]}]
+  });

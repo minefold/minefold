@@ -51,7 +51,7 @@
       .status {
         font-size: 12px;
         color: #999;
-        line-height: 24px;
+        line-height: 4*$line;
         &.error {
           color: $red;
         }
@@ -61,7 +61,7 @@
         margin-top: 2*$line;
 
         strong {
-          line-height: 24px;
+          line-height: 4*$line;
           margin: 0;
           color: $red;
         }
@@ -74,7 +74,7 @@
         background: url(image-path('spinner.gif')) left 1px no-repeat;
         padding-left: 16px + $gutter;
         font-size: 12px;
-        line-height: 18px;
+        line-height: 3*$line;
         color: #999;
         margin-top: $line;
         width: cols(4) - 16px;

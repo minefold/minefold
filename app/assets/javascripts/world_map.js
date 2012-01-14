@@ -1,5 +1,5 @@
 (function($){
-  
+
   var overviewerConfig = {
       /**
        * These are things that will probably not need to be changed by the user,
@@ -58,7 +58,7 @@
           /**
            * The zoom level when the page is loaded without a specific zoom setting
            */
-          'defaultZoom':  0,
+          'defaultZoom':  5,
           /**
            * This controls how far you can zoom out.
            */
@@ -166,8 +166,8 @@
        */
       'mapTypes':         [{"imgformat": "png", "overlay": false, "label": "Lighting", "bg_color": "#FFF", "path": "tiles", "shortname": "lighting"}]
   };
-  
-  
+
+
   var overviewer = {
       /**
        * This holds the map, probably the most important var in this file
@@ -462,7 +462,7 @@
                       // a default:
                       var iconURL = '';
 
-                      if (item.type == 'querypos') { 
+                      if (item.type == 'querypos') {
                           // Set on page load if MC x/y/z coords are given in the
                           // query string
                           var marker = new google.maps.Marker({
@@ -497,7 +497,7 @@
                                   'position': overviewer.util.fromWorldToLatLng(item.x,
                                       item.y, item.z),
                                   'map':      overviewer.map,
-                                  'title':    jQuery.trim(item.msg), 
+                                  'title':    jQuery.trim(item.msg),
                                   'icon':     iconURL,
                                   'visible':  false
                               });
@@ -520,7 +520,7 @@
                               'position': overviewer.util.fromWorldToLatLng(item.x,
                                   item.y, item.z),
                               'map':      overviewer.map,
-                              'title':    jQuery.trim(item.msg), 
+                              'title':    jQuery.trim(item.msg),
                               'icon':     iconURL,
                               'visible':  false
                           });
@@ -609,7 +609,7 @@
                               var shape = new google.maps.Polyline(shapeOptions);
                           }
 
-                          overviewer.collections.regions[label].push(shape); 
+                          overviewer.collections.regions[label].push(shape);
 
                           if (clickable) {
                               overviewer.util.createRegionInfoWindow(shape);
@@ -647,7 +647,7 @@
           },
           /**
            * Gee, I wonder what this does.
-           * 
+           *
            * @param string msg
            */
           'debug': function(msg) {
@@ -658,7 +658,7 @@
           /**
            * Simple helper function to split the query string into key/value
            * pairs. Doesn't do any type conversion but both are lowercase'd.
-           * 
+           *
            * @return Object
            */
           'parseQueryString': function() {
@@ -682,11 +682,11 @@
            * X, Y, Z order (arguments are *out of order*, because within the
            * function we use the axes like the rest of Minecraft Overviewer --
            * with the Z and Y flipped from normal minecraft usage.)
-           * 
+           *
            * @param int x
            * @param int z
            * @param int y
-           * 
+           *
            * @return google.maps.LatLng
            */
           'fromWorldToLatLng': function(x, z, y) {
@@ -742,10 +742,10 @@
            * The opposite of fromWorldToLatLng
            * NOTE: X, Y and Z in this function are Minecraft world definitions
            * (that is, X is horizontal, Y is altitude and Z is vertical).
-           * 
+           *
            * @param float lat
            * @param float lng
-           * 
+           *
            * @return Array
            */
           'fromLatLngToWorld': function(lat, lng) {
@@ -830,7 +830,7 @@
                           iconURL = overviewerConfig.CONST.image.defaultMarker;
                       }
                       items.push({
-                          'label': signGroup.label, 
+                          'label': signGroup.label,
                           'checked': signGroup.checked,
                           'icon': iconURL,
                           'action': function(n, item, checked) {
@@ -857,7 +857,7 @@
                   for (i in overviewerConfig.objectGroups.regions) {
                       var regionGroup = overviewerConfig.objectGroups.regions[i];
                       items.push({
-                          'label': regionGroup.label, 
+                          'label': regionGroup.label,
                           'checked': regionGroup.checked,
                           'action': function(n, item, checked) {
                               jQuery.each(overviewer.collections.regions[item.label],
@@ -907,7 +907,7 @@
           },
           /**
            * Reusable method for creating drop-down menus
-           * 
+           *
            * @param string title
            * @param array items
            */
@@ -963,7 +963,7 @@
                   itemDiv.appendChild(itemInput);
                   var textNode = document.createElement('text');
                   if(item.icon) {
-                      textNode.innerHTML = '<img width="15" height="15" src="' + 
+                      textNode.innerHTML = '<img width="15" height="15" src="' +
                           item.icon + '">' + item.label + '<br/>';
                   } else {
                       textNode.innerHTML = item.label + '<br/>';
@@ -1052,7 +1052,7 @@
            * Create the pop-up infobox for when you click on a region, this can't
            * be done in-line because of stupid Javascript scoping problems with
            * closures or something.
-           * 
+           *
            * @param google.maps.Polygon|google.maps.Polyline shape
            */
           'createRegionInfoWindow': function(shape) {
@@ -1075,7 +1075,7 @@
           },
           /**
            * Same as createRegionInfoWindow()
-           * 
+           *
            * @param google.maps.Marker marker
            */
           'createMarkerInfoWindow': function(marker) {
@@ -1106,7 +1106,7 @@
                       'y': coordinates.y,
                       'z': coordinates.z,
                       'type': 'querypos'}]);
-              }	
+              }
           },
           'setHash': function(x, y, z, zoom, maptype)    {
               window.location.replace("#/" + Math.floor(x) + "/" + Math.floor(y) + "/" + Math.floor(z) + "/" + zoom + "/" + maptype);
@@ -1183,7 +1183,7 @@
            * This is a mapType used only for debugging, to draw a grid on the screen
            * showing the tile co-ordinates and tile path. Currently the tile path
            * part does not work.
-           * 
+           *
            * @param google.maps.Size tileSize
            */
           'CoordMapType': function(tileSize) {
@@ -1193,7 +1193,7 @@
       /**
        * Stuff that we give to the google maps code instead of using ourselves
        * goes in here.
-       * 
+       *
        * Also, why do I keep writing these comments as if I'm multiple people? I
        * should probably stop that.
        */
@@ -1201,7 +1201,7 @@
           /**
            * Generate a function to get the path to a tile at a particular location
            * and zoom level.
-           * 
+           *
            * @param string path
            * @param string pathBase
            * @param string pathExt
@@ -1233,16 +1233,16 @@
           }
       }
   };
-  
+
 
   $.fn.world_map = function(options) {
     var config = $.extend({
       path:        '.',
     }, options);
-    
+
     overviewerConfig.CONST.mapDivId = $(this).attr('id');
     overviewerConfig.mapTypes[0].path = config.path;
-    
+
     overviewer.util.initialize();
   }
 

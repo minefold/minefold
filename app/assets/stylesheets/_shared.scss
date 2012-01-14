@@ -9,15 +9,18 @@ $helvetica: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 // Colors
 
-$blue:   lighten(#0A3F69, 20%);
-$yellow: #F1C440;
-$red:    #DD4B27;
-$green:  #9DE33F;
+$blue:   #3a7aff;
+$yellow: #ffce3a;
+$red:    #ff563a;
+$lime:   #b5ff3a;
+$green:  #5cff3a;
+$teal:   #3aff8c;
+$green:  #3ad9ff;
 
 
 // Grid
 
-$line: 6px;
+$line: 5px;
 
 $gutter: 10px;
 $pad:    20px;
@@ -30,7 +33,7 @@ $radius: 3px;
   @return $n * ($gutter + $col + $gutter);
 }
 
-$width: cols($ncols);
+$width: cols($ncols) + (2*$gutter);
 
 @mixin wrapper($n) {
   width: cols($n) - (2*$gutter);
