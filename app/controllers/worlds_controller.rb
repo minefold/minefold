@@ -53,12 +53,12 @@ class WorldsController < ApplicationController
     end
   end
 
-  def map
+  def info
     authorize! :read, world
   end
 
   def play
-    authorize! :update, world
+    authorize! :play, world
 
     current_user.current_world = world
     current_user.save
