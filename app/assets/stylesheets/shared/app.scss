@@ -293,6 +293,12 @@ header {
     }
   }
 
+  hr {
+    border-top: 1px solid rgba(black, 0.05);
+    margin: 0 (-$pad);
+    margin-bottom: 4*$line - 1px;
+  }
+
   figure {
     margin-bottom: 4*$line;
 

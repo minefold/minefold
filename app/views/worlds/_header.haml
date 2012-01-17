@@ -7,6 +7,19 @@
 - masthead class: 'attached' do
   %h1= world.name
 
+  %ol.stats
+    %li.pageviews
+      %em.val= world.pageviews
+      %span.label views
+
+    %li.minutes
+      %em.val= world.minutes_played
+      %span.label mins
+
+    %li.people
+      %em.val= world.memberships.size
+      %span.label people
+
   / - if not signed_in?
   /   #welcome
   /     %aside
@@ -27,25 +40,11 @@
   /       playing Minecraft here.
   /       You can join in too, it just takes 30s to sign up.
 
-  %ol.stats
-    %li.pageviews
-      %em.val= world.pageviews
-      %span.label views
-
-    %li.minutes
-      %em.val= world.minutes_played
-      %span.label mins
-
-    %li.people
-      %em.val= world.memberships.size
-      %span.label people
-
   %nav
     %ol
       %li.map= link_to 'Map', world
+      %li.info= link_to 'Info', info_world_path(world)
       %li.photos= link_to 'Photos', world_photos_path(world)
-
-      %li.members= link_to 'Members', world_members_path(world)
 
       - if can? :edit, world
         %li.settings= link_to 'Settings', edit_world_path(world)

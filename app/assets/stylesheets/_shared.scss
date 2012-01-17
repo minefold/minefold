@@ -1,6 +1,6 @@
 // Fonts
 
-$helvetica: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$proxima: "proxima-nova-soft-1", "proxima-nova-soft-2", $helvetica;
 
 @mixin antialiasing {
   -webkit-font-smoothing: antialiased;

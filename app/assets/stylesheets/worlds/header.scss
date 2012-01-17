@@ -3,23 +3,33 @@
   &.attached {
     position: fixed;
     top: 10*$line;
+    width: $width;
     @include box-sizing(border-box);
-
-    background-color: white;
-    @include border-radius(0 0 $radius $radius);
 
     border-top: 1px solid darken(white, 10%);
     padding-top: (2*$line - 1px);
 
+    background-color: white;
+    @include border-radius(0 0 $radius $radius);
     @include box-shadow(0 1px 0 rgba(black, 0.05));
 
-    h1 {
+    h1, .desc {
       width: cols($ncols - 3);
       float: left;
     }
 
     & + #page {
       margin-top: 20*$line - 1px;
+    }
+  }
+
+  .desc {
+    margin-bottom: 2*$line;
+    line-height: 4*$line;
+    color: rgba(black, 0.6);
+
+    p {
+      margin-bottom: 2*$line;
     }
   }
 
@@ -47,9 +57,10 @@
 
       .val {
         color: rgba(black, 0.8);
-        font-weight: 400;
+        font-weight: 600;
         font-size: 18px; line-height: 4*$line;
         font-style: normal;
+        font-family: $proxima;
       }
 
       .label {

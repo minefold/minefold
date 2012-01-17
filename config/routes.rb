@@ -58,8 +58,7 @@ Minefold::Application.routes.draw do
     end
 
     member do
-      get :map
-      get :invite
+      get :info
       put :play
     end
 
