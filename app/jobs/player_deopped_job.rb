@@ -1,4 +1,4 @@
-class PlayerDeoppedJob < TweetJob
+class PlayerDeoppedJob
   @queue = :low
 
   def self.perform world_id, username
