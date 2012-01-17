@@ -1,4 +1,4 @@
-- title 'Dashboard'
+- title_and_masthead 'Dashboard'
 
 -# TODO: "Confirm email address" new_confirmation_path(resource_name)
 
@@ -17,4 +17,4 @@
       - current_user.worlds.each do |world|
         %li{class: ('active' if current_user.current_world?(world))}
           = link_to world.name, world
-          %p= pluralize world.players.count, 'player', 'friends'
+          %p= pluralize world.members.count, 'member'

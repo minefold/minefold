@@ -1,5 +1,6 @@
-- title user.username do
-.avatar= avaimage_tag user.avatar.head.s24.url, width: 24, height: 24
+- title user.username
+- masthead do
+  .avatar= avatar_tag user, 30
   %h1= user.username
 
 %article

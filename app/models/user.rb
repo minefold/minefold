@@ -158,7 +158,7 @@ class User
   DEFAULT_AVATAR_SIZE = 120
 
   def avatar_url(size=DEFAULT_AVATAR_SIZE)
-    "http://asset.mcserverlist.net/avatar/#{safe_username}/#{size}"
+    "http://asset0.mcserverlist.net/avatar/#{safe_username}/#{size}"
   end
 
   # field :skin_etag

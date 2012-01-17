@@ -32,6 +32,8 @@ class WorldsController < ApplicationController
   def show
     authorize! :read, world
 
+    world.inc :pageviews, 1
+
     respond_with world
   end
 

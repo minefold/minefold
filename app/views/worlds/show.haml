@@ -1,131 +1,82 @@
-- title world.name
-
 = render partial: 'worlds/header'
 
-%aside
-  - if signed_in?
+- if world.mapped?
+  = javascript_include_tag '//maps.google.com/maps/api/js?sensor=false'
+  :javascript
+    // var mapView = new MF.MapView();
 
+    $(function(){
+      $('#backside #map').world_map({path: #{world.map_assets_url.to_json}})
+    })
+- else
+  %article
     - if can? :play, world
-      - if current_user.current_world == world
-        %form#play-here
-          %button{disabled: true}
-            %span.icon.current
-            Playing here
-      - else
-        = form_for [:play, world], method: 'put', html: {id: 'play-here'} do
-          %button
-            %span.icon.play
-            Play here
-
+      %h1 Waiting for you to play…
+      %p Please join #{current_user.host}
     - else
-      - if world.membership_requests.include_user?(current_user)
-        %form#play-here
-          %button{disabled: true}
-            %span.icon.waiting
-            Request sent
-      - else
-        = form_for world, url: world_membership_requests_path(world), method: :post, html: {id: 'play-here'} do
-          %button
-            %span.icon.ask
-            Ask to play here
+      %h1 Waiting for somebody to play here…
 
-    - if can? :operate, world
-      #add-friend
-        %button
-          %span.icon
-          Add a friend
-
-        = form_tag world_members_path(world), method: :post do
-          = hidden_field_tag :id
-
-          %section.search
-            %span.avatar
-            %input{type: 'text'}
-
-          %section.hint
-            %p
-              %em ENTER
-              a friend's username
-            %p
-              or
-              %a.cancel{href: ''} cancel
-
-
-  %h2 Friends playing here
-  %ul.players
-    - # TODO Refactor
-    - sorted_memberships(world).each do |membership|
-      - user = membership.user
-      %li{ class: [world.players.include?(user) ? :online : :offline, membership.op? && :op]}= link_to user.username, user
-
-  - if can?(:operate, world) and world.membership_requests.any?
-    %h2 Pending Membership Requests
-    %ul.membership-requests
-      = render 'membership_request', collection: world.membership_requests
-
-  %p.social
-    %a.twitter-share-button{href: 'https://twitter.com/share', data: {text: "Play Minecraft with me in #{world.name} - #{world_url(world)}", url: world_url(world), count: 'horizontal', via: 'minefold'}} Tweet
-    %script{type: 'text/javascript', src: '//platform.twitter.com/widgets.js'}
-
-    %iframe.facebook-like-button{src: "//www.facebook.com/plugins/like.php?href=#{world_url(world)}&send=true&layout=button_count&show_faces=false&height=50&action=like&colorscheme=light&appId=#{ENV['FB_APP_ID'].to_i}", allowTransparency: true, scrolling: 'no', frameborder: 0}
+:css
+  #page {display: none;}
 
 
 %article
-  - if signed_in? and can?(:play, world)
-    %form#share
-      .avatar
-        = avatar_tag current_user, 24
+  / - if signed_in? and can?(:play, world)
+  /   %form#share
+  /     .avatar
+  /       = avatar_tag current_user, 24
+  /
+  /     %input{type: 'text', name: 'text', rows: 2, maxlength: 100, autocomplete: 'off', placeholder: 'Chat with other players'}
+  /
+  /     = link_to 'Upload a photo', new_world_photo_path(world), class: 'photo'
+  /     .note Press enter to chat
+  /
+  / #events
+  /
+  / :javascript
+  /   var events, activityView, shareView, addFriendView, pusher, channel;
+  /
+  /   events = new MF.EventsCollection();
+  /   events.fetch({
+  /     success: function() {
+  /       activityView = new MF.ActivityView({
+  /         collection: events
+  /       });
+  /
+  /       events.bind('add', activityView.addEvent);
+  /
+  /       $('#events').append(activityView.el);
+  /
+  /       activityView.render();
+  /     }
+  /   });
+  /
+  /   shareView = new MF.ShareView({
+  /     el: $('form#share'),
+  /     collection: events
+  /   });
+  /
+  /   addFriendView = new MF.AddFriendView({
+  /     el: $('#add-friend'),
+  /     searchPath: #{search_world_members_path(world, format: :json).to_json}
+  /   });
+  /
+  /   pusher = new Pusher(#{Pusher.key.to_json}, {
+  /     encrypted: true
+  /   });
+  /
+  /   channel = pusher.subscribe(#{world.pusher_key.to_json});
+  /
+  /   channel.bind('chat-created', function(chat) {
+  /     // This is a hack to get around Backbone not sending Pusher's socket_id when saving a model.
+  /     var previousChatIsSame = events.any(function(e) {
+  /       return e.id === chat._id || (!e.id && e.get('type') === 'chat' && e.get('text') === chat.text);
+  /     });
+  /
+  /     if(!previousChatIsSame) {
+  /       var chatModel = new MF.ChatEvent(chat);
+  /       events.add(chatModel);
+  /     }
+  /   });
 
-      %input{type: 'text', name: 'text', rows: 2, maxlength: 100, autocomplete: 'off', placeholder: 'Chat with other players'}
-
-      = link_to 'Upload a photo', new_world_photo_path(world), class: 'photo'
-      .note Press enter to chat
-
-  #events
-
-  :javascript
-    var events, activityView, shareView, addFriendView, pusher, channel;
-
-    events = new MF.EventsCollection();
-    events.fetch({
-      success: function() {
-        activityView = new MF.ActivityView({
-          collection: events
-        });
-
-        events.bind('add', activityView.addEvent);
-
-        $('#events').append(activityView.el);
-
-        activityView.render();
-      }
-    });
-
-    shareView = new MF.ShareView({
-      el: $('form#share'),
-      collection: events
-    });
-
-    addFriendView = new MF.AddFriendView({
-      el: $('#add-friend'),
-      searchPath: #{search_world_members_path(world, format: :json).to_json}
-    });
-
-    pusher = new Pusher(#{Pusher.key.to_json}, {
-      encrypted: true
-    });
-
-    channel = pusher.subscribe(#{world.pusher_key.to_json});
-
-    channel.bind('chat-created', function(chat) {
-      // This is a hack to get around Backbone not sending Pusher's socket_id when saving a model.
-      var previousChatIsSame = events.any(function(e) {
-        return e.id === chat._id || (!e.id && e.get('type') === 'chat' && e.get('text') === chat.text);
-      });
-
-      if(!previousChatIsSame) {
-        var chatModel = new MF.ChatEvent(chat);
-        events.add(chatModel);
-      }
-    });
 

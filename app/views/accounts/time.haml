@@ -1,5 +1,5 @@
 - track_pageview
-- title 'Buy Time'
+- title_and_masthead 'Buy Time'
 
 - head do
   = javascript_include_tag 'https://js.stripe.com/v1'
@@ -29,15 +29,15 @@
         hours.
 
       %p.security AES-256 Secure payment by #{link_to 'Stripe', 'https://stripe.com/help/security', target: '_blank'}.
-	
+
     = form_tag order_path, method: :post do
       %input{type: 'hidden', name: 'hours'}
       %p.errors
-      
+
       %section.card-number
         = label_tag :number, 'Card Number'
         = text_field_tag :number, nil, name: nil, size: 20, autocomplete: 'off', class: %w{stripe number}, id: 'stripe-number'
-        
+
         :javascript
           var number = $('#stripe-number');
           number.blur(function(){
@@ -65,7 +65,7 @@
   products = buy.find('ol')
   card = buy.find('#card')
   form = card.find('form')
-  
+
   timePacks = #{TimePack.all.to_json}
 
   products.find('a').click (e) ->
@@ -78,7 +78,7 @@
 
     card.find('aside .dollar-amount').text("$" + price)
     card.find('aside .hours').text(hours)
-    
+
     form.find('input[name=hours]').val(hours)
 
     card.show()
@@ -87,7 +87,7 @@
   card.find('input[type=reset]').click ->
     card.hide()
     products.find('a').removeClass('active')
-  
+
   form.submit (e) ->
     e.preventDefault()
 
@@ -100,28 +100,28 @@
       cvc:       form.find('#stripe-cvc').val()
       exp_month: form.find('#stripe-exp-month').val()
       exp_year:  form.find('#stripe-exp-year').val()
-    
+
     hours = parseInt(products.find('.active').data('hours'), 10)
-    
+
     amount = _(timePacks).find((pack) -> pack.hours is hours).amount
-    
+
     # Protects against DOM modification attacks
     return unless amount
 
     Stripe.createToken card, amount, (status, response) ->
       if status isnt 200
         button.attr(disabled: false)
-    
+
         $('<p></p>')
           .addClass('stripe')
           .text(response.error.message)
           .appendTo form.find('.errors').empty()
-    
+
       else
         token = response.id
         $('<input></input>')
           .attr(type: 'hidden', name: 'stripe_token')
           .val(token)
           .appendTo(form)
-    
+
         form.get(0).submit()

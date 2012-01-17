@@ -3,7 +3,10 @@ class Worlds::MembershipsController < ApplicationController
     World.find_by_slug! params[:world_id]
   }
 
-  respond_to :json
+  respond_to :html, :json
+
+  def index
+  end
 
   def search
     authorize! :operate, world

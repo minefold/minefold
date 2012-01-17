@@ -1,7 +1,26 @@
-#worlds-show #masthead .activity {
-  @include active-masthead-menu-item;
+#worlds-show #page {
+  background: transparent;
+  margin-top: 10*$line;
 }
 
+#worlds-show footer {
+  position: absolute;
+  bottom: 0;
+  padding-bottom: 0;
+  width: $width - (2*$pad);
+  a {
+    color: rgba(black, 0.6);
+    text-shadow: 0 1px 0 rgba(white, 0.1);
+    &:hover {
+      color: black;
+    }
+  }
+
+  .fineprint {
+    color: rgba(black, 0.4);
+    text-shadow: 0 1px 0 rgba(white, 0.1);
+  }
+}
 
 
 #page aside {
@@ -141,10 +160,10 @@
   }
 
   .requests button.approve {
-    @include btn($green, white);
+    @include btn(green, white);
   }
   .requests button.ignore {
-    @include btn($red, white);
+    @include btn(red, white);
   }
 }
 
@@ -203,6 +222,7 @@ form#share {
 
     .body {
       float: left;
+      background: white;
     }
 
     .meta {
@@ -211,13 +231,6 @@ form#share {
       line-height: 3*$line;
       color: rgba(black, 0.2);
     }
-
-    hr {
-/*      border-top: 1px dotted darken(white, 10%);*/
-/*      margin: ($line - 1px) (-$gutter) $line (-$gutter);*/
-    }
-
-
 
     &.chat {
       .avatar {
@@ -230,7 +243,7 @@ form#share {
       }
 
       .body {
-        width: cols(7) - (2*$gutter) - 24px - $gutter;
+        width: cols(7) - (2*$gutter) - 24px - 4* $pad;
         border: 1px solid darken(white, 5%);
         border-bottom-color: darken(white, 10%);
         padding: $line $gutter;
