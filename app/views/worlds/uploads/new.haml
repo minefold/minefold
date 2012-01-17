@@ -1,4 +1,4 @@
-- title  'Upload a world'
+- title_and_masthead  'Upload a world'
 
 - head do
   = javascript_include_tag '//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js'
@@ -13,7 +13,7 @@
     -# TODO Actually fill out per os instructions
     -# = render partial: "instructions_#{os}"
     = render partial: 'instructions_mac'
-    
+
 
 %aside
   = form_for :world_upload do |f|
@@ -36,7 +36,7 @@
       Make sure you've followed the instructions to the tee. If you <em>still</em> continue to have problems, email your world as an attachment to #{mail_to 'support@minefold.com'}.
 
   :coffeescript
-    $ -> 
+    $ ->
       pusher = new Pusher(#{Pusher.key.to_json}, encrypted: true)
       maxFileSize = 1 * 1024 * 1024 * 1024 # 1Gb
 

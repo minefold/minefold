@@ -4,51 +4,66 @@
   %meta{property: 'og:url', content: world_path(world)}
   %meta{property: 'og:image', content: image_path('logo-48.png')}
 
-- masthead do
-  - if not signed_in?
-    #welcome
-      %aside
-        = link_to new_user_path, class: 'btn' do
-          Sign up now!
-          %span (First 10 hrs free)
+- masthead class: 'attached' do
+  %h1= world.name
 
-      %h2 Hey you!
+  / - if not signed_in?
+  /   #welcome
+  /     %aside
+  /       = link_to new_user_path, class: 'btn' do
+  /         Sign up now!
+  /         %span (First 10 hrs free)
+  /
+  /     %h2 Hey you!
+  /
+  /     %p
+  /       %strong= world.creator.username
+  /       - unless world.players.length.zero?
+  /         and
+  /         = pluralize world.players.length, 'friend', 'friends'
+  /         are
+  /       - else
+  /         is
+  /       playing Minecraft here.
+  /       You can join in too, it just takes 30s to sign up.
 
-      %p
-        %strong= world.creator.username
-        - unless world.players.length.zero?
-          and
-          = pluralize world.players.length, 'friend', 'friends'
-          are
-        - else
-          is
-        playing Minecraft here.
-        You can join in too, it just takes 30s to sign up.
+  %ol.stats
+    %li.pageviews
+      %em.val= world.pageviews
+      %span.label views
 
-  - if signed_in? and not current_user.played?
-    #welcome
-      %h2 Congratulations! Follow these steps to ephiphany:
-      %ol
-        %li
-          - if current_user.referrer
-            Join
-          - else
-            Create
-          a world.
-        %li
-          Invite 3 of your friends
+    %li.minutes
+      %em.val= world.minutes_played
+      %span.label mins
 
-        %li
-          Play!
-
+    %li.people
+      %em.val= world.memberships.size
+      %span.label people
 
   %nav
     %ol
-      %li.activity= link_to 'Activity', world
-      - if world.mapped?
-        %li.map= link_to 'Map', map_world_path(world)
-      - if world.photos.any?
-        %li.photos= link_to 'Photos', world_photos_path(world)
+      %li.map= link_to 'Map', world
+      %li.photos= link_to 'Photos', world_photos_path(world)
+
+      %li.members= link_to 'Members', world_members_path(world)
 
       - if can? :edit, world
         %li.settings= link_to 'Settings', edit_world_path(world)
+
+      %li.clone
+        = button_to 'Clone', '#'
+
+      - if can? :play, world
+        %li.play
+          - if current_user.current_world == world
+            = button_to 'Playing here', nil, disabled: true
+          - else
+            = button_to 'Play here', [:play, world], method: :put
+
+      - else
+        %li.play-request
+          - if signed_in? and world.membership_requests.include_user?(current_user)
+            = button_to 'Request sent', nil, disabled: true
+          - else
+            = button_to 'Ask to play here', world_membership_requests_path(world), method: :post
+

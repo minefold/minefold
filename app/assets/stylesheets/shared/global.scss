@@ -7,7 +7,7 @@ html {
   font-size: 14px;
   line-height: 4*$line;
   font-family: $helvetica;
-  min-width: $width;
+  min-width: $width + (2*$radius);
   background: white;
 }
 

@@ -55,7 +55,6 @@
 
     #backside
       #map
-      - # = yield :backside
 
     %header
       %h1
@@ -79,7 +78,7 @@
 
           %li.user
             = link_to current_user do
-              = avatar_tag(current_user, 15)
+              = avatar_tag(current_user, 20)
 
             %ol
               %li.profile= link_to 'Profile', current_user
@@ -121,9 +120,10 @@
           delay(t, function(){ elm.slideUp(); });
         });
 
-    %section#masthead= yield :masthead
+    = yield :masthead
 
-    #page= yield
+    #page
+      = yield
 
     %hr
 

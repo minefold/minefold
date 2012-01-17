@@ -22,16 +22,14 @@ Minefold::Application.routes.draw do
     post   '/signin' => 'sessions#create', :as => :user_session
     delete '/signout' => 'sessions#destroy', :as => :destroy_user_session
 
-    get '/reset-password' => 'passwords#new', :as => :new_user_password
-    post '/reset-password' => 'passwords#create'
-    get '/edit-password' => 'passwords#edit', :as => :edit_user_password
-    put '/edit-password' => 'passwords#update'
+    get '/account/amnesia' => 'passwords#new', :as => :new_user_password
+    post '/account/amnesia' => 'passwords#create'
+    get '/account/revive' => 'passwords#edit', :as => :edit_user_password
+    put '/account/revive' => 'passwords#update'
 
     get  '/signup/check' => 'users#check'
     get  '/signup' => 'users#new', :as => :new_user
     post '/users' => 'users#create', :as => :users
-
-    # get '/confirm-email' => 'devise/ConfirmationsController'
   end
 
   controller :stripe, :path => :customer, :as => :customer do
@@ -41,6 +39,7 @@ Minefold::Application.routes.draw do
 
   resource :account, :only => [:edit, :update], :path_names => {:edit => '/'} do
     get :time
+    get :notifications
   end
 
   resource :order, :only => [:create]

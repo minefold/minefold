@@ -12,7 +12,7 @@ describe Membership do
   it {should validate_presence_of(:user)}
   it {should validate_uniqueness_of(:user)}
 
-  it {should have_field(:role).of_type(Symbol)}
+  it {should have_field(:role).of_type(String)}
   it {should validate_inclusion_of(:role).to_allow(Membership::ROLES)}
 
   it "is valid without a role" do

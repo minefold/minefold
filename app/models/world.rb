@@ -33,6 +33,8 @@ class World
 
   field :last_mapped_at, type: DateTime
 
+  field :minutes_played, type: Integer, default: 0
+
 
   # Game settings
 
@@ -56,6 +58,12 @@ class World
   field :pvp, type: Boolean, default: true
   field :spawn_monsters, type: Boolean, default: true
   field :spawn_animals, type: Boolean, default: true
+
+
+  field :pageviews, type: Integer, default: 0
+  validates_numericality_of :pageviews,
+    only_integer: true,
+    greater_than_or_equal_to: 0
 
 
 # Validations

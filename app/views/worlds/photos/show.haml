@@ -1,6 +1,4 @@
-- title "#{world.name} photos" do
-  %h1= world.name
-
+- title "#{world.name} photos"
 = render partial: 'worlds/header'
 
 %figure#photo
@@ -17,14 +15,14 @@
 %aside
   - if photo.previous?
     = link_to '← Previous', [world, photo.previous], class: 'previous'
-  
+
   - if photo.next?
     = link_to 'Next →', [world, photo.next], class: 'next'
 
 :javascript
   var previous = $('aside a.previous'),
       next = $('aside a.next');
-  
+
   $(window).keydown(function(e) {
     if(e.keyCode == 37 && previous.length > 0) {
       window.location = previous.attr('href');

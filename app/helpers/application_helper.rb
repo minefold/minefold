@@ -31,21 +31,24 @@ module ApplicationHelper
     ).html_safe
   end
 
-  def title(page_title, masthead_title=page_title, &blk)
+  def title(page_title)
     content_for :title, page_title.to_s
-    if block_given?
-      masthead &blk
-    else
-      content_for :masthead, content_tag(:h1, masthead_title)
-    end
   end
 
+  def title_and_masthead(name)
+    title(name)
+    masthead { content_tag(:h1, name) }
+  end
+  
   def head(&blk)
     content_for :head, capture_haml(&blk)
   end
 
-  def masthead(&blk)
-    content_for :masthead, capture_haml(&blk)
+  def masthead(attrs={}, &blk)
+    attrs = {id: 'masthead'}.merge!(attrs)
+    content = content_tag(:section, capture(&blk), attrs)
+
+    content_for :masthead, content
   end
 
   def backside(&blk)
