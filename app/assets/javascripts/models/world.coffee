@@ -1,1 +1,1 @@
-class World extends Backbone.Model
+class MF.World extends Backbone.Model
