@@ -5,6 +5,7 @@
     top: 10*$line;
     width: $width;
     @include box-sizing(border-box);
+    z-index: 99;
 
     border-top: 1px solid darken(white, 10%);
     padding-top: (2*$line - 1px);
@@ -13,8 +14,8 @@
     @include border-radius(0 0 $radius $radius);
     @include box-shadow(0 1px 0 rgba(black, 0.05));
 
-    h1, .desc {
-      width: cols($ncols - 3);
+    h1 {
+      width: cols($ncols / 2) - $pad;
       float: left;
     }
 
@@ -33,43 +34,25 @@
     }
   }
 
-  ol.stats {
+  ol.actions {
     float: right;
-    width: cols(3) - $pad;
+    width: cols($ncols / 2);
 
     margin: 0;
-    margin-right: -$gutter;
-    text-shadow: 0 1px 0 rgba(white, 0.2);
+    margin-right: -$pad;
 
     li {
       float: right;
+      margin-right: $gutter;
 
-      text-align: center;
+      form input[type=submit], &.settings a {
+        @include btn(#3184d8, white);
+        padding: $line $gutter;
+        margin: $line 0;
+      }
 
-      border-left: 1px solid rgba(black, 0.1);
-      @include box-sizing(border-box);
-
-      padding: 0 $gutter;
-
-      .val, .label {
+      &.settings a img {
         display: block;
-      }
-
-      .val {
-        color: rgba(black, 0.8);
-        font-weight: 600;
-        font-size: 18px; line-height: 4*$line;
-        font-style: normal;
-        font-family: $proxima;
-      }
-
-      .label {
-        color: rgba(black, 0.4);
-        font-size: 12px; line-height: 4*$line;
-      }
-
-      &:last-child {
-        border-left: none;
       }
     }
   }
@@ -92,9 +75,9 @@
 
         a {
           display: block;
-          padding: ($line - 1px) (2*$gutter) ($line) (2*$gutter);
+          padding: $line (2*$gutter);
 
-          color: darken($blue, 20%);
+          color: darken($blue, 0%);
           text-decoration: none;
 
           &:hover {
@@ -102,27 +85,26 @@
           }
         }
 
-        &.clone, &.play, &.play-request {
+        &.stat {
           float: right;
+          padding: $line $gutter;
+
+          .val {
+            color: rgba(black, 0.8);
+            font-weight: 400;
+            font-size: 13px; line-height: 2*$line;
+            font-style: normal;
+          }
+
+          .label {
+            color: darken(white, 50%);
+            font-weight: 400;
+            font-size: 13px; line-height: 2*$line;
+          }
         }
 
-        form input[type=submit] {
-/*          background: rgba(black, 0.2);*/
-          background-color: $blue;
-          border: none;
-          margin: ($line - 1px) $gutter ($line) 0;
-/*          margin-right: $gutter;*/
-          padding: 0 $gutter;
-
-          color: white;
-          font-weight: 600;
-          font-size: 12px; line-height: 4*$line;
-          font-family: $helvetica;
-          @include border-radius($radius);
-
-          &:hover {
-            background-color: rgba(black, 0.3);
-          }
+        a, &.stat {
+          padding-top: $line - 1px;
         }
       }
     }

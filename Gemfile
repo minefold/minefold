@@ -32,8 +32,7 @@ gem 'jquery-rails'
 gem 'backbone-rails'
 gem 'coffee-filter'
 gem 'decent_exposure'
-gem 'representative', require: 'representative/json'
-gem 'representative_view'
+gem 'rabl'
 
 gem 'asset_sync'
 

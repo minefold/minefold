@@ -1,5 +1,5 @@
 class WorldsController < ApplicationController
-  respond_to :html
+  respond_to :html, :json
 
   prepend_before_filter :authenticate_user!, except: [:show, :map]
   before_filter :set_invite_code, :only => [:show, :map]
@@ -32,9 +32,11 @@ class WorldsController < ApplicationController
   def show
     authorize! :read, world
 
-    world.inc :pageviews, 1
-
-    respond_with world
+    respond_with(world) do |format|
+      format.html {
+        world.inc :pageviews, 1
+      }
+    end
   end
 
   def edit
@@ -51,10 +53,6 @@ class WorldsController < ApplicationController
     else
       render json: {errors: world.errors}
     end
-  end
-
-  def info
-    authorize! :read, world
   end
 
   def play

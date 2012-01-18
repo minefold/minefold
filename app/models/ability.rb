@@ -4,6 +4,7 @@ class Ability
   def initialize(user)
     # Public abilities
     can :read, [World, User]
+
     return unless user
 
     # Admin abilities
@@ -12,7 +13,7 @@ class Ability
     end
 
     # User abilities
-    can :create, World
+    can [:create, :clone], World
     can [:update, :destroy], World, creator: user
 
     can :operate, World do |world|
