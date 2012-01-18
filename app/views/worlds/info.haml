@@ -1,6 +1,21 @@
 - title "#{world.name} info"
 = render partial: 'header'
 
+- if world.mapped?
+  = javascript_include_tag '//maps.google.com/maps/api/js?sensor=false'
+  :javascript
+    var mapView = new MF.MapView({
+      el: $('#backside #map')[0],
+      host: #{world.map_assets_url.to_json},
+      map: {
+        navigationControl: false,
+        scrollwheel: false
+      }
+    });
+
+    mapView.render();
+
+
 %article
   %ul.memberships
     - world.memberships.each do |membership|
