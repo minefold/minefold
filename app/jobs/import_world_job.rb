@@ -32,7 +32,6 @@ class ImportWorldJob
     else
       world = world_upload.world
       Resque.push 'worlds_to_map', class: 'MapWorld', args: [world.id]
-      puts "Work complete."
 
       pusher.trigger 'success',
         world_upload: {
@@ -50,6 +49,7 @@ class ImportWorldJob
             only_path:  true
           )
         }
+      puts "Work complete."
     end
   end
 

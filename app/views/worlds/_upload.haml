@@ -1,0 +1,90 @@
+- head do
+  = javascript_include_tag '//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js'
+
+= form_for :world_upload do |f|
+  = f.file_field :path
+
+  .progress{hidden}
+    .bar
+  .status{hidden}
+
+  %p.processing{hidden}
+    %strong Processing world
+    This may take a few minutes depending on the size of your world.
+
+  %p.error{hidden}
+    %strong Error:
+    %span.message
+
+
+  %p.note{hidden}
+    Make sure you've followed the instructions to the tee. If you <em>still</em> continue to have problems, email your world as an attachment to #{mail_to 'support@minefold.com'}.
+
+:coffeescript
+  $ -> 
+    pusher = new Pusher(#{Pusher.key.to_json}, encrypted: true)
+    maxFileSize = 1 * 1024 * 1024 * 1024 # 1Gb
+
+    status = $('form .status')
+    processing = $('form .processing')
+    uploadForm = $('form#new_world')
+    uploadForm.submit (e) -> 
+      e.preventDefault()
+      console.log $(@).data('upload-in-progress')
+
+    $('form').s3upload
+      prefix: '#{[current_user.safe_username, current_user.id, Time.now.strftime('%Y%m%d%H%M%S')].join('-')}'
+      text: 'Upload your world'
+      signature_url: #{policy_upload_path(format: :xml).to_json}
+      required: true
+      submit_on_all_complete: false
+      onselect: (info, swf) ->
+        if parseInt(info.size) < maxFileSize
+          swf.upload()
+          $('#world_upload_path').val('Uploading '+info.name)
+          return false
+
+      onstart: =>
+        console.log 'onstart'
+        $('.error').hide()
+        $('.progress').show()
+        status.show()
+        uploadForm.data 'upload-in-progress', true
+
+      onprogress: (progress, info) ->
+        $('form .progress .bar').css width: (progress * 100) + '%'
+        status.text(Math.ceil( progress * 100 ) + '%')
+        false
+
+      onerror: (msg) ->
+        status.addClass('error').text(msg)
+        uploadForm.data 'upload-in-progress', false
+
+      oncomplete: (info) ->
+        $('.progress').add($('.status')).slideUp()
+        processing.show()
+
+        $.ajax
+          type: 'POST'
+          url: '#{upload_path}'
+          data: info
+          dataType: 'json'
+          success: (data) ->
+            channel_name = 'WorldUpload-' + data.id
+            channel = pusher.subscribe channel_name
+
+            console.log 'subscribed', channel
+
+            channel.bind 'success', (data) ->
+              console.log 'upload succeeded'
+              uploadForm.data 'upload-in-progress', false
+
+            channel.bind 'error', (message) ->
+              $('.progress').hide()
+              processing.hide()
+              $('#world_upload_path').val('Upload your world')
+              $('.error .message').text(message)
+              $('.error').show()
+              $('.note').show()
+              uploadForm.data 'upload-in-progress', false
+        

@@ -166,14 +166,6 @@ class World
     File.join ENV['WORLD_MAPS_URL'], id.to_s
   end
 
-
-# Uploads
-
-  def upload_filename_prefix
-    [creator.safe_username, creator.id, Time.now.strftime('%Y%m%d%H%M%S'), nil].join('-')
-  end
-
-
 # Other
 
   def to_param
