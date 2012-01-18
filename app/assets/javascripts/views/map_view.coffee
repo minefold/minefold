@@ -12,8 +12,22 @@ class MF.MapView extends Backbone.View
 
   initialize: (options) ->
     @host = options.host
+
+    rawHistory = localStorage.getItem(@model.id)
+
+    if rawHistory?
+      history = JSON.parse(rawHistory)
+      history.center = new google.maps.LatLng(history.lat, history.lng)
+
+      delete history.lat
+      delete history.lng
+
+    @defaults = _.extend @defaults, history
     @options = _.extend @defaults, options.map
-    @options.center or= @determineCenter()
+
+    @options.center or= new google.maps.LatLng(0.5, 0.5)
+
+    # console.log @options
 
   render: ->
     @map = new google.maps.Map(@el, @options)
@@ -25,23 +39,34 @@ class MF.MapView extends Backbone.View
       isPng: true
     )
 
-    google.maps.event.addListener @map, 'dragend', =>
-      center = @map.getCenter()
+    google.maps.event.addListener @map, 'center_changed', @persistViewport
+    google.maps.event.addListener @map, 'zoom_changed', @persistViewport
 
-      data =
-        center:
-          lat: center.lat()
-          lng: center.lng()
+  persistViewport: =>
+    center = @map.getCenter()
 
-      localStorage.setItem 'foo', JSON.stringify(data)
+    data =
+      zoom: @map.getZoom()
+      lat: center.lat()
+      lng: center.lng()
 
-  determineCenter: ->
-    local = JSON.parse(localStorage.getItem('foo'))
+    localStorage.setItem @model.id, JSON.stringify(data)
 
-    if local?
-      new google.maps.LatLng(local.center.lat, local.center.lng)
-    else
-      new google.maps.LatLng(0.5, 0.5)
+  setDynamic: ->
+    @map.setOptions
+      disableDoubleClickZoom: false
+      draggable: true
+      scrollwheel: true
+      navigationControl: true
+      keyboardShortcuts: true
+
+  setStatic: ->
+    @map.setOptions
+      disableDoubleClickZoom: true
+      draggable: false
+      scrollwheel: false
+      navigationControl: false
+      keyboardShortcuts: false
 
   tileUrl: (tile, zoom) =>
     url = ''
@@ -60,5 +85,5 @@ class MF.MapView extends Backbone.View
 
     # TODO Add mapped_at cache busting
 
-    @host + url
+    [@host, @model.id].join('/') + url
 

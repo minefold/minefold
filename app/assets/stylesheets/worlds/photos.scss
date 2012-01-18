@@ -24,6 +24,12 @@
   }
 }
 
+#worlds-photos-index {
+  #page {
+    width: cols(4);
+  }
+}
+
 #worlds-photos-show #page aside {
   overflow: auto;
 
@@ -105,5 +111,47 @@ form section.instructions {
   }
 }
 
+#worlds-show #page {
+  width: (6);
+  box-shadow: none;
+}
 
+#worlds-show #footer {
+  display: none;
+}
+
+#page figure.photo {
+  padding: 0;
+  position: relative;
+
+  img {
+    display: block;
+    width: $width;
+    margin: 0;
+    @include border-radius($radius);
+  }
+
+  figcaption {
+    color: rgba(white, 0.6);
+    font-size: 14px;
+    line-height: 4*$line;
+    margin: 0;
+    position: absolute;
+    background-color: rgba(black, 0.8);
+    width: 100%;
+    right: 0; bottom: 0; left: 0;
+    padding: (2*$line) $pad;
+    @include box-sizing(border-box);
+
+    @include border-radius(0 0 $radius $radius);
+
+
+    strong {
+      color: white;
+      font-size: 18px; line-height: 6*$line;
+      display: block;
+    }
+  }
+
+}
 

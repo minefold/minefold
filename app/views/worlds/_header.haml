@@ -4,65 +4,105 @@
   %meta{property: 'og:url', content: world_path(world)}
   %meta{property: 'og:image', content: image_path('logo-48.png')}
 
+  - if world.mapped?
+    = javascript_include_tag '//maps.google.com/maps/api/js?sensor=false'
+
 - masthead class: 'attached' do
   %h1= world.name
 
-  %ol.stats
-    %li.pageviews
-      %em.val= world.pageviews
-      %span.label views
+  %ol.actions
+    - if can? :edit, world
+      %li.settings
+        = link_to edit_world_path(world) do
+          = image_tag 'icons/settings.png', width: 20, height: 20
 
-    %li.minutes
-      %em.val= world.minutes_played
-      %span.label mins
-
-    %li.people
-      %em.val= world.memberships.size
-      %span.label people
-
-  / - if not signed_in?
-  /   #welcome
-  /     %aside
-  /       = link_to new_user_path, class: 'btn' do
-  /         Sign up now!
-  /         %span (First 10 hrs free)
-  /
-  /     %h2 Hey you!
-  /
-  /     %p
-  /       %strong= world.creator.username
-  /       - unless world.players.length.zero?
-  /         and
-  /         = pluralize world.players.length, 'friend', 'friends'
-  /         are
-  /       - else
-  /         is
-  /       playing Minecraft here.
-  /       You can join in too, it just takes 30s to sign up.
-
-  %nav
-    %ol
-      %li.map= link_to 'Map', world
-      %li.info= link_to 'Info', info_world_path(world)
-      %li.photos= link_to 'Photos', world_photos_path(world)
-
-      - if can? :edit, world
-        %li.settings= link_to 'Settings', edit_world_path(world)
-
+    - if can? :clone, world and not world.creator == current_user
       %li.clone
         = button_to 'Clone', '#'
 
-      - if can? :play, world
-        %li.play
-          - if current_user.current_world == world
-            = button_to 'Playing here', nil, disabled: true
-          - else
-            = button_to 'Play here', [:play, world], method: :put
+    - if can? :play, world
+      %li.play
+        - if current_user.current_world == world
+          = button_to 'Playing here', nil, disabled: true
+        - else
+          = button_to 'Play here', [:play, world], method: :put
 
-      - else
-        %li.play-request
-          - if signed_in? and world.membership_requests.include_user?(current_user)
-            = button_to 'Request sent', nil, disabled: true
-          - else
-            = button_to 'Ask to play here', world_membership_requests_path(world), method: :post
+    - else
+      %li.play-request
+        - if signed_in? and world.membership_requests.include_user?(current_user)
+          = button_to 'Request sent', nil, disabled: true
+        - else
+          = button_to 'Ask to play here', world_membership_requests_path(world), method: :post
+
+
+  %nav
+    %ol
+      %li.map= link_to 'Map', anchor: ''
+      %li.photos= link_to 'Photos', anchor: 'photos'
+
+      %li.stat.pageviews
+        %span.val= world.pageviews
+        %span.label views
+
+      %li.stat.minutes
+        %span.val= world.minutes_played
+        %span.label mins
+
+      %li.stat.people
+        %span.val= world.memberships.size
+        %span.label crafters
+
+:javascript
+  $(document).ready(function(){
+    var world = new MF.World(#{
+      render('worlds/base.rabl', object: world)
+    });
+
+    var photos = new MF.PhotosCollection({
+      world: world
+    });
+
+    console.log($('#page article')[0]);
+
+    var photosView = new MF.PhotosView({
+      el: $('#page')[0],
+      collection: photos
+    });
+
+    var mapView = new MF.MapView({
+      el: $('#backside #map')[0],
+      model: world,
+      host: #{ENV['WORLD_MAPS_URL'].to_json}
+    });
+
+    var WorkspaceRouter = Backbone.Router.extend({
+      routes: {
+        '': 'map',
+        'photos': 'photos'
+      },
+
+      map: function() {
+        $(mapView.el).css({opacity: 1});
+        $('#page').hide();
+        mapView.setDynamic();
+      },
+
+      photos: function() {
+        $(mapView.el).css({opacity: 0.6});
+        mapView.setStatic();
+        $('#page').show();
+        photosView.render();;
+      }
+    });
+
+    console.log(photosView.el);
+
+    workspace = new WorkspaceRouter();
+
+    mapView.render();
+
+    Backbone.history.start();
+  });
+
+
 

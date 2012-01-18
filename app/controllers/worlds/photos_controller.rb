@@ -1,5 +1,7 @@
 class Worlds::PhotosController < ApplicationController
 
+  respond_to :html, :json
+
   expose(:world) {
     World.find_by_slug!(params[:world_id])
   }
@@ -14,6 +16,8 @@ class Worlds::PhotosController < ApplicationController
 
   def index
     authorize! :read, world
+
+    respond_with world.photos.to_a
   end
 
   def new

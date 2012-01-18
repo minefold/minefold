@@ -155,9 +155,7 @@ class User
 
 # Avatars
 
-  DEFAULT_AVATAR_SIZE = 120
-
-  def avatar_url(size=DEFAULT_AVATAR_SIZE)
+  def avatar_url(size=nil)
     "http://asset0.mcserverlist.net/avatar/#{safe_username}/#{size}"
   end
 

@@ -1,32 +1,5 @@
 = render partial: 'worlds/header'
 
-- if world.mapped?
-  = javascript_include_tag '//maps.google.com/maps/api/js?sensor=false'
-  :javascript
-    var mapView = new MF.MapView({
-      el: $('#backside #map')[0],
-      host: #{world.map_assets_url.to_json},
-      map: {
-        navigationControl: false,
-        scrollwheel: false
-      }
-    });
-
-    mapView.render();
-
-%aside
-  - if can? :operate, world
-    = link_to new_world_photo_path(world), class: 'btn' do
-      Upload a new photo
-
 %article
-  - if world.photos.any?
-    #photos
-      - world.photos.each do |photo|
-        %figure
-          = link_to [world, photo] do
-            = image_tag photo.file_url(:thumb), width: 120, height: 120
-
-  - else
-    .placeholder
-      %p You can take screen shots in Minecraft by pressing <code>F2</code>.
+  %a{href: ''} Grid view
+  %a{href: ''} List view
