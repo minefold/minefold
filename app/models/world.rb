@@ -14,6 +14,9 @@ class World
     where(name: name)
   }
 
+  field :last_mapped_at, type: DateTime
+  field :minutes_played, type: Integer, default: 0
+
 
   belongs_to :creator,
     inverse_of: :created_worlds,
