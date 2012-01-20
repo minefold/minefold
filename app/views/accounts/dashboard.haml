@@ -16,5 +16,5 @@
     %ul
       - current_user.worlds.each do |world|
         %li{class: ('active' if current_user.current_world?(world))}
-          = link_to world.name, world
+          = link_to_world world.name, world
           %p= pluralize world.members.count, 'member'

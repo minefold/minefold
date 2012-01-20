@@ -49,30 +49,35 @@ Minefold::Application.routes.draw do
   as :user do
     resources :users, :path => 'players', :only => [:show]
   end
-
-  resources :worlds, :except => :destroy, :path_names => {:edit => 'settings'} do
+  
+  resources :worlds, :only => [:new, :create, :index] do
     collection do
       resource :upload, :module => :worlds, :only => [:new, :create] do
         get :policy
       end
     end
+  end
+  
+  scope '/:user_id', :as => :user do
+    resources :worlds, :path => '/', :only => [:show, :edit, :update, :destroy], :path_names => {:edit => 'settings'} do
 
-    member do
-      get :info
-      put :play
-    end
-
-    scope :module => :worlds do
-      resources :events, :only => [:index, :create]
-      resources :members, :controller => :memberships, :only => [:index, :create, :destroy] do
-        get  :search, :action => :search, :on => :collection
+      member do
+        get :info
+        put :play
       end
 
-      resources :membership_requests do
-        put :approve
-      end
+      scope :module => :worlds do
+        resources :events, :only => [:index, :create]
+        resources :members, :controller => :memberships, :only => [:index, :create, :destroy] do
+          get  :search, :action => :search, :on => :collection
+        end
 
-      resources :photos
+        resources :membership_requests do
+          put :approve
+        end
+
+        resources :photos
+      end
     end
   end
 
