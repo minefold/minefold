@@ -20,5 +20,12 @@ module WorldHelper
   def play_world_path world
     play_user_world_path world.creator, world
   end
-
+  
+  def world_membership_requests_path world
+    user_world_membership_requests_path world.creator, world
+  end
+  
+  def world_url world
+    user_world_url world.creator, world
+  end
 end
