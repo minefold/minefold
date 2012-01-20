@@ -4,6 +4,7 @@ class World
   include Mongoid::Slug
 
   GAME_MODES = [:survival, :creative]
+  LEVEL_TYPES = %W(DEFAULT FLAT)
   DIFFICULTIES = [:peaceful, :easy, :normal, :hard]
 
   field :name, type: String
@@ -11,7 +12,7 @@ class World
 
   field :seed,             type: String, default: ''
   field :game_mode,        type: Integer, default: GAME_MODES.index(:survival)
-
+  field :level_type,       type: String,  default: LEVEL_TYPES.first
   field :difficulty_level, type: Integer, default: DIFFICULTIES.index(:easy)
   field :pvp,              type: Boolean, default: true
   field :spawn_monsters,   type: Boolean, default: true
@@ -20,7 +21,10 @@ class World
   field :last_mapped_at, type: DateTime
   field :minutes_played, type: Integer, default: 0
 
+  field :world_data_file, type: String  # this is the world backup file in S3, can be blank
+
   belongs_to :creator, inverse_of: :created_worlds, class_name: 'User'
+  belongs_to :world_upload
 
   embeds_many :play_requests
 
@@ -46,11 +50,18 @@ class World
     only_integer: true,
     greater_than_or_equal_to: 0,
     less_than: DIFFICULTIES.size
-    
-  after_create do
+  
+    after_create do
     memberships.create role: 'op', user: creator
   end
 
+  after_create do
+    # if world is being created from an upload, use the uploaded world data file as our starting point
+    if world_upload
+      self.world_data_file = world_upload.world_data_file 
+      save!
+    end
+  end
 
 # Finders
 
@@ -165,14 +176,6 @@ class World
   def map_assets_url
     File.join ENV['WORLD_MAPS_URL'], id.to_s
   end
-
-
-# Uploads
-
-  def upload_filename_prefix
-    [creator.safe_username, creator.id, Time.now.strftime('%Y%m%d%H%M%S'), nil].join('-')
-  end
-
 
 # Other
 

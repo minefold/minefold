@@ -17,11 +17,12 @@ class TarGz
     end
 
     def run_command cmd
-      `#{cmd}`
+      puts cmd
+      puts `#{cmd}`
     end
 
-    def archive path, output_file, options = {}
-      run_command "tar #{option_string(options)} -czf '#{output_file}' '#{path}'"
+    def archive working_directory, path, output_file, options = {}
+      run_command "tar #{option_string(options)} -C '#{working_directory}' -czf '#{output_file}' '#{path}'"
     end
 
     def extract archive_file, options = {}
