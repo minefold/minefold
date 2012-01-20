@@ -2,35 +2,28 @@
 
   &.attached {
     position: fixed;
-    top: 10*$line;
+    top: 8*$line;
     width: $width;
     @include box-sizing(border-box);
     z-index: 99;
+    overflow: auto;
+    padding: 0 $pad;
 
     border-top: 1px solid darken(white, 10%);
-    padding-top: (2*$line - 1px);
 
     background-color: white;
     @include border-radius(0 0 $radius $radius);
     @include box-shadow(0 1px 0 rgba(black, 0.05));
 
-    h1 {
+    .attribution {
       width: cols($ncols / 2) - $pad;
       float: left;
-    }
 
-    & + #page {
-      margin-top: 20*$line - 1px;
-    }
-  }
-
-  .desc {
-    margin-bottom: 2*$line;
-    line-height: 4*$line;
-    color: rgba(black, 0.6);
-
-    p {
-      margin-bottom: 2*$line;
+      p {
+        color: darken(white, 40%);
+        font-size: 12px; line-height: 2*$line;
+        margin-bottom: 4*$line;
+      }
     }
   }
 
@@ -38,7 +31,7 @@
     float: right;
     width: cols($ncols / 2);
 
-    margin: 0;
+    margin: (2*$line) 0;
     margin-right: -$pad;
 
     li {
@@ -57,55 +50,18 @@
     }
   }
 
-  nav {
-    clear: both;
+  ul.stats {
+    li {
+      float: right;
+      font-size: 12px; line-height: 2*$line;
+      margin-left: $gutter;
 
-    ol {
-      background: darken(white, 5%);
-      overflow: auto;
-      margin: (2*$line) (-$pad) (-2*$line) (-$pad);
-      @include border-radius(0 0 $radius $radius);
+      .val {
+        color: rgba(black, 0.8);
+      }
 
-      border-top: 1px solid darken(white, 10%);
-
-      li {
-        float: left;
-        font-weight: 900;
-        font-size: 12px; line-height: 4*$line;
-
-        a {
-          display: block;
-          padding: $line (2*$gutter);
-
-          color: darken($blue, 0%);
-          text-decoration: none;
-
-          &:hover {
-            background-color: rgba(black, 0.05);
-          }
-        }
-
-        &.stat {
-          float: right;
-          padding: $line $gutter;
-
-          .val {
-            color: rgba(black, 0.8);
-            font-weight: 400;
-            font-size: 13px; line-height: 2*$line;
-            font-style: normal;
-          }
-
-          .label {
-            color: darken(white, 50%);
-            font-weight: 400;
-            font-size: 13px; line-height: 2*$line;
-          }
-        }
-
-        a, &.stat {
-          padding-top: $line - 1px;
-        }
+      .label {
+        color: rgba(black, 0.5);
       }
     }
   }

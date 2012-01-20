@@ -2,7 +2,7 @@
 - track 'visited homepage'
 
 - masthead do
-  %h1 The Easiest Way to Play Minecraft with Friends!
+  %h1 The easiest way to play Minecraft with your friends!
   %h2 No more server mumbojumbo.
 
   = link_to new_user_path, class: 'btn' do
@@ -22,28 +22,28 @@
     - @avatars.each do |username|
       = image_tag File.join("home", "head_s24_#{username}.png"), width: 24, height: 24, alt: username
 
-%ol#features
-  %li.feature
-    %h2 Zen Simplicity
-    %p We do it all for you. No servers, RAM, Java or SSH. Sign up and just start playing Minecraft in <strong>less than 60 seconds</strong>, young grasshopper.
+#page
+  %ol#features
+    %li.feature
+      %h2 Zen Simplicity
+      %p We do it all for you. No servers, RAM, Java or SSH. Sign up and just start playing Minecraft in <strong>less than 60 seconds</strong>, young grasshopper.
 
-  %li.feature
-    %h2 Buy Time Individually
-    %p <strong>Don't pay for Frank</strong> who faked a sickie and played for a week straight. Buy only enough time to suit <em>your</em> habits, not Frank's habit.
+    %li.feature
+      %h2 Buy Time Individually
+      %p <strong>Don't pay for Frank</strong> who faked a sickie and played for a week straight. Buy only enough time to suit <em>your</em> habits, not Frank's habit.
 
-  %li.feature
-    %h2 Show off
-    %p We give you <strong>high quality maps</strong> of your worlds so you can quickly show your bros that rad 'coaster you've been working on.
+    %li.feature
+      %h2 Show off
+      %p We give you <strong>high quality maps</strong> of your worlds so you can quickly show your bros that rad 'coaster you've been working on.
 
-  %li.feature
-    %h2 Realtime in-game chat
-    %p See when your friends are playing online and chat with them straight from the web. You don't have to open Minecraft to shout <strong>“OMG”</strong>.
+    %li.feature
+      %h2 Realtime in-game chat
+      %p See when your friends are playing online and chat with them straight from the web. You don't have to open Minecraft to shout <strong>“OMG”</strong>.
 
-  %li.feature
-    %h2 Make love, not grief
-    %p Keep pesky griefers out by only inviting <strong>friends you trust</strong> to play with you.
+    %li.feature
+      %h2 Make love, not grief
+      %p Keep pesky griefers out by only inviting <strong>friends you trust</strong> to play with you.
 
-  %li.feature
-    %h2 Peace of mind
-    %p Your pieces of art are <strong>continuously backed up</strong> in multiple locations. Never lose anything.
-
+    %li.feature
+      %h2 Peace of mind
+      %p Your pieces of art are <strong>continuously backed up</strong> in multiple locations. Never lose anything.

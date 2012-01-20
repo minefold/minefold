@@ -1,4 +1,4 @@
-class MF.EventView extends Backbone.View
+class Mf.EventView extends Backbone.View
   className: 'event'
 
   initialize: (options) ->

@@ -1,8 +1,8 @@
 #= require models/photo
 
-class MF.PhotosCollection extends Backbone.Collection
+class Mf.PhotosCollection extends Backbone.Collection
   url: -> @world.url() + '/photos'
-  model: MF.Photo
+  model: Mf.Photo
 
   initialize: (options) ->
     @world = options.world

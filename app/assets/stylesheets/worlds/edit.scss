@@ -1,4 +1,12 @@
-/*#worlds-edit #masthead .settings {
-  @include active-masthead-menu-item;
+#worlds-edit {
+
+  body {
+    width: cols(9);
+  }
+
+  .mode, .difficulty, .gameplay {
+    width: cols(3) - (2*$pad);
+    float: left;
+    border-bottom: none;
+  }
 }
-*/

@@ -1,6 +1,6 @@
 html {
-  margin-top: 12*$line;
-  background: darken(white, 5%) url(image-path('grain.png'));
+  margin-top: 8*$line;
+  background: url(image-path('grain.png'));
 }
 
 body {
@@ -12,10 +12,17 @@ body {
   top: 0px; right: 0; bottom: 0; left: 0;
   z-index: -1;
 
-  #map {
+  .map {
     position: absolute;
     width: 100%;
     height: 100%;
+  }
+
+  .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(white, 0.6);
   }
 }
 
@@ -25,14 +32,14 @@ header {
   z-index: 100;
   top: 0; left: 0; right: 0;
   width: $width;
-  margin: (2*$line) auto;
+  margin: 0 auto;
   padding: 0 $radius;
 
   @include box-shadow(0 1px 0 rgba(black, 0.2));
-  @include border-radius($radius);
+  @include border-radius(0 0 $radius $radius);
 
   background-color: $yellow;
-  text-shadow: 0 -1px 0 rgba(black, 0.2);
+  text-shadow: 0 1px 0 rgba(white, 0.6);
 
   h1 {
     float: left;
@@ -47,12 +54,8 @@ header {
       position: relative;
       padding: (2*$line) (2*$gutter);
 
-      color: white;
+      color: black;
       text-decoration: none;
-
-      &:hover {
-        background-color: rgba(white, 0.2);
-      }
 
       em {
         display: none;
@@ -66,7 +69,6 @@ header {
       float: left;
       font-size: 14px; line-height: 4*$line;
       font-weight: 900;
-      text-shadow: 0 1px 0 rgba(white, 0.6);
       color: rgba(black, 0.8);
 
       a {
@@ -187,29 +189,11 @@ header {
   }
 }
 
-
-/*@mixin active-masthead-menu-item {
-  a {
-    color: black;
-    background-color: white;
-    font-weight: bold;
-    z-index: 1;
-    position: relative;
-    border-color: darken(white, 10%);
-    border-bottom: 1px solid white;
-    margin-bottom: -1px;
-
-    &:hover {
-      background: white;
-    }
-  }
-}*/
-
 #masthead {
   padding: (2*$line) $pad;
 
   h1 {
-    margin-bottom: 2*$line;
+    margin: (2*$line) 0;
 
     font-size: 28px;
     line-height: 8*$line;
@@ -222,6 +206,10 @@ header {
     font-size: 18px;
     line-height: 10*$line;
     color: rgba(black, 0.6);
+  }
+
+  p {
+    margin-bottom: 4*$line;
   }
 
   a {
@@ -246,6 +234,8 @@ header {
   color: rgba(black, 0.6);
   line-height: 5*$line;
 
+  @include box-sizing(border-box);
+
   article {
     float: left;
     width: cols($ncols - 3);
@@ -258,13 +248,14 @@ header {
     width: cols(3);
 
     @include box-sizing(border-box);
-    padding: (4*$line) $gutter;
+    padding: (4*$line);
+    margin: 0;
     border-left: 1px solid darken(white, 5%);
   }
 
   h1 {
     font-size: 24px; line-height: 8*$line;
-    color: darken($blue, 40%);
+    color: darken($blue, 20%);
     margin-bottom: 4*$line;
     font-weight: 500;
   }
@@ -273,7 +264,7 @@ header {
     font-size: 19px;
     line-height: 6*$line;
     margin: (4*$line) 0;
-    color: darken($blue, 20%);
+    color: darken($blue, 10%);
   }
 
   h3 {
@@ -297,8 +288,6 @@ header {
 
   hr {
     border-top: 1px solid rgba(black, 0.05);
-    margin: 0 (-$pad);
-    margin-bottom: 4*$line - 1px;
   }
 
   figure {
@@ -310,8 +299,8 @@ header {
     }
 
     figcaption {
-      font-size: 12px;
-      line-height: 3*$line;
+      color: rgba(black, 0.4);
+      font-size: 12px; line-height: 4*$line;
     }
   }
 
@@ -329,8 +318,9 @@ header {
   .note {
     background: #FFC;
     color: rgba(black, 0.8);
-    margin: 0 (-$gutter) (2*$line) (-$gutter);
-    padding: $line $gutter;
+    margin: 0 (-$pad);
+    margin-bottom: 2*$line;
+    padding: $line $pad;
 
     &.small {
       font-size: 12px;
@@ -341,17 +331,6 @@ header {
   .btn {
     @include btn($blue, white);
   }
-
-  .placeholder {
-    padding: $line 0;
-    text-align: center;
-
-    h1 {
-      font-size: 28px;
-      color: black;
-    }
-  }
-
 }
 
 

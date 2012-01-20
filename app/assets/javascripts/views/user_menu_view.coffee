@@ -1,4 +1,4 @@
-class MF.UserMenuView extends Backbone.View
+class Mf.UserMenuView extends Backbone.View
   events:
     'mouseenter': 'show'
     'mouseleave': 'hide'

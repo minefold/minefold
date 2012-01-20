@@ -1,1 +1,1 @@
-class MF.Photo extends Backbone.Model
+class Mf.Photo extends Backbone.Model

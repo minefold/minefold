@@ -1,6 +1,6 @@
 #= require underscore
 
-class MF.AddFriendView extends Backbone.View
+class Mf.AddFriendView extends Backbone.View
   events:
     'click button': 'expand'
     'click a.cancel': 'collapse'

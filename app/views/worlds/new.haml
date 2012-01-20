@@ -1,8 +1,6 @@
 - title 'Create a new world'
 
-%aside
-  %p.note Do you have a world already? You can #{link_to 'upload it', new_upload_path} and start playing instantly.
-
-%article
-  = form_for world do |f|
-    = render partial: 'form', object: f
+#page
+  %article
+    = form_for world do |f|
+      = render partial: 'form', object: f

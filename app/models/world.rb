@@ -14,6 +14,7 @@ class World
     where(name: name)
   }
 
+  field :desc, type: String
 
   belongs_to :creator,
     inverse_of: :created_worlds,
@@ -28,8 +29,6 @@ class World
 
   has_many :events, as: :target,
                     order: [:created_at, :desc]
-
-  embeds_many :photos, order: [:created_at, :desc]
 
   field :last_mapped_at, type: DateTime
 

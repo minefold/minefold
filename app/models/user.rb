@@ -1,5 +1,6 @@
 class User
   include Mongoid::Document
+  include Mongoid::MultiParameterAttributes
   include Mongoid::Timestamps
   include Mongoid::Slug
   include Mongoid::Paranoia
@@ -29,9 +30,8 @@ class User
   field :credits,        type: Integer, default: (FREE_HOURS.hours / BILLING_PERIOD)
   field :minutes_played, type: Integer, default: 0
 
-  # attr_accessor :stripe_token
-  # field :stripe_id,               type: String
-  # embeds_one :card
+
+  field :notifications, type: Hash
 
   field :referral_code,   type: String, default: -> {
     self.class.free_referral_code
@@ -46,9 +46,8 @@ class User
   belongs_to :current_world, class_name: 'World', inverse_of: nil
   has_many :created_worlds, class_name: 'World', inverse_of: :creator
 
-  # has_and_belongs_to_many :opped_worlds,
-  #                         inverse_of: :ops,
-  #                         class_name: 'World'
+  has_many :albums
+  has_many :photos
 
   attr_accessor :email_or_username
 
@@ -89,9 +88,9 @@ class User
 
   attr_accessible :email,
                   :username,
-                  :plan_id,
                   :password,
-                  :password_confirmation
+                  :password_confirmation,
+                  :notifications
 
   attr_accessible :stripe_token,
                   :email_or_username,

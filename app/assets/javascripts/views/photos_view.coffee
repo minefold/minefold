@@ -1,28 +1,16 @@
 #= require collections/photos_collection
 #= require views/photo_view
 
-class MF.PhotosView extends Backbone.View
-  collection: MF.PhotosCollection
+class Mf.PhotosView extends Backbone.View
+  collection: Mf.PhotosCollection
+  template: _.template ""
 
-  initialize: ->
-    @subviews = []
-    @collection.bind 'add', (model) =>
-      console.log 'added', model
-      view = new MF.PhotoView(model: model)
-      @subviews.push view
-      $(@el).append view.el
-
-    @collection.fetch
-      success: (c) =>
-        c.each (model) =>
-          console.log 'added', model
-          view = new MF.PhotoView(model: model)
-          @subviews.push view
-          $(@el).append view.el
+  initialize: (options) ->
+    @world = options.world
 
   render: ->
-    console.log @collection
-    console.log 'rendering photos'
-    console.log @subviews
-    view.render() for view in @subviews
+    @collection = new Mf.PhotosCollection(world: @world)
 
+    @collection.fetch
+      success: (photos) =>
+        @subviews = photos.map (photo) -> new Mf.PhotoView(model: photo)

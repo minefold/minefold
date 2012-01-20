@@ -1,5 +1,5 @@
 #= require models/event
 
-class MF.DisconnectionEvent extends MF.Event
+class Mf.DisconnectionEvent extends Mf.Event
   defaults:
     type: 'disconnection'

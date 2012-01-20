@@ -58,7 +58,7 @@ Minefold::Application.routes.draw do
     end
 
     member do
-      get :info
+      get '/info', :action => :show
       put :play
     end
 

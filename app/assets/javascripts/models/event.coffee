@@ -1,12 +1,12 @@
-class MF.Event extends Backbone.Model
+class Mf.Event extends Backbone.Model
   
   constructor: (args...) ->
     super(args...)
     
     @__proto__ = switch @get('type')
-      when 'chat' then MF.ChatEvent.prototype
-      when 'connection' then MF.ConnectionEvent.prototype
-      when 'disconnection' then MF.DisconnectionEvent.prototype
+      when 'chat' then Mf.ChatEvent.prototype
+      when 'connection' then Mf.ConnectionEvent.prototype
+      when 'disconnection' then Mf.DisconnectionEvent.prototype
     @
   
   url: ->
