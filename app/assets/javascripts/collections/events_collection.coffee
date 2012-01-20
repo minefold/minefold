@@ -1,7 +1,7 @@
 #= require models/event
 
-class MF.EventsCollection extends Backbone.Collection
-  model: MF.Event
+class Mf.EventsCollection extends Backbone.Collection
+  model: Mf.Event
 
   url: ->
     "#{window.location.pathname}/events.json"

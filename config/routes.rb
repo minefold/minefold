@@ -49,7 +49,7 @@ Minefold::Application.routes.draw do
   as :user do
     resources :users, :path => 'players', :only => [:show]
   end
-  
+
   resources :worlds, :only => [:new, :create, :index] do
     collection do
       resource :upload, :module => :worlds, :only => [:new, :create] do
@@ -57,7 +57,7 @@ Minefold::Application.routes.draw do
       end
     end
   end
-  
+
   scope '/:user_id', :as => :user do
     resources :worlds, :path => '/', :only => [:show, :edit, :update, :destroy], :path_names => {:edit => 'settings'} do
 

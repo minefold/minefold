@@ -54,7 +54,8 @@
     %hr
 
     #backside
-      #map
+      .map
+      .overlay
 
     %header
       %h1
@@ -91,12 +92,7 @@
               .hours #{current_user.hours_left}h left
 
         :javascript
-          var userMenuView = new MF.UserMenuView({
-            el: $('header #nav .user')
-          });
-
-
-    %hr
+          var userMenuView = new Mf.UserMenuView({el: $('header #nav .user')});
 
     - if not flash.empty?
       #flash
@@ -122,12 +118,9 @@
 
     = yield :masthead
 
-    #page
-      = yield
+    = yield
 
-    %hr
-
-    %footer#footer
+    %footer
       %ul
         %li.about= link_to 'About', about_page_path
         %li.help= link_to 'Help & FAQ', help_page_path

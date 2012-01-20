@@ -1,9 +1,8 @@
-class MF.MapView extends Backbone.View
+class Mf.WorldMapView extends Backbone.View
   id: 'map'
 
   defaults:
     zoom: 5
-    navigationControl: true
     scaleControl: false
     mapTypeControl: false
     streetViewControl: false
@@ -13,6 +12,9 @@ class MF.MapView extends Backbone.View
   initialize: (options) ->
     @host = options.host
 
+    @overlay = $(@el).find('.overlay')
+
+    # TODO Refactor
     rawHistory = localStorage.getItem(@model.id)
 
     if rawHistory?
@@ -27,10 +29,11 @@ class MF.MapView extends Backbone.View
 
     @options.center or= new google.maps.LatLng(0.5, 0.5)
 
-    # console.log @options
+    @map = new google.maps.Map($(@el).find('.map')[0], @options)
+    google.maps.event.addListener @map, 'center_changed', @persistViewport
+    google.maps.event.addListener @map, 'zoom_changed', @persistViewport
 
   render: ->
-    @map = new google.maps.Map(@el, @options)
     @map.mapTypes.set 'map', new google.maps.ImageMapType(
       getTileUrl: @tileUrl
       tileSize: new google.maps.Size(@options.tileSize, @options.tileSize)
@@ -39,8 +42,34 @@ class MF.MapView extends Backbone.View
       isPng: true
     )
 
-    google.maps.event.addListener @map, 'center_changed', @persistViewport
-    google.maps.event.addListener @map, 'zoom_changed', @persistViewport
+  enter: ->
+    @map.setOptions
+      disableDoubleClickZoom: false
+      draggable: true
+      scrollwheel: true
+      navigationControl: true
+      keyboardShortcuts: true
+
+    @overlay.hide()
+
+  exit: ->
+    @overlay.show()
+
+    @map.setOptions
+      disableDoubleClickZoom: true
+      draggable: false
+      scrollwheel: false
+      navigationControl: false
+      keyboardShortcuts: false
+
+    $('<div></div>').css(
+      position: 'absolute'
+      top: 0
+      right: 0
+      bottom: 0
+      left: 0
+      backgroundColor: 'rgba(0,0,0,0.8)'
+    ).after($(@el))
 
   persistViewport: =>
     center = @map.getCenter()
@@ -51,22 +80,6 @@ class MF.MapView extends Backbone.View
       lng: center.lng()
 
     localStorage.setItem @model.id, JSON.stringify(data)
-
-  setDynamic: ->
-    @map.setOptions
-      disableDoubleClickZoom: false
-      draggable: true
-      scrollwheel: true
-      navigationControl: true
-      keyboardShortcuts: true
-
-  setStatic: ->
-    @map.setOptions
-      disableDoubleClickZoom: true
-      draggable: false
-      scrollwheel: false
-      navigationControl: false
-      keyboardShortcuts: false
 
   tileUrl: (tile, zoom) =>
     url = ''

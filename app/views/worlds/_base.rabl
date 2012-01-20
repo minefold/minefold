@@ -1,4 +1,4 @@
-attributes :id, :created_at, :updated_at
+attributes :id, :created_at, :updated_at, :desc
 
 node(:url) {|world| world_path(world) }
 

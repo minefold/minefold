@@ -1,7 +1,9 @@
-- title world.name
+- title "Settings for #{world.name}"
+- masthead do
+  %h1 #{world.name} settings
+  %p
+    = link_to "← back to #{world.name}", world
 
-= render partial: 'header'
-
-%article
+#page
   = form_for world do |f|
     = render partial: 'form', object: f

@@ -2,7 +2,7 @@ label {
   display: block;
 }
 
-input[type=text],
+/*input[type=text],
 input[type=email],
 input[type=textarea],
 input[type=password] {
@@ -11,6 +11,7 @@ input[type=password] {
   padding: $line ($gutter / 2);
   margin: 0;
 }
+*/
 
 input[type=checkbox] + label,
 input[type=radio] + label {
@@ -22,9 +23,9 @@ form {
     margin-bottom: 2*$line;
     clear: both;
 
-    h3 {
+/*    h3 {
       float: left;
-    }
+    }*/
 
     fieldset {
       margin-left: cols(2);
@@ -50,27 +51,19 @@ form {
 
   input[type=text], input[type=password], input[type=email], textarea {
     margin: 0;
-    border: 1px solid darken(white, 10%);
-    outline: none;
-    @include border-radius($radius);
-
-    &:focus {
-      border-color: $yellow;
-      @include box-shadow(0 0 1px $yellow);
-    }
+    padding: (2*$line - 1px) ($gutter - 1px);
+    font-size: 18px; line-height: 4*$line;
+    @include box-sizing(border-box);
   }
 
   textarea {
     font-family: $helvetica;
-    font-size: 12px;
-    line-height: 3*$line;
-    padding: ($line/2) ($gutter/2);
-    @include box-sizing(border-box);
+    font-size: 14px;
   }
 
   input[type=submit] {
     @include btn($blue, white);
-    padding: $line (2*$gutter);
+    padding: (2*$line) ($pad);
   }
 
   .errors {
@@ -90,5 +83,34 @@ form {
       border-color: $red;
     }
   }
+
+  fieldset {
+    padding: (4*$line) $pad;
+    padding-bottom: 4*$line - 1px;
+    border-bottom: 1px solid darken(white, 5%);
+
+    h3 {
+      color: black;
+      font-weight: 600;
+      line-height: 4*$line;
+      margin-bottom: 2*$line;
+    }
+
+    &.submit {
+      clear: both;
+      background-color: darken(white, 5%);
+      margin-top: -1px;
+      border-top: 1px solid darken(white, 10%);
+    }
+  }
+
+  input[type=text],
+  input[type=email],
+  input[type=password],
+  textarea {
+    width: 100%;
+    margin: 0; margin-bottom: 2*$line;
+  }
+
 
 }

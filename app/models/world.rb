@@ -46,8 +46,6 @@ class World
   has_many :events, as: :target,
                     order: [:created_at, :desc]
 
-  embeds_many :photos, order: [:created_at, :desc]
-
   field :last_mapped_at, type: DateTime
 
   field :minutes_played, type: Integer, default: 0

@@ -1,18 +1,18 @@
-- title_and_masthead  'Sign In'
+- title_and_masthead  'Hey friend, sign in.'
 
-%article
+#page
   = form_for :user, as: :user, url: session_path(:user) do |f|
-    %section.email
-      = f.label :email_or_username, 'Email or Minecraft username'
+    %fieldset
+      %h3= f.label :email_or_username, 'Email or username'
       = f.text_field :email_or_username, tabindex: 1
 
-    %section.password
-      = f.label :password do
-        Password
-        = link_to 'Forgot your password?', new_user_password_path, class: 'forgot'
+      %h3= f.label :password
       = f.password_field :password, tabindex: 2
 
-    %section
+      %p
+        = link_to 'Forgotten your password?', new_user_password_path, class: 'forgot'
+
+    %fieldset.submit
       = f.submit 'Sign in', tabindex: 4
       .remember-me
         = f.check_box :remember_me, tabindex: 3

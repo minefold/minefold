@@ -1,5 +1,5 @@
 #= require models/event
 
-class MF.ConnectionEvent extends MF.Event
+class Mf.ConnectionEvent extends Mf.Event
   defaults:
     type: 'connection'

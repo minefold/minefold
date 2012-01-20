@@ -1,8 +1,27 @@
 - title user.username
 - masthead do
-  .avatar= avatar_tag user, 30
   %h1= user.username
 
-%article
-  %p There isn't much to see here yet. But hey, we hope you enjoy this video!
-  = youtube_vid
+#page
+  %section.albums
+    - if user.albums.any?
+      %ol
+        - user.albums.each do |album|
+          %li= album.title
+
+    - else
+      You don't have any albums yet. Create one!
+
+  %hr.bare
+
+  %aside
+    Use our tool to auto upload screenshots!
+
+  %article
+    .photos
+      - if user.photos.any?
+        %ol
+          - user.photos.each do |photo|
+            %li= photo.caption
+      - else
+        You don't any any photos yet, download our tool!

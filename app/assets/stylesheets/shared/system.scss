@@ -1,6 +1,7 @@
 #system {
-  #masthead .wrapper, #page, footer .wrapper {
+  #masthead, #page, footer {
     width: cols(4);
+    margin: 0 auto;
   }
 
   #masthead {
@@ -8,10 +9,10 @@
   }
 
   #page {
-    padding: (4*$line) (2*$gutter);
+    padding: 0;
 
     article {
-      width: cols(4) - (4*$gutter);
+      width: 100%;
       margin: 0;
       padding: 0;
     }
@@ -19,7 +20,8 @@
 
   footer {
     text-align: center;
-    ul {
+    padding: (2*$line) $pad;
+    .twitter {
       display: none;
     }
   }

@@ -1,7 +1,7 @@
 #= require models/photo
 
-class MF.PhotoView extends Backbone.View
-  model: MF.Photo
+class Mf.PhotoView extends Backbone.View
+  model: Mf.Photo
   tagName: 'figure'
   className: 'photo'
 
