@@ -7,4 +7,5 @@
 
 %article
   = form_for world do |f|
+    = f.hidden_field :world_upload_id
     = render partial: 'form', object: f

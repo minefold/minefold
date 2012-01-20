@@ -20,8 +20,15 @@ describe World do
 # VALIDATIONS
 
   it { should validate_presence_of(:name)}
-
   it { should embed_many(:memberships) }
 
+  describe 'before_create' do
+    context 'with referenced world_upload' do
+      let(:world) { create :world, world_upload: WorldUpload.new(world_data_file: 'uploaded') }
+      subject { world }
+      
+      its(:world_data_file) { should == 'uploaded' }
+    end
+  end
 
 end
