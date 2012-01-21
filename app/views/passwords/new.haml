@@ -1,10 +1,10 @@
-- title_and_masthead "Reset Password"
+- title_and_masthead 'Forgotten password'
 
-%article
+#page
   = form_for :user, as: :user, url: new_user_password_path, method: :post do |f|
-    %section
-      = f.label :email
+    %fieldset
+      %h3= f.label :email
       = f.email_field :email
 
-    %section.submit
-      = f.submit 'Reset password'
+    %fieldset.submit
+      = f.submit 'Send password reset email'

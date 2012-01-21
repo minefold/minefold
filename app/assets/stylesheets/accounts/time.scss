@@ -1,3 +1,12 @@
+#accounts-edit body, #accounts-notifications body {
+  width: cols(9);
+
+  #page article {
+    width: cols(6);
+    padding: 0;
+  }
+}
+
 #buy {
   border-bottom: 1px solid darken(white, 10%);
   margin: 0 (-$gutter);
@@ -86,7 +95,7 @@
       float: right;
       margin-right: 0;
       line-height: 4*$line;
-	  
+
       strong {
         color: black;
       }
@@ -110,7 +119,7 @@
         float: left;
         margin-right: $gutter;
       }
-	  
+
       label {
         display: block;
       }

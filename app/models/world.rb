@@ -20,6 +20,7 @@ class World
   field :world_data_file, type: String  # this is the world backup file in S3, can be blank
 
   belongs_to :world_upload
+  field :desc, type: String
 
   belongs_to :creator,
     inverse_of: :created_worlds,
@@ -37,8 +38,6 @@ class World
 
   has_many :events, as: :target,
                     order: [:created_at, :desc]
-
-  embeds_many :photos, order: [:created_at, :desc]
 
   field :last_mapped_at, type: DateTime
   field :minutes_played, type: Integer, default: 0

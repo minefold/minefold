@@ -1,68 +1,60 @@
-%section.name
-  %h3
-    = form.label :name
+%fieldset.name
+  %h3= form.label :name
 
-  %fieldset
-    = error_messages_for form.object, :name
-    = form.text_field :name, tabindex: 1
+  = error_messages_for form.object, :name
+  = form.text_field :name, tabindex: 1
 
-%section.game-mode
-  %h3 Default game mode
+%fieldset.description
+  %h3= form.label :desc, 'Description'
 
-  %fieldset.inline
-    %div
-      = form.radio_button :game_mode, 0, tabindex: 2
-      = form.label :game_mode_0, 'Survival'
-
-    %div
-      = form.radio_button :game_mode, 1, tabindex: 3
-      = form.label :game_mode_1, 'Creative'
-
-%section.difficulty
-  %h3= form.label :difficulty_level, 'Difficulty'
-
-  %fieldset.inline
-    %div
-      = form.radio_button :difficulty_level, 0, tabindex: 4
-      = form.label :difficulty_level_0, 'Peaceful'
-
-    %div
-      = form.radio_button :difficulty_level, 1, tabindex: 5
-      = form.label :difficulty_level_1, 'Easy'
-
-    %div
-      = form.radio_button :difficulty_level, 2, tabindex: 6
-      = form.label :difficulty_level_2, 'Normal'
-
-    %div
-      = form.radio_button :difficulty_level, 3, tabindex: 7
-      = form.label :difficulty_level_3, 'Hard'
+  = error_messages_for form.object, :desc
+  = form.text_area :desc, tabindex: 2, rows: 10
 
 - if form.object.new?
-  %section.seed
-    %h3= form.label :seed
-    %fieldset
-      = form.text_field :seed, tabindex: 8
+  %fieldset.seed
+    %h3= form.label :seed, 'Map seed'
+    = form.text_field :seed, tabindex: 8
 
-%section.game-settings
-  %h3 Game settings
+%fieldset.mode
+  %h3 Mode
 
-  %fieldset
+  %div
+    = form.radio_button :game_mode, 0, tabindex: 2
+    = form.label :game_mode_0 do
+      Survival
+      .hint Search for resources, crafting, gain levels, health and hunger
+
+  %div
+    = form.radio_button :game_mode, 1, tabindex: 3
+    = form.label :game_mode_1 do
+      Creative
+      .hint Unlimited resources, free flying and destroy blocks instantly
+
+%fieldset.difficulty
+  %h3 Difficulty
+
+  - World::DIFFICULTIES.each_with_index do |level, i|
     %div
-      = form.check_box :pvp, tabindex: 9
-      = form.label :pvp, 'Player vs. Player'
+      = form.radio_button :difficulty_level, i, tabindex: (4+i)
+      = form.label "difficulty_level_#{i}", level.to_s.titlecase
 
-    %div
-      = form.check_box :spawn_monsters, tabindex: 10
-      = form.label :spawn_monsters, 'Spawn monsters'
+%fieldset.gameplay
+  %h3 Gameplay
 
-    %div
-      = form.check_box :spawn_animals, tabindex: 11
-      = form.label :spawn_animals, 'Spawn animals'
+  %div
+    = form.check_box :pvp, tabindex: 9
+    = form.label :pvp, 'Player vs. Player'
 
-%section.submit
-  %fieldset
-    - if form.object.new?
-      = form.submit 'Create world', tabindex: 12
-    - else
-      = form.submit 'Update world', tabindex: 12
+  %div
+    = form.check_box :spawn_monsters, tabindex: 10
+    = form.label :spawn_monsters, 'Spawn monsters'
+
+  %div
+    = form.check_box :spawn_animals, tabindex: 12
+    = form.label :spawn_animals, 'Spawn animals'
+
+%fieldset.submit
+  - if form.object.new?
+    = form.submit 'Create world', tabindex: 12
+  - else
+    = form.submit 'Update settings', tabindex: 12

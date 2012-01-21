@@ -1,41 +1,37 @@
 - title_and_masthead 'Account Settings'
 
-= render partial: 'nav'
+#page
+  = render partial: 'nav'
 
-%article
-  = form_for current_user, url: account_path, method: :put do |f|
-    %section
-      %h3 Server Host
-      %fieldset.inline
+  %article
+    = form_for current_user, url: account_path, method: :put do |f|
+      %fieldset.username
+        %h3= f.label :username
+
+        = f.text_field :username, maxlength: 16
+        = error_messages_for(f.object, :username)
+
+        = render partial: 'users/check_username'
+
+      %fieldset.email
+        %h3= f.label :email
+
+        = f.text_field :email
+        = error_messages_for(f.object, :email)
+
+      %fieldset.avatar
+        %h3= f.label :avatar
+
+        = avatar_tag current_user, 40
+        .hint Change your avatar at #{link_to 'Minecraft.net', 'http://minecraft.net/profile', target: '_blank'}
+
+      %fieldset.host
+        %h3 Server Host
         = current_user.host
         %p.hint
           Don't know
           = link_to 'how to connect', help_page_path(anchor: 'connecting')
           ?
 
-    %section
-      %h3
-        = f.label :username
-      %fieldset
-        = f.text_field :username
-        = error_messages_for(f.object, :username)
-
-        = render partial: 'users/check_username'
-
-    %section
-      %h3
-        = f.label :email
-      %fieldset
-        = f.text_field :email
-        = error_messages_for(f.object, :email)
-
-    %section
-      %h3
-        = f.label :avatar
-      %fieldset
-        = avatar_tag current_user, 48
-        %p.hint Change your avatar at #{link_to 'http://minecraft.net/profile', 'http://minecraft.net/profile', target: '_blank'}
-
-    %section
-      %fieldset
+      %fieldset.submit
         = f.submit 'Update account'

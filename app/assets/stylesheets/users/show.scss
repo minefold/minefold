@@ -1,9 +1,3 @@
-#users-show #masthead .avatar {
-  float: left;
-  margin-top: 2*$line;
-  margin-right: 2*$gutter;
-  img {
-    display: block;
-    @include border-radius($radius);
-  }
+section {
+  padding: 0 $pad (4*$line) $pad;
 }

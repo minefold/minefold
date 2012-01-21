@@ -1,7 +1,7 @@
 #= require jquery.timeago
 #= require views/event_view
 
-class MF.ConnectionView extends MF.EventView
+class Mf.ConnectionView extends Mf.EventView
   template: _.template """
     <div class="meta">
       <time class="timeago" datetime="<%= created_at %>"></time>

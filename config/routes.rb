@@ -46,10 +46,11 @@ Minefold::Application.routes.draw do
 
   post '/stripe/webhook' => 'stripe#webhook'
 
-  as :user do
-    resources :users, :path => 'players', :only => [:show]
+  namespace :api do
+    resources :sessions, :only => [:create]
+    resources :photos, :only => [:create]
   end
-  
+
   resources :worlds, :only => [:new, :create, :index] do
     collection do
       resource :upload, :module => :worlds, :only => [:new, :create] do
@@ -57,34 +58,31 @@ Minefold::Application.routes.draw do
       end
     end
   end
-  
-  scope '/:user_id', :as => :user do
-    resources :worlds, :path => '/', :only => [:show, :edit, :update, :destroy], :path_names => {:edit => 'settings'} do
 
-      member do
-        get :info
-        put :play
-        post :clone
-      end
+  as :user do
+    resources :users, :path => '/', :only => [:show] do
+      resources :worlds, :path => '/', :only => [:show, :edit, :update, :destroy], :path_names => {:edit => 'settings'} do
 
-      scope :module => :worlds do
-        resources :events, :only => [:index, :create]
-        resources :members, :controller => :memberships, :only => [:index, :create, :destroy] do
-          get  :search, :action => :search, :on => :collection
+        member do
+          get :info
+          put :play
+          put :clone
         end
 
-        resources :membership_requests do
-          put :approve
+        scope :module => :worlds do
+          resources :events, :only => [:index, :create]
+          resources :members, :controller => :memberships, :only => [:index, :create, :destroy] do
+            get  :search, :action => :search, :on => :collection
+          end
+
+          resources :membership_requests do
+            put :approve
+          end
+
+          resources :photos
         end
 
-        resources :photos
       end
     end
   end
-
-  namespace :api do
-    resource :session, :only => [:show], :controller => 'session'
-    resources :photos, :only => [:create]
-  end
-
 end

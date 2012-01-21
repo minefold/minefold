@@ -1,8 +1,8 @@
 #= require collections/events_collection
 #= require models/chat_event
 
-class MF.ShareView extends Backbone.View
-  collection: MF.EventsCollection
+class Mf.ShareView extends Backbone.View
+  collection: Mf.EventsCollection
 
   events:
     'keyup':  'type'
@@ -16,7 +16,7 @@ class MF.ShareView extends Backbone.View
     if isEnterKey(e) and input.val() isnt ''
       e.preventDefault()
 
-      chat = new MF.ChatEvent(text: input.val())
+      chat = new Mf.ChatEvent(text: input.val())
       @collection.add(chat)
       chat.save()
 

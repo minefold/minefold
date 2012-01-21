@@ -1,0 +1,26 @@
+#= require views/world/map_view
+#= require views/world/info_view
+#= require views/world/members_view
+
+class Mf.WorldRouter extends Backbone.Router
+  routes:
+    '': 'map'
+
+  initialize: (options) ->
+    @world = options.world
+
+    @mapView = new Mf.WorldMapView(
+      model: @world
+      el: $('#backside')[0]
+      host: <%= ENV['WORLD_MAPS_URL'].to_json %>
+    )
+
+    @mapView.render()
+
+  setCurrentView: (view) ->
+    @currentView?.exit()
+    view.enter()
+    @currentView = view
+    view.render()
+
+  map: -> @setCurrentView(@mapView)
