@@ -8,9 +8,10 @@ class World
   DIFFICULTIES = [:peaceful, :easy, :normal, :hard]
 
   field :name, type: String
-  validates_uniqueness_of :name
+  validates_uniqueness_of :name, scope: :parent_id
   validates_presence_of :name
-  slug  :name, index: true
+  slug  :name, index: true, scope: :parent
+
   scope :by_name, ->(name) {
     where(name: name)
   }
@@ -35,6 +36,13 @@ class World
   belongs_to :creator,
     inverse_of: :created_worlds,
     class_name: 'User'
+
+  scope :by_creator, ->(user) {
+    where(creator_id: user.id)
+  }
+
+  belongs_to :parent, inverse_of: :children, class_name: 'World'
+  has_many :children, inverse_of: :parent, class_name: 'World'
 
   embeds_many :memberships
   embeds_many :membership_requests do
@@ -184,6 +192,25 @@ class World
   def map_assets_url
     File.join ENV['WORLD_MAPS_URL'], id.to_s
   end
+
+
+# Uploads
+
+  def upload_filename_prefix
+    [creator.safe_username, creator.id, Time.now.strftime('%Y%m%d%H%M%S'), nil].join('-')
+  end
+
+# Cloning
+
+  def clone_world cloner
+    World.new   parent: self,
+               creator: cloner,
+                  name: name,
+                  seed: seed,
+             game_mode: game_mode,
+      difficulty_level: difficulty_level
+  end
+
 
 # Other
 

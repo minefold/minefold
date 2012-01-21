@@ -65,6 +65,13 @@ class WorldsController < ApplicationController
 
     redirect_to :back
   end
+  
+  def clone
+    cloned_world = world.clone_world(current_user)
+    cloned_world.save!
+    
+    redirect_to user_world_path(current_user, cloned_world)
+  end
 
 private
 
