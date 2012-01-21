@@ -6,12 +6,12 @@ gem 'thin'
 gem 'rails'
 gem 'sprockets'
 
+gem 'rack-www'
+
 # ORM
-gem 'mongoid'
+gem 'mongoid', '2.4.0'
 gem 'bson_ext'
 gem 'mongoid_slug'
-
-gem 'rack-www'
 
 # Authentication
 gem 'devise'
