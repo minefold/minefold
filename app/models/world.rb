@@ -3,13 +3,6 @@ class World
   include Mongoid::Timestamps
   include Mongoid::Slug
 
-
-  field :name, type: String
-  validates_uniqueness_of :name, scope: :parent_id
-  validates_presence_of :name
-
-  slug  :name, scope: :parent
-  
   scope :by_creator, ->(user) {
     where(creator_id: user.id)
   }
@@ -17,7 +10,16 @@ class World
   scope :by_name, ->(name) {
     where(name: name)
   }
+  
+  field :name, type: String
+  validates_uniqueness_of :name, scope: :parent_id
+  validates_presence_of :name
 
+  slug  :name, scope: :parent
+
+  field :world_data_file, type: String  # this is the world backup file in S3, can be blank
+
+  belongs_to :world_upload
 
   belongs_to :creator,
     inverse_of: :created_worlds,
@@ -39,15 +41,21 @@ class World
   embeds_many :photos, order: [:created_at, :desc]
 
   field :last_mapped_at, type: DateTime
-
   field :minutes_played, type: Integer, default: 0
 
 
   # Game settings
 
+  LEVEL_TYPES = %W(DEFAULT FLAT)
   GAME_MODES = [:survival, :creative]
   DIFFICULTIES = [:peaceful, :easy, :normal, :hard]
-
+  
+  field :level_type,       type: String,  default: LEVEL_TYPES.first
+  field :difficulty_level, type: Integer, default: DIFFICULTIES.index(:easy)
+  field :pvp,              type: Boolean, default: true
+  field :spawn_monsters,   type: Boolean, default: true
+  field :spawn_animals,    type: Boolean, default: true
+  
   field :seed, type: String, default: ''
 
   field :game_mode, type: Integer, default: GAME_MODES.index(:survival)
@@ -61,25 +69,25 @@ class World
     only_integer: true,
     greater_than_or_equal_to: 0,
     less_than: DIFFICULTIES.size
-
-  field :pvp, type: Boolean, default: true
-  field :spawn_monsters, type: Boolean, default: true
-  field :spawn_animals, type: Boolean, default: true
-
-
+  
   field :pageviews, type: Integer, default: 0
   validates_numericality_of :pageviews,
     only_integer: true,
     greater_than_or_equal_to: 0
 
+# Callbacks
 
-# Validations
+  after_create do
+    memberships.create role: 'op', user: creator
+  end
 
-
-
-  # after_create do
-  #   memberships.create role: 'op', user: creator
-  # end
+  after_create do
+    # if world is being created from an upload, use the uploaded world data file as our starting point
+    if world_upload
+      self.world_data_file = world_upload.world_data_file 
+      save!
+    end
+  end
 
 # Settings
 
@@ -108,7 +116,6 @@ class World
 
     write_attribute :creator_id, creator.id
   end
-
 
   def add_member(user)
     memberships.new user: user
@@ -168,7 +175,6 @@ class World
   def map_assets_url
     File.join ENV['WORLD_MAPS_URL'], id.to_s
   end
-
 
 # Uploads
 
