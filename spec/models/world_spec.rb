@@ -35,4 +35,12 @@ describe World do
       world.save
     }.should change(world, :slug)
   end
+  
+  describe 'clone_world' do
+    let(:cloner) { build :user }
+    subject { world.clone_world cloner }
+    
+    its(:parent) { should == world }
+    its(:world_data_file) { should == world.world_data_file }
+  end
 end

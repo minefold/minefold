@@ -28,7 +28,7 @@ class World
   field :last_mapped_at, type: DateTime
   field :minutes_played, type: Integer, default: 0
 
-  field :world_data_file, type: String  # this is the world backup file in S3, can be blank
+  field :world_data_file, type: String, default: -> {"#{id}.tar.gz"}  # this is the world backup file in S3, can be blank
 
   belongs_to :creator, inverse_of: :created_worlds, class_name: 'User'
   belongs_to :world_upload
@@ -77,6 +77,21 @@ class World
     only_integer: true,
     greater_than_or_equal_to: 0,
     less_than: DIFFICULTIES.size
+
+  field :pageviews, type: Integer, default: 0
+  validates_numericality_of :pageviews,
+    only_integer: true,
+    greater_than_or_equal_to: 0
+
+# Finders
+
+  def self.find_by_slug! creator_id, world_slug
+    world = World.where(creator_id: creator_id, slug: world_slug).first
+    raise Mongoid::Errors::DocumentNotFound.new(World.class, world_slug) unless world
+    world
+  end
+
+# Callbacks
 
   after_create do
     memberships.create role: 'op', user: creator
@@ -190,7 +205,11 @@ class World
   end
 
   def map_assets_url
-    File.join ENV['WORLD_MAPS_URL'], id.to_s
+    if mapped?
+      File.join ENV['WORLD_MAPS_URL'], id.to_s
+    elsif cloned?
+      parent.map_assets_url
+    end
   end
 
 
@@ -202,13 +221,22 @@ class World
 
 # Cloning
 
+  def cloned?
+    self.parent
+  end
+
+  def cloned_world cloning_user
+    children.where(creator_id: cloning_user.id).first
+  end
+
   def clone_world cloner
     World.new   parent: self,
                creator: cloner,
                   name: name,
                   seed: seed,
              game_mode: game_mode,
-      difficulty_level: difficulty_level
+      difficulty_level: difficulty_level,
+       world_data_file: world_data_file
   end
 
 

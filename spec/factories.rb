@@ -18,6 +18,7 @@ FactoryGirl.define do
   factory :world do
     sequence(:name) {|n| "World #{n}"}
     association :creator, factory: :user
+    sequence(:world_data_file) {|n| "world-#{n}.tar.gz"}
   end
 
 end

@@ -10,8 +10,6 @@ class Mf.WorldMapView extends Backbone.View
     tileSize: 384
 
   initialize: (options) ->
-    @host = options.host
-
     @overlay = $(@el).find('.overlay')
 
     # TODO Refactor
@@ -97,6 +95,6 @@ class Mf.WorldMapView extends Backbone.View
     url += '.png'
 
     # TODO Add mapped_at cache busting
-
-    [@host, @model.id].join('/') + url
+    console.log @model
+    @model.attributes.map_assets_url + url
 
