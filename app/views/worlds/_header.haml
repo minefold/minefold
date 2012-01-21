@@ -13,8 +13,8 @@
 
     %p
       by #{link_to world.creator.username, world.creator, rel: 'author'}.
-      - if true # world.cloned?
-        Cloned from #{link_to 'chrislloyd/minebnb', world}.
+      - if world.cloned?
+        Cloned from #{link_to_world "#{world.parent.creator.slug}/#{world.parent.slug}", world.parent}.
 
   %ol.actions
     - if can? :edit, world
@@ -24,7 +24,11 @@
 
     - if not world.creator == current_user
       %li.clone
-        = button_to 'Clone', '#'
+        - if current_user and cloned_world = world.cloned_world(current_user)
+          = link_to 'Your clone', user_world_path(current_user, cloned_world)
+        - else
+          = form_tag clone_user_world_path(world.creator, world), method: :put do
+            = submit_tag 'Clone'
 
     - if can? :play, world
       %li.play

@@ -1,6 +1,7 @@
 class Worlds::MembershipRequestsController < ApplicationController
+  expose(:creator) { User.find_by_slug! params[:user_id] }
   expose(:world) {
-    World.find_by_slug! params[:world_id]
+    World.find_by_slug! creator.id, params[:world_id]
   }
 
   expose(:membership_request) {

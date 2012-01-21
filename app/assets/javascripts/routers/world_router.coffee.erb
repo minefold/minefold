@@ -12,7 +12,6 @@ class Mf.WorldRouter extends Backbone.Router
     @mapView = new Mf.WorldMapView(
       model: @world
       el: $('#backside')[0]
-      host: <%= ENV['WORLD_MAPS_URL'].to_json %>
     )
 
     @mapView.render()

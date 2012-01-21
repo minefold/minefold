@@ -1,9 +1,10 @@
 class Worlds::PhotosController < ApplicationController
 
   respond_to :html, :json
-
+  
+  expose(:creator) { User.find_by_slug! params[:user_id] }
   expose(:world) {
-    World.find_by_slug!(params[:world_id])
+    World.find_by_slug!(creator.id, params[:world_id])
   }
 
   expose(:photo) {
