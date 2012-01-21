@@ -64,6 +64,7 @@ Minefold::Application.routes.draw do
       member do
         get :info
         put :play
+        post :clone
       end
 
       scope :module => :worlds do
