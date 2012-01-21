@@ -47,7 +47,7 @@ Minefold::Application.routes.draw do
   post '/stripe/webhook' => 'stripe#webhook'
 
   namespace :api do
-    resources :sessions, :only => [:create]
+    resource :session, :only => [:show],  :controller => 'session'
     resources :photos, :only => [:create]
   end
 
