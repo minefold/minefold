@@ -46,8 +46,9 @@ Minefold::Application.routes.draw do
 
   post '/stripe/webhook' => 'stripe#webhook'
 
-  as :user do
-    resources :users, :path => 'players', :only => [:show]
+  namespace :api do
+    resource :session, :only => [:show],  :controller => 'session'
+    resources :photos, :only => [:create]
   end
 
   resources :worlds, :only => [:new, :create, :index] do
