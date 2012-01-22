@@ -1,4 +1,4 @@
-attributes :id, :created_at, :updated_at
+attributes :id, :created_at, :updated_at, :map_assets_url
 
 node(:url) {|world| user_world_path(world.creator, world) }
 

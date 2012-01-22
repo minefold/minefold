@@ -46,7 +46,7 @@ Minefold::Application.routes.draw do
   post '/stripe/webhook' => 'stripe#webhook'
 
   namespace :api do
-    resources :sessions, :only => [:create]
+    resource :session, :only => [:show],  :controller => 'session'
     resources :photos, :only => [:create]
   end
 
@@ -60,7 +60,7 @@ Minefold::Application.routes.draw do
 
   as :user do
     resources :users, :path => '/', :only => [:show] do
-      resources :worlds, :path => '/', :except => [:index], :path_names => {:edit => 'settings'} do
+      resources :worlds, :path => '/', :except => [:index, :destroy], :path_names => {:edit => 'settings'} do
         scope :module => :worlds do
           resources :events, :only => [:index, :create]
           resources :members, :controller => :memberships, :only => [:index, :create, :destroy] do
@@ -70,13 +70,11 @@ Minefold::Application.routes.draw do
           resources :membership_requests, :only => [:create, :destroy] do
             put :approve, :on => :member
           end
-
-          resources :photos
         end
 
         member do
           put :play
-          put :clone
+          post :clone
         end
 
       end

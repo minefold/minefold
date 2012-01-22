@@ -16,11 +16,11 @@
             %p ignore
 
   #page
-    = form_for [world.creator, world, world.membership_requests.new] do |f|
+    = form_tag user_world_membership_requests_path, method: :post do
       %fieldset
-        = f.text_field :username, placeholder: 'notch'
+        = text_field_tag :username, placeholder: 'notch'
       %fieldset.submit
-        = f.submit 'Invite a friend'
+        = submit_tag 'Invite a friend'
 
 #page
   %section.members

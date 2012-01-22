@@ -11,15 +11,16 @@ class ImportWorldJob
     new.process WorldUpload.find(world_upload_id)
   end
 
-  def process(upload)
-    pusher_key = "#{upload.class.name}-#{upload.id}"
+  def process(world_upload)
+    pusher_key = "#{world_upload.class.name}-#{world_upload.id}"
     pusher = Pusher[pusher_key]
 
     puts "connecting to channel: #{pusher_key}"
 
     error = nil
+    world_data_file = nil
     begin
-      world_upload = process_world_upload upload
+      world_data_file = process_world_upload world_upload
       error = world_upload.process_result
     rescue => e
       Airbrake.notify(e)
@@ -30,54 +31,32 @@ class ImportWorldJob
       puts "Job failed. #{error}"
       pusher.trigger 'error', error
     else
-      world = world_upload.world
-      Resque.push 'worlds_to_map', class: 'MapWorld', args: [world.id]
-      puts "Work complete."
+      world_upload.world_data_file = world_data_file
+      world_upload.save!
+      
+      # world = world_upload.world
+      # Resque.push 'worlds_to_map', class: 'MapWorld', args: [world.id]
 
-      pusher.trigger 'success',
-        world_upload: {
-          filename: world_upload.filename,
-            s3_key: world_upload.s3_key,
-        },
-        world: {
-          '_id' => "#{world.id}",
-          name: world.name,
-          slug: world.slug,
-          url:  Minefold::Application.routes.url_for(
-            controller: 'worlds',
-            action:     'show',
-            id:         world.slug,
-            only_path:  true
-          )
-        }
+      pusher.trigger 'success', world_upload: { id: world_upload.id }
+      puts "Work complete."
     end
   end
 
   def process_world_upload world_upload
     FileUtils.mkdir_p tmp_dir
-    world_upload_archive = download_world_upload world_upload.s3_key
+    uploaded_world_archive = download_world_upload world_upload.s3_key
 
-    result = validate_world_archive world_upload_archive
+    result = validate_world_archive uploaded_world_archive
     if result[:error]
       world_upload.process_result = result[:error]
       world_upload.save
     else
-      world_name = File.basename world_upload.filename, ".*"
-      puts "Creating world:#{world_name} creator:#{world_upload.uploader.username}"
-
-      world = World.create name:world_name,
-                        creator:world_upload.uploader
-
-      world_archive = create_world_archive world.id, world_upload_archive, result[:world_path]
-
-      upload_world_archive world_archive, world.id
-      world_upload.world = world
-      world_upload.save
-
-      world_upload.uploader.current_world = world
-      world_upload.uploader.save
+      world_data_file = "upload-#{world_upload.id}"
+      world_archive = create_world_archive world_data_file, uploaded_world_archive, result[:world_path]
+    
+      upload_world_archive world_archive
+      "#{world_data_file}.tar.gz"
     end
-    world_upload
   end
 
   def download_world_upload s3_key
@@ -94,18 +73,20 @@ class ImportWorldJob
     local_filename
   end
 
-  def upload_world_archive world_archive, world_id
-    puts "Uploading #{world_archive}"
+  def upload_world_archive world_archive
+    world_archive_name = File.basename world_archive
+    puts "Uploading #{world_archive} => #{world_archive_name}"
+    
     directory = storage.directories.create :key => ENV['WORLDS_BUCKET']
-    directory.files.create key:"#{world_id}.tar.gz",
+    directory.files.create key:world_archive_name,
                           body:File.open(world_archive),
                         public:false
     puts "Upload finished"
   end
 
-  def validate_world_archive world_upload_archive
+  def validate_world_archive uploaded_world_archive
     begin
-      leveldat_file = Zip::ZipFile.foreach(world_upload_archive).find {|zf| zf.name =~ /level\.dat$/ }
+      leveldat_file = Zip::ZipFile.foreach(uploaded_world_archive).find {|zf| zf.name =~ /level\.dat$/ }
       if leveldat_file
         { world_path: File.dirname(leveldat_file.name) }
       else
@@ -116,19 +97,19 @@ class ImportWorldJob
     end
   end
 
-  def create_world_archive world_id, world_upload_archive, archive_world_path
-    extract_path = "#{tmp_dir}/#{world_id}/extract"
-
+  def create_world_archive world_file, world_upload_archive, archive_world_path
+    extract_path = "#{tmp_dir}/#{world_file}/extract"
+    import_base_path  = "#{tmp_dir}/#{world_file}/import"
+    world_data_dir = "#{import_base_path}/#{world_file}"
+    level_files = File.join(world_data_dir, "level")
+    
     extract_archive world_upload_archive, extract_path
 
-    import_path = "#{tmp_dir}/#{world_id}/import/#{world_id}/#{world_id}"
-    FileUtils.mkdir_p import_path
-    FileUtils.cp_r "#{extract_path}/#{archive_world_path}/.", import_path
+    FileUtils.mkdir_p level_files
+    FileUtils.cp_r "#{extract_path}/#{archive_world_path}/.", level_files
 
-    Dir.chdir "#{tmp_dir}/#{world_id}/import" do
-      TarGz.new.archive world_id, "#{world_id}.tar.gz", exclude:'server.jar'
-    end
-    "#{tmp_dir}/#{world_id}/import/#{world_id}.tar.gz"
+    TarGz.new.archive world_data_dir, ".", "#{import_base_path}/#{world_file}.tar.gz", exclude:'server.jar'
+    "#{import_base_path}/#{world_file}.tar.gz"
   end
 
 private

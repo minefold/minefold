@@ -4,10 +4,7 @@ class WorldsController < ApplicationController
   prepend_before_filter :authenticate_user!, except: [:show, :map]
   before_filter :set_invite_code, :only => [:show, :map]
 
-  expose(:creator) do
-    User.find_by_slug!(params[:user_id])
-  end
-
+  expose(:creator) { User.find_by_slug(params[:user_id]) }
   expose(:world) do
      if params[:id]
        World.find_by_creator_and_slug!(creator, params[:id])
@@ -49,12 +46,8 @@ class WorldsController < ApplicationController
     authorize! :update, world
 
     world.update_attributes params[:world]
-    if world.save
-      flash[:success] = "World updated"
-      redirect_to params['return_url'] || world_path(world)
-    else
-      render json: {errors: world.errors}
-    end
+
+    respond_with world, location: user_world_path(world.creator, world)
   end
 
   def play
@@ -66,6 +59,24 @@ class WorldsController < ApplicationController
     track 'changed worlds'
 
     redirect_to :back
+  end
+
+  def clone
+    authorize! :clone, world
+
+    # TODO Potential but *very* unlikely race condition if data is swept away between creating the clone and saving it.
+
+    clone = world.clone!
+    clone.creator = current_user
+
+    if clone.save
+      current_user.current_world = clone
+      current_user.save
+
+      track 'cloned world'
+    end
+
+    respond_with clone, location: user_world_path(clone.creator, clone)
   end
 
 private

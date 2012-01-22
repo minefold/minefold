@@ -13,11 +13,15 @@ class Ability
     end
 
     # User abilities
-    can [:create, :clone], World
+    can [:create], World
     can [:update, :destroy], World, creator: user
 
     can :operate, World do |world|
       world.op? user
+    end
+
+    can :clone, World do |world|
+      world.creator != user and !user.cloned?(world)
     end
 
     can :play, World do |world|

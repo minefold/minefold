@@ -1,7 +1,8 @@
 class Worlds::EventsController < ApplicationController
   layout nil
 
-  expose(:world) { World.find_by_slug!(params[:world_id]) }
+  expose(:creator) { User.find_by_slug! params[:user_id] }
+  expose(:world) { World.find_by_slug!(creator.id, params[:world_id]) }
   respond_to :json
 
   def index

@@ -37,6 +37,15 @@ describe WorldsController do
   end
 
   describe '#clone' do
+    let(:world) { Fabricate(:world) }
+    signin_as { Fabricate(:user) }
 
+    before {
+      puts world.creator.slug, world.slug
+      post :clone, user_id: world.creator.slug, id: world.slug
+    }
+
+    subject { response }
+    specify { redirect_to(user_world_path(current_user, world.slug)) }
   end
 end

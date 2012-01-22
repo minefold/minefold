@@ -3,14 +3,13 @@
 -# TODO: "Confirm email address" new_confirmation_path(resource_name)
 
 #page
-  %aside
-    - if not current_user.confirmed?
+  - if not current_user.confirmed?
+    %aside
       .note.small.warning
         %h3 Confirm your account
         %p You should have recieved an email with instructions on how to confirm your account. If you haven't got it we can #{link_to 'resend it to you', '#'} or you #{link_to 'change your email address', edit_account_path}.
 
-    %p= link_to 'Create a new world', new_world_path, class: 'btn'
-    %p= link_to 'Upload an existing world',new_upload_path
+  %p= link_to 'Create a new world!', new_world_path, class: 'btn'
 
   %article
     #worlds

@@ -21,3 +21,6 @@ window.every = (ms, fn) -> setInterval(fn, ms)
 
 jQuery ->
   $('time.timeago').timeago()
+  
+jQuery.fn.disable = -> $(@).addClass('disabled').attr('disabled', 'disabled')
+jQuery.fn.enable  = -> $(@).removeClass('disabled').removeAttr('disabled')

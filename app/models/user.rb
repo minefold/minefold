@@ -204,6 +204,10 @@ class User
 
 # Other
 
+  def cloned?(world)
+    created_worlds.where(parent_id: world.id).exists?
+  end
+
   def worlds
     World.where('memberships.user_id' => id).sort_by do |world|
       world.name.downcase

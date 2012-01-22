@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe World do
-  subject { Fabricate.build(:world) }
+  let(:world) { Fabricate.build(:world) }
+  subject { world }
 
   specify { be_timestamped_document }
 
@@ -24,11 +25,30 @@ describe World do
 
   specify { reference_many(:events) }
 
+  context 'with referenced world_upload' do
+    let(:world_upload) { WorldUpload.new(world_data_file: 'uploaded')}
+    subject { Fabricate(:world, world_upload: world_upload) }
+
+    its(:filename) { should == 'uploaded' }
+  end
+
   it "changes the slug when changing the name" do
     lambda {
       subject.name = subject.name.reverse
       subject.save
     }.should change(subject, :slug)
+  end
+
+  describe 'clone_world' do
+    let(:user) { Fabricate(:user) }
+    subject {
+      world.clone!.tap do |clone|
+        clone.ceator = user
+      end
+    }
+
+    specify(:parent) { eq world }
+    specify(:filename) { eq world.filename }
   end
 
   it "doesn't duplicate memberships"

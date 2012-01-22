@@ -11,8 +11,6 @@ class Mf.WorldMapView extends Backbone.View
     backgroundColor: '#FFF'
 
   initialize: (options) ->
-    @host = options.host
-
     @overlay = $(@el).find('.overlay')
 
     # TODO Refactor
@@ -98,6 +96,5 @@ class Mf.WorldMapView extends Backbone.View
     url += '.png'
 
     # TODO Add mapped_at cache busting
-
-    [@host, @model.id].join('/') + url
+    @model.get('map_assets_url') + url
 

@@ -1,6 +1,11 @@
 - title 'Create a new world'
 
-#page
-  %article
-    = form_for world do |f|
-      = render partial: 'form', object: f
+%aside
+  %p.note Do you have a world already? You can upload it and start playing instantly.
+  
+  = render partial: 'upload'
+
+%article
+  = form_for world do |f|
+    = f.hidden_field :world_upload_id
+    = render partial: 'form', object: f

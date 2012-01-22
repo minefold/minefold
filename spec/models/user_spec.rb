@@ -46,7 +46,7 @@ describe User do
 
     it "should have a short referral code" do
       subject.save!
-      subject.referral_code.length.should == User::REFERRAL_CODE_LENGTH
+      subject.referral_code.length.should <= User::REFERRAL_CODE_LENGTH
     end
 
     specify { belong_to(:referrer).of_type(User).as_inverse_of(:referrals) }
