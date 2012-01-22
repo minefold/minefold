@@ -3,25 +3,6 @@
   %h1= user.username
 
 #page
-  %section.albums
-    - if user.albums.any?
-      %ol
-        - user.albums.each do |album|
-          %li= album.title
-
-    - else
-      You don't have any albums yet. Create one!
-
-  %hr.bare
-
-  %aside
-    Use our tool to auto upload screenshots!
-
   %article
-    .pictures
-      - if user.pictures.any?
-        %ol
-          - user.pictures.each do |picture|
-            %li= picture.caption
-      - else
-        You don't any any photos yet, download our tool!
+    %p Sorry, nothing here yet!
+    = youtube_vid
