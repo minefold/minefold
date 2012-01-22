@@ -13,6 +13,10 @@ RSpec.configure do |config|
   config.extend ControllerMacros, type: :controller
 
   config.before(:each) do
+    Mongoid::IdentityMap.clear
+  end
+
+  config.before(:each) do
     DatabaseCleaner.start
   end
 
