@@ -6,122 +6,123 @@
   :javascript
     Stripe.setPublishableKey(#{ENV['STRIPE_PUBLISHABLE'].to_json});
 
-#buy
-  %ol
-    - TimePack.all.each do |pack|
-      %li
-        %a{data: {hours: pack.hours, amount: pack.amount}}
-          %h1.time
-            Buy
-            %strong= pack.hours
-            hours
-          %h2
-            %span.price= number_to_currency(pack.dollars)
-            %span.rate #{pack.rate}¢/h
+#page
+  #buy
+    %ol
+      - TimePack.all.each do |pack|
+        %li
+          %a{data: {hours: pack.hours, amount: pack.amount}}
+            %h1.time
+              Buy
+              %strong= pack.hours
+              hours
+            %h2
+              %span.price= number_to_currency(pack.dollars)
+              %span.rate #{pack.rate}¢/h
 
-  #card{hidden}
-    %aside
-      %p
-        You will be charged
-        %strong.dollar-amount $74.95
-        for
-        %strong.hours 500
-        hours.
+    #card{hidden}
+      %aside
+        %p
+          You will be charged
+          %strong.dollar-amount $74.95
+          for
+          %strong.hours 500
+          hours.
 
-      %p.security AES-256 Secure payment by #{link_to 'Stripe', 'https://stripe.com/help/security', target: '_blank'}.
+        %p.security AES-256 Secure payment by #{link_to 'Stripe', 'https://stripe.com/help/security', target: '_blank'}.
 
-    = form_tag order_path, method: :post do
-      %input{type: 'hidden', name: 'hours'}
-      %p.errors
+      = form_tag order_path, method: :post do
+        %input{type: 'hidden', name: 'hours'}
+        %p.errors
 
-      %section.card-number
-        = label_tag :number, 'Card Number'
-        = text_field_tag :number, nil, name: nil, size: 20, autocomplete: 'off', class: %w{stripe number}, id: 'stripe-number'
+        %section.card-number
+          = label_tag :number, 'Card Number'
+          = text_field_tag :number, nil, name: nil, size: 20, autocomplete: 'off', class: %w{stripe number}, id: 'stripe-number'
 
-        :javascript
-          var number = $('#stripe-number');
-          number.blur(function(){
-            number.val(number.val().replace(/[^0-9]/g, ''));
-          });
+          :javascript
+            var number = $('#stripe-number');
+            number.blur(function(){
+              number.val(number.val().replace(/[^0-9]/g, ''));
+            });
 
-      %section.card-expiry
-        = label_tag :expiry_month, 'Expiry Date'
-        = text_field_tag :expiry_month, nil, name: nil, size: 2, class: %w{stripe expiry-month}, id: 'stripe-exp-month', placeholder: 'MM'
-        %span /
-        = text_field_tag :expiry_year, nil, name: nil, size: 4, class: %w{stripe expiry-year}, id: 'stripe-exp-year', placeholder: 'YYYY'
-
-
-      %section.card-cvc
-        = label_tag :cvc, 'CVC'
-        = text_field_tag :cvc, nil, name: nil, size: 4, autocomplete: 'off', class: %w{stripe cvc}, id: 'stripe-cvc'
-
-      %section.submit
-        = submit_tag 'Confirm order'
-        %input{type: 'reset', value: 'Cancel'}
+        %section.card-expiry
+          = label_tag :expiry_month, 'Expiry Date'
+          = text_field_tag :expiry_month, nil, name: nil, size: 2, class: %w{stripe expiry-month}, id: 'stripe-exp-month', placeholder: 'MM'
+          %span /
+          = text_field_tag :expiry_year, nil, name: nil, size: 4, class: %w{stripe expiry-year}, id: 'stripe-exp-year', placeholder: 'YYYY'
 
 
-:coffeescript
-  buy = $('#buy')
-  products = buy.find('ol')
-  card = buy.find('#card')
-  form = card.find('form')
+        %section.card-cvc
+          = label_tag :cvc, 'CVC'
+          = text_field_tag :cvc, nil, name: nil, size: 4, autocomplete: 'off', class: %w{stripe cvc}, id: 'stripe-cvc'
 
-  timePacks = #{TimePack.all.to_json}
-
-  products.find('a').click (e) ->
-    product = $(@)
-    products.find('a').removeClass('active')
-    product.addClass('active')
-
-    price = product.data('amount') / 100
-    hours = product.data('hours')
-
-    card.find('aside .dollar-amount').text("$" + price)
-    card.find('aside .hours').text(hours)
-
-    form.find('input[name=hours]').val(hours)
-
-    card.show()
+        %section.submit
+          = submit_tag 'Confirm order'
+          %input{type: 'reset', value: 'Cancel'}
 
 
-  card.find('input[type=reset]').click ->
-    card.hide()
-    products.find('a').removeClass('active')
+  :coffeescript
+    buy = $('#buy')
+    products = buy.find('ol')
+    card = buy.find('#card')
+    form = card.find('form')
 
-  form.submit (e) ->
-    e.preventDefault()
+    timePacks = #{TimePack.all.to_json}
 
-    button = form.find('input[type=submit]')
+    products.find('a').click (e) ->
+      product = $(@)
+      products.find('a').removeClass('active')
+      product.addClass('active')
 
-    button.attr(disabled: true)
+      price = product.data('amount') / 100
+      hours = product.data('hours')
 
-    card =
-      number:    form.find('#stripe-number').val()
-      cvc:       form.find('#stripe-cvc').val()
-      exp_month: form.find('#stripe-exp-month').val()
-      exp_year:  form.find('#stripe-exp-year').val()
+      card.find('aside .dollar-amount').text("$" + price)
+      card.find('aside .hours').text(hours)
 
-    hours = parseInt(products.find('.active').data('hours'), 10)
+      form.find('input[name=hours]').val(hours)
 
-    amount = _(timePacks).find((pack) -> pack.hours is hours).amount
+      card.show()
 
-    # Protects against DOM modification attacks
-    return unless amount
 
-    Stripe.createToken card, amount, (status, response) ->
-      if status isnt 200
-        button.attr(disabled: false)
+    card.find('input[type=reset]').click ->
+      card.hide()
+      products.find('a').removeClass('active')
 
-        $('<p></p>')
-          .addClass('stripe')
-          .text(response.error.message)
-          .appendTo form.find('.errors').empty()
+    form.submit (e) ->
+      e.preventDefault()
 
-      else
-        token = response.id
-        $('<input></input>')
-          .attr(type: 'hidden', name: 'stripe_token')
-          .val(token)
-          .appendTo(form)
+      button = form.find('input[type=submit]')
 
-        form.get(0).submit()
+      button.attr(disabled: true)
+
+      card =
+        number:    form.find('#stripe-number').val()
+        cvc:       form.find('#stripe-cvc').val()
+        exp_month: form.find('#stripe-exp-month').val()
+        exp_year:  form.find('#stripe-exp-year').val()
+
+      hours = parseInt(products.find('.active').data('hours'), 10)
+
+      amount = _(timePacks).find((pack) -> pack.hours is hours).amount
+
+      # Protects against DOM modification attacks
+      return unless amount
+
+      Stripe.createToken card, amount, (status, response) ->
+        if status isnt 200
+          button.attr(disabled: false)
+
+          $('<p></p>')
+            .addClass('stripe')
+            .text(response.error.message)
+            .appendTo form.find('.errors').empty()
+
+        else
+          token = response.id
+          $('<input></input>')
+            .attr(type: 'hidden', name: 'stripe_token')
+            .val(token)
+            .appendTo(form)
+
+          form.get(0).submit()

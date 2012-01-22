@@ -62,7 +62,6 @@
 
         %ol#nav
           - if not user_signed_in?
-            %li.features= link_to 'Features', '/features'
             %li.pricing= link_to 'Pricing', pricing_page_path
             %li.feedback= link_to 'Help', 'http://getsatisfaction.com/minefold'
             %li.blog= link_to 'Blog', 'http://blog.minefold.com'
