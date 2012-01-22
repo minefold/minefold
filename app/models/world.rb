@@ -42,12 +42,10 @@ class World
   field :filename, type: String, default: -> {"#{id}.tar.gz"}
   belongs_to :world_upload
 
-  after_create do
-    # if world is being created from an upload, use the uploaded world data file as our starting point
-    if world_upload
-      self.filename = world_upload.world_data_file
-      save!
-    end
+  def world_upload=(upload)
+    write_attribute :world_upload_id, upload.id
+    self.filename = upload.world_data_file
+    upload
   end
 
   field :last_mapped_at, type: DateTime
@@ -115,7 +113,7 @@ class World
   end
 
   def add_member(user)
-    memberships.find_or_initialize_by user: user
+    memberships.find_or_create_by(user: user)
   end
 
   def add_op(user)
