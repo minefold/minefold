@@ -8,6 +8,7 @@ class Mf.WorldMapView extends Backbone.View
     streetViewControl: false
     mapTypeId: 'map'
     tileSize: 384
+    backgroundColor: '#FFF'
 
   initialize: (options) ->
     @host = options.host

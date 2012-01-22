@@ -1,6 +1,6 @@
-attributes :id, :created_at, :updated_at, :desc
+attributes :id, :created_at, :updated_at
 
-node(:url) {|world| world_path(world) }
+node(:url) {|world| user_world_path(world.creator, world) }
 
 child(world.creator => :creator) {
   extends 'users/_base'

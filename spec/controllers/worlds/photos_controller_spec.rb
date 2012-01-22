@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Worlds::PhotosController do
-  let(:world) {create :world}
+  let(:world) { Fabricate(:world) }
 
   describe '#create' do
     context 'not signed in' do

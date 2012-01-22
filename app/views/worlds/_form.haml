@@ -4,22 +4,16 @@
   = error_messages_for form.object, :name
   = form.text_field :name, tabindex: 1
 
-%fieldset.description
-  %h3= form.label :desc, 'Description'
-
-  = error_messages_for form.object, :desc
-  = form.text_area :desc, tabindex: 2, rows: 10
-
 - if form.object.new?
   %fieldset.seed
     %h3= form.label :seed, 'Map seed'
-    = form.text_field :seed, tabindex: 8
+    = form.text_field :seed, tabindex: 2
 
 %fieldset.mode
   %h3 Mode
 
   %div
-    = form.radio_button :game_mode, 0, tabindex: 2
+    = form.radio_button :game_mode, 0, tabindex: 3
     = form.label :game_mode_0 do
       Survival
       .hint Search for resources, crafting, gain levels, health and hunger
@@ -35,27 +29,27 @@
 
   - World::DIFFICULTIES.each_with_index do |level, i|
     %div
-      = form.radio_button :difficulty_level, i, tabindex: (4+i)
+      = form.radio_button :difficulty_level, i, tabindex: 4
       = form.label "difficulty_level_#{i}", level.to_s.titlecase
 
 %fieldset.gameplay
   %h3 Gameplay
 
   %div
-    = form.check_box :pvp, tabindex: 9
+    = form.check_box :pvp, tabindex: 5
     = form.label :pvp, 'Player vs. Player'
 
   %div
-    = form.check_box :spawn_monsters, tabindex: 10
+    = form.check_box :spawn_monsters, tabindex: 6
     = form.label :spawn_monsters, 'Spawn monsters'
 
   %div
-    = form.check_box :spawn_animals, tabindex: 12
+    = form.check_box :spawn_animals, tabindex: 7
     = form.label :spawn_animals, 'Spawn animals'
 
 %fieldset.submit
   - if form.object.new?
-    = form.submit 'Create world', tabindex: 12
+    = form.submit 'Create world', tabindex: 8
   - else
-    = form.submit 'Update settings', tabindex: 12
+    = form.submit 'Update settings', tabindex: 8
 

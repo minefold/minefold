@@ -2,7 +2,7 @@ Hi <%= @user.username %>,
 
 <%= @creator.username %> would like you to play in their Minecraft world "<%= @world.name %>". You can start playing here straight away by going to:
 
-    <%= world_url(@world) %>
+    <%= user_world_url(@world.creator, @world) %>
 
 and "Play here". The next time you connect to <%= @user.host %> in Minecraft you'll be connected to <%= @world.name %>.
 

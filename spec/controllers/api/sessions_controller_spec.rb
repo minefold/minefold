@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Api::SessionsController do
   render_views
 
-  let(:user) { create :user }
+  let(:user) { Fabricate(:user) }
 
   describe '#create' do
     before { user }

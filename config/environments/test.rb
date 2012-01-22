@@ -1,4 +1,6 @@
 Minefold::Application.configure do
+  Foreman.load_env!
+
   # The test environment is used exclusively to run your application's
   # test suite.  You never need to work with it otherwise.  Remember that
   # your test database is "scratch space" for the test suite and is wiped
@@ -13,14 +15,14 @@ Minefold::Application.configure do
   config.whiny_nils = true
 
   # Show full error reports and disable caching
-  config.consider_all_requests_local       = true
+  config.consider_all_requests_local = true
   config.action_controller.perform_caching = false
 
   # Raise exceptions instead of rendering exception templates
-  config.action_dispatch.show_exceptions = false
+  # config.action_dispatch.show_exceptions = false
 
   # Disable request forgery protection in test environment
-  config.action_controller.allow_forgery_protection    = false
+  config.action_controller.allow_forgery_protection = false
   config.action_mailer.default_url_options = { host: 'localhost:5000' }
 
   # Tell Action Mailer not to deliver emails to the real world.

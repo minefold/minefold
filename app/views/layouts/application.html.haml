@@ -29,6 +29,9 @@
     %meta{property: 'fb:app_id', content: ENV['FB_APP_ID']}
     = csrf_meta_tags
 
+    = render partial: 'shared/exceptional'
+
+
     = javascript_include_tag '//d3ds63zw57jt09.cloudfront.net/1.10/pusher.min.js'
     = javascript_include_tag '//maps.google.com/maps/api/js?sensor=false'
     = javascript_include_tag 'application'
@@ -45,51 +48,46 @@
     = yield :head
 
   %body{lang: 'en'}
-    %nav.accessibility
-      %ol
-        %li= link_to 'Skip to navigation', '#nav'
-        %li= link_to 'Skip to content', '#content'
-        %li= link_to 'Skip to footer', '#footer'
-
-    %hr
 
     #backside
       .map
       .overlay
 
     %header
-      %h1
-        = link_to root_url do
-          Minefold
-          %em Beta
+      .wrapper
+        %h1
+          = link_to root_url do
+            Minefold
+            %em Beta
 
-      %ol#nav
-        - if not user_signed_in?
-          %li.pricing= link_to 'Pricing', pricing_page_path
-          %li.blog= link_to 'Blog', 'http://blog.minefold.com'
-          %li.feedback= link_to 'Feedback', 'http://getsatisfaction.com/minefold'
+        %ol#nav
+          - if not user_signed_in?
+            %li.features= link_to 'Features', '/features'
+            %li.pricing= link_to 'Pricing', pricing_page_path
+            %li.feedback= link_to 'Help', 'http://getsatisfaction.com/minefold'
+            %li.blog= link_to 'Blog', 'http://blog.minefold.com'
 
-          %li.signin= link_to 'Sign In', new_user_session_path
-          %li.signup= link_to 'Sign Up', new_user_path
+            %li.signin= link_to 'Sign In', new_user_session_path
+            %li.signup= link_to 'Sign Up', new_user_path
 
-        - else
-          %li.dashboard= link_to 'Dashboard', user_root_path
-          %li.blog= link_to 'Blog', 'http://blog.minefold.com'
-          %li.feedback= link_to 'Feedback', 'http://getsatisfaction.com/minefold'
+          - else
+            %li.dashboard= link_to 'Dashboard', user_root_path
+            %li.blog= link_to 'Blog', 'http://blog.minefold.com'
+            %li.feedback= link_to 'Feedback', 'http://getsatisfaction.com/minefold'
 
-          %li.user
-            = link_to current_user do
-              = avatar_tag(current_user, 20)
+            %li.user
+              = link_to current_user do
+                = avatar_tag(current_user, 20)
 
-            %ol
-              %li.profile= link_to 'Profile', current_user
-              %li.settings= link_to 'Settings', account_path
-              %li.sign-out= link_to 'Signout', destroy_user_session_path, method: :delete
+              %ol
+                %li.profile= link_to 'Profile', current_user
+                %li.settings= link_to 'Settings', account_path
+                %li.sign-out= link_to 'Signout', destroy_user_session_path, method: :delete
 
 
-            %li.buy= link_to 'Buy time', time_account_path
-            %li.time
-              .hours #{current_user.hours_left}h left
+              %li.buy= link_to 'Buy time', time_account_path
+              %li.time
+                .hours #{current_user.hours_left}h left
 
         :javascript
           var userMenuView = new Mf.UserMenuView({el: $('header #nav .user')});
@@ -132,7 +130,6 @@
         %li.twitter= link_to 'Follow us on Twitter', 'https://twitter.com/minefold'
 
       %p.fineprint
-        &copy; 2011 Minefold.
         #{link_to 'Privacy', privacy_page_path} &amp; #{link_to 'Terms', terms_page_path}.
 
     - if Rails.env.production?

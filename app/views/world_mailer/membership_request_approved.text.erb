@@ -2,6 +2,6 @@ Hi <%= @user.username %>,
 
 <%= @creator.username %> has added you to their world "<%= @world.name %>". You can play here by going to:
 
-    <%= world_url(@world) %>
+    <%= user_world_url(@world.creator, @world) %>
 
 <%= render partial: 'shared/email_sig' %>

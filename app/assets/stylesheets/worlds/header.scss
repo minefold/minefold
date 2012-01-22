@@ -2,18 +2,16 @@
 
   &.attached {
     position: fixed;
-    top: 8*$line;
+    top: 10*$line;
     width: $width;
     @include box-sizing(border-box);
     z-index: 99;
     overflow: auto;
     padding: 0 $pad;
 
-    border-top: 1px solid darken(white, 10%);
-
     background-color: white;
-    @include border-radius(0 0 $radius $radius);
-    @include box-shadow(0 1px 0 rgba(black, 0.05));
+    @include border-radius($radius);
+    @include box-shadow(0 0 1px rgba(black, 0.2));
 
     .attribution {
       width: cols($ncols / 2) - $pad;
@@ -32,29 +30,31 @@
     width: cols($ncols / 2);
 
     margin: (2*$line) 0;
-    margin-right: -$pad;
+    margin-right: -$gutter;
 
     li {
       float: right;
       margin-right: $gutter;
 
-      form input[type=submit], &.settings a {
+      form input[type=submit], a {
         @include btn(#3184d8, white);
         padding: $line $gutter;
         margin: $line 0;
       }
 
-      &.settings a img {
+      a img, a img {
         display: block;
       }
     }
   }
 
   ul.stats {
+    margin-right: -$gutter;
+
     li {
       float: right;
       font-size: 12px; line-height: 2*$line;
-      margin-left: $gutter;
+      margin-right: $gutter;
 
       .val {
         color: rgba(black, 0.8);

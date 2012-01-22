@@ -18,10 +18,10 @@
     Use our tool to auto upload screenshots!
 
   %article
-    .photos
-      - if user.photos.any?
+    .pictures
+      - if user.pictures.any?
         %ol
-          - user.photos.each do |photo|
-            %li= photo.caption
+          - user.pictures.each do |picture|
+            %li= picture.caption
       - else
         You don't any any photos yet, download our tool!

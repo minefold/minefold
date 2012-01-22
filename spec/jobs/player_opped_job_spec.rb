@@ -1,9 +1,8 @@
 require 'spec_helper'
 
 describe PlayerOppedJob do
-  let(:creator) {create(:user)}
-  let(:world) {create(:world)}
-  let(:user) {create(:user)}
+  let(:world) { Fabricate(:world) }
+  let(:user) { Fabricate(:user) }
 
   before {
     world.add_member(user)

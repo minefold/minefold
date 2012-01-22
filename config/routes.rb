@@ -23,11 +23,10 @@ Minefold::Application.routes.draw do
     delete '/signout' => 'sessions#destroy', :as => :destroy_user_session
 
     get '/account/amnesia' => 'passwords#new', :as => :new_user_password
-    post '/account/amnesia' => 'passwords#create'
+    post '/account/amnesia' => 'passwords#create', :as => nil
     get '/account/revive' => 'passwords#edit', :as => :edit_user_password
-    put '/account/revive' => 'passwords#update'
+    put '/account/revive' => 'passwords#update', :as => nil
 
-    get  '/signup/check' => 'users#check'
     get  '/signup' => 'users#new', :as => :new_user
     post '/users' => 'users#create', :as => :users
   end
@@ -61,24 +60,23 @@ Minefold::Application.routes.draw do
 
   as :user do
     resources :users, :path => '/', :only => [:show] do
-      resources :worlds, :path => '/', :only => [:show, :edit, :update, :destroy], :path_names => {:edit => 'settings'} do
-
-        member do
-          put :play
-          put :clone
-        end
-
+      resources :worlds, :path => '/', :except => [:index], :path_names => {:edit => 'settings'} do
         scope :module => :worlds do
           resources :events, :only => [:index, :create]
           resources :members, :controller => :memberships, :only => [:index, :create, :destroy] do
             get  :search, :action => :search, :on => :collection
           end
 
-          resources :membership_requests do
-            put :approve
+          resources :membership_requests, :only => [:create, :destroy] do
+            put :approve, :on => :member
           end
 
           resources :photos
+        end
+
+        member do
+          put :play
+          put :clone
         end
 
       end

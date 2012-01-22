@@ -1,9 +1,10 @@
-- title "Settings for #{world.name}"
+- title "#{world.name} settings"
 - masthead do
   %h1 #{world.name} settings
   %p
-    = link_to "← back to #{world.name}", world
+    = link_to user_world_path(world.creator, world) do
+      ← back to #{world.name}
 
 #page
-  = form_for world do |f|
+  = form_for world, url: user_world_path(world.creator, world) do |f|
     = render partial: 'form', object: f

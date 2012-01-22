@@ -22,6 +22,10 @@
         = link_to edit_world_path(world) do
           = image_tag 'icons/settings.png', width: 20, height: 20
 
+    %li.members
+      = link_to world_members_path(world) do
+        = image_tag 'icons/friends.png', width: 30, height: 20
+
     - if not world.creator == current_user
       %li.clone
         = button_to 'Clone', '#'
@@ -56,7 +60,7 @@
 
   :javascript
     $(document).ready(function(){
-      var world = new Mf.World(#{render('worlds/base.rabl', object: world)})
+      var world = new Mf.World(#{render('worlds/base', object: world, formats: [:json])})
           workspace = new Mf.WorldRouter({world: world});
 
       $('a[rel=push]').click(function(e) {

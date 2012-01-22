@@ -14,8 +14,8 @@ class User
   field :email, type: String
 
   field :username, type: String
+  slug :username, index: true
   validates_presence_of :username
-  slug  :username, index: true
 
   field :safe_username, type: String, unique: true
   validates_uniqueness_of :safe_username, case_sensitive: false
@@ -47,7 +47,7 @@ class User
   has_many :created_worlds, class_name: 'World', inverse_of: :creator
 
   has_many :albums
-  has_many :photos
+  has_many :pictures
 
   attr_accessor :email_or_username
 
@@ -203,13 +203,6 @@ class User
   end
 
 # Other
-
-  def self.paid_for_minecraft?(username)
-    response = RestClient.get "http://www.minecraft.net/haspaid.jsp", params: {user: username}
-    return response == 'true'
-  rescue RestClient::Exception
-    return false
-  end
 
   def worlds
     World.where('memberships.user_id' => id).sort_by do |world|

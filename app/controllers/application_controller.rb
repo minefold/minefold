@@ -9,7 +9,14 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from(CanCan::AccessDenied) do
-    render status: :unauthorized, nothing: true
+    render status: :unauthorized, text: 'unauthorized'
+  end
+
+  before_filter do
+    if signed_in?
+      Exceptional.context user_id: current_user.id,
+                          email: current_user.email
+    end
   end
 
 private

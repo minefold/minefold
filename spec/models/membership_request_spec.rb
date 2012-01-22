@@ -1,17 +1,19 @@
 require 'spec_helper'
 
 describe MembershipRequest do
-  let(:world) {create(:world)}
-  let(:current_user) {create(:user)}
+  let(:world) { Fabricate(:world) }
+  let(:user) { Fabricate(:user) }
+  subject { world.membership_requests.new(user: user) }
 
-  it {should be_embedded_in(:world)}
-  it {should belong_to(:user)}
+  specify { be_embedded_in(:world) }
 
-  it "makes the user a member of the world" do
-    mr = world.membership_requests.new user: current_user
-    mr.approve
+  specify { belong_to(:user) }
+  specify { validate_presence_of(:user) }
 
-    world.members.should include(current_user)
+  describe "#approve" do
+    it "adds the user as a member of the world" do
+      subject.approve
+      world.members.should include(subject.user)
+    end
   end
-
 end

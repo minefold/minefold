@@ -1,0 +1,38 @@
+#worlds-memberships-index {
+  @extend #system;
+
+  #page {
+    margin-bottom: 2*$line;
+  }
+
+  #page section.members {
+    padding: 0 $pad;
+
+    ul {
+      margin: 0 (-$pad);
+      li {
+        overflow: auto;
+        margin: (2*$line) $pad;
+
+        a {
+          float: left;
+          display: block;
+          margin-right: $pad;
+
+          img {
+            display: block;
+          }
+        }
+
+        .meta {
+          float: left;
+          line-height: 4*$line;
+
+          .username {
+            color: rgba(black, 0.8);
+          }
+        }
+      }
+    }
+  }
+}

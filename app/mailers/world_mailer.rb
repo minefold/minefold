@@ -1,7 +1,7 @@
 class WorldMailer < ActionMailer::Base
   include Resque::Mailer
-  
-  include WorldHelper  
+
+  include WorldHelper
   helper :world
 
   default from: 'Minefold <team@minefold.com>'
@@ -21,8 +21,10 @@ class WorldMailer < ActionMailer::Base
     @creator = @world.creator
     @user = @world.membership_requests.find(request_id).user
 
-    mail to: @creator.email,
-         subject: "#{@user.username} would like to play in #{@world.name}"
+    @world.ops.each do |op|
+      mail to: op.email,
+           subject: "#{@user.username} would like to play in #{@world.name}"
+    end
   end
 
   def membership_request_approved(world_id, user_id)
