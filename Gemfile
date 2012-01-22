@@ -21,8 +21,6 @@ gem 'cancan'
 gem 'stripe'
 
 # Notifications
-gem 'sendgrid'
-gem 'twitter'
 gem 'pusher'
 
 # Views
@@ -52,7 +50,7 @@ gem 'rpm_contrib'
 gem 'newrelic_rpm'
 gem 'em-mixpanel'
 
-group :development do
+group :development, :test do
   gem 'letter_opener'
   gem 'heroku'
   gem 'foreman'
@@ -69,12 +67,14 @@ end
 group :worker do
   gem 'rubyzip'
   gem 'fog'
+  gem 'resque-exceptional'
 end
 
 group :test do
   gem 'rspec'
   gem 'rspec-rails'
-  gem 'factory_girl_rails'
+  gem 'faker'
+  gem 'fabrication'
   gem 'mongoid-rspec'
   gem 'autotest-rails'
   gem 'database_cleaner'

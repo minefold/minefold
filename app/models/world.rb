@@ -36,6 +36,11 @@ class World
   belongs_to :creator,
     inverse_of: :created_worlds,
     class_name: 'User'
+  validates_presence_of :creator
+
+  def self.find_by_creator_and_slug!(creator, slug)
+    where(creator_id: creator.id).find_by_slug!(slug)
+  end
 
   scope :by_creator, ->(user) {
     where(creator_id: user.id)
@@ -45,6 +50,7 @@ class World
   has_many :children, inverse_of: :parent, class_name: 'World'
 
   embeds_many :memberships
+
   embeds_many :membership_requests do
     def include_user?(user)
       where(user_id: user.id).exists?
@@ -106,19 +112,13 @@ class World
   end
 
 
+  # Stats
+
   field :pageviews, type: Integer, default: 0
   validates_numericality_of :pageviews,
     only_integer: true,
     greater_than_or_equal_to: 0
 
-
-# Validations
-
-
-
-  # after_create do
-  #   memberships.create role: 'op', user: creator
-  # end
 
 # Settings
 
@@ -142,15 +142,18 @@ class World
 # Players
 
   def creator=(creator)
-    membership = memberships.find_or_initialize_by(user: creator)
-    membership.op!
-
     write_attribute :creator_id, creator.id
+    add_op(creator)
   end
 
 
   def add_member(user)
-    memberships.new user: user
+    memberships.find_or_initialize_by user: user
+  end
+
+  def add_op(user)
+    m = add_member(user)
+    m.op!
   end
 
   def member?(user)

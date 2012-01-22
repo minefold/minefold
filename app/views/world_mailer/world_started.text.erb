@@ -9,6 +9,6 @@ Here's what's been happening in <%= @world.name %> recently:
 <% end %>
 <% end %>
 
-Visit <%= world_url(@world) %> to join in!
+Visit <%= user_world_url(@world.creator, @world) %> to join in!
 
 <%= render partial: 'shared/email_sig' %>

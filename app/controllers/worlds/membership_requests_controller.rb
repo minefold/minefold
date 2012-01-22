@@ -1,8 +1,10 @@
 class Worlds::MembershipRequestsController < ApplicationController
-  expose(:creator) { User.find_by_slug! params[:user_id] }
-  expose(:world) {
-    World.find_by_slug! creator.id, params[:world_id]
-  }
+  respond_to :html, :json
+
+  prepend_before_filter :authenticate_user!
+
+  expose(:creator) { User.find_by_slug!(params[:user_id]) }
+  expose(:world) { World.find_by_creator_and_slug!(creator, params[:world_id]) }
 
   expose(:membership_request) {
     if params[:id]
@@ -12,12 +14,10 @@ class Worlds::MembershipRequestsController < ApplicationController
     end
   }
 
-  respond_to :json
-
   def create
     authorize! :read, world
 
-    if membership_request.save and membership_request.new_record?
+    if membership_request.new_record? and membership_request.save
       WorldMailer
         .membership_request_created(world.id, membership_request.id)
         .deliver
@@ -25,7 +25,7 @@ class Worlds::MembershipRequestsController < ApplicationController
       track 'created membership request'
     end
 
-    respond_with world, location: world_path(world)
+    respond_with world, location: user_world_path(world.creator, world)
   end
 
   def approve
@@ -40,7 +40,7 @@ class Worlds::MembershipRequestsController < ApplicationController
 
     track 'approved membership request'
 
-    respond_with world, location: world_path(world)
+    respond_with world, location: user_world_path(world.creator, world)
   end
 
   def destroy
@@ -50,7 +50,6 @@ class Worlds::MembershipRequestsController < ApplicationController
 
     track 'ignored membership request'
 
-    respond_with world, location: world_path(world)
+    respond_with world, location: user_world_path(world.creator, world)
   end
-
 end

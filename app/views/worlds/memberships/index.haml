@@ -1,4 +1,42 @@
-= render partial: 'worlds/header'
+- title "#{world.name} members"
+- masthead do
+  %h1 #{world.name} members
+  %p
+    = link_to user_world_path(world.creator, world) do
+      ← back to #{world.name}
+
+- if can? :operate, world
+  #page
+    %section.members
+      %ul
+        - world.membership_requests.each do |r|
+          %li
+            = r.user.username
+            %p accept
+            %p ignore
+
+  #page
+    = form_for [world.creator, world, world.membership_requests.new] do |f|
+      %fieldset
+        = f.text_field :username, placeholder: 'notch'
+      %fieldset.submit
+        = f.submit 'Invite a friend'
+
+#page
+  %section.members
+    %ul
+      - world.memberships.each do |m|
+        %li
+          = link_to user_path(m.user) do
+            = avatar_tag m.user, 40
+          .meta
+            .username= m.user.username
+            Joined #{time_ago_in_words m.created_at}.
+
+          - # Kick players as an op
+          - # Op other players as a creator
+          - #
+          - # leave this world
 
 / %article
 /   - if can? :operate, world

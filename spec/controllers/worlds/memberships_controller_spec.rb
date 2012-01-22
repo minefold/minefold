@@ -3,13 +3,13 @@ require 'spec_helper'
 describe Worlds::MembershipsController do
   render_views
 
-  let(:creator) { create :user }
-  let(:world)   { create :world, creator: creator }
+  let(:creator) { Fabricate(:user) }
+  let(:world)   { Fabricate(:world) }
 
-  let(:user) { create :user }
+  let(:user) { Fabricate(:user) }
 
   context 'signed in' do
-    signin_as { creator }
+    signin_as { world.creator }
   end
 
 end

@@ -4,11 +4,13 @@ class WorldsController < ApplicationController
   prepend_before_filter :authenticate_user!, except: [:show, :map]
   before_filter :set_invite_code, :only => [:show, :map]
 
-  expose(:creator) { User.find_by_slug! params[:user_id] }
+  expose(:creator) do
+    User.find_by_slug!(params[:user_id])
+  end
 
   expose(:world) do
      if params[:id]
-       World.find_by_slug!(creator.id, params[:id])
+       World.find_by_creator_and_slug!(creator, params[:id])
      else
        World.new(params[:world])
      end
@@ -24,11 +26,9 @@ class WorldsController < ApplicationController
       current_user.save
 
       track 'created world'
-
-      redirect_to world_path(world)
-    else
-      render :new
     end
+
+    respond_with world, location: user_world_path(world.creator, world)
   end
 
   def show
@@ -67,14 +67,14 @@ class WorldsController < ApplicationController
 
     redirect_to :back
   end
-  
+
   def clone
     cloned_world = world.clone_world(current_user)
     cloned_world.save!
-    
+
     current_user.current_world = cloned_world
     current_user.save!
-    
+
     redirect_to user_world_path(current_user, cloned_world)
   end
 

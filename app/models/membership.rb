@@ -22,5 +22,4 @@ class Membership
   def op!
     self.role = 'op'
   end
-
 end
