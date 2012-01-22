@@ -46,7 +46,7 @@ gem 'resque', ' ~> 1.19.0'
 gem 'resque_mailer'
 
 # Logs & Stats
-gem 'airbrake'
+gem 'exceptional'
 gem 'statsd-instrument'
 gem 'rpm_contrib'
 gem 'newrelic_rpm'
