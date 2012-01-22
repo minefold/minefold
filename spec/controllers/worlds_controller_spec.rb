@@ -41,7 +41,6 @@ describe WorldsController do
     signin_as { Fabricate(:user) }
 
     before {
-      puts world.creator.slug, world.slug
       post :clone, user_id: world.creator.slug, id: world.slug
     }
 
