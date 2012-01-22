@@ -49,6 +49,23 @@ class World
   belongs_to :parent, inverse_of: :children, class_name: 'World'
   has_many :children, inverse_of: :parent, class_name: 'World'
 
+  # Data
+
+  # this is the world backup file in S3, can be blank
+  field :filename, type: String, default: -> {"#{id}.tar.gz"}
+  belongs_to :world_upload
+
+  def world_upload=(upload)
+    write_attribute :world_upload_id, upload.id
+    self.filename = upload.world_data_file
+    upload
+  end
+
+  field :last_mapped_at, type: DateTime
+
+
+  # Peeps
+
   embeds_many :memberships
 
   embeds_many :membership_requests do
@@ -148,7 +165,7 @@ class World
 
 
   def add_member(user)
-    memberships.find_or_initialize_by user: user
+    memberships.find_or_create_by(user: user)
   end
 
   def add_op(user)

@@ -48,6 +48,21 @@ describe World do
     its(:world_data_file) { should == world.world_data_file }
   end
 
-  it "doesn't duplicate memberships"
-  it "ads the creator as an op when setting the creator"
+  describe "#creator=" do
+    it "makes the creator an op" do
+      world.ops.should include(world.creator)
+    end
+  end
+
+  describe "#add_member" do
+    let(:member) { Fabricate(:user) }
+
+    it "sets the created_at dates correctly" do
+      membership = world.add_member(member)
+      world.save
+
+      membership.should_not be_new_record
+      membership.created_at.should_not be_nil
+    end
+  end
 end
