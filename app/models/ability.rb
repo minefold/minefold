@@ -9,7 +9,7 @@ class Ability
 
     # Admin abilities
     if user.admin?
-      can :manage, :all
+      can [:update, :destroy, :operate, :play], World
     end
 
     # User abilities
