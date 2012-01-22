@@ -18,7 +18,7 @@
   #page
     = form_tag user_world_membership_requests_path, method: :post do
       %fieldset
-        = text_field_tag :username, placeholder: 'notch'
+        = text_field_tag :username, nil, placeholder: 'notch'
       %fieldset.submit
         = submit_tag 'Invite a friend'
 
