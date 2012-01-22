@@ -1,11 +1,11 @@
-- title 'Create a new world'
+- title_and_masthead 'Create a new world'
 
-%aside
-  %p.note Do you have a world already? You can upload it and start playing instantly.
-  
-  = render partial: 'upload'
+#page
+  %aside
+    %p.note Do you have a world already? You can upload it and start playing instantly.
 
-%article
+    = render partial: 'upload'
+
   = form_for world do |f|
     = f.hidden_field :world_upload_id
     = render partial: 'form', object: f

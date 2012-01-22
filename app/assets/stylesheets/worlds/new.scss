@@ -1,0 +1,16 @@
+#worlds-new {
+
+  body {
+    width: cols(9);
+  }
+
+  #page {
+
+  }
+
+  .mode, .difficulty, .gameplay {
+    width: cols(2) - (2*$pad);
+    float: left;
+    border-bottom: none;
+  }
+}
