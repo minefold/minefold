@@ -18,7 +18,8 @@
   #page
     = form_for [world.creator, world, world.membership_requests.new] do |f|
       %fieldset
-        = f.text_field :username, placeholder: 'notch'
+        = text_field_tag :username, nil, placeholder: 'notch'
+
       %fieldset.submit
         = f.submit 'Invite a friend'
 
