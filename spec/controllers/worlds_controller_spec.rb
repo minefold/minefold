@@ -40,7 +40,9 @@ describe WorldsController do
     let(:cloner) { create :user }
     signin_as { cloner }
 
-    before { post :clone, user_id: world.creator.slug, id: world.slug }
+    before {
+      post :clone, user_id: world.creator.slug, id: world.slug
+    }
 
     context 'cloned world' do
       subject { World.where(creator_id: cloner.id, slug: world.slug).first }
