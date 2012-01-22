@@ -22,12 +22,10 @@ class UsersController < ApplicationController
 
   def new
   end
-  
+
   def create
     user.referrer = referrer
     if user.save
-      UserMailer.welcome(user.id).deliver
-
       sign_in :user, user
 
       track '$signup', distinct_id: user.id.to_s, mp_name_tag: user.safe_username
