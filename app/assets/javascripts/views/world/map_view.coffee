@@ -44,7 +44,7 @@ class Mf.WorldMapView extends Backbone.View
     map_data = @model.get('map_data') or []
     spawn = _.find map_data.markers, (marker) -> marker.type == 'spawn'
 
-    @options.center = if spawn then @worldToLatLng(spawn.x, spawn.z, spawn.y) else @worldToLatLng(0, 0, 68)
+    @options.center or= if spawn then @worldToLatLng(spawn.x, spawn.z, spawn.y) else @worldToLatLng(0, 0, 68)
 
     # console.log @model
     

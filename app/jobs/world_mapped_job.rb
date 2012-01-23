@@ -3,9 +3,8 @@ class WorldMappedJob
   
   def self.perform world_id, map_data
     world = World.find(world_id)
-    world.last_mapped_at = Time.now
-    world.map_data = map_data
-    world.save!
+    world.set :last_mapped_at, Time.now
+    world.set :map_data, map_data
     
     puts "world:#{world.id} mapped at #{world.last_mapped_at}"
   end
