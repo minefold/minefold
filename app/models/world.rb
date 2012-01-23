@@ -47,9 +47,10 @@ class World
     self.filename = upload.world_data_file
     upload
   end
-
+  
+  # map data
   field :last_mapped_at, type: DateTime
-
+  field :map_data, type: Hash
 
   # Peeps
 
