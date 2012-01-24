@@ -37,7 +37,7 @@
         - if current_user.current_world == world
           = button_to 'Playing here', nil, disabled: true
         - else
-          = button_to 'Play here', [:play, world], method: :put
+          = button_to 'Play here', join_user_world_path(world.creator, world), method: :put
 
     - else
       %li.membership-request

@@ -77,7 +77,7 @@ Minefold::Application.routes.draw do
         end
 
         member do
-          put :play
+          put :join
           post :clone
         end
 
