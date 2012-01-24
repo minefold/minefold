@@ -5,22 +5,18 @@
   li {
     position: relative;
     overflow: hidden;
-    padding: $line $gutter;
+    padding: $line $pad;
     border-bottom: 1px solid darken(white, 5%);
-    margin: 0 (-$gutter);
-    
-    img.thumb { position: absolute; right: -$gutter; top: -$gutter }
+    margin: 0 (-$pad);
 
     a {
       display: block;
       font-family: $helvetica;
       line-height: 4*$line;
-      padding-left: 24px + $gutter;
     }
 
     p {
       margin-bottom: 0;
-      margin-left: 24px + $gutter;
     }
 
     &:last-child {
@@ -30,6 +26,6 @@
     &:hover {
       background-color: darken(white, 2%);
     }
-  } 
+  }
 }
 
