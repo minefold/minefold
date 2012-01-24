@@ -1,17 +1,25 @@
-#worlds-show #masthead {
-  overflow: auto;
-}
+#worlds-show  {
+  #masthead {
+    overflow: auto;
+  }
 
-#worlds-show #page {
-  position: relative;
-  width: cols(7);
-  margin: (4*$line) auto;
+  .no-map {
+    position: absolute; top: 0; bottom: 0; left: 0; right: 0;
+    background: darken(white, 5%);
+    padding-top: 36*$line;
+
+    text-align: center;
+    color: rgba(black, 0.6);
+    font-size: 18px; line-height: 6*$line;
+    text-shadow: 0 1px 0 white;
+  }
 
   article.info {
     padding: 2*$pad;
   }
-}
 
-#worlds-show footer {
-  display: none;
+  footer {
+    display: none;
+  }
+
 }

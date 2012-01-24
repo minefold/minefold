@@ -80,9 +80,5 @@
         workspace.navigate(route, true);
       });
 
-
-      Backbone.history.start({
-        pushState: true,
-        root: world.url()
-      });
+      Backbone.history.start({pushState: true, root: world.url()});
     });

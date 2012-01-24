@@ -10,16 +10,11 @@ class Mf.WorldRouter extends Backbone.Router
     @world = options.world
 
     @mapView = new Mf.WorldMapView(
-      model: @world
       el: $('#backside')[0]
+      model: @world
     )
 
-    @mapView.render()
-
-  setCurrentView: (view) ->
-    @currentView?.exit()
-    view.enter()
-    @currentView = view
-    view.render()
-
-  map: -> @setCurrentView(@mapView)
+  map: ->
+    if @world.isMapped()
+      @mapView.enter()
+      @mapView.render()
