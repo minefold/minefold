@@ -49,17 +49,22 @@
           = button_to 'Ask to play here', world_membership_requests_path(world), method: :post
 
   %ul.stats
+    - if world.children.any?
+      %li.stat.members
+        %span.val= number_with_delimiter world.children.size
+        %span.label= pluralize_text world.children.size, 'clone', 'clones'
+
     %li.stat.views
-      %span.val= world.pageviews
-      %span.label views
+      %span.val= number_with_delimiter world.pageviews
+      %span.label= pluralize_text world.pageviews, 'view', 'views'
 
     %li.stat.mins
-      %span.val= world.minutes_played
-      %span.label mins
+      %span.val= number_with_delimiter world.minutes_played
+      %span.label= pluralize_text world.minutes_played, 'min', 'mins'
 
     %li.stat.members
-      %span.val= world.memberships.size
-      %span.label members
+      %span.val= number_with_delimiter world.memberships.size
+      %span.label= pluralize_text world.memberships.size, 'member', 'members'
 
 
   :javascript
