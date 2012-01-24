@@ -27,7 +27,8 @@ class Mf.WorldMapView extends Backbone.View
     tileSize: 384
     zoomLevels: 7
     backgroundColor: '#FFF'
-
+    markers: []
+    
   initialize: (options) ->
     # TODO Refactor
     rawHistory = localStorage.getItem(@model.id)
@@ -41,13 +42,11 @@ class Mf.WorldMapView extends Backbone.View
 
     @defaults = _.extend @defaults, history
     @options = _.extend @defaults, options.map
-
-    map_data = @model.get('map_data') or []
-    spawn = _.find map_data.markers, (marker) -> marker.type == 'spawn'
+    @options = _.extend @options, @model.get('map_data') or { }
+    
+    spawn = _.find @options.markers, (marker) -> marker.type == 'spawn'
 
     @options.center or= if spawn then @worldToLatLng(spawn.x, spawn.z, spawn.y) else @worldToLatLng(0, 0, 68)
-
-    # console.log @model
 
     @map = new google.maps.Map($(@el).find('.map')[0], @options)
     google.maps.event.addListener @map, 'center_changed', @persistViewport
