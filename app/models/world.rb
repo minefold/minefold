@@ -221,6 +221,12 @@ class World
 
 # Maps
 
+  # Does a map exist *at all*
+  def map?
+    mapped? or (clone? and parent.map?)
+  end
+
+  # Has the world been mapped personally
   def mapped?
     not last_mapped_at.nil?
   end
