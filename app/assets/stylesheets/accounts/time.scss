@@ -111,6 +111,18 @@
     }
 
     form {
+      h2.credit-card { 
+        position: relative;
+        background-color: #efefef; 
+        margin-left: -$gutter;
+        padding-left: $gutter;
+        margin-bottom: $gutter;
+        color: #666;
+        font-size: 20px;
+        
+        img { position: absolute; right: $gutter; top: 6px };
+      }
+      
       overflow: auto;
       padding: 0 $gutter;
       margin-bottom: 2*$line;
@@ -118,6 +130,8 @@
       section {
         float: left;
         margin-right: $gutter;
+        clear:none;
+        padding: 0;
       }
 
       label {
@@ -131,6 +145,12 @@
       input[type=reset] {
         @include btn(#FFF, #999);
       }
+      
+      section.card-expiry {
+        margin-left: 4*$gutter;
+        .expiry-month { width: 3em };
+        .expiry-year { width: 4em };
+      }
 
       section.submit {
         clear: left;
@@ -143,6 +163,14 @@
         .remember-card {
           margin-top: $line;
         }
+      }
+      
+      p.errors { 
+        background-color: #e33; 
+        clear: both; 
+        color: #efefef; 
+        line-height: 22px;
+        padding: 0 1em; 
       }
     }
   }
