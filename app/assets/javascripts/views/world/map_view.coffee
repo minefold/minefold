@@ -1,7 +1,9 @@
+#= require models/world
+
 class MapProjection
   constructor: (@tileSize) ->
     @inverseTileSize = 1.0 / @tileSize
-  
+
   fromLatLngToPoint: (latLng) ->
     x = latLng.lng() * @tileSize
     y = latLng.lat() * @tileSize
@@ -10,10 +12,11 @@ class MapProjection
   fromPointToLatLng: (point) ->
     lng = point.x * @inverseTileSize
     lat = point.y * @inverseTileSize
-    new google.maps.LatLng(lat, lng)  
+    new google.maps.LatLng(lat, lng)
 
 class Mf.WorldMapView extends Backbone.View
   id: 'map'
+  model: Mf.World
 
   defaults:
     zoom: 5
@@ -26,8 +29,6 @@ class Mf.WorldMapView extends Backbone.View
     backgroundColor: '#FFF'
 
   initialize: (options) ->
-    @overlay = $(@el).find('.overlay')
-
     # TODO Refactor
     rawHistory = localStorage.getItem(@model.id)
 
@@ -47,14 +48,14 @@ class Mf.WorldMapView extends Backbone.View
     @options.center or= if spawn then @worldToLatLng(spawn.x, spawn.z, spawn.y) else @worldToLatLng(0, 0, 68)
 
     # console.log @model
-    
+
     @map = new google.maps.Map($(@el).find('.map')[0], @options)
     google.maps.event.addListener @map, 'center_changed', @persistViewport
     google.maps.event.addListener @map, 'zoom_changed', @persistViewport
-    
+
     @addMarker spawn, 'Spawn', 'http://google-maps-icons.googlecode.com/files/home.png' if spawn
-    
-    
+
+
   render: ->
     mapType = new google.maps.ImageMapType(
       getTileUrl: @tileUrl
@@ -63,9 +64,9 @@ class Mf.WorldMapView extends Backbone.View
       minZoom: 0
       isPng: true
     )
-    
+
     mapType.projection = new MapProjection(@options.tileSize)
-    
+
     @map.mapTypes.set 'map', mapType
 
   enter: ->
@@ -76,26 +77,13 @@ class Mf.WorldMapView extends Backbone.View
       navigationControl: true
       keyboardShortcuts: true
 
-    @overlay.hide()
-
   exit: ->
-    @overlay.show()
-
     @map.setOptions
       disableDoubleClickZoom: true
       draggable: false
       scrollwheel: false
       navigationControl: false
       keyboardShortcuts: false
-
-    $('<div></div>').css(
-      position: 'absolute'
-      top: 0
-      right: 0
-      bottom: 0
-      left: 0
-      backgroundColor: 'rgba(0,0,0,0.8)'
-    ).after($(@el))
 
   persistViewport: =>
     center = @map.getCenter()
@@ -107,24 +95,27 @@ class Mf.WorldMapView extends Backbone.View
 
     localStorage.setItem @model.id, JSON.stringify(data)
 
-  tileUrl: (tile, zoom) =>
-    url = ''
+
+  tilePath = (tile, zoom) ->
+    path = ''
 
     if tile.x < 0 or tile.x >= Math.pow(2, zoom) or tile.y < 0 or tile.y >= Math.pow(2, zoom)
-      url += '/blank'
+      path += '/blank'
     else if zoom == 0
-      url += '/base'
+      path += '/base'
     else
       for z in [(zoom - 1)..0]
         x = Math.floor(tile.x / Math.pow(2, z)) % 2
         y = Math.floor(tile.y / Math.pow(2, z)) % 2
-        url += "/#{x + 2*y}"
+        path += "/#{x + 2*y}"
 
-    url += '.png'
+    path += '.png'
+    path
 
-    # TODO Add mapped_at cache busting
-    console.log @model
-    @model.attributes.map_assets_url + url
+  tileUrl: (tile, zoom) =>
+    timestamp = new Date(@model.get('last_mapped_at')).getTime()
+
+    window.location.protocol + @model.get('map_assets_url') + tilePath(tile, zoom) + '?' + timestamp
 
   addMarker: (marker, title, icon) =>
     new google.maps.Marker
@@ -132,14 +123,13 @@ class Mf.WorldMapView extends Backbone.View
       map: @map,
       title: marker.title,
       icon: icon
-    
-    
+
   worldToLatLng: (x, y, z) =>
     # the width and height of all the highest-zoom tiles combined,
     # inverted
-    
+
     perPixel = 1.0 / (@options.tileSize * Math.pow(2, @options.zoomLevels))
-    
+
     switch @options.northDirection
       when 'upper-left'
         temp = x
