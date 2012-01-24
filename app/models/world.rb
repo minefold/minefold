@@ -209,7 +209,8 @@ class World
       filename: filename,
       seed: seed,
       game_mode: game_mode,
-      difficulty_level: difficulty_level
+      difficulty_level: difficulty_level,
+      map_data: map_data
     })
   end
 

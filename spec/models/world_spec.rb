@@ -42,13 +42,15 @@ describe World do
   describe 'clone_world' do
     let(:user) { Fabricate(:user) }
     subject {
+      world.map_data = { zoomLevels: 16 }
       world.clone!.tap do |clone|
-        clone.ceator = user
+        clone.creator = user
       end
     }
 
     specify(:parent) { eq world }
     specify(:filename) { eq world.filename }
+    its(:map_data) { should == { zoomLevels: 16 } }
   end
 
   describe "#creator=" do
