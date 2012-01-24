@@ -33,7 +33,7 @@ class Worlds::MembershipsController < ApplicationController
 
     # TODO Move to an observer
     WorldMailer.membership_created(world.id, membership.id).deliver
-    track 'member added'
+    track 'added member'
 
     respond_with membership, location: world_path(world)
   end
