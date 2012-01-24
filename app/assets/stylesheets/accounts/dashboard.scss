@@ -3,16 +3,18 @@
   margin-bottom: -4*$line;
 
   li {
-    overflow: auto;
+    position: relative;
+    overflow: hidden;
     padding: $line $gutter;
     border-bottom: 1px solid darken(white, 5%);
     margin: 0 (-$gutter);
+    
+    img.thumb { position: absolute; right: -$gutter; top: -$gutter }
 
     a {
       display: block;
       font-family: $helvetica;
       line-height: 4*$line;
-      background: url(image-path('default-world.png')) no-repeat;
       padding-left: 24px + $gutter;
     }
 
@@ -28,6 +30,6 @@
     &:hover {
       background-color: darken(white, 2%);
     }
-
-  }
+  } 
 }
+
