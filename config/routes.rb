@@ -80,8 +80,8 @@ Minefold::Application.routes.draw do
         end
 
         member do
-          put :play
-          put :clone
+          put :join
+          post :clone
         end
       end
     end

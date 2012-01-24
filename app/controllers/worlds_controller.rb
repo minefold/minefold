@@ -54,13 +54,13 @@ class WorldsController < ApplicationController
     end
   end
 
-  def play
+  def join
     authorize! :play, world
 
     current_user.current_world = world
     current_user.save
 
-    track 'changed worlds'
+    track 'joined world'
 
     redirect_to :back
   end
