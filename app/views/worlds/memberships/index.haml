@@ -6,22 +6,27 @@
       ← back to #{world.name}
 
 - if can? :operate, world
-  #page
-    %section.members
-      %ul
-        - world.membership_requests.each do |r|
-          %li
-            = r.user.username
-            %p accept
-            %p ignore
+  - if world.membership_requests.any?
+    #page
+      %section.members
+        %h3 Pending Membership Requests
+        %ul
+          - world.membership_requests.each do |r|
+            %li
+              = link_to user_path(r.user) do
+                = avatar_tag r.user, 40
+              .meta
+                .username= r.user.username
+                = button_to 'Approve', approve_user_world_membership_request_path(world.creator, world, r), method: :put, class: 'approve'
+                = button_to 'Ignore', user_world_membership_request_path(world.creator, world, r), method: :delete, class: 'ignore'
 
   #page
-    = form_for [world.creator, world, world.membership_requests.new] do |f|
+    = form_tag user_world_members_path, method: :post do
       %fieldset
         = text_field_tag :username, nil, placeholder: 'notch'
 
       %fieldset.submit
-        = f.submit 'Invite a friend'
+        = submit_tag 'Invite a friend'
 
 #page
   %section.members

@@ -8,6 +8,23 @@
   #page section.members {
     padding: 0 $pad;
 
+    .meta {
+      width: cols(3) - $pad;
+    }
+
+    .approve {
+      @include btn($green, white);
+    }
+
+    .approve, .ignore {
+      float: left;
+      margin-right: $gutter;
+      padding: $line $gutter;
+
+      font-size: 12px;
+      line-height: 2*$line;
+    }
+
     ul {
       margin: 0 (-$pad);
       li {
