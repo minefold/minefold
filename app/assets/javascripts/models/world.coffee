@@ -1,4 +1,4 @@
 class Mf.World extends Backbone.Model
   url: -> @get('url')
 
-  isMapped: -> @get('last_mapped_at')?
+  isMapped: -> @get('map_assets_url')?

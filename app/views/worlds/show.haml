@@ -1,7 +1,7 @@
 
 = render partial: 'worlds/header'
 
-- if not world.mapped?
+- if not world.map?
 
   .no-map
     - if signed_in? and can? :play, world
