@@ -26,7 +26,7 @@
       = link_to world_members_path(world) do
         = image_tag 'icons/friends.png', width: 30, height: 20
 
-    - if not world.creator == current_user
+    - if not signed_in? or can? :clone, world
       %li.clone
         - if current_user and cloned_world = world.cloned_world(current_user)
           = link_to 'Your clone', user_world_path(current_user, cloned_world)
@@ -42,7 +42,7 @@
           = button_to 'Play here', [:play, world], method: :put
 
     - else
-      %li.play-request
+      %li.membership-request
         - if signed_in? and world.membership_requests.include_user?(current_user)
           = button_to 'Request sent', nil, disabled: true
         - else

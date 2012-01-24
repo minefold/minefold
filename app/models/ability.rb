@@ -20,6 +20,12 @@ class Ability
       world.op? user
     end
 
+    # 1. Can't clone own wold
+    # 2. Can't clone a world that's already been cloned
+    can :clone, World do |world|
+      world.creator != user and not user.cloned?(world)
+    end
+
     can :play, World do |world|
       world.member? user
     end
