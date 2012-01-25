@@ -144,29 +144,23 @@ class User
 
 # Avatars
 
-  def avatar_url(size=nil)
-    "http://asset0.mcserverlist.net/avatar/#{safe_username}/#{size}"
+  mount_uploader :avatar, AvatarUploader
+
+  def fetch_avatar!
+    self.remote_avatar_url = "http://minecraft.net/skin/#{safe_username}.png"
+    # Minecraft doesn't store default skins so it raises a HTTPError
+  rescue OpenURI::HTTPError
   end
 
-  # field :skin_etag
-  # mount_uploader :skin, AvatarUploader
+  def async_fetch_avatar!
+    Resque.enqueue(FetchAvatarJob, id)
+  end
 
-  # def fetch_avatar!
-  #   self.remote_avatar_url = "http://minecraft.net/skin/#{safe_username}.png"
-  #   # Minecraft doesn't store default skins so it raises a HTTPError
-  # rescue OpenURI::HTTPError
-  # end
-
-  # def async_fetch_avatar!
-  #   Resque.enqueue(FetchAvatarJob, id)
-  # end
-  #
-  # before_save do
-  #   async_fetch_avatar! if safe_username_changed?
-  # end
+  before_save do
+    async_fetch_avatar! if safe_username_changed?
+  end
 
   def cloned?(world)
-    p created_worlds.to_a
     created_worlds.where(parent_id: world.id).exists?
   end
 
