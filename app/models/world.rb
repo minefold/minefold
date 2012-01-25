@@ -13,7 +13,6 @@ class World
     where(name: name)
   }
 
-
   belongs_to :creator,
     inverse_of: :created_worlds,
     class_name: 'User'
@@ -38,6 +37,10 @@ class World
 
   # Legacy backup file in S3, can be blank
   field :world_data_file, type: String, default: -> {"#{id}.tar.gz"}
+=======
+  field :map_data, type: Hash
+  field :world_data_file, type: String  # this is the world backup file in S3, can be blank
+>>>>>>> 924a02d45aabe0a50028453757c4210371451bd5
 
   belongs_to :world_upload
 
