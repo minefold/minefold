@@ -14,7 +14,7 @@
           - world.membership_requests.each do |r|
             %li
               = link_to user_path(r.user) do
-                = avatar_tag r.user, 40
+                = avatar_tag r.user, :medium, width: 40, height: 40
               .meta
                 .username= r.user.username
                 = button_to 'Approve', approve_user_world_membership_request_path(world.creator, world, r), method: :put, class: 'approve'
@@ -34,7 +34,7 @@
       - world.memberships.each do |m|
         %li
           = link_to user_path(m.user) do
-            = avatar_tag m.user, 40
+            = avatar_tag m.user, :medium, width: 40, height: 40
           .meta
             .username= m.user.username
             Joined #{time_ago_in_words m.created_at}.

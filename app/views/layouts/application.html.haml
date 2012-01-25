@@ -76,7 +76,7 @@
 
             %li.user
               = link_to current_user do
-                = avatar_tag(current_user, 20)
+                = avatar_tag current_user, :small, width: 20, height: 20
 
               %ol
                 %li.profile= link_to 'Profile', current_user

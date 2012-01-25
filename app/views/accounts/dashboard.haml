@@ -15,5 +15,5 @@
         - current_user.worlds.sort_by {|w| w.creator.username.downcase + w.name.downcase }.each do |world|
           %li{class: ('active' if current_user.current_world?(world))}
             = link_to world do
-              #{world.creator.username}/#{world.name}
+              #{world.creator.username}/<strong>#{world.name}</strong>
             %p= pluralize world.members.count, 'member'
