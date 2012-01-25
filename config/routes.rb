@@ -65,7 +65,7 @@ Minefold::Application.routes.draw do
 
   as :user do
     resources :users, :path => '/', :only => [:show] do
-      resources :worlds, :path => '/', :except => [:index, :destroy], :path_names => {:edit => 'settings'} do
+      resources :worlds, :path => '/', :except => [:index], :path_names => {:edit => 'settings'} do
         scope :module => :worlds do
           resources :events, :only => [:index, :create]
           resources :members, :controller => :memberships, :only => [:index, :create, :destroy] do
@@ -75,14 +75,19 @@ Minefold::Application.routes.draw do
           resources :membership_requests, :only => [:create, :destroy] do
             put :approve, :on => :member
           end
-        end
 
-        member do
-          put :join
-          post :clone
+          member do
+            put :join
+            post :clone
+          end
         end
-
       end
     end
   end
+
+  namespace :api do
+    resource :session, :only => [:show], :controller => 'session'
+    resources :photos, :only => [:create]
+  end
+
 end

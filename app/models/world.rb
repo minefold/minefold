@@ -3,13 +3,11 @@ class World
   include Mongoid::Timestamps
   include Mongoid::Slug
 
-  scope :by_name, ->(name) {
-    where(name: name)
-  }
 
   field :name, type: String
-  slug :name, index: true, scope: :creator
+  validates_uniqueness_of :name, scope: :parent_id
   validates_presence_of :name
+  slug  :name, index: true, scope: :parent
 
   scope :by_name, ->(name) {
     where(name: name)
@@ -21,13 +19,13 @@ class World
     class_name: 'User'
   validates_presence_of :creator
 
-  scope :by_creator, ->(creator) {
-    where(creator_id: creator.id)
-  }
-
   def self.find_by_creator_and_slug!(creator, slug)
-    by_creator(creator).find_by_slug!(slug)
+    where(creator_id: creator.id).find_by_slug!(slug)
   end
+
+  scope :by_creator, ->(user) {
+    where(creator_id: user.id)
+  }
 
 
   # Cloning
@@ -38,24 +36,26 @@ class World
 
   # Data
 
-  # this is the world backup file in S3, can be blank
-  field :filename, type: String, default: -> {"#{id}.tar.gz"}
+  # Legacy backup file in S3, can be blank
+  field :world_data_file, type: String, default: -> {"#{id}.tar.gz"}
+
   belongs_to :world_upload
 
   def world_upload=(upload)
     write_attribute :world_upload_id, upload.id
-    self.filename = upload.world_data_file
+    self.world_data_file = upload.world_data_file
     upload
   end
-  
-  # map data
+
+
+  # Maps
   field :last_mapped_at, type: DateTime
   field :map_data, type: Hash
 
+
   # Peeps
 
-  embeds_many :memberships
-
+  embeds_many :memberships, cascade_callbacks: true
   embeds_many :membership_requests do
     def include_user?(user)
       where(user_id: user.id).exists?
@@ -63,19 +63,14 @@ class World
   end
 
   has_many :events, as: :target,
-                    order: [:created_at, :desc]
+                 order: [:created_at, :desc]
 
 
   # Game settings
 
-  LEVEL_TYPES = ['default', 'flat']
   GAME_MODES = [:survival, :creative]
+  LEVEL_TYPES = ['default', 'flat']
   DIFFICULTIES = [:peaceful, :easy, :normal, :hard]
-
-  field :level_type,       type: String,  default: LEVEL_TYPES.first
-  field :pvp,              type: Boolean, default: true
-  field :spawn_monsters,   type: Boolean, default: true
-  field :spawn_animals,    type: Boolean, default: true
 
   field :seed, type: String, default: ''
 
@@ -91,14 +86,24 @@ class World
     greater_than_or_equal_to: 0,
     less_than: DIFFICULTIES.size
 
+  field :level_type, type: String, default: LEVEL_TYPES.first
+  validates_inclusion_of :level_type, in: LEVEL_TYPES
 
-  # Stats
+  field :pvp, type: Boolean, default: true
+  field :spawn_monsters, type: Boolean, default: true
+  field :spawn_animals, type: Boolean, default: true
+
+
+  # Statistics
 
   field :minutes_played, type: Integer, default: 0
+  field :pageviews, type: Integer, default: 0
+  validates_numericality_of :pageviews,
+    only_integer: true,
+    greater_than_or_equal_to: 0
 
-  def minute_played!
-    inc :minutes_played, 1
-  end
+
+  # Stats
 
   field :pageviews, type: Integer, default: 0
   validates_numericality_of :pageviews,
@@ -106,7 +111,7 @@ class World
     greater_than_or_equal_to: 0
 
 
-  # Users
+  # Members
 
   def creator=(creator)
     write_attribute :creator_id, creator.id
@@ -114,7 +119,7 @@ class World
   end
 
   def add_member(user)
-    memberships.find_or_create_by(user: user)
+    memberships.find_or_initialize_by(user: user)
   end
 
   def add_op(user)
@@ -130,12 +135,15 @@ class World
   end
 
   def ops
-    memberships.ops.map {|m| m.user }
+    memberships.ops.map(&:user)
   end
 
   def members
-    memberships.map {|m| m.user }
+    memberships.map {|m| m.user}
   end
+
+
+  # Online players
 
   def players
     User.find(current_player_ids)
@@ -182,7 +190,7 @@ class World
   def map_assets_url
     case
     when mapped?
-      File.join(ENV['WORLD_MAPS_URL'], id.to_s)
+      File.join ENV['WORLD_MAPS_URL'], id.to_s
     when clone?
       parent.map_assets_url
     end
@@ -199,23 +207,27 @@ class World
   # Cloning
 
   def clone?
-    !parent.nil?
+    not parent.nil?
   end
 
   def clone!
-    self.class.new({
+    World.new(
       parent: self,
       name: name,
-      filename: filename,
+      # file: file,
+      # settings: settings,
+      # map: map
       seed: seed,
       game_mode: game_mode,
+      level_type: level_type,
       difficulty_level: difficulty_level,
+      world_data_file: world_data_file,
       map_data: map_data
-    })
+    )
   end
 
 
-# Other
+  # Other
 
   def to_param
     slug.to_param
@@ -232,6 +244,7 @@ class World
   def current_player_ids
     REDIS.smembers("#{redis_key}:connected_players").map {|id| BSON::ObjectId(id)}
   end
+
 
 private
 

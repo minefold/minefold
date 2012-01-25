@@ -32,10 +32,8 @@
         %p.security AES-256 Secure payment by #{link_to 'Stripe', 'https://stripe.com/help/security', target: '_blank'}.
 
       = form_tag order_path, method: :post do
-        %h2.credit-card
-          Credit Card
-          = image_tag "cc-types.png"
         %input{type: 'hidden', name: 'hours'}
+        %p.errors
 
         %section.card-number
           = label_tag :number, 'Card Number'
@@ -47,17 +45,16 @@
               number.val(number.val().replace(/[^0-9]/g, ''));
             });
 
-        %section.card-cvc
-          = label_tag :cvc, 'CVC'
-          = text_field_tag :cvc, nil, name: nil, size: 4, autocomplete: 'off', class: %w{stripe cvc}, id: 'stripe-cvc'
-
         %section.card-expiry
           = label_tag :expiry_month, 'Expiry Date'
           = text_field_tag :expiry_month, nil, name: nil, size: 2, class: %w{stripe expiry-month}, id: 'stripe-exp-month', placeholder: 'MM'
           %span /
           = text_field_tag :expiry_year, nil, name: nil, size: 4, class: %w{stripe expiry-year}, id: 'stripe-exp-year', placeholder: 'YYYY'
 
-        %p.errors
+
+        %section.card-cvc
+          = label_tag :cvc, 'CVC'
+          = text_field_tag :cvc, nil, name: nil, size: 4, autocomplete: 'off', class: %w{stripe cvc}, id: 'stripe-cvc'
 
         %section.submit
           = submit_tag 'Confirm order'

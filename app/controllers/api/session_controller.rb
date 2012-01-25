@@ -1,9 +1,8 @@
-class Api::SessionsController < Api::ApiController
+class Api::SessionController < Api::ApiController
   layout nil
-
-  # TODO Needs to be reconsidered
+  
   def show
-    if current_user.current_world &&
+    if current_user.current_world && 
        current_user.current_world.current_player_ids.include?(current_user.id)
       render json: { current_world: current_user.current_world.name }
     else

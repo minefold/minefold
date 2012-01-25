@@ -6,21 +6,21 @@ describe User do
   specify { be_timestamped_document}
   specify { be_paranoid_document}
 
-  specify { have_field(:email) }
-  specify { have_field(:username) }
-  specify { have_field(:safe_username) }
-  specify { have_field(:slug) }
+  it { should have_field(:email) }
+  it { should have_field(:username) }
+  it { should have_field(:safe_username) }
+  it { should have_field(:slug) }
 
-  specify { have_field(:host) }
+  it { should have_field(:host) }
 
-  specify { have_field(:credits).of_type(Integer) }
-  specify { have_field(:minutes_played).of_type(Integer).with_default_value_of(0) }
+  it { should have_field(:credits).of_type(Integer) }
+  it { should have_field(:minutes_played).of_type(Integer).with_default_value_of(0) }
 
-  specify { belong_to(:current_world).of_type(World).as_inverse_of(nil) }
-  specify { reference_many(:created_worlds).of_type(World).as_inverse_of(:creator) }
+  it { should belong_to(:current_world).of_type(World).as_inverse_of(nil) }
+  it { should reference_many(:created_worlds).of_type(World).as_inverse_of(:creator) }
 
-  specify { validate_numericality_of(:credits)}
-  specify { validate_numericality_of(:minutes_played).greater_than_or_equal_to(0) }
+  it { should validate_numericality_of(:credits)}
+  it { should validate_numericality_of(:minutes_played).greater_than_or_equal_to(0) }
 
   describe 'credits' do
     it "gives FREE_HOURS by default" do
@@ -30,10 +30,10 @@ describe User do
   end
 
   describe 'usernames' do
-    specify { validate_presence_of(:username)}
-    specify { validate_uniqueness_of(:safe_username)}
+    it { should validate_presence_of(:username)}
+    it { should validate_uniqueness_of(:safe_username)}
 
-    specify { validate_length_of(:safe_username).within(1..16)}
+    it { should validate_length_of(:safe_username).within(1..16)}
 
     it "changes #safe_username when changing #username" do
       subject.username = ' FooBarBaz '
@@ -42,14 +42,14 @@ describe User do
   end
 
   describe "referrals" do
-    specify { validate_uniqueness_of(:referral_code) }
+    it { should validate_uniqueness_of(:referral_code) }
 
     it "should have a short referral code" do
       subject.save!
-      subject.referral_code.length.should <= User::REFERRAL_CODE_LENGTH
+      subject.referral_code.length.should == User::REFERRAL_CODE_LENGTH
     end
 
-    specify { belong_to(:referrer).of_type(User).as_inverse_of(:referrals) }
-    specify { reference_many(:referrals).of_type(User).as_inverse_of(:referrer) }
+    it { should belong_to(:referrer).of_type(User).as_inverse_of(:referrals) }
+    it { should reference_many(:referrals).of_type(User).as_inverse_of(:referrer) }
   end
 end

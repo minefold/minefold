@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
     render status: :not_found, template: 'errors/not_found'
   end
 
-  rescue_from(CanCan::AccessDenied) do
+  rescue_from CanCan::AccessDenied do
     render status: :unauthorized, text: 'unauthorized'
   end
 

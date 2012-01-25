@@ -24,6 +24,7 @@
     = form_tag user_world_members_path, method: :post do
       %fieldset
         = text_field_tag :username, nil, placeholder: 'notch'
+
       %fieldset.submit
         = submit_tag 'Invite a friend'
 

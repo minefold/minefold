@@ -45,7 +45,7 @@ class WorldsController < ApplicationController
   def update
     authorize! :update, world
 
-    world.update_attributes params[:world]
+    world.update_attributes(params[:world])
 
     respond_with world, location: user_world_path(world.creator, world)
   end
@@ -58,14 +58,10 @@ class WorldsController < ApplicationController
 
     track 'joined world'
 
-    redirect_to :back
+    respond_with world, location: user_world_path(world.creator, world)
   end
 
   def clone
-    authorize! :clone, world
-
-    # TODO Potential but *very* unlikely race condition if data is swept away between creating the clone and saving it.
-
     clone = world.clone!
     clone.creator = current_user
 
@@ -76,13 +72,13 @@ class WorldsController < ApplicationController
       track 'cloned world'
     end
 
-    respond_with clone, location: user_world_path(clone.creator, clone)
+    respond_with world, location: user_world_path(current_user, clone)
   end
+
 
 private
 
   def set_invite_code
-    # THINK: Should we retroactively apply invite codes?
     cookies[:invite] = params[:i] if params[:i] and not signed_in?
   end
 

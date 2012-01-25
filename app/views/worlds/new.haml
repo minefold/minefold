@@ -2,13 +2,11 @@
 
 #page
   %aside
-    %p.note 
-      Have a world already? You can upload a zip file and start playing instantly.
-      %br/
-      = link_to 'How do I zip my world?', instructions_upload_path, target: '_blank'
-    
+    %p.note Do you have a world already? You can upload it and start playing instantly.
+
     = render partial: 'upload'
 
-  = form_for world do |f|
-    = f.hidden_field :world_upload_id
-    = render partial: 'form', object: f
+  %article
+    = form_for world do |f|
+      = f.hidden_field :world_upload_id
+      = render partial: 'form', object: f

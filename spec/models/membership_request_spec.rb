@@ -5,10 +5,10 @@ describe MembershipRequest do
   let(:user) { Fabricate(:user) }
   subject { world.membership_requests.new(user: user) }
 
-  specify { be_embedded_in(:world) }
+  it { should be_embedded_in(:world) }
 
-  specify { belong_to(:user) }
-  specify { validate_presence_of(:user) }
+  it { should belong_to(:user) }
+  it { should validate_presence_of(:user) }
 
   describe "#approve" do
     it "adds the user as a member of the world" do

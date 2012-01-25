@@ -26,3 +26,7 @@ RSpec.configure do |config|
 
   Fog.mock!
 end
+
+def basic_auth(username, password)
+  @request.env["HTTP_AUTHORIZATION"] = "Basic " + Base64::encode64("#{username}:#{password}")
+end

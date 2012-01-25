@@ -6,30 +6,32 @@ describe World do
 
   specify { be_timestamped_document }
 
-  specify { have_field(:name) }
-  specify { have_field(:slug) }
-  specify { validate_presence_of(:name) }
+  it { should have_field(:name) }
+  it { should have_field(:slug) }
+  it { should validate_presence_of(:name) }
 
-  specify { belong_to(:creator).of_type(User).as_inverse_of(:created_worlds) }
-  specify { validate_presence_of(:creator) }
+  it { should belong_to(:creator).of_type(User).as_inverse_of(:created_worlds) }
+  it { should validate_presence_of(:creator) }
 
 
-  specify { embed_many(:memberships) }
+  it { should embed_many(:memberships) }
 
-  specify { embed_many(:membership_requests) }
+  it { should embed_many(:membership_requests) }
 
-  specify { have_field(:seed).with_default_value_of('') }
-  specify { have_field(:pvp).with_default_value_of(true) }
-  specify { have_field(:spawn_monsters).with_default_value_of(true) }
-  specify { have_field(:spawn_animals).with_default_value_of(true) }
+  it { should have_field(:seed).with_default_value_of('') }
+  it { should have_field(:pvp).with_default_value_of(true) }
+  it { should have_field(:spawn_monsters).with_default_value_of(true) }
+  it { should have_field(:spawn_animals).with_default_value_of(true) }
 
-  specify { reference_many(:events) }
+  it { should reference_many(:events) }
 
-  context 'with referenced world_upload' do
-    let(:world_upload) { WorldUpload.new(world_data_file: 'uploaded')}
-    subject { Fabricate(:world, world_upload: world_upload) }
+  describe 'before_create' do
+    context 'with referenced world_upload' do
+      let(:world) { Fabricate(:world, world_upload: WorldUpload.new(world_data_file: 'uploaded')) }
+      subject { world }
 
-    its(:filename) { should == 'uploaded' }
+      its(:world_data_file) { should == 'uploaded' }
+    end
   end
 
   it "changes the slug when changing the name" do
@@ -40,17 +42,11 @@ describe World do
   end
 
   describe 'clone_world' do
-    let(:user) { Fabricate(:user) }
-    subject {
-      world.map_data = { zoomLevels: 16 }
-      world.clone!.tap do |clone|
-        clone.creator = user
-      end
-    }
+    subject { world.clone! }
 
-    specify(:parent) { eq world }
-    specify(:filename) { eq world.filename }
-    its(:map_data) { should == { zoomLevels: 16 } }
+    its(:parent) { eq world }
+    its(:world_data_file) { eq world.world_data_file }
+    its(:map_data) { eq world.map_data }
   end
 
   describe "#creator=" do
@@ -63,8 +59,8 @@ describe World do
     let(:member) { Fabricate(:user) }
 
     it "sets the created_at dates correctly" do
-      membership = world.add_member(member)
-      world.save
+      membership = subject.add_member(member)
+      subject.save
 
       membership.should_not be_new_record
       membership.created_at.should_not be_nil

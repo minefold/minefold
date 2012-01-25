@@ -16,4 +16,5 @@ class Mf.PhotoView extends Backbone.View
   initialize: ->
 
   render: ->
+    console.log 'rendering photo!'
     $(@el).html @template(@model.attributes)

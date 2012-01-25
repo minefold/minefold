@@ -1,7 +1,7 @@
-class Worlds::PicturesController < ApplicationController
+class Worlds::PhotosController < ApplicationController
 
   respond_to :html, :json
-
+  
   expose(:creator) { User.find_by_slug! params[:user_id] }
   expose(:world) {
     World.find_by_slug!(creator.id, params[:world_id])
@@ -31,7 +31,7 @@ class Worlds::PicturesController < ApplicationController
     photo.creator = current_user
     world.photos.push photo
 
-    track 'uploaded picture'
+    track 'uploaded photo'
 
     redirect_to world_photos_path(world)
   end

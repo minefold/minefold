@@ -36,6 +36,35 @@ describe WorldsController do
     end
   end
 
+  describe '#join' do
+    let(:world) { Fabricate(:world) }
+
+    context 'public' do
+      before { post :join, user_id: world.creator.slug, id: world.slug }
+      it "is unauthorized"
+    end
+
+    context 'member' do
+      signin_as { Fabricate(:user).tap {|u| world.add_member(u) } }
+
+      it "sets the user's current world" do
+        post :join, user_id: world.creator.slug, id: world.slug
+        current_user.current_world.should == world
+      end
+    end
+
+    context 'already joined' do
+      signin_as { Fabricate(:user, current_world: world) }
+      before { world.add_member(current_user) }
+
+      it "does nothing" do
+        lambda {
+          post :join, user_id: world.creator.slug, id: world.slug
+        }.should_not change(current_user, :current_world)
+      end
+    end
+  end
+
   describe '#clone' do
     let(:world) { Fabricate(:world) }
     signin_as { Fabricate(:user) }
@@ -45,6 +74,7 @@ describe WorldsController do
     }
 
     subject { response }
-    specify { redirect_to(user_world_path(current_user, world.slug)) }
+
+    it { should redirect_to(user_world_path(current_user, world.slug)) }
   end
 end

@@ -14,9 +14,7 @@
     %p
       by #{link_to world.creator.username, world.creator, rel: 'author'}.
       - if world.clone?
-        Cloned from
-        = link_to user_world_path(world.parent.creator, world.parent) do
-          #{world.parent.creator.slug}/#{world.parent.slug}
+        Cloned from #{link_to_world "#{world.parent.creator.slug}/#{world.parent.slug}", world.parent}.
 
   %ol.actions
     - if can? :edit, world
@@ -30,7 +28,7 @@
 
     - if not signed_in? or can? :clone, world
       %li.clone
-        = button_to 'Clone', clone_user_world_path(world.creator, world)
+        = button_to 'Clone', clone_user_world_path(world.creator, world), method: :put
 
     - if can? :play, world
       %li.play
@@ -63,7 +61,6 @@
     %li.stat.members
       %span.val= number_with_delimiter world.memberships.size
       %span.label= pluralize_text world.memberships.size, 'member', 'members'
-
 
 
   :javascript
