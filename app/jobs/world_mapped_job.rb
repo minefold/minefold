@@ -1,7 +1,7 @@
 class WorldMappedJob
   @queue = :low
   
-  THUMB_WIDTH = 200
+  THUMB_WIDTH = 100
   THUMB_HEIGHT = 100
   
   def self.perform world_id, map_data

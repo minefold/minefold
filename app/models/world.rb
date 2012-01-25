@@ -13,7 +13,6 @@ class World
     where(name: name)
   }
 
-
   belongs_to :creator,
     inverse_of: :created_worlds,
     class_name: 'User'
