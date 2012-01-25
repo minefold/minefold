@@ -57,6 +57,7 @@ Minefold::Application.routes.draw do
   resources :worlds, :only => [:new, :create, :index] do
     collection do
       resource :upload, :module => :worlds, :only => [:new, :create] do
+        get :instructions
         get :policy
       end
     end
