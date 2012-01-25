@@ -2,7 +2,10 @@
 
 #page
   %aside
-    %p.note Do you have a world already? You can upload it and start playing instantly.
+    %p.note 
+      Have a world already? Upload a zip file of the world and start playing instantly.
+      %br/
+      = link_to 'How do I zip my world?', instructions_upload_path, target: '_blank'
 
     = render partial: 'upload'
 
