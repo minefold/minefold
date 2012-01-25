@@ -32,14 +32,14 @@ module ApplicationHelper
   end
 
   def title(page_title)
-    content_for :title, page_title.to_s
+    content_for(:title, page_title.to_s)
   end
 
   def title_and_masthead(name)
     title(name)
     masthead { content_tag(:h1, name) }
   end
-  
+
   def head(&blk)
     content_for :head, capture_haml(&blk)
   end

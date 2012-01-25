@@ -10,5 +10,5 @@ class MembershipRequest
   def approve
     world.add_member(user)
   end
-  
+
 end

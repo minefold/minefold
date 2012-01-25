@@ -45,13 +45,9 @@ class WorldsController < ApplicationController
   def update
     authorize! :update, world
 
-    world.update_attributes params[:world]
-    if world.save
-      flash[:success] = "World updated"
-      redirect_to params['return_url'] || world_path(world)
-    else
-      render json: {errors: world.errors}
-    end
+    world.update_attributes(params[:world])
+
+    respond_with world, location: user_world_path(world.creator, world)
   end
 
   def join
@@ -62,23 +58,27 @@ class WorldsController < ApplicationController
 
     track 'joined world'
 
-    redirect_to :back
+    respond_with world, location: user_world_path(world.creator, world)
   end
 
   def clone
-    cloned_world = world.clone_world(current_user)
-    cloned_world.save!
+    clone = world.clone!
+    clone.owner = current_user
 
-    current_user.current_world = cloned_world
-    current_user.save!
+    if clone.save
+      current_user.current_world = cloned_world
+      current_user.save
 
-    redirect_to user_world_path(current_user, cloned_world)
+      track 'cloned world'
+    end
+
+    respond_with world, location: user_world_path(current_user, clone)
   end
+
 
 private
 
   def set_invite_code
-    # THINK: Should we retroactively apply invite codes?
     cookies[:invite] = params[:i] if params[:i] and not signed_in?
   end
 

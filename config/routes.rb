@@ -75,13 +75,10 @@ Minefold::Application.routes.draw do
             put :approve, :on => :member
           end
 
-        resources :membership_requests do
-          put :approve
-        end
-
-        member do
-          put :join
-          post :clone
+          member do
+            put :join
+            post :clone
+          end
         end
       end
     end

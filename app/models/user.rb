@@ -12,35 +12,54 @@ class User
   REFERRAL_HOURS = 2
 
   field :email, type: String
+  index :email, unique: true
+  scope :by_email, ->(email) {
+    where(email: sanitize_email(email))
+  }
 
   field :username, type: String
   slug :username, index: true
   validates_presence_of :username
+  validates_length_of :safe_username, within: 1..16
 
-  field :safe_username, type: String, unique: true
+  field :safe_username, type: String
   validates_uniqueness_of :safe_username, case_sensitive: false
   validates_length_of :safe_username, within: 1..16
+  index :safe_username, unique: true
+
+  scope :by_username, ->(username) {
+    where(safe_username: sanitize_username(username))
+  }
+
+  attr_accessor :email_or_username
+  scope :by_email_or_username, ->(str) {
+    any_of(
+      {safe_username: sanitize_username(str)},
+      {email: sanitize_email(str)}
+    )
+  }
 
   field :admin, type: Boolean, default: false
 
-  field :host,           default: 'pluto.minefold.com'
+  field :host, default: 'pluto.minefold.com'
 
-  field :unlimited,      type: Boolean, default: false
+  field :unlimited, type: Boolean, default: false
 
-  field :credits,        type: Integer, default: (FREE_HOURS.hours / BILLING_PERIOD)
+  field :credits, type: Integer, default: (FREE_HOURS.hours / BILLING_PERIOD)
+  validates_numericality_of :credits, greater_than_or_equal_to: 0
+
   field :minutes_played, type: Integer, default: 0
+  validates_numericality_of :minutes_played, greater_than_or_equal_to: 0
 
 
   field :notifications, type: Hash
+  field :last_world_started_mail_sent_at, type: DateTime
 
-  field :referral_code,   type: String, default: -> {
-    self.class.free_referral_code
-  }
-
+  field :referral_code, type: String, default: ->{ self.class.free_referral_code }
   validates_uniqueness_of :referral_code
 
-  belongs_to :referrer,  class_name: 'User', inverse_of: :referrals
-  has_many   :referrals, class_name: 'User', inverse_of: :referrer
+  belongs_to :referrer, class_name: 'User', inverse_of: :referrals
+  has_many :referrals, class_name: 'User', inverse_of: :referrer
 
 
   belongs_to :current_world, class_name: 'World', inverse_of: nil
@@ -49,42 +68,13 @@ class User
   has_many :albums
   has_many :pictures
 
-  attr_accessor :email_or_username
 
-
-  scope :potential_members, ->(world) {
+  scope :potential_members_for, ->(world) {
     not_in(_id: world.memberships.map {|p| p.user_id})
   }
 
 
-
-# Finders
-
-  index :email, unique: true
-  scope :by_email, ->(email) {
-    where(email: sanitize_email(email))
-  }
-
-  index :safe_username, unique: true
-  scope :by_username, ->(username) {
-    where(safe_username: sanitize_username(username))
-  }
-  scope :by_email_or_username, ->(str) {
-    any_of(
-      {safe_username: sanitize_username(str)},
-      {email: sanitize_email(str)}
-    )
-  }
-
-
-# Validations
-
-
-  validates_numericality_of :credits
-  validates_numericality_of :minutes_played, greater_than_or_equal_to: 0
-
-
-# Security
+  # Security
 
   attr_accessible :email,
                   :username,
@@ -175,6 +165,10 @@ class User
   #   async_fetch_avatar! if safe_username_changed?
   # end
 
+  def cloned?(world)
+    p created_worlds.to_a
+    created_worlds.where(parent_id: world.id).exists?
+  end
 
 # Referrals
 
@@ -189,11 +183,6 @@ class User
     true
   end
 
-# Mail throttling
-  # TODO Move to the top
-
-  field :last_world_started_mail_sent_at
-
   def member?(world)
     world.memberships.any? {|m| m.user == self}
   end
@@ -205,9 +194,7 @@ class User
 # Other
 
   def worlds
-    World.where('memberships.user_id' => id).sort_by do |world|
-      world.name.downcase
-    end
+    World.where('memberships.user_id' => id)
   end
 
   def current_world?(world)
@@ -218,14 +205,6 @@ class User
     slug
   end
 
-  # Security. When searching for potential players in a world the results were returning emails and credit cards of users.
-  def as_json(options={})
-    {
-      id: id,
-      username: safe_username,
-      avatar: avatar_url
-    }
-  end
 
 protected
 

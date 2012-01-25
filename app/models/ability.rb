@@ -13,7 +13,7 @@ class Ability
     end
 
     # User abilities
-    can [:create, :clone], World
+    can [:create], World
     can [:update, :destroy], World, creator: user
 
     can :operate, World do |world|

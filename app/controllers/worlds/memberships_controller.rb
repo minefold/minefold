@@ -1,10 +1,10 @@
 class Worlds::MembershipsController < ApplicationController
-  expose(:creator) { User.find_by_slug! params[:user_id] }
-  expose(:world) {
-    World.find_by_slug! creator.id, params[:world_id]
-  }
-
   respond_to :html, :json
+
+  expose(:creator) { User.find_by_slug!(params[:user_id]) }
+  expose(:world) {
+    World.find_by_creator_and_slug!(creator, params[:world_id])
+  }
 
   def index
   end
@@ -13,7 +13,7 @@ class Worlds::MembershipsController < ApplicationController
     authorize! :operate, world
 
     @user = User
-      .potential_members(world)
+      .potential_members_for(world)
       .by_username(params[:username])
       .first
 
@@ -24,12 +24,11 @@ class Worlds::MembershipsController < ApplicationController
     authorize! :operate, world
 
     @user = User
-      .potential_members(world)
+      .potential_members_for(world)
       .where(_id: params[:id])
       .first
 
     membership = world.add_member(@user)
-    world.save
 
     # TODO Move to an observer
     WorldMailer.membership_created(world.id, membership.id).deliver
