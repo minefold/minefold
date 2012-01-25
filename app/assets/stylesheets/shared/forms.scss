@@ -86,8 +86,6 @@ form {
 
   fieldset {
     padding: (4*$line) $pad;
-    padding-bottom: 4*$line - 1px;
-    border-bottom: 1px solid darken(white, 5%);
 
     h3 {
       color: black;
@@ -98,9 +96,8 @@ form {
 
     &.submit {
       clear: both;
-      background-color: darken(white, 5%);
+      border: none;
       margin-top: -1px;
-      border-top: 1px solid darken(white, 10%);
     }
   }
 

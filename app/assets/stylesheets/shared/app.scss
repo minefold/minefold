@@ -37,7 +37,6 @@ header {
   padding: 0 $radius;
 
   background-color: $yellow;
-  text-shadow: 0 1px 0 rgba(white, 0.6);
 
   .wrapper {
     width: $width;
@@ -116,7 +115,6 @@ header {
         position: absolute;
 
         @include border-radius(0 0 $radius $radius);
-        @include box-shadow(0 1px 0 rgba(black, 0.2));
 
         z-index: 101;
         background-color: $yellow;
@@ -127,7 +125,6 @@ header {
 
           a {
             border: none;
-            border-top: 1px solid rgba(black, 0.1);
 
             &:last-child:hover {
               @include border-radius(0 0 $radius $radius);
@@ -220,7 +217,6 @@ header {
 
   background-color: white;
 
-  @include box-shadow(0 0 1px rgba(black, 0.2));
   @include border-radius($radius);
   overflow: auto;
 
@@ -233,7 +229,7 @@ header {
     float: left;
     width: cols($ncols - 3);
     @include box-sizing(border-box);
-    padding: (4*$line) $pad;
+    padding: (2*$line) $pad;
   }
 
   aside {
@@ -241,7 +237,7 @@ header {
     width: cols(3);
 
     @include box-sizing(border-box);
-    padding: (4*$line);
+    padding: (2*$line) $pad;
     margin: 0;
     border-left: 1px solid darken(white, 5%);
   }
@@ -309,15 +305,16 @@ header {
   }
 
   .note {
-    background: #FFC;
-    color: rgba(black, 0.8);
-    margin: 0 (-$pad);
+    background: $green;
+    color: white;
     margin-bottom: 2*$line;
-    padding: $line $pad;
-
-    &.small {
-      font-size: 12px;
-      line-height: 3*$line;
+    padding: $line $gutter;
+    a {
+      color: white;
+      font-weight: 600;
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 
@@ -331,18 +328,25 @@ footer {
   clear: both;
   font-size: 12px; line-height: 4*$line;
 
-  padding: (2*$line) $pad;
-  padding-bottom: 10*$line;
+  border-top: 1px solid darken(white, 5%);
+
+  margin: $line 0;
+  padding: $line $pad;
+
+  #page + & {
+    padding-bottom: 10*$line;
+  }
 
   ul {
     overflow: auto;
+    margin: 0 (-$gutter/2);
     li {
       float: left;
       a {
         color: $blue;
-        font-weight: bold;
+        font-weight: 600;
         text-decoration: none;
-        margin-right: $gutter;
+        padding: 0 ($gutter/2);
         display: block;
         text-shadow: 0 1px 0 rgba(white, 0.6);
         &:hover {
@@ -350,29 +354,32 @@ footer {
         }
       }
 
-      &.twitter {
-        float: right;
-        a {
-          background: url(image-path('twitter.png')) left center no-repeat;
-          padding-left: 26px + ($gutter/2);
-          margin-right: 0;
+      &.fineprint a {
+        color: darken(white, 20%);
+        font-weight: 400;
+        &:hover {
+          color: black;
         }
       }
 
-    }
-  }
-
-  .fineprint {
-    color: rgba(black, 0.2);
-    font-size: 11px;
-    float: left;
-
-    a {
-      color: rgba(black, 0.4);
-      text-decoration: none;
-      &:hover {
-        color: rgba(black, 0.6);
+      &.social {
+        float: right;
       }
+
     }
   }
+
+//  .fineprint {
+//    color: rgba(black, 0.2);
+//    font-size: 11px;
+//    float: left;
+//
+//    a {
+//      color: rgba(black, 0.4);
+//      text-decoration: none;
+//      &:hover {
+//        color: rgba(black, 0.6);
+//      }
+//    }
+//  }
 }
