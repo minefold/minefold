@@ -18,9 +18,20 @@ class AvatarUploader < CarrierWave::Uploader::Base
     %w(png)
   end
 
-  version :head do
-    process :crop_head!
+  process :crop_head!
+
+  version :small do
+    process :sample => [20, 20]
   end
+
+  version :medium do
+    process :sample => [40, 40]
+  end
+
+  version :large do
+    process :sample => [60, 60]
+  end
+
 
   # Returns the digest path of the default image so that it can be served out from CloudFront like the other static assets.
   def default_url
