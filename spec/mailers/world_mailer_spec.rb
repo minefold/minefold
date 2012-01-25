@@ -1,52 +1,85 @@
 require "spec_helper"
 
 describe WorldMailer do
-  describe "play_request" do
-    let(:owner)     { create :user }
-    let(:world)     { create :world, creator: owner }
-    let(:requestor) { create :user }
-    
-    let(:mail)      { WorldMailer.play_request world.id, requestor.id }
 
-    it "renders the headers" do
-      mail.subject.should eq("#{requestor.username} would like to play in #{world.name}")
-      mail.to.should eq([owner.email])
-    end
+  describe "#membership_created" do
+    let(:world) { Fabricate(:world) }
+    let(:membership) {
+      world.memberships.create(user: Fabricate(:user))
+    }
 
-    it "renders the body" do
-      mail.body.encoded.should include(world.name)
-      mail.body.encoded.should include(world.slug)
-      mail.body.encoded.should include(requestor.username)
-    end
+    subject {
+      WorldMailer.membership_created(world.id, membership.id)
+    }
+
+    its(:to) { should include(membership.user.email) }
+
+    its(:body) { should include(membership.user.username) }
+    its(:body) { should include(membership.user.host) }
+    its(:body) { should include(world.creator.username) }
+    its(:body) { should include(world.name) }
+    its(:body) { should include(user_world_url(world.creator, world)) }
   end
 
-  describe "world_started" do
-    let(:online_players)  { [create(:user), create(:user)] }
-    let(:offline_players) { [create(:user), create(:user)] }
-  
-    let(:to_player) { offline_players.first }
-  
-    let(:world) do 
-      w = create :world, creator:(online_players.first)
-      w.stub(:player_ids) { (online_players + offline_players).map &:id }
-      w.stub(:current_player_ids)     { (online_players).map &:id }
-      w.events.create source: online_players.first, text: 'come mine with me!'
+
+  describe "#membership_request_created" do
+    let(:world) { Fabricate(:world) }
+    let(:membership_request) {
+      world.membership_requests.create(user: Fabricate(:user))
+    }
+
+    subject {
+      WorldMailer.membership_request_created(world.id, membership_request.id)
+    }
+
+    its(:to) { should include(world.creator.email) }
+
+    its(:subject) { should include(membership_request.user.username) }
+    its(:subject) { should include(world.name) }
+
+    its(:body) { should include(world.name) }
+    its(:body) { should include(world.slug) }
+    its(:body) { should include(membership_request.user.username) }
+  end
+
+  describe "#membership_request_approved" do
+    let(:world) { Fabricate(:world) }
+    let(:user) { Fabricate(:user) }
+
+    subject {
+      WorldMailer.membership_request_approved(world.id, user.id)
+    }
+
+    its(:to) {should include(user.email)}
+
+    its(:subject) { should include(world.creator.username) }
+    its(:subject) { should include(world.name) }
+
+    its(:body) { should include(user.username) }
+    its(:body) { should include(world.name) }
+    its(:body) { should include(world.slug) }
+  end
+
+  describe "#world_started" do
+    let(:members) { [Fabricate(:user), Fabricate(:user)] }
+    let(:players) { [Fabricate(:user), Fabricate(:user)] }
+
+    let(:user) { members.first }
+
+    let(:world) do
+      w = Fabricate(:world, creator: players.first)
+      w.stub(:members) { players + members }
+      w.stub(:player_ids) { players.pluck(:id) }
+      w.events.create source: players.first, text: 'come mine with me!'
       w
     end
-  
-    let(:mail) { WorldMailer.world_started world.id, to_player.id }
-    
-    it "renders the headers" do
-      mail.subject.should eq("Your friends are playing on Minefold in #{world.name}")
-      mail.to.should eq([to_player.email])
-    end
 
-    it "renders the body" do
-      mail.body.encoded.should include(world.name)
-      mail.body.encoded.should include(world.slug)
-      mail.body.encoded.should include(to_player.username)
-    end
+    subject { WorldMailer.world_started(world.id, user.id) }
+
+    its(:to) { include(user.email) }
+
+    its(:body) { include(world.name) }
+    its(:body) { include(user_world_url(world.creator, world)) }
+    its(:body) { include(user.username) }
   end
-  
-  
 end

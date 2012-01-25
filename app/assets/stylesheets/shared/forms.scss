@@ -2,15 +2,16 @@ label {
   display: block;
 }
 
-input[type=text],
+/*input[type=text],
 input[type=email],
 input[type=textarea],
 input[type=password] {
   @include box-sizing(border-box);
-  font: 400 16px/18px $helvetica;
+  font: 400 14px/18px $helvetica;
   padding: $line ($gutter / 2);
   margin: 0;
 }
+*/
 
 input[type=checkbox] + label,
 input[type=radio] + label {
@@ -22,9 +23,9 @@ form {
     margin-bottom: 2*$line;
     clear: both;
 
-    h3 {
+/*    h3 {
       float: left;
-    }
+    }*/
 
     fieldset {
       margin-left: cols(2);
@@ -43,34 +44,26 @@ form {
   .hint {
     font-size: 12px;
     color: #999;
-    line-height: 18px;
+    line-height: 3*$line;
     margin-top: 0;
     margin-bottom: 2*$line;
   }
 
   input[type=text], input[type=password], input[type=email], textarea {
     margin: 0;
-    border: 1px solid darken(white, 10%);
-    outline: none;
-    @include border-radius($radius);
-
-    &:focus {
-      border-color: $yellow;
-      @include box-shadow(0 0 1px $yellow);
-    }
-  }
-  
-  textarea {
-    font-family: $helvetica;
-    font-size: 12px;
-    line-height: 18px;
-    padding: ($line/2) ($gutter/2);
+    padding: (2*$line - 1px) ($gutter - 1px);
+    font-size: 18px; line-height: 4*$line;
     @include box-sizing(border-box);
   }
 
+  textarea {
+    font-family: $helvetica;
+    font-size: 14px;
+  }
+
   input[type=submit] {
-    @include btn(lighten($blue, 10%), white);
-    padding: $line (2*$gutter);
+    @include btn($blue, white);
+    padding: (2*$line) ($pad);
   }
 
   .errors {
@@ -78,7 +71,7 @@ form {
     margin-bottom: $line;
 
     color: $red;
-    line-height: 18px;
+    line-height: 3*$line;
   }
 
   .field_with_errors {
@@ -90,5 +83,34 @@ form {
       border-color: $red;
     }
   }
+
+  fieldset {
+    padding: (4*$line) $pad;
+    padding-bottom: 4*$line - 1px;
+    border-bottom: 1px solid darken(white, 5%);
+
+    h3 {
+      color: black;
+      font-weight: 600;
+      line-height: 4*$line;
+      margin-bottom: 2*$line;
+    }
+
+    &.submit {
+      clear: both;
+      background-color: darken(white, 5%);
+      margin-top: -1px;
+      border-top: 1px solid darken(white, 10%);
+    }
+  }
+
+  input[type=text],
+  input[type=email],
+  input[type=password],
+  textarea {
+    width: 100%;
+    margin: 0; margin-bottom: 2*$line;
+  }
+
 
 }

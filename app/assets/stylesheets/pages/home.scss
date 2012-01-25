@@ -1,38 +1,49 @@
 #pages-home {
+
   #masthead {
     text-align: center;
     padding-top: 12*$line;
     padding-bottom: 0;
 
+    overflow: auto;
+
+    h1, h2 {
+      text-shadow: 0 1px 0 rgba(white, 0.8);
+    }
+
     h1 {
-      font-size: 24px;
-      font-weight: 600;
-      line-height: 36px;
+      font-weight: 900;
+      line-height: 8*$line;
       float: none;
+      color: darken($blue, 40%);
     }
 
     h2 {
+      font-size: 24px;
       margin-bottom: 4*$line;
+      color: darken($blue, 20%);
     }
 
     .btn {
-      @include btn(lighten($blue, 10%), white);
+      @include btn($blue, white);
       width: cols(4) - (4*$gutter);
       margin: 0 auto;
       margin-bottom: 12*$line;
 
+      border-bottom: 1px solid white;
+
       text-align: center;
 
       font-size: 16px;
-      @include antialiasing;
+      line-height: 4*$line;
 
       .free {
         font-size: 12px;
         color: rgba(white, 0.8);
-        line-height: 18px;
+        line-height: 4*$line;
       }
     }
-    
+
     #screenshots {
       position: relative;
       overflow: visible;
@@ -42,16 +53,15 @@
         display: block;
         float: left;
         position: relative;
-        @include box-shadow(0 12px 12px rgba(black, 0.5));
       }
       .a, .c {
-        top: 4*$line;
+        top: 24px;
       }
       .b {
         margin: 0 (-$pad);
 
         z-index: 1;
-        
+
       }
     }
 
@@ -64,13 +74,12 @@
         display: block;
         float: left;
         margin: 0 $gutter;
-/*        @include border-radius($radius);*/
         border: 2px solid white;
 
-        margin: 0 ((($col + 2*$gutter) - 24px - (2*2px))/2);
+        margin: 0 ((($col + $pad) - 24px - (2*2px))/2);
       }
     }
-    
+
   }
 
   #features {
@@ -78,10 +87,7 @@
     margin: (4*$gutter) (4*$gutter);
 
     strong {
-      color: fade($yellow, 80%);
-      padding: 1px 2px;
-      background-color: lighten($yellow, 40%);
-      font-weight: 500;
+      font-weight: 600;
     }
 
     li {
@@ -100,68 +106,3 @@
 
 }
 
-
-//#pages-home {
-//
-//  header {
-//    padding-top: 8 * $line;
-//    padding-bottom: 0;
-//
-//    h1 a, aside {
-//      line-height: 48px;
-//    }
-//
-//    h1 a {
-//      padding: 0 $gutter 0 (60px + $gutter);
-//      font-size: 18px;
-//      background: url(image-path('logo-48.png')) 2px center no-repeat;
-//
-//      .beta {
-//        font-size: 11px;
-//        right: $gutter;
-//      }
-//    }
-//  }
-//
-//  #masthead {
-//    text-align: center;
-//    padding: (8*$line) 0;
-//    text-shadow: 0 1px 0 white;
-//
-//    h1 {
-//      font-size: 24px;
-//      font-weight: 600;
-//      line-height: 36px;
-//      margin: 0;
-//      float: none;
-//    }
-//
-//    h2 {
-//      margin-top: $line;
-//      margin-bottom: $line;
-//      color: rgba(black, 0.5);
-//      font-weight: 500;
-//      font-size: 14px;
-//      line-height: 24px;
-//      float: none;
-//    }
-//
-//    a.button {
-//      font-size: 18px;
-//      line-height: 24px;
-//      @include inline-block;
-//
-//      .free {
-//        font-size: 12px;
-//        line-height: 18px;
-//        color: lighten($blue, 40%);
-//        font-weight: 400;
-//      }
-//
-//      strong {
-//        font-weight: 500;
-//      }
-//    }
-//  }
-//
-//}

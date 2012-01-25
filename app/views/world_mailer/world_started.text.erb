@@ -1,14 +1,14 @@
-Hi <%= @player.username %>,
+Hi <%= @user.username %>,
 
-<%= @online_players.map(&:username).to_sentence(:last_word_connector => ' and ') %> just started playing in <%= @world.name %>.
+<%= @world.players.collect {|p| p.username}.to_sentence(:last_word_connector => ' and ') %> just started playing in <%= @world.name %>.
 
-<% if @recent_activity.any? %>
+<% if @recent_events.any? %>
 Here's what's been happening in <%= @world.name %> recently:
-<% @recent_activity.each do |item| %>
+<% @events.each do |event| %>
   - <%= item.source.username %> said: “<%= item.text %>” (<%= time_ago_in_words item.created_at %> ago)
 <% end %>
 <% end %>
 
-Visit <%= world_url(@world) %> to join in!
+Visit <%= user_world_url(@world.creator, @world) %> to join in!
 
 <%= render partial: 'shared/email_sig' %>

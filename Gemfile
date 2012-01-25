@@ -6,22 +6,21 @@ gem 'thin'
 gem 'rails'
 gem 'sprockets'
 
+gem 'rack-www'
+
 # ORM
-gem 'mongoid'
+gem 'mongoid', '2.4.0'
 gem 'bson_ext'
 gem 'mongoid_slug'
 
-gem 'rack-www'
-
 # Authentication
 gem 'devise'
+gem 'cancan'
 
 # Payment Processing
 gem 'stripe'
 
 # Notifications
-gem 'sendgrid'
-gem 'twitter'
 gem 'pusher'
 
 # Views
@@ -31,8 +30,7 @@ gem 'jquery-rails'
 gem 'backbone-rails'
 gem 'coffee-filter'
 gem 'decent_exposure'
-gem 'representative', require: 'representative/json'
-gem 'representative_view'
+gem 'rabl'
 
 gem 'asset_sync'
 
@@ -46,13 +44,13 @@ gem 'resque', ' ~> 1.19.0'
 gem 'resque_mailer'
 
 # Logs & Stats
-gem 'airbrake'
+gem 'exceptional'
 gem 'statsd-instrument'
 gem 'rpm_contrib'
 gem 'newrelic_rpm'
 gem 'em-mixpanel'
 
-group :development do
+group :development, :test do
   gem 'letter_opener'
   gem 'heroku'
   gem 'foreman'
@@ -68,13 +66,15 @@ end
 
 group :worker do
   gem 'rubyzip'
-  gem 'fog'  
+  gem 'fog'
+  gem 'resque-exceptional'
 end
 
 group :test do
   gem 'rspec'
   gem 'rspec-rails'
-  gem 'factory_girl_rails'
+  gem 'faker'
+  gem 'fabrication'
   gem 'mongoid-rspec'
   gem 'autotest-rails'
   gem 'database_cleaner'

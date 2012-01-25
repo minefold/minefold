@@ -4,49 +4,78 @@
   %meta{property: 'og:url', content: world_path(world)}
   %meta{property: 'og:image', content: image_path('logo-48.png')}
 
-- masthead do
-  - if not signed_in?
-    #welcome
-      %aside
-        = link_to new_user_path, class: 'btn' do
-          Sign up now!
-          %span (First 10 hrs free)
-      
-      %h2 Hey you!
-      
-      %p
-        %strong= world.creator.username
-        - unless world.players.length.zero?
-          and
-          = pluralize world.players.length, 'friend', 'friends'
-          are
-        - else
-          is
-        playing Minecraft here.
-        You can join in too, it just takes 30s to sign up.
-  
-  - if signed_in? and not current_user.played?
-    #welcome
-      %h2 Congratulations! Follow these steps to ephiphany:
-      %ol
-        %li
-          - if current_user.referrer
-            Join
-          - else
-            Create
-          a world.
-        %li
-          Invite 3 of your friends
-        
-        %li
-          Play!
-          
-  
-  %nav
-    %ol
-      %li.activity= link_to 'Activity', world
-      %li.map= link_to 'Map', map_world_path(world)
-      %li.photos= link_to 'Photos', world_photos_path(world)
+  - if world.mapped?
+    = javascript_include_tag '//maps.google.com/maps/api/js?sensor=false'
 
-      - if world.opped?(current_user)
-        %li.settings= link_to 'Settings', edit_world_path(world)
+- masthead class: 'attached' do
+  .attribution
+    %h1= world.name
+
+    %p
+      by #{link_to world.creator.username, world.creator, rel: 'author'}.
+      - if world.clone?
+        Cloned from #{link_to_world "#{world.parent.creator.slug}/#{world.parent.slug}", world.parent}.
+
+  %ol.actions
+    - if can? :edit, world
+      %li.settings
+        = link_to edit_world_path(world) do
+          = image_tag 'icons/settings.png', width: 20, height: 20
+
+    %li.members
+      = link_to world_members_path(world) do
+        = image_tag 'icons/friends.png', width: 30, height: 20
+
+    - if not signed_in? or can? :clone, world
+      %li.clone
+        = button_to 'Clone', clone_user_world_path(world.creator, world), method: :put
+
+    - if can? :play, world
+      %li.play
+        - if current_user.current_world == world
+          = button_to 'Playing here', nil, disabled: true
+        - else
+          = button_to 'Play here', join_user_world_path(world.creator, world), method: :put
+
+    - else
+      %li.membership-request
+        - if signed_in? and world.membership_requests.include_user?(current_user)
+          = button_to 'Request sent', nil, disabled: true
+        - else
+          = button_to 'Ask to play here', world_membership_requests_path(world), method: :post
+
+  %ul.stats
+    - if world.children.any?
+      %li.stat.members
+        %span.val= number_with_delimiter world.children.size
+        %span.label= pluralize_text world.children.size, 'clone', 'clones'
+
+    %li.stat.views
+      %span.val= number_with_delimiter world.pageviews
+      %span.label= pluralize_text world.pageviews, 'view', 'views'
+
+    %li.stat.mins
+      %span.val= number_with_delimiter world.minutes_played
+      %span.label= pluralize_text world.minutes_played, 'min', 'mins'
+
+    %li.stat.members
+      %span.val= number_with_delimiter world.memberships.size
+      %span.label= pluralize_text world.memberships.size, 'member', 'members'
+
+
+  :javascript
+    $(document).ready(function(){
+      var world = new Mf.World(#{render('worlds/base', object: world, formats: [:json])})
+          workspace = new Mf.WorldRouter({world: world});
+
+      $('a[rel=push]').click(function(e) {
+        e.preventDefault();
+
+        var href = $(this).attr('href'),
+            route = href.replace(world.url(), '');
+
+        workspace.navigate(route, true);
+      });
+
+      Backbone.history.start({pushState: true, root: world.url()});
+    });

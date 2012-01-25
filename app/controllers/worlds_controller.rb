@@ -1,75 +1,84 @@
 class WorldsController < ApplicationController
-  respond_to :html
+  respond_to :html, :json
 
   prepend_before_filter :authenticate_user!, except: [:show, :map]
   before_filter :set_invite_code, :only => [:show, :map]
 
+  expose(:creator) { User.find_by_slug!(params[:user_id]) }
   expose(:world) do
      if params[:id]
-       World.find_by_slug!(params[:id])
+       World.find_by_creator_and_slug!(creator, params[:id])
      else
        World.new(params[:world])
      end
    end
 
   def create
+    authorize! :create, world
+
     world.creator = current_user
 
     if world.save
       current_user.current_world = world
       current_user.save
-      
-      track 'created world'
 
-      redirect_to world_path(world)
-    else
-      render :new
+      track 'created world'
     end
+
+    respond_with world, location: user_world_path(world.creator, world)
   end
 
   def show
-    respond_with world
-  end
+    authorize! :read, world
 
-  def edit
-    # TODO: Make this more robust
-    not_found unless world.opped?(current_user)
-  end
-
-  def update
-    not_found unless world.opped?(current_user)
-
-    world.update_attributes params[:world]
-    if world.save
-      flash[:success] = "World updated"
-      redirect_to params['return_url'] || world_path(world)
-    else
-      render json: {errors: world.errors}
+    respond_with(world) do |format|
+      format.html {
+        world.inc :pageviews, 1
+      }
     end
   end
 
-  def map
+  def edit
+    authorize! :update, world
   end
 
+  def update
+    authorize! :update, world
 
-  def invite
+    world.update_attributes(params[:world])
+
+    respond_with world, location: user_world_path(world.creator, world)
   end
 
-  def play
-    raise 'Not whitelisted for world' unless world.whitelisted?(current_user)
+  def join
+    authorize! :play, world
 
     current_user.current_world = world
     current_user.save
-    
-    track 'changed worlds'
 
-    redirect_to :back
+    track 'joined world'
+
+    respond_with world, location: user_world_path(world.creator, world)
   end
+
+  def clone
+    clone = world.clone!
+    clone.creator = current_user
+
+    if clone.save
+      current_user.current_world = clone
+      current_user.save
+
+      track 'cloned world'
+    end
+
+    respond_with world, location: user_world_path(current_user, clone)
+  end
+
 
 private
 
   def set_invite_code
-    # THINK: Should we retroactively apply invite codes?
     cookies[:invite] = params[:i] if params[:i] and not signed_in?
   end
 

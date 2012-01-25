@@ -1,4 +1,4 @@
-class MF.MinecraftUsernameView extends Backbone.View
+class Mf.MinecraftUsernameView extends Backbone.View
   events:
     'keyup': 'debouncedCheck'
 

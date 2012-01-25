@@ -1,45 +1,68 @@
 html {
-  margin-top: 7*$line;
+  background: url(image-path('grain.png'));
+}
+
+body {
+  margin-top: 8*$line;
+  width: $width;
+}
+
+#backside {
+  position: fixed;
+  top: 8*$line; right: 0; bottom: 0; left: 0;
+  z-index: -1;
+
+  background: white;
+
+  .map {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(white, 0.6);
+    display: none;
+  }
 }
 
 header {
   position: fixed;
   overflow: visible;
-  border-bottom: 1px solid darken(white, 15%);
-  z-index: 99;
+  z-index: 100;
   top: 0; left: 0; right: 0;
+  padding: 0 $radius;
 
-  min-width: $width;
+  background-color: $yellow;
+  text-shadow: 0 1px 0 rgba(white, 0.6);
 
-  background-color: white;
-  @include box-shadow(0 0 6px rgba(black, 0.1));
+  .wrapper {
+    width: $width;
+    margin: 0 auto
+  }
 
   h1 {
     float: left;
-    line-height: 18px;
+    font-size: 18px; line-height: 4*$line;
     font-weight: 700;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    font-size: 18px;
+    font-family: $proxima;
 
     a {
-      color: $red;
+      display: block;
+      position: relative;
+      padding: (2*$line) (2*$gutter);
+
+      color: black;
       text-decoration: none;
 
-      padding: (2*$line) $gutter;
-
-      margin-left: -$gutter;
-      margin-right: $gutter;
-
-      display: block;
-
-      &:hover {
-        color: black;
+      em {
+        display: none;
       }
-    }
-
-    em {
-      display: none;
     }
   }
 
@@ -47,97 +70,88 @@ header {
     overflow: visible;
     li {
       float: left;
-    }
-
-    a {
-      display: block;
-      padding: (2*$line) $gutter;
-
-      color: $blue;
-      text-decoration: none;
-      line-height: 18px;
-      font-size: 12px;
-      font-weight: 600;
-      @include antialiasing;
-
-      border-color: darken(white, 5%);
-      border-type: solid;
-      border-left: 1px solid darken(white, 5%);
-
-      &:hover {
-        color: black;
-      }
-    }
-
-    .signin, .user, .time, .buy {
-      float: right;
-      position: relative;
-    }
-
-    .hours {
-      padding: (2*$line) $gutter;
-      line-height: 18px;
-
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    .user {
-      img {
-        display: block;
-        border-radius: $radius;
-      }
-
-      &.active ol {
-        display: block;
-      }
-    }
-
-    ol {
-      display: none;
-
-      right: 0;
-      top: 7*$line;
-      width: cols(2) - (2*$gutter);
-      position: absolute;
-
-      @include border-radius(0 0 $radius $radius);
-
-      z-index: 100;
-      background-color: white;
-      border: 1px solid darken(white, 15%);
-      border-top-color: darken(white, 5%);
-      @include box-sizing(border-box);
-
-      @include box-shadow(0 1px 3px rgba(black, 0.1));
-      
-
-      li {
-        float: none;
-      }
+      font-size: 14px; line-height: 4*$line;
+      font-weight: 900;
+      color: rgba(black, 0.8);
 
       a {
-        border: none;
+        display: block;
+        padding: (2*$line) (2*$gutter);
+
+        color: rgba(black, 0.8);
+        text-decoration: none;
+        @include antialiasing;
+      }
+
+      a:hover, &.active > a {
+        background-color: rgba(black, 0.05);
+      }
+
+      &.signin, &.signup, &.user, &.time, &.buy {
+        float: right;
+        position: relative;
+      }
+
+      &.time {
+        padding: (2*$line) $gutter;
+      }
+
+      &.user {
+        img {
+          display: block;
+          border-radius: $radius;
+        }
+
+        &.active ol {
+            display: block;
+        }
+      }
+
+      ol {
+        display: none;
+
+        right: 0;
+        top: 8*$line;
+        width: cols(2) - (2*$gutter);
+        position: absolute;
+
+        @include border-radius(0 0 $radius $radius);
+        @include box-shadow(0 1px 0 rgba(black, 0.2));
+
+        z-index: 101;
+        background-color: $yellow;
+        @include box-sizing(border-box);
+
+        li {
+          float: none;
+
+          a {
+            border: none;
+            border-top: 1px solid rgba(black, 0.1);
+
+            &:last-child:hover {
+              @include border-radius(0 0 $radius $radius);
+            }
+          }
+        }
       }
     }
-
   }
 }
 
 
 #flash {
-  width: $width;
   overflow: auto;
 
   .message {
     padding: $line $gutter;
-    line-height: 24px;
+    line-height: 4*$line;
     font-size: 13px;
     margin-top: $line;
     border-bottom: 1px solid rgba(black, 0.05);
-    
+
     @include border-radius($radius);
-    
+
     a.hide {
       float: right;
       font-size: 11px;
@@ -168,37 +182,27 @@ header {
   }
 }
 
-
-@mixin active-masthead-menu-item {
-  a {
-    color: black;
-    background-color: white;
-    font-weight: bold;
-    z-index: 1;
-    position: relative;
-    border-color: darken(white, 10%);
-    border-bottom: 1px solid white;
-    margin-bottom: -1px;
-
-    &:hover {
-      background: white;
-    }
-  }
-}
-
 #masthead {
-  padding: (4*$line) 0;
+  padding: (2*$line) $pad;
 
   h1 {
-    font-size: 24px;
-    line-height: 48px;
-    font-weight: 500;
+    margin: (2*$line) 0;
+
+    font-size: 28px;
+    line-height: 8*$line;
+    font-weight: 600;
+    font-family: $proxima;
+    text-shadow: 0 1px 0 rgba(white, 0.8);
   }
 
   h2 {
     font-size: 18px;
-    line-height: 24px;
+    line-height: 10*$line;
     color: rgba(black, 0.6);
+  }
+
+  p {
+    margin-bottom: 4*$line;
   }
 
   a {
@@ -208,103 +212,59 @@ header {
       color: black;
     }
   }
-
-  nav {
-    margin-top: 4*$line;
-    margin-bottom: -4*$line;
-
-    ol {
-      clear: both;
-      position: relative;
-      margin-bottom: -1px;
-
-      li {
-        float: left;
-        margin-right: 1px;
-        padding: 0;
-
-        a {
-          display: block;
-          padding: ($line/2) $gutter;
-
-          line-height: 24px;
-          background-color: rgba(white, 0.6);
-          color: $blue;
-          text-decoration: none;
-
-          @include border-radius($radius $radius 0 0);
-          border: 1px solid darken(white, 5%);
-          border-bottom: none;
-
-          &:hover {
-            color: black;
-            border-color: darken(white, 10%);
-          }
-        }
-      }
-
-      .settings {
-        float: right;
-      }
-
-    }
-  }
 }
 
 #page {
   clear: both;
-  width: $width + 2px;
   margin: 0 auto;
-  padding: 0 $gutter;
-  @include box-sizing(border-box);
 
   background-color: white;
-  border: 1px solid rgba(black, 0.1);
-  border-bottom-color: rgba(black, 0.15);
-  @include box-shadow(0 1px 3px rgba(black, 0.1));
+
+  @include box-shadow(0 0 1px rgba(black, 0.2));
   @include border-radius($radius);
   overflow: auto;
 
   color: rgba(black, 0.6);
-  line-height: 24px;
+  line-height: 5*$line;
 
+  @include box-sizing(border-box);
 
   article {
     float: left;
     width: cols($ncols - 3);
     @include box-sizing(border-box);
-    padding: (2*$line) $gutter;
-    margin-left: -$gutter;
+    padding: (4*$line) $pad;
   }
 
   aside {
     float: right;
     width: cols(3);
-    @include box-sizing(border-box);
-    padding: (2*$line) $gutter;
-    margin-right: -$gutter;
 
+    @include box-sizing(border-box);
+    padding: (4*$line);
+    margin: 0;
     border-left: 1px solid darken(white, 5%);
   }
 
   h1 {
-    font-size: 18px;
-    color: lighten($blue, 10%);
-    margin: (2*$line) 0;
+    font-size: 24px; line-height: 8*$line;
+    color: darken($blue, 20%);
+    margin-bottom: 4*$line;
     font-weight: 500;
   }
 
   h2 {
-    font-size: 16px;
-    line-height: 18px;
-    margin-bottom: $line;
-    color: lighten($blue, 10%);
+    font-size: 19px;
+    line-height: 6*$line;
+    margin: (4*$line) 0;
+    color: darken($blue, 10%);
   }
 
   h3 {
     font-size: 14px;
     font-weight: 600;
     color: black;
+    margin: $line 0;
   }
 
   p, ul, ol, pre {
@@ -316,6 +276,24 @@ header {
     text-decoration: none;
     &:hover {
       color: black;
+    }
+  }
+
+  hr {
+    border-top: 1px solid rgba(black, 0.05);
+  }
+
+  figure {
+    margin-bottom: 4*$line;
+
+    img, #map {
+      margin: 0 (-$pad);
+      width: cols($ncols - 3);
+    }
+
+    figcaption {
+      color: rgba(black, 0.4);
+      font-size: 12px; line-height: 4*$line;
     }
   }
 
@@ -331,25 +309,30 @@ header {
   }
 
   .note {
-    background: lighten($yellow, 35%);
+    background: #FFC;
     color: rgba(black, 0.8);
-    margin: 0 (-$gutter) (2*$line) (-$gutter);
-    padding: $line $gutter;
+    margin: 0 (-$pad);
+    margin-bottom: 2*$line;
+    padding: $line $pad;
+
+    &.small {
+      font-size: 12px;
+      line-height: 3*$line;
+    }
   }
 
   .btn {
-    @include btn(lighten($blue, 10%), white);
+    @include btn($blue, white);
   }
-
 }
 
 
 footer {
   clear: both;
-  font: 13px/18px $helvetica;
+  font-size: 12px; line-height: 4*$line;
 
-  padding: (2*$line) $gutter;
-  margin: 0 $gutter;
+  padding: (2*$line) $pad;
+  padding-bottom: 10*$line;
 
   ul {
     overflow: auto;
@@ -357,9 +340,11 @@ footer {
       float: left;
       a {
         color: $blue;
+        font-weight: bold;
         text-decoration: none;
         margin-right: $gutter;
         display: block;
+        text-shadow: 0 1px 0 rgba(white, 0.6);
         &:hover {
           color: black;
         }
@@ -378,9 +363,9 @@ footer {
   }
 
   .fineprint {
-    clear: both;
     color: rgba(black, 0.2);
     font-size: 11px;
+    float: left;
 
     a {
       color: rgba(black, 0.4);

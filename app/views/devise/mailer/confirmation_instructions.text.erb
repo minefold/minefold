@@ -1,0 +1,7 @@
+Hi <%= @resource.username %>!
+
+You can confirm your email by going to the link below:
+
+    <%= confirmation_url(@resource.confirmation_token) %>
+
+<%= render partial: 'shared/email_sig' %>

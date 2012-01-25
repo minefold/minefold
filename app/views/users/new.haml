@@ -1,8 +1,10 @@
-- title  'Sign up now' do
-  %h1 Sign up now
+- title  'Create your account'
+- masthead do
+  %h1 Create your account
   %p
     or
     = link_to 'sign in to an existing account', new_user_session_path
 
-= form_for user do |f|
-  = render partial: 'form', object: f
+#page
+  = form_for user do |f|
+    = render partial: 'form', object: f

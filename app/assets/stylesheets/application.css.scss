@@ -11,12 +11,15 @@
 
 @import 'passwords/index';
 
+@import 'worlds/new';
 @import 'worlds/header';
 @import 'worlds/show';
-@import 'worlds/map';
+@import 'worlds/info';
 @import 'worlds/edit';
 @import 'worlds/upload';
-@import 'worlds/photos';
+@import 'worlds/pictures';
+
+@import 'worlds/memberships/index';
 
 @import 'pages/home';
 @import 'pages/pricing';

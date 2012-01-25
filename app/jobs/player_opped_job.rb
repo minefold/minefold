@@ -1,12 +1,19 @@
 class PlayerOppedJob
   @queue = :low
 
-  def self.perform world_id, username
-    user = User.by_username(username).first
-    if user
-      membership = World.find(world_id).memberships.where(user_id: user.id).first
-      membership.role = 'op'
-      membership.save
-    end
+  def self.perform(world_id, player_username)
+    world = World.find(world_id)
+    user = User.by_username(player_username).first
+
+    return unless user
+
+    new.process! world, user
+  end
+
+  def process!(world, user)
+    membership = world.memberships.where(user_id: user.id).first
+    membership.op!
+
+    world.save
   end
 end

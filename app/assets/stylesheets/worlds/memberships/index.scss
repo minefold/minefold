@@ -1,0 +1,55 @@
+#worlds-memberships-index {
+  @extend #system;
+
+  #page {
+    margin-bottom: 2*$line;
+  }
+
+  #page section.members {
+    padding: 0 $pad;
+
+    .meta {
+      width: cols(3) - $pad;
+    }
+
+    .approve {
+      @include btn($green, white);
+    }
+
+    .approve, .ignore {
+      float: left;
+      margin-right: $gutter;
+      padding: $line $gutter;
+
+      font-size: 12px;
+      line-height: 2*$line;
+    }
+
+    ul {
+      margin: 0 (-$pad);
+      li {
+        overflow: auto;
+        margin: (2*$line) $pad;
+
+        a {
+          float: left;
+          display: block;
+          margin-right: $pad;
+
+          img {
+            display: block;
+          }
+        }
+
+        .meta {
+          float: left;
+          line-height: 4*$line;
+
+          .username {
+            color: rgba(black, 0.8);
+          }
+        }
+      }
+    }
+  }
+}

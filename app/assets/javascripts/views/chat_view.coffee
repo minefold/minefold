@@ -1,7 +1,7 @@
 #= require jquery.timeago
 #= require views/event_view
 
-class MF.ChatView extends MF.EventView
+class Mf.ChatView extends Mf.EventView
   template: _.template """
     <div class="avatar">
       <% if(source) { %>

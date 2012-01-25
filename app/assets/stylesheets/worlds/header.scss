@@ -1,37 +1,67 @@
-/* TODO This is too general */
 #masthead {
-  #welcome {
-    overflow: auto;
-    background: lighten($blue, 55%);
-    color: rgba(black, 0.6);
-    padding: (2*$line) $gutter;
-    margin: 0 (-$gutter);
-    
-    border-bottom: 1px solid lighten($blue, 45%);
-    @include border-radius($radius);
-    @include box-shadow(0 1px 3px rgba(black, 0.1));
 
-    font-size: 12px;
-    
-    aside {
+  &.attached {
+    position: fixed;
+    top: 10*$line;
+    width: $width;
+    @include box-sizing(border-box);
+    z-index: 99;
+    overflow: auto;
+    padding: 0 $pad;
+
+    background-color: white;
+    @include border-radius($radius);
+    @include box-shadow(0 0 1px rgba(black, 0.2));
+
+    .attribution {
+      width: cols($ncols / 2) - $pad;
+      float: left;
+
+      p {
+        color: darken(white, 40%);
+        font-size: 12px; line-height: 2*$line;
+        margin-bottom: 4*$line;
+      }
+    }
+  }
+
+  ol.actions {
+    float: right;
+    width: cols($ncols / 2);
+
+    margin: (2*$line) 0;
+    margin-right: -$gutter;
+
+    li {
       float: right;
-      width: cols(3) - (2*$gutter);
+      margin-right: $gutter;
+
+      form input[type=submit], a {
+        @include btn(#3184d8, white);
+        padding: $line $gutter;
+        margin: $line 0;
+      }
+
+      a img, a img {
+        display: block;
+      }
     }
-    
-    h2 {
-      margin-bottom: $line;
-      font-weight: 600;
-      color: lighten($blue, 10%);
-      
-    }
-    
-    .btn {
-      @include btn(lighten($blue, 10%), white);
-      
-      span {
-        color: lighten($blue, 40%);
-        font-weight: 400;
-        font-size: 12px;
+  }
+
+  ul.stats {
+    margin-right: -$gutter;
+
+    li {
+      float: right;
+      font-size: 12px; line-height: 2*$line;
+      margin-right: $gutter;
+
+      .val {
+        color: rgba(black, 0.8);
+      }
+
+      .label {
+        color: rgba(black, 0.5);
       }
     }
   }

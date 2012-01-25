@@ -1,7 +1,8 @@
-- title user.username do
-  .avatar= image_tag user.avatar.head.s24.url, width: 24, height: 24
+- title user.username
+- masthead do
   %h1= user.username
 
-%article
-  %p There isn't much to see here yet. But hey, we hope you enjoy this video!
-  = youtube_vid
+#page
+  %article
+    %p Sorry, nothing here yet!
+    = youtube_vid

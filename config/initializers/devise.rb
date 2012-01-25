@@ -61,7 +61,7 @@ Devise.setup do |config|
   # ==> Configuration for :database_authenticatable
   # For bcrypt, this is the cost for hashing the password and defaults to 10. If
   # using other encryptors, it sets how many times you want the password re-encrypted.
-  config.stretches = 10
+  config.stretches = Rails.env.test? ? 1 : 10
 
   # Setup a pepper to generate the encrypted password.
   # config.pepper = "16a6cf6ea026af7660cc88fb5b8a195fd2f3576ee3b189ea7a1068aa3862100702d544db667a33e06c9526e51ec6ba506589dca674a7c22cf3ee1424e5da4b02"
@@ -73,7 +73,9 @@ Devise.setup do |config|
   # You can use this to let your user access some features of your application
   # without confirming the account, but blocking it after a certain period
   # (ie 2 days).
-  # config.confirm_within = 2.days
+  config.confirm_within = 2.weeks
+  # TODO Upgrade to Devise 2.0
+  # config.allow_unconfirmed_access_for = 2.weeks
 
   # Defines which key will be used when confirming an account
   # config.confirmation_keys = [ :email ]

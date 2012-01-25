@@ -1,6 +1,15 @@
+#accounts-edit body, #accounts-notifications body {
+  width: cols(9);
+
+  #page article {
+    width: cols(6);
+    padding: 0;
+  }
+}
+
 #buy {
   border-bottom: 1px solid darken(white, 10%);
-  margin: 0 (-$gutter);
+  margin: 0 $gutter;
 
   ol {
     overflow: auto;
@@ -23,7 +32,7 @@
         h1.time {
           font-size: 28px;
           font-weight: 400;
-          line-height: 24px;
+          line-height: 4*$line;
           color: $blue;
         }
 
@@ -36,7 +45,7 @@
 
         .price {
           font-size: 24px;
-          line-height: 24px;
+          line-height: 4*$line;
           color: lighten($blue, 20%);
         }
 
@@ -85,8 +94,8 @@
     aside {
       float: right;
       margin-right: 0;
-      line-height: 24px;
-	  
+      line-height: 4*$line;
+
       strong {
         color: black;
       }
@@ -94,7 +103,7 @@
       .security {
         font-size: 11px;
         color: rgba(black, 0.2);
-        line-height: 24px;
+        line-height: 4*$line;
         margin-top: $line;
         margin-bottom: $line;
       }
@@ -102,6 +111,18 @@
     }
 
     form {
+      h2.credit-card { 
+        position: relative;
+        background-color: #efefef; 
+        margin-left: -$gutter;
+        padding-left: $gutter;
+        margin-bottom: $gutter;
+        color: #666;
+        font-size: 20px;
+        
+        img { position: absolute; right: $gutter; top: 6px };
+      }
+      
       overflow: auto;
       padding: 0 $gutter;
       margin-bottom: 2*$line;
@@ -109,8 +130,10 @@
       section {
         float: left;
         margin-right: $gutter;
+        clear:none;
+        padding: 0;
       }
-	  
+
       label {
         display: block;
       }
@@ -121,6 +144,12 @@
 
       input[type=reset] {
         @include btn(#FFF, #999);
+      }
+      
+      section.card-expiry {
+        margin-left: 4*$gutter;
+        .expiry-month { width: 3em };
+        .expiry-year { width: 4em };
       }
 
       section.submit {
@@ -134,6 +163,14 @@
         .remember-card {
           margin-top: $line;
         }
+      }
+      
+      p.errors { 
+        background-color: #e33; 
+        clear: both; 
+        color: #efefef; 
+        line-height: 22px;
+        padding: 0 1em; 
       }
     }
   }

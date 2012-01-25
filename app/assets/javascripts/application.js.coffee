@@ -8,14 +8,13 @@
 #= require jquery.timeago
 #= require jquery.s3upload
 
-#= require world_map
 #= require_self
 #= require_tree ./models
 #= require_tree ./collections
 #= require_tree ./views
+#= require_tree ./routers
 
-
-window.MF = {}
+window.Mf = {}
 
 window.delay = (ms, fn) -> setTimeout(fn, ms)
 window.every = (ms, fn) -> setInterval(fn, ms)

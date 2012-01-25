@@ -1,9 +1,9 @@
 module ApplicationHelper
-  
+
   def hidden
     {style: 'display:none'}
   end
-  
+
   def page_css_selector
     [params[:controller].gsub('/', '-').dasherize,
      params[:action].dasherize].join('-')
@@ -31,28 +31,33 @@ module ApplicationHelper
     ).html_safe
   end
 
-  def title(page_title, masthead_title=page_title, &blk)
-    content_for :title, page_title.to_s
-    if block_given?
-      masthead &blk
-    else
-      content_for :masthead, content_tag(:h1, masthead_title)
-    end
+  def title(page_title)
+    content_for(:title, page_title.to_s)
   end
 
+  def title_and_masthead(name)
+    title(name)
+    masthead { content_tag(:h1, name) }
+  end
+
+  def title_and_masthead(name)
+    title(name)
+    masthead { content_tag(:h1, name) }
+  end
+  
   def head(&blk)
     content_for :head, capture_haml(&blk)
   end
 
-  def masthead(&blk)
-    content_for :masthead, capture_haml(&blk)
+  def masthead(attrs={}, &blk)
+    attrs = {id: 'masthead'}.merge!(attrs)
+    content = content_tag(:section, capture(&blk), attrs)
+
+    content_for :masthead, content
   end
 
-  def before(&blk)
-    content_for :before, &blk
+  def backside(&blk)
+    content_for :backside, capture_haml(&blk)
   end
 
-  def after(&blk)
-    content_for :after, &blk
-  end
 end

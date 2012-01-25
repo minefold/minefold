@@ -1,124 +1,14 @@
-- title world.name
 
 = render partial: 'worlds/header'
 
-%aside
-  - if signed_in?
-    - case
-    - when current_user.current_world == world    
-      %form#play-here
-        %button{disabled: true}
-          %span.icon.current
-          Playing here
-    - when world.players.include?(current_user)
-      = form_for [:play, world], method: 'put', html: {id: 'play-here'} do
-        %button
-          %span.icon.play
-          Play here
-    - when world.play_requests.any?{|req| req.user == current_user }
-      %form#play-here
-        %button{disabled: true}
-          %span.icon.waiting
-          Request sent
+- if not world.map?
+
+  .no-map
+    - if signed_in? and can? :play, world
+      Start playing in this world by connecting to
+      %strong= current_user.host
+      in Minecraft.
     - else
-      = form_for world, method: 'post', url: ask_world_players_path(world), html: {id: 'play-here'} do
-        %button
-          %span.icon.ask
-          Ask to play here
-    
-    - if world.opped?(current_user)
-      #add-friend
-        %button
-          %span.icon
-          Add a friend
-        
-        = form_tag add_world_players_path(world) do
-          = hidden_field_tag :id
-          
-          %section.search
-            %span.avatar
-            %input{type: 'text'}
-          
-          %section.hint
-            %p
-              %em ENTER
-              a friend's username
-            %p
-              or
-              %a.cancel{href: ''} cancel
-
-
-  %h2 Friends playing here
-  %ul.players
-    - sorted_memberships(world).each do |membership|
-      - user = membership.user
-      %li{ class: [world.current_players.include?(user) ? :online : :offline, membership.role == 'op' && :op]}= link_to user.username, user
-  
-  - if world.opped?(current_user) and world.play_requests.any?
-    = render "play_requests", object: world.play_requests
-  
-  %p.social
-    %a.twitter-share-button{href: 'https://twitter.com/share', data: {text: "Play Minecraft with me in #{world.name} - #{world_url(world)}", url: world_url(world), count: 'horizontal', via: 'minefold'}} Tweet
-    %script{type: 'text/javascript', src: '//platform.twitter.com/widgets.js'}
-
-    %iframe.facebook-like-button{src: "//www.facebook.com/plugins/like.php?href=#{world_url(world)}&send=true&layout=button_count&show_faces=false&height=50&action=like&colorscheme=light&appId=#{ENV['FB_APP_ID'].to_i}", allowTransparency: true, scrolling: 'no', frameborder: 0}
-
-
-%article
-  - if signed_in?
-    %form#share
-      .avatar
-        = image_tag current_user.avatar.head.s24.url, width: 24, height: 24
-
-      %input{type: 'text', name: 'text', rows: 2, maxlength: 100, autocomplete: 'off', placeholder: 'Chat with other players'}
-
-      .note Press enter to chat
-
-  #events
-
-  :javascript
-    var events, activityView, shareView, addFriendView, pusher, channel;
-
-    events = new MF.EventsCollection();
-    events.fetch({
-      success: function() {
-        activityView = new MF.ActivityView({
-          collection: events
-        });
-        
-        events.bind('add', activityView.addEvent);
-
-        $('#events').append(activityView.el);
-
-        activityView.render();
-      }
-    });
-
-    shareView = new MF.ShareView({
-      el: $('form#share'),
-      collection: events
-    });
-    
-    addFriendView = new MF.AddFriendView({
-      el: $('#add-friend'),
-      searchPath: #{search_world_players_path(world, format: :json).to_json}
-    });
-
-    pusher = new Pusher(#{Pusher.key.to_json}, {
-      encrypted: true
-    });
-    
-    channel = pusher.subscribe(#{world.pusher_key.to_json});
-    
-    channel.bind('chat-created', function(chat) {
-      // This is a hack to get around Backbone not sending Pusher's socket_id when saving a model.
-      var previousChatIsSame = events.any(function(e) {
-        return e.id === chat._id || (!e.id && e.get('type') === 'chat' && e.get('text') === chat.text);
-      });
-      
-      if(!previousChatIsSame) {
-        var chatModel = new MF.ChatEvent(chat);
-        events.add(chatModel);
-      }
-    });
-
+      Waiting for
+      %strong= world.creator.username
+      to play here…

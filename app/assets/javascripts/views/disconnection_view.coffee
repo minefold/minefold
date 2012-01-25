@@ -1,7 +1,7 @@
 #= require jquery.timeago
 #= require views/event_view
 
-class MF.DisconnectionView extends MF.EventView
+class Mf.DisconnectionView extends Mf.EventView
   template: _.template """
     <div class="meta">
       <time class="timeago" datetime="<%= created_at %>"></time>

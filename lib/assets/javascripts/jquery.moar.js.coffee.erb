@@ -3,7 +3,6 @@ $ = jQuery
 $.fn.moar = (options) ->
   options = $.extend {
     url: '/page/:page'
-    # load: (data) -> console.log data
     scrollMargin: 50
     startPage: 1
     loadingImage: <%= asset_path('spinner.gif').to_json %>

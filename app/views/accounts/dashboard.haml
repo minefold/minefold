@@ -1,14 +1,19 @@
-- title 'Dashboard'
+- title_and_masthead 'Dashboard'
 
 -# TODO: "Confirm email address" new_confirmation_path(resource_name)
 
-%aside
-  %p= link_to 'Create a new world!', new_world_path, class: 'btn'
+#page
+  %p= link_to 'Create a new world', new_world_path, class: 'btn'
 
-%article
-  #worlds
-    %ul
-      - current_user.worlds.each do |world|
-        %li{class: ('active' if current_user.current_world?(world))}
-          = link_to world.name, world
-          %p= pluralize world.players.count, 'player', 'friends'
+  %aside
+    %h3 Confirm your account
+    %p You should have recieved an email with instructions on how to confirm your account.
+
+  %article
+    #worlds
+      %ul
+        - current_user.worlds.sort_by {|w| w.creator.username.downcase + w.name.downcase }.each do |world|
+          %li{class: ('active' if current_user.current_world?(world))}
+            = link_to world do
+              #{world.creator.username}/#{world.name}
+            %p= pluralize world.members.count, 'member'

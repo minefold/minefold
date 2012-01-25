@@ -2,19 +2,14 @@
   @extend #system;
 
   form {
-    width: 100%;
-
-    input[type=text], input[type=password] {
-      width: 100%;
-    }
-
     input[type=submit], .remember-me {
       float: left;
     }
 
     .remember-me {
-      margin-top: $line;
+      margin-top: 2*$line;
       margin-left: 2*$gutter;
+      line-height: 4*$line;
     }
   }
 }

@@ -1,33 +1,21 @@
 require "spec_helper"
 
 describe UserMailer do
-  let(:user) { create :user }
+  let(:user) { Fabricate(:user) }
 
   describe "reminder" do
-    let(:mail) { UserMailer.reminder user.id }
-    
-    it "renders the headers" do
-      mail.subject.should eq("Buy more Minefold time (running low)")
-      mail.to.should eq([user.email])
-    end
+    subject { UserMailer.reminder(user.id) }
 
-    it "renders the body" do
-      mail.body.encoded.should include(user.username)
-      mail.body.encoded.should include(time_account_url)
-    end
+    its(:to) { include(user.email) }
+
+    its(:body) { include(user.username) }
+    its(:body) { include(time_account_url) }
   end
 
   describe "welcome" do
-    let(:mail) { UserMailer.welcome user.id }
-    
-    it "renders the headers" do
-      mail.subject.should include('Welcome')
-      mail.to.should eq([user.email])
-    end
+    subject { UserMailer.welcome(user.id) }
 
-    it "renders the body" do
-      mail.body.encoded.should include(user.username)
-      mail.body.encoded.should include('10 hours free')
-    end
+    its(:to) { include(user.email) }
+    its(:body) { include(user.username) }
   end
 end

@@ -1,0 +1,157 @@
+/*#worlds-photos-index #masthead .photos,
+#worlds-photos-show #masthead .photos {
+  @include active-masthead-menu-item;
+}*/
+
+#worlds-photos-new, #worlds-photos-create {
+  @extend #system;
+
+  #page {
+    width: cols(5);
+  }
+
+  // TODO Hack!
+  article {
+    width: 100% !important;
+  }
+
+  form {
+    width: 100%;
+
+    textarea, input {
+      width: 100%;
+    }
+  }
+}
+
+/*#worlds-photos-index {
+  #page {
+    width: cols(4);
+  }
+}*/
+
+#worlds-photos-show #page aside {
+  overflow: auto;
+
+  .previous {
+    float: left;
+  }
+  .next {
+    float: right;
+  }
+}
+
+#photos {
+  margin: 0 (-$gutter);
+  overflow: auto;
+
+  figure {
+    float: left;
+    margin: 0 $gutter;
+    margin-bottom: 2*$line;
+
+    a {
+      border: 1px solid darken(white, 5%);
+      padding: 2px;
+
+      text-align: center;
+      display: block;
+
+      @include box-sizing(border-box);
+
+
+      img {
+        display: block;
+        float: none;
+      }
+
+      figcaption {
+        display: block;
+        font-size: 12px;
+      }
+
+      &:hover {
+        border-color: $blue;
+      }
+
+    }
+  }
+
+}
+
+#photo {
+  width: 800px;
+  margin: 0 (-$gutter);
+  padding-top: $line;
+  padding-bottom: $line - 1px;
+  border-bottom: 1px solid darken(white, 10%);
+
+  img {
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+// TODO Hack!
+form section.instructions {
+  font-size: 12px;
+  background: darken(white, 5%) asset_data_url('icons/help.png') no-repeat (2*$gutter) ($line);
+  padding: $line (2*$gutter);
+  padding-left: (2*$gutter) + 24px + $gutter;
+  margin: 0 (-2 * $gutter);
+  margin-top: -4 * $line;
+  margin-bottom: 4 * $line;
+  pre {
+    overflow: auto;
+    // TODO Hack!
+    margin-bottom: 0 !important;
+  }
+  code {
+    color: black;
+  }
+}
+
+#worlds-show #page {
+  width: (6);
+  box-shadow: none;
+}
+
+#worlds-show #footer {
+  display: none;
+}
+
+#page figure.photo {
+  padding: 0;
+  position: relative;
+
+  img {
+    display: block;
+    width: $width;
+    margin: 0;
+    @include border-radius($radius);
+  }
+
+  figcaption {
+    color: rgba(white, 0.6);
+    font-size: 14px;
+    line-height: 4*$line;
+    margin: 0;
+    position: absolute;
+    background-color: rgba(black, 0.8);
+    width: 100%;
+    right: 0; bottom: 0; left: 0;
+    padding: (2*$line) $pad;
+    @include box-sizing(border-box);
+
+    @include border-radius(0 0 $radius $radius);
+
+
+    strong {
+      color: white;
+      font-size: 18px; line-height: 6*$line;
+      display: block;
+    }
+  }
+
+}
+

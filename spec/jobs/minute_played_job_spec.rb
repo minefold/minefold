@@ -1,14 +1,14 @@
 require 'spec_helper'
 
 describe MinutePlayedJob do
-  let(:player) { create :user }
-  let(:world)  { create :world }
-  
-  before { world.add_player player }
-  
-  it "should increase world minutes played" do
-    MinutePlayedJob.perform player.id, world.id, Time.now
+  let(:player) { Fabricate(:user) }
+  let(:world)  { Fabricate(:world) }
 
-    world.minutes_played.should == 1
+  before { world.add_member(player) }
+
+  it "should increase world minutes played" do
+    lambda {
+      subject.process! player, world, Time.now
+    }.should change(world, :minutes_played).by(1)
   end
 end

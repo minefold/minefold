@@ -1,6 +1,6 @@
 #= require models/event
 
-class MF.ChatEvent extends MF.Event
+class Mf.ChatEvent extends Mf.Event
   defaults:
     type: 'chat'
   

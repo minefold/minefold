@@ -1,62 +1,37 @@
 class User
   include Mongoid::Document
+  include Mongoid::MultiParameterAttributes
   include Mongoid::Timestamps
   include Mongoid::Slug
   include Mongoid::Paranoia
-  
+
   BILLING_PERIOD = 1.minute
   FREE_HOURS  = 10
 
   REFERRAL_CODE_LENGTH = 6
   REFERRAL_HOURS = 2
 
-  field :email,          type: String
-  field :username,       type: String
-  field :safe_username,  type: String
-  slug  :username,       index: true
-
-  field :host,           default: 'pluto.minefold.com'
-
-  field :unlimited,      type: Boolean, default: false
-
-  field :credits,        type: Integer, default: (FREE_HOURS.hours / BILLING_PERIOD)
-  field :minutes_played, type: Integer, default: 0
-
-  # attr_accessor :stripe_token
-  # field :stripe_id,               type: String
-  # embeds_one :card
-
-  field :referral_code,   type: String, default: -> {
-    self.class.free_referral_code
-  }
-  
-  validates_uniqueness_of :referral_code
-  
-  belongs_to :referrer,  class_name: 'User', inverse_of: :referrals
-  has_many   :referrals, class_name: 'User', inverse_of: :referrer
-
-
-  belongs_to :current_world, class_name: 'World', inverse_of: nil
-  has_many :created_worlds, class_name: 'World', inverse_of: :creator
-  
-  has_and_belongs_to_many :opped_worlds,
-                          inverse_of: :ops,
-                          class_name: 'World'
-
-  attr_accessor :email_or_username
-  
-
-# Finders
-
+  field :email, type: String
   index :email, unique: true
   scope :by_email, ->(email) {
     where(email: sanitize_email(email))
   }
 
+  field :username, type: String
+  slug :username, index: true
+  validates_presence_of :username
+  validates_length_of :safe_username, within: 1..16
+
+  field :safe_username, type: String
+  validates_uniqueness_of :safe_username, case_sensitive: false
+  validates_length_of :safe_username, within: 1..16
   index :safe_username, unique: true
+
   scope :by_username, ->(username) {
     where(safe_username: sanitize_username(username))
   }
+
+  attr_accessor :email_or_username
   scope :by_email_or_username, ->(str) {
     any_of(
       {safe_username: sanitize_username(str)},
@@ -64,22 +39,48 @@ class User
     )
   }
 
+  field :admin, type: Boolean, default: false
 
-# Validations
+  field :host, default: 'pluto.minefold.com'
 
-  validates_presence_of :username
-  validates_uniqueness_of :username, case_sensitive: false
-  validates_numericality_of :credits
+  field :unlimited, type: Boolean, default: false
+
+  field :credits, type: Integer, default: (FREE_HOURS.hours / BILLING_PERIOD)
+  validates_numericality_of :credits, greater_than_or_equal_to: 0
+
+  field :minutes_played, type: Integer, default: 0
   validates_numericality_of :minutes_played, greater_than_or_equal_to: 0
 
 
-# Security
+  field :notifications, type: Hash
+  field :last_world_started_mail_sent_at, type: DateTime
+
+  field :referral_code, type: String, default: ->{ self.class.free_referral_code }
+  validates_uniqueness_of :referral_code
+
+  belongs_to :referrer, class_name: 'User', inverse_of: :referrals
+  has_many :referrals, class_name: 'User', inverse_of: :referrer
+
+
+  belongs_to :current_world, class_name: 'World', inverse_of: nil
+  has_many :created_worlds, class_name: 'World', inverse_of: :creator
+
+  has_many :albums
+  has_many :pictures
+
+
+  scope :potential_members_for, ->(world) {
+    not_in(_id: world.memberships.map {|p| p.user_id})
+  }
+
+
+  # Security
 
   attr_accessible :email,
                   :username,
-                  :plan_id,
                   :password,
-                  :password_confirmation
+                  :password_confirmation,
+                  :notifications
 
   attr_accessible :stripe_token,
                   :email_or_username,
@@ -87,7 +88,7 @@ class User
 
 
 # Credits
-  
+
   # Kicks off the audit trail for any credits the user starts off with
   after_create do
     CreditTrail.log(self, self.credits)
@@ -119,7 +120,7 @@ class User
   def increment_credits!(n)
     inc(:credits, n.to_i).tap { CreditTrail.log(self, n.to_i)}
   end
-  
+
   def hours_left
     credits / User::BILLING_PERIOD
   end
@@ -129,6 +130,7 @@ class User
 
   devise :registerable,
          :database_authenticatable,
+         :confirmable,
          :recoverable,
          :rememberable,
          :trackable,
@@ -142,22 +144,31 @@ class User
 
 # Avatars
 
-  mount_uploader :avatar, AvatarUploader
-
-  def fetch_avatar!
-    self.remote_avatar_url = "http://minecraft.net/skin/#{safe_username}.png"
-    # Minecraft doesn't store default skins so it raises a HTTPError
-  rescue OpenURI::HTTPError
+  def avatar_url(size=nil)
+    "http://asset0.mcserverlist.net/avatar/#{safe_username}/#{size}"
   end
 
-  def async_fetch_avatar!
-    Resque.enqueue(FetchAvatarJob, id)
+  # field :skin_etag
+  # mount_uploader :skin, AvatarUploader
+
+  # def fetch_avatar!
+  #   self.remote_avatar_url = "http://minecraft.net/skin/#{safe_username}.png"
+  #   # Minecraft doesn't store default skins so it raises a HTTPError
+  # rescue OpenURI::HTTPError
+  # end
+
+  # def async_fetch_avatar!
+  #   Resque.enqueue(FetchAvatarJob, id)
+  # end
+  #
+  # before_save do
+  #   async_fetch_avatar! if safe_username_changed?
+  # end
+
+  def cloned?(world)
+    p created_worlds.to_a
+    created_worlds.where(parent_id: world.id).exists?
   end
-
-  before_save do
-    async_fetch_avatar! if safe_username_changed?
-  end  
-
 
 # Referrals
 
@@ -167,29 +178,31 @@ class User
     end while self.where(referral_code: c).exists?
     c
   end
-  
+
   def played?
     true
   end
-  
-# Mail throttling
-  # TODO Move to the top
 
-  field :last_world_started_mail_sent_at
+  def member?(world)
+    world.memberships.any? {|m| m.user == self}
+  end
+
+  def op?(world)
+    world.memberships.any? {|m| m.user == self && m.role == Memberships::OP}
+  end
+
+  def member?(world)
+    world.memberships.any? {|m| m.user == self}
+  end
+
+  def op?(world)
+    world.memberships.any? {|m| m.user == self && m.role == Memberships::OP}
+  end
 
 # Other
-  
-  def self.paid_for_minecraft?(username)
-    response = RestClient.get "http://www.minecraft.net/haspaid.jsp", params: {user: username}
-    return response == 'true'
-  rescue RestClient::Exception
-    return false
-  end
-  
+
   def worlds
-    World.where('memberships.user_id' => id).sort_by do |world|
-      world.name.downcase
-    end
+    World.where('memberships.user_id' => id)
   end
 
   def current_world?(world)
@@ -199,15 +212,7 @@ class User
   def to_param
     slug
   end
-  
-  # Security. When searching for potential players in a world the results were returning emails and credit cards of users.
-  def as_json(options={})
-    {
-      id: id,
-      username: safe_username,
-      avatar: avatar.head.as_json
-    }
-  end
+
 
 protected
 

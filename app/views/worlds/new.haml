@@ -1,11 +1,14 @@
-- title 'Create a new world'
+- title_and_masthead 'Create a new world'
 
-%aside
-  %p.note Do you have a world already? You can upload it and start playing instantly.
-  
-  = render partial: 'upload'
+#page
+  %aside
+    %p.note 
+      Have a world already? Upload a zip file of the world and start playing instantly.
+      %br/
+      = link_to 'How do I zip my world?', instructions_upload_path, target: '_blank'
 
-%article
+    = render partial: 'upload'
+
   = form_for world do |f|
     = f.hidden_field :world_upload_id
     = render partial: 'form', object: f

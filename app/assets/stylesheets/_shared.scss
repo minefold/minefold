@@ -1,6 +1,6 @@
 // Fonts
 
-$helvetica: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$proxima: "proxima-nova-soft-1", "proxima-nova-soft-2", $helvetica;
 
 @mixin antialiasing {
   -webkit-font-smoothing: antialiased;
@@ -9,15 +9,15 @@ $helvetica: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 // Colors
 
-$blue:   lighten(#0A3F69, 20%);
-$yellow: #F1C440;
-$red:    #DD4B27;
-$green:  #9DE33F;
+$yellow: #FD0;
+$blue:   #0082CC;
+$red:    #ff2200;
+$green:  #00CC50;
 
 
 // Grid
 
-$line: 6px;
+$line: 5px;
 
 $gutter: 10px;
 $pad:    20px;
@@ -30,7 +30,7 @@ $radius: 3px;
   @return $n * ($gutter + $col + $gutter);
 }
 
-$width: cols($ncols);
+$width: cols($ncols) + (2*$gutter);
 
 @mixin wrapper($n) {
   width: cols($n) - (2*$gutter);

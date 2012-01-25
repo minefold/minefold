@@ -1,0 +1,20 @@
+#= require views/world/map_view
+#= require views/world/info_view
+#= require views/world/members_view
+
+class Mf.WorldRouter extends Backbone.Router
+  routes:
+    '': 'map'
+
+  initialize: (options) ->
+    @world = options.world
+
+    @mapView = new Mf.WorldMapView(
+      el: $('#backside')[0]
+      model: @world
+    )
+
+  map: ->
+    if @world.isMapped()
+      @mapView.enter()
+      @mapView.render()
