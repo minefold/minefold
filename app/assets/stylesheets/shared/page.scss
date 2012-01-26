@@ -1,8 +1,10 @@
 #page {
-  margin-bottom: $line * 10;
-
   line-height: 5*$line;
   color: darken(white, 60%);
+
+  .container > .row {
+    margin-bottom: $line * 8;
+  }
 
   article {
     @include makeColumn($ncols - 3);
@@ -42,7 +44,7 @@
     color: $blue;
     text-decoration: none;
     &:hover {
-      color: black;
+      color: $green;
     }
   }
 
