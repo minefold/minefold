@@ -11,7 +11,7 @@
       height: $line * 40;
     }
 
-    figcaption {
+    .adr {
       @include makeColumn(3);
     }
   }
