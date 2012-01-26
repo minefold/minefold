@@ -54,7 +54,7 @@
       .overlay
 
     %header
-      .wrapper
+      .container
         %h1
           = link_to root_url do
             Minefold
@@ -113,23 +113,27 @@
           delay(t, function(){ elm.slideUp(); });
         });
 
-    = yield :masthead
+    #masthead
+      .container= yield :masthead
 
-    = yield
+    #page
+      .container
+        = yield
 
     %footer
-      %ul
-        %li.about= link_to 'About', about_page_path
-        %li.blog= link_to 'Blog', 'http://blog.minefold.com'
-        %li.help= link_to 'Help', help_page_path
-        %li.feedback= link_to 'Feedback', 'http://getsatisfaction.com/minefold'
-        -# %li.press= link_to 'Press', press_page_path
-        -# %li.jobs= link_to 'Jobs', jobs_page_path
-        %li.fineprint.privacy= link_to 'Privacy', privacy_page_path
-        %li.fineprint.terms= link_to 'Terms', terms_page_path
+      .container
+        %ul
+          %li.about= link_to 'About', about_page_path
+          %li.blog= link_to 'Blog', 'http://blog.minefold.com'
+          %li.help= link_to 'Help', help_page_path
+          %li.feedback= link_to 'Feedback', 'http://getsatisfaction.com/minefold'
+          -# %li.press= link_to 'Press', press_page_path
+          -# %li.jobs= link_to 'Jobs', jobs_page_path
+          %li.fineprint.privacy= link_to 'Privacy', privacy_page_path
+          %li.fineprint.terms= link_to 'Terms', terms_page_path
 
-        %li.social.twitter= link_to 'Facebook', 'https://facebook.com/minefold'
-        %li.social.twitter= link_to 'Twitter', 'https://twitter.com/minefold'
+          %li.social.twitter= link_to 'Facebook', 'https://facebook.com/minefold'
+          %li.social.twitter= link_to 'Twitter', 'https://twitter.com/minefold'
 
     - if Rails.env.production?
       = render partial: 'shared/analytics'

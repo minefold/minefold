@@ -37,23 +37,15 @@ module ApplicationHelper
 
   def title_and_masthead(name)
     title(name)
-    masthead { content_tag(:h1, name) }
+    masthead { content_tag(:div, content_tag(:h1, name), class: 'row') }
   end
 
-  def title_and_masthead(name)
-    title(name)
-    masthead { content_tag(:h1, name) }
-  end
-  
   def head(&blk)
     content_for :head, capture_haml(&blk)
   end
 
   def masthead(attrs={}, &blk)
-    attrs = {id: 'masthead'}.merge!(attrs)
-    content = content_tag(:section, capture(&blk), attrs)
-
-    content_for :masthead, content
+    content_for :masthead, capture(&blk)
   end
 
   def backside(&blk)

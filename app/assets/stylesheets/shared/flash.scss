@@ -1,0 +1,41 @@
+#flash {
+  overflow: auto;
+
+  .message {
+    padding: $line $gutter;
+    line-height: 4*$line;
+    font-size: 13px;
+    margin-top: $line;
+    border-bottom: 1px solid rgba(black, 0.05);
+
+    @include border-radius($radius);
+
+    a.hide {
+      float: right;
+      font-size: 11px;
+      color: rgba(black, 0.4);
+      font-weight: 600;
+      text-decoration: none;
+
+      display: block;
+      padding: $line (2*$gutter);
+      margin: (-$line) (-$gutter);
+      text-align: center;
+
+      &:hover, &:focus {
+        color: rgba(black, 0.8);
+      }
+    }
+  }
+
+  .notice, .success {
+    color: black;
+    background-color: lighten($yellow, 35%);
+  }
+
+  .alert, .error {
+    font-weight: 600;
+    color: $red;
+    background-color: lighten($yellow, 30%);
+  }
+}

@@ -6,10 +6,8 @@
   ol {
     overflow: auto;
     @include border-radius($radius);
-    width: cols(9);
 
     li {
-      float: left;
       text-align: center;
       width: cols(3);
       padding: (2*$line) 0;
