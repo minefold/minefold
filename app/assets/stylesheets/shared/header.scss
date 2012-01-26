@@ -2,6 +2,11 @@ header {
   @include clearfix;
   background-color: $yellow;
 
+  // Makes the header line up with the rest of the text
+  .container {
+    width: $width + ($gutter * 2);
+  }
+
   h1 {
     float: left;
     font-size: 18px; line-height: $line * 4;

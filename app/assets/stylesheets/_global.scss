@@ -3,7 +3,7 @@ html {
   font-size: 14px;
   line-height: 4*$line;
   font-family: $helvetica;
-  min-width: $width + (2*$radius);
+  min-width: $width + ($gutter * 2);
   background: white;
 }
 
