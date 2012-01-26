@@ -33,17 +33,20 @@ header {
     overflow: visible;
     li {
       float: left;
-      font-size: 14px; line-height: 4*$line;
+      font-size: 14px; line-height: $line * 4;
       font-weight: 900;
       color: rgba(black, 0.8);
 
       a {
         display: block;
-        padding: ($line * 4) $gutter;
 
         color: rgba(black, 0.8);
         text-decoration: none;
         @include antialiasing;
+      }
+
+      a, &.time {
+        padding: ($line * 4) $gutter;
       }
 
       a:hover, &.active > a {
@@ -55,10 +58,6 @@ header {
       &.signin, &.signup, &.user, &.time, &.buy {
         float: right;
         position: relative;
-      }
-
-      &.time {
-        padding: (2*$line) $gutter;
       }
 
       &.user {
