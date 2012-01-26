@@ -54,7 +54,6 @@
     %h2 Address
 
     %figure.vcard
-      #map
       %figcaption
         %p.adr
           %a.fn.org.url{href: root_url, style: 'display:none'} Minefold
@@ -67,9 +66,11 @@
           %br
           %span.country-name United States of America
 
+      .map
+
       %script{src: '//maps.googleapis.com/maps/api/js?sensor=false'}
       :javascript
-        var map = new google.maps.Map($('figure #map')[0], {
+        var map = new google.maps.Map($('.vcard .map')[0], {
           zoom: 13,
           center: new google.maps.LatLng(37.3860517, -122.0838511),
           mapTypeId: google.maps.MapTypeId.ROADMAP,
