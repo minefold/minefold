@@ -1,176 +1,110 @@
-#accounts-edit body, #accounts-notifications body {
-  width: cols(9);
-
-  #page article {
-    width: cols(6);
-    padding: 0;
-  }
-}
-
-#buy {
-  border-bottom: 1px solid darken(white, 10%);
-  margin: 0 $gutter;
-
-  ol {
-    overflow: auto;
-    margin-bottom: 0;
-
+#accounts-time {
+  ol.time-packs {
     li {
-      float: left;
-
       a {
-        display: block;
-        text-align: center;
-        width: cols(10)/3 + 1px;
-        padding: (4*$line) 0;
+        @include makeColumn($ncols / 3);
         @include box-sizing(border-box);
+        padding: ($line * 2 - 2px) ($gutter - 2px);
+        border-width: 2px;
+        border-style: solid;
 
-        border-left: 1px solid darken(white, 10%);
+        color: black;
 
         cursor: pointer;
 
-        h1.time {
-          font-size: 28px;
-          font-weight: 400;
-          line-height: 4*$line;
-          color: $blue;
+        .time {
+          font-size: 18px; line-height: $line * 6;
         }
 
-        .call-to-action {
-          display: block;
-          color: darken(white, 20%);
-          font: 13px/18px $helvetica;
-          margin-bottom: $line;
+        .price, .rate {
+          color: rgba(black, 0.8);
         }
 
         .price {
-          font-size: 24px;
-          line-height: 4*$line;
-          color: lighten($blue, 20%);
-        }
-
-        .rate {
-          color: rgba(black, 0.2);
-          font-size: 13px;
-        }
-
-        &:hover {
-          background-color: lighten($blue, 55%);
-          text-decoration: none;
-        }
-
-        &.active {
-          background: lighten($blue, 50%);
-          color: black;
-          h1 {
-            color: black;
-          }
-          .price {
-            color: rgba(black, 0.6);
-          }
-          .rate {
-            color: rgba(black, 0.4);
-          }
+          font-weight: 600;
         }
       }
 
-      &:first-child a {
-        border-left: none;
-        width: cols(10) / 3;
-        @include border-radius($radius 0 0 0);
+      &:nth-child(1) {
+        a {
+          border-color: $yellow;
+          &:hover {
+            background-color: $yellow;
+          }
+        }
+
+        &.active a {
+          background-color: $yellow;
+        }
       }
 
-      &:last-child a {
-        @include border-radius(0 $radius 0 0);
+      &:nth-child(2) {
+        a {
+          border-color: $green;
+          &:hover {
+            background-color: $green;
+          }
+        }
+
+        &.active a {
+          background-color: $green;
+        }
       }
 
+      &:nth-child(3) {
+        a {
+          border-color: $blue;
+          &:hover {
+            background-color: $blue;
+          }
+        }
+
+        &.active a {
+          background-color: $blue;
+        }
+      }
+
+      a:hover, &.active a, &.active a:hover {
+        color: white;
+
+        .price, .rate {
+          color: rgba(white, 0.8);
+        }
+      }
     }
   }
 
-  #card {
-    overflow: auto;
-    border-top: 1px solid darken(white, 10%);
 
-    aside {
-      float: right;
-      margin-right: 0;
-      line-height: 4*$line;
+  #order {
 
-      strong {
-        color: black;
+    form {
+      .card-number {
+        @include makeColumn(4);
+        .hint img {
+          display: block;
+        }
+      }
+
+      .card-cvc {
+        @include makeColumn(2)
+      }
+
+      .card-expiry {
+        @include makeColumn(6);
+
+        input {
+          @include columns(2);
+        }
+
+        .slash {
+          @include inline-block;
+          width: $gutter / 2;
+        }
       }
 
       .security {
-        font-size: 11px;
-        color: rgba(black, 0.2);
-        line-height: 4*$line;
-        margin-top: $line;
-        margin-bottom: $line;
-      }
-
-    }
-
-    form {
-      h2.credit-card { 
-        position: relative;
-        background-color: #efefef; 
-        margin-left: -$gutter;
-        padding-left: $gutter;
-        margin-bottom: $gutter;
-        color: #666;
-        font-size: 20px;
-        
-        img { position: absolute; right: $gutter; top: 6px };
-      }
-      
-      overflow: auto;
-      padding: 0 $gutter;
-      margin-bottom: 2*$line;
-
-      section {
-        float: left;
-        margin-right: $gutter;
-        clear:none;
-        padding: 0;
-      }
-
-      label {
-        display: block;
-      }
-
-      input[type=checkbox] + label {
-        display: inline;
-      }
-
-      input[type=reset] {
-        @include btn(#FFF, #999);
-      }
-      
-      section.card-expiry {
-        margin-left: 4*$gutter;
-        .expiry-month { width: 3em };
-        .expiry-year { width: 4em };
-      }
-
-      section.submit {
-        clear: left;
-
-        input[type=submit], input[type=reset], .remember-card {
-          float: left;
-          margin-right: $gutter;
-        }
-
-        .remember-card {
-          margin-top: $line;
-        }
-      }
-      
-      p.errors { 
-        background-color: #e33; 
-        clear: both; 
-        color: #efefef; 
-        line-height: 22px;
-        padding: 0 1em; 
+        font-size: 12px;
+        color: darken(white, 20%);
       }
     }
   }
