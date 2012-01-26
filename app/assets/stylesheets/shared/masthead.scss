@@ -1,0 +1,32 @@
+#masthead {
+  padding: ($line * 8) 0;
+
+  h1, h2, p {
+    @include gridColumn;
+    clear: both;
+  }
+
+  h1 {
+    font-size: 28px; line-height: $line * 8;
+    font-weight: 400;
+  }
+
+  h2 {
+    font-weight: 200;
+    font-size: 18px;
+    line-height: 6*$line;
+    color: rgba(black, 0.4);
+  }
+
+  p {
+    margin-bottom: 4*$line;
+  }
+
+  a {
+    color: $blue;
+    text-decoration: none;
+    &:hover, &:focus {
+      color: black;
+    }
+  }
+}

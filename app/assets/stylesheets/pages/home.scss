@@ -1,108 +1,38 @@
 #pages-home {
-
   #masthead {
-    text-align: center;
-    padding-top: 12*$line;
-    padding-bottom: 0;
-
-    overflow: auto;
-
-    h1, h2 {
-      text-shadow: 0 1px 0 rgba(white, 0.8);
-    }
+    background-color: darken(white, 0%);
+    margin-bottom: $line * 8;
 
     h1 {
       font-weight: 900;
-      line-height: 8*$line;
-      float: none;
-      color: darken($blue, 40%);
+      line-height: $line * 8;
     }
 
     h2 {
+      padding-bottom: $line * 8;
+
       font-size: 24px;
-      margin-bottom: 4*$line;
-      color: darken($blue, 20%);
+      font-weight: 200;
     }
 
-    .btn {
-      @include btn($blue, white);
-      width: cols(4) - (4*$gutter);
-      margin: 0 auto;
-      margin-bottom: 12*$line;
+    a.btn {
+      @include btn($green, white);
+      @include makeColumn(3);
 
-      border-bottom: 1px solid white;
+      clear: both;
 
-      text-align: center;
-
-      font-size: 16px;
-      line-height: 4*$line;
+      padding: ($line * 3) $gutter;
+      font-size: 16px; line-height: $line * 4;
 
       .free {
-        font-size: 12px;
-        color: rgba(white, 0.8);
-        line-height: 4*$line;
+        font-style: italic;
+        font-size: 12px; line-height: $line * 4;
       }
-    }
-
-    #screenshots {
-      position: relative;
-      overflow: visible;
-      z-index: -1;
-      height: 144px;
-      img {
-        display: block;
-        float: left;
-        position: relative;
-      }
-      .a, .c {
-        top: 24px;
-      }
-      .b {
-        margin: 0 (-$pad);
-
-        z-index: 1;
-
-      }
-    }
-
-    #avatars {
-      position: absolute;
-      z-index: 1;
-      margin: (-0.5*(24px + 2px)) (-$gutter);
-
-      img {
-        display: block;
-        float: left;
-        margin: 0 $gutter;
-        border: 2px solid white;
-
-        margin: 0 ((($col + $pad) - 24px - (2*2px))/2);
-      }
-    }
-
-  }
-
-  #features {
-    overflow: auto;
-    margin: (4*$gutter) (4*$gutter);
-
-    strong {
-      font-weight: 600;
-    }
-
-    li {
-      display: block;
-      float: left;
-      width: cols(4) - (2*$gutter);
-      margin-bottom: $line;
-      margin: 0 (2*$gutter);
-
-      p {
-        text-align: justify;
-      }
-
     }
   }
 
+  .feature {
+    @include makeColumn(3);
+  }
 }
 

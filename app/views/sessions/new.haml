@@ -3,11 +3,11 @@
 #page
   = form_for :user, as: :user, url: session_path(:user) do |f|
     %fieldset
-      %h3= f.label :email_or_username, 'Email or username'
-      = f.text_field :email_or_username, tabindex: 1
+      - # %h3= f.label :email_or_username, 'Email or username'
+      %p= f.text_field :email_or_username, placeholder: 'Email or username', tabindex: 1
 
-      %h3= f.label :password
-      = f.password_field :password, tabindex: 2
+      - # %h3= f.label :password
+      %p= f.password_field :password, placeholder: 'password', tabindex: 2
 
       %p
         = link_to 'Forgotten your password?', new_user_password_path, class: 'forgot'

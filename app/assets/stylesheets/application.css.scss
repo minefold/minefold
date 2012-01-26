@@ -3,8 +3,20 @@
 
 @import 'bourbon';
 
-@import 'shared';
-@import 'shared/app';
+@import 'vars';
+@import 'mixins';
+@import 'scaffold';
+
+@import 'global';
+
+@import 'shared/buttons';
+@import 'shared/forms';
+
+@import 'shared/header';
+@import 'shared/masthead';
+@import 'shared/page';
+@import 'shared/footer';
+
 
 @import 'accounts/dashboard';
 @import 'accounts/time';
@@ -22,6 +34,7 @@
 @import 'worlds/memberships/index';
 
 @import 'pages/home';
+@import 'pages/about';
 @import 'pages/pricing';
 
 @import 'sessions/new';

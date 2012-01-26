@@ -1,0 +1,96 @@
+header {
+  @include clearfix;
+  background-color: $yellow;
+
+  h1 {
+    float: left;
+    font-size: 18px; line-height: $line * 4;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-family: $proxima;
+
+    a {
+      display: block;
+      position: relative;
+      padding: ($line * 4) $gutter;
+
+      color: black;
+      text-decoration: none;
+
+      &:hover {
+        color: white;
+        background-color: $green;
+      }
+
+      em {
+        display: none;
+      }
+    }
+  }
+
+  ol {
+    overflow: visible;
+    li {
+      float: left;
+      font-size: 14px; line-height: 4*$line;
+      font-weight: 900;
+      color: rgba(black, 0.8);
+
+      a {
+        display: block;
+        padding: ($line * 4) $gutter;
+
+        color: rgba(black, 0.8);
+        text-decoration: none;
+        @include antialiasing;
+      }
+
+      a:hover, &.active > a {
+        background-color: rgba(black, 0.05);
+        background-color: $blue;
+        color: white;
+      }
+
+      &.signin, &.signup, &.user, &.time, &.buy {
+        float: right;
+        position: relative;
+      }
+
+      &.time {
+        padding: (2*$line) $gutter;
+      }
+
+      &.user {
+        img {
+          display: block;
+          border-radius: $radius;
+        }
+
+        &.active ol {
+            display: block;
+        }
+      }
+
+      ol {
+        @include columns(2);
+        display: none;
+
+        right: 0;
+        top: 12*$line;
+        position: absolute;
+
+        z-index: 101;
+        background-color: $yellow;
+
+        li {
+          float: none;
+
+          a {
+            border: none;
+          }
+        }
+      }
+    }
+  }
+}

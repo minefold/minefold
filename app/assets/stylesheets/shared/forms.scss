@@ -2,17 +2,6 @@ label {
   display: block;
 }
 
-/*input[type=text],
-input[type=email],
-input[type=textarea],
-input[type=password] {
-  @include box-sizing(border-box);
-  font: 400 14px/18px $helvetica;
-  padding: $line ($gutter / 2);
-  margin: 0;
-}
-*/
-
 input[type=checkbox] + label,
 input[type=radio] + label {
   display: inline;
@@ -22,10 +11,6 @@ form {
   section {
     margin-bottom: 2*$line;
     clear: both;
-
-/*    h3 {
-      float: left;
-    }*/
 
     fieldset {
       margin-left: cols(2);
@@ -39,14 +24,6 @@ form {
     &.disabled label {
       color: #999;
     }
-  }
-
-  .hint {
-    font-size: 12px;
-    color: #999;
-    line-height: 3*$line;
-    margin-top: 0;
-    margin-bottom: 2*$line;
   }
 
   input[type=text], input[type=password], input[type=email], textarea {
