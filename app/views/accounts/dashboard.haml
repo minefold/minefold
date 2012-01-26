@@ -4,15 +4,7 @@
 
 .row
   %aside
-    - if current_user.confirmed?
-      %h3 Got a world already?
-      %p
-        = link_to 'Upload it', new_world_path
-        and start playing instantly
-        
-    - else
-      %h3 Confirm your account
-      %p You should have recieved an email with instructions on how to confirm your account.
+    %p= link_to 'Create a new world', new_world_path, class: 'btn'
 
     - if not current_user.confirmed?
       %h3 Confirm your account
