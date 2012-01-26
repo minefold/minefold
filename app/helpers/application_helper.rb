@@ -37,7 +37,7 @@ module ApplicationHelper
 
   def title_and_masthead(name)
     title(name)
-    masthead { content_tag(:h1, name) }
+    masthead { content_tag(:div, content_tag(:h1, name), class: 'row') }
   end
 
   def head(&blk)
