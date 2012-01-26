@@ -1,31 +1,28 @@
-#worlds {
-  margin-top: -2*$line;
-  margin-bottom: -4*$line;
+#accounts-dashboard {
+  .worlds {
+    li {
+      margin-bottom: $line * 4;
 
-  li {
-    position: relative;
-    overflow: hidden;
-    padding: $line $pad;
-    border-bottom: 1px solid darken(white, 5%);
-    margin: 0 (-$pad);
+      .name {
+        font-weight: 600;
+        font-size: 16px;
 
-    a {
-      display: block;
-      font-family: $helvetica;
-      line-height: 4*$line;
-    }
+        .creator {
+          font-weight: 400;
+          color: lighten($blue,10%);
+        }
 
-    p {
-      margin-bottom: 0;
-    }
+        .slash {
+          color: darken(white, 20%);
+        }
 
-    &:last-child {
-      border-bottom: none;
-    }
+      }
 
-    &:hover {
-      background-color: darken(white, 2%);
+      .meta {
+        color: darken(white, 20%);
+        font-size: 12px;
+        line-height: $line * 3;
+      }
     }
   }
 }
-
