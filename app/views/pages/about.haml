@@ -1,23 +1,15 @@
 - title  'About Minefold'
 - masthead do
-  .row
-    %h1 About Minefold
-    %h2 tl;dr we love games so we're making them more fun.
+  %h1 About Minefold
+  %h2 tl;dr we're making gaming accessible to everybody.
 
 .row
   = render partial: 'pages/nav'
   %article
     %p
-      Playing a
+      We're making games just as acessible as they are fun to play. It's difficult and nerdy to maintain a multiplayer server and get your friends into it. We're working to on making this as easy as possible. In fact, we don't want you to even to have to know what a "server" is! Wether you've formed a clan at school or want to spend time with your daughter or re-connect with a travelling friend, we can help you.
 
-      Teams sweating out ideas,  making games can't begint to count the number of hours that go into testing and perfecting games. Every minute detail is scrutinised over to make
-
-      Playing games is fun but we think it couldpeople can't play because it's too difficult
-
-    %p
-      We're  we want to make getting  them just as fun. It's difficult and nerdy to maintain a multiplayer server and get your friends into it. We're working to on making this as easy as possible. In fact, we don't want you to even to have to know what a "server" is! Wether you've formed a clan at school or want to spend time with your daughter or re-connect with a travelling friend, we can help you.
-
-    %p Originally from sunny Sydney, in 2012 Minefold made the pilgrimage to (the even sunnier) Mountain View in California.
+    %p Originally from sunny Sydney, Australia in 2012 Minefold made the pilgrimage to the even sunnier Mountain View in California.
 
     %h2 The Team
 
@@ -72,5 +64,7 @@
         var map = new google.maps.Map($('.vcard .map')[0], {
           zoom: 13,
           center: new google.maps.LatLng(37.391748, -122.05798),
-          mapTypeId: google.maps.MapTypeId.ROADMAP
+          mapTypeId: google.maps.MapTypeId.HYBRID,
+          mapTypeControl: false,
+          scrollwheel: false
         });

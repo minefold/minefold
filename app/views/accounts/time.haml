@@ -1,34 +1,52 @@
 - track_pageview
-- title 'Buy Time'
+- title 'Buy Pro'
 - masthead do
   .row
-    %h1 No time left?
+    %h1 Buy a <span class="pro">Pro</span> subscription
 
 - head do
   = javascript_include_tag 'https://js.stripe.com/v1'
   :javascript
     Stripe.setPublishableKey(#{ENV['STRIPE_PUBLISHABLE'].to_json});
 
-.row
-  %article
+= form_tag order_path, method: :post do
+  = hidden_field_tag :months
+
+  %fieldset
+    %h2 1. Pick who you want to buy Pro for
+    = avatar_tag current_user, :medium, width: 40, height: 40
+    = current_user.username
+
+
+  %fieldset
     %h2 1. Choose how long you want to play for
-  %ol.time-packs
-    - TimePack.all.each do |pack|
+    %ol.subscriptions
       %li
-        %a{data: {hours: pack.hours, amount: pack.amount}}
-          .time
-            %strong= pack.hours
-            hours
-          %span.price= number_to_currency(pack.dollars)
-          %span.rate #{pack.rate}¢/h
+        %a{data: {months: 3, amount: 1500}}
+          .duration
+            %strong 3
+            months
 
-#order
+          %span.price= number_to_currency 15
+
+      %li
+        %a{data: {months: 6, amount: 3000}}
+          .duration
+            %strong 6
+            months
+
+          %span.price= number_to_currency 30
+
+      %li
+        %a{data: {months: 12, amount: 4500}}
+          .duration
+            %strong 6
+            months
+
+          %span.price= number_to_currency 45
+
   .row
-    %article
-      %h2 2. Enter in your payment details
-
-  = form_tag order_path, method: :post do
-    = hidden_field_tag :hours
+    %h2 2. Enter in your payment details
 
     .errors{hidden}
 
