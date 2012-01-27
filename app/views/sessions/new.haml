@@ -1,8 +1,11 @@
 - greetings = %w(friend brah bro buddy mate pal)
+
 - title  'Sign in'
 - masthead do
-  .row
-    %h1 Hey #{greetings.sample}, sign in
+  %h1 Hey #{greetings.sample}, sign in
+  %p
+    or #{link_to 'sign up for a new account', new_user_path}.
+
 
 = form_for :user, as: :user, url: session_path(:user) do |f|
   %fieldset
@@ -10,14 +13,14 @@
       = f.text_field :email_or_username, placeholder: 'Email or username', tabindex: 1
 
     %section.password
-      = f.password_field :password, placeholder: 'password', tabindex: 2
+      = f.password_field :password, placeholder: 'Password', tabindex: 2
 
   %fieldset.submit
     = f.submit 'Sign in', tabindex: 4
-    .remember-me
+    %section.remember-me
       = f.check_box :remember_me, tabindex: 3
       = f.label :remember_me
 
-  %section
+  %fieldset
     = link_to new_user_password_path, class: 'forgot' do
       Forgotten your password #{greetings.sample}?
