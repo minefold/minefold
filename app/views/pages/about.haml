@@ -2,7 +2,7 @@
 - masthead do
   .row
     %h1 About Minefold
-    %h2 tl;dr we're making games more fun.
+    %h2 tl;dr we love games so we're making them more fun.
 
 .row
   = render partial: 'pages/nav'
@@ -60,7 +60,7 @@
         %br
         %span.locality Mountain View
         \,
-        %abbr.region{title: 'New South Wales'} CA
+        %abbr.region{title: 'California'} CA
         %span.postal-code 94043
         %br
         %span.country-name United States of America
@@ -71,11 +71,6 @@
       :javascript
         var map = new google.maps.Map($('.vcard .map')[0], {
           zoom: 13,
-          center: new google.maps.LatLng(37.3860517, -122.0838511),
-          mapTypeId: google.maps.MapTypeId.ROADMAP,
-          disableDefaultUI: true,
-          styles: [{featureType: "all",
-                    stylers: [
-                      {saturation: -100},
-                      {gamma: 2}]}]
+          center: new google.maps.LatLng(37.391748, -122.05798),
+          mapTypeId: google.maps.MapTypeId.ROADMAP
         });

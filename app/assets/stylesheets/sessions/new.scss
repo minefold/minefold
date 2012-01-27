@@ -1,14 +1,15 @@
 #sessions-new, #sessions-create {
 
   form {
+    @include columns(4);
+
     input[type=submit], .remember-me {
-      float: left;
+      @include gridColumn;
     }
 
     .remember-me {
-      margin-top: 2*$line;
-      margin-left: 2*$gutter;
-      line-height: 4*$line;
+      margin-top: $line * 2;
+      line-height: $line * 4;
     }
   }
 }
