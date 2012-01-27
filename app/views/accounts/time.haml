@@ -55,7 +55,7 @@
         %span.slash /
         = text_field_tag :expiry_year, nil, name: nil, size: 4, id: 'card-exp-year', placeholder: 'YYYY'
 
-    %section.submit
+    %fieldset.submit
       = submit_tag 'Confirm order'
       = button_tag 'Cancel', type: 'reset'
 
