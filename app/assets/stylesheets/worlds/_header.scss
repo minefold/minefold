@@ -1,0 +1,64 @@
+#worlds-show {
+
+  header, #masthead {
+    position: fixed;
+    right: 0; left: 0;
+  }
+
+  header {
+    top: 0;
+  }
+
+  #masthead {
+    top: $line * 12;
+    padding: $gutter;
+
+    .container {
+      @include row;
+    }
+
+    .attribution {
+      @include makeColumn($ncols / 2);
+    }
+
+    .actions, .stats {
+      @include makeColumn($ncols / 2);
+      float: right;
+      margin-right: -$gutter;
+    }
+
+    ol.actions {
+      li {
+        float: right;
+        margin-left: $gutter;
+
+        form input[type=submit], a {
+          @include btn($blue, white, $green);
+            padding: $line $gutter;
+            margin: ($line * 2) 0;
+        }
+
+        a img, a img {
+          display: block;
+        }
+      }
+    }
+
+    ul.stats {
+      li {
+        float: right;
+        font-size: 12px; line-height: $line * 2;
+        margin: $line 0;
+        margin-left: $gutter;
+
+        .val {
+          color: rgba(black, 0.8);
+        }
+
+        .label {
+          color: rgba(black, 0.5);
+        }
+      }
+    }
+  }
+}
