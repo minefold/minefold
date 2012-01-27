@@ -15,9 +15,10 @@ form {
   }
 
   fieldset {
-    @include row;
 
     &.submit {
+      @include row;
+
       input[type=submit], button[type=reset] {
         @include gridColumn;
         padding: ($line * 2) $gutter;
