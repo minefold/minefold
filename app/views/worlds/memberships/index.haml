@@ -21,12 +21,21 @@
                 = button_to 'Ignore', user_world_membership_request_path(world.creator, world, r), method: :delete, class: 'ignore'
 
   #page
-    = form_tag user_world_members_path, method: :post do
+    = form_tag user_world_members_path, method: :post, id: 'add-member' do
+      = hidden_field_tag :id
       %fieldset
         = text_field_tag :username, nil, placeholder: 'notch'
+        = image_tag 'spinner.gif', class: 'loading'
 
       %fieldset.submit
-        = submit_tag 'Invite a friend'
+        = submit_tag 'Add player'
+        
+    :coffeescript
+      $ ->
+        new Mf.AddFriendView
+          el: $('form#add-member')
+          searchPath: '#{search_user_world_members_path(world.creator, world)}'
+    
 
 #page
   %section.members

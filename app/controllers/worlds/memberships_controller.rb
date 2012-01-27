@@ -25,16 +25,16 @@ class Worlds::MembershipsController < ApplicationController
 
     @user = User
       .potential_members_for(world)
-      .where(_id: params[:id])
-      .first
-
+      .find(params[:id])
+      
     membership = world.add_member(@user)
-
+    membership.save!
+    
     # TODO Move to an observer
     WorldMailer.membership_created(world.id, membership.id).deliver
     track 'added member'
 
-    respond_with membership, location: world_path(world)
+    respond_with membership, location: user_world_path(world.creator, world)
   end
 
 end
