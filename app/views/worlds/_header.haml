@@ -12,9 +12,12 @@
     %h1= world.name
 
     %p
-      by #{link_to world.creator.username, world.creator, rel: 'author'}.
+      by #{link_to world.creator.username, world.creator, rel: 'author'}
       - if world.clone?
-        Cloned from #{link_to_world "#{world.parent.creator.slug}/#{world.parent.slug}", world.parent}.
+        and cloned from
+        = link_to world.parent.creator.username, world.parent.creator
+        \/
+        = link_to world.parent.name, world.parent
 
   %ol.actions
     - if can? :edit, world
@@ -61,21 +64,3 @@
     %li.stat.members
       %span.val= number_with_delimiter world.memberships.size
       %span.label= pluralize_text world.memberships.size, 'member', 'members'
-
-
-  :javascript
-    $(document).ready(function(){
-      var world = new Mf.World(#{render('worlds/base', object: world, formats: [:json])})
-          workspace = new Mf.WorldRouter({world: world});
-
-      $('a[rel=push]').click(function(e) {
-        e.preventDefault();
-
-        var href = $(this).attr('href'),
-            route = href.replace(world.url(), '');
-
-        workspace.navigate(route, true);
-      });
-
-      Backbone.history.start({pushState: true, root: world.url()});
-    });

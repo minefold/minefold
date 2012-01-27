@@ -1,13 +1,13 @@
-@mixin btn($bg, $fg) {
-  color: $fg;
+@mixin btn($bg, $text, $hover: black) {
+  color: $text;
   background-color: $bg;
 
   display: block;
-  padding: (2*$line) $gutter;
+  padding: ($line * 2) $gutter;
   margin-top: 0; margin-bottom: 0;
 
   font: 600 15px $helvetica;
-  line-height: 4*$line;
+  line-height: $line * 4;
   text-decoration: none;
   text-align: left;
 
@@ -32,16 +32,10 @@
   }
 
   &:hover, &:focus {
-    color: $fg;
-    background-color: $blue;
+    color: $text;
+    background-color: $hover;
     text-decoration: none;
     cursor: pointer;
-  }
-
-  &:hover, &:focus, &:active {
-    .icon {
-      background-color: transparent;
-    }
   }
 
   &:disabled, &.disabled {
