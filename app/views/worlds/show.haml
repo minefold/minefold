@@ -1,5 +1,22 @@
-
 = render partial: 'worlds/header'
+
+:javascript
+  $(document).ready(function(){
+    var world = new Mf.World(#{render('worlds/base', object: world, formats: [:json])})
+        workspace = new Mf.WorldRouter({world: world});
+
+    $('a[rel=push]').click(function(e) {
+      e.preventDefault();
+
+      var href = $(this).attr('href'),
+          route = href.replace(world.url(), '');
+
+      workspace.navigate(route, true);
+    });
+
+    Backbone.history.start({pushState: true, root: world.url()});
+  });
+
 
 - if not world.map?
   - backside do
