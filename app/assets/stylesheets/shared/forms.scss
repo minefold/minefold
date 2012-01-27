@@ -16,26 +16,27 @@ form {
 
   fieldset {
     @include row;
-  }
 
-  section.submit {
-    @include row;
+    &.submit {
+      input[type=submit], button[type=reset] {
+        @include gridColumn;
+        padding: ($line * 2) $gutter;
+      }
 
-    input[type=submit], button[type=reset] {
-      @include gridColumn;
-      padding: ($line * 2) $gutter;
-    }
+      input[type=submit] {
+        @include btn($blue, white);
+      }
 
-    input[type=submit] {
-      @include btn($blue, white);
-    }
-
-    button[type=reset] {
-      @include btn(darken(white, 40%), white);
+      button[type=reset] {
+        @include btn(darken(white, 40%), white);
+      }
     }
   }
 
-  input[type=text], input[type=password], input[type=email], textarea {
+  input[type=text],
+  input[type=password],
+  input[type=email],
+  textarea {
     margin: 0;
     padding: ($line * 2) ($gutter / 2);
     font-size: 18px; line-height: $line * 4;
@@ -59,32 +60,6 @@ form {
     padding: $line $gutter;
     font-weight: bold;
   }
-
-
-//  .errors {
-//
-//    color: $red;
-//    line-height: 3*$line;
-//  }
-
-
-
-  //fieldset {
-  //    padding: (4*$line) $pad;
-  //
-  //    h3 {
-  //      color: black;
-  //      font-weight: 600;
-  //      line-height: 4*$line;
-  //      margin-bottom: 2*$line;
-  //    }
-  //
-  //    &.submit {
-  //      clear: both;
-  //      border: none;
-  //      margin-top: -1px;
-  //    }
-  //  }
 
   input[type=text],
   input[type=email],

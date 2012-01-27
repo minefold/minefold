@@ -1,19 +1,23 @@
-- title_and_masthead  'Hey friend, sign in.'
+- greetings = %w(friend brah bro buddy mate pal)
+- title  'Sign in'
+- masthead do
+  .row
+    %h1 Hey #{greetings.sample}, sign in
 
-#page
-  = form_for :user, as: :user, url: session_path(:user) do |f|
-    %fieldset
-      - # %h3= f.label :email_or_username, 'Email or username'
-      %p= f.text_field :email_or_username, placeholder: 'Email or username', tabindex: 1
+= form_for :user, as: :user, url: session_path(:user) do |f|
+  %fieldset
+    %section.username
+      = f.text_field :email_or_username, placeholder: 'Email or username', tabindex: 1
 
-      - # %h3= f.label :password
-      %p= f.password_field :password, placeholder: 'password', tabindex: 2
+    %section.password
+      = f.password_field :password, placeholder: 'password', tabindex: 2
 
-      %p
-        = link_to 'Forgotten your password?', new_user_password_path, class: 'forgot'
+  %fieldset.submit
+    = f.submit 'Sign in', tabindex: 4
+    .remember-me
+      = f.check_box :remember_me, tabindex: 3
+      = f.label :remember_me
 
-    %fieldset.submit
-      = f.submit 'Sign in', tabindex: 4
-      .remember-me
-        = f.check_box :remember_me, tabindex: 3
-        = f.label :remember_me
+  %section
+    = link_to new_user_password_path, class: 'forgot' do
+      Forgotten your password #{greetings.sample}?

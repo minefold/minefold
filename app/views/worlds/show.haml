@@ -2,13 +2,13 @@
 = render partial: 'worlds/header'
 
 - if not world.map?
-
-  .no-map
-    - if signed_in? and can? :play, world
-      Start playing in this world by connecting to
-      %strong= current_user.host
-      in Minecraft.
-    - else
-      Waiting for
-      %strong= world.creator.username
-      to play here…
+  - backside do
+    .no-map
+      - if signed_in? and can? :play, world
+        Start playing in this world by connecting to
+        %strong= current_user.host
+        in Minecraft.
+      - else
+        Waiting for
+        %strong= world.creator.username
+        to play here…

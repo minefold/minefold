@@ -22,10 +22,13 @@
   }
 
   #masthead {
-    overflow: auto;
+    @include container;
+    padding-top: $line * 2;
+    padding-bottom: $line * 2;
+    background-color: white;
   }
 
-  .no-map {
+  #backside .no-map {
     position: absolute; top: 0; bottom: 0; left: 0; right: 0;
     background: darken(white, 5%);
     padding-top: 36*$line;
