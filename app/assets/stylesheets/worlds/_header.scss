@@ -5,12 +5,16 @@
     right: 0; left: 0;
   }
 
+  // Move the map and masthead down
+  #masthead, #backside {
+    top: $line * 8;
+  }
+
   header {
     top: 0;
   }
 
   #masthead {
-    top: $line * 12;
     padding: $gutter;
 
     .container {
@@ -30,12 +34,12 @@
     ol.actions {
       li {
         float: right;
+        margin: $line 0;
         margin-left: $gutter;
 
         form input[type=submit], a {
           @include btn($blue, white, $green);
-            padding: $line $gutter;
-            margin: ($line * 2) 0;
+          padding: $line $gutter;
         }
 
         a img, a img {
@@ -47,8 +51,7 @@
     ul.stats {
       li {
         float: right;
-        font-size: 12px; line-height: $line * 2;
-        margin: $line 0;
+        font-size: 12px; line-height: $line * 4;
         margin-left: $gutter;
 
         .val {

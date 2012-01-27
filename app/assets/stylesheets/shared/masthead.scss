@@ -13,13 +13,12 @@
   h2 {
     font-weight: 400;
     font-size: 18px;
-    line-height: $line * 2;
+    line-height: $line * 4;
     color: rgba(black, 0.2);
   }
 
   p {
-    margin-top: $line * 2;
-    margin-bottom: $line * 2;
+    line-height: $line * 4;
   }
 
   a {
