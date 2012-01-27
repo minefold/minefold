@@ -2,24 +2,23 @@
 - track 'visited homepage'
 
 - masthead do
-  .row
-    %h1 Play Minecraft with your friends the easy way
-    %h2 No more server mumbojumbo
+  %h1 Play Minecraft with your friends the easy way
+  %h2 No more server mumbojumbo
 
-    = link_to new_user_path, class: 'btn' do
-      Start playing now!
-      .free
-        = pluralize User::FREE_HOURS, 'hour', 'hours'
-        free every month
+  = link_to new_user_path, class: 'btn' do
+    Start playing now!
+    .free
+      = pluralize User::FREE_HOURS, 'hour', 'hours'
+      free every month
 
 .row
   .feature
     %h2 Zen Simplicity
-    %p We do it all for you. No servers, RAM, Java or SSH. Sign up and just start playing Minecraft in <strong>less than 60 seconds</strong>, young grasshopper.
+    %p We do it all for you, grasshopper. No servers, RAM, Java or SSH. Sign up & start playing Minecraft in <strong>less than 30 seconds</strong>.
 
   .feature
-    %h2 Buy Time Individually
-    %p <strong>Don't pay for Frank</strong> who faked a sickie and played for a week straight. Buy only enough time to suit <em>your</em> habits, not Frank's habit.
+    %h2 Pay Individually
+    %p <strong>Don't pay for Frank</strong> who faked a sickie and played for a week straight. Only buy enough to suit <em>your</em> habit, not Frank's habit.
 
   .feature
     %h2 Beautiful maps

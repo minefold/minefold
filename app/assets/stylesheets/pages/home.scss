@@ -1,6 +1,7 @@
 #pages-home {
   #masthead {
-    margin-bottom: $line * 8;
+    padding-top: $line * 12;
+    padding-bottom: $line * 12;
 
     h1 {
       font-weight: 900;
@@ -8,13 +9,14 @@
     }
 
     h2 {
-      padding-bottom: $line * 8;
+      padding-bottom: $line * 12;
       font-size: 24px;
     }
 
     a.btn {
       @include btn($green, white);
-      @include makeColumn(3);
+      @include box-sizing(border-box);
+      @include columns(3);
 
       clear: both;
 

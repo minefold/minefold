@@ -23,13 +23,20 @@ header {
       color: black;
       text-decoration: none;
 
+      em {
+
+          color: rgba(black, 0.4);
+        font-size: 12px; line-height: $line * 2;
+      }
+
       &:hover {
         color: white;
         background-color: $green;
-      }
 
-      em {
-        display: none;
+        em {
+          @include inline-block;
+          color: rgba(white, 0.4);
+        }
       }
     }
   }

@@ -1,6 +1,8 @@
 //= require reset
 //= require_self
 
+@charset "utf-8";
+
 @import 'bourbon';
 
 @import 'vars';
@@ -16,6 +18,7 @@
 @import 'shared/masthead';
 @import 'shared/page';
 @import 'shared/footer';
+@import 'shared/pro';
 
 
 @import 'accounts/dashboard';
@@ -35,7 +38,7 @@
 
 @import 'pages/home';
 @import 'pages/about';
-@import 'pages/pricing';
+@import 'pages/pro';
 
 @import 'sessions/new';
 
