@@ -6,6 +6,8 @@
   %p
     or #{link_to 'sign up for a new account', new_user_path}.
 
+    %section.password
+      = f.password_field :password, placeholder: 'password', tabindex: 2
 
 = form_for :user, as: :user, url: session_path(:user) do |f|
   %fieldset

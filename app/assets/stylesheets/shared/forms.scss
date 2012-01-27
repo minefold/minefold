@@ -15,10 +15,9 @@ form {
   }
 
   fieldset {
+    @include row;
 
     &.submit {
-      @include row;
-
       input[type=submit], button[type=reset] {
         @include gridColumn;
         padding: ($line * 2) $gutter;
@@ -31,10 +30,6 @@ form {
       button[type=reset] {
         @include btn(darken(white, 40%), white);
       }
-    }
-
-    button[type=reset] {
-      @include btn(darken(white, 40%), white);
     }
   }
 
