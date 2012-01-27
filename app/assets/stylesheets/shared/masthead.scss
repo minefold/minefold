@@ -2,7 +2,6 @@
   padding: ($line * 8) 0;
 
   h1, h2, p {
-    @include gridColumn;
     clear: both;
   }
 
@@ -12,10 +11,10 @@
   }
 
   h2 {
-    font-weight: 200;
+    font-weight: 400;
     font-size: 18px;
     line-height: 6*$line;
-    color: rgba(black, 0.4);
+    color: rgba(black, 0.2);
   }
 
   p {

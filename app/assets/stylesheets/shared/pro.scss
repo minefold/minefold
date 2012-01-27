@@ -1,0 +1,8 @@
+span.pro {
+  @include inline-block;
+
+  background: $red;
+  color: rgba(white, 0.9);
+  font-weight: 900;
+  text-shadow: 0 -1px 0 rgba(black, 0.2);
+}
