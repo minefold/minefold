@@ -71,7 +71,7 @@ class World
   LEVEL_TYPES = ['default', 'flat']
   DIFFICULTIES = [:peaceful, :easy, :normal, :hard]
 
-  field :seed, type: String, default: ''
+  field :seed, type: String, default: -> { Time.now.to_i.to_s }
 
   field :game_mode, type: Integer, default: GAME_MODES.index(:survival)
   validates_numericality_of :game_mode,
