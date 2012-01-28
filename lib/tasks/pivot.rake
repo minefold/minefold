@@ -31,7 +31,7 @@ namespace :db do
     desc "Add pivot to the database without running it"
     task :fake, [:pivot] => :environment do |t, args|
       pivot = args[:pivot]
-      raise "Unknown pivot #{pivot_to_fake}" unless File.exists? pivot
+      raise "Unknown pivot #{pivot}" unless File.exists? pivot
     
       pivoter.record_run pivot
     end

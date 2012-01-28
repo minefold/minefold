@@ -2,7 +2,7 @@ Minefold::Application.configure do
   StatsD.mode = :production
   
   config.action_mailer.default_url_options = {
-    host: 'www.minefold.com',
+    host: 'minefold.com',
     protocol: 'https'
   }
 
@@ -15,6 +15,7 @@ Minefold::Application.configure do
     password:       ENV['MAILGUN_SMTP_PASSWORD'],
     domain:         ENV['MAILGUN_DOMAIN']
   }
+  ActionMailer::Base.default :from => 'Minefold <team@minefold.com>'
   
   config.middleware.use Rack::WWW, www: false
 

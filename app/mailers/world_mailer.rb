@@ -4,8 +4,6 @@ class WorldMailer < ActionMailer::Base
   include WorldHelper
   helper :world
 
-  default from: 'Minefold <team@minefold.com>'
-
   def membership_created(world_id, membership_id)
     @world = World.find(world_id)
     @creator = @world.creator

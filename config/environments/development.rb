@@ -18,6 +18,7 @@ Minefold::Application.configure do
   }
   
   config.action_mailer.delivery_method = :letter_opener
+  ActionMailer::Base.default :from => 'Minefold <team@dev.minefold.com>'
   
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
