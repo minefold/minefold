@@ -5,32 +5,39 @@ form {
     display: block;
   }
 
+  input[type=checkbox],
+  input[type=radio] {
+    float: left;
+    height: $line * 4;
+    background: $red;
+    clear: left;
+    margin-top: 2px;
+  }
+
   input[type=checkbox] + label,
   input[type=radio] + label {
-    display: inline;
+    display: block;
+    padding-left: $gutter;
   }
 
   fieldset, .errors {
     margin-bottom: $line * 8;
   }
 
-  fieldset {
+  fieldset.submit {
+    @include row;
 
-    &.submit {
-      @include row;
+    input[type=submit], button[type=reset] {
+      @include gridColumn;
+      padding: ($line * 2) $gutter;
+    }
 
-      input[type=submit], button[type=reset] {
-        @include gridColumn;
-        padding: ($line * 2) $gutter;
-      }
+    input[type=submit] {
+      @include btn($blue, white, $green);
+    }
 
-      input[type=submit] {
-        @include btn($blue, white);
-      }
-
-      button[type=reset] {
-        @include btn(darken(white, 40%), white);
-      }
+    button[type=reset] {
+      @include btn(darken(white, 40%), white, darken(white, 30%));
     }
   }
 
@@ -39,6 +46,8 @@ form {
   input[type=email],
   textarea {
     margin: 0;
+    margin-bottom: $line * 2;
+    width: 100%;
     padding: ($line * 2) ($gutter / 2);
     font-size: 18px; line-height: $line * 4;
     @include box-sizing(border-box);
@@ -61,14 +70,4 @@ form {
     padding: $line $gutter;
     font-weight: bold;
   }
-
-  input[type=text],
-  input[type=email],
-  input[type=password],
-  textarea {
-    width: 100%;
-    margin: 0; margin-bottom: 2*$line;
-  }
-
-
 }
