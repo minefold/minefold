@@ -12,7 +12,7 @@
 
   %article
     %ul.worlds
-      - current_user.worlds.sort_by {|w| w.creator.username.downcase + w.name.downcase }.each do |world|
+      - current_user.worlds.sort_by {|w| (w.creator.username + w.name).downcase }.each do |world|
         %li{class: ('active' if current_user.current_world?(world))}
           .name
             = link_to world.creator.username, world.creator, class: 'creator'

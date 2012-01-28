@@ -1,0 +1,28 @@
+form#new-world, form#edit-world {
+
+  .name {
+    @include columns(6);
+  }
+
+  .world {
+    @include row;
+  }
+
+  .level-type, .upload {
+    @include makeColumn(6);
+  }
+
+  .upload {
+    @include box-sizing(border-box);
+    border-left: 1px solid darken(white, 5%);
+    padding-left: $gutter;
+
+    input[type=file] {
+      @include btn($blue, white, $green);
+    }
+  }
+
+  .mode, .difficulty, .gameplay {
+    @include makeColumn(4);
+  }
+}
