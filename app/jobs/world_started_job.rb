@@ -3,7 +3,7 @@ class WorldStartedJob
 
   def self.perform world_id
     world   = World.find(world_id)
-    online_players  = world.current_players
+    online_players  = world.players
     offline_players = world.offline_players
     
     puts "world started:#{world.name}  whitelisted:#{world.player_ids.size}  online: #{online_players.size}  offline: #{offline_players.size}"
