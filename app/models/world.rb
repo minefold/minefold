@@ -145,11 +145,11 @@ class World
   # Online players
 
   def players
-    User.find(current_player_ids)
+    User.find(player_ids)
   end
 
   def offline_players
-    User.find(memberships.map {|m| m.user_id} - current_player_ids)
+    User.find(memberships.map(&:user_id) - player_ids)
   end
 
 
@@ -240,7 +240,7 @@ class World
     "#{collection.name.downcase}:#{id}"
   end
 
-  def current_player_ids
+  def player_ids
     REDIS.smembers("#{redis_key}:connected_players").map {|id| BSON::ObjectId(id)}
   end
 

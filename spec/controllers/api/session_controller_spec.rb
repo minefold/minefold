@@ -32,7 +32,7 @@
 #           User.stub(:by_email_or_username) { [user] }
 #           user.current_world = world
 #
-#           user.current_world.stub(:current_player_ids) { [user.id] }
+#           user.current_world.stub(:player_ids) { [user.id] }
 #
 #           get :show
 #           body = JSON.parse(response.body)
