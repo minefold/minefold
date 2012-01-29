@@ -2,13 +2,6 @@ Hi <%= @user.username %>,
 
 <%= @world.players.collect {|p| p.username}.to_sentence(:last_word_connector => ' and ') %> just started playing in <%= @world.name %>.
 
-<% if @recent_events.any? %>
-Here's what's been happening in <%= @world.name %> recently:
-<% @events.each do |event| %>
-  - <%= item.source.username %> said: “<%= item.text %>” (<%= time_ago_in_words item.created_at %> ago)
-<% end %>
-<% end %>
-
 Visit <%= user_world_url(@world.creator, @world) %> to join in!
 
 <%= render partial: 'shared/email_sig' %>

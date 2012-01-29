@@ -38,8 +38,6 @@ class WorldMailer < ActionMailer::Base
     @world  = World.find(world_id)
     @user = User.find(user_id)
 
-    @recent_events = @world.events.where(_type: 'Chat').limit(5)
-
     mail to: @user.email,
          subject: "Your friends are playing on Minefold in #{@world.name}"
   end
