@@ -1,28 +1,50 @@
 form#new-world, form#edit-world {
 
   .name {
-    @include columns(6);
-  }
-
-  .world {
-    @include row;
-  }
-
-  .level-type, .upload {
-    @include makeColumn(6);
+    @include columns($ncols / 2);
   }
 
   .upload {
-    @include box-sizing(border-box);
-    border-left: 1px solid darken(white, 5%);
-    padding-left: $gutter;
+    @include row;
 
-    input[type=file] {
+    section {
+      @include makeColumn($ncols / 2);
+    }
+
+    input[type=file], #world_path {
       @include btn($blue, white, $green);
+    }
+
+    ol {
+      list-style-type: decimal;
+      color: rgba(black, 0.4);
+      font-size: 12px; line-height: $line * 3;
+
+      p {
+        margin-bottom: $line * 2;
+      }
+
+      code {
+        color: rgba(black, 0.8);
+        font-size: 90%;
+      }
     }
   }
 
-  .mode, .difficulty, .gameplay {
-    @include makeColumn(4);
+  .mode, .level-type {
+    @include row;
+    clear: both;
+
+    h3 {
+      margin-left: $gutter;
+    }
+
+    section {
+      @include makeColumn($ncols / 4);
+    }
+  }
+
+  .difficulty, .gameplay {
+    @include makeColumn($ncols / 4);
   }
 }

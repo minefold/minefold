@@ -15,23 +15,7 @@
 
   cursor: pointer;
 
-  .icon {
-    background-color: darken($bg, 10%);
-    display: block;
-    float: left;
-
-    padding: $line $gutter;
-    margin: (-$line) $gutter (-$line) (-$gutter);
-
-    @include border-radius($radius 0 0 $radius);
-
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 18px;
-    height: 24px;
-  }
-
-  &:hover, &:focus {
+  &:hover, &.hover, &:focus, &.focus {
     color: $text;
     background-color: $hover;
     text-decoration: none;
@@ -46,11 +30,5 @@
     text-shadow: none;
 
     cursor: default;
-
-    .icon {
-      background-color: darken(white, 10%);
-      cursor: default;
-    }
   }
-
 }

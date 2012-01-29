@@ -1,10 +1,8 @@
-- title "#{world.name} settings"
+- title_and_masthead "#{world.name} settings"
 - masthead do
-  %h1 #{world.name} settings
   %p
     = link_to user_world_path(world.creator, world) do
-      ← back to #{world.name}
+      ← Back to #{world.name}
 
-#page
-  = form_for world, url: user_world_path(world.creator, world) do |f|
-    = render partial: 'form', object: f
+= form_for world, url: user_world_path(world.creator, world), html: {id: 'edit-world'} do |f|
+  = render partial: 'form', object: f

@@ -1,6 +1,18 @@
 form {
   @include clearfix;
 
+  h3 {
+    display: block;
+    margin: $line 0;
+    color: black;
+    line-height: $line * 4;
+  }
+
+  .optional {
+    color: darken(white, 40%);
+    font-weight: 400;
+  }
+
   label {
     display: block;
   }
@@ -24,20 +36,23 @@ form {
     margin-bottom: $line * 8;
   }
 
-  fieldset.submit {
-    @include row;
+  fieldset {
 
-    input[type=submit], button[type=reset] {
-      @include gridColumn;
-      padding: ($line * 2) $gutter;
-    }
+    &.submit {
+      @include row;
 
-    input[type=submit] {
-      @include btn($blue, white, $green);
-    }
+      input[type=submit], button[type=reset] {
+        @include gridColumn;
+        padding: ($line * 2) $gutter;
+      }
 
-    button[type=reset] {
-      @include btn(darken(white, 40%), white, darken(white, 30%));
+      input[type=submit] {
+        @include btn($blue, white, $green);
+      }
+
+      button[type=reset] {
+        @include btn(darken(white, 40%), white, darken(white, 30%));
+      }
     }
   }
 

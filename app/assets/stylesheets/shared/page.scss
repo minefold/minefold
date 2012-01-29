@@ -29,11 +29,18 @@
     color: $blue;
   }
 
-  h3 {
-    font-size: 14px;
-    font-weight: 600;
-    color: black;
+  h3, h4 {
     margin: $line 0;
+    color: black;
+    font-size: 14px; line-height: $line * 4;
+  }
+
+  h3 {
+    font-weight: 600;
+  }
+
+  h4 {
+    color: darken(white, 60%);
   }
 
   h1, h2, p, ul, ol, pre, .note, figure {
