@@ -32,7 +32,16 @@ describe WorldsController do
     end
 
     context 'signed in as a player' do
-      # signin_as { subject.creator }
+      signin_as { world.creator }
+
+      context "who hasn't played before" do
+        before {
+          get :show, user_id: world.creator.slug, id: world.slug
+        }
+        subject { response }
+
+        its(:body) { should include(current_user.host) }
+      end
     end
   end
 

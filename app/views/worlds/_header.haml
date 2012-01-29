@@ -8,6 +8,17 @@
     = javascript_include_tag '//maps.google.com/maps/api/js?sensor=false'
 
 - masthead do
+  - # TODO: Potential confusion: current_user.current_world == world?
+  - if signed_in? and can?(:play, world) and not current_user.played?
+    .instructions
+      Connect to
+      %strong= current_user.host
+      in Minecraft to play here.
+
+      = link_to help_page_path(anchor: 'connecting') do
+        Don't know how to connect?
+
+
   .attribution
     %h1= world.name
 

@@ -21,6 +21,22 @@
       @include row;
     }
 
+    // TODO Hacky CSS
+    .instructions {
+      width: 100%;
+      margin: (-2 * $line) (-$gutter) ($line * 2) 0;
+      padding: $line $gutter;
+
+      background: darken(white, 5%);
+      color: rgba(black, 0.4);
+
+      line-height: $line * 4;
+
+      strong {
+        color: black;
+      }
+    }
+
     .attribution {
       @include makeColumn($ncols / 2);
     }

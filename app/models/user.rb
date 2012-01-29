@@ -89,6 +89,13 @@ class User
   validates_numericality_of :minutes_played, greater_than_or_equal_to: 0
 
 
+  field :last_played_at, type: DateTime
+
+  def played?
+    not last_played_at.nil?
+  end
+
+
   field :notifications, type: Hash
   field :last_world_started_mail_sent_at, type: DateTime
 
@@ -192,10 +199,6 @@ class User
       c = rand(36 ** REFERRAL_CODE_LENGTH).to_s(36)
     end while self.where(referral_code: c).exists?
     c
-  end
-
-  def played?
-    true
   end
 
   def member?(world)
