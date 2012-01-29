@@ -17,7 +17,7 @@ class Worlds::MembershipRequestsController < ApplicationController
   def create
     authorize! :read, world
 
-    if membership_request.new_record? and membership_request.save
+    if membership_request.new_record? and world.save!
       WorldMailer
         .membership_request_created(world.id, membership_request.id)
         .deliver

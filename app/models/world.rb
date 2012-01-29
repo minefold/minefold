@@ -55,7 +55,7 @@ class World
   # Peeps
 
   embeds_many :memberships, cascade_callbacks: true
-  embeds_many :membership_requests do
+  embeds_many :membership_requests, cascade_callbacks: true do
     def include_user?(user)
       where(user_id: user.id).exists?
     end
