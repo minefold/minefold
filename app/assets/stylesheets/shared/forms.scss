@@ -32,6 +32,10 @@ form {
         @include btn(darken(white, 40%), white);
       }
     }
+
+    button[type=reset] {
+      @include btn(darken(white, 40%), white);
+    }
   }
 
   input[type=text],
