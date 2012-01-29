@@ -27,6 +27,17 @@ describe Worlds::MembershipsController do
       end
 
     end
+    
+    describe '#search' do
+      let(:rando) { Fabricate :user }
+      
+      it "should return user id" do
+        get :search, user_id: world.creator.slug, world_id: world.slug, username: rando.username, format: :json
+        
+        body = JSON.parse(response.body)
+        body['id'].should == rando.id.to_s
+      end
+    end
   end
 
 end

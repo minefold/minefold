@@ -13,8 +13,8 @@ class Worlds::MembershipsController < ApplicationController
     authorize! :operate, world
 
     @user = User
-      .potential_members_for(world)
       .by_username(params[:username])
+      .potential_members_for(world)
       .first
 
     respond_with @user
