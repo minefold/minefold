@@ -16,7 +16,7 @@ describe UsersController do
     }
 
     subject { response }
-    it { should redirect_to(new_world_path) }
+    it { should redirect_to(user_root_path) }
 
     it "creates a user" do
       User.by_username('notch').should exist
