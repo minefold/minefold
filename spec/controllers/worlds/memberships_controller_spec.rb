@@ -29,13 +29,23 @@ describe Worlds::MembershipsController do
     end
     
     describe '#search' do
-      let(:rando) { Fabricate :user }
-      
-      it "should return user id" do
-        get :search, user_id: world.creator.slug, world_id: world.slug, username: rando.username, format: :json
+      context 'searching potential user' do
+        let(:potential_user) { Fabricate :user }
         
-        body = JSON.parse(response.body)
-        body['id'].should == rando.id.to_s
+        it "should return user id" do
+          get :search, user_id: world.creator.slug, world_id: world.slug, username: potential_user.username, format: :json
+        
+          body = JSON.parse response.body
+          body['id'].should == potential_user.id.to_s
+        end
+      end
+      
+      context 'searching user already in list' do
+        it "should return empty" do
+          get :search, user_id: world.creator.slug, world_id: world.slug, username: world.creator.username, format: :json
+           
+          response.body.should == '{}'
+        end
       end
     end
   end

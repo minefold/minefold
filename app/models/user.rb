@@ -108,7 +108,7 @@ class User
 
 
   scope :potential_members_for, ->(world) {
-    not_in(id: world.memberships.map {|p| p.user_id})
+    not_in(_id: world.memberships.map {|p| p.user_id})
   }
 
 
