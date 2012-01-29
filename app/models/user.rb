@@ -127,7 +127,7 @@ class User
 # Validations
 
   def reserved_usernames
-    if MinefoldBlacklist.usernames.include?(username.downcase)
+    if UsernameBlacklist.include? safe_username
       errors.add :username, 'is reserved'
     end
   end
