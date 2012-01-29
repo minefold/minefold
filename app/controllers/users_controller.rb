@@ -1,6 +1,4 @@
-class UsersController < ApplicationController
-  include Devise::Controllers::InternalHelpers
-
+class UsersController < Devise::RegistrationsController
   prepend_before_filter :require_no_authentication, :only => [:new, :create]
   prepend_before_filter :authenticate_user!, :only => [:dashboard, :edit, :update]
 

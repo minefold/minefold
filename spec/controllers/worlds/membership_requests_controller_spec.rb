@@ -11,7 +11,7 @@ describe Worlds::MembershipRequestsController do
 
       subject { response }
 
-      # it { should redirect_to(new_user_session_path) }
+      it { should redirect_to(new_user_session_path) }
     end
 
     context 'signed in' do

@@ -11,7 +11,7 @@ class User
   REFERRAL_CODE_LENGTH = 6
   REFERRAL_HOURS = 2
 
-  field :email, type: String
+  field :email, type: String, null: true
   index :email, unique: true
   scope :by_email, ->(email) {
     where(email: sanitize_email(email))
@@ -27,6 +27,11 @@ class User
   validates_length_of :safe_username, within: 1..16
   index :safe_username, unique: true
 
+  def username=(str)
+    super(str.strip)
+    self.safe_username = self.class.sanitize_username(str)
+  end
+
   scope :by_username, ->(username) {
     where(safe_username: sanitize_username(username))
   }
@@ -38,6 +43,38 @@ class User
       {email: sanitize_email(str)}
     )
   }
+
+  # Devise fields
+
+  field :encrypted_password, type: String, null: true
+
+  field :reset_password_token, type: String
+  field :reset_password_sent_at, type: Time
+
+  field :remember_ceated_at, type: Time
+
+  field :sign_in_count, type: Integer
+  field :current_sign_in_at, type: Time
+  field :last_sign_in_at, type: Time
+  field :current_sign_in_ip, type: String
+  field :last_sign_in_ip, type: String
+
+  field :confirmation_token, type: String
+  field :confirmed_at, type: Time
+  field :confirmation_sent_at, type: Time
+  field :unconfirmed_email, type: String # Only if using reconfirmable
+
+  field :authentication_token, type: String
+
+  devise :registerable,
+         :database_authenticatable,
+         :confirmable,
+         :recoverable,
+         :rememberable,
+         :trackable,
+         :validatable,
+         :token_authenticatable
+
 
   field :admin, type: Boolean, default: false
 
@@ -70,7 +107,7 @@ class User
 
 
   scope :potential_members_for, ->(world) {
-    not_in(_id: world.memberships.map {|p| p.user_id})
+    not_in(id: world.memberships.map {|p| p.user_id})
   }
 
 
@@ -123,22 +160,6 @@ class User
 
   def hours_left
     credits / User::BILLING_PERIOD
-  end
-
-
-# Authentication
-
-  devise :registerable,
-         :database_authenticatable,
-         :confirmable,
-         :recoverable,
-         :rememberable,
-         :trackable,
-         :validatable
-
-  def username=(str)
-    super(str)
-    self.safe_username = self.class.sanitize_username(str)
   end
 
 

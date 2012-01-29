@@ -8,6 +8,10 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 RSpec.configure do |config|
   config.mock_with :rspec
 
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
   config.include Mongoid::Matchers
   config.include Devise::TestHelpers, type: :controller
   config.extend ControllerMacros, type: :controller
@@ -16,15 +20,11 @@ RSpec.configure do |config|
     Mongoid::IdentityMap.clear
   end
 
-  config.before(:each) do
-    DatabaseCleaner.start
-  end
+  Fog.mock!
 
   config.after(:each) do
     DatabaseCleaner.clean
   end
-
-  Fog.mock!
 end
 
 def basic_auth(username, password)

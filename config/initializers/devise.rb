@@ -13,6 +13,8 @@ Devise.setup do |config|
   # available as additional gems.
   require 'devise/orm/mongoid'
 
+  config.apply_schema = false
+
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
   # just :email. You can configure it to use [:username, :subdomain], so for
@@ -72,9 +74,7 @@ Devise.setup do |config|
   # You can use this to let your user access some features of your application
   # without confirming the account, but blocking it after a certain period
   # (ie 2 days).
-  config.confirm_within = 2.weeks
-  # TODO Upgrade to Devise 2.0
-  # config.allow_unconfirmed_access_for = 2.weeks
+  config.allow_unconfirmed_access_for = 2.weeks
 
   # Defines which key will be used when confirming an account
   # config.confirmation_keys = [ :email ]
@@ -82,9 +82,6 @@ Devise.setup do |config|
   # ==> Configuration for :rememberable
   # The time the user will be remembered without asking for credentials again.
   config.remember_for = 12.months
-
-  # If true, a valid remember token can be re-used between multiple browsers.
-  config.remember_across_browsers = true
 
   # If true, extends the user's remember period when remembered via cookie.
   # config.extend_remember_period = false

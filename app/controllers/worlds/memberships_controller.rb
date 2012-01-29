@@ -26,10 +26,10 @@ class Worlds::MembershipsController < ApplicationController
     @user = User
       .potential_members_for(world)
       .find(params[:id])
-      
+
     membership = world.add_member(@user)
     membership.save!
-    
+
     # TODO Move to an observer
     WorldMailer.membership_created(world.id, membership.id).deliver
     track 'added member'

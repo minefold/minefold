@@ -29,6 +29,9 @@ Minefold::Application.configure do
   # Compress JavaScripts and CSS
   config.assets.compress = true
 
+  # Fix for Devise
+  config.assets.initialize_on_precompile = false
+
   # Compress both stylesheets and JavaScripts
   # config.assets.js_compressor  = :uglifier
 

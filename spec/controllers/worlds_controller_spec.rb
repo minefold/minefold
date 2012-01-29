@@ -37,6 +37,7 @@ describe WorldsController do
   end
 
   describe '#join' do
+    let(:member) { Fabricate(:user) }
     let(:world) { Fabricate(:world) }
 
     context 'public' do
@@ -45,11 +46,24 @@ describe WorldsController do
     end
 
     context 'member' do
-      signin_as { Fabricate(:user).tap {|u| world.add_member(u) } }
+      before {
+        @request.env['devise.mapping'] = Devise.mappings[:user]
+
+        world.add_member(member)
+        world.save!
+
+        sign_in member
+
+        post :join, user_id: world.creator.slug, id: world.slug
+      }
+
+      subject { response }
+
+      it { should redirect_to(user_world_path(world.creator, world)) }
 
       it "sets the user's current world" do
-        post :join, user_id: world.creator.slug, id: world.slug
-        current_user.current_world.should == world
+        member.reload
+        member.current_world.should == world
       end
     end
 

@@ -9,7 +9,7 @@ gem 'sprockets'
 gem 'rack-www'
 
 # ORM
-gem 'mongoid', '2.4.0'
+gem 'mongoid'
 gem 'bson_ext'
 gem 'mongoid_slug'
 

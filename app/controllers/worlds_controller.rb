@@ -1,7 +1,7 @@
 class WorldsController < ApplicationController
   respond_to :html, :json
 
-  prepend_before_filter :authenticate_user!, except: [:show, :map]
+  prepend_before_filter :authenticate_user!, except: [:show]
   before_filter :set_invite_code, :only => [:show, :map]
 
   expose(:creator) { User.find_by_slug!(params[:user_id]) }
@@ -54,7 +54,7 @@ class WorldsController < ApplicationController
     authorize! :play, world
 
     current_user.current_world = world
-    current_user.save
+    current_user.save!
 
     track 'joined world'
 

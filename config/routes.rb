@@ -17,7 +17,7 @@ Minefold::Application.routes.draw do
   end
 
   # Authentication
-  devise_for :users, :skip => [:sessions, :passwords, :registrations] do
+  devise_scope :user do
     get    '/signin' => 'sessions#new', :as => :new_user_session
     post   '/signin' => 'sessions#create', :as => :user_session
     delete '/signout' => 'sessions#destroy', :as => :destroy_user_session
@@ -39,6 +39,8 @@ Minefold::Application.routes.draw do
       get :notifications
     end
   end
+
+  devise_for :user, :skip => [:sessions, :passwords, :registrations, :confirmations]
 
   controller :stripe, :path => :customer, :as => :customer do
     get :new
@@ -63,14 +65,14 @@ Minefold::Application.routes.draw do
     end
   end
 
-  as :user do
+  devise_scope :user do
     resources :users, :path => '/', :only => [:show] do
       resources :worlds, :path => '/', :except => [:index], :path_names => {:edit => 'settings'} do
         member do
           put :join
           put :clone
         end
-        
+
         scope :module => :worlds do
           resources :events, :only => [:index, :create]
           resources :members, :controller => :memberships, :only => [:index, :create, :destroy] do

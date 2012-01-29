@@ -2,16 +2,24 @@ development:
   host: localhost
   database: minefold
   identity_map_enabled: true
+  persist_in_safe_mode: true
+  max_retries_on_connection_failure: 3
 
 test:
   host: localhost
   database: minefold_test
   identity_map_enabled: true
+  persist_in_safe_mode: true
+  max_retries_on_connection_failure: 3
 
 staging:
-  uri: <%= ENV['MONGOLAB_URI'] || 'mongodb://heroku_app650862:96gg63iarmqm0tuq46knv4a8mb@dbh18.mongolab.com:27187/heroku_app650862' %>
+  uri: <%= ENV['MONGOLAB_URI'] || 'mongodb://heroku_app650848:k0ad1jn7a7o3m8rajedm4tpk3u@dbh54.mongolab.com:27547/heroku_app650848' %>
   identity_map_enabled: true
+  persist_in_safe_mode: true
+  max_retries_on_connection_failure: 3
 
 production:
   uri: <%= ENV['MONGOLAB_URI'] || 'mongodb://heroku_app650862:96gg63iarmqm0tuq46knv4a8mb@dbh18.mongolab.com:27187/heroku_app650862' %>
   identity_map_enabled: true
+  persist_in_safe_mode: true
+  max_retries_on_connection_failure: 3
