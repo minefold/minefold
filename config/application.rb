@@ -55,5 +55,7 @@ module Minefold
     config.assets.version = '1.0'
 
     config.assets.paths << Rails.root.join('app', 'assets', 'flash')
+    
+    config.mongoid.observers = :user_observer
   end
 end

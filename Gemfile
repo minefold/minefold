@@ -50,6 +50,9 @@ gem 'rpm_contrib'
 gem 'newrelic_rpm'
 gem 'em-mixpanel'
 
+# Mail
+gem 'createsend'
+
 group :development, :test do
   gem 'letter_opener'
   gem 'heroku'

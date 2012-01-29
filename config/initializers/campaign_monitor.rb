@@ -1,0 +1,1 @@
+CreateSend.api_key ENV['CAMPAIGN_MONITOR_API_KEY']
