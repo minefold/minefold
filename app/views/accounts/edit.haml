@@ -11,8 +11,6 @@
         = f.text_field :username, maxlength: 16
         = error_messages_for(f.object, :username)
 
-        = render partial: 'users/check_username'
-
       %fieldset.email
         %h3= f.label :email
 
