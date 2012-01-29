@@ -39,6 +39,12 @@ describe User do
       subject.username = ' FooBarBaz '
       subject.safe_username.should == 'foobarbaz'
     end
+    
+    it "doesn't allow reserved usernames" do
+      bad_user = Fabricate.build :user, username: 'Admin'
+      bad_user.should_not be_valid
+      bad_user.errors.first.should == [:username, 'is reserved']
+    end
   end
 
   describe "referrals" do

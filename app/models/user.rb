@@ -4,7 +4,7 @@ class User
   include Mongoid::Timestamps
   include Mongoid::Slug
   include Mongoid::Paranoia
-
+  
   BILLING_PERIOD = 1.minute
   FREE_HOURS  = 10
 
@@ -21,6 +21,7 @@ class User
   slug :username, index: true
   validates_presence_of :username
   validates_length_of :safe_username, within: 1..16
+  validate :reserved_usernames
 
   field :safe_username, type: String
   validates_uniqueness_of :safe_username, case_sensitive: false
@@ -44,7 +45,7 @@ class User
     )
   }
 
-  # Devise fields
+# Devise fields
 
   field :encrypted_password, type: String, null: true
 
@@ -111,7 +112,7 @@ class User
   }
 
 
-  # Security
+# Security
 
   attr_accessible :email,
                   :username,
@@ -123,7 +124,14 @@ class User
                   :email_or_username,
                   :remember_me
 
+# Validations
 
+  def reserved_usernames
+    if MinefoldBlacklist.usernames.include?(username.downcase)
+      errors.add :username, 'is reserved'
+    end
+  end
+    
 # Credits
 
   # Kicks off the audit trail for any credits the user starts off with
