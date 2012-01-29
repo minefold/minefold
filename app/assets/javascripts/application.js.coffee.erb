@@ -1,12 +1,10 @@
-# Copyright 2011 Mutli Inc.
+# Copyright 2011 Mutli Corp.
 
 #= require json2
 #= require jquery
 #= require jquery_ujs
 #= require underscore
 #= require backbone
-#= require jquery.timeago
-#= require jquery.s3upload
 
 #= require_self
 #= require_tree ./models
@@ -14,13 +12,12 @@
 #= require_tree ./views
 #= require_tree ./routers
 
-window.Mf = {}
+window.Mf = {
+  pusher: new Pusher(<%= Pusher.key.to_json %>, encrypted: true)
+}
 
 window.delay = (ms, fn) -> setTimeout(fn, ms)
 window.every = (ms, fn) -> setInterval(fn, ms)
 
-jQuery ->
-  $('time.timeago').timeago()
-  
 jQuery.fn.disable = -> $(@).addClass('disabled').attr('disabled', 'disabled')
 jQuery.fn.enable  = -> $(@).removeClass('disabled').removeAttr('disabled')

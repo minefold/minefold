@@ -3,30 +3,22 @@
   = error_messages_for form.object, :name
   = form.text_field :name, tabindex: 1
 
+
 - if form.object.new?
-  %h3= form.label :level_type, 'World'
+  - head do
+    = javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js'
 
-  %fieldset.world
-    %section.level-type
-      = form.radio_button :level_type, 'default'
-      = form.label :level_type_default do
-        Natural
-        .hint
-          Terrain is like real life. The seed is #{form.object.seed}.
-
-      = form.radio_button :level_type, 'flat'
-      = form.label :level_type_flat do
-        Flat
-        .hint
-          Works best in Creative mode.
-
-    %section.seed{hidden}
-      = form.label :seed, 'Map seed'
-      = form.text_field :seed, tabindex: 2
-
-    %section.upload
+  %fieldset.upload
+    %section
+      %h3
+        = form.label :upload do
+          Upload an existing world
+          %span.optional (optional)
       = form.hidden_field :world_upload_id
-      - # = render partial: 'upload'
+
+      %ol
+        = render partial: "worlds/uploads/instructions_#{os}"
+
       = form.file_field :path
 
       .progress{hidden}
@@ -41,27 +33,57 @@
         %strong Error:
         %span.message
 
-      %p.note{hidden}
-        Make sure you've followed the instructions to the tee. If you <em>still</em> continue to have problems, email your world as an attachment to #{mail_to 'support@minefold.com'}.
+    :javascript
+      $(document).ready(function () {
+        var worldUploadView = new Mf.WorldUploadView({
+          el: $('#new-world fieldset.upload')[0],
+          text: 'Choose world archive file',
+          prefix: #{[current_user.safe_username, current_user.id, Time.now.strftime('%Y%m%d%H%M%S')].join('-').to_json},
+          worldUploadPath: #{policy_upload_path(format: :xml).to_json},
+          
+        });
+      });
+
+
+%fieldset.mode
+  %h3= form.label 'Mode'
+  %section
+    =form.radio_button :game_mode, 0, tabindex: 3
+    = form.label :game_mode_0 do
+      Survival
+      .hint
+        Search for resources, crafting, gain levels, health and hunger
+
+  %section
+    = form.radio_button :game_mode, 1, tabindex: 3
+    = form.label :game_mode_1 do
+      Creative
+      .hint
+        Unlimited resources, free flying and destroy blocks instantly
+
+%fieldset.level-type
+  %h3= form.label :level_type, 'Terrain'
+
+  %section.level-type-default
+    = form.radio_button :level_type, 'default'
+    = form.label :level_type_default do
+      Natural
+      .hint
+        Terrain is like real life. The seed is #{form.object.seed}.
+
+  %section.level-type-flat
+    = form.radio_button :level_type, 'flat'
+    = form.label :level_type_flat do
+      Flat
+      .hint
+        Works best in Creative mode.
+
+  %section.seed{hidden}
+    = form.label :seed, 'Map seed'
+    = form.text_field :seed, tabindex: 2
+
 
 .row
-  %fieldset.mode
-    %h3= form.label 'Mode'
-
-    %section
-      =form.radio_button :game_mode, 0, tabindex: 3
-      = form.label :game_mode_0 do
-        Survival
-        .hint
-          Search for resources, crafting, gain levels, health and hunger
-
-    %section
-      = form.radio_button :game_mode, 1, tabindex: 3
-      = form.label :game_mode_1 do
-        Creative
-        .hint
-          Unlimited resources, free flying and destroy blocks instantly
-
   %fieldset.difficulty
     %h3= form.label 'Difficulty'
 

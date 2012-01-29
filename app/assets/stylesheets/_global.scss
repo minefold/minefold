@@ -24,5 +24,9 @@ em {
 }
 
 code {
-  font-family: Inconsolata, monospace;
+  font-family: Monaco, monospace;
+}
+
+.highlight {
+  background-color: lighten($yellow, 40%);
 }
