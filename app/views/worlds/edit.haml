@@ -4,5 +4,9 @@
     = link_to user_world_path(world.creator, world) do
       ← Back to #{world.name}
 
-= form_for world, url: user_world_path(world.creator, world), html: {id: 'edit-world'} do |f|
-  = render partial: 'form', object: f
+%section.actions
+  = form_for world, url: user_world_path(world.creator, world), html: {id: 'edit-world'} do |f|
+    = render partial: 'form', object: f
+
+  - if can? :destroy, world
+    = button_to "Delete this world", user_world_path(world.creator, world), method: 'delete', form_class: 'delete'

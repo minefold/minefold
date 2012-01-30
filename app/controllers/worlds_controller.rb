@@ -74,7 +74,12 @@ class WorldsController < ApplicationController
 
     respond_with world, location: user_world_path(current_user, clone)
   end
-
+  
+  def destroy
+    authorize! :destroy, world
+    world.delete!
+    redirect_to user_root_path, flash: { info: "#{world.name} was deleted" }
+  end
 
 private
 

@@ -2,7 +2,7 @@ class World
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::Slug
-
+  include Mongoid::Paranoia
 
   field :name, type: String
   validates_uniqueness_of :name, scope: :parent_id

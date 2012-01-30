@@ -72,4 +72,19 @@ describe World do
       membership.created_at.should_not be_nil
     end
   end
+  
+  describe '#delete' do
+    let(:world) { Fabricate :world }
+    let(:member) { Fabricate :user, current_world: world }
+    
+    before { 
+      member.current_world.should == world
+      world.delete! 
+      member.reload
+    }
+    
+    it "should set members's current_worlds's to nil" do
+      member.current_world.should be_nil
+    end
+  end
 end

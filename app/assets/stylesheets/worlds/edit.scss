@@ -9,4 +9,10 @@
     float: left;
     border-bottom: none;
   }
+
+  .actions {
+    form.delete {
+      input { @include btn($red, white); margin-bottom: $gutter; }
+    }
+  }
 }

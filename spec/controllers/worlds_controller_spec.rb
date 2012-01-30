@@ -100,4 +100,21 @@ describe WorldsController do
 
     it { should redirect_to(user_world_path(current_user, world.slug)) }
   end
+  
+  describe '#destroy' do
+    let(:world) { Fabricate :world }
+    signin_as { world.creator }
+    
+    before {
+      delete :destroy, user_id: world.creator.slug, id: world.slug
+    }
+    
+    it "should delete world" do
+      World.where(_id: world.id).should be_empty
+    end
+
+    it "should redirect to dashboard" do
+      response.should redirect_to user_root_path
+    end
+  end
 end
