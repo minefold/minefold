@@ -8,7 +8,7 @@
       %fieldset
         %h3 Receive emails for the following events
         = f.fields_for :notifications do |n|
-          = setting n, :campaigns, 'News and info from Minefold'
+          = setting n, :campaign, 'News and info from Minefold'
           = setting n, :world_started, 'A friend starts playing in a world'
           = setting n, :world_membership_added, 'You have been added to a world'
           = setting n, :world_membership_request_created, 'Someone asks to join your world'

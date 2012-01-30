@@ -14,6 +14,7 @@ RSpec.configure do |config|
 
   config.include Mongoid::Matchers
   config.include Devise::TestHelpers, type: :controller
+  config.include ControllerHelpers, type: :controller
   config.extend ControllerMacros, type: :controller
 
   config.before(:each) do

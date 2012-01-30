@@ -7,8 +7,8 @@ class CampaignObserver < Mongoid::Observer
   
   def after_update user
     if user.notifications_was and user.notifications_changed? and 
-        user.notifications_was['campaigns'] != user.notifications['campaigns']
-      user.notify?(:campaigns) ? subscribe(user) : unsubscribe(user)
+        user.notifications_was['campaign'] != user.notifications['campaign']
+      user.notify?(:campaign) ? subscribe(user) : unsubscribe(user)
     end
     
     update_subscription user if user.username_changed?
