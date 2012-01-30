@@ -6,7 +6,7 @@
   %article
     = form_for current_user, url: account_path do |f|
       %fieldset
-        %h3 Receive emails for the following
+        %h3 Receive emails for the following events
         = f.fields_for :notifications do |n|
           = setting n, :campaigns, 'News and info from Minefold'
           = setting n, :world_started, 'A friend starts playing in a world'
