@@ -1,67 +1,34 @@
 - track_pageview
-- title 'Buy Pro'
-- masthead do
-  .row
-    %h1 Buy a <span class="pro">Pro</span> subscription
+- title_and_masthead 'Buy Time'
 
 - head do
   = javascript_include_tag 'https://js.stripe.com/v1'
   :javascript
     Stripe.setPublishableKey(#{ENV['STRIPE_PUBLISHABLE'].to_json});
 
-= form_tag order_path, method: :post do
-  = hidden_field_tag :months
+%ol.time-packs
+  - TimePack.all.each do |pack|
+    %li{data: {hours: pack.hours, amount: pack.amount}}
+      %a
+        %h1.time
+          Buy
+          %strong= pack.hours
+          hours
+        %h2
+          %span.price= number_to_currency(pack.dollars)
+          %span.rate #{pack.rate}¢/h
 
-  %fieldset
-    %h2 1. Pick who you want to buy Pro for
-    = avatar_tag current_user, :medium, width: 40, height: 40
-    = current_user.username
-
-
-  %fieldset
-    %h2 1. Choose how long you want to play for
-    %ol.subscriptions
-      %li
-        %a{data: {months: 3, amount: 1500}}
-          .duration
-            %strong 3
-            months
-
-          %span.price= number_to_currency 15
-
-      %li
-        %a{data: {months: 6, amount: 3000}}
-          .duration
-            %strong 6
-            months
-
-          %span.price= number_to_currency 30
-
-      %li
-        %a{data: {months: 12, amount: 4500}}
-          .duration
-            %strong 6
-            months
-
-          %span.price= number_to_currency 45
-
+= form_tag order_path, method: :post, id: 'new-order', style: 'display:none' do
   .row
-    %h2 2. Enter in your payment details
+    %fieldset.card
+      %input{type: 'hidden', name: 'hours'}
 
-    .errors{hidden}
+      .errors{hidden}
 
-    %fieldset
       %section.card-number
         = label_tag :number, 'Card Number'
         = text_field_tag :number, nil, name: nil, size: 20, autocomplete: 'off', id: 'card-number'
-
-        .hint= image_tag 'cc-types.png'
-
-        :javascript
-          var number = $('#stripe-number');
-          number.blur(function(){
-            number.val(number.val().replace(/[^0-9]/g, ''));
-          });
+        = image_tag 'cc-types.png'
 
       %section.card-cvc
         = label_tag :cvc, 'CVC'
@@ -69,73 +36,84 @@
 
       %section.card-expiry
         = label_tag :expiry_month, 'Expiry Date'
+
         = text_field_tag :expiry_month, nil, name: nil, size: 2, id: 'card-exp-month', placeholder: 'MM'
         %span.slash /
         = text_field_tag :expiry_year, nil, name: nil, size: 4, id: 'card-exp-year', placeholder: 'YYYY'
 
-    %fieldset.submit
-      = submit_tag 'Confirm order'
-      = button_tag 'Cancel', type: 'reset'
+    %aside
+      %p
+        You will be charged
+        %strong.dollar-amount $74.95
+        for
+        %strong.hours 500
+        hours.
 
-    %p.security AES-256 Secure payments by #{link_to 'Stripe', 'https://stripe.com/help/security', target: '_blank'}.
+      %p.security AES-256 Secure payment by #{link_to 'Stripe', 'https://stripe.com/help/security', target: '_blank'}.
 
+  %fieldset.submit
+    = submit_tag 'Purchase time'
+    = button_tag 'Reset', type: 'reset'
 
 
 :coffeescript
-  products = $('ol.time-packs')
-  order = $('#order')
-  form = order.find('form')
+  timePacks = $('ol.time-packs li')
+  form = $('form#new-order')
+  aside = form.find('aside')
 
-  timePacks = #{TimePack.all.to_json}
+  timePacksData = #{TimePack.all.to_json}
 
-  products.find('a').click (e) ->
-    product = $(@)
-    products.find('li').removeClass('active')
-    product.parent().addClass('active')
+  timePacks.find('a').click (e) ->
+    pack = $(@).parent('li')
+    console.log timePacks
+    timePacks.removeClass('active')
+    pack.addClass('active')
 
-    price = product.data('amount') / 100
-    hours = product.data('hours')
+    price = pack.data('amount') / 100
+    hours = pack.data('hours')
 
-    order.find('aside .dollar-amount').text("$" + price)
-    order.find('aside .hours').text(hours)
+    console.log price, hours
+
+    aside.find('.dollar-amount').text("$" + price)
+    aside.find('.hours').text(hours)
 
     form.find('input[name=hours]').val(hours)
 
-    order.show()
+    form.show()
 
 
-  card.find('input[type=reset]').click ->
-    card.hide()
-    products.find('a').parent().removeClass('active')
+  form.find('button[type=reset]').click ->
+    timePacks.removeClass('active')
+    form.hide()
 
   form.submit (e) ->
     e.preventDefault()
 
-    button = form.find('input[type=submit]')
-
-    button.attr(disabled: true)
+    submitButton = form.find('input[type=submit]').attr(disabled: true)
 
     card =
-      number:    form.find('#stripe-number').val()
-      cvc:       form.find('#stripe-cvc').val()
-      exp_month: form.find('#stripe-exp-month').val()
-      exp_year:  form.find('#stripe-exp-year').val()
+      number:    form.find('#card-number').val()
+      cvc:       form.find('#card-cvc').val()
+      exp_month: form.find('#card-exp-month').val()
+      exp_year:  form.find('#card-exp-year').val()
 
-    hours = parseInt(products.find('.active').data('hours'), 10)
+    selectedPack = timePacks.filter('.active')
 
-    amount = _(timePacks).find((pack) -> pack.hours is hours).amount
+    hours = parseInt(selectedPack.data('hours'), 10)
+
+    amount = _(timePacksData).find((pack) -> pack.hours is hours).amount
 
     # Protects against DOM modification attacks
-    return unless amount
+    return alert('Nice try buddy') unless amount?
 
     Stripe.createToken card, amount, (status, response) ->
       if status isnt 200
-        button.attr(disabled: false)
+        submitButton.attr(disabled: false)
 
         $('<p></p>')
           .addClass('stripe')
           .text(response.error.message)
-          .appendTo form.find('.errors').empty()
+          .appendTo form.find('.errors').empty().show()
 
       else
         token = response.id

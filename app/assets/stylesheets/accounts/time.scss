@@ -1,5 +1,7 @@
 #accounts-time {
   ol.time-packs {
+    @include row;
+
     li {
       a {
         @include makeColumn($ncols / 3);
@@ -13,7 +15,7 @@
         cursor: pointer;
 
         .time {
-          font-size: 18px; line-height: $line * 6;
+          font-size: 24px; line-height: $line * 10;
         }
 
         .price, .rate {
@@ -23,88 +25,114 @@
         .price {
           font-weight: 600;
         }
-      }
 
-      &:nth-child(1) {
-        a {
-          border-color: $yellow;
-          &:hover {
-            background-color: $yellow;
-          }
+        h2 {
+          margin-bottom: $line * 2;
         }
 
-        &.active a {
-          background-color: $yellow;
-        }
-      }
-
-      &:nth-child(2) {
-        a {
+        border-color: $blue;
+        &:hover {
           border-color: $green;
-          &:hover {
-            background-color: $green;
-          }
-        }
-
-        &.active a {
-          background-color: $green;
         }
       }
 
-      &:nth-child(3) {
-        a {
-          border-color: $blue;
-          &:hover {
-            background-color: $blue;
-          }
-        }
-
-        &.active a {
-          background-color: $blue;
-        }
+      &.active a {
+        border-color: $yellow;
       }
+
+//      &:nth-child(1) {
+//        a {
+//          border-color: $yellow;
+//          &:hover {
+//            background-color: $yellow;
+//          }
+//        }
+//
+//        &.active a {
+//          background-color: $yellow;
+//        }
+//      }
+//
+//      &:nth-child(2) {
+//        a {
+//          border-color: $green;
+//          &:hover {
+//            background-color: $green;
+//          }
+//        }
+//
+//        &.active a {
+//          background-color: $green;
+//        }
+//      }
+//
+//      &:nth-child(3) {
+//        a {
+//          border-color: $blue;
+//          &:hover {
+//            background-color: $blue;
+//          }
+//        }
+//
+//        &.active a {
+//          background-color: $blue;
+//        }
+//      }
 
       a:hover, &.active a, &.active a:hover {
         color: white;
 
-        .price, .rate {
-          color: rgba(white, 0.8);
-        }
+//        .price, .rate {
+//          color: rgba(white, 0.8);
+//        }
       }
     }
   }
 
+  form {
+    .errors p {
+      margin-bottom: 0;
+    }
 
-  #order {
+    fieldset.card {
+      @include makeColumn(4);
 
-    form {
       .card-number {
-        @include makeColumn(4);
         .hint img {
           display: block;
         }
       }
 
       .card-cvc {
-        @include makeColumn(2)
+        @include columns(2);
       }
 
       .card-expiry {
-        @include makeColumn(6);
+        @include row;
+
+        label {
+          margin-left: $gutter;
+        }
 
         input {
-          @include columns(2);
+          @include makeColumn(1.5);
         }
 
         .slash {
-          @include inline-block;
-          width: $gutter / 2;
+          @include gridColumn;
+          width: $gutter;
+          text-align: center;
+          font-size: 18px; line-height: $line * 10;
         }
       }
 
+    }
+
+    aside {
+      @include makeColumn(4);
+
       .security {
         font-size: 12px;
-        color: darken(white, 20%);
       }
     }
   }
