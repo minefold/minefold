@@ -40,7 +40,7 @@ class WorldMailer < ActionMailer::Base
   end
 
   def world_started(world_id, user_id)
-    @world  = World.find(world_id)
+    @world = World.find(world_id)
     @user = User.find(user_id)
 
     return unless @user.notify? :world_started

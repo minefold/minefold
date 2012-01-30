@@ -6,7 +6,8 @@ class SubscribePlayerJob
   end
   
   def process! user
-    CreateSend::Subscriber.add ENV['CAMPAIGN_MONITOR_USER_LIST_ID'], user.email, user.username, [{ :Key => 'Username', :Value => user.username}], false
+    CreateSend::Subscriber.add ENV['CAMPAIGN_MONITOR_USER_LIST_ID'], 
+      user.email, user.username, [{ :Key => 'Username', :Value => user.username}], true
     puts "subscribed #{user.id} #{user.username} #{user.email}"
   end
 end

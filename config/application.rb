@@ -56,6 +56,6 @@ module Minefold
 
     config.assets.paths << Rails.root.join('app', 'assets', 'flash')
     
-    config.mongoid.observers = :user_observer
+    config.mongoid.observers = :campaign_observer
   end
 end
