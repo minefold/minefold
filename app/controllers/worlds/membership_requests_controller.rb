@@ -18,10 +18,11 @@ class Worlds::MembershipRequestsController < ApplicationController
     authorize! :read, world
 
     if membership_request.new_record? and world.save!
-      WorldMailer
-        .membership_request_created(world.id, membership_request.id)
-        .deliver
-
+      world.ops.each do |op|
+        WorldMailer
+          .membership_request_created(world.id, membership_request.id)
+          .deliver
+      end
       track 'created membership request'
     end
 

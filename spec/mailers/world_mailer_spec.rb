@@ -29,7 +29,7 @@ describe WorldMailer do
     }
 
     subject {
-      WorldMailer.membership_request_created(world.id, membership_request.id)
+      WorldMailer.membership_request_created(world.id, membership_request.id, world.creator.id)
     }
 
     its(:to) { should include(world.creator.email) }
