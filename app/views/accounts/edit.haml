@@ -1,35 +1,33 @@
 - title_and_masthead 'Account Settings'
 
-#page
-  = render partial: 'nav'
+= render partial: 'nav'
 
-  %article
-    = form_for current_user, url: account_path, method: :put do |f|
-      %fieldset.username
-        %h3= f.label :username
+= form_for current_user, url: account_path, method: :put do |f|
+  %fieldset.username
+    %h3= f.label :username
 
-        = f.text_field :username, maxlength: 16
-        = error_messages_for(f.object, :username)
+    = f.text_field :username, maxlength: 16
+    = error_messages_for(f.object, :username)
 
-      %fieldset.email
-        %h3= f.label :email
+  %fieldset.email
+    %h3= f.label :email
 
-        = f.text_field :email
-        = error_messages_for(f.object, :email)
+    = f.text_field :email
+    = error_messages_for(f.object, :email)
 
-      %fieldset.avatar
-        %h3= f.label :avatar
+  %fieldset.avatar
+    %h3= f.label :avatar
 
-        = avatar_tag current_user, :large, width: 60, height: 60
-        .hint Change your avatar at #{link_to 'Minecraft.net', 'http://minecraft.net/profile', target: '_blank'}
+    = avatar_tag current_user, :large, width: 60, height: 60
+    .hint Change your avatar at #{link_to 'Minecraft.net', 'http://minecraft.net/profile', target: '_blank'}
 
-      %fieldset.host
-        %h3 Server Host
-        = current_user.host
-        %p.hint
-          Don't know
-          = link_to 'how to connect', help_page_path(anchor: 'connecting')
-          ?
+  %fieldset.host
+    %h3 Server Host
+    = current_user.host
+    %p.hint
+      Don't know
+      = link_to 'how to connect', help_page_path(anchor: 'connecting')
+      ?
 
-      %fieldset.submit
-        = f.submit 'Update account'
+  %fieldset.submit
+    = f.submit 'Update account'
