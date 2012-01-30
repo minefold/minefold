@@ -90,7 +90,7 @@
         :javascript
           var userMenuView = new Mf.UserMenuView({el: $('header #nav .user')});
 
-    - if not flash.empty?
+    - if flash.any?
       #flash
         - flash.each do |type, message|
           %div.message{class: type}
