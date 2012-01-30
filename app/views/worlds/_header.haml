@@ -11,12 +11,12 @@
   - # TODO: Potential confusion: current_user.current_world == world?
   - if signed_in? and can?(:play, world) and not current_user.played?
     .instructions
-      Connect to
+      You need to add the server
       %strong= current_user.host
-      in Minecraft to play here.
+      to Minecraft before you can play on Minefold.
 
       = link_to help_page_path(anchor: 'connecting') do
-        Don't know how to connect?
+        Want some help?
 
 
   .attribution
