@@ -224,6 +224,12 @@ class User
   def op?(world)
     world.memberships.any? {|m| m.user == self && m.role == Memberships::OP}
   end
+  
+# Notifications
+
+  def notify? notification
+    notifications[notification.to_s] != "0"
+  end
 
 # Other
 
