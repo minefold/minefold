@@ -1,3 +1,5 @@
-#passwords-new, #passwords-edit, #passwords-update {
-  @extend #system;
+#passwords-new, #passwords-create, #passwords-edit, #passwords-update {
+  form {
+    @include columns(4);
+  }
 }

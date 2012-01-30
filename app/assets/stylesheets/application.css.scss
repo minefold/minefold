@@ -1,29 +1,47 @@
 //= require reset
 //= require_self
 
+@charset "utf-8";
+
 @import 'bourbon';
 
-@import 'shared';
-@import 'shared/app';
+@import 'vars';
+@import 'mixins';
+@import 'scaffold';
+
+@import 'global';
+
+@import 'shared/buttons';
+@import 'shared/forms';
+
+@import 'shared/header';
+@import 'shared/flash';
+@import 'shared/masthead';
+@import 'shared/page';
+@import 'shared/footer';
+@import 'shared/pro';
+
 
 @import 'accounts/dashboard';
+@import 'accounts/edit';
 @import 'accounts/time';
 @import 'accounts/notifications';
 
 @import 'passwords/index';
 
-@import 'worlds/new';
 @import 'worlds/header';
+@import 'worlds/form';
+
 @import 'worlds/show';
 @import 'worlds/info';
 @import 'worlds/edit';
-@import 'worlds/upload';
 @import 'worlds/pictures';
 
 @import 'worlds/memberships/index';
 
 @import 'pages/home';
-@import 'pages/pricing';
+@import 'pages/about';
+@import 'pages/pro';
 
 @import 'sessions/new';
 

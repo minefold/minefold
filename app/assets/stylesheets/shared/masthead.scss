@@ -1,0 +1,31 @@
+#masthead {
+  padding: ($line * 8) 0;
+
+  h1, h2, p {
+    clear: both;
+  }
+
+  h1 {
+    font-size: 28px; line-height: $line * 8;
+    font-weight: 400;
+  }
+
+  h2 {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: $line * 4;
+    color: rgba(black, 0.2);
+  }
+
+  p {
+    line-height: $line * 4;
+  }
+
+  a {
+    color: $blue;
+    text-decoration: none;
+    &:hover, &:focus {
+      color: black;
+    }
+  }
+}

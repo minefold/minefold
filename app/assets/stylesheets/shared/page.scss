@@ -1,0 +1,82 @@
+#page {
+  line-height: 5*$line;
+  color: darken(white, 60%);
+
+  .container > .row {
+    margin-bottom: $line * 8;
+  }
+
+  article {
+    @include makeColumn($ncols - 3);
+  }
+
+  aside {
+    @include makeColumn(3);
+    margin: 0;
+    float: right;
+  }
+
+  h1 {
+    font-size: 24px; line-height: 8*$line;
+    color: $blue;
+    margin-bottom: 4*$line;
+    font-weight: 500;
+  }
+
+  h2 {
+    font-size: 18px;
+    line-height: 6*$line;
+    color: $blue;
+  }
+
+  h3, h4 {
+    margin: $line 0;
+    color: black;
+    font-size: 14px; line-height: $line * 4;
+  }
+
+  h3 {
+    font-weight: 600;
+  }
+
+  h4 {
+    color: darken(white, 60%);
+  }
+
+  h1, h2, p, ul, ol, pre, .note, figure {
+    margin-bottom: $line * 4;
+  }
+
+  a {
+    color: $blue;
+    text-decoration: none;
+    &:hover {
+      color: $green;
+    }
+  }
+
+  hr {
+    border-top: 1px solid rgba(black, 0.05);
+  }
+
+  figure {
+    img, #map {
+      @include columns($ncols - 3);
+      margin-right: -$pad;
+    }
+
+    figcaption {
+      color: rgba(black, 0.4);
+      font-size: 12px; line-height: 4*$line;
+    }
+  }
+
+  .note {
+    background: darken(white, 5%);
+    padding: $line ($gutter/2);
+  }
+
+  .btn {
+    @include btn($blue, white);
+  }
+}

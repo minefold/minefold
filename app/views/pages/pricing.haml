@@ -5,27 +5,23 @@
   %h1 Pricing
   %h2 Buy time only as you need it
 
-#page
-  #products
-    %ol
-      - TimePack.all.each do |pack|
-        %li
-          %h1.time
-            %strong= pack.hours
-            hours
-          %h2.price
-            = number_to_currency(pack.dollars)
-            %span.rate #{pack.rate}¢/h
+.row
+  #features
+    Unlimited time
+    %br
+    Unlimited worlds
 
-    %p.extras
-      Everybody also gets
-      <strong>#{pluralize User::FREE_HOURS, 'hour', 'hours'}</strong>,
-      <em>unlimited worlds</em>, <em>real-time chat</em>, <em>beautiful maps</em> & more <strong>for free</strong>.
+  .dollar $5
 
-    - if signed_in?
-      = link_to 'Buy some time now!', time_account_path, class: 'btn'
-    - else
-      = link_to 'Sign up and start playing now!', new_user_path, class: 'btn'
+  %p.extras
+    Everybody also gets
+    <strong>#{pluralize User::FREE_HOURS, 'hour', 'hours'}</strong>,
+    <em>unlimited worlds</em>, <em>real-time chat</em>, <em>beautiful maps</em> & more <strong>for free</strong>.
+
+  - if signed_in?
+    = link_to 'Buy some time now!', time_account_path, class: 'btn'
+  - else
+    = link_to 'Sign up and start playing now!', new_user_path, class: 'btn'
 
   %aside
     %h2 Common Questions

@@ -1,51 +1,111 @@
 %fieldset.name
   %h3= form.label :name
-
   = error_messages_for form.object, :name
   = form.text_field :name, tabindex: 1
 
+
 - if form.object.new?
-  %fieldset.seed
-    %h3= form.label :seed, 'Map seed'
-    = form.text_field :seed, tabindex: 2
+  - head do
+    = javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js'
+
+  %fieldset.upload
+    %section
+      %h3
+        = form.label :upload do
+          Upload an existing world
+          %span.optional (optional)
+      = form.hidden_field :world_upload_id
+
+      %ol
+        = render partial: "worlds/uploads/instructions_#{os}"
+
+      = form.file_field :path
+
+      .progress{hidden}
+        .bar
+      .status{hidden}
+
+      %p.state.processing{hidden}
+        %strong Processing world
+        This may take a few minutes depending on the size of your world.
+
+      %p.state.error{hidden}
+        %strong Error:
+        %span.message
+
+    :javascript
+      $(document).ready(function () {
+        var worldUploadView = new Mf.WorldUploadView({
+          el: $('#new-world fieldset.upload')[0],
+          text: 'Choose world archive file',
+          prefix: #{[current_user.safe_username, current_user.id, Time.now.strftime('%Y%m%d%H%M%S')].join('-').to_json},
+          worldUploadPath: #{policy_upload_path(format: :xml).to_json},
+          
+        });
+      });
+
 
 %fieldset.mode
-  %h3 Mode
-
-  %div
-    = form.radio_button :game_mode, 0, tabindex: 3
+  %h3= form.label 'Mode'
+  %section
+    =form.radio_button :game_mode, 0, tabindex: 3
     = form.label :game_mode_0 do
       Survival
-      .hint Search for resources, crafting, gain levels, health and hunger
+      .hint
+        Search for resources, crafting, gain levels, health and hunger
 
-  %div
+  %section
     = form.radio_button :game_mode, 1, tabindex: 3
     = form.label :game_mode_1 do
       Creative
-      .hint Unlimited resources, free flying and destroy blocks instantly
+      .hint
+        Unlimited resources, free flying and destroy blocks instantly
 
-%fieldset.difficulty
-  %h3 Difficulty
+%fieldset.level-type
+  %h3= form.label :level_type, 'Terrain'
 
-  - World::DIFFICULTIES.each_with_index do |level, i|
-    %div
-      = form.radio_button :difficulty_level, i, tabindex: 4
-      = form.label "difficulty_level_#{i}", level.to_s.titlecase
+  %section.level-type-default
+    = form.radio_button :level_type, 'default'
+    = form.label :level_type_default do
+      Natural
+      .hint
+        Terrain is like real life. The seed is #{form.object.seed}.
 
-%fieldset.gameplay
-  %h3 Gameplay
+  %section.level-type-flat
+    = form.radio_button :level_type, 'flat'
+    = form.label :level_type_flat do
+      Flat
+      .hint
+        Works best in Creative mode.
 
-  %div
-    = form.check_box :pvp, tabindex: 5
-    = form.label :pvp, 'Player vs. Player'
+  %section.seed{hidden}
+    = form.label :seed, 'Map seed'
+    = form.text_field :seed, tabindex: 2
 
-  %div
-    = form.check_box :spawn_monsters, tabindex: 6
-    = form.label :spawn_monsters, 'Spawn monsters'
 
-  %div
-    = form.check_box :spawn_animals, tabindex: 7
-    = form.label :spawn_animals, 'Spawn animals'
+.row
+  %fieldset.difficulty
+    %h3= form.label 'Difficulty'
+
+    - World::DIFFICULTIES.each_with_index do |level, i|
+      %section
+        = form.radio_button :difficulty_level, i, tabindex: 4
+        = form.label "difficulty_level_#{i}", level.to_s.titlecase
+
+  %fieldset.gameplay
+    %h3= form.label 'Gameplay'
+
+    %section.pvp
+      = form.check_box :pvp, tabindex: 5
+      = form.label :pvp, 'Player vs. Player'
+
+    %section.spawn-monsters
+      = form.check_box :spawn_monsters, tabindex: 6
+      = form.label :spawn_monsters, 'Spawn monsters'
+
+    %section.spawn-animals
+      = form.check_box :spawn_animals, tabindex: 7
+      = form.label :spawn_animals, 'Spawn animals'
 
 %fieldset.submit
   - if form.object.new?

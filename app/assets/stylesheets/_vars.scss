@@ -1,0 +1,29 @@
+// Fonts
+
+$proxima: $helvetica, "proxima-nova-soft-1", "proxima-nova-soft-2", $helvetica;
+
+
+// Colors
+
+$yellow: #FD0;
+
+$blue:   #0082CC;
+$red:    #e10045;
+$green:  #00CC50;
+
+$purple: #4400cc;
+$orange: #ff7700;
+
+// Grid
+
+$line: 5px;
+
+$gutter: 20px;
+$pad:    20px;
+$col:    $pad + 20px + $pad;
+
+$ncols:  12;
+
+$width: ($ncols * $col) + ($gutter * ($ncols - 1));
+
+$radius: 3px;

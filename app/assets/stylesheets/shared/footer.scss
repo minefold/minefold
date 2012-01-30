@@ -1,0 +1,38 @@
+footer {
+  border-top: 1px solid darken(white, 5%);
+  margin-bottom: $line * 20;
+
+  font-size: 12px; line-height: $line * 4;
+
+  ul {
+    @include row;
+
+    li {
+      @include gridColumn;
+      a {
+        display: block;
+        color: $blue;
+        font-weight: 600;
+        text-decoration: none;
+        line-height: 6*$line;
+
+        &:hover {
+          color: $green;
+        }
+      }
+
+      &.fineprint a {
+        color: darken(white, 20%);
+        font-weight: 400;
+
+        &:hover {
+          color: darken(white, 40%);
+        }
+      }
+
+      &.social {
+        float: right;
+      }
+    }
+  }
+}

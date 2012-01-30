@@ -4,7 +4,7 @@ class User
   include Mongoid::Timestamps
   include Mongoid::Slug
   include Mongoid::Paranoia
-  
+
   BILLING_PERIOD = 1.minute
   FREE_HOURS  = 10
 
@@ -90,7 +90,14 @@ class User
   validates_numericality_of :minutes_played, greater_than_or_equal_to: 0
 
 
-  field :notifications, type: Hash, default: {}
+  field :last_played_at, type: DateTime
+
+  def played?
+    not last_played_at.nil?
+  end
+
+
+  field :notifications, type: Hash, default: ->{ Hash.new }
   field :last_world_started_mail_sent_at, type: DateTime
 
   field :referral_code, type: String, default: ->{ self.class.free_referral_code }
@@ -112,7 +119,7 @@ class User
   }
 
 
-# Security
+  # Security
 
   attr_accessible :email,
                   :username,
@@ -131,7 +138,7 @@ class User
       errors.add :username, 'is reserved'
     end
   end
-    
+
 # Credits
 
   # Kicks off the audit trail for any credits the user starts off with
@@ -202,10 +209,6 @@ class User
     c
   end
 
-  def played?
-    true
-  end
-
   def member?(world)
     world.memberships.any? {|m| m.user == self}
   end
@@ -220,12 +223,6 @@ class User
 
   def op?(world)
     world.memberships.any? {|m| m.user == self && m.role == Memberships::OP}
-  end
-  
-# Notifications
-  
-  def notify? notification
-    notifications[notification.to_s] != "0"
   end
 
 # Other

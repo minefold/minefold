@@ -1,14 +1,22 @@
-
 = render partial: 'worlds/header'
 
 - if not world.map?
+  - backside do
+    .no-map
+      - if signed_in? and can? :play, world
+        Start playing in this world by connecting to
+        %strong= current_user.host
+        in Minecraft.
+      - else
+        Waiting for
+        %strong= world.creator.username
+        to play here…
 
-  .no-map
-    - if signed_in? and can? :play, world
-      Start playing in this world by connecting to
-      %strong= current_user.host
-      in Minecraft.
-    - else
-      Waiting for
-      %strong= world.creator.username
-      to play here…
+- else
+  :javascript
+    $(document).ready(function(){
+      var world = new Mf.World(#{render('worlds/base', object: world, formats: [:json])})
+          workspace = new Mf.WorldRouter({world: world});
+
+      Backbone.history.start({pushState: true, root: world.url()});
+    });

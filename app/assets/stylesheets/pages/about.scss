@@ -1,0 +1,18 @@
+#pages-about {
+  .founder {
+    @include makeColumn(($ncols - 3) / 2);
+  }
+
+  .vcard {
+    @include row;
+
+    .map {
+      @include makeColumn(6);
+      height: $line * 40;
+    }
+
+    .adr {
+      @include makeColumn(3);
+    }
+  }
+}

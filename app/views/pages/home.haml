@@ -2,40 +2,24 @@
 - track 'visited homepage'
 
 - masthead do
-  %h1 The easiest way to play Minecraft with your friends!
-  %h2 No more server mumbojumbo.
+  %h1 Play Minecraft with your friends, the easy way.
+  %h2 No more server mumbojumbo
 
   = link_to new_user_path, class: 'btn' do
     Start playing now!
     .free
-      Try it out for
-      %strong
-        = pluralize User::FREE_HOURS, 'hour', 'hours'
-      %em FREE
+      = pluralize User::FREE_HOURS, 'hour', 'hours'
+      free every month
 
-  #screenshots
-    %img.a{src: image_path('screen-a.png'), width: 240, height: 120}
-    %img.b{src: image_path('screen-b.png'), width: 340, height: 144}
-    %img.c{src: image_path('screen-c.png'), width: 240, height: 120}
+.row
+  .feature
+    %h2 Zen Simplicity
+    %p We do it all for you, grasshopper. No servers, RAM, Java or SSH. Sign up & start playing Minecraft in <strong>less than 30 seconds</strong>.
 
-  #avatars
-    - @avatars.each do |username|
-      = image_tag File.join("home", "head_s24_#{username}.png"), width: 24, height: 24, alt: username
+  .feature
+    %h2 Pay Individually
+    %p <strong>Don't pay for Frank</strong> who faked a sickie and played for a week straight. Only buy enough to suit <em>your</em> habits, not Frank's habit.
 
-#page
-  %ol#features
-    %li.feature
-      %h2 Zen Simplicity
-      %p We do it all for you. No servers, RAM, Java or SSH. Sign up and just start playing Minecraft in <strong>less than 60 seconds</strong>, young grasshopper.
-
-    %li.feature
-      %h2 Buy Time Individually
-      %p <strong>Don't pay for Frank</strong> who faked a sickie and played for a week straight. Buy only enough time to suit <em>your</em> habits, not Frank's habit.
-
-    %li.feature
-      %h2 Show off
-      %p We give you <strong>high quality maps</strong> of your worlds so you can quickly show your bros that rad 'coaster you've been working on.
-
-    %li.feature
-      %h2 Peace of mind
-      %p Your pieces of art are <strong>continuously backed up</strong> in multiple locations. Never lose anything.
+  .feature
+    %h2 Beautiful maps
+    %p We give you <strong>high quality maps</strong> of your worlds so you can quickly show your bros that rad 'coaster you've been working on.

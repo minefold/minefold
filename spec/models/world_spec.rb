@@ -18,7 +18,7 @@ describe World do
 
   it { should embed_many(:membership_requests) }
 
-  it { should have_field(:seed).with_default_value_of('') }
+  it { should have_field(:seed) }
   it { should have_field(:pvp).with_default_value_of(true) }
   it { should have_field(:spawn_monsters).with_default_value_of(true) }
   it { should have_field(:spawn_animals).with_default_value_of(true) }
@@ -39,6 +39,12 @@ describe World do
       subject.name = subject.name.reverse
       subject.save
     }.should change(subject, :slug)
+  end
+
+  it "generates a random seed based on the time (like Minecraft)" do
+    Timecop.freeze do
+      world.seed.should == Time.now.to_i.to_s
+    end
   end
 
   describe 'clone_world' do

@@ -1,0 +1,85 @@
+#worlds-show {
+
+  header, #masthead {
+    position: fixed;
+    right: 0; left: 0;
+  }
+
+  // Move the map and masthead down
+  #masthead, #backside {
+    top: $line * 8;
+  }
+
+  header {
+    top: 0;
+  }
+
+  #masthead {
+    padding: $gutter;
+
+    .container {
+      @include row;
+    }
+
+    // TODO Hacky CSS
+    .instructions {
+      width: 100%;
+      margin: (-2 * $line) (-$gutter) ($line * 2) 0;
+      padding: ($line * 2) $gutter;
+      padding-bottom: ($line * 2) - 2px;
+
+      border-bottom: 2px solid darken(white, 5%);
+      color: rgba(black, 0.4);
+
+      line-height: $line * 4;
+
+      strong {
+        color: rgba(black, 0.8);
+      }
+    }
+
+    .attribution {
+      @include makeColumn($ncols / 2);
+      font-size: 12px;
+    }
+
+    .actions, .stats {
+      @include makeColumn($ncols / 2);
+      float: right;
+      margin-right: -$gutter;
+    }
+
+    ol.actions {
+      li {
+        float: right;
+        margin: $line 0;
+        margin-left: $gutter;
+
+        form input[type=submit], a {
+          @include btn($blue, white, $green);
+          padding: $line $gutter;
+        }
+
+        a img, a img {
+          display: block;
+        }
+      }
+    }
+
+    ul.stats {
+      li {
+        float: right;
+        font-size: 13px; line-height: $line * 4;
+        margin-left: $gutter;
+
+        .val {
+          color: rgba(black, 0.8);
+        }
+
+        .label {
+          color: rgba(black, 0.5);
+        }
+      }
+    }
+  }
+}

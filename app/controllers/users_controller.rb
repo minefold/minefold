@@ -28,7 +28,7 @@ class UsersController < Devise::RegistrationsController
 
       track '$signup', distinct_id: user.id.to_s, mp_name_tag: user.safe_username
 
-      respond_with user, :location => new_world_path
+      respond_with user, :location => user_root_path
     else
       clean_up_passwords user
       respond_with user, :location => users_path(code: params[:user][:invite_id])

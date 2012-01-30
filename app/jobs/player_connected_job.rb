@@ -8,8 +8,10 @@ class PlayerConnectedJob
     world = user.current_world
     new.process!(user, world, connected_at)
   end
-  
+
   def process!(user, world, connected_at)
+    world.update_attributes last_played_at: connected_at
+
     world.record_event! Connection, source: user,
                                 created_at: connected_at
 
