@@ -90,7 +90,7 @@ class User
   validates_numericality_of :minutes_played, greater_than_or_equal_to: 0
 
 
-  field :notifications, type: Hash
+  field :notifications, type: Hash, default: {}
   field :last_world_started_mail_sent_at, type: DateTime
 
   field :referral_code, type: String, default: ->{ self.class.free_referral_code }

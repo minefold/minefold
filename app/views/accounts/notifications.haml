@@ -1,4 +1,4 @@
-- title_and_masthead 'Account Settings'
+- title_and_masthead 'Email Notifications'
 
 #page
   = render partial: 'accounts/nav'
@@ -6,18 +6,11 @@
   %article
     = form_for current_user, url: account_path do |f|
       %fieldset
-        %h3 Worlds
-
+        %h3 Receive emails for the following
         = f.fields_for :notifications do |n|
-          %div
-            = n.check_box :world_membership_created, checked:  (current_user.notifications['world_membership_created'] == '1')
-            = n.label :world_membership_created do
-              Somebody wants to play in one of your worlds
-
-          %div
-            = n.check_box :world_started, checked: (current_user.notifications['world_started'] == '1')
-            = n.label :world_started do
-              A friend starts playing a world
+          = setting n, :world_started, 'A friend starts playing in a world'
+          = setting n, :world_membership_added, 'You have been added to a world'
+          = setting n, :world_membership_request_created, 'Someone asks to join your world'
 
       %fieldset.submit
         = f.submit 'Update notifications'
