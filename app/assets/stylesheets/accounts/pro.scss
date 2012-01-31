@@ -1,4 +1,8 @@
 #accounts-pro {
+  #masthead .pro {
+    padding: 0 ($gutter / 2);
+  }
+
   ol.time-packs {
     @include row;
 
@@ -6,8 +10,8 @@
       a {
         @include makeColumn($ncols / 3);
         @include box-sizing(border-box);
-        padding: ($line * 2 - 2px) ($gutter - 2px);
-        border-width: 2px;
+        padding: ($line * 2 - 5px) ($gutter - 5px);
+        border-width: 5px;
         border-style: solid;
 
         color: black;
@@ -30,61 +34,15 @@
           margin-bottom: $line * 2;
         }
 
+        border-color: darken(white, 5%);
+      }
+
+      a:hover, &.active a {
         border-color: $blue;
-        &:hover {
-          border-color: $green;
-        }
       }
-
-      &.active a {
-        border-color: $yellow;
-      }
-
-//      &:nth-child(1) {
-//        a {
-//          border-color: $yellow;
-//          &:hover {
-//            background-color: $yellow;
-//          }
-//        }
-//
-//        &.active a {
-//          background-color: $yellow;
-//        }
-//      }
-//
-//      &:nth-child(2) {
-//        a {
-//          border-color: $green;
-//          &:hover {
-//            background-color: $green;
-//          }
-//        }
-//
-//        &.active a {
-//          background-color: $green;
-//        }
-//      }
-//
-//      &:nth-child(3) {
-//        a {
-//          border-color: $blue;
-//          &:hover {
-//            background-color: $blue;
-//          }
-//        }
-//
-//        &.active a {
-//          background-color: $blue;
-//        }
-//      }
 
       a:hover, &.active a, &.active a:hover {
         color: white;
-
-//        .price, .rate {
-//          color: rgba(white, 0.8);
-//        }
       }
     }
   }
