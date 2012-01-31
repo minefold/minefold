@@ -1,5 +1,27 @@
 #pages-home {
 
+  #backside {
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    overflow: hidden;
+    width: 100%;
+    z-index: -100;
+
+    min-width: $width + ($gutter * 2);
+
+    .bg {
+      position: absolute;
+      top: $line * 12; right: 40%; bottom: 0;
+      margin-right: -1842px;
+
+      overflow: hidden;
+      width: 1842px;
+
+      background: white url(image-path('home-bg.jpg')) no-repeat 0 0;
+      min-width: $width;
+    }
+  }
+
   header {
     h1 a, ol li a, ol li.time {
       padding-top: $line * 4;
