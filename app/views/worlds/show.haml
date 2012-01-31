@@ -1,7 +1,6 @@
 = render partial: 'worlds/header'
 
 - if not world.map?
-  %h1 PENIS
   - backside do
     .no-map
       - if signed_in? and can? :play, world
@@ -14,7 +13,6 @@
         to play here…
 
 - else
-  %h1 Cock
   :javascript
     $(document).ready(function(){
       var world = new Mf.World(#{render('worlds/base', object: world, formats: [:json])})
