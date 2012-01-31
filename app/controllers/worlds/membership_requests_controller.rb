@@ -20,7 +20,7 @@ class Worlds::MembershipRequestsController < ApplicationController
     if membership_request.new_record? and world.save!
       world.ops.each do |op|
         WorldMailer
-          .membership_request_created(world.id, membership_request.id)
+          .membership_request_created(world.id, membership_request.id, op.id)
           .deliver
       end
       track 'created membership request'
