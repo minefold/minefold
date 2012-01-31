@@ -89,6 +89,10 @@
     aside {
       @include makeColumn(4);
 
+      .pro {
+        padding: 0 ($gutter / 4);
+      }
+
       .security {
         font-size: 12px;
       }
