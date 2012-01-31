@@ -1,34 +1,100 @@
 #pages-pricing {
 
-  ol.time-packs {
+  #features {
     @include row;
-    li {
-      @include makeColumn($ncols / 3);
-      text-align: center;
+    margin-bottom: $line * 4;
 
-      .time {
-        font-size: 24px;
-        font-weight: 600; line-height: $line * 4;
-        color: $green;
+    p {
+      @include gridColumn;
+      color: darken(white, 20%);
 
-        margin-bottom: $line * 2;
+      .pro {
+        line-height: $line * 3;
+        padding: 2px 4px;
       }
+    }
 
-      .price {
-        font-size: 18px;
-        color: $blue;
-      }
+    ul {
 
-      .rate {
-        color: darken(white, 20%);
-        font-size: 14px;
+      li {
+        @include gridColumn;
+
+        &:before {
+          content: "\2713";
+          color: $green;
+          margin-right: $gutter / 2;
+        }
       }
     }
   }
 
-  .extras {
-    text-align: center;
+  #products {
+    @include row;
+
+    .product {
+      @include makeColumn(4);
+      @include box-sizing(border-box);
+      padding: $line $gutter;
+      border: 5px solid darken(white, 5%);
+      text-align: center;
+
+      h1 {
+        color: black;
+        margin-bottom: 0;
+      }
+
+      .tagline {
+        color: darken(white, 40%);
+
+        .pro {
+          line-height: $line * 3;
+          padding: 2px 4px;
+        }
+      }
+
+      .price {
+        font-weight: 600;
+        font-size: 24px; line-height: $line * 8;
+
+        .dollar {
+          font-size: 12px; line-height: $line * 1;
+          margin-bottom: $line * 4;
+        }
+      }
+
+      &.three-months, &.twelve-months {
+        margin-top: $line * 8;
+      }
+
+      &.six-months {
+        padding-top: $line * 4;
+        padding-bottom: $line * 4;
+        border-color: $green;
+
+        h1 {
+          font-size: 28px;
+        }
+
+        .price {
+          font-size: 28px;
+          line-height: $line * 10;
+        }
+
+        .savings {
+          margin-top: $line * 2; // padding: $line 0;
+          strong {
+            color: darken($green, 10%);
+            font-weight: 600;
+          }
+        }
+      }
+
+      &:hover {
+        border-color: $blue;
+      }
+    }
   }
+
 
   .btn.buy, .btn.sign-up {
     @include columns(4);

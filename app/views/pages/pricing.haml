@@ -2,25 +2,58 @@
 
 - title 'Pricing'
 - masthead do
-  %h1 Pricing
+  %h1
+    Pricing
+    %small (Beta only)
   %h2 Buy time only as you need it
 
-%ol.time-packs
-  - TimePack.all.each do |pack|
-    %li{data: {hours: pack.hours, amount: pack.amount}}
-      %a
-        %h1.time
-          Buy
-          %strong= pack.hours
-          hours
-        %h2
-          %span.price= number_to_currency(pack.dollars)
-          %span.rate #{pack.rate}¢/h
-.extras
+#features
   %p
-    Everybody also gets
-    <strong class="highlight">#{pluralize User::FREE_HOURS, 'hour', 'hours'} a month</strong>,
-    <em>unlimited worlds</em>, <em>beautiful maps</em> & more <strong>for free</strong>.
+    Minefold
+    %span.pro Pro
+    lets you
+
+  %ul
+    %li play for <del>10 hours</del> <strong>unlimited hours</strong> a month
+    %li play in unlimited worlds
+    %li show off georgous maps
+
+#products
+  .product.three-months
+    %h1 3 months
+    .tagline
+      of Minefold
+      %span.pro Pro
+
+    .price
+      %span.dollar $
+      15.00
+
+  .product.six-months
+    %h1 6 months
+    .tagline
+      of Minefold
+      %span.pro Pro
+
+    .savings
+      You save
+      %strong $5
+
+    .price
+      %span.dollar $
+      25.00
+
+  .product.twelve-months
+    %h1 12 months
+    .tagline
+      of Minefold
+      %span.pro Pro
+
+    .price
+      %span.dollar $
+      50.00
+
+
 
 - if signed_in?
   = link_to 'Buy some time now!', time_account_path, class: ['btn', 'buy']
