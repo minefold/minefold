@@ -77,7 +77,16 @@ class WorldsController < ApplicationController
   
   def destroy
     authorize! :destroy, world
+    
+    members_to_notify = world.members - [world.creator]
+    members_to_notify.each do |member|
+      WorldMailer.world_deleted(world.name, world.creator.username, member.id).deliver
+    end
+    
     world.delete!
+    
+    track 'deleted world'
+    
     redirect_to user_root_path, flash: { info: "#{world.name} was deleted" }
   end
 

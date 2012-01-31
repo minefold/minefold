@@ -134,11 +134,11 @@ class World
   end
 
   def ops
-    memberships.ops.map(&:user)
+    memberships.ops.pluck :user
   end
 
   def members
-    memberships.map {|m| m.user}
+    memberships.pluck :user
   end
 
 

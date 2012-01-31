@@ -76,10 +76,21 @@ describe WorldMailer do
 
     subject { WorldMailer.world_started(world.id, user.id) }
 
-    its(:to) { include(user.email) }
+    its(:to) { should include(user.email) }
 
-    its(:body) { include(world.name) }
-    its(:body) { include(user_world_url(world.creator, world)) }
-    its(:body) { include(user.username) }
+    its(:body) { should include(world.name) }
+    its(:body) { should include(user_world_url(world.creator, world)) }
+    its(:body) { should include(user.username) }
+  end
+
+  describe "#world_deleted" do
+    let(:user) { Fabricate :user }
+  
+    subject { WorldMailer.world_deleted('worldy', 'worldy-creator', user.id) }
+  
+    its(:to) { should include(user.email) }
+  
+    its(:body) { should include('worldy') }
+    its(:body) { should include('worldy-creator') }
   end
 end
