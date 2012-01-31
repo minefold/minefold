@@ -10,9 +10,7 @@
     border-bottom: none;
   }
 
-  .actions {
-    form.delete {
-      input { @include btn($red, white); margin-bottom: $gutter; }
-    }
+  form.delete {
+    input { @include btn($red, white); margin-bottom: 2*$line; }
   }
 }

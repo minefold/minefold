@@ -80,7 +80,9 @@ class WorldsController < ApplicationController
     
     members_to_notify = world.members - [world.creator]
     members_to_notify.each do |member|
-      WorldMailer.world_deleted(world.name, world.creator.username, member.id).deliver
+      if member.current_world == world
+        WorldMailer.world_deleted(world.name, world.creator.username, member.id).deliver
+      end
     end
     
     world.delete!
