@@ -7,89 +7,45 @@
 
 - if can? :operate, world
   - if world.membership_requests.any?
-    #page
-      %section.members
-        %h3 Pending Membership Requests
-        %ul
-          - world.membership_requests.each do |r|
-            %li
-              = link_to user_path(r.user) do
-                = avatar_tag r.user, :medium, width: 40, height: 40
-              .meta
-                .username= r.user.username
+    %h2 Pending Membership Requests
+    %section.members
+      %ul
+        - world.membership_requests.each do |r|
+          %li
+            = link_to user_path(r.user) do
+              = avatar_tag r.user, :medium, width: 40, height: 40
+            .meta
+              .username= r.user.username
+              .actions
                 = button_to 'Approve', approve_user_world_membership_request_path(world.creator, world, r), method: :put, class: 'approve'
                 = button_to 'Ignore', user_world_membership_request_path(world.creator, world, r), method: :delete, class: 'ignore'
 
-  #page
-    = form_tag user_world_members_path, method: :post, id: 'add-member' do
-      = hidden_field_tag :id
-      %fieldset
-        = text_field_tag :username, nil, placeholder: 'notch'
-        = image_tag 'spinner.gif', class: 'loading'
+  %h2 Add a friend
+  = form_tag user_world_members_path, method: :post, id: 'add-member' do
+    = hidden_field_tag :id
+    %fieldset.username
+      = text_field_tag :username, nil, placeholder: 'notch'
+      = image_tag 'spinner.gif', class: 'loading'
 
-      %fieldset.submit
-        = submit_tag 'Add player'
-        
-    :coffeescript
-      $ ->
-        new Mf.AddFriendView
-          el: $('form#add-member')
-          searchPath: '#{search_user_world_members_path(world.creator, world)}'
-    
+    %fieldset.submit
+      = submit_tag 'Add member'
 
-#page
-  %section.members
-    %ul
-      - world.memberships.each do |m|
-        %li
-          = link_to user_path(m.user) do
-            = avatar_tag m.user, :medium, width: 40, height: 40
-          .meta
-            .username= m.user.username
-            Joined #{time_ago_in_words m.created_at}.
+  :coffeescript
+    $ ->
+      new Mf.AddFriendView
+        el: $('form#add-member')
+        searchPath: '#{search_user_world_members_path(world.creator, world)}'
 
-          - # Kick players as an op
-          - # Op other players as a creator
-          - #
-          - # leave this world
 
-/ %article
-/   - if can? :operate, world
-/     #add-friend
-/       %button
-/         %span.icon
-/         Add a friend
-/
-/       = form_tag world_members_path(world), method: :post do
-/         = hidden_field_tag :id
-/
-/         %section.search
-/           %span.avatar
-/           %input{type: 'text'}
-/
-/         %section.hint
-/           %p
-/             %em ENTER
-/             a friend's username
-/           %p
-/             or
-/             %a.cancel{href: ''} cancel
-/
-/
-/   %h2 Friends playing here
-/   %ul.players
-/     - # TODO Refactor
-/     - sorted_memberships(world).each do |membership|
-/       - user = membership.user
-/       %li{ class: [world.players.include?(user) ? :online : :offline, membership.op? && :op]}= link_to user.username, user
-/
-/   - if can?(:operate, world) and world.membership_requests.any?
-/     %h2 Pending Membership Requests
-/     %ul.membership-requests
-/       = render 'membership_request', collection: world.membership_requests
-/
-/   %p.social
-/     %a.twitter-share-button{href: 'https://twitter.com/share', data: {text: "Play Minecraft with me in #{world.name} - #{world_url(world)}", url: world_url(world), count: 'horizontal', via: 'minefold'}} Tweet
-/     %script{type: 'text/javascript', src: '//platform.twitter.com/widgets.js'}
-/
-/     %iframe.facebook-like-button{src: "//www.facebook.com/plugins/like.php?href=#{world_url(world)}&send=true&layout=button_count&show_faces=false&height=50&action=like&colorscheme=light&appId=#{ENV['FB_APP_ID'].to_i}", allowTransparency: true, scrolling: 'no', frameborder: 0}/
+%section.members
+  %ul
+    - world.memberships.each do |m|
+      %li
+        = link_to user_path(m.user) do
+          = avatar_tag m.user, :medium, width: 40, height: 40
+        .meta
+          .username
+            = m.user.username
+            - if m.op?
+              %em.highlight (op)
+          Joined #{time_ago_in_words(m.created_at)} ago.

@@ -1,33 +1,45 @@
 #worlds-memberships-index {
-  @extend #system;
 
-  #page {
-    margin-bottom: 2*$line;
-  }
-  
-  #page #add-member {
-    fieldset { position: relative };
-    img.loading { position: absolute; top: 3.5 * $gutter; left: 0px }
+  #add-member {
+    @include columns(6);
+
+    fieldset.username {
+      position: relative;
+      margin-bottom: $line * 2;
+    }
+
+    img.loading {
+      position: absolute;
+      top: $line * 3;
+      left: -2 * $gutter;
+    }
   }
 
-  #page section.members {
-    padding: 0 $pad;
+  section.members {
+    margin-bottom: $line * 8;
 
     .meta {
-      width: cols(3) - $pad;
-    }
+      @include columns(6);
 
-    .approve {
-      @include btn($green, white);
-    }
+      .actions {
+        @include clearfix;
 
-    .approve, .ignore {
-      float: left;
-      margin-right: $gutter;
-      padding: $line $gutter;
+        .approve {
+          @include btn($green, white, $blue);
+        }
 
-      font-size: 12px;
-      line-height: 2*$line;
+        .ignore {
+          @include btn(darken(white, 20%), white, $blue);
+        }
+
+        .approve, .ignore {
+          padding: $line $gutter;
+          margin: 0;
+          margin-bottom: $line;
+
+          font-size: 12px; line-height: $line * 2;
+        }
+      }
     }
 
     ul {
