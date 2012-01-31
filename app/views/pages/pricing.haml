@@ -5,70 +5,73 @@
   %h1 Pricing
   %h2 Buy time only as you need it
 
-.row
-  #features
-    Unlimited time
-    %br
-    Unlimited worlds
-
-  .dollar $5
-
-  %p.extras
+%ol.time-packs
+  - TimePack.all.each do |pack|
+    %li{data: {hours: pack.hours, amount: pack.amount}}
+      %a
+        %h1.time
+          Buy
+          %strong= pack.hours
+          hours
+        %h2
+          %span.price= number_to_currency(pack.dollars)
+          %span.rate #{pack.rate}¢/h
+.extras
+  %p
     Everybody also gets
-    <strong>#{pluralize User::FREE_HOURS, 'hour', 'hours'}</strong>,
-    <em>unlimited worlds</em>, <em>real-time chat</em>, <em>beautiful maps</em> & more <strong>for free</strong>.
+    <strong class="highlight">#{pluralize User::FREE_HOURS, 'hour', 'hours'} a month</strong>,
+    <em>unlimited worlds</em>, <em>beautiful maps</em> & more <strong>for free</strong>.
 
-  - if signed_in?
-    = link_to 'Buy some time now!', time_account_path, class: 'btn'
-  - else
-    = link_to 'Sign up and start playing now!', new_user_path, class: 'btn'
+- if signed_in?
+  = link_to 'Buy some time now!', time_account_path, class: ['btn', 'buy']
+- else
+  = link_to 'Sign up and start playing now!', new_user_path, class: ['btn', 'sign-up']
 
-  %aside
-    %h2 Common Questions
+%aside
+  %h2 Common Questions
 
-    %dl
-      %dt Can I pay for my friends?
-      %dd
-        %p Not yet, sorry.
+  %dl
+    %dt Can I pay for my friends?
+    %dd
+      %p Not yet, sorry.
 
-      %dt When is my time used?
-      %dd
-        %p Your time only gets deducted when you're actually <em>playing</em> on Minefold.
+    %dt When is my time used?
+    %dd
+      %p Your time only gets deducted when you're actually <em>playing</em> on Minefold.
 
-      %dt Does my time ever expire?
-      %dd
-        %p Nope!
+    %dt Does my time ever expire?
+    %dd
+      %p Nope!
 
-    .note If you still have any questions, please <strong>don't hesitate to ask #{mail_to 'support@minefold.com'}</strong>.
+  .note If you still have any questions, please <strong>don't hesitate to ask #{mail_to 'support@minefold.com'}</strong>.
 
 
-  %article
+%article
+  %h1 Happy Campers
 
-    %h1 Happy Campers
+  #testimonials
+    .testimonial
+      %q{cite: 'https://twitter.com/technoweenie/status/139955603111018496'}
+        Really impressed with how easy
+        = link_to '@minefold', 'https://twitter.com/minefold'
+        is to play Minecraft with my son.
+      %cite
+        %img.avatar{src: '//twitter.com/api/users/profile_image/technoweenie?size=normal', width: 20, height: 20}
+        %a{href: 'https://twitter.com/technoweenie/status/139955603111018496'} @technoweenie
 
-    #testimonials
-      .testimonial
-        %q{cite: 'https://twitter.com/technoweenie/status/139955603111018496'}
-          Really impressed with how easy
-          = link_to '@minefold', 'https://twitter.com/minefold'
-          is to play Minecraft with my son.
-        %cite
-          %img.avatar{src: '//twitter.com/api/users/profile_image/technoweenie?size=normal', width: 24, height: 24}
-          %a{href: 'https://twitter.com/technoweenie/status/139955603111018496'} @technoweenie
+    .testimonial
+      %q{cite: 'https://twitter.com/qrush/status/117244523083595776'}
+        Wow, pay by the hour Minecraft with chat, live maps, and more.
+      %cite
+        %img.avatar{src: '//twitter.com/api/users/profile_image/qrush?size=normal', width: 20, height: 20}
+        %a{href: 'https://twitter.com/qrush/status/117244523083595776'} @qrush
 
-      .testimonial
-        %q{cite: 'https://twitter.com/qrush/status/117244523083595776'}
-          Wow, pay by the hour Minecraft with chat, live maps, and more.
-        %cite
-          %img.avatar{src: '//twitter.com/api/users/profile_image/qrush?size=normal', width: 24, height: 24}
-          %a{href: 'https://twitter.com/qrush/status/117244523083595776'} @qrush
+    .testimonial
+      %q
+        I have only been playing for about 30 minutes, but I am loving it so far.
+      %cite Joshua Antonishen
 
-      .testimonial
-        %q
-          I have only been playing for about 30 minutes, but I am loving it so far.
-        %cite Joshua Antonishen
-
-      .testimonial
-        %q
-          Thank you so much guys, you are so boss.
-        %cite Chris Elliott
+    .testimonial
+      %q
+        Thank you so much guys, you are so boss.
+      %cite Chris Elliott
