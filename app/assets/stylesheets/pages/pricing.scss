@@ -1,0 +1,82 @@
+#pages-pricing {
+
+  ol.time-packs {
+    @include row;
+    li {
+      @include makeColumn($ncols / 3);
+      text-align: center;
+
+      .time {
+        font-size: 24px;
+        font-weight: 600; line-height: $line * 4;
+        color: $green;
+
+        margin-bottom: $line * 2;
+      }
+
+      .price {
+        font-size: 18px;
+        color: $blue;
+      }
+
+      .rate {
+        color: darken(white, 20%);
+        font-size: 14px;
+      }
+    }
+  }
+
+  .extras {
+    text-align: center;
+  }
+
+  .btn.buy, .btn.sign-up {
+    @include columns(4);
+    @include center-block;
+    @include btn($blue, white, $green);
+    text-align: center;
+    margin-bottom: $line * 8;
+  }
+
+
+  aside {
+
+    dt {
+      color: black;
+      font-weight: 600;
+    }
+
+    .note {
+      font-size: 12px;
+      line-height: $line * 4;
+    }
+  }
+
+  #testimonials {
+    @include row;
+
+    .testimonial {
+      @include makeColumn($ncols - 3);
+      margin-bottom: $line * 2;
+
+      q {
+        color: black;
+        font-size: 16px; line-height: $line * 6;
+      }
+
+      cite {
+        display: block;
+        font-size: 12px; line-height: $line * 4;
+        margin: $line 0;
+        margin-bottom: $line;
+
+        img {
+          display: block;
+          margin: 0;
+          float: left;
+          margin-right: $gutter / 2;
+        }
+      }
+    }
+  }
+}
