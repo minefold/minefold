@@ -65,14 +65,11 @@
 
   timePacks.find('a').click (e) ->
     pack = $(@).parent('li')
-    console.log timePacks
     timePacks.removeClass('active')
     pack.addClass('active')
 
     price = pack.data('amount') / 100
     hours = pack.data('hours')
-
-    console.log price, hours
 
     aside.find('.dollar-amount').text("$" + price)
     aside.find('.hours').text(hours)
