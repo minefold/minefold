@@ -14,6 +14,7 @@
         = form.label :upload do
           Upload an existing world
           %span.optional (optional)
+
       = form.hidden_field :world_upload_id
 
       %ol
@@ -21,9 +22,18 @@
 
       = form.file_field :path
 
-      .progress{hidden}
-        .bar
-      .status{hidden}
+      #progress
+        .bar{style: 'width:65%'} 65%
+        .error
+          There was a problem with the zip file.
+          %a.retry{href: url_for} Fasdf
+        .processing
+          Processing
+          %span.filename
+          …
+        .success
+          Successfully uploaded
+          %span.filename
 
       %p.state.processing{hidden}
         %strong Processing world
@@ -35,12 +45,34 @@
 
     :javascript
       $(document).ready(function () {
-        var worldUploadView = new Mf.WorldUploadView({
-          el: $('#new-world fieldset.upload')[0],
-          text: 'Choose world archive file',
-          prefix: #{[current_user.safe_username, current_user.id, Time.now.strftime('%Y%m%d%H%M%S')].join('-').to_json},
-          worldUploadPath: #{policy_upload_path(format: :xml).to_json},
-          
+        var newWorldForm = $('form#new-world'),
+            newWorldSubmitButton = newWorldForm.find('input[type=submit]'),
+            originalSubmitButtonName = newWorldSubmitButton.val(),
+            worldUploadView = new Mf.WorldUploadView({
+              el: newWorldForm.find('fieldset.upload')[0],
+              form: newWorldForm,
+              text: 'Choose your world archive file',
+              prefix: #{[current_user.safe_username, current_user.id, Time.now.strftime('%Y%m%d%H%M%S')].join('-').to_json},
+              worldUploadPolicyPath: #{policy_upload_path(format: :xml).to_json},
+              worldUploadPath: #{upload_path.to_json}
+            });
+
+        newWorldForm.submit(function(e) {
+          if(newWorldSubmitButton.is(':disabled')) {
+            e.preventDefault();
+          } else {
+            $(window).off('beforeunload');
+          }
+        });
+
+        newWorldForm.bind('upload:started', function() {
+          newWorldSubmitButton.attr('disabled', true).val('Waiting for upload to finish');
+        });
+
+        newWorldForm.bind('upload:finished', function() {
+          newWorldSubmitButton
+            .attr('disabled', false)
+            .val(originalSubmitButtonName);
         });
       });
 

@@ -15,6 +15,46 @@ form#new-world, form#edit-world {
       @include btn($blue, white, $green);
     }
 
+    #progress {
+      background-color: darken(white, 5%);
+      font-weight: 900;
+      color: white;
+      line-height: $line * 6;
+
+      .bar, .error, .processing, .success {
+        display: none;
+        padding: $line $gutter;
+        @include box-sizing(border-box);
+      }
+
+      &.started .bar {
+        display: block;
+        background-color: $blue;
+        text-align: right;
+        overflow: hidden;
+        display: relative;
+        min-width: $gutter * 3;
+      }
+
+      &.failed .error {
+        display: block;
+        background-color: $red;
+      }
+
+      &.uploaded .processing {
+        display: block;
+        color: darken(white, 60%);
+        padding-left: $gutter + 16px + ($gutter / 2);
+        background: url(image-path('spinner.gif')) no-repeat $gutter center;
+      }
+
+      &.succeeded .success {
+        display: block;
+        padding-left: $gutter + 16px + ($gutter / 2);
+        background: $green url(image-path('icons/tick.png')) no-repeat $gutter center;
+      }
+    }
+
     ol {
       list-style-type: decimal;
       color: rgba(black, 0.4);

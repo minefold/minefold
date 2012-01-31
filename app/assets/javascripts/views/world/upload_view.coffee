@@ -2,72 +2,85 @@
 
 class Mf.WorldUploadView extends Backbone.View
   @maxFileSize: 1 * 1024 * 1024 * 1024 # 1 Gb
+  events:
+    '.error a.retry': 'retry'
 
   initialize: (options) ->
+    @form = options.form
     @worldUploadPath = options.worldUploadPath
 
     $(@el).find('input[type=file]').s3upload
-      prefix: options.prefix
       text: options.text
-      signature_url: options.signature_url
+      prefix: options.prefix
+      signature_url: options.worldUploadPolicyPath
       submit_on_all_complete: false
+      file_types: [['Archives', '*.zip']]
+
       onselect: @select
       onstart: @start
       onprogress: @progress
+      onerror: @error
+      oncomplete: @complete
       onrollover: @rollOver
       onrollout: @rollOut
 
-    @button = $(@el).find('input#world_path')
+    @button = @$('input#world_path')
+    @progress = @$('#progress')
+
+  rollOver: =>
+    @button.addClass 'hover'
+
+  rollOut: =>
+    @button.removeClass 'hover'
 
   select: (info, swf) =>
     if parseInt(info.size) < @constructor.maxFileSize
+      @progress.find('.filename').text(info.name)
       swf.upload()
-      $('#world_upload_path').val "Uploading #{info.name}"
       false
 
-  rollOver: => @button.addClass 'hover'
-  rollOut: => @button.removeClass 'hover'
+  unloadMsg = ->'Are you sure you want to leave? Your upload will be lost.'
 
   start: =>
-    $('p.state').hide()
-    $('.progress').show()
-    $('.status').show()
-    # trigger 'upload-in-progress'
+    @button.hide()
+
+    $(window).on 'beforeunload', unloadMsg
+
+    @progress.attr('class', 'started')
+    @form.trigger 'upload:started'
 
   progress: (progress, info) =>
-    percent = Math.floor(progress * 100)
-    $('form .progress .bar').css width: "#{percent}%"
-    $('.status').text "#{percent}%"
+    percent = "#{Math.floor(progress * 100)}%"
+    @progress.find('.bar').css(width: percent).text(percent)
     false
 
   error: (msg) =>
-    $('.status').addClass('error').text(msg)
-    # trigger 'upload-failed'
+    @progress.find('.error').text(msg)
+
+    $(window).off 'beforeunload', unloadMsg
+
+    @progress.attr 'class', 'failed'
+    @form.trigger 'upload:finished'
+
+  retry: =>
+    @progress.attr('class', '')
+    @buttn.show()
 
   complete: (info) =>
-    $('.progress').add($('.status')).slideUp()
-    $('#world_upload_path').val('Processing...')
-    $('form .processing').show()
+    @progress.attr 'class', 'uploaded'
 
     $.ajax
       type: 'POST'
       url: @worldUploadPath
       data: info
       dataType: 'json'
-      success: (data) ->
+      success: (data) =>
         channel_name = 'WorldUpload-' + data.id
         channel = Mf.pusher.subscribe(channel_name)
 
-        channel.bind 'success', (data) ->
-          $('p.state').hide()
-          $('#world_upload_path').val('Finished')
-          $('input#world_world_upload_id').val(data.world_upload.id)
-          # uploadForm.trigger 'upload-succeeded'
+        channel.bind 'success', (data) =>
+          @progress.attr 'class', 'succeeded'
+          @$('input#world_world_upload_id').val(data.world_upload.id)
+          @form.trigger 'upload:finished'
 
-        channel.bind 'error', (message) ->
-          $('p.state').hide()
-          $('#world_upload_path').val('Upload your world')
-          $('.error .message').text(message)
-          $('.error').show()
-          $('.note').show()
-          # form.trigger 'upload-failed'
+        channel.bind 'error', @error
