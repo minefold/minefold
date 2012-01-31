@@ -9,10 +9,8 @@ class Mf.WorldRouter extends Backbone.Router
   initialize: (options) ->
     @world = options.world
 
-    @mapView = new Mf.WorldMapView(
-      el: $('#backside')[0]
-      model: @world
-    )
+    @mapView = new Mf.WorldMapView(model: @world)
+    $('#backside').append @mapView.el
 
   map: ->
     if @world.isMapped()
