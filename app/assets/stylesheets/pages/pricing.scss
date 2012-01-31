@@ -1,5 +1,11 @@
 #pages-pricing {
 
+  #masthead h1 small {
+    color: darken(white, 20%);
+    font-weight: 200;
+    font-size: 16px;
+  }
+
   #features {
     @include row;
     margin-bottom: $line * 4;
@@ -30,6 +36,7 @@
 
   #products {
     @include row;
+    margin-bottom: $line * 8;
 
     .product {
       @include makeColumn(4);
@@ -87,10 +94,6 @@
             font-weight: 600;
           }
         }
-      }
-
-      &:hover {
-        border-color: $blue;
       }
     }
   }

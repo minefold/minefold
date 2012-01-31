@@ -11,7 +11,6 @@ Minefold::Application.routes.draw do
     '/press'   => :press,
     '/pricing' => :pricing,
     '/privacy' => :privacy,
-    '/store'   => :store,
     '/terms'   => :terms
   }.each do |url, name|
     get url, :controller => 'pages',:action => name, :as => "#{name}_page"
@@ -36,7 +35,7 @@ Minefold::Application.routes.draw do
     get  '/confirm/:confirmation_token' => 'confirmations#show', :as => :confirmation
 
     resource :account, :only => [:edit, :update], :path_names => {:edit => '/'} do
-      get :time
+      get :pro
       get :notifications
     end
   end
