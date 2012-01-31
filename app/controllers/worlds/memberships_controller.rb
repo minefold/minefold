@@ -34,7 +34,7 @@ class Worlds::MembershipsController < ApplicationController
     WorldMailer.membership_created(world.id, membership.id).deliver
     track 'added member'
 
-    respond_with membership, location: user_world_path(world.creator, world)
+    respond_with membership, location: user_world_members_path(world.creator, world)
   end
 
 end

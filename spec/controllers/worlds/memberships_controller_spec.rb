@@ -3,51 +3,52 @@ require 'spec_helper'
 describe Worlds::MembershipsController do
   render_views
 
-  let(:world)   { Fabricate(:world) }
+  let(:world) { Fabricate(:world) }
 
-  context 'signed in' do
+  describe '#create' do
     signin_as { world.creator }
 
-    describe 'add non existant user' do
-      it "should 404" do
-        post :create, user_id: world.creator.slug, world_id: world.slug, id: BSON::ObjectId.new
+    it "doesn't add non existant users" do
+      post :create, user_id: world.creator.slug, world_id: world.slug, id: BSON::ObjectId.new
 
-        response.should be_not_found
-      end
+      # TODO Not the proper response (should be 422)
+      response.should be_not_found
     end
 
-    describe 'add real user' do
-      let(:user) { Fabricate(:user) }
+    it "adds a member to world" do
+      user = Fabricate(:user)
 
-      it "should add member to world" do
-        post :create, user_id: world.creator.slug, world_id: world.slug, id: user.id
+      post :create, user_id: world.creator.slug, world_id: world.slug, id: user.id
 
-        world.reload
-        world.members.should include(user)
-      end
+      # TODO Move out to another spec
+      response.should redirect_to(user_world_members_path(world.creator, world))
 
-    end
-    
-    describe '#search' do
-      context 'searching potential user' do
-        let(:potential_user) { Fabricate :user }
-        
-        it "should return user id" do
-          get :search, user_id: world.creator.slug, world_id: world.slug, username: potential_user.username, format: :json
-        
-          body = JSON.parse response.body
-          body['id'].should == potential_user.id.to_s
-        end
-      end
-      
-      context 'searching user already in list' do
-        it "should return empty" do
-          get :search, user_id: world.creator.slug, world_id: world.slug, username: world.creator.username, format: :json
-           
-          response.body.should == '{}'
-        end
-      end
+      world.reload
+      world.members.should include(user)
     end
   end
 
+
+  describe '#search' do
+    signin_as { world.creator }
+
+    context 'searching for a potential user' do
+      let(:potential_user) { Fabricate :user }
+
+      it "returns the user's id" do
+        get :search, user_id: world.creator.slug, world_id: world.slug, username: potential_user.username, format: :json
+
+        body = JSON.parse(response.body)
+        body['id'].should == potential_user.id.to_s
+      end
+    end
+
+    context 'searching user who already in list' do
+      it "returns empty" do
+        get :search, user_id: world.creator.slug, world_id: world.slug, username: world.creator.username, format: :json
+
+        response.body.should == '{}'
+      end
+    end
+  end
 end
