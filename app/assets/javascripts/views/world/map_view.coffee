@@ -15,7 +15,7 @@ class MapProjection
     new google.maps.LatLng(lat, lng)
 
 class Mf.WorldMapView extends Backbone.View
-  id: 'map'
+  className: 'map'
   model: Mf.World
 
   defaults:
@@ -48,7 +48,7 @@ class Mf.WorldMapView extends Backbone.View
 
     @options.center or= if spawn then @worldToLatLng(spawn.x, spawn.z, spawn.y) else @worldToLatLng(0, 0, 68)
 
-    @map = new google.maps.Map($(@el).find('.map')[0], @options)
+    @map = new google.maps.Map(@el, @options)
     google.maps.event.addListener @map, 'center_changed', @persistViewport
     google.maps.event.addListener @map, 'zoom_changed', @persistViewport
 
