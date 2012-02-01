@@ -9,7 +9,7 @@ describe UserMailer do
     its(:to) { include(user.email) }
 
     its(:body) { include(user.username) }
-    its(:body) { include(time_account_url) }
+    its(:body) { include(pro_account_url) }
   end
 
   describe "welcome" do
