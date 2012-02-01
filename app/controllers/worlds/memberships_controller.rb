@@ -24,7 +24,7 @@ class Worlds::MembershipsController < ApplicationController
     authorize! :operate, world
 
     @user = User
-      .potential_members_for(world)
+      # .potential_members_for(world)
       .find(params[:id])
 
     membership = world.add_member(@user)
