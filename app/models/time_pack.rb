@@ -1,17 +1,17 @@
-class TimePack < Struct.new(:amount, :hours)
+class TimePack < Struct.new(:id, :months, :cents)
   def self.all
-    [new(595, 20), new(1995, 100), new(4995, 500)]
+    [ new('beta-3m-1500', 3, 1500), 
+      new('beta-6m-2500', 6, 2500), 
+      new('beta-12m-4500', 12, 4500) ]
   end
 
-  def self.find(hours)
-    all.find {|p| p.hours == hours}
+  def self.find(id)
+    all.find {|p| p.id == id}
   end
 
   def rate
-    (amount / hours.to_f).round
+    dollars / months.to_f
   end
-
-  alias_method :cents, :amount
 
   def dollars
     cents / 100.0

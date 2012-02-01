@@ -76,19 +76,18 @@ class User
          :validatable,
          :token_authenticatable
 
-
   field :admin, type: Boolean, default: false
 
   field :host, default: 'pluto.minefold.com'
 
   field :unlimited, type: Boolean, default: false
+  field :plan_expires_at, type: DateTime
 
   field :credits, type: Integer, default: (FREE_HOURS.hours / BILLING_PERIOD)
   validates_numericality_of :credits, greater_than_or_equal_to: 0
 
   field :minutes_played, type: Integer, default: 0
   validates_numericality_of :minutes_played, greater_than_or_equal_to: 0
-
 
   field :last_played_at, type: DateTime
 
@@ -153,16 +152,25 @@ class User
   def create_charge!(stripe_token, pack)
     Stripe::Charge.create(
       card: stripe_token,
-      amount: pack.amount,
+      amount: pack.cents,
       currency: 'usd',
-      description: "#{customer_description}: #{pack.hours}h"
+      description: "#{pack.months} months of Minefold Pro"
     )
-  rescue StripeError
+  rescue Stripe::StripeError
     false
   end
 
-  def buy_time!(stripe_token, pack)
-    create_charge!(stripe_token, pack) and increment_hours!(pack.hours)
+  def buy_pack!(stripe_token, pack)
+    charged = create_charge!(stripe_token, pack)
+    increased = extend_plan_expiry!(pack.months)
+    
+    charged and increased
+  end
+  
+  def extend_plan_expiry!(months)
+    current_expiry = plan_expires_at || Time.now
+    self.plan_expires_at = current_expiry + months.months
+    save!
   end
 
   def increment_hours!(n)
