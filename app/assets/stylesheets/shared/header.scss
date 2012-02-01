@@ -10,7 +10,7 @@ header {
     width: $width + ($gutter * 2);
   }
 
-  h1 a, ol li a, ol li.time {
+  h1 a, ol li a, ol li.time, ol li.sweet {
     padding: ($line * 2) $gutter;
   }
 
@@ -71,7 +71,7 @@ header {
         color: white;
       }
 
-      &.signin, &.signup, &.user, &.time, &.buy {
+      &.signin, &.signup, &.user, &.time, &.upgrade, &.sweet {
         float: right;
         position: relative;
       }

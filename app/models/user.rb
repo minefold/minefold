@@ -83,6 +83,10 @@ class User
   field :unlimited, type: Boolean, default: false
   field :plan_expires_at, type: DateTime
 
+  def pro?
+    not plan_expires_at.nil? and plan_expires_at.future?
+  end
+
   field :credits, type: Integer, default: (FREE_HOURS.hours / BILLING_PERIOD)
   validates_numericality_of :credits, greater_than_or_equal_to: 0
 
@@ -163,10 +167,10 @@ class User
   def buy_pack!(stripe_token, pack)
     charged = create_charge!(stripe_token, pack)
     increased = extend_plan_expiry!(pack.months)
-    
+
     charged and increased
   end
-  
+
   def extend_plan_expiry!(months)
     current_expiry = plan_expires_at || Time.now
     self.plan_expires_at = current_expiry + months.months

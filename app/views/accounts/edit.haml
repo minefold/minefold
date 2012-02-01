@@ -21,6 +21,12 @@
     = avatar_tag current_user, :large, width: 60, height: 60
     .hint Change your avatar at #{link_to 'Minecraft.net', 'http://minecraft.net/profile', target: '_blank'}
 
+  - if current_user.pro?
+    %fieldset.pro
+      %h3 Pro Account
+      Expires in #{time_ago_in_words current_user.plan_expires_at} from now (#{current_user.plan_expires_at.strftime("%d/%m/%Y")}).
+
+
   %fieldset.host
     %h3 Server Host
     = current_user.host
