@@ -60,6 +60,14 @@ namespace :db do
       puts "\nPIVOTS TO RUN" if pivoter.pivots_to_run.any?
       pivoter.pivots_to_run.each {|pivot| log pivot }
     end
+    
+    desc "Run the last recorded pivot again"
+    task :rerun_last => :environment do
+      pivot = pivoter.previous_pivots.last
+      start = Time.now
+      load(pivot)
+      puts "#{pivot} - #{(Time.now - start).to_i}s"
+    end
 
     def log(str)
       puts " * #{str}"
