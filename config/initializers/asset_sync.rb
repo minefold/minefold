@@ -9,4 +9,6 @@ AssetSync.configure do |config|
 
   # Automatically replace files with their equivalent gzip compressed version
   config.gzip_compression = true
+
+  config.fail_silently = false
 end
