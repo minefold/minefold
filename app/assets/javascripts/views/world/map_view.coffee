@@ -31,16 +31,18 @@ class Mf.WorldMapView extends Backbone.View
 
   initialize: (options) ->
     # TODO Refactor
-    rawHistory = localStorage.getItem(@model.id)
+    if window.localStorage?
+      rawHistory = localStorage.getItem(@model.id)
 
-    if rawHistory?
-      history = JSON.parse(rawHistory)
-      history.center = new google.maps.LatLng(history.lat, history.lng)
+      if rawHistory?
+        history = JSON.parse(rawHistory)
+        history.center = new google.maps.LatLng(history.lat, history.lng)
 
-      delete history.lat
-      delete history.lng
+        delete history.lat
+        delete history.lng
 
-    @defaults = _.extend @defaults, history
+      @defaults = _.extend @defaults, history
+
     @options = _.extend @defaults, options.map
     @options = _.extend @options, @model.get('map_data') or { }
 
@@ -49,10 +51,13 @@ class Mf.WorldMapView extends Backbone.View
     @options.center or= if spawn then @worldToLatLng(spawn.x, spawn.z, spawn.y) else @worldToLatLng(0, 0, 68)
 
     @map = new google.maps.Map(@el, @options)
-    google.maps.event.addListener @map, 'center_changed', @persistViewport
-    google.maps.event.addListener @map, 'zoom_changed', @persistViewport
 
-    @addMarker spawn, 'Spawn', '//google-maps-icons.googlecode.com/files/home.png' if spawn
+    if window.localStorage?
+      google.maps.event.addListener @map, 'center_changed', @persistViewport
+      google.maps.event.addListener @map, 'zoom_changed', @persistViewport
+
+    if spawn?
+      @addMarker spawn, 'Spawn', '//google-maps-icons.googlecode.com/files/home.png'
 
 
   render: ->

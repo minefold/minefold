@@ -88,7 +88,7 @@ class User
   end
 
   field :credits, type: Integer, default: (FREE_HOURS.hours / BILLING_PERIOD)
-  validates_numericality_of :credits, greater_than_or_equal_to: 0
+  validates_numericality_of :credits
 
   field :minutes_played, type: Integer, default: 0
   validates_numericality_of :minutes_played, greater_than_or_equal_to: 0
