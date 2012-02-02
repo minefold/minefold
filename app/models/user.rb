@@ -158,17 +158,14 @@ class User
       card: stripe_token,
       amount: pack.cents,
       currency: 'usd',
-      description: "#{pack.months} months of Minefold Pro"
+      description: "#{pack.months} months of Minefold Pro for #{username} (#{email})"
     )
   rescue Stripe::StripeError
     false
   end
 
   def buy_pack!(stripe_token, pack)
-    charged = create_charge!(stripe_token, pack)
-    increased = extend_plan_expiry!(pack.months)
-
-    charged and increased
+    create_charge!(stripe_token, pack) and extend_plan_expiry!(pack.months)
   end
 
   def extend_plan_expiry!(months)

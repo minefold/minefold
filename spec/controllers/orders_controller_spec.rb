@@ -10,7 +10,7 @@ describe OrdersController do
         card: 'token666',
         amount: 1500,
         currency: 'usd',
-        description: "3 months of Minefold Pro"
+        description: "3 months of Minefold Pro for #{current_user.username} (#{current_user.email})"
       ) { true }
       
       Timecop.freeze
