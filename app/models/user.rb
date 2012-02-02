@@ -11,7 +11,45 @@ class User
   REFERRAL_CODE_LENGTH = 6
   REFERRAL_HOURS = 2
 
+
   field :email, type: String, null: true
+  field :username,       type: String
+  field :safe_username,  type: String
+  slug  :username,       index: true
+
+  field :host,           default: 'pluto.minefold.com'
+
+  field :unlimited,      type: Boolean, default: false
+
+  field :credits,        type: Integer, default: (FREE_HOURS.hours / BILLING_PERIOD)
+  field :minutes_played, type: Integer, default: 0
+
+  # attr_accessor :stripe_token
+  # field :stripe_id,               type: String
+  # embeds_one :card
+
+  field :referral_code,   type: String, default: -> {
+    self.class.free_referral_code
+  }
+
+  validates_uniqueness_of :referral_code
+
+  belongs_to :referrer,  class_name: 'User', inverse_of: :referrals
+  has_many   :referrals, class_name: 'User', inverse_of: :referrer
+
+
+  belongs_to :current_world, class_name: 'World', inverse_of: nil
+  has_many :created_worlds, class_name: 'World', inverse_of: :creator
+
+  has_and_belongs_to_many :opped_worlds,
+                          inverse_of: :ops,
+                          class_name: 'World'
+
+  attr_accessor :email_or_username
+
+
+# Finders
+
   index :email, unique: true
   scope :by_email, ->(email) {
     where(email: sanitize_email(email))
@@ -66,6 +104,7 @@ class User
   field :unconfirmed_email, type: String # Only if using reconfirmable
 
   field :authentication_token, type: String
+  index :authentication_token, unique: true
 
   devise :registerable,
          :database_authenticatable,
@@ -216,14 +255,6 @@ class User
       c = rand(36 ** REFERRAL_CODE_LENGTH).to_s(36)
     end while self.where(referral_code: c).exists?
     c
-  end
-
-  def member?(world)
-    world.memberships.any? {|m| m.user == self}
-  end
-
-  def op?(world)
-    world.memberships.any? {|m| m.user == self && m.role == Memberships::OP}
   end
 
   def member?(world)
