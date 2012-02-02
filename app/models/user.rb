@@ -84,7 +84,7 @@ class User
   field :plan_expires_at, type: DateTime
 
   def pro?
-    not plan_expires_at.nil? and plan_expires_at.future?
+    unlimited? or (not plan_expires_at.nil? and plan_expires_at.future?)
   end
 
   field :credits, type: Integer, default: (FREE_HOURS.hours / BILLING_PERIOD)
