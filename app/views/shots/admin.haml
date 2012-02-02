@@ -1,0 +1,29 @@
+%style
+  :plain
+    .shot img { float: left; height: 135px; margin-bottom: 20px; margin-right: 20px }
+    .shot form { display: inline-block }
+    .shot input[type=text] { width: 630px }
+
+%p yo. client available from: http://minefold.com/client
+
+- if @shots.empty?
+  %p upload some shots
+
+- for shot in @shots
+  %div.shot
+    %img{src: shot.file.url, width: 240}
+    = form_tag "/shots/#{shot.id}", method: :put, name: "shot_#{shot.id}" do
+      %input{type: "hidden", name: "public", value: shot.public}
+      %input{type: "text", placeholder: "Title/description/caption", name: "title", value: shot.title}
+
+    = form_tag "/shots/#{shot.id}", method: :delete do
+      %button{type: "submit"} Delete
+
+    - if shot.public?
+      %button{onclick: "$(shot_#{shot.id}).find('[name=public]').val(0); shot_#{shot.id}.submit()"} Make Private
+
+    %button{onclick: "shot_#{shot.id}.submit()"} Save
+
+    - if not shot.public?
+      %button{onclick: "$(shot_#{shot.id}).find('[name=public]').val(1); shot_#{shot.id}.submit()"} Save and Publicize
+

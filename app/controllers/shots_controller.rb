@@ -35,6 +35,29 @@ class ShotsController < ApplicationController
     render :show
   end
 
+  prepend_before_filter :authenticate_user!, :only => :admin
+  def admin
+    @shots = Shot.all(
+      conditions: { creator_id: current_user.id},
+      sort: [[:created_at, :desc]]
+    )
+    render :admin
+  end
+
+  def update
+    @shot = Shot.find params[:id]
+    @shot.title = params[:title]
+    @shot.public = params[:public]
+    @shot.save
+    redirect_to '/shots/admin'
+  end
+
+  def destroy
+    @shot = Shot.find params[:id]
+    @shot.destroy
+    redirect_to '/shots/admin'
+  end
+
   # ---
 
   def shots_per_page

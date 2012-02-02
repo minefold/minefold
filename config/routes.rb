@@ -67,7 +67,12 @@ Minefold::Application.routes.draw do
   end
 
   get '/shots' => 'shots#everyone'
+
   get '/shots/:id' => 'shots#show', :id => /[A-Fa-f0-9]{24}\-.*/
+  put '/shots/:id' => 'shots#update', :id => /[A-Fa-f0-9]{24}/
+  delete '/shots/:id' => 'shots#destroy', :id => /[A-Fa-f0-9]{24}/
+
+  get '/shots/admin' => 'shots#admin'
   get '/shots/:user_slug' => 'shots#for_user'
 
   devise_scope :user do
