@@ -7,7 +7,7 @@ class Api::ShotsController < Api::ApiController
     sha = Digest::SHA1.hexdigest params[:shot].tempfile.read
 
     # gaurd against confused client
-    if Shot.where(sha: sha, creator_id: current_user.id).first
+    if Shot.unscoped.where(sha: sha, creator_id: current_user.id).first
       return render status: :ok, text: "already uploaded: #{sha}\n"
     end
 
@@ -23,7 +23,7 @@ class Api::ShotsController < Api::ApiController
   end
 
   def index
-    shots = Shot.where(creator_id: current_user.id)
+    shots = Shot.unscoped.where(creator_id: current_user.id)
     render status: :ok, json: {shots: shots}
   end
 

@@ -2,6 +2,7 @@ class Shot
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::Slug
+  include Mongoid::Paranoia
 
   mount_uploader :file, ShotUploader
 
