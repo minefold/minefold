@@ -89,6 +89,7 @@ Minefold::Application.routes.draw do
   end
 
   get '/shots' => 'shots#everyone'
+  get '/shots/:user_slug' => 'shots#for_user'
 
   namespace :api do
     resources :shots, :only => [:index, :create]
