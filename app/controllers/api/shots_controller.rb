@@ -22,4 +22,9 @@ class Api::ShotsController < Api::ApiController
     render status: :ok, text: "uploaded: #{sha}\n"
   end
 
+  def index
+    shots = Shot.where(creator_id: current_user.id)
+    render status: :ok, json: {shots: shots}
+  end
+
 end

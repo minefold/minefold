@@ -89,7 +89,7 @@ Minefold::Application.routes.draw do
   end
 
   namespace :api do
-    resources :shots, :only => [:create]
+    resources :shots, :only => [:index, :create]
   end
 
 end
