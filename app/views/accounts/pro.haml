@@ -88,7 +88,7 @@
     timePacks.removeClass('active')
     pack.addClass('active')
 
-    price = pack.data('cents') / 100
+    price = pack.data('amount') / 100
     months = pack.data('months')
 
     aside.find('.dollar-amount').text("$" + price)
