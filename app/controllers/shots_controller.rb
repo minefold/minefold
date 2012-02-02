@@ -15,8 +15,7 @@ class ShotsController < ApplicationController
   end
 
   def for_user
-    @user = User.where(:slug => params[:user_slug]).first
-    not_found if @user.nil?
+    @user = User.find_by_slug!(params[:user_slug])
 
     @page = params[:page].to_i
     @pages = (Shot.count/shots_per_page.to_f).ceil
@@ -32,9 +31,7 @@ class ShotsController < ApplicationController
 
   def show
     id = params[:id].split('-').first
-    @shot = Shot.find(id)
-    not_found if @shot.nil?
-
+    @shot = Shot.find(id) or raise Mongoid::Errors::DocumentNotFound
     render :show
   end
 

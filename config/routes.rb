@@ -66,6 +66,10 @@ Minefold::Application.routes.draw do
     end
   end
 
+  get '/shots' => 'shots#everyone'
+  get '/shots/:id' => 'shots#show', :id => /[A-Fa-f0-9]{24}\-.*/
+  get '/shots/:user_slug' => 'shots#for_user'
+
   devise_scope :user do
     resources :users, :path => '/', :only => [:show] do
       resources :worlds, :path => '/', :except => [:index], :path_names => {:edit => 'settings'} do
@@ -87,12 +91,6 @@ Minefold::Application.routes.draw do
       end
     end
   end
-
-  get '/shots' => 'shots#everyone'
-  # 4f2a0b59801f9131f8000001-
-  get '/shots/:id' => 'shots#show', :constraints => /[\da-f]{24}/
-  get '/shots/:user_slug' => 'shots#for_user'
-
 
   namespace :api do
     resources :shots, :only => [:index, :create]
