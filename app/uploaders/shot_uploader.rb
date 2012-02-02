@@ -6,7 +6,7 @@ class ShotUploader < CarrierWave::Uploader::Base
   end
 
   def filename
-    model.sha + ".jpeg"
+    model.sha + ".png"
   end
 
   def store_dir
@@ -14,7 +14,7 @@ class ShotUploader < CarrierWave::Uploader::Base
   end
 
   def extension_white_list
-    %w(jpeg)
+    %w(png)
   end
 
 end
