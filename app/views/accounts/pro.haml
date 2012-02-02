@@ -81,18 +81,14 @@
   form = $('form#new-order')
   aside = form.find('aside')
 
-  timePacksData = [
-    {months: 3, amount: 1500},
-    {months: 6, amount: 2500},
-    {months: 12, amount: 4500}
-  ]
+  timePacksData = #{TimePack.all.to_json}
 
   timePacks.find('a').click (e) ->
     pack = $(@).parent('li')
     timePacks.removeClass('active')
     pack.addClass('active')
 
-    price = pack.data('amount') / 100
+    price = pack.data('cents') / 100
     months = pack.data('months')
 
     aside.find('.dollar-amount').text("$" + price)
@@ -122,7 +118,8 @@
 
     months = parseInt(selectedPack.data('months'), 10)
 
-    amount = _(timePacksData).find((pack) -> pack.hours is hours).amount
+    pack = _(timePacksData).find((pack) -> pack.months is months)
+    amount = pack.cents
 
     # Protects against DOM modification attacks
     return alert('Nice try buddy') unless amount?
@@ -141,6 +138,11 @@
         $('<input></input>')
           .attr(type: 'hidden', name: 'stripe_token')
           .val(token)
+          .appendTo(form)
+
+        $('<input></input>')
+          .attr(type: 'hidden', name: 'pack_id')
+          .val(pack.id)
           .appendTo(form)
 
         form.get(0).submit()
