@@ -87,4 +87,9 @@ Minefold::Application.routes.draw do
       end
     end
   end
+
+  namespace :api do
+    resources :shots, :only => [:create]
+  end
+
 end
