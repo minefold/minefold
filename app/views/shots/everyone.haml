@@ -1,0 +1,13 @@
+/ %h1 Latest Shots on Minefold
+
+%div.shots
+  - for shot in @shots
+    %div.shot
+      %a.shot-link{href: "/shots/#{shot.id}-#{shot.slug}"}
+        %img{src: shot.file.url, width: 300, height: 168}
+        - unless shot.title.blank?
+          %h3.title= shot.title
+        / todo: format
+        %h5.date= shot.created_at
+      %h4.user
+        %a{href: "/shots/#{shot.creator.slug}"}=shot.creator.username

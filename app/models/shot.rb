@@ -1,15 +1,17 @@
 class Shot
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::Slug
 
   mount_uploader :file, ShotUploader
 
   belongs_to :creator, class_name: 'User'
 
-  field :title
-  field :sha
-  field :original_filename
+  field :title, type: String
+  field :sha, type: String, index: true
+  field :original_filename, type: String
+  field :public, type: Boolean
 
-  index :sha
+  slug :title, index: true
 
 end
