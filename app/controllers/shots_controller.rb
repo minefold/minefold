@@ -30,6 +30,14 @@ class ShotsController < ApplicationController
     render :for_user
   end
 
+  def show
+    id = params[:id].split('-').first
+    @shot = Shot.find(id)
+    not_found if @shot.nil?
+
+    render :show
+  end
+
   # ---
 
   def shots_per_page
