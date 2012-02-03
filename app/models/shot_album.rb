@@ -8,4 +8,6 @@ class ShotAlbum
   has_many :shots, dependent: :nullify
 
   field :name, type: String, index: true
+  slug  :name, index: true
+
 end
