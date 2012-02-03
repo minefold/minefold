@@ -76,7 +76,7 @@ Minefold::Application.routes.draw do
   delete '/shots/albums/:id' => 'shot_albums#destroy'
 
   get '/shots/admin' => 'shots#admin'
-  get '/shots/admin/albums/:id' => 'shot_albums#show'
+  get '/shots/admin/albums/:id' => 'shot_albums#admin'
 
   get '/shots' => 'shots#everyone'
   get '/shots/:user_slug' => 'shots#for_user'

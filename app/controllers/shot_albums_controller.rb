@@ -9,7 +9,7 @@ class ShotAlbumsController < ApplicationController
     redirect_to '/shots/admin'
   end
 
-  def show
+  def admin
     @shot_album = ShotAlbum.find(params[:id])
     @shot_albums = ShotAlbum.all(
       conditions: { creator_id: current_user.id},
