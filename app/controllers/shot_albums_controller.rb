@@ -26,7 +26,7 @@ class ShotAlbumsController < ApplicationController
       conditions: { creator_id: current_user.id},
       sort: [[:created_at, :desc]]
     )
-    render 'shots/album'
+    render 'shots/admin_album'
   end
 
 end
