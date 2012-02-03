@@ -115,6 +115,8 @@ class User
          :validatable,
          :token_authenticatable
 
+# Other
+
   field :admin, type: Boolean, default: false
 
   field :host, default: 'pluto.minefold.com'
@@ -138,6 +140,9 @@ class User
     not last_played_at.nil?
   end
 
+  has_many :shot_albums, inverse_of: :creator
+  has_many :shots, inverse_of: :creator
+
 
   field :notifications, type: Hash, default: ->{ Hash.new }
   field :last_world_started_mail_sent_at, type: DateTime
@@ -151,10 +156,6 @@ class User
 
   belongs_to :current_world, class_name: 'World', inverse_of: nil
   has_many :created_worlds, class_name: 'World', inverse_of: :creator
-
-  has_many :albums
-  has_many :pictures
-
 
   scope :potential_members_for, ->(world) {
     not_in(_id: world.memberships.map {|p| p.user_id})
