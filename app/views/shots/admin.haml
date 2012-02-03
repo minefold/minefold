@@ -29,3 +29,6 @@
 = form_tag "/shots/albums", method: :post, :class => 'create_album' do
   %input{type: "text", placeholder: "New Album Name", name: "name"}
   %button{type: "submit"} Create
+
+:coffeescript
+  $ -> $('.shot input[type=text]').first().focus()
