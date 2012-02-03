@@ -1,4 +1,7 @@
-/ %h1 Latest Shots on Minefold
+%h1= "Shots in #{@shot_album.name}"
+
+%p
+  %a{href: "/shots/#{@user.slug}"}=" ← all shots by #{@user.username}"
 
 %div.shots
   - for shot in @shots
@@ -9,8 +12,6 @@
           %h3.title= shot.title
         / todo: format
         %h5.date= shot.created_at
-      %h4.user
-        %a{href: "/shots/#{shot.creator.slug}"}=shot.creator.username
-      - if shot.shot_album
-        %h4.album
-          %a.album{href: "/shots/#{shot.creator.slug}/#{shot.shot_album.slug}"}= shot.shot_album.name
+        / - if shot.shot_album
+        /   %h4.album
+        /     %a.album{href: "/shots/#{shot.creator.slug}/#{shot.shot_album.slug}"}= shot.shot_album.name

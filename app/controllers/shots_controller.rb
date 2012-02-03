@@ -18,6 +18,7 @@ class ShotsController < ApplicationController
 
   def for_user
     @user = User.find_by_slug!(params[:user_slug])
+    @shot_albums = @user.shot_albums
 
     @page = params[:page].to_i
     @pages = (Shot.count/shots_per_page.to_f).ceil
@@ -29,6 +30,23 @@ class ShotsController < ApplicationController
       skip: @page * shots_per_page
     )
     render :for_user
+  end
+
+  def for_album
+    @user = User.find_by_slug!(params[:user_slug])
+    @shot_album = ShotAlbum.find_by_slug!(params[:shot_album_slug])
+
+    @page = params[:page].to_i
+    @pages = (Shot.count/shots_per_page.to_f).ceil
+
+    @shots = Shot.all(
+      conditions: { public: true, creator_id: @user.id, :shot_album_id => @shot_album.id},
+      sort: [[:created_at, :desc]],
+      limit: shots_per_page,
+      skip: @page * shots_per_page
+    )
+
+    render :for_album
   end
 
   def show
