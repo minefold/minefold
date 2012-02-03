@@ -35,11 +35,13 @@ class Worlds::MembershipRequestsController < ApplicationController
     membership_request.approve
     membership_request.destroy
 
-    WorldMailer
-      .membership_request_approved(world.id, membership_request.user.id)
-      .deliver
+    if world.save!
+      WorldMailer
+        .membership_request_approved(world.id, membership_request.user.id)
+        .deliver
 
-    track 'approved membership request'
+      track 'approved membership request'
+    end
 
     respond_with world, location: user_world_path(world.creator, world)
   end
