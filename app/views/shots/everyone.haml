@@ -14,3 +14,9 @@
       - if shot.shot_album
         %h4.album
           %a.album{href: "/shots/#{shot.creator.slug}/#{shot.shot_album.slug}"}= shot.shot_album.name
+
+%p.paginator
+  = "pages: "
+  - for page_num in 1..@pages
+    %a{href: "?page=#{page_num}", class: ("active" if @page == page_num)}= page_num
+    = "･" unless page_num == @pages

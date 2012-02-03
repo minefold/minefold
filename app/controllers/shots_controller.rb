@@ -5,13 +5,15 @@ class ShotsController < ApplicationController
 
   def everyone
     @page = params[:page].to_i
+    @page = 1 if @page.zero?
+
     @pages = (Shot.count/shots_per_page.to_f).ceil
 
     @shots = Shot.all(
       conditions: { public: true },
       sort: [[:created_at, :desc]],
       limit: 18,
-      skip: @page * shots_per_page
+      skip: (@page-1) * shots_per_page
     )
     render :everyone
   end
