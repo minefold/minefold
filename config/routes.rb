@@ -74,6 +74,7 @@ Minefold::Application.routes.draw do
 
   post '/shots/albums' => 'shot_albums#create'
   delete '/shots/albums/:id' => 'shot_albums#destroy'
+  put '/shots/albums/:id' => 'shot_albums#update'
 
   get '/shots/admin' => 'shots#admin'
   get '/shots/admin/albums/:id' => 'shot_albums#admin'

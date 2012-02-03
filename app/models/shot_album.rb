@@ -10,4 +10,6 @@ class ShotAlbum
   field :name, type: String, index: true
   slug  :name, index: true
 
+  field :description, type: String
+
 end

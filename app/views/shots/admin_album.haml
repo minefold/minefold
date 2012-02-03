@@ -1,5 +1,13 @@
 %h2= "Shots in #{@shot_album.name}"
 
+= form_tag "/shots/albums/#{@shot_album.id}", method: :put do
+  %textarea{name: :description, placeholder: "Describe your album. If this world has been upload to Minefold include a link to it here so that other people can check out its map and fork and do other Minefoldy things"}=@shot_album.description
+  %button{type: "submit"} Update Album Description
+
+%br
+%hr
+%br
+
 - for shot in @shot_album.shots
   = render partial: 'shots/edit_shot', :locals => { :shot => shot }
 

@@ -18,6 +18,12 @@ class ShotAlbumsController < ApplicationController
     redirect_to '/shots/admin'
   end
 
+  def update
+    @shot_album = ShotAlbum.find(params[:id])
+    @shot_album.update_attributes params.slice :name, :description
+    redirect_to "/shots/admin/albums/#{@shot_album.id}"
+  end
+
   # ---
 
   def admin
