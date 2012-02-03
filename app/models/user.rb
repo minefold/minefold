@@ -197,14 +197,6 @@ class User
   rescue OpenURI::HTTPError
   end
 
-  def async_fetch_avatar!
-    Resque.enqueue(FetchAvatarJob, id)
-  end
-
-  before_save do
-    async_fetch_avatar! if safe_username_changed?
-  end
-
   def cloned?(world)
     created_worlds.where(parent_id: world.id).exists?
   end
