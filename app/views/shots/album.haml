@@ -1,0 +1,13 @@
+%h2= "Shots in #{@shot_album.name}"
+
+- for shot in @shot_album.shots
+  = render partial: 'shots/edit_shot', :locals => { :shot => shot }
+
+= link_to "delete this album and but keep all the shots", "/shots/albums/#{@shot_album.id}?cascade=false", :method => :delete, :confirm => "for reals?"
+
+%br
+
+= link_to "delete this album and all shots in it", "/shots/albums/#{@shot_album.id}?cascade=true", :method => :delete, :confirm => "for reals?"
+
+%br
+%br

@@ -1,0 +1,31 @@
+/ %p yo. client available from: http://minefold.com/client
+
+- if @private_no_album_shots.empty?
+  %p upload some shots
+- else
+  %h2 Private shots that aint in albums
+
+- for shot in @private_no_album_shots
+  = render partial: 'edit_shot', :locals => { :shot => shot }
+
+%h2 Public shots that aint in albums
+
+- for shot in @public_no_album_shots
+  = render partial: 'edit_shot', :locals => { :shot => shot }
+
+%hr
+
+%h2 Albums
+
+%style
+  :plain
+    .create_album input[type=text] { width: 800px }
+
+%ul
+  - for shot_album in @shot_albums
+    %li
+      %a{href: "/shots/admin/albums/#{shot_album.id}"}= "#{shot_album.name} (#{shot_album.shots.count})"
+
+= form_tag "/shots/albums", method: :post, :class => 'create_album' do
+  %input{type: "text", placeholder: "New Album Name", name: "name"}
+  %button{type: "submit"} Create

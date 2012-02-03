@@ -66,6 +66,19 @@ Minefold::Application.routes.draw do
     end
   end
 
+  get '/shots' => 'shots#everyone'
+
+  get '/shots/:id' => 'shots#show', :id => /[A-Fa-f0-9]{24}\-.*/
+  put '/shots/:id' => 'shots#update', :id => /[A-Fa-f0-9]{24}/
+  delete '/shots/:id' => 'shots#destroy', :id => /[A-Fa-f0-9]{24}/
+
+  post '/shots/albums' => 'shot_albums#create'
+  delete '/shots/albums/:id' => 'shot_albums#destroy'
+
+  get '/shots/admin' => 'shots#admin'
+  get '/shots/admin/albums/:id' => 'shot_albums#show'
+  get '/shots/:user_slug' => 'shots#for_user'
+
   devise_scope :user do
     resources :users, :path => '/', :only => [:show] do
       resources :worlds, :path => '/', :except => [:index], :path_names => {:edit => 'settings'} do
@@ -87,4 +100,9 @@ Minefold::Application.routes.draw do
       end
     end
   end
+
+  namespace :api do
+    resources :shots, :only => [:index, :create]
+  end
+
 end

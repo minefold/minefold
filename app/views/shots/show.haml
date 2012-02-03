@@ -1,0 +1,17 @@
+%div.shot-header
+  - if @shot
+    %h1.title= @shot.title
+  %h2.byline
+    %span.user-byline
+      by
+      %a.user{href: "/shots/#{@shot.creator.slug}"}=@shot.creator.username
+    / - if @shot.album
+    /   %span.album-byline
+    /     in
+    /     %a.album{href: "/shots/#{@shot.albulm.slug}"}=@shot.user.username
+    %span.date-byline
+      on
+      %span.date= @shot.created_at
+
+%div.shot-body
+  %img{src: @shot.file.url, width: "100%"}
