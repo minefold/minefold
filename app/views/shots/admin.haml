@@ -1,29 +1,31 @@
+/ %p yo. client available from: http://minefold.com/client
+
+- if @private_no_album_shots.empty?
+  %p upload some shots
+- else
+  %h2 Private shots that aint in albums
+
+- for shot in @private_no_album_shots
+  = render partial: 'edit_shot', :locals => { :shot => shot }
+
+%h2 Public shots that aint in albums
+
+- for shot in @public_no_album_shots
+  = render partial: 'edit_shot', :locals => { :shot => shot }
+
+%hr
+
+%h2 Albums
+
 %style
   :plain
-    .shot img { float: left; height: 135px; margin-bottom: 20px; margin-right: 20px }
-    .shot form { display: inline-block }
-    .shot input[type=text] { width: 630px }
+    .create_album input[type=text] { width: 800px }
 
-%p yo. client available from: http://minefold.com/client
+%ul
+  - for shot_album in @shot_albums
+    %li
+      %a{href: "/shots/admin/albums/#{shot_album.id}"}= "#{shot_album.name} (#{shot_album.shots.count})"
 
-- if @shots.empty?
-  %p upload some shots
-
-- for shot in @shots
-  %div.shot
-    %img{src: shot.file.url, width: 240}
-    = form_tag "/shots/#{shot.id}", method: :put, name: "shot_#{shot.id}" do
-      %input{type: "hidden", name: "public", value: shot.public}
-      %input{type: "text", placeholder: "Title/description/caption", name: "title", value: shot.title}
-
-    = form_tag "/shots/#{shot.id}", method: :delete do
-      %button{type: "submit"} Delete
-
-    - if shot.public?
-      %button{onclick: "$(shot_#{shot.id}).find('[name=public]').val(0); shot_#{shot.id}.submit()"} Make Private
-
-    %button{onclick: "shot_#{shot.id}.submit()"} Save
-
-    - if not shot.public?
-      %button{onclick: "$(shot_#{shot.id}).find('[name=public]').val(1); shot_#{shot.id}.submit()"} Save and Publicize
-
+= form_tag "/shots/albums", method: :post, :class => 'create_album' do
+  %input{type: "text", placeholder: "New Album Name", name: "name"}
+  %button{type: "submit"} Create

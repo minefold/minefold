@@ -1,0 +1,10 @@
+#shot-albums-show, #shots-admin {
+
+  .shot { height: 200px; position: relative }
+  .shot img { float: left; margin-bottom: 20px; margin-right: 20px }
+  .shot form { display: inline-block }
+  .shot input[type=text] { width: 630px }
+  .shot select { width: 180px; margin-left: 5px }
+  .shot .controls { display: block; position:absolute; top: 55px; left: 500px }
+
+}

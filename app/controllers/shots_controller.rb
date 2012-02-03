@@ -1,6 +1,8 @@
 class ShotsController < ApplicationController
   respond_to :html
 
+  # ---
+
   def everyone
     @page = params[:page].to_i
     @pages = (Shot.count/shots_per_page.to_f).ceil
@@ -31,30 +33,50 @@ class ShotsController < ApplicationController
 
   def show
     id = params[:id].split('-').first
-    @shot = Shot.find(id) or raise Mongoid::Errors::DocumentNotFound
+    @shot = Shot.find(id)
     render :show
   end
 
+  # ---
+
   prepend_before_filter :authenticate_user!, :only => :admin
   def admin
-    @shots = Shot.all(
+    @private_no_album_shots = Shot.
+      where(creator_id: User.first.id).
+      where(shot_album_id: nil).
+      any_in(public: [nil,false]).
+      desc(:updated_at)
+
+    @public_no_album_shots = Shot.
+      where(creator_id: User.first.id).
+      where(shot_album_id: nil).
+      any_in(public: [true]).
+      desc(:updated_at)
+
+    @shot_albums = ShotAlbum.all(
       conditions: { creator_id: current_user.id},
       sort: [[:created_at, :desc]]
     )
     render :admin
   end
 
+  # ---
+
   def update
     @shot = Shot.find params[:id]
-    @shot.title = params[:title]
-    @shot.public = params[:public]
-    @shot.save
-    redirect_to '/shots/admin'
+    @shot.update_attributes params.slice :title, :public, :shot_album_id
+    # developer sppeeeeeeeddd
+    redirect_to(
+      if request.referer[/albums\/(.+?)$/,1] && $1 != @shot[:shot_album_id].to_s
+        '/shots/admin'
+      else
+        request.referer
+      end)
   end
 
   def destroy
     @shot = Shot.find params[:id]
-    @shot.destroy
+    @shot.delete
     redirect_to '/shots/admin'
   end
 
