@@ -1,3 +1,6 @@
+%p
+  %a{href: "/shots/admin"}=" ← back to all shots"
+
 %h2= "Shots in #{@shot_album.name}"
 
 = form_tag "/shots/albums/#{@shot_album.id}", method: :put do
