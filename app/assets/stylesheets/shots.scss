@@ -1,7 +1,7 @@
 #shot-albums-admin, #shots-admin {
 
   .shot { height: 200px; position: relative }
-  .shot img { float: left; margin-bottom: 20px; margin-right: 20px }
+  .shot .img-wrap { min-width: 240px; float: left; margin-bottom: 20px; margin-right: 20px; text-align: center; background: #f7f7f7; }
   .shot form { display: inline-block }
   .shot input[type=text] { width: 630px }
   .shot select { width: 180px; margin-left: 5px }
