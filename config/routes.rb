@@ -53,8 +53,8 @@ Minefold::Application.routes.draw do
 
   namespace :api do
     resource :session, :only => [:show],  :controller => 'session'
-    resources :photos, :only => [:create]
     post '/campaign/webhook' => 'campaign#webhook'
+    resources :shots, :only => [:index, :create]
   end
 
   resources :worlds, :only => [:new, :create, :index] do
@@ -104,9 +104,4 @@ Minefold::Application.routes.draw do
       end
     end
   end
-
-  namespace :api do
-    resources :shots, :only => [:index, :create]
-  end
-
 end
