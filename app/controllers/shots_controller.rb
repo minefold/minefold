@@ -4,17 +4,9 @@ class ShotsController < ApplicationController
   # ---
 
   def everyone
-    @page = params[:page].to_i
-    @page = 1 if @page.zero?
+    @shots = paginate Shot.count,
+      Shot.where(public: true).desc(:created_at)
 
-    @pages = (Shot.count/shots_per_page.to_f).ceil
-
-    @shots = Shot.all(
-      conditions: { public: true },
-      sort: [[:created_at, :desc]],
-      limit: 18,
-      skip: (@page-1) * shots_per_page
-    )
     render :everyone
   end
 
@@ -101,6 +93,17 @@ class ShotsController < ApplicationController
   end
 
   # ---
+
+  def paginate(count, mongoid_criteria)
+    @page = params[:page].to_i
+    @page = 1 if @page.zero?
+
+    @pages = (count/shots_per_page.to_f).ceil
+
+    mongoid_criteria.
+      limit(shots_per_page).
+      skip((@page-1) * shots_per_page)
+  end
 
   def shots_per_page
     18
