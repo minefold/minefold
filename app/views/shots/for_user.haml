@@ -19,3 +19,5 @@
         - if shot.shot_album
           %h4.album
             %a.album{href: "/shots/#{shot.creator.slug}/#{shot.shot_album.slug}"}= shot.shot_album.name
+
+= render partial: 'pager'

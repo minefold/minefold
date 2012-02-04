@@ -4,42 +4,23 @@ class ShotsController < ApplicationController
   # ---
 
   def everyone
-    @shots = paginate Shot.count,
-      Shot.where(public: true).desc(:created_at)
-
+    @shots = paginate(Shot.where(public: true))
     render :everyone
   end
 
   def for_user
     @user = User.find_by_slug!(params[:user_slug])
     @shot_albums = @user.shot_albums
-
-    @page = params[:page].to_i
-    @pages = (Shot.count/shots_per_page.to_f).ceil
-
-    @shots = Shot.all(
-      conditions: { public: true, creator_id: @user.id},
-      sort: [[:created_at, :desc]],
-      limit: shots_per_page,
-      skip: @page * shots_per_page
-    )
+    @shots = paginate(Shot.where(public: true, creator_id: @user.id)).desc(:created_at)
     render :for_user
   end
 
   def for_album
     @user = User.find_by_slug!(params[:user_slug])
     @shot_album = ShotAlbum.find_by_slug!(params[:shot_album_slug])
-
-    @page = params[:page].to_i
-    @pages = (Shot.count/shots_per_page.to_f).ceil
-
-    @shots = Shot.all(
-      conditions: { public: true, creator_id: @user.id, :shot_album_id => @shot_album.id},
-      sort: [[:created_at, :desc]],
-      limit: shots_per_page,
-      skip: @page * shots_per_page
-    )
-
+    @shots = paginate(Shot.where(
+      public: true, creator_id: @user.id, :shot_album_id => @shot_album.id
+    )).desc(:created_at)
     render :for_album
   end
 
@@ -94,11 +75,11 @@ class ShotsController < ApplicationController
 
   # ---
 
-  def paginate(count, mongoid_criteria)
+  def paginate(mongoid_criteria)
     @page = params[:page].to_i
     @page = 1 if @page.zero?
 
-    @pages = (count/shots_per_page.to_f).ceil
+    @pages = (mongoid_criteria.count/shots_per_page.to_f).ceil
 
     mongoid_criteria.
       limit(shots_per_page).
