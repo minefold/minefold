@@ -11,16 +11,20 @@ class ShotsController < ApplicationController
   def for_user
     @user = User.find_by_slug!(params[:user_slug])
     @shot_albums = @user.shot_albums
-    @shots = paginate(Shot.where(public: true, creator_id: @user.id)).desc(:created_at)
+    @shots = paginate(
+      Shot.where(public: true, creator_id: @user.id)
+    ).desc(:created_at)
     render :for_user
   end
 
   def for_album
     @user = User.find_by_slug!(params[:user_slug])
     @shot_album = ShotAlbum.find_by_slug!(params[:shot_album_slug])
-    @shots = paginate(Shot.where(
-      public: true, creator_id: @user.id, :shot_album_id => @shot_album.id
-    )).desc(:created_at)
+    @shots = paginate(
+      Shot.where(
+        public: true, creator_id: @user.id, :shot_album_id => @shot_album.id
+      )
+    ).desc(:created_at)
     render :for_album
   end
 
