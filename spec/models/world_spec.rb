@@ -27,10 +27,11 @@ describe World do
 
   describe 'before_create' do
     context 'with referenced world_upload' do
-      let(:world) { Fabricate(:world, world_upload: WorldUpload.new(world_data_file: 'uploaded')) }
-      subject { world }
+      let(:upload) { Fabricate(:world_upload, world_data_file: 'uploaded-world.tar.gz') }
+      let(:world) { Fabricate(:world, world_upload_id: upload.id) }
+      subject { world.reload }
 
-      its(:world_data_file) { should == 'uploaded' }
+      its(:world_data_file) { should == 'uploaded-world.tar.gz' }
     end
   end
 

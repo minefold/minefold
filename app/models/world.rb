@@ -26,26 +26,17 @@ class World
     where(creator_id: user.id)
   }
 
-
   # Cloning
 
   belongs_to :parent, inverse_of: :children, class_name: 'World'
   has_many :children, inverse_of: :parent, class_name: 'World'
 
-
   # Data
 
   # Legacy backup file in S3, can be blank
-  field :world_data_file, type: String, default: -> {"#{id}.tar.gz"}
+  field :world_data_file, type: String
 
   belongs_to :world_upload
-
-  def world_upload=(upload)
-    write_attribute :world_upload_id, upload.id
-    self.world_data_file = upload.world_data_file
-    upload
-  end
-
 
   # Maps
   field :last_mapped_at, type: DateTime

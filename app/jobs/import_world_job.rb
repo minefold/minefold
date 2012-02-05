@@ -12,18 +12,24 @@ class ImportWorldJob
   end
 
   def process(world_upload)
-    pusher_key = "#{world_upload.class.name}-#{world_upload.id}"
-    pusher = Pusher[pusher_key]
+    begin
+      pusher_key = "#{world_upload.class.name}-#{world_upload.id}"
+      pusher = Pusher[pusher_key]
 
-    puts "connecting to channel: #{pusher_key}"
+      puts "connecting to channel: #{pusher_key}"
+    rescue => e
+      puts "cannot connect to pusher: #{e}"
+    end
 
     error = nil
     world_data_file = nil
+    
     begin
       world_data_file = process_world_upload world_upload
       error = world_upload.process_result
     rescue => e
-      Airbrake.notify(e)
+      puts e, e.backtrace
+      
       error = e.to_s
     end
 
