@@ -80,11 +80,20 @@ class User
 
   field :host, default: 'pluto.minefold.com'
 
-  field :unlimited, type: Boolean, default: false
+  # Feature flags
+
+  field :beta, type: Boolean, default: false
+  field :features, type: Array
+
+  def feature?(feature)
+    features.include? feature
+  end
+
+
   field :plan_expires_at, type: DateTime
 
   def pro?
-    unlimited? or (not plan_expires_at.nil? and plan_expires_at.future?)
+    beta? or (not plan_expires_at.nil? and plan_expires_at.future?)
   end
 
   field :credits, type: Integer, default: (FREE_HOURS.hours / BILLING_PERIOD)
