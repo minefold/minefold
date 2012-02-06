@@ -17,5 +17,7 @@ end.compact.uniq_by{|u| u.id }.sort_by{|u| u.username}.each do |user|
   user.save!
   puts "#{user.username} plan expires: #{user.plan_expires_at}"
 
-  CampaignList.paid_users.subscribe user
+  if Rails.env.production?
+    CampaignList.paid_users.subscribe(user)
+  end
 end
