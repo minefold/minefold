@@ -1,7 +1,7 @@
 AssetSync.configure do |config|
   config.fog_provider = 'AWS'
-  config.aws_access_key_id = 'AKIAJPN5IJVEBB2QE35A'
-  config.aws_secret_access_key = '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'
+  config.aws_access_key_id = ENV['S3_KEY']
+  config.aws_secret_access_key = ENV['S3_SECRET']
   config.fog_directory = 'minefold-production-assets'
 
   # Increase upload performance by configuring your region
@@ -9,6 +9,4 @@ AssetSync.configure do |config|
 
   # Automatically replace files with their equivalent gzip compressed version
   config.gzip_compression = true
-
-  config.fail_silently = false
 end

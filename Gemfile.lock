@@ -1,3 +1,21 @@
+GIT
+  remote: https://github.com/defunkt/resque.git
+  revision: deea948834bea5dac087b19ad2dfe6fa7b0562b5
+  specs:
+    resque (1.19.0)
+      multi_json (~> 1.0)
+      redis-namespace (~> 1.0.2)
+      sinatra (>= 0.9.2)
+      vegas (~> 0.1.2)
+
+GIT
+  remote: https://github.com/rumblelabs/asset_sync.git
+  revision: e3b3e34d7caf8f8b6374d3973dc720571760b4a1
+  specs:
+    asset_sync (0.2.9)
+      activemodel
+      fog
+
 GEM
   remote: https://code.stripe.com/
   remote: https://rubygems.org/
@@ -32,9 +50,6 @@ GEM
       multi_json (~> 1.0)
     addressable (2.2.6)
     arel (3.0.0)
-    asset_sync (0.2.9)
-      activemodel
-      fog
     autotest-rails (4.1.1)
       ZenTest (= 4.5)
     backbone-rails (0.5.3.1)
@@ -209,11 +224,6 @@ GEM
     redis (2.2.2)
     redis-namespace (1.0.3)
       redis (< 3.0.0)
-    resque (1.19.0)
-      multi_json (~> 1.0)
-      redis-namespace (~> 1.0.2)
-      sinatra (>= 0.9.2)
-      vegas (~> 0.1.2)
     resque-exceptional (0.1.0)
       resque (>= 1.8.0)
     resque_mailer (2.0.2)
@@ -290,7 +300,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  asset_sync
+  asset_sync!
   autotest-rails
   backbone-rails
   bourbon
@@ -325,7 +335,7 @@ DEPENDENCIES
   rack-www
   rails
   rake
-  resque (~> 1.19.0)
+  resque!
   resque-exceptional
   resque_mailer
   rpm_contrib

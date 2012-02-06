@@ -1,4 +1,4 @@
-# Update paid users to 12 months free
+# Gives paid users 12 months of Pro
 
 paid_users = (
   Stripe::Customer.all(count: 100).data.
@@ -12,10 +12,12 @@ paid_users.map do |u|
   puts "No user found for #{u}" unless user
   user
 end.compact.uniq_by{|u| u.id }.sort_by{|u| u.username}.each do |user|
-  user.credits = 0 if user.credits < 0  
+  user.credits = 0 if user.credits < 0
   user.plan_expires_at = Time.now + 12.months
   user.save!
   puts "#{user.username} plan expires: #{user.plan_expires_at}"
-  
-  CampaignList.paid_users.subscribe user
+
+  if Rails.env.production?
+    CampaignList.paid_users.subscribe(user)
+  end
 end

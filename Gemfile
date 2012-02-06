@@ -32,7 +32,7 @@ gem 'coffee-filter'
 gem 'decent_exposure'
 gem 'rabl'
 
-gem 'asset_sync'
+gem 'asset_sync', git: 'https://github.com/rumblelabs/asset_sync.git'
 
 # Uploads
 gem 'carrierwave'
@@ -40,7 +40,10 @@ gem 'carrierwave-mongoid', require: 'carrierwave/mongoid'
 gem 'mini_magick'
 
 # Job Processing
-gem 'resque', ' ~> 1.19.0'
+gem 'resque',
+  git: 'https://github.com/defunkt/resque.git',
+  require: ['resque', 'resque/server']
+
 gem 'resque_mailer'
 
 # Logs & Stats
