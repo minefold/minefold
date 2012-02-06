@@ -5,13 +5,13 @@
     %span.user-byline
       by
       %a.user{href: "/shots/#{@shot.creator.slug}"}=@shot.creator.username
-    / - if @shot.album
-    /   %span.album-byline
-    /     in
-    /     %a.album{href: "/shots/#{@shot.albulm.slug}"}=@shot.user.username
+    - if @shot.shot_album
+      %span.album-byline
+        in
+        %a.album{href: "/shots/#{@shot.creator.slug}/#{@shot.shot_album.slug}"}= @shot.shot_album.name
     %span.date-byline
       on
       %span.date= @shot.created_at
 
 %div.shot-body
-  %img{src: @shot.file.url, width: "100%"}
+  %img{src: @shot.file.full.url}

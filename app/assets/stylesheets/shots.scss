@@ -1,10 +1,19 @@
-#shot-albums-show, #shots-admin {
+#shot-albums-admin, #shots-admin {
 
   .shot { height: 200px; position: relative }
-  .shot img { float: left; margin-bottom: 20px; margin-right: 20px }
+  .shot .img-wrap { min-width: 240px; float: left; margin-bottom: 20px; margin-right: 20px; text-align: center; background: #f7f7f7; }
   .shot form { display: inline-block }
   .shot input[type=text] { width: 630px }
   .shot select { width: 180px; margin-left: 5px }
   .shot .controls { display: block; position:absolute; top: 55px; left: 500px }
 
+}
+
+#shots-everyone, #shots-for-user, #shots-for-album {
+
+  .shots { text-align: center; white-space-collapse: discard; font-size: 0; }
+  .shot { display: inline-block; text-align: left; vertical-align: top; font-size: 14px; min-width: 240px; min-height: 260px; margin: 0 30px 20px 30px; }
+
+  .paginator { text-align: center }
+  .paginator .active { color: black }
 }

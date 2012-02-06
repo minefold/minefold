@@ -4,10 +4,15 @@
   - for shot in @shots
     %div.shot
       %a.shot-link{href: "/shots/#{shot.id}-#{shot.slug}"}
-        %img{src: shot.file.url, width: 300, height: 168}
+        %img{src: shot.file.quart.url, width: 240}
         - unless shot.title.blank?
           %h3.title= shot.title
         / todo: format
         %h5.date= shot.created_at
       %h4.user
         %a{href: "/shots/#{shot.creator.slug}"}=shot.creator.username
+      - if shot.shot_album
+        %h4.album
+          %a.album{href: "/shots/#{shot.creator.slug}/#{shot.shot_album.slug}"}= shot.shot_album.name
+
+= render partial: 'pager'

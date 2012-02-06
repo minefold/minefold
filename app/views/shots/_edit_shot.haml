@@ -1,5 +1,7 @@
 %div.shot
-  %img{src: shot.file.url, width: 240}
+  %div.img-wrap
+    %img{src: shot.file.quart.url}
+
   = form_tag "/shots/#{shot.id}", method: :put, name: "shot_#{shot.id}" do
     %input{type: "hidden", name: "public", value: shot.public? ? 1 : 0}
     %input{type: "text", placeholder: "Title/description/caption", name: "title", value: shot.title}
