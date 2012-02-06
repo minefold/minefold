@@ -2,6 +2,11 @@
 
 Minefold::Application.routes.draw do
   root :to => 'pages#home'
+
+  namespace :admin do
+    mount Resque::Server.new, :at => "/resque"
+  end
+
   get  '/dashboard' => 'accounts#dashboard', :as => :user_root
 
   # Static Pages
