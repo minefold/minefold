@@ -1,4 +1,4 @@
-# Aminize us
+# Adminize us
 
-User.chris.set :admin, true
-User.dave.set :admin, true
+admins = {"username" => {'$in' => ['chrislloyd', 'whatupdave']}}
+db['users'].update admins, {'$set' => {'admin' => true}}
