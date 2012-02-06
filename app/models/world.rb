@@ -5,9 +5,9 @@ class World
 
 
   field :name, type: String
-  validates_uniqueness_of :name, scope: :parent_id
+  validates_uniqueness_of :name, scope: :creator_id
   validates_presence_of :name
-  slug  :name, index: true, scope: :parent
+  slug  :name, index: true, scope: :parent_id
 
   scope :by_name, ->(name) {
     where(name: name)
@@ -204,7 +204,6 @@ class World
     World.new(
       parent: self,
       name: name,
-      # file: file,
       # settings: settings,
       # map: map
       seed: seed,
