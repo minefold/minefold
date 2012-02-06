@@ -72,7 +72,7 @@ class WorldsController < ApplicationController
       track 'cloned world'
     end
 
-    respond_with world, location: user_world_path(current_user, clone)
+    respond_with clone, location: user_world_path(current_user, clone)
   end
 
 
