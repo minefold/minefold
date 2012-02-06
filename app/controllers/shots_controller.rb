@@ -39,13 +39,13 @@ class ShotsController < ApplicationController
   prepend_before_filter :authenticate_user!, :only => :admin
   def admin
     @private_no_album_shots = Shot.
-      where(creator_id: User.first.id).
+      where(creator_id: current_user.id).
       where(shot_album_id: nil).
       any_in(public: [nil,false]).
       desc(:updated_at)
 
     @public_no_album_shots = Shot.
-      where(creator_id: User.first.id).
+      where(creator_id: current_user.id).
       where(shot_album_id: nil).
       any_in(public: [true]).
       desc(:updated_at)
