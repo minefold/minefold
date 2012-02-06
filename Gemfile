@@ -57,8 +57,6 @@ group :development, :test do
   gem 'letter_opener'
   gem 'heroku'
   gem 'foreman'
-
-  gem 'colored'
 end
 
 # Gems used only for assets and not required

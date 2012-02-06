@@ -1,5 +1,4 @@
 require 'pivot'
-require 'colored'
 
 namespace :db do
 
@@ -8,7 +7,7 @@ namespace :db do
     Pivot.pending.each do |pivot|
       puts pivot
       bm = pivot.run!
-      $stderr.puts bm.to_s.green
+      $stderr.puts bm.to_s
     end
   end
 
@@ -37,7 +36,7 @@ namespace :db do
       pivot = Pivot.previous.last
       puts pivot
       time = pivot.run!
-      $stderr.puts time.to_s.green
+      $stderr.puts time.to_s
     end
 
   end
