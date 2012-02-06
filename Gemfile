@@ -32,7 +32,7 @@ gem 'coffee-filter'
 gem 'decent_exposure'
 gem 'rabl'
 
-gem 'asset_sync'
+gem 'asset_sync', git: 'https://github.com/rumblelabs/asset_sync.git'
 
 # Uploads
 gem 'carrierwave'

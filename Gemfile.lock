@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/rumblelabs/asset_sync.git
+  revision: e3b3e34d7caf8f8b6374d3973dc720571760b4a1
+  specs:
+    asset_sync (0.2.9)
+      activemodel
+      fog
+
 GEM
   remote: https://code.stripe.com/
   remote: https://rubygems.org/
@@ -32,9 +40,6 @@ GEM
       multi_json (~> 1.0)
     addressable (2.2.6)
     arel (3.0.0)
-    asset_sync (0.2.9)
-      activemodel
-      fog
     autotest-rails (4.1.1)
       ZenTest (= 4.5)
     backbone-rails (0.5.3.1)
@@ -291,7 +296,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  asset_sync
+  asset_sync!
   autotest-rails
   backbone-rails
   bourbon
