@@ -71,6 +71,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.2.0)
+    colored (1.2)
     cookiejar (0.3.0)
     createsend (1.0.3)
       hashie (~> 1.0)
@@ -301,6 +302,7 @@ DEPENDENCIES
   carrierwave-mongoid
   coffee-filter
   coffee-rails
+  colored
   createsend
   database_cleaner
   decent_exposure

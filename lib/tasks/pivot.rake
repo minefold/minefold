@@ -1,80 +1,44 @@
-class Pivoter
-
-  def initialize(dir)
-    @dir = dir
-  end
-
-  def schema
-    Mongoid::Config.master[:schema_info]
-  end
-
-  def pivots
-    Dir[File.join(@dir, '*.rb')].sort
-  end
-
-  def previous_pivots
-    schema.find.map {|p| p['file']}.sort
-  end
-
-  def pivots_to_run
-    (pivots - previous_pivots).sort
-  end
-
-  def record!(pivot)
-    if schema.find({ file: pivot }).first
-      puts "#{pivot} already run"
-    else
-      schema.insert(file: pivot, at: Time.now)
-    end
-  end
-
-end
+require 'pivot'
+require 'colored'
 
 namespace :db do
 
   desc "Run outstanding pivots"
   task :pivot => :environment do
-    pivoter.pivots_to_run.each do |pivot|
-      start = Time.now
-      load(pivot)
-      puts "#{pivot} - #{(Time.now - start).to_i}s"
-      pivoter.record! pivot
+    Pivot.pending.each do |pivot|
+      puts pivot
+      bm = pivot.run!
+      $stderr.puts bm.to_s.green
     end
   end
 
   namespace :pivots do
+    desc "Previously run pivots"
+    task :previous => :environment do
+      Pivot.previous.each {|p| puts "#{p}: #{p.name}" }
+    end
+
+    desc "Pending pivots"
+    task :pending => :environment do
+      Pivot.pending.each {|p| puts "#{p}: #{p.name}" }
+    end
 
     desc "Add pivot to the database without running it"
     task :fake, [:pivot] => :environment do |t, args|
-      pivot = args[:pivot]
-      raise "Unknown pivot #{pivot}" unless File.exists? pivot
+      pivot = Pivot.new(args[:pivot])
 
-      pivoter.record! pivot
+      raise "Unknown pivot #{pivot}" unless File.exists?(pivot)
+
+      pivot.record!
     end
 
-    desc "Show pivots"
-    task :list => :environment do
-      puts "PREVIOUS PIVOTS" if pivoter.previous_pivots.any?
-      pivoter.previous_pivots.each {|pivot| log pivot}
-
-      puts "\nPIVOTS TO RUN" if pivoter.pivots_to_run.any?
-      pivoter.pivots_to_run.each {|pivot| log pivot }
-    end
-    
-    desc "Run the last recorded pivot again"
-    task :rerun_last => :environment do
-      pivot = pivoter.previous_pivots.last
-      start = Time.now
-      load(pivot)
-      puts "#{pivot} - #{(Time.now - start).to_i}s"
+    desc "Runs the last pivot again"
+    task :rerun => :environment do
+      pivot = Pivot.previous.last
+      puts pivot
+      time = pivot.run!
+      $stderr.puts time.to_s.green
     end
 
-    def log(str)
-      puts " * #{str}"
-    end
-
-    def pivoter
-      @pivoter ||= Pivoter.new File.join('db', 'pivots')
-    end
   end
 end
