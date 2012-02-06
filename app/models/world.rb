@@ -7,7 +7,7 @@ class World
   field :name, type: String
   validates_uniqueness_of :name, scope: :creator_id
   validates_presence_of :name
-  slug  :name, index: true, scope: :parent_id
+  slug  :name, index: true, scope: :creator_id
 
   scope :by_name, ->(name) {
     where(name: name)
