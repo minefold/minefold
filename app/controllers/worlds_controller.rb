@@ -65,14 +65,14 @@ class WorldsController < ApplicationController
     clone = world.clone!
     clone.creator = current_user
 
-    if clone.save
-      current_user.current_world = clone
-      current_user.save
+    clone.save!
 
-      track 'cloned world'
-    end
+    current_user.current_world = clone
+    current_user.save
 
-    respond_with world, location: user_world_path(current_user, clone)
+    track 'cloned world'
+
+    respond_with clone, location: user_world_path(current_user, clone)
   end
 
 
