@@ -1,0 +1,20 @@
+- title "#{photo.title} by #{photo.creator.username}"
+
+.photo
+  .body= image_tag photo.file.large.url
+
+  %aside
+    .user
+      .avatar= image_tag photo.creator.avatar.small.url, width: 20, height: 20
+      .username
+        By
+        = link_to photo.creator.username, user_path(photo.creator)
+
+    .time-and-place
+      This photo was taken #{time_ago_in_words photo.created_at} ago
+      - if photo.world
+        in #{link_to world_fullname(photo.world), user_world_path(photo.world.creator, photo.world)}
+      \.
+
+- if photo.title?
+  %h1= photo.title

@@ -1,0 +1,19 @@
+#photos-index {
+
+  .photos {
+    @include row;
+    margin-bottom: $line * 6;
+  }
+
+  .photo-card {
+    @include makeColumn(2);
+    margin-bottom: $line * 4;
+
+    .file {
+      img {
+        display: block;
+      }
+    }
+  }
+
+}

@@ -22,9 +22,9 @@
     .create_album input[type=text] { width: 800px }
 
 %ul
-  - for shot_album in @shot_albums
+  - @albums.each do |album|
     %li
-      %a{href: "/shots/admin/albums/#{shot_album.id}"}= "#{shot_album.name} (#{shot_album.shots.count})"
+      %a{href: "/shots/admin/albums/#{album.id}"}= "#{album.name} (#{album.shots.count})"
 
 = form_tag "/shots/albums", method: :post, :class => 'create_album' do
   %input{type: "text", placeholder: "New Album Name", name: "name"}

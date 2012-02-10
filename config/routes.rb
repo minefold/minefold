@@ -7,6 +7,12 @@ Minefold::Application.routes.draw do
     mount Resque::Server.new, :at => "/resque"
   end
 
+  namespace :api do
+    resource :session, :only => [:show],  :controller => 'session'
+    post '/campaign/webhook' => 'campaign#webhook'
+    resources :photos, :only => [:index, :create]
+  end
+
   get  '/dashboard' => 'accounts#dashboard', :as => :user_root
 
   # Static Pages
@@ -56,12 +62,6 @@ Minefold::Application.routes.draw do
 
   post '/stripe/webhook' => 'stripe#webhook'
 
-  namespace :api do
-    resource :session, :only => [:show],  :controller => 'session'
-    post '/campaign/webhook' => 'campaign#webhook'
-    resources :shots, :only => [:index, :create]
-  end
-
   resources :worlds, :only => [:new, :create, :index] do
     collection do
       resource :upload, :module => :worlds, :only => [:new, :create] do
@@ -71,25 +71,33 @@ Minefold::Application.routes.draw do
     end
   end
 
+  resources :photos
 
 
-  get '/shots/:id' => 'shots#show', :id => /[A-Fa-f0-9]{24}\-.*/
-  put '/shots/:id' => 'shots#update', :id => /[A-Fa-f0-9]{24}/
-  delete '/shots/:id' => 'shots#destroy', :id => /[A-Fa-f0-9]{24}/
+  # get '/shots/:id' => 'shots#show', :id => /[A-Fa-f0-9]{24}\-.*/
+  # put '/shots/:id' => 'shots#update', :id => /[A-Fa-f0-9]{24}/
+  # delete '/shots/:id' => 'shots#destroy', :id => /[A-Fa-f0-9]{24}/
+  #
+  # post '/shots/albums' => 'shot_albums#create'
+  # delete '/shots/albums/:id' => 'shot_albums#destroy'
+  # put '/shots/albums/:id' => 'shot_albums#update'
+  #
+  # get '/shots/admin' => 'shots#admin'
+  # get '/shots/admin/albums/:id' => 'shot_albums#admin'
+  #
+  # get '/shots' => 'shots#everyone'
+  # get '/shots/:user_slug' => 'shots#for_user'
+  # get '/shots/:user_slug/:shot_album_slug' => 'shots#for_album'
 
-  post '/shots/albums' => 'shot_albums#create'
-  delete '/shots/albums/:id' => 'shot_albums#destroy'
-  put '/shots/albums/:id' => 'shot_albums#update'
-
-  get '/shots/admin' => 'shots#admin'
-  get '/shots/admin/albums/:id' => 'shot_albums#admin'
-
-  get '/shots' => 'shots#everyone'
-  get '/shots/:user_slug' => 'shots#for_user'
-  get '/shots/:user_slug/:shot_album_slug' => 'shots#for_album'
+  get '/lightroom' => 'photos#lightroom', :as => :lightroom
 
   devise_scope :user do
     resources :users, :path => '/', :only => [:show] do
+
+      scope :module => :users do
+        resources :photos
+      end
+
       resources :worlds, :path => '/', :except => [:index], :path_names => {:edit => 'settings'} do
         member do
           put :join
@@ -97,7 +105,7 @@ Minefold::Application.routes.draw do
         end
 
         scope :module => :worlds do
-          resources :events, :only => [:index, :create]
+          # resources :events, :only => [:index, :create]
           resources :members, :controller => :memberships, :only => [:index, :create, :destroy] do
             get  :search, :action => :search, :on => :collection
           end
@@ -107,6 +115,8 @@ Minefold::Application.routes.draw do
           end
         end
       end
+
+
     end
   end
 end

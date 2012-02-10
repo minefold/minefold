@@ -1,0 +1,79 @@
+#photos-lightroom {
+  #masthead {
+    h1, h2 {
+      @include makeColumn(8);
+    }
+
+    aside {
+      @include makeColumn(4);
+      float: right;
+      text-align: right;
+      line-height: $line * 4;
+    }
+  }
+
+  .unsorted-photos {
+    @include row;
+    li {
+      @include makeColumn(6);
+      margin-bottom: $line * 4;
+
+      .file {
+        position: relative;
+
+        img {
+          display: block;
+        }
+
+        .button_to input[type=submit] {
+          width: 50%;
+          background: transparent;
+          font-size: 42px;
+          color: white;
+          border: none;
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          text-shadow: 0 1px 0 rgba(black, 0.4);
+          opacity: 0.6;
+          margin: 0;
+
+          cursor: pointer;
+
+          &.keep {
+            background: transparent url(image-path('icons/tick-big.png')) no-repeat center;
+          }
+
+          &.chuck {
+            left: 50%;
+            background: transparent url(image-path('icons/trash-big.png')) no-repeat center;
+          }
+
+          &:hover {
+            opacity: 1;
+            background-color: rgba(black, 0.2);
+          }
+        }
+      }
+
+      .title input[type=text] {
+        width: 100%;
+        @include box-sizing(border-box);
+        margin: 0;
+        font-family: $helvetica;
+        font-size: 14px;
+        padding: ($line * 2) ($gutter / 2);
+        border: 1px solid darken(white, 5%);
+        border-top: none;
+      }
+
+      .world {
+        font-size: 12px;
+        margin-left: $gutter / 2;
+      }
+
+    }
+
+  }
+
+}

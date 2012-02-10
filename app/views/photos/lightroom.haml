@@ -1,0 +1,82 @@
+- title 'Lightroom'
+- masthead do
+  .row
+    - if current_user.worlds.any?
+      %aside
+        Default world these photos were taken in
+        = select 'photos', 'master_world', options_for_select(current_user.worlds.map {|w| [world_fullname(w), w.id.to_s] }, current_user.current_world.id), include_blank: true
+    %h1 Lightroom
+    %h2 Publish or chuck your Minecraft screenshots
+
+
+
+%ul.unsorted-photos
+  - current_user.photos.unsorted.each do |photo|
+    %li
+      .file
+        = image_tag photo.file.lightbox.url
+        = button_to '', user_photo_path(current_user, photo), method: :put, class: 'keep'
+        = button_to '', user_photo_path(current_user, photo), method: :delete, class: 'chuck'
+
+      .title
+        = text_field_tag :photo_title, nil, placeholder: 'Title'
+
+      - if current_user.worlds.any?
+        .world
+          taken in
+          = select :photo, :world, options_for_select(current_user.worlds.map {|w| [world_fullname(w), w.id.to_s] }, current_user.current_world.id), include_blank: true
+
+:javascript
+  var selects = $('select[name="photo[world]"]'),
+      masterSelect = $('#photos_master_world'),
+      masterVal = masterSelect.val();
+
+  masterSelect.change(function() {
+    var newMasterVal = masterSelect.val();
+
+    selects
+      .filter(function() { return $(this).val() === masterVal; })
+      .val(newMasterVal);
+
+    masterVal = newMasterVal;
+  });
+
+:javascript
+  var form = $('.file form.button_to')
+  form.submit(function(e) {
+    e.preventDefault();
+
+    var self = $(this),
+        li = self.parents('li'),
+        type = $(this).find('input[type=submit]').attr('class');
+
+    if(type === 'keep') {
+      var title = li.find('input[name=photo_title]').val(),
+          world = li.find('select').val();
+
+      $.ajax(self.attr('action'), {
+        data: {
+          photo: {
+            public: true,
+            title: title,
+            world: world
+          }
+        },
+        dataType: 'json',
+        type: 'PUT'
+      }).done(function() {
+        li.remove();
+      });
+    } else if(type === 'chuck') {
+      $.ajax(self.attr('action'), {
+        dataType: 'json',
+        type: 'DELETE'
+      }).done(function() {
+        li.remove();
+      });
+    }
+
+
+    return false;
+  });
+

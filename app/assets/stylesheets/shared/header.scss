@@ -1,8 +1,10 @@
 header {
   @include clearfix;
+  border-top: 0 solid darken($blue, 10%);
 
   &, ol ol {
-    background-color: $yellow;
+    @include linear-gradient(rgba(black, 0.0) 60%, rgba(black, 0.1));
+    background-color: $teal;
   }
 
   // Makes the header line up with the rest of the text
@@ -10,38 +12,39 @@ header {
     width: $width + ($gutter * 2);
   }
 
-  h1 a, ol li a, ol li.time, ol li.sweet {
-    padding: ($line * 2) $gutter;
+  ol li a, ol li.time, ol li.sweet {
+    padding: ($line) ($gutter/2);
   }
 
   h1 {
     float: left;
-    font-size: 18px; line-height: $line * 4;
+    font-size: 24px; line-height: $line * 6;
     font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    font-family: $proxima;
+    letter-spacing: -0.05em;
+    font-family: $patagonia;
 
     a {
       display: block;
       position: relative;
 
-      color: black;
+      color: $yellow;
       text-decoration: none;
 
-      em {
+      text-shadow: 0 2px 0 rgba(black, 0.2);
 
-          color: rgba(black, 0.4);
+      padding: ($line + 2px) $gutter ($line - 2px) $gutter;
+
+      em {
+        display: none;
+        color: lighten($blue, 40%);
         font-size: 12px; line-height: $line * 2;
       }
 
       &:hover {
-        color: white;
-        background-color: $green;
+        color: $green;
 
         em {
-          @include inline-block;
-          color: rgba(white, 0.4);
+          color: lighten($green, 40%);
         }
       }
     }
@@ -58,22 +61,35 @@ header {
 
       position: relative;
 
+      margin: $line 0;
+
       a {
         display: block;
 
-        color: black;
+        color: white;
         text-decoration: none;
+        text-shadow: 0 1px 0 rgba(black, 0.1);
       }
 
       a:hover, &.active > a {
-        background-color: rgba(black, 0.05);
-        background-color: $blue;
-        color: white;
+        background-color: $green;
+
       }
 
       &.signin, &.signup, &.user, &.time, &.upgrade, &.sweet {
         float: right;
         position: relative;
+      }
+
+      .count {
+        font-size: 11px;
+        @include border-radius(2px);
+        background-color: $red;
+        color: white;
+        padding: 0 3px;
+        line-height: 18px;
+        box-shadow: 0 1px 0 rgba(black, 0.4);
+        @include inline-block;
       }
 
       &.user {
@@ -90,6 +106,7 @@ header {
       ol {
         @include columns(2);
         display: none;
+        background-color: $green;
 
         right: 0;
         position: absolute;
@@ -98,9 +115,13 @@ header {
 
         li {
           float: none;
+          margin: 0;
 
           a {
             border: none;
+            &:hover {
+              background-color: rgba(white, 0.2);
+            };
           }
         }
       }

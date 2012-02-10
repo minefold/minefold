@@ -1,7 +1,7 @@
 - head do
   %meta{property: 'og:title', content: world.name}
   %meta{property: 'og:type',  content: 'fold'}
-  %meta{property: 'og:url', content: world_path(world)}
+  %meta{property: 'og:url', content: user_world_path(world.creator, world)}
   %meta{property: 'og:image', content: image_path('logo-48.png')}
 
 - masthead do
@@ -23,18 +23,16 @@
       by #{link_to world.creator.username, world.creator, rel: 'author'}
       - if world.clone?
         and cloned from
-        = link_to world.parent.creator.username, world.parent.creator
-        \/
-        = link_to world.parent.name, world.parent
+        = link_to world_fullname(world.parent), user_world_path(world.parent.creator, world.parent)
 
   %ol.actions
     - if can? :edit, world
       %li.settings
-        = link_to edit_world_path(world) do
+        = link_to edit_user_world_path(world.creator, world) do
           = image_tag 'icons/settings.png', width: 20, height: 20
 
     %li.members
-      = link_to world_members_path(world) do
+      = link_to user_world_members_path(world.creator, world) do
         = image_tag 'icons/friends.png', width: 30, height: 20
 
     - if not signed_in? or can? :clone, world
@@ -53,7 +51,7 @@
         - if signed_in? and world.membership_requests.include_user?(current_user)
           = button_to 'Request sent', nil, disabled: true
         - else
-          = button_to 'Ask to play here', world_membership_requests_path(world), method: :post
+          = button_to 'Ask to play here', user_world_membership_requests_path(world), method: :post
 
   %ul.stats
     - if world.children.any?

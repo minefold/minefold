@@ -56,7 +56,7 @@
         %h1
           = link_to root_url do
             Minefold
-            %em Beta
+            %em Beta!
 
         %ol#nav
           - if not user_signed_in?
@@ -68,6 +68,13 @@
 
           - else
             %li.dashboard= link_to 'Dashboard', user_root_path
+            %li.photos-a= link_to 'Photos', photos_path
+            - if current_user.photos.unsorted.count > 0
+              %li.lightbox
+                = link_to lightroom_path do
+                  Lightroom
+                  %span.count= current_user.photos.unsorted.count
+
             %li.blog= link_to 'Blog', 'http://blog.minefold.com'
             %li.feedback= link_to 'Feedback', 'http://getsatisfaction.com/minefold'
 

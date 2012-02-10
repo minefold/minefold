@@ -1,0 +1,8 @@
+- masthead do
+  %h1 Latest Photos
+
+.photos
+  - photos.each do |photo|
+    .photo-card
+      = link_to photo_path(photo) do
+        .file= image_tag photo.file.small.url

@@ -16,6 +16,8 @@
 
   #masthead {
     padding: $gutter;
+    box-shadow: 0 1px 0 rgba(black, 0.2);
+    @include border-radius(0 0 $radius $radius);
 
     .container {
       @include row;
@@ -57,7 +59,7 @@
 
         form input[type=submit], a {
           @include btn($blue, white, $green);
-          padding: $line $gutter;
+          padding: $line ($gutter / 2);
         }
 
         a img, a img {

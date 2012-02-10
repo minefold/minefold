@@ -25,7 +25,7 @@ class Mf.WorldMapView extends Backbone.View
     streetViewControl: false
     mapTypeId: 'map'
     tileSize: 384
-    zoomLevels: 7
+    minZoom: 14
     backgroundColor: '#FFF'
     markers: []
 
@@ -51,6 +51,8 @@ class Mf.WorldMapView extends Backbone.View
     @options.center or= if spawn then @worldToLatLng(spawn.x, spawn.z, spawn.y) else @worldToLatLng(0, 0, 68)
 
     @map = new google.maps.Map(@el, @options)
+
+    window.map = @map
 
     if window.localStorage?
       google.maps.event.addListener @map, 'center_changed', @persistViewport

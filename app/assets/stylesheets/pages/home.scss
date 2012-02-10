@@ -16,16 +16,14 @@
 
       overflow: hidden;
       width: 1842px;
-
-      background: white url(image-path('home-bg.jpg')) no-repeat 0 0;
       min-width: $width;
     }
   }
 
   header {
     h1 a, ol li a, ol li.time {
-      padding-top: $line * 4;
-      padding-bottom: $line * 4;
+      margin-top: $line * 2;
+      margin-bottom: $line * 2;
     }
   }
 
@@ -34,8 +32,10 @@
     padding-bottom: $line * 12;
 
     h1 {
+      color: $blue;
       font-weight: 900;
       line-height: $line * 10;
+      letter-spacing: -0.05;
     }
 
     h2 {

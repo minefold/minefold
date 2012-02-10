@@ -7,7 +7,7 @@ class World
   field :name, type: String
   validates_uniqueness_of :name, scope: :parent_id
   validates_presence_of :name
-  slug  :name, index: true, scope: :parent
+  slug  :name, index: true #, scope: :parent
 
   scope :by_name, ->(name) {
     where(name: name)
@@ -225,12 +225,7 @@ class World
     )
   end
 
-
   # Other
-
-  def to_param
-    slug.to_param
-  end
 
   def pusher_key
     "#{collection.name.downcase}-#{id}"

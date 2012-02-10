@@ -40,6 +40,7 @@ class User
 
   belongs_to :current_world, class_name: 'World', inverse_of: nil
   has_many :created_worlds, class_name: 'World', inverse_of: :creator
+  has_many :worlds, :foreign_key => 'memberships.user_id'
 
   has_and_belongs_to_many :opped_worlds,
                           inverse_of: :ops,
@@ -149,9 +150,7 @@ class User
     not last_played_at.nil?
   end
 
-  has_many :shot_albums, inverse_of: :creator
-  has_many :shots, inverse_of: :creator
-
+  has_many :photos, inverse_of: :creator
 
   field :notifications, type: Hash, default: ->{ Hash.new }
   field :last_world_started_mail_sent_at, type: DateTime
@@ -274,10 +273,6 @@ class User
   end
 
 # Other
-
-  def worlds
-    World.where('memberships.user_id' => id)
-  end
 
   def current_world?(world)
     current_world == world
