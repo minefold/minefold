@@ -1,8 +1,7 @@
-- masthead do
-  %h1 Latest Photos
+- title_and_masthead 'Photos'
 
-.photos
-  - photos.each do |photo|
-    .photo-card
+%ul.photos
+  - photos.order_by([:created_at, :desc]).each do |photo|
+    %li.photo-card
       = link_to photo_path(photo) do
         .file= image_tag photo.file.small.url

@@ -27,7 +27,7 @@ header {
       display: block;
       position: relative;
 
-      color: $yellow;
+      color: white;
       text-decoration: none;
 
       text-shadow: 0 2px 0 rgba(black, 0.2);
@@ -66,19 +66,41 @@ header {
       a {
         display: block;
 
-        color: white;
+        color: lighten($green, 0%);
         text-decoration: none;
         text-shadow: 0 1px 0 rgba(black, 0.1);
       }
 
       a:hover, &.active > a {
-        background-color: $green;
-
+        color: lighten($green, 30%);
       }
 
-      &.signin, &.signup, &.user, &.time, &.upgrade, &.sweet {
+      &.signin, &.signup, &.user, &.plan {
         float: right;
         position: relative;
+      }
+
+      &.plan {
+        margin-top: $line * 2;
+        margin-right: $gutter / 4;
+        color: lighten($teal, 60%);
+        font-weight: 400;
+        font-size: 12px;
+
+        a.upgrade {
+          @include inline-block;
+          line-height: $line * 4;
+          color: $teal;
+          background-color: lighten($teal, 60%);
+          padding: 0 ($gutter / 4);
+          text-shadow: 0 1px 0 white;
+          margin-left: $gutter / 2;
+          font-weight: 600;
+          @include border-radius($radius);
+          &:hover {
+            background-color: white;
+          }
+        }
       }
 
       .count {
@@ -95,11 +117,16 @@ header {
       &.user {
         img {
           display: block;
-          border-radius: $radius;
         }
 
-        &.active ol {
+        &.active {
+          background-color: $green;
+          img {
+            @include box-shadow(0 1px 1px rgba(black, 0.4));
+          }
+          ol {
             display: block;
+          }
         }
       }
 
@@ -119,9 +146,11 @@ header {
 
           a {
             border: none;
+            color: white;
             &:hover {
               background-color: rgba(white, 0.2);
-            };
+              color: white;
+            }
           }
         }
       }

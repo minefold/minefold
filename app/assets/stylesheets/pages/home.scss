@@ -34,8 +34,9 @@
     h1 {
       color: $blue;
       font-weight: 900;
-      line-height: $line * 10;
-      letter-spacing: -0.05;
+      font-size: 36px; line-height: $line * 10;
+      letter-spacing: -0.05em;
+      font-family: $patagonia;
     }
 
     h2 {

@@ -25,7 +25,7 @@ class Mf.WorldMapView extends Backbone.View
     streetViewControl: false
     mapTypeId: 'map'
     tileSize: 384
-    minZoom: 14
+    zoomLevels: 7
     backgroundColor: '#FFF'
     markers: []
 
