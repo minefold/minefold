@@ -9,4 +9,8 @@
     float: left;
     border-bottom: none;
   }
+
+  form.delete {
+    input { @include btn($red, white); margin-bottom: 2*$line; line-height: 1*$line; font-size: 12px; }
+  }
 }

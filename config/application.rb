@@ -18,7 +18,7 @@ module Minefold
     # -- all .rb files in that directory are automatically loaded.
 
     # Custom directories with classes and modules you want to be autoloadable.
-    %w{ app/jobs lib }.each do |path|
+    %w{ app/jobs lib lib/core_ext }.each do |path|
       config.autoload_paths << Rails.root.join(path)
     end
 

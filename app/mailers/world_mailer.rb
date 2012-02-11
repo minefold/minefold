@@ -48,4 +48,13 @@ class WorldMailer < ActionMailer::Base
     mail to: @user.email,
          subject: "Your friends are playing on Minefold in #{@world.name}"
   end
+  
+  def world_deleted world_name, world_creator, user_id
+    @world_name = world_name
+    @world_creator = world_creator
+    @user = User.find(user_id)
+
+    mail to: @user.email,
+         subject: "#{@world_creator} removed the world #{@world_name} you were playing in"
+  end
 end

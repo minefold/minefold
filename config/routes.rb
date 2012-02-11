@@ -62,7 +62,7 @@ Minefold::Application.routes.draw do
     post '/campaign/webhook' => 'campaign#webhook'
   end
 
-  resources :worlds, :only => [:new, :create, :index] do
+  resources :worlds, :only => [:new, :create, :index, :destroy] do
     collection do
       resource :upload, :module => :worlds, :only => [:new, :create] do
         get :instructions
