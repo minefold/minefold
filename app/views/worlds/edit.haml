@@ -6,3 +6,9 @@
 
 = form_for world, url: user_world_path(world.creator, world), html: {id: 'edit-world'} do |f|
   = render partial: 'form', object: f
+
+%h2 Danger Zone!
+
+- if can? :destroy, world
+  = button_to "Delete this world", user_world_path(world.creator, world), method: 'delete', form_class: 'delete', confirm: 'Are you sure you want to delete this world?'
+

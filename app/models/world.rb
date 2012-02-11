@@ -2,7 +2,7 @@ class World
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::Slug
-
+  include Mongoid::Paranoia
 
   field :name, type: String
   validates_uniqueness_of :name, scope: :creator_id
@@ -125,11 +125,11 @@ class World
   end
 
   def ops
-    memberships.ops.map(&:user)
+    memberships.ops.pluck :user
   end
 
   def members
-    memberships.map {|m| m.user}
+    memberships.pluck :user
   end
 
 

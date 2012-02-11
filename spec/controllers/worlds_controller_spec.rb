@@ -100,4 +100,32 @@ describe WorldsController do
 
     it { should redirect_to(user_world_path(current_user, world.slug)) }
   end
+  
+  describe '#destroy' do
+    let(:player) { Fabricate :user }
+    let(:member) { Fabricate :user }
+    let(:world) { Fabricate :world }
+    
+    signin_as { world.creator }
+    
+    before {
+      world.add_member(member)
+      world.add_member(player)
+      player.current_world = world
+      world.save
+      
+      WorldMailer.should_receive(:world_deleted).
+        with(world.name, world.creator.username, player.id) { Struct.new(:deliver).new }
+      
+      delete :destroy, user_id: world.creator.slug, id: world.slug
+    }
+    
+    it "deletes world" do
+      World.where(_id: world.id).should be_empty
+    end
+
+    it "redirects to dashboard" do
+      response.should redirect_to user_root_path
+    end
+  end
 end

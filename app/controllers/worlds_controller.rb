@@ -74,7 +74,23 @@ class WorldsController < ApplicationController
 
     respond_with clone, location: user_world_path(current_user, clone)
   end
-
+  
+  def destroy
+    authorize! :destroy, world
+    
+    members_to_notify = world.members - [world.creator]
+    members_to_notify.each do |member|
+      if member.current_world == world
+        WorldMailer.world_deleted(world.name, world.creator.username, member.id).deliver
+      end
+    end
+    
+    world.delete!
+    
+    track 'deleted world'
+    
+    redirect_to user_root_path, flash: { info: "#{world.name} was deleted" }
+  end
 
 private
 
