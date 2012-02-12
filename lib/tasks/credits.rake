@@ -11,8 +11,7 @@ namespace :users do
         user.credits = monthly_credits
 
         if Rails.env.production?
-          mixpanel = EM::Mixpanel.new(ENV['MIXPANEL_TOKEN'])
-          mixpanel.track 'reset credits', distinct_id: user.id.to_s, mp_name_tag: user.safe_username
+          Mixpanel.track 'reset credits', distinct_id: user.id.to_s, mp_name_tag: user.safe_username
         end
         
         user.save
