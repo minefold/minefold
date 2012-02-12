@@ -131,7 +131,6 @@ class User
     features.include? feature
   end
 
-
   field :plan_expires_at, type: DateTime
 
   def pro?
@@ -140,6 +139,8 @@ class User
 
   field :credits, type: Integer, default: (FREE_HOURS.hours / BILLING_PERIOD)
   validates_numericality_of :credits
+  
+  field :last_credit_reset, type: DateTime
 
   field :minutes_played, type: Integer, default: 0
   validates_numericality_of :minutes_played, greater_than_or_equal_to: 0

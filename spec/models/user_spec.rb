@@ -27,6 +27,7 @@ describe User do
       free_credits = subject.class::FREE_HOURS.hours / subject.class::BILLING_PERIOD
       subject.credits.should == free_credits
     end
+
   end
 
   describe 'usernames' do
