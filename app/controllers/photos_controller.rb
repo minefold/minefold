@@ -1,6 +1,8 @@
 class PhotosController < ApplicationController
   respond_to :html
 
+  prepend_before_filter :authenticate_user!, only: [:lightroom]
+
   expose(:photos) { Photo.public }
   expose(:photo)
 
