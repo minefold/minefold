@@ -14,6 +14,11 @@ class UserMailer < ActionMailer::Base
     mail(to: @user.email, subject: 'Buy more Minefold time (running low)')
   end
 
+  def credits_reset(user_id)
+    @user = User.find user_id
+    mail(to: @user.email, subject: 'You have more Minefold time!')
+  end
+
   # TODO
   # def thanks(user_id)
   #   # @order = Order.find(order_id)
