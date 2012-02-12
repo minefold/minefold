@@ -125,11 +125,11 @@ class World
   end
 
   def ops
-    memberships.ops.pluck :user
+    memberships.ops.pluck(:user)
   end
 
   def members
-    memberships.pluck :user
+    memberships.pluck(:user)
   end
 
 
