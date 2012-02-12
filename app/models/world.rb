@@ -91,6 +91,7 @@ class World
   validates_numericality_of :pageviews,
     only_integer: true,
     greater_than_or_equal_to: 0
+  field :last_played_at, type: DateTime
 
 
   # Stats
