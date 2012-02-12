@@ -12,6 +12,6 @@ class MinutePlayedJob < TweetJob
     user.inc :minutes_played, 1
     world.inc :minutes_played, 1
 
-    world.memberhsips.where(user_id: user.id).first.inc :minutes_played, 1
+    world.memberships.where(user_id: user.id).first.inc :minutes_played, 1
   end
 end
