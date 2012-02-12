@@ -7,15 +7,17 @@ class ConfirmationsController < Devise::ConfirmationsController
   }
 
   def show
-    if user and user.valid?
+    self.resouce = resource_class.confirm_by_token(params[:confirmation_token])
+
+    if resource.errors.empty?
       set_flash_message(:notice, :confirmed) if is_navigational_format?
-      sign_in :user, user
+      sign_in(resource_name, resource)
 
-      UserMailer.welcome(user.id).deliver
+      UserMailer.welcome(resource.id).deliver
 
-      respond_with_navigational(user){ redirect_to after_confirmation_path_for(:user, user) }
+      respond_with_navigational(resource){ redirect_to after_confirmation_path_for(resource_name, resource) }
     else
-      respond_with_navigational(user.errors, :status => :unprocessable_entity){ render :new }
+      respond_with_navigational(resource.errors, :status => :unprocessable_entity){ render :new }
     end
   end
 
