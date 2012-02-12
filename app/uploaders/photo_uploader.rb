@@ -22,6 +22,7 @@ class PhotoUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
   version(:full) do
+    process :store_geometry
     process resize_to_fit: [960, 720]
   end
 
@@ -35,6 +36,14 @@ class PhotoUploader < CarrierWave::Uploader::Base
 
   version(:small) do
     process resize_to_fill: [140, 140]
+  end
+
+
+  def store_geometry
+    p @file
+    img = MiniMagick::Image.open(@file.file)
+    model.width = img[:width]
+    model.height = img[:height]
   end
 
 end

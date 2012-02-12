@@ -71,7 +71,11 @@ Minefold::Application.routes.draw do
     end
   end
 
-  resources :photos
+  get '/services/oembed' => 'o_embed#show'
+
+  resources :photos do
+    get :oembed, :on => :collection
+  end
 
 
   # get '/shots/:id' => 'shots#show', :id => /[A-Fa-f0-9]{24}\-.*/

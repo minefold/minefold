@@ -28,6 +28,9 @@ class Photo
     only_integer: true,
     greater_than_or_equal_to: 0
 
+  field :width, type: Integer
+  field :height, type: Integer
+
 
   def to_param
     id.to_param

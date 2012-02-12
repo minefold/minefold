@@ -1,4 +1,6 @@
 - title "#{photo.title} by #{photo.creator.username}"
+- head do
+  %link{rel: 'alternate', type: 'application/json+oembed', href: photo_oembed_url(photo), title: photo.title}
 
 .photo
   .body= image_tag photo.file.large.url
