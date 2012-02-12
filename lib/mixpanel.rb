@@ -6,7 +6,7 @@ module Mixpanel
 
   def track(event_name, properties={})
     if Rails.env.production?
-      if signed_in?
+      if properties[:distinct_id].nil? and signed_in?
         properties[:distinct_id] = current_user.id.to_s
         properties[:mp_name_tag] = current_user.safe_username
       end
