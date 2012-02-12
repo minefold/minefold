@@ -7,7 +7,7 @@ class ConfirmationsController < Devise::ConfirmationsController
   }
 
   def show
-    self.resouce = resource_class.confirm_by_token(params[:confirmation_token])
+    self.resource = resource_class.confirm_by_token(params[:confirmation_token])
 
     if resource.errors.empty?
       set_flash_message(:notice, :confirmed) if is_navigational_format?
