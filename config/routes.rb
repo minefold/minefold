@@ -71,7 +71,7 @@ Minefold::Application.routes.draw do
     end
   end
 
-  get '/services/oembed' => 'o_embed#show'
+  get '/oembed' => 'o_embed#show'
 
   resources :photos do
     get :oembed, :on => :collection
