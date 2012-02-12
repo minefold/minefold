@@ -16,6 +16,9 @@ class UserMailer < ActionMailer::Base
 
   def credits_reset(user_id)
     @user = User.find user_id
+    
+    return unless @user.notify? :credits_reset
+    
     mail(to: @user.email, subject: 'You have more Minefold time!')
   end
 
