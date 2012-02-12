@@ -9,6 +9,9 @@ class MinutePlayedJob < TweetJob
   end
 
   def process!(user, world, timestamp)
+    user.inc :minutes_played, 1
     world.inc :minutes_played, 1
+
+    world.memberhsips.where(user_id: user.id).first.inc :minutes_played, 1
   end
 end

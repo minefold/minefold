@@ -12,7 +12,6 @@ class Membership
 
   field :role, type: String
   validates_inclusion_of :role, in: ROLES, allow_nil: true
-
   scope :ops, where(role: 'op')
 
   def op?
@@ -22,4 +21,8 @@ class Membership
   def op!
     self.role = 'op'
   end
+
+  field :minutes_played, type: Integer, default: 0
+  field :last_played_at, type: DateTime
+
 end
