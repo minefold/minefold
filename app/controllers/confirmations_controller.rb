@@ -15,7 +15,7 @@ class ConfirmationsController < Devise::ConfirmationsController
 
       UserMailer.welcome(resource.id).deliver
 
-      respond_with_navigational(resource){ redirect_to after_confirmation_path_for(resource_name, resource) }
+      respond_with_navigational(resource){ redirect_to user_root_path }
     else
       respond_with_navigational(resource.errors, :status => :unprocessable_entity){ render :new }
     end
