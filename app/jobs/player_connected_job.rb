@@ -10,7 +10,10 @@ class PlayerConnectedJob
   end
 
   def process!(user, world, connected_at)
-    world.update_attributes last_played_at: connected_at
+    world.last_played_at = connected_at
+    world.memberships.where(user_id: user.id).first.last_played_at = connected_at
+
+    world.save
 
     world.record_event! Connection, source: user,
                                 created_at: connected_at
