@@ -3,7 +3,7 @@ class PhotoUploader < CarrierWave::Uploader::Base
     storage :fog
 
     def fog_directory; ENV['PHOTOS_BUCKET']; end
-    def fog_host; ENV['PHOTOS_CF_HOST']; end
+    def fog_host; ENV['PHOTOS_HOST']; end
     def store_dir; nil; end
 
   else
