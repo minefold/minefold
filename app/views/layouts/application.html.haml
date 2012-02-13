@@ -60,31 +60,31 @@
 
         %ol#nav
           - if not user_signed_in?
-            %li.pricing= link_to 'Pricing', pricing_page_path
-            %li.blog= link_to 'Blog', 'http://blog.minefold.com'
+            %li.nav-pricing= link_to 'Pricing', pricing_page_path
+            %li.nav-blog= link_to 'Blog', 'http://blog.minefold.com'
 
-            %li.signin= link_to 'Sign In', new_user_session_path
-            %li.signup= link_to 'Sign Up', new_user_path
+            %li.nav-signin= link_to 'Sign In', new_user_session_path
+            %li.nav-signup= link_to 'Sign Up', new_user_path
 
           - else
-            %li.dashboard= link_to 'Dashboard', user_root_path
-            %li.photos-a= link_to 'Photos', photos_path
+            %li.nav-dashboard= link_to 'Dashboard', user_root_path
+            %li.nav-photos= link_to 'Photos', photos_path
             - if current_user.photos.unsorted.count > 0
-              %li.lightbox
+              %li.nav-lightroom
                 = link_to lightroom_path do
                   Lightroom
                   %span.count= current_user.photos.unsorted.count
 
-            %li.user
+            %li.nav-user
               = link_to current_user do
                 = avatar_tag current_user, :small, width: 20, height: 20
 
               %ol
-                %li.profile= link_to 'Profile', current_user
-                %li.settings= link_to 'Settings', account_path
-                %li.sign-out= link_to 'Sign out', destroy_user_session_path, method: :delete
+                %li.nav-profile= link_to 'Profile', current_user
+                %li.nav-settings= link_to 'Settings', account_path
+                %li.nav-sign-out= link_to 'Sign out', destroy_user_session_path, method: :delete
 
-            %li.plan
+            %li.nav-plan
               - if current_user.pro?
                 %span.pro Pro!
               - else

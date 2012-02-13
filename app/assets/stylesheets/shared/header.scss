@@ -75,12 +75,12 @@ header {
         color: lighten($green, 30%);
       }
 
-      &.signin, &.signup, &.user, &.plan {
+      &.nav-signin, &.nav-signup, &.nav-user, &.nav-plan {
         float: right;
         position: relative;
       }
 
-      &.plan {
+      &.nav-plan {
         margin-top: $line * 2;
         margin-right: $gutter / 4;
         color: lighten($teal, 60%);
@@ -114,7 +114,7 @@ header {
         @include inline-block;
       }
 
-      &.user {
+      &.nav-user {
         img {
           display: block;
         }
