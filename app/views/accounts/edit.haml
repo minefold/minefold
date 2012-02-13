@@ -4,7 +4,7 @@
 
 = form_for current_user, url: account_path, method: :put do |f|
   %fieldset.username
-    %h3= f.label :username
+    %h3= f.label :username, 'Minecraft Username'
 
     = f.text_field :username, maxlength: 16
     = error_messages_for(f.object, :username)
