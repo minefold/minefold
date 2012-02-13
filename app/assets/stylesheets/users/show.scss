@@ -1,0 +1,19 @@
+#users-show {
+  .avatar, .profile {
+    float: left;
+  }
+
+  .avatar {
+    margin-right: $gutter;
+    img { display: block; }
+  }
+
+  .profile {
+    .created-at {
+      color: darken(white, 20%);
+      line-height: $line * 4;
+    }
+  }
+  
+  
+}

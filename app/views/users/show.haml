@@ -1,9 +1,11 @@
 - title user.username
 - masthead do
-  .avatar
-    = image_tag user.avatar.large.url
-  %h1.username= user.username
-  Member since #{user.created_at.strftime("%-d %b, %Y")}
+  .avatar= image_tag user.avatar.large.url
+  .profile
+    %h1.username= user.username
+    .created-at Member since #{user.created_at.strftime("%-d %b, %Y")}
 
-- user.created_worlds.each do |world|
+%h2 Worlds
+
+- user.worlds.each do |world|
   %p= link_to strong_world_fullname(world), world

@@ -1,10 +1,6 @@
 #masthead {
   padding: ($line * 8) 0;
 
-  h1, h2, p {
-    clear: both;
-  }
-
   h1 {
     font-size: 28px; line-height: $line * 8;
     font-weight: 400;
