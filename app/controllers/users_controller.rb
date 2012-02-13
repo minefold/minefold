@@ -24,6 +24,7 @@ class UsersController < Devise::RegistrationsController
   def create
     user.referrer = referrer
     if user.save
+      track 'created user'
       sign_in :user, user
 
       track '$signup', distinct_id: user.id.to_s, mp_name_tag: user.safe_username
