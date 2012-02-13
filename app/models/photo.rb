@@ -31,6 +31,8 @@ class Photo
   field :width, type: Integer
   field :height, type: Integer
 
+  field :thumb_width, type: Integer
+  field :thumb_height, type: Integer
 
   def to_param
     id.to_param
