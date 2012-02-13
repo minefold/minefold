@@ -39,10 +39,6 @@
     /[if lt IE 9]
       = javascript_include_tag '//html5shim.googlecode.com/svn/trunk/html5.js'
 
-    = javascript_include_tag "//use.typekit.com/#{ENV['TYPEKIT_ID']}.js"
-    :javascript
-      try{Typekit.load();}catch(e){}
-
     = render partial: 'shared/mixpanel'
 
     = yield :head
