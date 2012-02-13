@@ -8,4 +8,4 @@
 %h2 Worlds
 
 - user.worlds.each do |world|
-  %p= link_to strong_world_fullname(world), world
+  %p= link_to strong_world_fullname(world), user_world_path(world.creator, world)
