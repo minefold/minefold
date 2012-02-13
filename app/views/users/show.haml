@@ -1,6 +1,9 @@
 - title user.username
 - masthead do
-  %h1= user.username
+  .avatar
+    = image_tag user.avatar.large.url
+  %h1.username= user.username
+  Member since #{user.created_at.strftime("%-d %b, %Y")}
 
-%p Sorry, nothing here yet! Enjoy this delicious video.
-= youtube_vid
+- user.created_worlds.each do |world|
+  %p= link_to strong_world_fullname(world), world
