@@ -4,7 +4,9 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
 
-  rescue_from Mongoid::Errors::DocumentNotFound do
+  class NotFound < StandardError; end
+
+  rescue_from Mongoid::Errors::DocumentNotFound, NotFound do
     render status: :not_found, template: 'errors/not_found'
   end
 
