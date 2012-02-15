@@ -11,6 +11,7 @@ Minefold::Application.routes.draw do
     resource :session, :only => [:show],  :controller => 'session'
     post '/campaign/webhook' => 'campaign#webhook'
     resources :photos, :only => [:index, :create]
+    get 'key' => 'Api#key'
   end
 
   get  '/dashboard' => 'accounts#dashboard', :as => :user_root
