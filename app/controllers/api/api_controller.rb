@@ -4,6 +4,10 @@ class Api::ApiController < ActionController::Base
   before_filter :http_auth
   layout nil
 
+  def key
+    render json: { api_key: current_user.authentication_token }
+  end
+
   def http_auth
     @current_user = authenticate_with_http_basic do |username, password|
       user = User.by_email_or_username(username).first
