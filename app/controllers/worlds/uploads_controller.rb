@@ -9,8 +9,8 @@ class Worlds::UploadsController < ApplicationController
 
   def create
     upload = WorldUpload.create s3_key: params[:key],
-                              filename: params[:name],
-                              uploader: current_user
+                                filename: params[:name],
+                                user: current_user
 
     Resque.enqueue WorldUploadJob, upload.id
     render json: { id: upload.id }

@@ -22,6 +22,9 @@ class WorldUploadJob
     puts "Parsing seed from #{@upload.level_dat_path}"
     @upload.parse_seed!
 
+    puts "Cleaning data"
+    @upload.clean!
+
     puts "Building archive"
     @upload.build!
 

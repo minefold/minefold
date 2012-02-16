@@ -39,7 +39,7 @@ class Mf.WorldUploadView extends Backbone.View
       swf.upload()
       false
 
-  unloadMsg = ->'Are you sure you want to leave? Your upload will be lost.'
+  unloadMsg = -> 'Your upload will be lost.'
 
   start: =>
     @button.hide()

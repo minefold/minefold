@@ -17,13 +17,7 @@ class WorldUpload
   field :s3_key, type: String
   field :filename, type: String
 
-  # the result of processing into a world data file
-  field :process_result, type: String
-
-  # the new world data file ready for use
-  # field :world_data_file, type: String
-
-  belongs_to :uploader, class_name: 'User'
+  belongs_to :user
   belongs_to :world
 
   field :seed
@@ -62,19 +56,15 @@ class WorldUpload
     self.seed = NBTFile.read(data)[1]['Data']['RandomSeed'].value.to_s
   end
 
-  # Prepares the folder structure and makes a tar.gzip
-  def build!
-    # Make the worldupload-id folder
-
-    # Make the upload key dir
-    # Dir.mkdir_p(x)
-
-    # Remove any ignored files
+  def clean!
     IGNORED_FILES.each do |f|
       path = File.join(world_path, f)
       File.unlink(path) if File.exist?(path)
     end
+  end
 
+  # Prepares the folder structure and makes a tar.gzip
+  def build!
     puts "BUILD_PATH: #{build_path}"
 
     puts "WORLD_PATH: #{world_path}"
@@ -86,7 +76,7 @@ class WorldUpload
     FileUtils.mv(world_path, level_path)
 
     # TODO Refactor out archive path
-    TarGz.new.archive tmpdir, File.basename(build_path), compiled_archive_path
+    TarGz.new.archive build_path, '.', compiled_archive_path
   end
 
   # Uploads that tar.gzip back up to S3
@@ -99,7 +89,7 @@ class WorldUpload
 
 
   def upload_key
-    [self.class.name.downcase, id].join('-')
+    ['upload', id].join('-')
   end
 
   def world_data_file
