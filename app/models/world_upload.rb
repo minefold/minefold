@@ -64,15 +64,29 @@ class WorldUpload
 
   # Prepares the folder structure and makes a tar.gzip
   def build!
-    File.rename(world_path, level_path)
+    # Make the worldupload-id folder
 
+    # Make the upload key dir
+    # Dir.mkdir_p(x)
+
+    # Remove any ignored files
     IGNORED_FILES.each do |f|
-      path = File.join(level_path, f)
+      path = File.join(world_path, f)
       File.unlink(path) if File.exist?(path)
     end
 
+    puts "BUILD_PATH: #{build_path}"
+
+    puts "WORLD_PATH: #{world_path}"
+    puts "LEVEL_PATH: #{level_path}"
+
+    FileUtils.mkdir_p(build_path)
+
+    # Rename the world path folder to 'level'
+    FileUtils.mv(world_path, level_path)
+
     # TODO Refactor out archive path
-    TarGz.new.archive level_path, '.', compiled_archive_path
+    TarGz.new.archive tmpdir, File.basename(build_path), compiled_archive_path
   end
 
   # Uploads that tar.gzip back up to S3
@@ -114,6 +128,10 @@ class WorldUpload
     File.join(tmpdir, upload_key)
   end
 
+  def build_path
+    File.join(tmpdir, "#{upload_key}-build")
+  end
+
   def level_dat_path
     @level_dat_path ||= Find.find(extraction_path) do |path|
       if path =~ /level\.dat$/
@@ -129,7 +147,7 @@ class WorldUpload
   end
 
   def level_path
-    File.join(File.dirname(world_path), 'level')
+    File.join(build_path, 'level')
   end
 
   def compiled_archive_path
