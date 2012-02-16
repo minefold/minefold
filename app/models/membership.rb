@@ -25,8 +25,4 @@ class Membership
   field :minutes_played, type: Integer, default: 0
   field :last_played_at, type: DateTime
 
-  def played?
-    not last_played_at.nil?
-  end
-
 end
