@@ -21,7 +21,7 @@ class WorldUpload
   field :process_result, type: String
 
   # the new world data file ready for use
-  # field :world_data_file, type: String
+  field :world_data_file, type: String
 
   belongs_to :uploader, class_name: 'User'
   belongs_to :world
@@ -78,7 +78,7 @@ class WorldUpload
   # Uploads that tar.gzip back up to S3
   def upload!
     worlds_bucket = self.class.storage.directories.create :key => ENV['WORLDS_BUCKET']
-    worlds_bucket.files.create key: world_data_file,
+    worlds_bucket.files.create key: upload_key,
                               body: File.open(compiled_archive_path),
                             public: false
   end
@@ -86,10 +86,6 @@ class WorldUpload
 
   def upload_key
     [self.class.name.downcase, id].join('-')
-  end
-
-  def world_data_file
-    "#{upload_key}.tar.gz"
   end
 
   def pusher_key
@@ -133,7 +129,7 @@ class WorldUpload
   end
 
   def compiled_archive_path
-    File.join(tmpdir, world_data_file)
+    File.join(tmpdir, "#{upload_key}.tar.gz")
   end
 
 end
