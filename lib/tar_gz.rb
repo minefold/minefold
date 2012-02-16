@@ -1,5 +1,3 @@
-require 'shellwords'
-
 class TarGz
   attr_reader :options
 
@@ -13,34 +11,34 @@ class TarGz
   end
 
   class Base
-
-    def archive(cwd, path, output, args={})
-      sh 'tar', arg_str(args), '-C', cwd, '-czf', output, path
+    attr_reader :options
+    def initialize options = {}
+      @options = options
     end
 
-    def extract(input, args={})
-      sh 'tar', arg_str(args), '-xzf', Shellwords.escape(input)
-    end
-
-  private
-
-    def sh(*argv)
-      cmd = Shellwords.join(argv)
+    def run_command cmd
       puts cmd
       puts `#{cmd}`
     end
 
+    def archive working_directory, path, output_file, options = {}
+      run_command "tar #{option_string(options)} -C '#{working_directory}' -czf '#{output_file}' '#{path}'"
+    end
+
+    def extract archive_file, options = {}
+      run_command "tar #{option_string(options)} -xzf '#{archive_file}'"
+    end
   end
 
   class OSX < Base
-    def arg_str(args)
-      Shellwords.join args.map{|k,v| "--#{k} '#{Shellwords.escape(v)}'"}
+    def option_string options
+      options.map{|k,v| "--#{k} '#{v}'"}.join(" ")
     end
   end
 
   class Linux < Base
-    def arg_str(args)
-      Shellwords.join args.map{|k,v| "--#{k}='#{Shellwords.escape(v)}'"}
+    def option_string options
+      options.map{|k,v| "--#{k}='#{v}'"}.join(" ")
     end
   end
 end

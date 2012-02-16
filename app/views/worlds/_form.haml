@@ -52,7 +52,7 @@
               el: newWorldForm.find('fieldset.upload')[0],
               form: newWorldForm,
               text: 'Choose your world archive file',
-              prefix: #{[current_user.safe_username, current_user.id, Time.now.strftime('%Y%m%d%H%M%S'), nil].join('-').to_json},
+              prefix: #{[current_user.safe_username, current_user.id, Time.now.strftime('%Y%m%d%H%M%S')].join('-').to_json},
               worldUploadPolicyPath: #{policy_upload_path(format: :xml).to_json},
               worldUploadPath: #{upload_path.to_json}
             });
@@ -69,13 +69,7 @@
           newWorldSubmitButton.attr('disabled', true).val('Waiting for upload to finish');
         });
 
-        newWorldForm.bind('upload:finished', function(e, data) {
-          if(data) {
-            newWorldForm.find('input#world_world_upload_id').val(data.id);
-            newWorldForm.find('.level-type-default .seed').text(data.seed);
-            newWorldForm.find('input#world_seed').val(data.seed);
-          }
-
+        newWorldForm.bind('upload:finished', function() {
           newWorldSubmitButton
             .attr('disabled', false)
             .val(originalSubmitButtonName);
@@ -107,7 +101,7 @@
     = form.label :level_type_default do
       Natural
       .hint
-        Terrain is like real life. The seed is <span class="seed">#{form.object.seed}</span>.
+        Terrain is like real life. The seed is #{form.object.seed}.
 
   %section.level-type-flat
     = form.radio_button :level_type, 'flat'

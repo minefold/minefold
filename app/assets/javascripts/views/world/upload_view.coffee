@@ -80,6 +80,7 @@ class Mf.WorldUploadView extends Backbone.View
 
         channel.bind 'success', (data) =>
           @progress.attr 'class', 'succeeded'
-          @form.trigger 'upload:finished', data
+          @$('input#world_world_upload_id').val(data.world_upload.id)
+          @form.trigger 'upload:finished'
 
         channel.bind 'error', @error
