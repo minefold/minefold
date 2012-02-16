@@ -4,9 +4,10 @@ module ApplicationHelper
     {style: 'display:none'}
   end
 
-  def page_css_selector
-    [params[:controller].gsub('/', '-').dasherize,
-     params[:action].dasherize].join('-')
+  def page_css_id
+    [ params[:controller].gsub('/', '-').dasherize,
+      params[:action].dasherize
+    ].join('-')
   end
 
   def flash_upload_options(opts)

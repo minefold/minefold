@@ -1,11 +1,11 @@
 !!!
-%html{'xmlns:og' => 'http://ogp.me/ns#', id: page_css_selector}
+%html{'xmlns:og' => 'http://ogp.me/ns#', id: page_css_id}
   %head
     %meta{charset: 'utf-8'}
     = stylesheet_link_tag 'application'
 
     %title
-      - if content_for? :title
+      - if content_for?(:title)
         = content_for(:title)
         —
       Minefold
@@ -28,9 +28,6 @@
     %meta{property: 'og:site_name', content: 'Minefold'}
     %meta{property: 'fb:app_id', content: ENV['FB_APP_ID']}
     = csrf_meta_tags
-
-    = render partial: 'shared/exceptional'
-
 
     = javascript_include_tag '//d3ds63zw57jt09.cloudfront.net/1.10/pusher.min.js'
     = javascript_include_tag '//maps.google.com/maps/api/js?sensor=false'
@@ -67,7 +64,7 @@
             %li.nav-photos= link_to 'Photos', photos_path
             - if current_user.photos.unsorted.count > 0
               %li.nav-lightroom
-                = link_to lightroom_path do
+                = link_to lightroom_photos_path do
                   Lightroom
                   %span.count= current_user.photos.unsorted.count
 

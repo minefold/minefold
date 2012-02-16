@@ -75,7 +75,7 @@ Minefold::Application.routes.draw do
   get '/oembed' => 'o_embed#show', :defaults => { :format => 'json' }
 
   resources :photos do
-    get :oembed, :on => :collection
+    get :lightroom, :on => :collection
   end
 
 
@@ -93,8 +93,6 @@ Minefold::Application.routes.draw do
   # get '/shots' => 'shots#everyone'
   # get '/shots/:user_slug' => 'shots#for_user'
   # get '/shots/:user_slug/:shot_album_slug' => 'shots#for_album'
-
-  get '/lightroom' => 'photos#lightroom', :as => :lightroom
 
   devise_scope :user do
     resources :users, :path => '/', :only => [:show] do
