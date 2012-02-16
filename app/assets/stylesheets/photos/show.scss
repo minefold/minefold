@@ -23,7 +23,6 @@
         @include clearfix;
         padding-bottom: $line * 2 - 1px;
         border-bottom: 1px solid darken(white, 5%);
-        margin-bottom: $line * 2;
         .avatar {
           float: left;
           img {
@@ -41,6 +40,10 @@
       .time-and-place {
         color: darken(white, 40%);
         font-size: 12px; line-height: $line * 4;
+      }
+
+      .user, .time-and-place, .social {
+        margin-bottom: $line * 2;
       }
     }
   }
