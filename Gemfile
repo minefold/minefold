@@ -74,6 +74,7 @@ group :worker do
   gem 'rubyzip'
   gem 'fog'
   gem 'resque-exceptional'
+  gem 'nbtfile'
 end
 
 group :test do
