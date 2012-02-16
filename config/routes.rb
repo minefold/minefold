@@ -12,6 +12,7 @@ Minefold::Application.routes.draw do
     post '/campaign/webhook' => 'campaign#webhook'
     resources :photos, :only => [:index, :create]
     get 'key' => 'Api#key'
+    get 'upload-policy' => 'Api#upload_policy'
   end
 
   get  '/dashboard' => 'accounts#dashboard', :as => :user_root
