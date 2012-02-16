@@ -110,7 +110,7 @@ class World
   end
 
   def add_member(user)
-    memberships.find_or_initialize_by(user: user)
+    memberships.find_or_initialize_by(user_id: user.id)
   end
 
   def add_op(user)
