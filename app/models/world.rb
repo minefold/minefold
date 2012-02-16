@@ -35,7 +35,6 @@ class World
 
   # Legacy backup file in S3, can be blank
   field :world_data_file, type: String
-
   belongs_to :world_upload
 
   # Maps

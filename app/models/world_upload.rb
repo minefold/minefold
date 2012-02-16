@@ -65,17 +65,11 @@ class WorldUpload
 
   # Prepares the folder structure and makes a tar.gzip
   def build!
-    puts "BUILD_PATH: #{build_path}"
-
-    puts "WORLD_PATH: #{world_path}"
-    puts "LEVEL_PATH: #{level_path}"
-
     FileUtils.mkdir_p(build_path)
 
     # Rename the world path folder to 'level'
     FileUtils.mv(world_path, level_path)
 
-    # TODO Refactor out archive path
     TarGz.new.archive build_path, '.', compiled_archive_path
   end
 
@@ -83,8 +77,8 @@ class WorldUpload
   def upload!
     worlds_bucket = self.class.storage.directories.create :key => ENV['WORLDS_BUCKET']
     worlds_bucket.files.create key: world_data_file,
-                              body: File.open(compiled_archive_path),
-                            public: false
+                               body: File.open(compiled_archive_path),
+                               public: false
   end
 
 
@@ -142,6 +136,10 @@ class WorldUpload
 
   def compiled_archive_path
     File.join(tmpdir, world_data_file)
+  end
+
+  def as_json(options={})
+    { id: id, seed: seed }
   end
 
 end

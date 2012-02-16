@@ -36,7 +36,7 @@ class WorldUploadJob
 
     puts "Done"
 
-    pusher.trigger('success', @upload.attributes)
+    pusher.trigger('success', @upload.to_json)
 
   rescue WorldUpload::InvalidUploadError => e
     pusher.trigger('error', e.message)
@@ -45,6 +45,8 @@ class WorldUploadJob
     pusher.trigger('error', e.message)
 
   rescue => e
+    pusher.trigger('error', 'Something horrible happend. Sorry!')
+
     raise e
   end
 
