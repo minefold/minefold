@@ -41,7 +41,7 @@
   %ul
     - world.memberships.each do |m|
       %li
-        = link_to user_path(m.user) do
+        = link_to user_path(m.user), class: 'avatar' do
           = avatar_tag m.user, :medium, width: 40, height: 40
         .meta
           .username
@@ -49,3 +49,8 @@
             - if m.op?
               %em.highlight (op)
           Joined #{time_ago_in_words(m.created_at)} ago.
+          - if m.played?
+            Last played #{time_ago_in_words(m.last_played_at)} ago.
+
+          - if can?(:destroy, m)
+            = link_to 'Remove', user_world_member_path(world.creator, world, m), method: :delete

@@ -20,6 +20,12 @@ class Ability
       world.op? user
     end
 
+    can :destroy, Membership do |membership|
+      can?(:operate, membership.world) and
+      membership.user != user and
+      membership.user != membership.world.creator
+    end
+
     # 1. Can't clone own wold
     # 2. Can't clone a world that's already been cloned
     can :clone, World do |world|
