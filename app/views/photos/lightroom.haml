@@ -1,82 +1,54 @@
 - title 'Lightroom'
 - masthead do
-  .row
-    - if current_user.worlds.any?
-      %aside
-        Default world these photos were taken in
-        = select 'photos', 'master_world', options_for_select(current_user.worlds.map {|w| [world_fullname(w), w.id.to_s] }, current_user.current_world.id), include_blank: true
-    %h1 Lightroom
-    %h2 Publish or chuck your Minecraft screenshots
+  %h1 Lightroom
+  %h2 Sort out your photos
 
+= form_for current_user, url: lightroom_photos_path, method: :put do |f|
+  = f.fields_for :pending_photos do |photo_fields|
+    .photo
+      = photo_fields.hidden_field :published
 
-
-%ul.unsorted-photos
-  - current_user.photos.unsorted.each do |photo|
-    %li
       .file
-        = image_tag photo.file.lightbox.url
-        = button_to '', user_photo_path(current_user, photo), method: :put, class: 'keep'
-        = button_to '', user_photo_path(current_user, photo), method: :delete, class: 'chuck'
+        = image_tag photo_fields.object.file.medium.url
+        %a.publish{href: '#'} Publish
+        %a.trash Trash
 
-      .title
-        = text_field_tag :photo_title, nil, placeholder: 'Title'
+      .metadata
+        = photo_fields.text_field :title, placeholder: 'Title'
+        = photo_fields.text_area :desc, placeholder: 'Description', rows: 2
 
-      - if current_user.worlds.any?
-        .world
-          taken in
-          = select :photo, :world, options_for_select(current_user.worlds.map {|w| [world_fullname(w), w.id.to_s] }, current_user.current_world.id), include_blank: true
+  :javascript
+    $('.photo .file a').click(function(e) {
+      e.preventDefault();
+      var publish = $(this).hasClass('publish');
+      $(this)
+        .parents('.photo')
+        .find('input[name$="[published]"]')
+        .val(publish);
 
-:javascript
-  var selects = $('select[name="photo[world]"]'),
-      masterSelect = $('#photos_master_world'),
-      masterVal = masterSelect.val();
+      $(this).siblings('a').removeClass('active');
+      $(this).addClass('active');
 
-  masterSelect.change(function() {
-    var newMasterVal = masterSelect.val();
+      // Focus title
+      if(publish) {
+        $(this).parents('.photo').find('input[name$="[title]"]').focus();
+      }
+    });
 
-    selects
-      .filter(function() { return $(this).val() === masterVal; })
-      .val(newMasterVal);
+    // .add('textarea[name$="[desc]"]')
+    //   .keydown(function() {
+    //       .attr('checked', true);
+    // });
 
-    masterVal = newMasterVal;
-  });
+  %fieldset.submit
+    = f.submit 'Save Photos'
 
-:javascript
-  var form = $('.file form.button_to')
-  form.submit(function(e) {
-    e.preventDefault();
+%hr
 
-    var self = $(this),
-        li = self.parents('li'),
-        type = $(this).find('input[type=submit]').attr('class');
-
-    if(type === 'keep') {
-      var title = li.find('input[name=photo_title]').val(),
-          world = li.find('select').val();
-
-      $.ajax(self.attr('action'), {
-        data: {
-          photo: {
-            public: true,
-            title: title,
-            world: world
-          }
-        },
-        dataType: 'json',
-        type: 'PUT'
-      }).done(function() {
-        li.remove();
-      });
-    } else if(type === 'chuck') {
-      $.ajax(self.attr('action'), {
-        dataType: 'json',
-        type: 'DELETE'
-      }).done(function() {
-        li.remove();
-      });
-    }
-
-
-    return false;
-  });
+%h2 Photos that you published
+%ul.recent-photos
+  - current_user.photos.published.each do |photo|
+    %li
+      = link_to photo_path(photo) do
+        = image_tag photo.file.thumb.url
 

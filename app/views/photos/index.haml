@@ -1,7 +1,21 @@
-- title_and_masthead 'Photos'
+- title 'Photos'
+- masthead do
+  %h1 Hello Reddit!
 
-%ul.photos
-  - photos.order_by([:created_at, :desc]).each do |photo|
-    %li.photo-card
+  %aside
+    = image_tag 'client.png'
+
+  %p
+    We love seeing photos of the stuff you build in Minecraft so we thought we'd make it easier for you to share them. Here's a little app that automatically saves screenshots you take in Minecraft. You can then review them and post the most bodacious ones straight to <a href="http://reddit.com/r/minecraft">/r/minecraft</a>.
+
+  %p.signature
+    — Lots of love, Chris & Dave
+
+  = button_to "Download Mac Client (2.1mb)"
+
+%h3 Photos that people have taken recently
+%ul.recent-photos
+  - Photo.recent.each do |photo|
+    %li
       = link_to photo_path(photo) do
-        .file= image_tag photo.file.small.url
+        = image_tag photo.file.thumb.url

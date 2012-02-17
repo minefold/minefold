@@ -3,11 +3,15 @@ class PhotosController < ApplicationController
 
   prepend_before_filter :authenticate_user!, only: [:lightroom]
 
-  expose(:photos) { Photo.public }
+  expose(:photos) { Photo.published }
   expose(:photo)
 
   def index
-    respond_with photos
+    if signed_in?
+      render action: 'lightroom'
+    else
+      render action: 'index'
+    end
   end
 
   def show
@@ -19,6 +23,11 @@ class PhotosController < ApplicationController
   end
 
   def lightroom
+  end
+
+  def update_lightroom
+    current_user.photos_attributes = params[:user][:pending_photos_attributes]
+    redirect_to photos_path
   end
 
 end

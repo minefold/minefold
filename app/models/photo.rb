@@ -4,23 +4,25 @@ class Photo
   include Mongoid::Slug
   include Mongoid::Paranoia
 
+  default_scope order_by([:created_at, :asc])
+
   mount_uploader :file, PhotoUploader
 
   belongs_to :creator, class_name: 'User'
-
-  belongs_to :world
-  attr_accessible :world
 
   field :title, type: String
   slug :title, index: true
   attr_accessible :title
 
+  field :desc, type: String
+  attr_accessible :desc
+
   field :sha, type: String, index: true
 
-  field :public, type: Boolean, default: false
-  scope :unsorted, where(public: false)
-  scope :public, where(public: true)
-  attr_accessible :public
+  field :published, type: Boolean
+  scope :published, where(public: true)
+  scope :pending, where(:public.exists => false)
+  attr_accessible :published
 
 
   field :pageviews, type: Integer, default: 0
@@ -34,7 +36,10 @@ class Photo
   field :thumb_width, type: Integer
   field :thumb_height, type: Integer
 
+  scope :recent, published.order_by([:created_at, :desc]).limit(12)
+
   def to_param
     id.to_param
   end
+
 end

@@ -75,24 +75,9 @@ Minefold::Application.routes.draw do
   get '/oembed' => 'o_embed#show', :defaults => { :format => 'json' }
 
   resources :photos do
-    get :lightroom, :on => :collection
+    get 'lightroom', :on => :collection
+    put 'lightroom', :action => :update_lightroom, :on => :collection
   end
-
-
-  # get '/shots/:id' => 'shots#show', :id => /[A-Fa-f0-9]{24}\-.*/
-  # put '/shots/:id' => 'shots#update', :id => /[A-Fa-f0-9]{24}/
-  # delete '/shots/:id' => 'shots#destroy', :id => /[A-Fa-f0-9]{24}/
-  #
-  # post '/shots/albums' => 'shot_albums#create'
-  # delete '/shots/albums/:id' => 'shot_albums#destroy'
-  # put '/shots/albums/:id' => 'shot_albums#update'
-  #
-  # get '/shots/admin' => 'shots#admin'
-  # get '/shots/admin/albums/:id' => 'shot_albums#admin'
-  #
-  # get '/shots' => 'shots#everyone'
-  # get '/shots/:user_slug' => 'shots#for_user'
-  # get '/shots/:user_slug/:shot_album_slug' => 'shots#for_album'
 
   devise_scope :user do
     resources :users, :path => '/', :only => [:show] do

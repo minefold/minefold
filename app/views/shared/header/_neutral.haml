@@ -1,0 +1,12 @@
+%header
+  .container
+    %h1
+      = link_to root_url do
+        Minefold
+        %em Beta!
+
+    %ol#nav
+      %li.nav-blog= link_to 'Blog', 'http://blog.minefold.com'
+
+      %li.nav-signin= link_to 'Sign In', new_user_session_path
+      %li.nav-signup= link_to 'Sign Up', new_user_path

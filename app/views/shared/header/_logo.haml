@@ -1,0 +1,6 @@
+%h1
+  = link_to root_url do
+    Minefold
+    - if params[:controller] == 'photos'
+      %span.photos Photos
+    %em Beta!

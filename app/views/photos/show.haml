@@ -13,13 +13,29 @@
         = link_to photo.creator.username, user_path(photo.creator)
 
     .time-and-place
-      This photo was taken #{time_ago_in_words photo.created_at} ago
-      - if photo.world
-        in #{link_to world_fullname(photo.world), user_world_path(photo.world.creator, photo.world)}
-      \.
+      Uploaded #{time_ago_in_words photo.created_at} ago
 
     .social
       %script{type: 'text/javascript', src: '//www.reddit.com/static/button/button3.js'}
 
 - if photo.title?
   %h1= photo.title
+- if photo.desc?
+  %p= photo.desc
+
+#disqus_thread
+- if Rails.env.development?
+  :javascript
+    var window.discus_developer = 1;
+
+:javascript
+  var disqus_shortname = 'minefold',
+      disqus_identifier = #{['photos', photo.id.to_s].join('/').to_json};
+
+  (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>

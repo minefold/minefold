@@ -1,7 +1,7 @@
 //= require reset
 //= require_self
 
-@charset "utf-8";
+@charset 'utf-8';
 
 @import 'bourbon';
 
@@ -9,17 +9,16 @@
 @import 'mixins';
 @import 'scaffold';
 
-@import 'global';
-
 @import 'shared/buttons';
-@import 'shared/forms';
-
-@import 'shared/header';
 @import 'shared/flash';
+@import 'shared/footer';
+@import 'shared/forms';
+@import 'shared/header';
 @import 'shared/masthead';
 @import 'shared/page';
-@import 'shared/footer';
 @import 'shared/pro';
+
+@import 'layouts/application';
 
 
 @import 'accounts/dashboard';
@@ -50,6 +49,4 @@
 
 @import 'users/new';
 @import 'users/show';
-
-@import 'shots';
 

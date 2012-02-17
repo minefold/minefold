@@ -139,7 +139,7 @@ class User
 
   field :credits, type: Integer, default: (FREE_HOURS.hours / BILLING_PERIOD)
   validates_numericality_of :credits
-  
+
   field :last_credit_reset, type: DateTime
 
   field :minutes_played, type: Integer, default: 0
@@ -152,6 +152,13 @@ class User
   end
 
   has_many :photos, inverse_of: :creator
+  accepts_nested_attributes_for :photos
+
+  def pending_photos
+    photos.pending
+  end
+
+  accepts_nested_attributes_for :pending_photos
 
   field :notifications, type: Hash, default: ->{ Hash.new }
   field :last_world_started_mail_sent_at, type: DateTime

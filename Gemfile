@@ -31,6 +31,7 @@ gem 'backbone-rails', '0.5.3.1'
 gem 'coffee-filter'
 gem 'decent_exposure'
 gem 'rabl'
+gem 'kaminari'
 
 gem 'asset_sync', git: 'https://github.com/rumblelabs/asset_sync.git'
 

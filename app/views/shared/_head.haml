@@ -1,0 +1,31 @@
+%meta{charset: 'utf-8'}
+= stylesheet_link_tag 'application'
+
+%title
+  - if content_for?(:title)
+    = content_for(:title)
+    —
+  Minefold
+
+/ ---
+
+%meta{name: 'description', content: 'Play Minecraft on demand with friends.'}
+%meta{name: 'keywords', content: %w(gaming games game minecraft server hosting multiplayer).join(',')}
+= favicon_link_tag
+
+%meta{'http-equiv' => 'X-UA-Compatible', :content => 'IE=edge,chrome=1'}
+%meta{name: 'viewport', content: 'width=device-width, initial-scale=1'}
+%meta{property: 'og:site_name', content: 'Minefold'}
+%meta{property: 'fb:app_id', content: ENV['FB_APP_ID']}
+= csrf_meta_tags
+
+= javascript_include_tag '//d3ds63zw57jt09.cloudfront.net/1.10/pusher.min.js'
+= javascript_include_tag '//maps.google.com/maps/api/js?sensor=false'
+= javascript_include_tag 'application'
+
+/[if lt IE 9]
+  = javascript_include_tag '//html5shim.googlecode.com/svn/trunk/html5.js'
+
+= render partial: 'shared/mixpanel'
+
+= yield :head

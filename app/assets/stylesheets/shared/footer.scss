@@ -4,7 +4,7 @@ footer {
 
   font-size: 12px; line-height: $line * 4;
 
-  ul {
+  ol {
     @include row;
 
     li {

@@ -10,6 +10,10 @@ module ApplicationHelper
     ].join('-')
   end
 
+  def page_attributes
+    { 'xmlns:og' => 'http://ogp.me/ns#', id: page_css_id }
+  end
+
   def flash_upload_options(opts)
     { buttonUpPath: image_path('upload-button.png'),
       buttonOverPath: image_path('upload-button-hover.png'),
@@ -19,17 +23,6 @@ module ApplicationHelper
       selectMultipleFiles: false,
       buttonWidth: 100
     }.merge(opts)
-  end
-
-  def youtube_vid
-    content_tag(:iframe, nil,
-      width: 480,
-      height: 390,
-      src: "#{Videos.sample}?rel=0",
-      frameborder: 0,
-      allowfullscreen: true,
-      class: 'youtube'
-    ).html_safe
   end
 
   def title(page_title)

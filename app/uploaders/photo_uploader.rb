@@ -30,7 +30,7 @@ class PhotoUploader < CarrierWave::Uploader::Base
     process resize_to_fit: [700, 525]
   end
 
-  version(:lightbox) do
+  version(:medium) do
     process resize_to_fit: [460, 345]
   end
 
