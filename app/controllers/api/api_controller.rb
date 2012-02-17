@@ -20,6 +20,8 @@ class Api::ApiController < ActionController::Base
   end
 
   def http_auth
+    return if current_user
+
     @current_user = authenticate_with_http_basic do |username, password|
       user = User.by_email_or_username(username).first
       user if user && user.valid_password?(password)
@@ -29,7 +31,9 @@ class Api::ApiController < ActionController::Base
   end
 
   def api_key_auth
-    render status: 403, text: "API key required" unless request.headers['Api-key'] && 
+    return if current_user
+
+    render status: 403, text: "API key required" unless request.headers['Api-key'] &&
       @current_user = User.where(authentication_token: request.headers['Api-key']).first
   end
 end
