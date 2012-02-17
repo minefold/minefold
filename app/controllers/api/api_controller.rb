@@ -29,8 +29,7 @@ class Api::ApiController < ActionController::Base
   end
 
   def api_key_auth
-    @current_user = User.where(authentication_token: request.headers['Api-key']).first
-    render status: 403, text: "API key required" unless @current_user
+    render status: 403, text: "API key required" unless request.headers['Api-key'] && 
+      @current_user = User.where(authentication_token: request.headers['Api-key']).first
   end
-
 end

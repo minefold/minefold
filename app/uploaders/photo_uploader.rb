@@ -1,4 +1,8 @@
 class PhotoUploader < CarrierWave::Uploader::Base
+  include CarrierWave::Sha
+  
+  process :set_sha
+  
   if Rails.env.production? or Rails.env.staging?
     storage :fog
 
