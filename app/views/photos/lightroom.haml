@@ -1,10 +1,11 @@
 - title 'Lightroom'
+- world_select_options = options_for_select(current_user.worlds.map {|w| [world_fullname(w), w.id.to_s] }, (current_user.current_world.id if current_user.current_world))
 - masthead do
   .row
     - if current_user.worlds.any?
       %aside
         Default world these photos were taken in
-        = select 'photos', 'master_world', options_for_select(current_user.worlds.map {|w| [world_fullname(w), w.id.to_s] }, current_user.current_world.id), include_blank: true
+        = select 'photos', 'master_world', world_select_options, include_blank: true
     %h1 Lightroom
     %h2 Publish or chuck your Minecraft screenshots
 
@@ -24,7 +25,7 @@
       - if current_user.worlds.any?
         .world
           taken in
-          = select :photo, :world, options_for_select(current_user.worlds.map {|w| [world_fullname(w), w.id.to_s] }, current_user.current_world.id), include_blank: true
+          = select :photo, :world, world_select_options, include_blank: true
 
 :javascript
   var selects = $('select[name="photo[world]"]'),
