@@ -7,6 +7,7 @@ class Photo
   default_scope order_by([:created_at, :asc])
 
   mount_uploader :file, PhotoUploader
+  attr_accessible :remote_file_url
 
   belongs_to :creator, class_name: 'User'
 

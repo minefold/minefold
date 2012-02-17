@@ -1,4 +1,5 @@
 - title 'Lightroom'
+- world_select_options = options_for_select(current_user.worlds.map {|w| [world_fullname(w), w.id.to_s] }, (current_user.current_world.id if current_user.current_world))
 - masthead do
   %h1 Lightroom
   %h2 Sort out your photos
@@ -51,4 +52,3 @@
     %li
       = link_to photo_path(photo) do
         = image_tag photo.file.thumb.url
-

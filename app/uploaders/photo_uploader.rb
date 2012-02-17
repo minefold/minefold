@@ -1,4 +1,5 @@
 class PhotoUploader < CarrierWave::Uploader::Base
+
   if Rails.env.production? or Rails.env.staging?
     storage :fog
 
@@ -21,9 +22,11 @@ class PhotoUploader < CarrierWave::Uploader::Base
 
   include CarrierWave::MiniMagick
 
+  process :set_sha
+
   version(:full) do
     process resize_to_fit: [960, 720]
-    process geometry: [:width, :height]
+    process set_geometry: [:width, :height]
   end
 
   version(:large) do
@@ -43,10 +46,14 @@ class PhotoUploader < CarrierWave::Uploader::Base
     process geometry: [:thumb_width, :thumb_height]
   end
 
-  def geometry(width_attr, height_attr)
+  def set_geometry(width_attr, height_attr)
     image = MiniMagick::Image.open(current_path)
     model[width_attr] = image[:width]
     model[height_attr] = image[:height]
+  end
+
+  def set_sha
+    model.sha = Digest::SHA1.hexdigest(read)
   end
 
 end

@@ -1,11 +1,22 @@
 class Api::ApiController < ActionController::Base
   include Mixpanel
 
-  before_filter :http_auth
+  before_filter :http_auth, except: [:upload_policy]
   layout nil
 
   def key
     render json: { api_key: current_user.authentication_token }
+  end
+
+  def upload_policy
+    @policy = S3UploadPolicy.new ENV['S3_KEY'],
+                                 ENV['S3_SECRET'],
+                                 ENV['UPLOADS_BUCKET']
+
+    @policy.key = params[:key]
+    @policy.content_type = params[:contentType]
+
+    render layout: false
   end
 
   def http_auth
@@ -18,8 +29,7 @@ class Api::ApiController < ActionController::Base
   end
 
   def api_key_auth
-    @current_user = User.where(authentication_token: request.headers['Api-key']).first
-    render status: 403, text: "API key required" unless @current_user
+    render status: 403, text: "API key required" unless request.headers['Api-key'] && 
+      @current_user = User.where(authentication_token: request.headers['Api-key']).first
   end
-
 end

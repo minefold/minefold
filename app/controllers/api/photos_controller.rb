@@ -6,22 +6,11 @@ class Api::PhotosController < Api::ApiController
   # prepend_before_filter :authenticate_user!
 
   def create
-    sha = Digest::SHA1.hexdigest params[:photo].tempfile.read
-
-    # gaurd against confused client
-    if Photo.unscoped.where(sha: sha, creator_id: current_user.id).first
-      return render status: :ok, text: "already uploaded: #{sha}\n"
-    end
-
-    photo = Photo.new
-    photo.creator = current_user
-    photo.file = params[:photo]
-    photo.sha = sha
-    photo.save!
+    Resque.enqueue PhotoUploadJob, current_user.id, params[:photo][:remote_file_url]
 
     track 'uploaded photo', source: request.headers['User-Agent']
 
-    render status: :ok, text: "uploaded: #{sha}\n"
+    render status: :ok, text: "scheduled: #{params[:photo][:remote_file_url]}"
   end
 
   def index
