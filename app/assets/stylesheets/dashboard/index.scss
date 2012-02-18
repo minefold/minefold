@@ -1,0 +1,19 @@
+#dashboard-index #page {
+  .activity { @include makeColumn(9); }
+  .event {
+    @include clearfix;
+    margin-bottom: $line * 2;
+
+    .source {float: left; margin-right: $gutter; }
+    .source img { display: block; }
+    .content { float: left; margin-left: 0; }
+    .content .desc { line-height: $line * 4; }
+
+    .desc + .body { margin-top: $line; }
+
+    &.events-published_photo img { display: block; }
+    &.events-connection, &.events-disconnection { font-size: 12px; color: #999; }
+    &.events-connection, &.events-disconnection a { color: desaturate($blue, 100%); }
+    &.events-connection, &.events-disconnection a:hover { color: black; }
+  }
+}

@@ -1,0 +1,9 @@
+.desc
+  %span.user= link_to published_photo.source.username, user_path(published_photo.source)
+  published a photo
+  = time_ago_in_words published_photo.created_at
+  ago
+
+.body
+  = link_to photo_path(published_photo.target) do
+    = image_tag published_photo.target.file.thumb.url

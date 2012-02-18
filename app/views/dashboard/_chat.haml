@@ -1,0 +1,7 @@
+.desc
+  %span.user= link_to chat.source.username, user_path(chat.source)
+  chatted in
+  %span.chat= link_to strong_world_fullname(chat.target), user_world_path(chat.target.creator, chat.target)
+
+.body
+  = chat.text

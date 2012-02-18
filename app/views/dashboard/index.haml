@@ -1,0 +1,30 @@
+- title 'Dashboard'
+- masthead do
+  %h1 Dashboard
+
+.row
+  %aside
+    %h1 Worlds
+    - if current_user.worlds.any?
+      - current_user.worlds.sort_by {|w| w.creator.slug + w.slug }.each do |world|
+        .world
+          = link_to strong_world_fullname(world), user_world_path(world.creator, world)
+    - else
+      %p.empty You haven't created or joined any worlds yet.
+
+  %article
+    %h1 Activty
+    - current_user.events.where('_type' => 'Events::PublishedPhoto').limit(40).each do |event|
+      .event{class: event.class.name.underscore.gsub('/', '-')}
+        .source
+          .avatar= image_tag event.source.avatar.small.url, width: 20, height: 20
+        .content
+          - case event.class
+          - when Events::Chat
+            = render partial: 'chat', object: event
+          - when Events::PublishedPhoto
+            = render partial: 'published_photo', object: event
+          - when Events::Connection
+            = render partial: 'connection', object: event
+          - when Events::Disconnection
+            = render partial: 'disconnection', object: event
