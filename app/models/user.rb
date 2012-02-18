@@ -177,6 +177,10 @@ class User
     not_in(_id: world.memberships.map {|p| p.user_id})
   }
 
+  def events
+    Event.where(source_id: self.id).order_by([:created_at, :desc]).limit(40)
+  end
+
 
   # Security
 
@@ -289,6 +293,13 @@ class User
   def to_param
     slug
   end
+
+
+  def stream
+    $redis.lrange("users/#{id}/stream", 0, 100)
+  end
+
+
 
 
 protected

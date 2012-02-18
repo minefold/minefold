@@ -7,11 +7,11 @@ class Event
 
   index :source
   index :target
-  
+
   default_scope includes(:source, :target)
-  
+
   def pusher_key
     self.class.name.downcase
   end
-  
+
 end

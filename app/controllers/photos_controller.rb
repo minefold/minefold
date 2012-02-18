@@ -7,11 +7,6 @@ class PhotosController < ApplicationController
   expose(:photo)
 
   def index
-    if signed_in?
-      render action: 'lightroom'
-    else
-      render action: 'index'
-    end
   end
 
   def show
@@ -26,8 +21,23 @@ class PhotosController < ApplicationController
   end
 
   def update_lightroom
-    current_user.photos_attributes = params[:user][:pending_photos_attributes]
-    redirect_to photos_path
+    params[:user][:pending_photos_attributes].each do |_, attrs|
+      update_set = {
+        'title' => attrs["title"],
+        "desc" =>  attrs["desc"]
+      }
+
+      if not attrs['published'].blank?
+        update_set['published'] = (attrs['published'] == 'true')
+      end
+
+      Photo.collection.update(
+        {'_id' => BSON::ObjectId(attrs['id'])},
+        {'$set' => update_set}
+      )
+    end
+
+    redirect_to lightroom_photos_path
   end
 
 end

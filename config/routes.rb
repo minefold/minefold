@@ -56,6 +56,8 @@ Minefold::Application.routes.draw do
 
   devise_for :user, :skip => [:sessions, :passwords, :registrations, :confirmations]
 
+  get '/dashboard' => 'dashboard#index', :as => :user_root
+
   resource :order, :only => [:create]
 
   resources :photos do

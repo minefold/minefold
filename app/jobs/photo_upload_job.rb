@@ -18,5 +18,7 @@ class PhotoUploadJob
     photo.remote_file_url = @remote_file_url
     photo.creator = @user
     photo.save!
+
+    CreatedPhotoEvent.create(source: photo.creator, target: photo)
   end
 end

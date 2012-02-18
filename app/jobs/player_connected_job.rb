@@ -15,10 +15,9 @@ class PlayerConnectedJob
 
     world.save
 
-    world.record_event! Connection, source: user,
-                                created_at: connected_at
-
-    # TODO Broadcast pusher event
+    Events::Connection.create! source: user,
+                               target: world,
+                               created_at: connected_at
   end
 
 end

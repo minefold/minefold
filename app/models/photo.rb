@@ -21,8 +21,8 @@ class Photo
   field :sha, type: String, index: true
 
   field :published, type: Boolean
-  scope :published, where(public: true)
-  scope :pending, where(:public.exists => false)
+  scope :published, where(published: true)
+  scope :pending, where(:published.exists => false)
   attr_accessible :published
 
 
