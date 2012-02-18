@@ -16,6 +16,7 @@ gem 'mongoid_slug'
 # Authentication
 gem 'devise'
 gem 'cancan'
+gem 'omniauth-facebook'
 
 # Payment Processing
 gem 'stripe'

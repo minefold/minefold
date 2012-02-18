@@ -40,4 +40,10 @@ class PhotosController < ApplicationController
     redirect_to lightroom_photos_path
   end
 
+  def download
+    track 'downloaded client', os: 'mac', version: '1.04'
+
+    redirect_to 'http://minefold-macclient.s3.amazonaws.com/Minefold%201.04.zip'
+  end
+
 end

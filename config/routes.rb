@@ -54,7 +54,8 @@ Minefold::Application.routes.draw do
     end
   end
 
-  devise_for :user, :skip => [:sessions, :passwords, :registrations, :confirmations]
+  devise_for :user, :skip => [:sessions, :passwords, :registrations, :confirmations],
+    :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
 
   get '/dashboard' => 'dashboard#index', :as => :user_root
 
@@ -63,6 +64,7 @@ Minefold::Application.routes.draw do
   resources :photos do
     get 'lightroom', :on => :collection
     put 'lightroom', :action => :update_lightroom, :on => :collection
+    get :download, :on => :collection
   end
 
   resources :worlds, :only => [:new, :create, :index, :destroy] do
