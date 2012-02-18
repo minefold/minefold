@@ -2,13 +2,13 @@ ol#nav {
   @include clearfix;
 
   li, .count { float: left; }
-  li a, .count {
+  li a {
     display: block; padding: ($line * 2) ($gutter / 2);
-    font-weight: 600; font-size: 14px; font-weight: 400; line-height: $line * 4; text-decoration: none;
+    color: lighten(black, 60%); font-weight: 600; font-size: 14px; font-weight: 400; line-height: $line * 4; text-decoration: none;
   }
+  li a:hover { color: black; }
   .count {
     background-color: $red; padding: $line ($gutter / 4); margin: ($line * 2) 0; margin-left: -($gutter / 4);
-    @include border-radius(2px);
     color: white; font-size: 11px; line-height: $line * 2;
   }
 }

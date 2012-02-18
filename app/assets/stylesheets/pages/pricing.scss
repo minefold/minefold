@@ -27,7 +27,7 @@
 
         &:before {
           content: "\2713";
-          color: $green;
+          color: $blue;
           margin-right: $gutter / 2;
         }
       }
@@ -76,7 +76,7 @@
       &.six-months {
         padding-top: $line * 4;
         padding-bottom: $line * 4;
-        border-color: $green;
+        border-color: $yellow;
 
         h1 {
           font-size: 28px;
@@ -90,7 +90,7 @@
         .savings {
           margin-top: $line * 2; // padding: $line 0;
           strong {
-            color: darken($green, 10%);
+            color: darken($yellow, 20%);
             font-weight: 600;
           }
         }

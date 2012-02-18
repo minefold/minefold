@@ -45,7 +45,7 @@
     }
 
     a.btn {
-      @include btn($green, white);
+      @include btn($blue, white, darken($blue, 20%));
       @include box-sizing(border-box);
       @include columns(3);
 

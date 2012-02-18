@@ -1,21 +1,25 @@
 - title 'Photos'
 - masthead do
-  %h1 Hello Reddit!
+  %h1 Photos
+  %h2 Hello Reddit!
 
-  %aside
-    = image_tag 'client.png'
+%aside
+  = image_tag 'client.png'
 
-  %p
-    We love seeing photos of the stuff you build in Minecraft so we thought we'd make it easier for you to share them. Here's a little app that automatically saves screenshots you take in Minecraft. You can then review them and post the most bodacious ones straight to <a href="http://reddit.com/r/minecraft">/r/minecraft</a>.
+%p
+  We love seeing photos of the stuff you build in Minecraft so we thought we'd make it easier for you to share them. Here's a little app that automatically saves screenshots you take in Minecraft. You can then review them and post the most bodacious ones straight to <a href="http://reddit.com/r/minecraft">/r/minecraft</a>.
 
-  %p.signature
-    — Lots of love, Chris & Dave
+%p.signature
+  — Lots of love, Chris & Dave
 
-  = button_to "Download Mac Client (2.1mb)"
+.download
+  = button_to "Download Mac Client (2.1mb)", '#'
+  %small (Windows client coming soon)
 
-%h3 Photos that people have taken recently
-%ul.recent-photos
-  - Photo.recent.each do |photo|
-    %li
-      = link_to photo_path(photo) do
-        = image_tag photo.file.thumb.url
+.recent-photos
+  %h3 Photos that people have taken recently
+  %ul
+    - Photo.recent.each do |photo|
+      %li
+        = link_to photo_path(photo) do
+          = image_tag photo.file.thumb.url

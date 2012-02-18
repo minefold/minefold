@@ -17,7 +17,7 @@ footer {
         line-height: 6*$line;
 
         &:hover {
-          color: $green;
+          color: darken($blue, 20%);
         }
       }
 

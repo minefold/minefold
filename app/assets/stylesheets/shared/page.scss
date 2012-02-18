@@ -52,7 +52,7 @@
     color: $blue;
     text-decoration: none;
     &:hover {
-      color: $green;
+      color: darken($blue, 20%);
     }
   }
 

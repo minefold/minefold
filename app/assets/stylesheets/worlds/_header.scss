@@ -15,9 +15,8 @@
   }
 
   #masthead {
-    padding: $gutter;
+    padding: 0 $gutter;
     box-shadow: 0 1px 0 rgba(black, 0.2);
-    @include border-radius(0 0 $radius $radius);
 
     .container {
       @include row;
@@ -25,29 +24,30 @@
 
     // TODO Hacky CSS
     .instructions {
-      width: 100%;
-      margin: (-2 * $line) (-$gutter) ($line * 2) 0;
+      @include columns($ncols);
+      margin-top: $line * -2;
       padding: ($line * 2) $gutter;
-      padding-bottom: ($line * 2) - 2px;
+      padding-bottom: ($line * 2) - 1px;
+      margin-bottom: $line * 2;
 
-      border-bottom: 2px solid darken(white, 5%);
+      border-bottom: 1px solid darken(white, 5%);
       color: rgba(black, 0.4);
 
       line-height: $line * 4;
 
-      strong {
-        color: rgba(black, 0.8);
-      }
+      strong { color: rgba(black, 0.8); }
     }
 
     .attribution {
       @include makeColumn($ncols / 2);
-      font-size: 12px;
+      font-size: 12px; line-height: $line * 4; padding: 0;
+      img { display: block; float: left; margin-right: $gutter / 4; }
     }
 
     .actions, .stats {
       @include makeColumn($ncols / 2);
       float: right;
+      margin-left: 0;
       margin-right: -$gutter;
     }
 

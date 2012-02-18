@@ -47,7 +47,7 @@ form {
       }
 
       input[type=submit] {
-        @include btn($blue, white, $green);
+        @include btn($blue, white, darken($blue, 20%));
       }
 
       button[type=reset] {

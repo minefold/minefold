@@ -15,13 +15,14 @@ Minefold::Application.routes.draw do
     get 'upload-policy' => 'Api#upload_policy'
   end
 
-  get  '/dashboard' => 'accounts#dashboard', :as => :user_root
+  post '/stripe/webhook' => 'stripe#webhook'
+
+  get '/oembed' => 'o_embed#show', :defaults => { :format => 'json' }
+
 
   # Static Pages
   { '/about'   => :about,
     '/help'    => :help,
-    '/jobs'    => :jobs,
-    '/press'   => :press,
     '/pricing' => :pricing,
     '/privacy' => :privacy,
     '/terms'   => :terms
@@ -55,14 +56,12 @@ Minefold::Application.routes.draw do
 
   devise_for :user, :skip => [:sessions, :passwords, :registrations, :confirmations]
 
-  controller :stripe, :path => :customer, :as => :customer do
-    get :new
-    put :create
-  end
-
   resource :order, :only => [:create]
 
-  post '/stripe/webhook' => 'stripe#webhook'
+  resources :photos do
+    get 'lightroom', :on => :collection
+    put 'lightroom', :action => :update_lightroom, :on => :collection
+  end
 
   resources :worlds, :only => [:new, :create, :index, :destroy] do
     collection do
@@ -71,13 +70,6 @@ Minefold::Application.routes.draw do
         get :policy
       end
     end
-  end
-
-  get '/oembed' => 'o_embed#show', :defaults => { :format => 'json' }
-
-  resources :photos do
-    get 'lightroom', :on => :collection
-    put 'lightroom', :action => :update_lightroom, :on => :collection
   end
 
   devise_scope :user do
@@ -104,7 +96,6 @@ Minefold::Application.routes.draw do
           end
         end
       end
-
 
     end
   end

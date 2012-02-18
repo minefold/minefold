@@ -19,7 +19,6 @@ class UsersController < Devise::RegistrationsController
   }
 
   def new
-    render layout: 'neutral'
   end
 
   def create

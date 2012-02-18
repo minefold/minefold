@@ -2,8 +2,8 @@
   padding: ($line * 8) 0;
 
   h1 {
-    font-size: 28px; line-height: $line * 8;
-    font-weight: 400;
+    font-size: 24px; line-height: $line * 8;
+    font-weight: 200; color: $blue;
     font-family: $patagonia;
   }
 
@@ -19,10 +19,7 @@
   }
 
   a {
-    color: $blue;
-    text-decoration: none;
-    &:hover, &:focus {
-      color: $green;
-    }
+    color: $blue; text-decoration: none;
+    &:hover, &:focus { color: darken($blue, 20%); }
   }
 }

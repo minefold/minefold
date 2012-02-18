@@ -12,7 +12,7 @@ form#new-world, form#edit-world {
     }
 
     input[type=file], #world_path {
-      @include btn($blue, white, $green);
+      @include btn($blue, white, darken($blue, 20%));
     }
 
     #progress {

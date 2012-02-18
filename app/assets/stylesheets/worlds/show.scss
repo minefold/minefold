@@ -1,5 +1,15 @@
 #worlds-show  {
 
+  header {
+    background-color: black;
+    h1 a { color: white; }
+    h1 a:hover { color: $red; }
+    ol#nav a { color: lighten(black, 60%); }
+    ol#nav a:hover, ol#account a:hover { color: white; }
+
+    ol#nav a, ol#account .account-plan .time, ol#account a { font-weight: 600; }
+  }
+
   #backside {
     position: fixed;
     right: 0; bottom: 0; left: 0;

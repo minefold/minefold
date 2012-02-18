@@ -1,5 +1,6 @@
 header {
   @include clearfix;
+
   @import 'shared/header/logo';
   @import 'shared/header/nav';
   @import 'shared/header/account';

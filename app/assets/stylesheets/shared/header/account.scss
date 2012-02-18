@@ -1,48 +1,45 @@
 ol#account {
   @include clearfix;
+  margin-right: - $gutter/2;
 
   li { float: left; }
   li a {
     display: block; padding: ($line * 2) ($gutter / 2);
-    color: white; font-size: 14px; line-height: $line * 4; text-decoration: none;
+    color: darken(white, 40%); font-size: 14px; line-height: $line * 4; text-decoration: none;
   }
-  li a:hover { color: $blue; }
+  li a:hover { color: black; }
 
   li.account-plan {
-    margin: ($line * 2) 0;
-    color: lighten($teal, 60%); font-weight: 400; font-size: 14px;
+    margin: ($line * 2) ($gutter / 2);
+    color: darken(white, 20%); font-size: 14px;
 
     a.upgrade {
-      @include inline-block; @include border-radius($radius);
-      margin-left: $gutter / 2; padding: 0 ($gutter / 4); background-color: lighten($teal, 60%);
-      color: $teal; font-weight: 600; line-height: $line * 4;
+      @include inline-block;
+      margin-left: $gutter / 2; padding: 0 ($gutter / 4); background-color: $yellow;
+      color: black; font-weight: 600; line-height: $line * 4;
 
-      &:hover { background-color: white; }
+      &:hover { background-color: $red; color: white; }
     }
   }
 
   li.account-user {
     position: relative;
-    margin-left: $gutter / 2;
     img { display: block; }
 
-    &.active {
-      background-color: lighten($teal, 10%);
-      img { @include box-shadow(0 1px 1px rgba(black, 0.4)); }
-      ol { display: block; }
+    ol {
+      display: none; position: absolute; z-index: 101; right: 0; background-color: $blue;
+      @include columns(2);
     }
 
-    ol {
-      display: none;
-      position: absolute; z-index: 101; right: 0; background-color: $green;
-      @include columns(2);
+    ol li { float: none; margin: 0; font-weight: 600; }
+    ol li a { border: none; color: white; }
 
-      li {
-        float: none; margin: 0;
+    ol li a:hover { background-color: darken($blue, 20%); color: white; }
 
-        a { border: none; color: white; }
-        a:hover { background-color: rgba(white, 0.2); color: white; }
-      }
+    &.active {
+      background-color: $blue;
+      img { @include box-shadow(0 1px 1px rgba(black, 0.4)); }
+      ol { display: block; }
     }
   }
 }

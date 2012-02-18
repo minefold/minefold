@@ -1,12 +1,11 @@
 %ol#nav
   - if not signed_in?
-    - if params[:controller] != 'photos'
-      %li.nav-photos= link_to 'Photos', photos_path
-      %li.nav-blog= link_to 'Blog', 'http://blog.minefold.com'
+    %li.nav-photos= link_to 'Photos', photos_path
+    %li.nav-blog= link_to 'Blog', 'http://blog.minefold.com'
 
   - else
     %li.nav-dashboard= link_to 'Dashboard', user_root_path
     %li.nav-worlds= link_to 'Worlds', user_worlds_path(current_user)
-    %li.nav-photos= link_to 'Photos', photos_path
+    %li.nav-photos= link_to 'Lightroom', lightroom_photos_path
     - if current_user.photos.pending.count > 0
       %span.count= current_user.photos.pending.count

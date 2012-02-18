@@ -1,58 +1,23 @@
-#photos-index header, #photos-show header {
-  background-color: #FFF; @include box-shadow(0 1px 1px rgba(black, 0.1));
-  h1 a { color: $blue; text-shadow: none; }
-  ol#nav a { color: darken(white, 60%); }
-  ol#nav a:hover { color: #000; }
-  ol#account a { color: #999; }
-  ol#account a:hover { color: #000; }
-  ol#account .account-plan a { color: $teal; }
-  ol#account .account-plan a:hover { background-color: $teal; color: white; }
-  ol#account a.account-user:hover { background-color: $teal; }
-  ol#account ol { background-color: $teal; }
-  ol#account ol a { color: white; }
-}
-
-
 #photos-index {
+  .signature { color: darken(white, 20%); }
 
-  #masthead {
-    h1 {
+  aside { @include columns(6); }
+  aside img { display: block; }
+  .download input[type=submit] { @include btn($blue, white, darken($blue, 20%)); margin: 0;}
+  .download small { color: #CCC; font-size: 12px; line-height: $line * 3; }
+
+  .recent-photos {
+    margin-top: $line * 12;
+
+    ul {
+      @include clearfix;
       margin-bottom: $line * 8;
-      font-size: 36px; font-family: $patagonia;
-    }
+      margin-left: -10px;
 
-    p {
-      text-align: justify;
-
-      color: #666;
-      font-size: 18px; line-height: $line * 6;
-      margin-bottom: $line * 6;
-
-      @include columns(6);
-
-      &.signature {
-        color: #CCC;
+      li {
+        float: left;
+        margin-left: 10px;
       }
-    }
-
-    input[type=submit] { @include btn($blue, white, darken($blue, 20%)); }
-
-    aside {
-      float: right;
-      @include columns(6);
-      background-image: url(image-path('i'));
-    }
-
-  }
-
-  ul.recent-photos {
-    @include clearfix;
-    margin-bottom: $line * 8;
-    margin-left: -10px;
-
-    li {
-      float: left;
-      margin-left: 10px;
     }
   }
 }

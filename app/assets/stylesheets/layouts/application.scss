@@ -1,10 +1,10 @@
 html {
+  background: white;
   font-weight: 400;
   font-size: 14px;
   line-height: 4*$line;
   font-family: $helvetica;
   min-width: $width + ($gutter * 2);
-  background: white;
 }
 
 .container { @include container; }
@@ -13,10 +13,3 @@ strong { font-weight: 600; }
 em { font-style: italic; }
 code { font-family: Monaco, monospace; }
 .highlight { background-color: lighten($yellow, 40%); }
-
-header {
-  background: $teal;
-  h1 a { color: white; text-shadow: 0 2px 0 darken($teal, 10%); }
-  ol#nav a { color: $green; }
-  ol#nav a:hover { color: lighten($green, 20%); }
-}

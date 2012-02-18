@@ -1,4 +1,4 @@
-@mixin btn($bg, $text, $hover: $blue) {
+@mixin btn($bg, $text, $hover: black) {
   color: $text;
   background-color: $bg;
 
@@ -14,8 +14,6 @@
   border: none;
 
   cursor: pointer;
-
-  @include border-radius($radius);
 
   &:hover, &.hover, &:focus, &.focus {
     color: $text;

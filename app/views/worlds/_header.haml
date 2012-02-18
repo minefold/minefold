@@ -15,12 +15,18 @@
       = link_to help_page_path(anchor: 'connecting') do
         Want some help?
 
+  - if not signed_in?
+    .instructions
+      %strong= link_to world.creator.username, user_path(world.creator)
+      is playing Minecraft here. You can play too!
+
 
   .attribution
     %h1= world.name
 
     %p
-      by #{link_to world.creator.username, world.creator, rel: 'author'}
+      = image_tag world.creator.avatar.small.url, width: 20, height: 20
+      By #{link_to world.creator.username, world.creator, rel: 'author'}
       - if world.clone?
         and cloned from
         = link_to world_fullname(world.parent), user_world_path(world.parent.creator, world.parent)
