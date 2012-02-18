@@ -1,3 +1,3 @@
-collection current_user.photos => :photos
+collection current_user.photos.unscoped => :photos
 attribute :sha
 

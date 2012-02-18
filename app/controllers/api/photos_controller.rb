@@ -13,8 +13,4 @@ class Api::PhotosController < Api::ApiController
     render status: :ok, text: "scheduled: #{params[:photo][:remote_file_url]}"
   end
 
-  def index
-    respond_with current_user.photos.unscoped
-  end
-
 end
