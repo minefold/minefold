@@ -1,8 +1,10 @@
+@import 'shared/vars';
+
 html {
   background: white;
   font-weight: 400;
   font-size: 14px;
-  line-height: 4*$line;
+  line-height: $line * 4;
   font-family: $helvetica;
   min-width: $width + ($gutter * 2);
 
