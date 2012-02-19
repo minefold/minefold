@@ -1,7 +1,6 @@
 - title 'Photos'
 - masthead do
   %h1 Photos
-  %h2 Hello Reddit!
 
 %aside
   = image_tag 'client.png'
@@ -17,9 +16,9 @@
   %small (Windows client coming soon)
 
 .recent-photos
-  %h3 Photos that people have taken recently
+  %h2 Photos that people have published recently
   %ul
-    - Photo.recent.each do |photo|
+    - Photo.recent.limit(6).each do |photo|
       %li
         = link_to photo_path(photo) do
-          = image_tag photo.file.thumb.url
+          = image_tag photo.file.small.url

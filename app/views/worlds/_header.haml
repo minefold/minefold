@@ -7,72 +7,68 @@
 - masthead do
   - # TODO: Potential confusion: current_user.current_world == world?
   - if signed_in? and can?(:play, world) and not current_user.played?
-    .instructions
-      You need to add the server
+    %section
+      Connect to
       %strong= current_user.host
-      to Minecraft before you can play on Minefold.
+      in Minecraft to play here.
 
       = link_to help_page_path(anchor: 'connecting') do
-        Want some help?
-
-  - if not signed_in?
-    .instructions
-      %strong= link_to world.creator.username, user_path(world.creator)
-      is playing Minecraft here. You can play too!
+        Need some help?
 
 
-  .attribution
+  %section
     %h1= world.name
+    %ol.actions
+      - if can? :edit, world
+        %li.settings
+          = link_to edit_user_world_path(world.creator, world) do
+            = image_tag 'icons/settings.png', width: 20, height: 20
 
-    %p
+      %li.members
+        = link_to user_world_members_path(world.creator, world) do
+          = image_tag 'icons/friends.png', width: 30, height: 20
+
+      - if not signed_in? or can? :clone, world
+        %li.clone
+          = button_to 'Clone', clone_user_world_path(world.creator, world), method: :put
+
+      - if can? :play, world
+        %li.play
+          - if current_user.current_world == world
+            = button_to 'Playing here', nil, disabled: true
+          - else
+            = button_to 'Play here', join_user_world_path(world.creator, world), method: :put
+
+      - else
+        %li.membership-request
+          - if signed_in? and world.membership_requests.include_user?(current_user)
+            = button_to 'Request sent', nil, disabled: true
+          - else
+            = button_to 'Ask to play here', user_world_membership_requests_path(world), method: :post
+
+
+  %section.meta
+    .creator
       = image_tag world.creator.avatar.small.url, width: 20, height: 20
-      By #{link_to world.creator.username, world.creator, rel: 'author'}
+      By #{link_to_user world.creator, rel: 'author'}
       - if world.clone?
         and cloned from
         = link_to world_fullname(world.parent), user_world_path(world.parent.creator, world.parent)
 
-  %ol.actions
-    - if can? :edit, world
-      %li.settings
-        = link_to edit_user_world_path(world.creator, world) do
-          = image_tag 'icons/settings.png', width: 20, height: 20
+    %ul.stats
+      - if world.children.any?
+        %li.stat.members
+          %span.val= number_with_delimiter world.children.size
+          %span.label= pluralize_text world.children.size, 'clone', 'clones'
 
-    %li.members
-      = link_to user_world_members_path(world.creator, world) do
-        = image_tag 'icons/friends.png', width: 30, height: 20
+      %li.stat.views
+        %span.val= number_with_delimiter world.pageviews
+        %span.label= pluralize_text world.pageviews, 'view', 'views'
 
-    - if not signed_in? or can? :clone, world
-      %li.clone
-        = button_to 'Clone', clone_user_world_path(world.creator, world), method: :put
+      %li.stat.mins
+        %span.val= number_with_delimiter world.minutes_played
+        %span.label= pluralize_text world.minutes_played, 'min', 'mins'
 
-    - if can? :play, world
-      %li.play
-        - if current_user.current_world == world
-          = button_to 'Playing here', nil, disabled: true
-        - else
-          = button_to 'Play here', join_user_world_path(world.creator, world), method: :put
-
-    - else
-      %li.membership-request
-        - if signed_in? and world.membership_requests.include_user?(current_user)
-          = button_to 'Request sent', nil, disabled: true
-        - else
-          = button_to 'Ask to play here', user_world_membership_requests_path(world), method: :post
-
-  %ul.stats
-    - if world.children.any?
       %li.stat.members
-        %span.val= number_with_delimiter world.children.size
-        %span.label= pluralize_text world.children.size, 'clone', 'clones'
-
-    %li.stat.views
-      %span.val= number_with_delimiter world.pageviews
-      %span.label= pluralize_text world.pageviews, 'view', 'views'
-
-    %li.stat.mins
-      %span.val= number_with_delimiter world.minutes_played
-      %span.label= pluralize_text world.minutes_played, 'min', 'mins'
-
-    %li.stat.members
-      %span.val= number_with_delimiter world.memberships.size
-      %span.label= pluralize_text world.memberships.size, 'member', 'members'
+        %span.val= number_with_delimiter world.memberships.size
+        %span.label= pluralize_text world.memberships.size, 'member', 'members'

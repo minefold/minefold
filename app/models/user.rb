@@ -161,11 +161,15 @@ class User
     not last_played_at.nil?
   end
 
-  has_many :photos, inverse_of: :creator
+  has_many :photos, inverse_of: :creator, order: [:created_at, :asc]
   accepts_nested_attributes_for :photos
 
   def pending_photos
     photos.pending
+  end
+
+  def published_photos
+    photos.published
   end
 
   accepts_nested_attributes_for :pending_photos

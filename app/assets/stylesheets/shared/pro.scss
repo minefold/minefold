@@ -1,14 +1,10 @@
-span.pro {
-  @include inline-block;
-
-  background: $red;
-
-  color: white;
-  font-weight: 900;
-  padding: 0 0.3em;
-  text-shadow: 0 1px 0 rgba(black, 0.2);
-
-  h1 & {
-    text-shadow: 0 2px 0 rgba(black, 0.2);
-  }
+.pro {
+  @include inline-block; padding: 0 $radius;
+  background-color: darken(white, 20%);
+  color: white; font-weight: 900; font-size: 11px; line-height: $line * 3;
+  text-transform: uppercase;
 }
+a.pro { color: white !important; }
+a.pro:hover { background-color: $red; }
+
+.username + .pro { margin: 0 1em; }

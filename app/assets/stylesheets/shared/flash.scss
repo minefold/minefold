@@ -4,8 +4,9 @@
 
   .message {
     padding: ($line * 2) 0;
+    padding-bottom: ($line * 2) - 1px;
     font-size: 14px; line-height: $line * 4;
-    border-bottom: 2px solid rgba(black, 0.05);
+    border-bottom: 1px solid rgba(black, 0.05);
 
     a.hide {
       float: right;

@@ -22,9 +22,12 @@
     .hint Change your avatar at #{link_to 'Minecraft.net', 'http://minecraft.net/profile', target: '_blank'}
 
   - if current_user.pro?
-    %fieldset.pro
+    %fieldset
       %h3 Pro Account
-      Expires in #{time_ago_in_words current_user.plan_expires_at} from now (#{current_user.plan_expires_at.strftime("%d/%m/%Y")}).
+      - if current_user.beta?
+        Enjoy your Beta account bro!
+      - else
+        Expires in #{time_ago_in_words current_user.plan_expires_at} from now (#{current_user.plan_expires_at.strftime("%d/%m/%Y")}).
 
 
   %fieldset.host

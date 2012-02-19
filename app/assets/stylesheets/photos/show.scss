@@ -1,61 +1,49 @@
 #photos-show {
-  #masthead {
-    padding: 0;
+  #masthead { padding: ($line * 3) 0; }
+
+  .file {
+    overflow: hidden;
+    img { display: block; }
   }
 
-  .photo {
-    @include row;
-    margin-top: $line * 6;
-    margin-bottom: $line * 2;
+  aside {
+    line-height: $line * 4;
 
-    .body {
-      @include makeColumn(9);
-      overflow: hidden;
-      img {
-        display: block;
+    section {
+      padding: ($line * 2) 0;
+      border-bottom: 1px solid darken(white, 5%);
+      padding-bottom: ($line * 2) - 1px;
+
+      &:first-child { padding-top: 0; }
+      &:last-child { border-bottom: none; }
+    }
+
+    .creator {
+      @include clearfix;
+      border-bottom: 1px solid darken(white, 5%); padding-bottom: $line * 2 - 1px;
+      .avatar {
+        float: left; margin-right: $gutter / 2;
+        img { display: block; }
       }
     }
 
-    aside {
-      @include makeColumn(3);
-
-      .user {
-        @include clearfix;
-        padding-bottom: $line * 2 - 1px;
-        border-bottom: 1px solid darken(white, 5%);
-        .avatar {
-          float: left;
-          img {
-            display: block;
-          }
-        }
-
-        .username {
-          float: left;
-          margin-left: $gutter / 2;
-          line-height: 20px;
-        }
+    .album {
+      @include row;
+      .photo { @include makeColumn(1); }
+      .photo img { display: block; }
+      .photo.current {
+        padding: 1px ; border: 1px solid darken(white, 100%);
+        margin: -2px; margin-left: $gutter - 2px;
       }
-
-      .time-and-place {
-        color: darken(white, 40%);
-        font-size: 12px; line-height: $line * 4;
-      }
-
-      .user, .time-and-place, .social {
-        margin-bottom: $line * 2;
+      .photo.empty {
+        width: ($col - $gutter); min-height: ($col / 2); padding: ($line * 3) ($gutter / 2); background-color: darken(white, 5%);
+        font-size: 11px; line-height: $line * 3; text-align: center;
       }
     }
-  }
 
-  #page {
-
-    h1 {
-      margin: 0; margin-bottom: $line * 6;
-      color: black;
-      font-weight: 400;
-      font-size: 18px; line-height: $line * 6;
+    .created-at {
+      color: darken(white, 40%);
+      font-size: 12px; line-height: $line * 4;
     }
-
   }
 }

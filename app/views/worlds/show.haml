@@ -1,16 +1,11 @@
 = render partial: 'worlds/header'
 
 - if not world.map?
-  - backside do
-    .no-map
-      - if signed_in? and can? :play, world
-        Start playing in this world by connecting to
-        %strong= current_user.host
-        in Minecraft.
-      - else
-        Waiting for
-        %strong= world.creator.username
-        to play here…
+  .empty
+    %p
+      = image_tag 'spinner.gif'
+      Waiting for the map to render.
+
 
 - else
   :javascript

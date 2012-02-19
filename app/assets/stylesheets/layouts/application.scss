@@ -5,6 +5,8 @@ html {
   line-height: 4*$line;
   font-family: $helvetica;
   min-width: $width + ($gutter * 2);
+
+  text-rendering: optimizeLegibility;
 }
 
 .container { @include container; }

@@ -12,11 +12,11 @@
     ul {
       @include clearfix;
       margin-bottom: $line * 8;
-      margin-left: -10px;
+      margin-left: -$gutter;
 
       li {
         float: left;
-        margin-left: 10px;
+        margin-left: $gutter;
       }
     }
   }

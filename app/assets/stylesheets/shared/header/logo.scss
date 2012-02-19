@@ -1,15 +1,17 @@
 h1 {
-  float: left;
-  font-weight: 700; font-size: 28px; line-height: $line * 8; font-family: $patagonia;
-  letter-spacing: -0.05em;
+  float: left; position: relative;
+  font-weight: 700; font-size: 18px; line-height: $line * 8; font-family: $patagonia;
 
   a {
-    display: block; position: relative;
-    padding: 0; margin-right: $gutter;
+    display: block; padding: 0; margin-right: $gutter; float: left;
     color: $red; text-decoration: none;
   }
   a:hover { color: black; }
 
   .photos { color: #CCC; font-weight: 200; }
-  .beta { display: none; font-size: 12px; line-height: $line * 2; }
+
+  .beta {
+    @include inline-block; float: left; margin: $line ($gutter - 5px) 0 (-$gutter + 5px);
+    font-weight: 500; color: darken($teal, 0%); font-size: 12px; line-height: $line * 4; font-family: $helvetica;
+  }
 }

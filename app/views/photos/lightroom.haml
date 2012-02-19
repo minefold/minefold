@@ -2,53 +2,44 @@
 - world_select_options = options_for_select(current_user.worlds.map {|w| [world_fullname(w), w.id.to_s] }, (current_user.current_world.id if current_user.current_world))
 - masthead do
   %h1 Lightroom
-  %h2 Sort out your photos
 
-= form_for current_user, url: lightroom_photos_path, method: :put do |f|
-  = f.fields_for :pending_photos do |photo_fields|
-    .photo
-      = photo_fields.hidden_field :published
+- if current_user.pending_photos.any?
+  = form_for current_user, url: lightroom_photos_path, method: :put do |f|
+    = f.fields_for :pending_photos do |photo_fields|
+      .photo
+        = photo_fields.hidden_field :published
 
-      .file
-        = image_tag photo_fields.object.file.medium.url
-        %a.publish{href: '#'} Publish
-        %a.trash Trash
+        .file
+          = image_tag photo_fields.object.file.medium.url
+          %a.publish{href: '#'} Publish
+          %a.trash Trash
 
-      .metadata
-        = photo_fields.text_field :title, placeholder: 'Title'
-        = photo_fields.text_area :desc, placeholder: 'Description', rows: 2
+        .metadata
+          = photo_fields.text_field :title, placeholder: 'Title'
+          = photo_fields.text_area :desc, placeholder: 'Description', rows: 2
 
-  :javascript
-    $('.photo .file a').click(function(e) {
-      e.preventDefault();
-      var publish = $(this).hasClass('publish');
-      $(this)
-        .parents('.photo')
-        .find('input[name$="[published]"]')
-        .val(publish);
+    :javascript
+      $('.photo .file a').click(function(e) {
+        e.preventDefault();
+        var publish = $(this).hasClass('publish');
+        $(this)
+          .parents('.photo')
+          .find('input[name$="[published]"]')
+          .val(publish);
 
-      $(this).siblings('a').removeClass('active');
-      $(this).addClass('active');
+        $(this).siblings('a').removeClass('active');
+        $(this).addClass('active');
 
-      // Focus title
-      if(publish) {
-        $(this).parents('.photo').find('input[name$="[title]"]').focus();
-      }
-    });
+        // Focus title
+        if(publish) {
+          $(this).parents('.photo').find('input[name$="[title]"]').focus();
+        }
+      });
 
-    // .add('textarea[name$="[desc]"]')
-    //   .keydown(function() {
-    //       .attr('checked', true);
-    // });
+    %fieldset.submit
+      = f.submit 'Save Photos'
 
-  %fieldset.submit
-    = f.submit 'Save Photos'
+  %hr
 
-%hr
-
-%h2 Photos that you published
-%ul.recent-photos
-  - current_user.photos.published.each do |photo|
-    %li
-      = link_to photo_path(photo) do
-        = image_tag photo.file.thumb.url
+- else
+  %p Your lightroom is empty. Take some more photos!

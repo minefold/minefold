@@ -1,9 +1,10 @@
 - title user.username
 - masthead do
   .avatar= image_tag user.avatar.large.url
-  .profile
-    %h1.username= user.username
-    .created-at Member since #{user.created_at.strftime("%-d %b, %Y")}
+  %h1= user.username
+  .meta
+    = pro_link(user)
+    %span.created-at Member since #{user.created_at.strftime("%-d %b, %Y")}
 
 %h2 Worlds
 

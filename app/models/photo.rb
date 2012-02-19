@@ -37,10 +37,30 @@ class Photo
   field :thumb_width, type: Integer
   field :thumb_height, type: Integer
 
-  scope :recent, published.order_by([:created_at, :desc]).limit(12)
+  scope :recent, published.order_by([:created_at, :desc])
 
   def to_param
     id.to_param
+  end
+
+  def idx
+    creator.published_photos.to_a.index(self)
+  end
+
+  def previous
+    creator.published_photos[idx - 1]
+  end
+
+  def next
+    creator.published_photos[idx + 1]
+  end
+
+  def first?
+    idx <= 0
+  end
+
+  def last?
+    idx >= creator.published_photos.length - 1
   end
 
 end

@@ -2,29 +2,37 @@
 - masthead do
   %h1 Dashboard
 
+- if current_user.worlds.empty?
+  .onboard
+    %p You need to join or create a new world to play on Minefold. To join a friend's world, go to its page and tap “Ask to play here”. However, if you want to start a new world you can use the “#{link_to 'Create a new world', new_world_path}” button. If you already have a single player world you can import it while creating a new world.
+
 .row
-  %aside
-    %h1 Worlds
+  %article
+    - if not current_user.confirmed?
+      %h1 Confirm your account
+      %p You should have recieved an email with instructions on how to confirm your account.
+
+    %h1 Your Worlds
+    = link_to 'Create a new world', new_world_path, class: 'btn'
     - if current_user.worlds.any?
-      - current_user.worlds.sort_by {|w| w.creator.slug + w.slug }.each do |world|
-        .world
-          = link_to strong_world_fullname(world), user_world_path(world.creator, world)
+      .worlds
+        %ol
+          - current_user.worlds.sort_by {|w| w.creator.slug + w.slug }.each do |world|
+            %li
+              = link_to strong_world_fullname(world), user_world_path(world.creator, world)
+              .meta
+                = pluralize world.memberships.count, 'member', 'members'
+
+
     - else
       %p.empty You haven't created or joined any worlds yet.
 
-  %article
-    %h1 Activty
-    - current_user.events.where('_type' => 'Events::PublishedPhoto').limit(40).each do |event|
-      .event{class: event.class.name.underscore.gsub('/', '-')}
-        .source
-          .avatar= image_tag event.source.avatar.small.url, width: 20, height: 20
-        .content
-          - case event.class
-          - when Events::Chat
-            = render partial: 'chat', object: event
-          - when Events::PublishedPhoto
-            = render partial: 'published_photo', object: event
-          - when Events::Connection
-            = render partial: 'connection', object: event
-          - when Events::Disconnection
-            = render partial: 'disconnection', object: event
+  %aside
+    %h1 Your Photos
+    - if current_user.photos.recent.any?
+      .photos
+        %ol
+          - current_user.photos.recent.each do |photo|
+            %li
+              = link_to photo_path(photo) do
+                = image_tag photo.file.small.url

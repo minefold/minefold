@@ -8,7 +8,7 @@ class ProcessChatJob
   end
 
   def process!(world, user, text)
-    caht = Events::Chat.create! source: user, target: world, text: text
+    chat = Events::Chat.create! source: user, target: world, text: text
 
     world.broadcast "#{chat.pusher_key}-created", chat.attributes
   end

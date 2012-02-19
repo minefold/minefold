@@ -1,11 +1,11 @@
 %ol#nav
-  - if not signed_in?
-    %li.nav-photos= link_to 'Photos', photos_path
-    %li.nav-blog= link_to 'Blog', 'http://blog.minefold.com'
+  - if signed_in?
+    %li.nav-dashboard= link_to 'Dashboard', user_root_path
+
+    - unless current_user.photos.pending.count.zero?
+      %li.nav-photos= link_to 'Lightroom', lightroom_photos_path
+      %span.count= current_user.photos.pending.count
 
   - else
-    %li.nav-dashboard= link_to 'Dashboard', user_root_path
-    %li.nav-worlds= link_to 'Worlds', user_worlds_path(current_user)
-    %li.nav-photos= link_to 'Lightroom', lightroom_photos_path
-    - if current_user.photos.pending.count > 0
-      %span.count= current_user.photos.pending.count
+    %li.nav-photos= link_to 'Photos', photos_path
+    %li.nav-blog= link_to 'Blog', 'http://blog.minefold.com'

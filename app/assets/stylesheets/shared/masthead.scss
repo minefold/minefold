@@ -3,15 +3,14 @@
 
   h1 {
     font-size: 24px; line-height: $line * 8;
-    font-weight: 200; color: $blue;
-    font-family: $patagonia;
+    font-weight: 600; color: $teal;
   }
 
   h2 {
     font-weight: 400;
     font-size: 18px;
     line-height: $line * 4;
-    color: rgba(black, 0.2);
+    color: lighten($teal, 20%);
   }
 
   p {
