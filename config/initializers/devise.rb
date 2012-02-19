@@ -191,7 +191,7 @@ Devise.setup do |config|
   fb_omniauth_options = {scope: 'email'}
 
   if Rails.env.production? or Rails.env.staging?
-    omniauth_options[:client_options] = {:ssl => {:ca_file => '/usr/lib/ssl/certs/ca-certificates.crt'}}
+    fb_omniauth_options[:client_options] = {:ssl => {:ca_file => '/usr/lib/ssl/certs/ca-certificates.crt'}}
   end
 
   config.omniauth :facebook, ENV["FB_APP_ID"], ENV["FB_APP_SECRET"], fb_omniauth_options
