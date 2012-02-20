@@ -15,6 +15,17 @@
       = link_to help_page_path(anchor: 'connecting') do
         Need some help?
 
+  - if not signed_in?
+    %section
+      %p
+        - case referer
+        - when 'reddit.com', nil
+          %strong Greetings Redditor!
+        - when 'news.ycombinator.com'
+          %strong Hello hacker.
+
+        Want to play here? We <em>magically</em> create servers for you and your friends to play in. #{link_to 'Sign up now', new_user_path} and play free for 10 hours.
+
 
   %section
     %h1= world.name
