@@ -6,7 +6,7 @@ class PlayerDisconnectedJob
   def self.perform(username, disconnected_at)
     user = User.by_username(username).first
     world = user.current_world
-    new.process!(user, world, disconnected_at)
+    new.process!(user, world, disconnected_at) if world
   end
 
   def process!(user, world, disconnected_at)
