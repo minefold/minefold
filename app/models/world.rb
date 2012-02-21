@@ -58,7 +58,7 @@ class World
   # Game settings
 
   GAME_MODES = [:survival, :creative]
-  LEVEL_TYPES = ['default', 'flat']
+  LEVEL_TYPES = ['DEFAULT', 'FLAT']
   DIFFICULTIES = [:peaceful, :easy, :normal, :hard]
 
   field :seed, type: String, default: -> { Time.now.to_i.to_s }
