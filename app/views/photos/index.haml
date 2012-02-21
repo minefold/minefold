@@ -2,18 +2,20 @@
 - masthead do
   %h1 Photos
 
-%aside
-  = image_tag 'client.png'
+.row
+  %aside
+    = image_tag 'client.png'
 
-%p
-  We love seeing photos of the stuff you build in Minecraft so we thought we'd make it easier for you to share them. Here's a little app that automatically saves screenshots you take in Minecraft. You can then review them and post the most bodacious ones straight to <a href="http://reddit.com/r/minecraft">/r/minecraft</a>.
+  %article
+    %p
+      We love seeing the stuff you build in Minecraft so we thought we'd make it easier for you to share your photos. Instead of having to find and upload the screenshots you take in Minecraft, we made a little app that automatically saves them all. You can then review them: chuck the ones you don't like or post the bodacious ones straight to <a href="http://reddit.com/r/minecraft">/r/minecraft</a>.
 
-%p.signature
-  — Lots of love, Chris & Dave
+    %p.signature
+      — Lots of love, Chris & Dave
 
-.download
-  = link_to "Download Mac Client (2.1mb)", download_photos_path, class: 'btn'
-  %small (Windows client coming soon)
+    .download
+      = link_to "Download Mac Client (1.5mb)", download_photos_path, class: 'btn'
+      %small (Windows client coming soon)
 
 .recent-photos
   %h2 Photos that people have published recently

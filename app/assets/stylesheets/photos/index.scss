@@ -1,10 +1,13 @@
 #photos-index {
   .signature { color: darken(white, 20%); }
 
-  aside { @include columns(6); }
+  aside, article { @include columns(6); }
   aside img { display: block; }
   .download .btn { @include btn($blue, white, darken($blue, 20%)); margin: 0; @include inline-block; }
-  .download small { color: #CCC; font-size: 12px; line-height: $line * 3; }
+  .download small {
+    display: block; padding: $line $gutter;
+    color: lighten($blue, 20%); font-size: 12px; line-height: $line * 3;
+  }
 
   .recent-photos {
     margin-top: $line * 12;
