@@ -1,17 +1,23 @@
 class WorldsController < ApplicationController
   respond_to :html, :json
 
-  prepend_before_filter :authenticate_user!, except: [:show]
+  prepend_before_filter :authenticate_user!, except: [:show, :explore]
   before_filter :set_invite_code, :only => [:show, :map]
 
   expose(:creator) { User.find_by_slug!(params[:user_id]) }
   expose(:world) do
-     if params[:id]
-       World.find_by_creator_and_slug!(creator, params[:id])
-     else
-       World.new(params[:world])
-     end
-   end
+    if params[:id]
+      World.find_by_creator_and_slug!(creator, params[:id])
+    else
+      World.new(params[:world])
+    end
+  end
+
+  def explore
+    @worlds = World.where(:photo.ne => nil)
+      .page(params[:page].to_i)
+      .order_by([:pageviews, :desc])
+  end
 
   def create
     authorize! :create, world
@@ -74,21 +80,21 @@ class WorldsController < ApplicationController
 
     respond_with clone, location: user_world_path(current_user, clone)
   end
-  
+
   def destroy
     authorize! :destroy, world
-    
+
     members_to_notify = world.members - [world.creator]
     members_to_notify.each do |member|
       if member.current_world == world
         WorldMailer.world_deleted(world.name, world.creator.username, member.id).deliver
       end
     end
-    
+
     world.delete!
-    
+
     track 'deleted world'
-    
+
     redirect_to user_root_path, flash: { info: "#{world.name} was deleted" }
   end
 

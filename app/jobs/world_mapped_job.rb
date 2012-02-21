@@ -1,28 +1,23 @@
 class WorldMappedJob
   @queue = :low
   
-  THUMB_WIDTH = 100
-  THUMB_HEIGHT = 100
-  
-  def self.perform world_id, map_data
-    job = new World.find(world_id)
-    job.set_map_data map_data
-    job.create_thumbnail
-  end
-  
   attr_reader :world
   
-  def initialize world
+  def self.perform(world_id, map_data)
+    world = World.find(world_id)
+    new(world).process! map_data
+  end
+  
+  def initialize(world)
     @world = world
   end
   
-  def set_map_data map_data
-    world.set :last_mapped_at, Time.now
-    world.set :map_data, map_data
-    
-    puts "world:#{world.id} mapped at #{world.last_mapped_at}"
+  def process! map_data
+    world.update_attribues last_mapped_at: Time.now,
+                           map_data: map_data
+  
   end
-
+  
   def create_thumbnail
     run "mkdir -p #{File.dirname local_thumb} && curl --silent --show-error #{remote_base} | convert -gravity center -crop #{THUMB_WIDTH}x#{THUMB_HEIGHT}+0+0 - #{local_thumb}"
     

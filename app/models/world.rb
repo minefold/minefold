@@ -230,6 +230,17 @@ class World
   end
 
 
+# ---
+
+
+  mount_uploader :photo, CoverPhotoUploader
+
+  def fetch_photo!
+    self.remote_photo_url = "http://d14m45jej91i3z.cloudfront.net/#{id}/base.png"
+  rescue OpenURI::HTTPError
+  end
+
+
 private
 
   def pusher_channel

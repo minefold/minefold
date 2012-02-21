@@ -1,0 +1,40 @@
+#worlds-explore {
+
+  .worlds {
+    @include columns(10);
+    @include clearfix;
+  }
+
+  .world {
+    float: left;
+    margin-right: $gutter;
+    margin-bottom: $line * 4;
+
+    a.thumb {
+      border: 1px solid darken(white, 10%);
+      box-shadow: 0 1px 1px rgba(black, 0.05);
+      display: block;
+      @include border-radius($line);
+    }
+
+    .creator {
+      font-size: 12px;
+      line-height: $line * 3; margin-top: $line; width: 140px;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 0 ($gutter / 4);
+      .username {font-weight: 600;}
+      .avatar {float: left; margin-right: $gutter /4;}
+      .avatar img {display: block;}
+      .pro { display: none; font-size: 10px;}
+    }
+
+    &:hover a.thumb { border-color: darken(white, 20%); }
+    &:hover .pro { @include inline-block; }
+  }
+
+  .pagination {
+    clear: both;
+    margin-bottom: $line * 12;
+  }
+}

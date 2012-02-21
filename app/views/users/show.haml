@@ -3,7 +3,8 @@
   .avatar= image_tag user.avatar.large.url
   %h1= user.username
   .meta
-    = pro_link(user)
+    - if user.pro?
+      = pro_link(user)
     %span.created-at Member since #{user.created_at.strftime("%-d %b, %Y")}
 
 %h2 Worlds

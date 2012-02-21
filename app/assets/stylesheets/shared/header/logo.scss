@@ -12,6 +12,6 @@ h1 {
 
   .beta {
     @include inline-block; float: left; margin: $line ($gutter - 5px) 0 (-$gutter + 5px);
-    font-weight: 500; color: darken($teal, 0%); font-size: 12px; line-height: $line * 4; font-family: $helvetica;
+    font-weight: 500; color: darken(white, 20%); font-size: 12px; line-height: $line * 4; font-family: $helvetica;
   }
 }

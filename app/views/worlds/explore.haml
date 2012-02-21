@@ -1,0 +1,16 @@
+- title 'Explore'
+- masthead do
+  %h1 Explore
+
+.worlds
+  - @worlds.per(12).each do |world|
+    .world
+      = link_to user_world_path(world.creator, world), class: 'thumb' do
+        = image_tag world.photo.small.url, width: 140, height: 140
+
+      .creator
+        .avatar= image_tag world.creator.avatar.small.url, width: 15, height: 15
+        = link_to_user world.creator
+
+.pagintion
+  = paginate @worlds

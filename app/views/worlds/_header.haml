@@ -15,16 +15,13 @@
       = link_to help_page_path(anchor: 'connecting') do
         Need some help?
 
-  - if not signed_in?
-    %section
+  - if not signed_in? and not %w{reddit.com news.ycombinator.com twitter.com facebook.com}.include?(referer)
+    %section.upsell
       %p
-        - case referer
-        - when 'reddit.com', nil
-          %strong Greetings Redditor!
-        - when 'news.ycombinator.com'
-          %strong Hello hacker.
+        %strong
+          #{world.creator.username} is playing Minecraft here.
 
-        Want to play here? We <em>magically</em> create servers for you and your friends to play in. #{link_to 'Sign up now', new_user_path} and play free for 10 hours.
+        You can create a server just like this too. #{link_to 'Sign up now', new_user_path} and play <em>FREE</em> for 10 hours each month.
 
 
   %section
