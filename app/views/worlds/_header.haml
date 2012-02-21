@@ -55,7 +55,7 @@
           - if signed_in? and world.membership_requests.include_user?(current_user)
             = button_to 'Request sent', nil, disabled: true
           - else
-            = button_to 'Ask to play here', user_world_membership_requests_path(world), method: :post
+            = button_to 'Ask to play here', user_world_membership_requests_path(world.creator, world), method: :post
 
 
   %section.meta
