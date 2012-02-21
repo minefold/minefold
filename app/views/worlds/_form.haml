@@ -103,14 +103,14 @@
   %h3= form.label :level_type, 'Terrain'
 
   %section.level-type-default
-    = form.radio_button :level_type, 'default'
+    = form.radio_button :level_type, 'DEFAULT'
     = form.label :level_type_default do
       Natural
       .hint
         Terrain is like real life. The seed is <span class="seed">#{form.object.seed}</span>.
 
   %section.level-type-flat
-    = form.radio_button :level_type, 'flat'
+    = form.radio_button :level_type, 'FLAT'
     = form.label :level_type_flat do
       Flat
       .hint

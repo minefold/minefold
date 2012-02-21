@@ -76,7 +76,7 @@ class World
     less_than: DIFFICULTIES.size
 
   field :level_type, type: String, default: LEVEL_TYPES.first
-  validates_inclusion_of :level_type, in: LEVEL_TYPES
+  # validates_inclusion_of :level_type, in: LEVEL_TYPES
 
   field :pvp, type: Boolean, default: true
   field :spawn_monsters, type: Boolean, default: true
