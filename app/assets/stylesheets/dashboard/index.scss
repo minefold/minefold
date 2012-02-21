@@ -3,6 +3,8 @@
 #dashboard-index #page {
   article, aside { @include columns(6); }
 
+  .btn.new-world { margin-bottom: $line * 4;}
+
   .worlds ol li { margin-bottom: $line * 2; }
   .photos ol { margin-left: -$gutter; }
   .photos ol li { float: left; margin-left: $gutter; margin-bottom: $line * 4; }
