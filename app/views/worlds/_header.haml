@@ -15,7 +15,7 @@
       = link_to help_page_path(anchor: 'connecting') do
         Need some help?
 
-  - if not signed_in? and not %w{reddit.com news.ycombinator.com twitter.com facebook.com}.include?(referer)
+  - if not signed_in?
     %section.upsell
       %p
         %strong

@@ -1,14 +1,16 @@
 #worlds-show {
   // Move the map and masthead down
-  #backside { top: $line * 8; }
+  #backside { top: $line * 8; z-index: 0; }
 
   header {
-    @include box-shadow(0 1px 1px rgba(black, 0.2));
+    @include box-shadow(0 1px 1px rgba(black, 0.2)); z-index: 1;
   }
 
   #masthead {
     @include container; padding: 0 $gutter; //margin-top: -$line;
     @include box-shadow(0 1px 1px rgba(black, 0.2));
+    z-index: 2;
+    position: relative;
 
     .container { @include row; padding: 0; @include border-radius(0 0 $line $line); background-color: white;
         @include box-sizing(border-box); margin-right: 0;
