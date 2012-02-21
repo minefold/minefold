@@ -31,20 +31,18 @@ gem 'jquery-rails'
 gem 'backbone-rails', '0.5.3.1'
 gem 'coffee-filter'
 gem 'decent_exposure'
-gem 'rabl'
+gem 'rabl', '>=0.5'
 gem 'kaminari'
 
 gem 'asset_sync'
 
 # Uploads
-gem 'carrierwave'
+gem 'carrierwave', git: 'https://github.com/jnicklas/carrierwave.git'
 gem 'carrierwave-mongoid', require: 'carrierwave/mongoid'
 gem 'mini_magick'
 
 # Job Processing
-gem 'resque',
-  git: 'https://github.com/defunkt/resque.git',
-  require: ['resque', 'resque/server']
+gem 'resque', require: ['resque', 'resque/server']
 
 gem 'resque_mailer'
 
