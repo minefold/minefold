@@ -60,9 +60,9 @@
       Posted #{time_ago_in_words photo.created_at} ago
 
     %section.social
-      %script{type: 'text/javascript', src: '//www.reddit.com/static/button/button1.js'}
+      - # %script{type: 'text/javascript', src: '//www.reddit.com/static/button/button1.js'}
 
-      = link_to 'Tweet', 'https://twitter.com/share', class: 'twitter-share-button', data: {url: url_for(only_path: false), text:  photo.title, via: 'minefold'}
+      = link_to 'Tweet', '//twitter.com/share', class: 'twitter-share-button', data: {url: url_for(only_path: false), text:  photo.title, via: 'minefold'}
       :javascript
         !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
 
