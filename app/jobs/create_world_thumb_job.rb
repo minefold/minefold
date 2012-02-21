@@ -3,19 +3,13 @@ class CreateWorldThumbJob
 
   def self.perform(world_id)
     world = World.find(world_id)
-    new(world).process!
+    new.process! world
   end
 
-  def initialize(world)
-    @world = world
-  end
-
-  def process!
-    remote_base = File.join("http:#{@world.map_assets_url}", 'base.png')
-    puts remote_base
-
-    @world.remote_thumb_url = remote_base
-    @world.save
+  def process!(world)
+    puts "Fetching photo for World##{world.id}"
+    world.fetch_photo!
+    world.save
   end
 
 end

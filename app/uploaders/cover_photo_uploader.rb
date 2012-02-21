@@ -4,11 +4,11 @@ class CoverPhotoUploader < CarrierWave::Uploader::Base
     storage :fog
 
     def fog_directory
-      ENV['PHOTOS_BUCKET']
+      ENV['COVER_PHOTOS_BUCKET']
     end
 
     def fog_host
-      ENV['PHOTOS_HOST']
+      ENV['COVER_PHOTOS_HOST']
     end
 
   else
