@@ -58,7 +58,7 @@ class World
   # Game settings
 
   GAME_MODES = [:survival, :creative]
-  LEVEL_TYPES = ['default', 'flat']
+  LEVEL_TYPES = ['DEFAULT', 'FLAT']
   DIFFICULTIES = [:peaceful, :easy, :normal, :hard]
 
   field :seed, type: String, default: -> { Time.now.to_i.to_s }
@@ -76,7 +76,7 @@ class World
     less_than: DIFFICULTIES.size
 
   field :level_type, type: String, default: LEVEL_TYPES.first
-  validates_inclusion_of :level_type, in: LEVEL_TYPES
+  # validates_inclusion_of :level_type, in: LEVEL_TYPES
 
   field :pvp, type: Boolean, default: true
   field :spawn_monsters, type: Boolean, default: true
