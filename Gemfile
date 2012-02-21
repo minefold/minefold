@@ -34,7 +34,7 @@ gem 'decent_exposure'
 gem 'rabl'
 gem 'kaminari'
 
-gem 'asset_sync', git: 'https://github.com/rumblelabs/asset_sync.git'
+gem 'asset_sync'
 
 # Uploads
 gem 'carrierwave'
