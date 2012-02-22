@@ -9,8 +9,8 @@ class WorldMappedJob
   end
 
   def process! world, map_data
-    world.update_attribues last_mapped_at: Time.now,
-                           map_data: map_data
+    world.update_attributes last_mapped_at: Time.now,
+                            map_data: map_data
 
     Resque.enqueue(CreateWorldThumbJob, world.id)
   end
