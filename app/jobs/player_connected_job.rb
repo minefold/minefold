@@ -11,7 +11,8 @@ class PlayerConnectedJob
 
   def process!(user, world, connected_at)
     world.last_played_at = connected_at
-    world.memberships.where(user_id: user.id).first.last_played_at = connected_at
+    membership = world.memberships.where(user_id: user.id).first
+    membership.last_played_at = connected_at if membership
 
     world.save
 
