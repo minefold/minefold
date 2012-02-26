@@ -22,12 +22,13 @@ class UsersController < Devise::RegistrationsController
   end
 
   def create
+    user.mpid = cookies[:mpid]
     user.referrer = referrer
+
     if user.save
-      track 'created user'
       sign_in :user, user
 
-      track '$signup', distinct_id: user.id.to_s, mp_name_tag: user.safe_username
+      track '$signup', distinct_id: user.mpid, mp_name_tag: user.safe_username
 
       respond_with user, :location => user_root_path
     else

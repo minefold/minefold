@@ -1,4 +1,3 @@
-#= require jquery.timeago
 #= require views/event_view
 
 class Mf.ChatView extends Mf.EventView
@@ -19,7 +18,7 @@ class Mf.ChatView extends Mf.EventView
 
   initialize: (options) ->
     super()
-  
+
   render: ->
     attrs = @model.toJSON()
 

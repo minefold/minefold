@@ -1,4 +1,3 @@
-#= require jquery.timeago
 #= require views/event_view
 
 class Mf.ConnectionView extends Mf.EventView
@@ -6,7 +5,7 @@ class Mf.ConnectionView extends Mf.EventView
     <div class="meta">
       <time class="timeago" datetime="<%= created_at %>"></time>
     </div>
-    
+
     <div class="body">
       <p><%= source.username %> joined the game</p>
     </div>

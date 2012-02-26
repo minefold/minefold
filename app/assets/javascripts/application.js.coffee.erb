@@ -6,6 +6,8 @@
 #= require underscore
 #= require backbone
 
+#= require jquery.cookie
+
 #= require_self
 #= require_tree ./models
 #= require_tree ./collections
@@ -21,3 +23,4 @@ window.every = (ms, fn) -> setInterval(fn, ms)
 
 jQuery.fn.disable = -> $(@).addClass('disabled').attr('disabled', 'disabled')
 jQuery.fn.enable  = -> $(@).removeClass('disabled').removeAttr('disabled')
+
