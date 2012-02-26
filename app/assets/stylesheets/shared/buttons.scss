@@ -1,6 +1,7 @@
 @mixin btn($bg, $text, $hover: black) {
   @include box-sizing(border-box);
   color: $text;
+  @include linear-gradient(rgba(white, 0.05), rgba(black, 0.05));
   background-color: $bg;
 
   display: block;
@@ -15,12 +16,21 @@
   border: none;
 //  border: 1px solid darken($bg, 20%);
 
-  text-shadow: 0 -1px 0 rgba(black, 0.2);
+  text-shadow: 0 -1px 0 rgba(black, 0.4);
   @include box-shadow(inset 0 -1px 0px rgba(black, 0.2), 0 1px 1px rgba(black, 0.1));
 
   @include border-radius($line);
 
   cursor: pointer;
+
+  text-shadow: 0 1px 0 rgba(black, 0.1);
+
+
+  outline: none;
+
+  span {
+    color: lighten($blue, 20%); text-shadow: 0 -1px 0 rgba(black, 0.1);
+  }
 
 
   &:hover, &.hover, &:focus, &.focus {
@@ -32,8 +42,8 @@
   }
 
   &:active, &.active {
-    border-color: darken($hover, 20%);
-    @include box-shadow(none);
+    @include linear-gradient(rgba(black, 0.2), rgba(white, 0.05));
+    background-color: $hover;
   }
 
   &:disabled, &.disabled {

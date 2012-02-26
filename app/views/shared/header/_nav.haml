@@ -5,8 +5,8 @@
     - unless current_user.photos.pending.count.zero?
       %li.nav-photos= link_to 'Lightroom', lightroom_photos_path
       %span.count= current_user.photos.pending.count
-    %li.nav-explore= link_to 'Explore', '/worlds/explore'
+    %li.nav-explore= link_to 'Explore Worlds', '/worlds/explore'
   - else
     - # %li.nav-photos= link_to 'Photos', photos_path
-    %li.nav-explore= link_to 'Explore', '/worlds/explore'
+    %li.nav-explore= link_to 'Explore Worlds', '/worlds/explore'
     %li.nav-blog= link_to 'Blog', 'http://blog.minefold.com'

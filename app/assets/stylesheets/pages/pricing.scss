@@ -15,8 +15,8 @@
       color: darken(white, 20%);
 
       .pro {
-        line-height: $line * 3;
-        padding: 2px 4px;
+//        line-height: $line * 3;
+//        padding: 2px 4px;
       }
     }
 
@@ -43,6 +43,7 @@
       @include box-sizing(border-box);
       padding: $line $gutter;
       border: 5px solid darken(white, 5%);
+      @include border-radius($line);
       text-align: center;
 
       h1 {
@@ -55,7 +56,6 @@
 
         .pro {
           line-height: $line * 3;
-          padding: 2px 4px;
         }
       }
 
@@ -76,7 +76,7 @@
       &.six-months {
         padding-top: $line * 4;
         padding-bottom: $line * 4;
-        border-color: $yellow;
+        border-color: $green;
 
         h1 {
           font-size: 28px;
@@ -88,9 +88,9 @@
         }
 
         .savings {
-          margin-top: $line * 2; // padding: $line 0;
+          margin-top: $line * 2;
           strong {
-            color: darken($yellow, 20%);
+            color: $green;
             font-weight: 600;
           }
         }
@@ -102,7 +102,7 @@
   .btn.buy, .btn.sign-up {
     @include columns(4);
     @include center-block;
-    @include btn($blue, white, $green);
+    @include btn($blue, white, darken($blue, 20%));
     text-align: center;
     margin-bottom: $line * 8;
   }

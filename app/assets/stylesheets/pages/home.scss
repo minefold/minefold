@@ -1,25 +1,5 @@
 #pages-home {
 
-  #backside {
-    position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0;
-    overflow: hidden;
-    width: 100%;
-    z-index: -100;
-
-    min-width: $width + ($gutter * 2);
-
-    .bg {
-      position: absolute;
-      top: $line * 12; right: 40%; bottom: 0;
-      margin-right: -1842px;
-
-      overflow: hidden;
-      width: 1842px;
-      min-width: $width;
-    }
-  }
-
   header {
     h1 a, ol li a, ol li.time {
       margin-top: $line * 2;
@@ -30,39 +10,61 @@
 
   #masthead {
     padding-top: $line * 12;
-    padding-bottom: $line * 12;
+    padding-bottom: $line * 36;
+    text-align: center;
+
+    .container {
+      @include columns($ncols - 2);
+    }
+
 
     h1 {
-      font-weight: 900;
-      font-size: 36px; line-height: $line * 10;
-      letter-spacing: -0.05em;
-      font-family: $patagonia;
+      font-weight: 900; font-size: 36px; line-height: $line * 10;
     }
 
     h2 {
-      padding-bottom: $line * 12;
-      font-size: 24px;
+      font-size: 24px; padding-bottom: $line * 12;
     }
 
     a.btn {
       @include btn($blue, white, darken($blue, 20%));
       @include box-sizing(border-box);
-      @include columns(3);
+      @include columns(6);
+      text-align: center;
+      margin: 0 auto;
 
       clear: both;
 
       padding: ($line * 3) $gutter;
-      font-size: 16px; line-height: $line * 4;
+      font-size: 18px; line-height: $line * 6;
 
-      .free {
-        font-style: italic;
-        font-size: 12px; line-height: $line * 4;
+      span {
+        display: block;
+        font-style: italic; font-size: 12px; line-height: $line * 4;
       }
     }
   }
 
-  .feature {
-    @include makeColumn(3);
+  .features {
+    margin-bottom: $line * 24;
+    @include row;
+
+    li { @include makeColumn(4); margin-bottom: $line * 12; }
+
+    text-align: center;
+
+    h2 { font-weight: 600; }
+
+    figure { min-height: 210px; }
+    figure img { display: block; margin: 0 auto; }
+    figure figcaption { text-align: center; line-height: $line * 4; }
+
+
+//    .perspective img { margin: 0 auto; }
+
+    .pricing figure { float: left; width: 50%; }
+    .pricing figure img { margin-top: $line * 10; margin-bottom: $line * 2; }
+
   }
 }
 

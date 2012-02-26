@@ -5,24 +5,44 @@
   .bg
 
 - masthead do
-  %h1 Play Minecraft with your friends, the easy way.
-  %h2 No more server mumbojumbo
+  %h1 Unlimited on-demand Minecraft servers
+  %h2 with super simple setup.
 
   = link_to new_user_path, class: 'btn' do
     Start playing now!
-    .free
-      = pluralize User::FREE_HOURS, 'hour', 'hours'
-      free every month
+    %span 10 hours FREE per month
 
-.row
-  .feature
-    %h2 Zen Simplicity
-    %p We do it all for you, grasshopper. No servers, RAM, Java or SSH. Sign up & start playing Minecraft in <strong>less than 30 seconds</strong>.
 
-  .feature
+
+
+%ol.features
+  %li.perspective
+
+    %figure
+      = link_to '/chrislloyd/minebnb' do
+        = image_tag 'maps.png'
+
+    %h2 A fresh perspective
+    %p
+      Every world you create (or upload) gets a beautiful, interactive map help you find your bearings.
+
+  %li.pricing
+    %figure
+      = image_tag 'pricing-traditional.png'
+      %figcaption Traditional Pricing
+
+    %figure
+      = image_tag 'pricing-minefold.png'
+      %figcaption Minefold's Pricing
+
     %h2 Pay Individually
-    %p <strong>Don't pay for Frank</strong> who faked a sickie and played for a week straight. Only buy enough to suit <em>your</em> habits, not Frank's habit.
+    %p Instead of one person bearing the cost of a server, Minefold lets everybody join individually. Play for 10 hours a month <em>FREE</em> or upgrade to Minefold <span class="pro">Pro</span> for <em>unlimited</em> hours.
 
-  .feature
-    %h2 Beautiful pages
-    %p Let you upload photos and render <strong>high quality maps</strong> of your worlds so you can quickly show your bros that rad 'coaster you've been working on.
+  %li.sharing
+    %figure
+      = image_tag 'share.png'
+
+    %h2 Show off
+    %p Minefold is the easiest way to display and share your builds. Anybody can explore your world's map and then "clone" to have an instantly playable copy of it.
+
+

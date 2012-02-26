@@ -61,7 +61,6 @@
 
   figure {
     img, #map {
-      @include columns($ncols - 3);
       margin-right: -$pad;
     }
 
