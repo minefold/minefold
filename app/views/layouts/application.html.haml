@@ -29,8 +29,6 @@
       :coffeescript
         mpq.identify #{current_user.mpid.to_json}
         mpq.name_tag #{current_user.email.to_s.to_json}
-        
-        
 
     - else
       :coffeescript
@@ -44,3 +42,7 @@
           $.cookie('mpid', mpid, expires: 365)
 
         mpq.identify(mpid)
+
+    - if params[:ref]
+      :javascript
+        mpq.register_once({ref: #{params[:ref].to_json}}, "all", "False", 365);
