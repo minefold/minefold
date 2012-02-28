@@ -1,6 +1,10 @@
 #pages-home {
 
   header {
+    h1 {
+      font-size: 32px;
+    }
+
     h1 a, ol li a, ol li.time {
       margin-top: $line * 2;
       margin-bottom: $line * 2;

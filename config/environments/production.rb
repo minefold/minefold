@@ -65,7 +65,7 @@ Minefold::Application.configure do
   #       verbose: true
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
-  config.action_controller.asset_host = "https://d1gl6072w16l3y.cloudfront.net"
+  config.action_controller.asset_host = ENV['ASSET_HOST']
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
