@@ -33,8 +33,7 @@
             = image_tag 'icons/settings.png', width: 20, height: 20
 
       %li.members
-        = link_to user_world_members_path(world.creator, world) do
-          = image_tag 'icons/friends.png', width: 30, height: 20
+        = link_to "Members", user_world_members_path(world.creator, world)
 
       - if not signed_in? or can? :clone, world
         %li.clone
