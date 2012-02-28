@@ -121,12 +121,17 @@ class User
   field :mpid, type: String, default: ->{ self.id.to_s }
   attr_accessible :mpid
 
+  # OAuth
 
-# Other
-
-  def self.find_for_facebook_oauth(access_token, signed_in_resource=nil)
+  field :facebook_uid, type: String
+  index :facebook_uid, unique: true
+  
+  def self.find_or_create_for_facebook_oauth(access_token, signed_in_resource=nil)
     data = access_token.extra.raw_info
-    if user = User.where(:email => data.email).first
+    
+    
+    if user = User.where(:facebook_uid => data.uid).first
+      if user.fac 
       user
     else # Create a user with a stub password.
       User.new(:email => data.email, :password => Devise.friendly_token[0,20])
