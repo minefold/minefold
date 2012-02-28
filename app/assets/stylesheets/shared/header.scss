@@ -6,6 +6,6 @@ header {
   @import 'shared/header/nav';
   @import 'shared/header/account';
 
-  h1, ol#nav { float: left; }
-  ol#account { float: right; }
+  h1 { float: left; }
+  ol#nav, ol#account { float: right; }
 }
