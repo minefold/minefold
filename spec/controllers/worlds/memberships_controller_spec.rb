@@ -9,7 +9,7 @@ describe Worlds::MembershipsController do
     signin_as { world.creator }
 
     it "doesn't add non existant users" do
-      post :create, user_id: world.creator.slug, world_id: world.slug, id: BSON::ObjectId.new
+      post :create, user_id: world.creator.slug, world_id: world.slug, username: 'some-rando'
 
       # TODO Not the proper response (should be 422)
       response.should be_not_found
@@ -17,8 +17,7 @@ describe Worlds::MembershipsController do
 
     it "adds a member to world" do
       user = Fabricate(:user)
-
-      post :create, user_id: world.creator.slug, world_id: world.slug, id: user.id
+      post :create, user_id: world.creator.slug, world_id: world.slug, username: user.username
 
       # TODO Move out to another spec
       response.should redirect_to(user_world_members_path(world.creator, world))

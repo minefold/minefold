@@ -23,16 +23,4 @@ describe Membership do
     subject.op!
     subject.should be_op
   end
-  
-  it "enforces user uniqueness within world" do
-    rando = Fabricate(:user)
-    world.add_member(rando)
-    world.save!
-    
-    another_world = Fabricate(:world)
-    another_world.add_member(user)
-    another_world.add_member(rando)
-    another_world.save!
-    another_world.valid?.should be_true
-  end
 end
