@@ -1,5 +1,6 @@
 ol#nav {
   @include clearfix;
+  float: right;
 
   li, .count { float: left; }
   li a {

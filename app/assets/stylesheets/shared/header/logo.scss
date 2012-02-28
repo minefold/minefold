@@ -1,12 +1,11 @@
 h1 {
   float: left; position: relative;
-  font-weight: 700; font-size: 18px; line-height: $line * 8; font-family: $patagonia;
+  font-weight: 700; font-size: 24px; line-height: $line * 8; font-family: $patagonia;
 
   a {
-    display: block; padding: 0; margin-right: $gutter; float: left;
-    color: $red; text-decoration: none;
+    display: block; padding: 0; float: left; color: black; text-decoration: none;
   }
-  a:hover { color: black; }
+  a:hover { color: $teal; }
 
   .photos { color: #CCC; font-weight: 200; }
 
