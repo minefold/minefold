@@ -5,9 +5,12 @@
   %h1 Unlimited on-demand Minecraft servers
   %h2 with super simple setup.
 
-  = link_to new_user_path, class: 'btn' do
-    Start playing now!
+  = link_to user_omniauth_authorize_path(:facebook), class: 'btn' do
+    Sign in with Facebook now!
     %span 10 hours FREE per month
+
+  = link_to 'Sign up without facebook', new_user_path
+
 
 %ol.features
   %li.perspective

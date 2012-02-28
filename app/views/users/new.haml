@@ -5,7 +5,5 @@
   %p
     or #{link_to 'sign in to an existing account', new_user_session_path}.
 
-- # link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook)
-
 = form_for user do |f|
   = render partial: 'form', object: f

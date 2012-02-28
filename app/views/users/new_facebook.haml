@@ -1,0 +1,14 @@
+- track_pageview
+- title  'Create your account'
+- masthead do
+  %h1 We just need your Minecraft username!
+
+  = form_for user do |f|
+    %fieldset
+      %section.username
+        = f.text_field :username, tabindex: 1, placeholder: 'notch'
+        = error_messages_for(f.object, :safe_username)
+        = error_messages_for(f.object, :username)
+
+    %fieldset.submit
+      = f.submit 'Sign me up already!', tabindex: 5
