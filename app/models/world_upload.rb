@@ -118,7 +118,7 @@ class WorldUpload
 
   def level_dat_path
     @level_dat_path ||= Find.find(extraction_path) do |path|
-      if path =~ /^level\.dat$/
+      if path =~ /\/level\.dat$/
         break(path)
       else
         next
