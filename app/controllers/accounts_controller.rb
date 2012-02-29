@@ -3,6 +3,8 @@ class AccountsController < ApplicationController
 
   respond_to :html, :json
 
+  skip_before_filter :require_username!, only: [:username, :update]
+
   def dashboard
   end
 
@@ -13,12 +15,14 @@ class AccountsController < ApplicationController
     authorize! :update, current_user
 
     current_user.update_attributes(params[:user])
-    
+
     if current_user.save
       flash[:success] = 'Your settings were changed'
     end
-    
-    respond_with current_user, :location => request.referer
+
+    # raise "#{request.referer.inspect} #{current_user.errors.inspect}"
+
+    respond_with current_user, :location => account_path
   end
 
   def fetch_avatar

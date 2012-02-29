@@ -18,10 +18,6 @@ class UsersController < Devise::RegistrationsController
     end
   }
 
-  def new
-    render session["devise.facebook_data"] ? 'new_facebook' : 'new'
-  end
-
   def create
     user.mpid = cookies[:mpid]
     user.referrer = referrer
@@ -34,9 +30,7 @@ class UsersController < Devise::RegistrationsController
       respond_with user, :location => user_root_path
     else
       clean_up_passwords user
-      respond_with user do |format|
-        format.html { render session["devise.facebook_data"] ? 'new_facebook' : 'new' }
-      end
+      respond_with user
     end
   end
 

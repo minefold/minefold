@@ -51,6 +51,7 @@ Minefold::Application.routes.draw do
     resource :account, :only => [:edit, :update], :path_names => {:edit => '/'} do
       get :pro
       get :notifications
+      get :username
     end
   end
 

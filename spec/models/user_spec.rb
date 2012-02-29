@@ -31,7 +31,6 @@ describe User do
   end
 
   describe 'usernames' do
-    it { should validate_presence_of(:username)}
     it { should validate_uniqueness_of(:safe_username)}
 
     it { should validate_length_of(:safe_username).within(1..16)}

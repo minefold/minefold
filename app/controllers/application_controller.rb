@@ -20,6 +20,8 @@ class ApplicationController < ActionController::Base
                           email: current_user.email
     end
   end
+  
+  before_filter :require_username!
 
 private
 
@@ -30,6 +32,12 @@ private
       resource = warden.user(:user)
       flash[:alert] = I18n.t("devise.failure.already_authenticated")
       redirect_to after_sign_in_path_for(resource)
+    end
+  end
+  
+  def require_username!
+    if signed_in? and current_user.username.nil?
+       redirect_to username_account_path
     end
   end
 
