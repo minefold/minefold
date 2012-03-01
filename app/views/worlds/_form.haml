@@ -7,6 +7,7 @@
 - if form.object.new?
   - head do
     = javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js'
+    = javascript_include_tag '//d3ds63zw57jt09.cloudfront.net/1.10/pusher.min.js'
 
   %fieldset.upload
     %section
@@ -43,44 +44,45 @@
         %strong Error:
         %span.message
 
-    :javascript
-      $(document).ready(function () {
-        var newWorldForm = $('form#new-world'),
-            newWorldSubmitButton = newWorldForm.find('input[type=submit]'),
-            originalSubmitButtonName = newWorldSubmitButton.val(),
-            worldUploadView = new Mf.WorldUploadView({
-              el: newWorldForm.find('fieldset.upload')[0],
-              form: newWorldForm,
-              text: 'Choose your world archive file',
-              prefix: #{[current_user.safe_username, current_user.id, Time.now.strftime('%Y%m%d%H%M%S'), nil].join('-').to_json},
-              worldUploadPolicyPath: #{policy_upload_path(format: :xml).to_json},
-              worldUploadPath: #{upload_path.to_json}
-            });
+    - js do
+      :javascript
+        $(document).ready(function () {
+          var newWorldForm = $('form#new-world'),
+              newWorldSubmitButton = newWorldForm.find('input[type=submit]'),
+              originalSubmitButtonName = newWorldSubmitButton.val(),
+              worldUploadView = new Mf.WorldUploadView({
+                el: newWorldForm.find('fieldset.upload')[0],
+                form: newWorldForm,
+                text: 'Choose your world archive file',
+                prefix: #{[current_user.safe_username, current_user.id, Time.now.strftime('%Y%m%d%H%M%S'), nil].join('-').to_json},
+                worldUploadPolicyPath: #{policy_upload_path(format: :xml).to_json},
+                worldUploadPath: #{upload_path.to_json}
+              });
 
-        newWorldForm.submit(function(e) {
-          if(newWorldSubmitButton.is(':disabled')) {
-            e.preventDefault();
-          } else {
-            $(window).off('beforeunload');
-          }
+          newWorldForm.submit(function(e) {
+            if(newWorldSubmitButton.is(':disabled')) {
+              e.preventDefault();
+            } else {
+              $(window).off('beforeunload');
+            }
+          });
+
+          newWorldForm.bind('upload:started', function() {
+            newWorldSubmitButton.attr('disabled', true).val('Waiting for upload to finish');
+          });
+
+          newWorldForm.bind('upload:finished', function(e, data) {
+            if(data) {
+              newWorldForm.find('input#world_world_upload_id').val(data.id);
+              newWorldForm.find('.level-type-default .seed').text(data.seed);
+              newWorldForm.find('input#world_seed').val(data.seed);
+            }
+
+            newWorldSubmitButton
+              .attr('disabled', false)
+              .val(originalSubmitButtonName);
+          });
         });
-
-        newWorldForm.bind('upload:started', function() {
-          newWorldSubmitButton.attr('disabled', true).val('Waiting for upload to finish');
-        });
-
-        newWorldForm.bind('upload:finished', function(e, data) {
-          if(data) {
-            newWorldForm.find('input#world_world_upload_id').val(data.id);
-            newWorldForm.find('.level-type-default .seed').text(data.seed);
-            newWorldForm.find('input#world_seed').val(data.seed);
-          }
-
-          newWorldSubmitButton
-            .attr('disabled', false)
-            .val(originalSubmitButtonName);
-        });
-      });
 
 
 %fieldset.mode

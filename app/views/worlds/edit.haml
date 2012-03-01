@@ -1,5 +1,6 @@
-- title_and_masthead "#{world.name} settings"
+- title "#{world.name} settings"
 - masthead do
+  %h1 #{world.name} settings
   %p
     = link_to user_world_path(world.creator, world) do
       ← Back to #{world.name}

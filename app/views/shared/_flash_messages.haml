@@ -1,23 +1,26 @@
 - if flash.any?
+  - js do
+    :javascript
+      $(document).ready(function() {
+        // Manual hide button
+        $('#flash a.hide').click(function() {
+          $(this).parent().hide();
+        });
+
+        // Staggers multiple messages from hiding.
+        var t = 2000;
+
+        // Timeout hide
+        $('#flash .message').each(function(i){
+          var elm = $(this);
+          // Counts the number of words in the message, giving 600ms to read each word.
+          t += (elm.text().split(/\s+/).length * 600) + (i * 300);
+          delay(t, function(){ elm.slideUp(); });
+        });
+      });
+
   #flash
     - flash.each do |type, message|
       %div.message{class: type}
         %a.hide{href: '#'} Hide
         = simple_format(message)
-
-  :javascript
-    $(document).ready(function() {
-      // Manual hide
-      $('#flash a.hide').click(function() { $(this).parent().hide(); });
-
-      // Staggers multiple messages from hiding.
-      var t = 2000;
-
-      // Timeout hide
-      $('#flash .message').each(function(i){
-        var elm = $(this);
-        // Counts the number of words in the message, giving 600ms to read each word.
-        t += (elm.text().split(/\s+/).length * 600) + (i * 300);
-        delay(t, function(){ elm.slideUp(); });
-      });
-    });

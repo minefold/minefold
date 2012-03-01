@@ -1,5 +1,7 @@
 - track 'viewed world'
-= render partial: 'worlds/header'
+
+= render partial: 'worlds/masthead'
+
 
 - if not world.map?
   .empty
@@ -7,12 +9,41 @@
       = image_tag 'spinner.gif'
       Waiting for the map to render.
 
-
 - else
-  :javascript
-    $(document).ready(function(){
-      var world = new Mf.World(#{render('worlds/base', object: world, formats: [:json])})
-          workspace = new Mf.WorldRouter({world: world});
+  #map
+  - head do
+    = javascript_include_tag '//maps.google.com/maps/api/js?sensor=false'
+  - js do
+    :javascript
+      $(document).ready(function() {
+        var world = new Mf.World(#{render('worlds/base', object: world, formats: [:json])});
 
-      Backbone.history.start({pushState: true, root: world.url()});
-    });
+        var worldMapView = new Mf.WorldMapView({model: world});
+        $('#map').append(worldMapView.el);
+        worldMapView.render();
+      });
+
+.members
+  %span.by By
+  - world.members.each do |member|
+    = image_tag member.avatar.small.url, width: 20, height: 20
+
+.row
+  %article
+    %ul.stats
+      - if world.children.any?
+        %li.stat
+          %span.val= number_with_delimiter world.children.size
+          %span.label= pluralize_text world.children.size, 'clone', 'clones'
+
+      %li.stat
+        %span.val= number_with_delimiter world.pageviews
+        %span.label= pluralize_text world.pageviews, 'view', 'views'
+
+      %li.stat
+        %span.val= number_with_delimiter world.minutes_played
+        %span.label= pluralize_text world.minutes_played, 'min', 'mins'
+
+      %li.stat
+        %span.val= number_with_delimiter world.memberships.size
+        %span.label= pluralize_text world.memberships.size, 'member', 'members'

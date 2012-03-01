@@ -1,5 +1,47 @@
 #worlds-show  {
 
+  #masthead {
+    padding: ($line * 4) 0;
+    h1 {
+      font-size: 28px;
+    }
+  }
+
+  #map {
+    background: darken(white, 40%);
+    height: $line * 80;
+  }
+
+  .world-map-view {
+    height: 100%;
+
+    .world-map-control-view {
+      margin: ($line * 4) $gutter;
+      a {
+        display: block; float: left;
+        padding: $line ($gutter / 2);
+
+        background-color: white; color: #666;
+        font-size: 12px; font-weight: 600; line-height: $line * 4;
+
+        @include box-shadow(0 1px 2px rgba(black, 0.5));
+        @include border-radius(2px);
+
+        cursor: pointer;
+      }
+
+      a.exit-fullscreen { display: none; }
+
+    }
+
+  }
+  .world-map-view.fullscreen {
+    position: fixed !important;
+    top: 40px; left: 0; right: 0; bottom: 0;
+    .world-map-control-view a.enter-fullscreen { display: none; }
+    .world-map-control-view a.exit-fullscreen { display: block; }
+  }
+
   #backside {
     position: fixed;
     right: 0; bottom: 0; left: 0;
@@ -31,8 +73,27 @@
     padding: 2*$pad;
   }
 
-  footer {
-    display: none;
+  #page .members {
+    padding: ($line * 2) ($gutter / 2);
+    @include clearfix;
+
+    .by {
+      float: left;
+      font-size: 12px; line-height: $line * 4;
+      margin-right: 10px;
+    }
+
+    img {
+      display: block;
+      float: left;
+      margin-right: 5px;
+    }
+
+  }
+
+  .stats {
+    li { float: left; margin-right: $gutter;}
+    
   }
 
 }

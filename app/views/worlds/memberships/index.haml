@@ -30,12 +30,15 @@
     %fieldset.submit
       = submit_tag 'Add member'
 
-  :coffeescript
-    $ ->
-      new Mf.AddFriendView
-        el: $('form#add-member')
-        searchPath: '#{search_user_world_members_path(world.creator, world)}'
-
+  - js do
+    :javascript
+      $(document).ready(function() {
+        var addFriendView = new Mf.AddFriendView({
+          searchPath: #{search_user_world_members_path(world.creator, world).to_json}
+        });
+        addFriendView.setElement($('form#add-member'));
+        addFriendView.render();
+      });
 
 %section.members
   %ul

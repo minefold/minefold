@@ -1,15 +1,13 @@
 #pages-home {
 
   header {
-    h1 {
-      font-size: 32px;
-    }
+    a#logo img { top: 0; }
+    a#logo h1 { display: block; }
 
-    h1 a, ol li a, ol li.time {
+    a#logo, ol li a, ol li.time {
       margin-top: $line * 2;
       margin-bottom: $line * 2;
     }
-    .beta { margin-top: $line * 2; }
   }
 
   #masthead {
@@ -23,7 +21,7 @@
 
 
     h1 {
-      font-weight: 900; font-size: 36px; line-height: $line * 10;
+      font-weight: 400; font-size: 36px; line-height: $line * 10;
     }
 
     h2 {

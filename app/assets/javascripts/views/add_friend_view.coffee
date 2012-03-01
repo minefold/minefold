@@ -9,12 +9,11 @@ class Mf.AddFriendView extends Backbone.View
 
   initialize: (options) ->
     @searchPath = options.searchPath
-    @form = @el
-    $('input[name=username]').attr('autocomplete', 'off')
-    @submit = $('input[type=submit]', @el)
-    @submit.disable()
 
-    @loading = $('img.loading', @el).hide()
+  render: ->
+    $('input[name=username]').attr('autocomplete', 'off')
+    @submit = @$el.find('input[type=submit]').disable()
+    @loading = @$el.find('img.loading').hide()
 
   expand: (e) ->
     e.preventDefault()
@@ -55,13 +54,6 @@ class Mf.AddFriendView extends Backbone.View
           @submit.disable()
         else
           @submit.enable()
-          # img = @form.find('.avatar img')
-          # if img.length is 0
-          #   img = $('<img />')
-          #     .attr(width: 24, height: 24)
-          #     .appendTo(@form.find('.avatar'))
-          #
-          # img.attr 'src', data.avatar
 
           @form
             .addClass('valid')

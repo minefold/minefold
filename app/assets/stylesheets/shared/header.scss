@@ -2,6 +2,10 @@ header {
   @include clearfix;
   box-shadow: 0 1px 1px rgba(black, 0.05), inset 0 -1px 0 rgba(black, 0.1);
 
+  .container {
+    position: relative; z-index: 99;
+  }
+
   @import 'shared/header/logo';
   @import 'shared/header/nav';
   @import 'shared/header/account';

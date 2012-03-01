@@ -1,4 +1,6 @@
 #= require models/world
+#= require views/world/map_control_view
+
 
 class MapProjection
   constructor: (@tileSize) ->
@@ -14,9 +16,10 @@ class MapProjection
     lat = point.y * @inverseTileSize
     new google.maps.LatLng(lat, lng)
 
+
 class Mf.WorldMapView extends Backbone.View
-  className: 'map'
   model: Mf.World
+  className: 'world-map-view'
 
   defaults:
     zoom: 5
@@ -26,74 +29,74 @@ class Mf.WorldMapView extends Backbone.View
     mapTypeId: 'map'
     tileSize: 384
     zoomLevels: 7
-    backgroundColor: '#FFF'
+    backgroundColor: '#F2F2F2'
+    northDirection: 'upper-right'
     markers: []
 
   initialize: (options) ->
-    # TODO Refactor
-    if window.localStorage?
-      rawHistory = localStorage.getItem(@model.id)
-
-      if rawHistory?
-        history = JSON.parse(rawHistory)
-        history.center = new google.maps.LatLng(history.lat, history.lng)
-
-        delete history.lat
-        delete history.lng
-
-      @defaults = _.extend @defaults, history
+    @controls = new Mf.WorldMapControlView(mapView: @)
 
     @options = _.extend @defaults, options.map
-    @options = _.extend @options, @model.get('map_data') or { }
-
-    spawn = _.find @options.markers, (marker) -> marker.type == 'spawn'
-
-    @options.center or= if spawn then @worldToLatLng(spawn.x, spawn.z, spawn.y) else @worldToLatLng(0, 0, 68)
-
-    @map = new google.maps.Map(@el, @options)
-
-    window.map = @map
-
-    if window.localStorage?
-      google.maps.event.addListener @map, 'center_changed', @persistViewport
-      google.maps.event.addListener @map, 'zoom_changed', @persistViewport
-
-    if spawn?
-      @addMarker spawn, 'Spawn', '//google-maps-icons.googlecode.com/files/home.png'
-
+    @options = _.extend @options, @model.get('map_data') or {}
 
   render: ->
+    @map = new google.maps.Map(@el, @options)
+    window.map = @map
+
     mapType = new google.maps.ImageMapType(
       getTileUrl: @tileUrl
       tileSize: new google.maps.Size(@options.tileSize, @options.tileSize)
       maxZoom: 7
       minZoom: 0
-      isPng: true
     )
 
-    mapType.projection = new MapProjection(@options.tileSize)
+    historyPayload = window.localStorage?.getItem(@model.id)
+    if historyPayload?
+      data = JSON.parse(historyPayload)
+      @map.setZoom(data.zoom)
 
+      center = new google.maps.LatLng(data.lat, data.lng)
+      @map.setCenter(center)
+
+    else
+      {x: spawnX, y: spawnY, z: spawnZ} = @model.spawn()
+      @map.setCenter @worldToLatLng(spawnX, spawnY, spawnZ)
+
+    # Can't add the projection in the constructor
+    mapType.projection = new MapProjection(@options.tileSize)
     @map.mapTypes.set 'map', mapType
 
-  enter: ->
-    @map.setOptions
-      disableDoubleClickZoom: false
-      draggable: true
-      scrollwheel: true
-      navigationControl: true
-      keyboardShortcuts: true
+    # Adds the control view to the top right
+    @controls.el.index = 1
+    @map.controls[google.maps.ControlPosition.TOP_RIGHT].push @controls.el
+    @controls.render()
 
-  exit: ->
-    @map.setOptions
-      disableDoubleClickZoom: true
-      draggable: false
-      scrollwheel: false
-      navigationControl: false
-      keyboardShortcuts: false
+    spawn = @model.spawn()
+    if spawn?
+      @addMarker spawn, 'Spawn', '//google-maps-icons.googlecode.com/files/home.png'
+
+    if window.localStorage?
+      google.maps.event.addListener map, 'center_changed', @persistViewport
+      google.maps.event.addListener map, 'zoom_changed', @persistViewport
+
+  # enter: ->
+  #   @map.setOptions
+  #     disableDoubleClickZoom: false
+  #     draggable: true
+  #     scrollwheel: true
+  #     navigationControl: true
+  #     keyboardShortcuts: true
+  #
+  # exit: ->
+  #   @map.setOptions
+  #     disableDoubleClickZoom: true
+  #     draggable: false
+  #     scrollwheel: false
+  #     navigationControl: false
+  #     keyboardShortcuts: false
 
   persistViewport: =>
     center = @map.getCenter()
-
     data =
       zoom: @map.getZoom()
       lat: center.lat()
@@ -178,3 +181,23 @@ class Mf.WorldMapView extends Backbone.View
     lng += 12 * perPixel
 
     point = new google.maps.LatLng(lat, lng)
+
+  enterFullscreen: ->
+    @parent = @$el.parent()
+
+    @$el.addClass('fullscreen').appendTo(document.body)
+
+    google.maps.event.trigger @map, 'resize'
+
+    $(document).on 'keydown', @shortcutExitFullscreen
+
+  exitFullscreen: =>
+    @$el.removeClass('fullscreen').appendTo(@parent)
+    google.maps.event.trigger @map, 'resize'
+    @parent = null
+
+  shortcutExitFullscreen: (e) =>
+    if e.keyCode is 27
+      @exitFullscreen()
+      $(document).off 'keydown', @shortcutExitFullscreen
+

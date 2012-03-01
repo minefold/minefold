@@ -1,3 +1,9 @@
+- js do
+  :javascript
+    $(document).ready(function() {
+      new Mf.UserMenuView({el: $('#account .account-user')});
+    });
+
 %ol#account
   - if not signed_in?
     %li.account-signup= link_to 'Sign Up', new_user_path
@@ -18,6 +24,3 @@
         %li.account-profile= link_to 'Profile', current_user
         %li.account-settings= link_to 'Settings', account_path
         %li.account-sign-out= link_to 'Sign out', destroy_user_session_path, method: :delete
-
-    :javascript
-      new Mf.UserMenuView({el: $('#account .account-user')});

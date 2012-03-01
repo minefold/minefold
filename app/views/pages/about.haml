@@ -59,12 +59,13 @@
 
       .map
 
-      %script{src: '//maps.googleapis.com/maps/api/js?sensor=false'}
-      :javascript
-        var map = new google.maps.Map($('.vcard .map')[0], {
-          zoom: 13,
-          center: new google.maps.LatLng(37.391748, -122.05798),
-          mapTypeId: google.maps.MapTypeId.HYBRID,
-          mapTypeControl: false,
-          scrollwheel: false
-        });
+- js do
+  = javascript_include_tag '//maps.google.com/maps/api/js?sensor=false'
+  :javascript
+    var map = new google.maps.Map($('.vcard .map')[0], {
+      zoom: 13,
+      center: new google.maps.LatLng(37.391748, -122.05798),
+      mapTypeId: google.maps.MapTypeId.HYBRID,
+      mapTypeControl: false,
+      scrollwheel: false
+    });

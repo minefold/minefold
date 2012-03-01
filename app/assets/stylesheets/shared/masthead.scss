@@ -2,15 +2,15 @@
   padding: ($line * 8) 0;
 
   h1 {
-    font-size: 24px; line-height: $line * 8;
-    font-weight: 600; color: $teal;
+    font-size: 34px; line-height: $line * 8;
+    font-weight: 400; color: black;
   }
 
   h2 {
-    font-weight: 400;
+    font-weight: 200;
     font-size: 18px;
     line-height: $line * 4;
-    color: lighten($teal, 20%);
+    color: lighten(black, 60%);
   }
 
   p {
@@ -20,5 +20,9 @@
   a {
     color: $blue; text-decoration: none;
     &:hover, &:focus { color: darken($blue, 20%); }
+  }
+
+  aside {
+    float: right;
   }
 }

@@ -1,0 +1,21 @@
+.worlds-controller #masthead {
+
+  h1 {
+    float: left;
+    .creator { color: darken(white, 40%); }
+    .slash { color: darken(white, 10%); }
+  }
+
+  ol {
+    @include clearfix;
+
+    li {
+      float: right; margin-left: $gutter;
+    }
+  }
+
+  form input[type=submit], a.btn {
+    @include btn($blue, white, darken($blue, 20%));
+    padding: $line ($gutter); line-height: $line * 6;
+  }
+}

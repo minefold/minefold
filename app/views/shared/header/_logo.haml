@@ -1,1 +1,7 @@
-%h1= link_to 'Minefold', root_url
+= link_to root_url, id: 'logo' do
+  - if request.fullpath == root_path
+    = image_tag 'logo60.png', width: 60, height: 60
+  - else
+    = image_tag 'logo40.png', width: 40, height: 40
+
+  %h1 Minefold

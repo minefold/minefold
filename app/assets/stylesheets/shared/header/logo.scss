@@ -1,16 +1,18 @@
-h1 {
-  float: left; position: relative;
-  font-weight: 700; font-size: 24px; line-height: $line * 8; font-family: $patagonia;
+a#logo {
+  display: block; float: left;
 
-  a {
-    display: block; padding: 0; float: left; color: black; text-decoration: none;
+  color: black; font-weight: 800; font-size: 24px; line-height: $line * 8;
+  text-decoration: none;
+
+  img {
+    position: absolute; background-color: $red;
+    padding: 0 $gutter/2;
+    border-bottom: 5px solid darken($red, 20%);
   }
-  a:hover { color: $teal; }
+  &:hover img { background-color: darken($red, 20%); }
 
-  .photos { color: #CCC; font-weight: 200; }
-
-  .beta {
-    @include inline-block; float: left; margin: $line ($gutter - 5px) 0 (-$gutter + 5px);
-    font-weight: 500; color: darken(white, 20%); font-size: 12px; line-height: $line * 4; font-family: $helvetica;
+  h1 {
+    display: none;
+    margin-left: 80px + $gutter; font-weight: 800; font-size: 24px;
   }
 }

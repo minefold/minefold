@@ -6,12 +6,18 @@ module ApplicationHelper
 
   def page_css_id
     [ params[:controller].gsub('/', '-').dasherize,
-      params[:action].dasherize
-    ].join('-')
+      params[:action].dasherize ].join('-')
+  end
+
+  def page_css_class
+    [params[:controller], 'controller'].join('-')
   end
 
   def page_attributes
-    { 'xmlns:og' => 'http://ogp.me/ns#', id: page_css_id }
+    { 'xmlns:og' => 'http://ogp.me/ns#',
+      id: page_css_id,
+      class: page_css_class
+    }
   end
 
   def flash_upload_options(opts)
@@ -42,8 +48,8 @@ module ApplicationHelper
     content_for :masthead, capture(&blk)
   end
 
-  def backside(&blk)
-    content_for :backside, capture_haml(&blk)
+  def js(&blk)
+    content_for :js, capture(&blk)
   end
 
 end

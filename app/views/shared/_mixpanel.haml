@@ -20,17 +20,18 @@
     mpq.name_tag(#{current_user.email.to_s.to_json});
 
 - else
-  :javascript
-    var mpid = $.cookie('mpid');
-    if(!(mpid != null)) {
-      mpid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
-        v.toString(16);
-      });
+  - js do
+    :javascript
+      var mpid = $.cookie('mpid');
+      if(!(mpid != null)) {
+        mpid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+          var r = r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+          v.toString(16);
+        });
 
-      $.cookie('mpid', mpid, {expires: 365});
-      mpq.identify(mpid);
-    }
+        $.cookie('mpid', mpid, {expires: 365});
+        mpq.identify(mpid);
+      }
 
 - if params[:ref]
   :javascript

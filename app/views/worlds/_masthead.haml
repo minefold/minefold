@@ -1,0 +1,55 @@
+- head do
+  - world_opengraph_properties(world).each do |name, content|
+    %meta{property: "og:#{name}", content: content}
+
+- masthead do
+  - # TODO: Potential confusion: current_user.current_world == world?
+  - if signed_in? and can?(:play, world) and not current_user.played?
+    %section
+      Connect to
+      %strong= current_user.host
+      in Minecraft to play here.
+
+      = link_to help_page_path(anchor: 'connecting') do
+        Need some help?
+
+  - if not signed_in? and false
+    %section.upsell
+      %p
+        %strong
+          #{world.creator.username} is playing Minecraft here.
+
+        You can create a server just like this too. #{link_to 'Sign up now', new_user_path} and play <em>FREE</em> for 10 hours each month.
+
+  / ---
+
+  %h1
+    = link_to world.creator.username, user_path(world.creator), class: 'creator'
+    %span.slash /
+    %span.name= world.name
+  %aside
+    %ol.actions
+      - if can? :edit, world
+        %li.settings
+          = link_to 'Settings', edit_user_world_path(world.creator, world), class: 'btn'
+
+      %li.members
+        = link_to 'Members', user_world_members_path(world.creator, world), class: 'btn'
+
+      - if not signed_in? or can? :clone, world
+        %li.clone
+          = button_to 'Clone', clone_user_world_path(world.creator, world), method: :put
+
+      - if can? :play, world
+        %li.play
+          - if current_user.current_world == world
+            = button_to 'Playing here', nil, disabled: true
+          - else
+            = button_to 'Play here', join_user_world_path(world.creator, world), method: :put
+
+      - else
+        %li.membership-request
+          - if signed_in? and world.membership_requests.include_user?(current_user)
+            = button_to 'Request sent', nil, disabled: true
+          - else
+            = button_to 'Ask to play here', user_world_membership_requests_path(world.creator, world), method: :post
