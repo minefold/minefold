@@ -28,15 +28,19 @@ class Worlds::MembershipsController < ApplicationController
       .potential_members_for(world)
       .first
 
-    membership = world.add_member(@user)
+    if @user
+      membership = world.add_member(@user)
 
-    world.save!
+      world.save!
 
-    # TODO Move to an observer
-    WorldMailer.membership_created(world.id, membership.id).deliver
-    track 'added member'
+      # TODO Move to an observer
+      WorldMailer.membership_created(world.id, membership.id).deliver
+      track 'added member'
 
-    respond_with membership, location: user_world_members_path(world.creator, world)
+      respond_with membership, location: user_world_members_path(world.creator, world)
+    else
+      render nothing: true, status: :not_found
+    end
   end
 
   def destroy
