@@ -58,13 +58,12 @@ class User
 
   field :username, type: String
   slug :username, index: true
-  validates_presence_of :username
-  validates_length_of :safe_username, within: 1..16
+  validates_length_of :safe_username, within: 1..16, allow_nil: true
   validate :reserved_usernames
 
   field :safe_username, type: String
-  validates_uniqueness_of :safe_username, case_sensitive: false
-  validates_length_of :safe_username, within: 1..16
+  validates_uniqueness_of :safe_username, case_sensitive: false, allow_nil: true
+  validates_length_of :safe_username, within: 1..16, allow_nil: true
   index :safe_username, unique: true
 
   def username=(str)
@@ -121,15 +120,26 @@ class User
   field :mpid, type: String, default: ->{ self.id.to_s }
   attr_accessible :mpid
 
+  # OAuth
 
-# Other
+  field :facebook_uid, type: String
+  index :facebook_uid, unique: true
 
-  def self.find_for_facebook_oauth(access_token, signed_in_resource=nil)
-    data = access_token.extra.raw_info
-    if user = User.where(:email => data.email).first
+  def self.find_or_create_for_facebook_oauth(access_token, signed_in_resource=nil)
+    uid, data = access_token.uid, access_token.extra.raw_info
+    email = data.email
+    
+    if user = User.where(facebook_uid: uid).first
       user
-    else # Create a user with a stub password.
-      User.create!(:email => data.email, :password => Devise.friendly_token[0,20])
+    elsif user = User.where(email: email).first
+      user.facebook_uid = uid
+      user.save!
+      user
+    else 
+      # Create a user with a stub password.
+      user = User.create!(email: email, facebook_uid: uid, password: Devise.friendly_token[0,20])
+      user.confirm!
+      user
     end
   end
 

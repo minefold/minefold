@@ -85,4 +85,6 @@ form {
     padding: $line $gutter;
     font-weight: bold;
   }
+
+  section.divider { text-align: center; font-size: 18px; line-height: $line * 8; }
 }

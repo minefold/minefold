@@ -33,7 +33,7 @@
       @include box-sizing(border-box);
       @include columns(6);
       text-align: center;
-      margin: 0 auto;
+      margin: 0 auto 2*$line;
 
       clear: both;
 

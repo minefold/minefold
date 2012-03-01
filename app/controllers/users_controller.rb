@@ -18,9 +18,6 @@ class UsersController < Devise::RegistrationsController
     end
   }
 
-  def new
-  end
-
   def create
     user.mpid = cookies[:mpid]
     user.referrer = referrer
@@ -33,7 +30,7 @@ class UsersController < Devise::RegistrationsController
       respond_with user, :location => user_root_path
     else
       clean_up_passwords user
-      respond_with user, :location => users_path(code: params[:user][:invite_id])
+      respond_with user
     end
   end
 
@@ -46,5 +43,6 @@ class UsersController < Devise::RegistrationsController
       }
     end
   end
+
 
 end

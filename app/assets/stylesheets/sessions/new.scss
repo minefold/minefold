@@ -1,6 +1,8 @@
 #sessions-new, #sessions-create {
   form {
     @include columns(4);
+    
+    .btn { text-align: center; }
 
     input[type=submit], .remember-me {
       @include gridColumn;
