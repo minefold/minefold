@@ -19,6 +19,6 @@ class PhotoUploadJob
     photo.creator = @user
     photo.save!
 
-    CreatedPhotoEvent.create(source: photo.creator, target: photo)
+    Events::PublishedPhoto.create(source: photo.creator, target: photo)
   end
 end
