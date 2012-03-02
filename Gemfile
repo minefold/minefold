@@ -7,6 +7,7 @@ gem 'rails'
 gem 'sprockets'
 
 gem 'rack-www'
+gem 'uuid'
 
 # ORM
 gem 'mongo', '~>1.5'

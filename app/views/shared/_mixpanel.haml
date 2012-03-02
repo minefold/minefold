@@ -8,30 +8,26 @@
   "track_forms","register","register_once","identify","name_tag","set_config"];for(c=0;c<
   d.length;c++){mpq[d[c]]=e(d[c])}})();
 
-- unless Rails.env.production?
-  :javascript
-    mpq.set_config({debug: true});
-
-
 - # WARNING: Could potentially break page caching.
 - if signed_in?
   :javascript
     mpq.identify(#{current_user.mpid.to_json});
     mpq.name_tag(#{current_user.email.to_s.to_json});
-
 - else
-  - js do
-    :javascript
-      var mpid = $.cookie('mpid');
-      if(!(mpid != null)) {
-        mpid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-          var r = r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
-          v.toString(16);
-        });
+  :javascript
+    var mpid = null,
+        pairs = document.cookie.split('; ');
 
-        $.cookie('mpid', mpid, {expires: 365});
-        mpq.identify(mpid);
-      }
+    for (var i = 0, pair; pair = pairs[i] && pairs[i].split('='); i++) {
+        if (decodeURIComponent(pair[0]) === 'mpid') {
+          mpid = decodeURIComponent(pair[1] || '');
+        }
+    }
+
+    if(!(mpid != null) || (mpid !== '')) {
+    console.log('mpid', mpid);
+      mpq.identify(mpid);
+    }
 
 - if params[:ref]
   :javascript

@@ -12,6 +12,12 @@ class User
   REFERRAL_HOURS = 2
 
 
+  def self.mpid
+    @uuid ||= UUID.new
+    @uuid.generate
+  end
+
+
   field :email, type: String, null: true
   field :username,       type: String
   field :safe_username,  type: String

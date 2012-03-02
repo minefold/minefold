@@ -20,10 +20,19 @@ class ApplicationController < ActionController::Base
                           email: current_user.email
     end
   end
-  
+
   before_filter :require_username!
 
+  before_filter :set_mpid
+
 private
+
+  def set_mpid
+    if not cookies[:mpid]
+      mpid = signed_in? ? current_user.mpid : User.mpid
+      cookies[:mpid] = {value: mpid, expires: 1.year.from_now}
+    end
+  end
 
   def require_no_authentication!
     no_input = devise_mapping.no_input_strategies
@@ -34,7 +43,7 @@ private
       redirect_to after_sign_in_path_for(resource)
     end
   end
-  
+
   def require_username!
     if signed_in? and current_user.username.nil?
        redirect_to username_account_path
