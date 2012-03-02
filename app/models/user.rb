@@ -64,7 +64,7 @@ class User
   field :safe_username, type: String
   validates_uniqueness_of :safe_username, case_sensitive: false, allow_nil: true
   validates_length_of :safe_username, within: 1..16, allow_nil: true
-  index :safe_username, unique: true
+  index :safe_username
 
   def username=(str)
     super(str.strip)
@@ -128,14 +128,14 @@ class User
   def self.find_or_create_for_facebook_oauth(access_token, signed_in_resource=nil)
     uid, data = access_token.uid, access_token.extra.raw_info
     email = data.email
-    
+
     if user = User.where(facebook_uid: uid).first
       user
     elsif user = User.where(email: email).first
       user.facebook_uid = uid
       user.save!
       user
-    else 
+    else
       # Create a user with a stub password.
       user = User.create!(email: email, facebook_uid: uid, password: Devise.friendly_token[0,20])
       user.confirm!
