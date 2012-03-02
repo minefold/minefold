@@ -43,7 +43,7 @@ class PhotoUploader < CarrierWave::Uploader::Base
 
   version(:thumb) do
     process resize_to_fit: [70, 70]
-    process geometry: [:thumb_width, :thumb_height]
+    process set_geometry: [:thumb_width, :thumb_height]
   end
 
   def set_geometry(width_attr, height_attr)
