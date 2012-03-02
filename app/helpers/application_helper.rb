@@ -52,4 +52,16 @@ module ApplicationHelper
     content_for :js, capture(&blk)
   end
 
+  def crashmat_options
+    opts = {
+      app: "2",
+      log: !Rails.env.production?,
+    }
+    if signed_in?
+      opts.merge(user: {id: current_user.id, email: current_user.email})
+    end
+    opts
+  end
+
+
 end
