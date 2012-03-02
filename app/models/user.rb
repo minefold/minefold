@@ -233,11 +233,6 @@ class User
 
 # Credits
 
-  # Kicks off the audit trail for any credits the user starts off with
-  after_create do
-    CreditTrail.log(self, self.credits)
-  end
-
   def customer_description
     [safe_username, id].join('-')
   end
@@ -268,7 +263,7 @@ class User
   end
 
   def increment_credits!(n)
-    inc(:credits, n.to_i).tap { CreditTrail.log(self, n.to_i)}
+    inc(:credits, n.to_i)
   end
 
   def hours_left
