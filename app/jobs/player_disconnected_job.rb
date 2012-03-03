@@ -10,8 +10,9 @@ class PlayerDisconnectedJob
   end
 
   def process!(user, world, disconnected_at)
-    world.record_event! Events::Disconnection, source: user,
-                                created_at: disconnected_at
+    Events::Disconnection.create source: user,
+                                 target: world,
+                                 created_at: disconnected_at
 
     # TODO Broadcast pusher event
   end

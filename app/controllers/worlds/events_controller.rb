@@ -9,21 +9,21 @@ class Worlds::EventsController < ApplicationController
     authorize! :read, world
   end
 
-  def create
-    authorize! :chat, world
-
-    chat = world.record_event! Chat, source: current_user,
-                                     text: params[:text]
-
-    if chat.valid?
-      world.broadcast "#{chat.pusher_key}-created",
-                      chat.attributes,
-                      params[:socket_id]
-
-      world.say chat.msg
-    end
-
-    respond_with chat, location: world_events_path(world)
-  end
+  # def create
+  #   authorize! :chat, world
+  #
+  #   chat = world.record_event! Chat, source: current_user,
+  #                                    text: params[:text]
+  #
+  #   if chat.valid?
+  #     world.broadcast "#{chat.pusher_key}-created",
+  #                     chat.attributes,
+  #                     params[:socket_id]
+  #
+  #     world.say chat.msg
+  #   end
+  #
+  #   respond_with chat, location: world_events_path(world)
+  # end
 
 end

@@ -4,14 +4,23 @@ class World
   include Mongoid::Slug
   include Mongoid::Paranoia
 
+
+# ---
+# Name
+
+
   field :name, type: String
+  # TODO Validate name being only [a-Z][0-9]\-
   validates_uniqueness_of :name, scope: :creator_id
   validates_presence_of :name
   slug  :name, index: true, scope: :creator_id
 
-  scope :by_name, ->(name) {
-    where(name: name)
-  }
+  scope :by_name, ->(name) { where(name: name) }
+
+
+# ---
+# Creator
+
 
   belongs_to :creator,
     inverse_of: :created_worlds,
@@ -22,40 +31,172 @@ class World
     where(creator_id: creator.id).find_by_slug!(slug)
   end
 
-  scope :by_creator, ->(user) {
-    where(creator_id: user.id)
-  }
+  scope :by_creator, ->(user) { where(creator_id: user.id) }
 
-  # Cloning
+  def creator=(creator)
+    write_attribute :creator_id, creator.id
+    add_op(creator)
+  end
+
+
+# ---
+# Cover Photo
+
+
+  mount_uploader :photo, CoverPhotoUploader
+
+  def fetch_photo!
+    self.remote_photo_url = "http://d14m45jej91i3z.cloudfront.net/#{id}/base.png"
+  rescue OpenURI::HTTPError
+  end
+
+
+
+# ---
+# Cloning
+
 
   belongs_to :parent, inverse_of: :children, class_name: 'World'
   has_many :children, inverse_of: :parent, class_name: 'World'
 
-  # Data
+  def clone?
+    not parent.nil?
+  end
+
+  def clone!
+    World.new(
+      parent: self,
+      name: name,
+      # settings: settings,
+      # map: map
+      seed: seed,
+      game_mode: game_mode,
+      level_type: level_type,
+      difficulty_level: difficulty_level,
+      world_data_file: world_data_file,
+      map_data: map_data
+    )
+  end
+
+
+# ---
+# Data
+
 
   # Legacy backup file in S3, can be blank
   field :world_data_file, type: String
   belongs_to :world_upload
 
-  # Maps
+  def upload_filename_prefix
+    [creator.safe_username, creator.id, Time.now.strftime('%Y%m%d%H%M%S'), nil].join('-')
+  end
+
+
+# ---
+# Maps
+
+
   field :last_mapped_at, type: DateTime
   field :map_data, type: Hash
 
+  # Does a map exist *at all*
+  def map?
+    mapped? or (clone? and parent.map?)
+  end
 
-  # Peeps
+  # Has the world been mapped personally
+  def mapped?
+    not last_mapped_at.nil?
+  end
+
+  # The base location of the map data
+  def map_assets_url
+    case
+    when mapped?
+      File.join ENV['WORLD_MAPS_URL'], id.to_s
+    when clone?
+      parent.map_assets_url
+    end
+  end
+
+
+# ---
+# Members
+
 
   embeds_many :memberships, cascade_callbacks: true
+
+  def add_member(user)
+    memberships.find_or_initialize_by(user_id: user.id)
+  end
+
+  def add_op(user)
+    add_member(user).tap {|m| m.op! }
+  end
+
+  def member?(user)
+    memberships.where(user_id: user.id).exists?
+  end
+
+  def op?(user)
+    memberships.ops.where(user_id: user.id).exists?
+  end
+
+  def ops
+    memberships.ops.pluck(:user)
+  end
+
+  def members
+    memberships.pluck(:user)
+  end
+
   embeds_many :membership_requests, cascade_callbacks: true do
     def include_user?(user)
       where(user_id: user.id).exists?
     end
   end
 
+
+# ---
+# Online Players
+
+
+  def player_ids
+    $redis.smembers("#{redis_key}:connected_players").map {|id| BSON::ObjectId(id)}
+  end
+
+  def players
+    User.find(player_ids)
+  end
+
+  def offline_players
+    User.find(memberships.map(&:user_id) - player_ids)
+  end
+
+  def broadcast(event_name, data, socket_id=nil)
+    pusher_channel.trigger event_name, data, socket_id
+  end
+
+  def say(msg)
+    send_stdin "say #{msg}"
+  end
+
+  def tell(user, msg)
+    send_stdin "/tell #{user.username} #{msg}"
+  end
+
+
+# ---
+# Events
+
+
   has_many :events, as: :target,
                  order: [:created_at, :desc]
 
 
-  # Game settings
+# ---
+# Settings
+
 
   GAME_MODES = [:survival, :creative]
   LEVEL_TYPES = ['DEFAULT', 'FLAT']
@@ -83,7 +224,9 @@ class World
   field :spawn_animals, type: Boolean, default: true
 
 
-  # Statistics
+# ---
+# Stats
+
 
   field :minutes_played, type: Integer, default: 0
   field :pageviews, type: Integer, default: 0
@@ -92,130 +235,14 @@ class World
     greater_than_or_equal_to: 0
   field :last_played_at, type: DateTime
 
-
-  # Stats
-
   field :pageviews, type: Integer, default: 0
   validates_numericality_of :pageviews,
     only_integer: true,
     greater_than_or_equal_to: 0
 
 
-  # Members
+# ---
 
-  def creator=(creator)
-    write_attribute :creator_id, creator.id
-    add_op(creator)
-  end
-
-  def add_member(user)
-    memberships.find_or_initialize_by(user_id: user.id)
-  end
-
-  def add_op(user)
-    add_member(user).tap {|m| m.op! }
-  end
-
-  def member?(user)
-    memberships.where(user_id: user.id).exists?
-  end
-
-  def op?(user)
-    memberships.ops.where(user_id: user.id).exists?
-  end
-
-  def ops
-    memberships.ops.pluck(:user)
-  end
-
-  def members
-    memberships.pluck(:user)
-  end
-
-
-  # Online players
-
-  def players
-    User.find(player_ids)
-  end
-
-  def offline_players
-    User.find(memberships.map(&:user_id) - player_ids)
-  end
-
-
-  # Communication
-
-  def record_event!(type, attrs)
-    event = type.new(attrs)
-    self.events.push(event) if event.valid?
-    event
-  end
-
-  def broadcast(event_name, data, socket_id=nil)
-    pusher_channel.trigger event_name, data, socket_id
-  end
-
-  def say(msg)
-    send_stdin "say #{msg}"
-  end
-
-  def tell(user, msg)
-    send_stdin "/tell #{user.username} #{msg}"
-  end
-
-
-  # Maps
-
-  # Does a map exist *at all*
-  def map?
-    mapped? or (clone? and parent.map?)
-  end
-
-  # Has the world been mapped personally
-  def mapped?
-    not last_mapped_at.nil?
-  end
-
-  def map_assets_url
-    case
-    when mapped?
-      File.join ENV['WORLD_MAPS_URL'], id.to_s
-    when clone?
-      parent.map_assets_url
-    end
-  end
-
-
-  # Uploads
-
-  def upload_filename_prefix
-    [creator.safe_username, creator.id, Time.now.strftime('%Y%m%d%H%M%S'), nil].join('-')
-  end
-
-
-  # Cloning
-
-  def clone?
-    not parent.nil?
-  end
-
-  def clone!
-    World.new(
-      parent: self,
-      name: name,
-      # settings: settings,
-      # map: map
-      seed: seed,
-      game_mode: game_mode,
-      level_type: level_type,
-      difficulty_level: difficulty_level,
-      world_data_file: world_data_file,
-      map_data: map_data
-    )
-  end
-
-  # Other
 
   def pusher_key
     "#{collection.name.downcase}-#{id}"
@@ -223,21 +250,6 @@ class World
 
   def redis_key
     "#{collection.name.downcase}:#{id}"
-  end
-
-  def player_ids
-    $redis.smembers("#{redis_key}:connected_players").map {|id| BSON::ObjectId(id)}
-  end
-
-
-# ---
-
-
-  mount_uploader :photo, CoverPhotoUploader
-
-  def fetch_photo!
-    self.remote_photo_url = "http://d14m45jej91i3z.cloudfront.net/#{id}/base.png"
-  rescue OpenURI::HTTPError
   end
 
 
