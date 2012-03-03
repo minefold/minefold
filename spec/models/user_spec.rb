@@ -24,7 +24,7 @@ describe User do
 
   describe 'credits' do
     it "gives FREE_HOURS by default" do
-      free_credits = subject.class::FREE_HOURS.hours / subject.class::BILLING_PERIOD
+      free_credits = subject.class::FREE_HOURS.hours / subject.class::CREDIT_PERIOD
       subject.credits.should == free_credits
     end
 
@@ -39,7 +39,7 @@ describe User do
       subject.username = ' FooBarBaz '
       subject.safe_username.should == 'foobarbaz'
     end
-    
+
     it "doesn't allow reserved usernames" do
       bad_user = Fabricate.build :user, username: 'Admin'
       bad_user.should_not be_valid
