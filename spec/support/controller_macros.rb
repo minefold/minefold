@@ -4,7 +4,7 @@ module ControllerMacros
   def signin_as(&blk)
     let!(:current_user, &blk)
 
-    go_go_power_devise!
+    remap_devise!
 
     # prepend_before(:each) do
     before(:each) do
@@ -12,8 +12,7 @@ module ControllerMacros
     end
   end
 
-  # TODO Name better, drinking!
-  def go_go_power_devise!
+  def remap_devise!
     before(:each) { @request.env['devise.mapping'] = Devise.mappings[:user] }
   end
 end

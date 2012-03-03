@@ -17,7 +17,8 @@ class ConfirmationsController < Devise::ConfirmationsController
 
       respond_with_navigational(resource){ redirect_to user_root_path }
     else
-      respond_with_navigational(resource.errors, :status => :unprocessable_entity){ render :new }
+      redirect_to user_root_path
+      # respond_with_navigational(resource.errors, :status => :unprocessable_entity){ render :new }
     end
   end
 

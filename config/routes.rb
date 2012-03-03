@@ -44,8 +44,8 @@ Minefold::Application.routes.draw do
     get  '/signup' => 'users#new', :as => :new_user
     post '/users' => 'users#create', :as => :users
 
-    get  '/confirm/new' => 'confirmations#new', :as => :new_user_confirmation
-    post '/confirm' => 'confirmations#create', :as => :user_confirmation
+    # get  '/confirm/new' => 'confirmations#new', :as => :new_user_confirmation
+    # post '/confirm' => 'confirmations#create', :as => :user_confirmation
     get  '/confirm/:confirmation_token' => 'confirmations#show', :as => :confirmation
 
     resource :account, :only => [:edit, :update], :path_names => {:edit => '/'} do

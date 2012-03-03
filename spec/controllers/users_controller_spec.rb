@@ -4,7 +4,7 @@ describe UsersController do
   render_views
 
   describe '#create' do
-    go_go_power_devise!
+    remap_devise!
 
     before(:each) {
       post :create, user: {
