@@ -5,7 +5,7 @@ a#logo {
   text-decoration: none;
 
   img {
-    position: absolute; background-color: $red;
+    position: absolute; left: 0; background-color: $red;
     padding: 0 $gutter/2;
     border-bottom: 5px solid darken($red, 20%);
   }
