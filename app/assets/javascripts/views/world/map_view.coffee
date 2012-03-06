@@ -58,9 +58,12 @@ class Mf.WorldMapView extends Backbone.View
       center = new google.maps.LatLng(data.lat, data.lng)
       @map.setCenter(center)
 
-    else
+    else if spawn?
       {x: spawnX, y: spawnY, z: spawnZ} = @model.spawn()
       @map.setCenter @worldToLatLng(spawnX, spawnY, spawnZ)
+
+    else
+      @map.setCenter @worldToLatLng(0, 68, 0)
 
     # Can't add the projection in the constructor
     mapType.projection = new MapProjection(@options.tileSize)
