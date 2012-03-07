@@ -1,21 +1,13 @@
+require 'time'
+
 class PlayerDisconnectedJob
   @queue = :high
 
-  # TODO deploy new prism then change these names
-  def self.perform(user_id_or_username, world_id_or_disconnected_at, connected_at = nil, disconnected_at = nil)
-    user_id = BSON::ObjectId(user_id_or_username.to_s) rescue nil
-    user = user_id ? User.find(user_id) : User.by_username(user_id_or_username).first
+  def self.perform(user_id, world_id, connected_at, disconnected_at)
+    user = User.find(user_id)
+    world = World.find(world_id)
 
-    world_id = BSON::ObjectId(world_id_or_disconnected_at.to_s) rescue nil
-    world = world_id ? World.find(world_id) : user.current_world
-
-    if world
-      if disconnected_at
-        new.process!(user, world, connected_at, disconnected_at)
-      else
-        new.process!(user, world, nil, world_id_or_disconnected_at)
-      end
-    end
+    new.process!(user, world, Time.parse(connected_at), Time.parse(disconnected_at))
   end
 
   def process!(user, world, connected_at, disconnected_at)
