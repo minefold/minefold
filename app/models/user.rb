@@ -300,7 +300,8 @@ class User
   mount_uploader :avatar, AvatarUploader
 
   def fetch_avatar!
-    self.remote_avatar_url = "http://minecraft.net/skin/#{safe_username}.png"
+    # Minecraft's skins are case sensitive! So stupid.
+    self.remote_avatar_url = "http://minecraft.net/skin/#{username.strip}.png"
     # Minecraft doesn't store default skins so it raises a HTTPError
   rescue OpenURI::HTTPError
   end
