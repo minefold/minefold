@@ -18,7 +18,7 @@ module Mixpanel
     return unless Rails.env.production?
     
     if properties[:distinct_id].nil? and signed_in?
-      properties[:distinct_id] = current_user.id.to_s
+      properties[:distinct_id] = current_user.mpid.to_s
       properties[:mp_name_tag] = current_user.email
     end
 

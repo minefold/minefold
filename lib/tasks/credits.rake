@@ -12,7 +12,7 @@ namespace :users do
         user.last_credit_reset = Time.now
 
         if Rails.env.production?
-          Mixpanel.track 'reset credits', distinct_id: user.id.to_s, mp_name_tag: user.safe_username
+          Mixpanel.track 'reset credits', distinct_id: user.mpid.to_s, mp_name_tag: user.email
         end
 
         user.save

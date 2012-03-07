@@ -19,7 +19,7 @@ class UserMailer < ActionMailer::Base
     
     return unless @user.notify? :credits_reset
     
-    Mixpanel.track 'sent reset credit email', distinct_id: @user.id.to_s, mp_name_tag: @user.safe_username
+    Mixpanel.track 'sent reset credit email', distinct_id: @user.mpid.to_s, mp_name_tag: @user.email
     
     mail(to: @user.email, subject: 'You have more Minefold time!')
   end

@@ -25,7 +25,7 @@ class UsersController < Devise::RegistrationsController
     if user.save
       sign_in :user, user
 
-      track '$signup', distinct_id: user.mpid, mp_name_tag: user.safe_username
+      track '$signup', distinct_id: user.mpid.to_s, mp_name_tag: user.email
 
       respond_with user, :location => user_root_path
     else
