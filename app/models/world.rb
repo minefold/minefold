@@ -225,6 +225,12 @@ class World
 
 
 # ---
+# Comments
+
+  embeds_many :comments, as: :commentable
+
+
+# ---
 # Stats
 
 

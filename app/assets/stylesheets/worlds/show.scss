@@ -9,7 +9,7 @@
 
   #map {
     background: darken(white, 5%);
-    height: $line * 80;
+    height: $line * 100;
   }
 
   .world-map-view {
@@ -42,27 +42,6 @@
     .world-map-control-view a.exit-fullscreen { display: block; }
   }
 
-  #backside {
-    position: fixed;
-    right: 0; bottom: 0; left: 0;
-
-    background: darken(white, 5%);
-
-    .map {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-    }
-
-    .overlay {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(white, 0.6);
-      display: none;
-    }
-  }
-
   .empty {
     margin-top: $line * 4;
     color: darken(white, 40%); text-shadow: 0 1px 0 white;
@@ -73,14 +52,19 @@
     padding: 2*$pad;
   }
 
-  #page .members {
+  #world-members {
     padding: ($line * 2) ($gutter / 2);
     @include clearfix;
+    background: darken(white, 5%);
+    @include box-shadow(inset 0 -1px 0 rgba(black, 0.05));
+    margin-bottom: $line * 4;
 
     .by {
       float: left;
-      font-size: 12px; line-height: $line * 4;
-      margin-right: 10px;
+      margin-right: $gutter / 2;
+      color: darken(white, 20%);
+      font-weight: 800; font-size: 11px; line-height: $line * 4; text-transform: uppercase;
+      text-shadow: 0 1px 0 white;
     }
 
     img {
@@ -92,8 +76,72 @@
   }
 
   .stats {
-    li { float: left; margin-right: $gutter;}
+    li { margin-bottom: 0; line-height: $line * 6 - 3px; border-bottom: 1px solid darken(white, 5%); }
+    .val { font-size: 16px; font-weight: 600; color: black; }
+
 
   }
+
+  #world-comments {
+    h1 {
+      font-size: 14px; color: darken(white, 100%);
+      border-bottom: 1px solid darken(white, 20%);
+      margin-bottom: $line * 0;
+      line-height: $line * 6 - 1px; font-weight: normal;
+    }
+
+    .comment {
+      list-style-type: none;
+      margin: ($line * 2) 0;
+      @include clearfix;
+      border-bottom: 1px solid darken(white, 10%);
+
+      h2 {
+        font-size: 14px;
+
+        line-height: $line * 3;
+        margin-bottom: $line;
+        font-weight: 600;
+
+        a {
+          cursor: pointer;
+        }
+
+        img {
+          float: left;
+          width: 40px;
+          margin-right: $gutter;
+
+        }
+
+        .badge-link {display:none;}
+      }
+
+      .comment-body, .comment-meta {
+        margin-left: 40px + $gutter;
+      }
+
+      .comment-body {
+        font-size: 14px;
+
+        p {
+          margin-bottom: $line * 2;
+        }
+        *:last-child {
+          margin-bottom: 0;
+        }
+      }
+      .comment-meta {
+        font-size: 11px;
+
+        a {
+          color: darken(white, 40%);
+          &:hover { color: darken(white, 60%); }
+        }
+
+      }
+    }
+  }
+
 
 }

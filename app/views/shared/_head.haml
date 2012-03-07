@@ -19,14 +19,18 @@
 %meta{property: 'fb:app_id', content: ENV['FB_APP_ID']}
 = csrf_meta_tags
 
-- if false
-  :javascript
-    var _crashmat = #{crashmat_options.to_json};
-    (function(w, d, cm, woe) {
-      w.onerror = function(e,f,l) { cm.e = cm.e || []; cm.e.push([e,f,l]); if (woe) woe(e,f,l); };
-      var e = d.createElement('script'); e.async = true; e.src = '//tracker.crashm.at/';
-      (d.head || d.getElementsByTagName('head')[0]).appendChild(e);
-    })(window, document, window._crashmat, window.onerror);
+:javascript
+  var _crashmat = #{crashmat_options.to_json};
+  (function(w, d, cm, woe) {
+    w.onerror = function(e,f,l) {
+      cm.e = cm.e || []; cm.e.push([e,f,l]);
+      if (woe) woe(e,f,l);
+    };
+    var e = d.createElement('script');
+    e.async = true;
+    e.src = '//tracker.crashm.at/';
+    (d.head || d.getElementsByTagName('head')[0]).appendChild(e);
+  })(window, document, window._crashmat, window.onerror);
 
 = javascript_include_tag '//d3ds63zw57jt09.cloudfront.net/1.10/pusher.min.js'
 

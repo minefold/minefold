@@ -22,6 +22,12 @@
 
     h1 {
       font-weight: 400; font-size: 36px; line-height: $line * 10;
+
+      span.trade {
+        color: desaturate(lighten($teal, 60%), 100%);
+        font-weight: 200; font-size: 18px;
+        position: relative; top: $line * -3;
+      }
     }
 
     h2 {
@@ -58,8 +64,6 @@
     li { @include makeColumn(4); margin-bottom: $line * 12; }
 
     text-align: center;
-
-    h2 { font-weight: 600; }
 
     figure { min-height: 210px; }
     figure img { display: block; margin: 0 auto; }

@@ -35,6 +35,7 @@ gem 'coffee-filter'
 gem 'decent_exposure'
 gem 'rabl', '>=0.5'
 gem 'kaminari'
+gem 'rdiscount'
 
 gem 'asset_sync'
 

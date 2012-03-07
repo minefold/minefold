@@ -101,6 +101,8 @@ Minefold::Application.routes.draw do
           resources :membership_requests, :only => [:create, :destroy] do
             put :approve, :on => :member
           end
+
+          resources :comments, :only => [:create]
         end
       end
 

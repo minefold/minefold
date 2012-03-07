@@ -1,7 +1,5 @@
 - track 'viewed world'
-
 = render partial: 'worlds/masthead'
-
 
 - if not world.map?
   .empty
@@ -23,13 +21,14 @@
         worldMapView.render();
       });
 
-.members
-  %span.by By
+#world-members
+  %span.by Members
   - world.members.each do |member|
-    = image_tag member.avatar.small.url, width: 20, height: 20
+    = link_to member do
+      = image_tag member.avatar.small.url, width: 20, height: 20
 
 .row
-  %article
+  %aside
     %ul.stats
       - if world.children.any?
         %li.stat
@@ -47,3 +46,32 @@
       %li.stat
         %span.val= number_with_delimiter world.memberships.size
         %span.label= pluralize_text world.memberships.size, 'member', 'members'
+
+
+  %article
+    - if world.comments.any?
+      #world-comments
+        %h1= pluralize world.comments.count, 'comment', 'comments'
+        %ol
+          - world.comments.each do |comment|
+            %li[comment]
+              %h2
+                %a.badge-link{href: '/pro'}
+                  %span.badge.badge-pro Pro
+                %a.url{rel: 'contact', title: comment.author.username}
+                  = image_tag comment.author.avatar.medium.url, width: 40, height: 40
+                  = comment.author.username
+              .comment-body
+                = markdown comment.text
+
+              .comment-meta
+                = link_to "#comment-#{comment.id}", class: 'posted' do
+                  = time_ago_in_words(comment.created_at)
+                  ago
+
+    - if can? :play, world
+      = form_for world.comments.new, url: user_world_comments_path(world.creator, world) do |f|
+        %h3 Add a new comment
+        = f.text_area :text, rows: 3
+        = f.submit 'Post comment'
+
