@@ -61,7 +61,7 @@
               %h2
                 %a.badge-link{href: '/pro'}
                   %span.badge.badge-pro Pro
-                %a.url{rel: 'contact', title: comment.author.username}
+                %a.url{rel: 'contact', title: comment.author.username, href:user_worlds_path(comment.author)}
                   = image_tag comment.author.avatar.medium.url, width: 40, height: 40
                   = comment.author.username
               .comment-body
@@ -72,9 +72,9 @@
                   = time_ago_in_words(comment.created_at)
                   ago
 
-    - if can? :play, world
+    - if can? :read, world
       = form_for world.comments.new, url: user_world_comments_path(world.creator, world) do |f|
-        %h3 Add a new comment
+        %h3 Add a new comment (<a href="http://daringfireball.net/projects/markdown/syntax" target="_blank">Markdown Syntax</a>)
         = f.text_area :text, rows: 3
         = f.submit 'Post comment'
 
