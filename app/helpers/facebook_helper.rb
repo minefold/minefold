@@ -14,17 +14,17 @@ module FacebookHelper
     else
       []
     end.map do |key, value|
-      tag('meta', property: "og:#{key}", content: value)
+      tag('meta', property: key.to_s, content: value.to_s)
     end.join.html_safe
   end
 
   def world_og_attrs(world)
     attrs = {
-      type: 'minefold:world',
-      url: user_world_url(world.creator, world),
-      title: h(world.name),
-      description: h('Minecraft world'),
-      image: world.photo.url,
+      'og:type' => 'minefold:world',
+      'og:url' => user_world_url(world.creator, world),
+      'og:title' => h(world.name),
+      'og:description' => h('Minecraft world'),
+      'og:image' => world.photo.url,
       'minefold:members' => world.members.count
     }
 
