@@ -188,7 +188,7 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
-  fb_omniauth_options = {scope: 'email'}
+  fb_omniauth_options = {scope: 'email,publish_actions'}
 
   if Rails.env.production? or Rails.env.staging?
     fb_omniauth_options[:client_options] = {:ssl => {:ca_file => '/usr/lib/ssl/certs/ca-certificates.crt'}}
