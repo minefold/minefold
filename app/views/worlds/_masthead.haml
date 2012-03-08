@@ -1,7 +1,3 @@
-- head do
-  - world_opengraph_properties(world).each do |name, content|
-    %meta{property: "og:#{name}", content: content}
-
 - masthead do
   - # TODO: Potential confusion: current_user.current_world == world?
   - if signed_in? and can?(:play, world) and not current_user.played?

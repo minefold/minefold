@@ -13,10 +13,14 @@ module ApplicationHelper
     [params[:controller], 'controller'].join('-')
   end
 
-  def page_attributes
-    { 'xmlns:og' => 'http://ogp.me/ns#',
+  def app_html_attrs
+    {
       id: page_css_id,
-      class: page_css_class
+      class: page_css_class,
+      xmlns: 'http://www.w3.org/1999/xhtml',
+      dir: 'ltr',
+      lang: 'en-US',
+      'xmlns:fb' => 'https://www.facebook.com/2008/fbml'
     }
   end
 

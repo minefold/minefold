@@ -10,14 +10,4 @@ module WorldHelper
     ].join('/').html_safe
   end
 
-  def world_opengraph_properties(world)
-    {
-      title: world.name,
-      type: 'world',
-      image: world.photo.url,
-      url: user_world_path(world.creator, world),
-      determiner: 'the'
-    }
-  end
-
 end

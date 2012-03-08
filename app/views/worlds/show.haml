@@ -1,4 +1,7 @@
 - track 'viewed world'
+- head do
+  = og_tags(world)
+
 = render partial: 'worlds/masthead'
 
 - if not world.map?
