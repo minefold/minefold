@@ -1,6 +1,3 @@
 [submodule "vendor/assets/jquery.cookie"]
 	path = vendor/assets/jquery.cookie
 	url = git://github.com/carhartl/jquery-cookie.git
-[submodule "vendor/assets/jQuery.fn.autoResize"]
-	path = vendor/assets/jQuery.fn.autoResize
-	url = git://github.com/padolsey/jQuery.fn.autoResize.git

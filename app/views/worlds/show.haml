@@ -73,6 +73,10 @@
                   ago
 
     - if can? :read, world
+      - js do
+        :coffeescript
+          $ -> $('textarea#comment_text').elastic()
+
       = form_for world.comments.new, url: user_world_comments_path(world.creator, world) do |f|
         %h3 Add a new comment (<a href="http://daringfireball.net/projects/markdown/syntax" target="_blank">Markdown Syntax</a>)
         = f.text_area :text, rows: 3
