@@ -7,42 +7,10 @@ class User
 
 
 # ---
-# Identity
+# Minecraft Account
 
+  has_one :minecraft_account, dependent: :nullify
 
-  field :username, type: String
-  slug :username, index: true
-  attr_accessible :username
-  validate :reserved_usernames
-
-  scope :by_username, ->(username) {
-    where(safe_username: sanitize_username(username))
-  }
-
-
-  field :safe_username, type: String
-  validates_length_of :safe_username, within: 1..16, allow_nil: true
-  validates_uniqueness_of :safe_username, case_sensitive: false, allow_nil: true
-  index :safe_username
-
-  def self.sanitize_username(str)
-    str.downcase.strip
-  end
-
-  def username=(str)
-    super(str.strip)
-    self.safe_username = self.class.sanitize_username(str)
-  end
-
-  def reserved_usernames
-    if UsernameBlacklist.include?(safe_username)
-      errors.add(:username, 'is reserved')
-    end
-  end
-
-  def to_param
-    slug
-  end
 
 
 # ---
@@ -50,22 +18,7 @@ class User
 
 
   field :admin, type: Boolean, default: false
-  field :unlimited, type: Boolean, default: false
   field :beta, type: Boolean, default: false
-
-
-# ---
-# Email
-
-
-  field :email, type: String, null: true
-  index :email, unique: true
-  scope :by_email, ->(email) { where(email: sanitize_email(email)) }
-  attr_accessible :email
-
-  def self.sanitize_email(str)
-    str.downcase.strip
-  end
 
 
 # ---
@@ -122,10 +75,23 @@ class User
 
 
 # ---
+# Email
+
+
+  field :email, type: String, null: true
+  index :email
+  scope :by_email, ->(email) { where(email: sanitize_email(email)) }
+  # attr_accessible :email
+
+  def self.sanitize_email(str)
+    str.downcase.strip
+  end
+
+# ---
 # OAuth
 
 
-  field :facebook_uid, type: String
+  field :facebook_uid, type: String, null: true
   index :facebook_uid, unique: true
 
   def self.find_or_create_for_facebook_oauth(access_token, signed_in_resource=nil)
