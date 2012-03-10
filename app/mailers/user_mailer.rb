@@ -19,9 +19,22 @@ class UserMailer < ActionMailer::Base
     
     return unless @user.notify? :credits_reset
     
-    Mixpanel.track 'sent reset credit email', distinct_id: @user.mpid.to_s, mp_name_tag: @user.email
-    
+    track @user, 'sent reset credit email'
     mail(to: @user.email, subject: 'You have more Minefold time!')
+  end
+  
+  def invite(invitor_id, world_id, invitee_email, message = nil)
+    @invitor = User.find invitor_id
+    @world = World.find world_id
+    
+    track @invitor, 'sent invite email'
+    mail(to: invitee_email, subject: "#{@invitor.username} wants you to play Minecraft in #{@world.name}")
+  end
+  
+  private
+  
+  def track user, event
+    Mixpanel.track event, distinct_id: user.mpid.to_s, mp_name_tag: user.email
   end
 
   # TODO

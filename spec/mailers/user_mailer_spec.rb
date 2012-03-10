@@ -26,4 +26,13 @@ describe UserMailer do
     its(:body) { should include(user.username) }
     its(:body) { should include(pro_account_url) }
   end
+  
+  describe "invite_player" do
+    let(:world) { Fabricate :world }
+    subject { UserMailer.invite(user.id, world.id, 'dave@minefold.com') }
+
+    its(:to) { should include('dave@minefold.com') }
+    its(:body) { should include(user.username) }
+  end
+  
 end

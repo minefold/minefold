@@ -91,7 +91,7 @@ class WorldsController < ApplicationController
       end
     end
 
-    world.delete!
+    world.delete
 
     track 'deleted world'
 
