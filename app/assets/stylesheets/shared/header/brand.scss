@@ -6,7 +6,7 @@ a#brand {
 
   .logo {
     display: block; position: absolute; left: 0; top: 0;
-    @include columns(1); height: $line * 10;
+    width: $col - ($gutter / 2); height: ($line * 8) + $line;
 
 
     background-color: $red;
@@ -23,7 +23,7 @@ a#brand {
   &:hover img { background-color: darken($red, 20%); }
 
   h1 {
-    display: none;
-    margin-left: 80px + $gutter; font-weight: 600; font-size: 38px;
+    display: none; margin-left: $col + $gutter; line-height: $line * 12;
+    font-weight: 400; font-size: 38px;
   }
 }

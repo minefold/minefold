@@ -2,12 +2,16 @@
 
   header {
     a#brand {
-      
+      .logo {
+        height: ($line * 12) + ($line * 2);
+        width: $col + ($gutter / 2);
+        background-image: asset-data-url('logo-large.png');
+        background-position: center ((60px - 33px) / 2);
+      }
       h1 {
-        
+        display: block;
       }
     }
-    a#logo h1 { display: block; }
 
     a#logo, ol li a, ol li.time {
       margin-top: $line * 2;
