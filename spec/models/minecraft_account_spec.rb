@@ -62,4 +62,5 @@ describe MinecraftAccount do
 
   it { should have_field(:minutes_played).of_type(Integer).with_default_value_of(0) }
 
+
 end
