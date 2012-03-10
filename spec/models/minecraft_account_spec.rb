@@ -45,9 +45,21 @@ describe MinecraftAccount do
 
 
 # ---
+# Avatar
+
+
+  it { should respond_to(:avatar) }
+
+  it "fetches avatars from Mojang" do
+    subject.should_receive(:remote_avatar_url=).with(kind_of(String))
+    subject.fetch_avatar
+  end
+
+
+# ---
 # Stats
 
 
-  it { should have_field(:ticks).of_type(Integer).with_default_value_of(0) }
+  it { should have_field(:minutes_played).of_type(Integer).with_default_value_of(0) }
 
 end

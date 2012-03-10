@@ -10,7 +10,7 @@ class User
 # Minecraft Account
 
   has_one :minecraft_account, dependent: :nullify
-
+  index :minecraft_account
 
 
 # ---
@@ -257,19 +257,6 @@ class User
 
   def played?
     not last_played_at.nil?
-  end
-
-
-# ---
-# Avatars
-
-  mount_uploader :avatar, AvatarUploader
-
-  def fetch_avatar!
-    # Minecraft's skins are case sensitive! So stupid.
-    self.remote_avatar_url = "http://minecraft.net/skin/#{username.strip}.png"
-    # Minecraft doesn't store default skins so it raises a HTTPError
-  rescue OpenURI::HTTPError
   end
 
 

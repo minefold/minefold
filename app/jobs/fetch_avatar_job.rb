@@ -1,16 +1,21 @@
 class FetchAvatarJob
   @queue = :low
 
-  def self.perform(user_id)
-    new.process! User.find(user_id)
+  def self.perform(minecraft_account_id)
+    job = new(minecraft_account_id)
+
+    puts "Fetching avatar for #{minecraft_account.safe_username}"
+    job.process!
+    puts "Fetched avatar for #{minecraft_account.safe_username}"
   end
 
-  def process!(user)
-    user.fetch_avatar!
-    user.save
-    puts "downloaded skin for #{user.safe_username}"
-  rescue OpenURI::HTTPError
-    puts "no skin for #{user.safe_username}"
+  def initialize(minecraft_account_id)
+    @minecraft_account = MinecraftAccount.find(minecraft_account_id)
+  end
+
+  def process!
+    minecraft_account.fetch_avatar
+    minecraft_account.save
   end
 
 end

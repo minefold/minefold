@@ -46,16 +46,29 @@ class MinecraftAccount
 
   field :unlock_code, type: String, default: -> { rand(36 ** 4).to_s(36) }
 
+  def unlocked?
+    not user.nil?
+  end
+
+
+# ---
+# Avatars
+
+  mount_uploader :avatar, AvatarUploader
+
+  def fetch_avatar
+    # Minecraft's skins are case sensitive! So stupid.
+    self.remote_avatar_url = "http://minecraft.net/skin/#{username}.png"
+    # Minecraft doesn't store default skins so it raises a HTTPError
+  rescue OpenURI::HTTPError
+  end
+
 
 # ---
 # Stats
 
 
-  # TODO This constant should be somewhere else. It's used by both User and
-  #   MinecraftAccount and in Prism.
-  TICK_PERIOD = 1.minute
-
-  field :ticks, type: Integer, default: 0
+  field :minutes_played, type: Integer, default: 0
 
 
 end

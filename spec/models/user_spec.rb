@@ -3,13 +3,19 @@ require 'spec_helper'
 describe User do
   subject { Fabricate.build(:user) }
 
-  specify { be_timestamped_document}
-  specify { be_paranoid_document}
+  it { should be_timestamped_document }
+  it { should be_paranoid_document }
+
+
+# ---
+# Minecraft Account
+
+  it { should have_one(:minecraft_account) }
+
+
 
   it { should have_field(:email) }
-  it { should have_field(:username) }
-  it { should have_field(:safe_username) }
-  it { should have_field(:slug) }
+
 
   it { should have_field(:host) }
 
@@ -28,23 +34,6 @@ describe User do
       subject.credits.should == free_credits
     end
 
-  end
-
-  describe 'usernames' do
-    it { should validate_uniqueness_of(:safe_username)}
-
-    it { should validate_length_of(:safe_username).within(1..16)}
-
-    it "changes #safe_username when changing #username" do
-      subject.username = ' FooBarBaz '
-      subject.safe_username.should == 'foobarbaz'
-    end
-
-    it "doesn't allow reserved usernames" do
-      bad_user = Fabricate.build :user, username: 'Admin'
-      bad_user.should_not be_valid
-      bad_user.errors.first.should == [:username, 'is reserved']
-    end
   end
 
   describe "referrals" do
