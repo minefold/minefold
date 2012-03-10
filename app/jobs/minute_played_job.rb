@@ -1,4 +1,4 @@
-class MinutePlayedJob < TweetJob
+class MinutePlayedJob
   @queue = :high
 
   def self.perform(user_id, world_id, timestamp)

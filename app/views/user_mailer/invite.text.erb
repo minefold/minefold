@@ -1,0 +1,7 @@
+Hi there,
+
+<%= @invitor.username %> is playing Minecraft right now in <%= user_world_url(@world.creator, @world) %> and wants you to join in.
+
+Visit <%= user_world_url(@world.creator, @world) %> to play now!
+
+<%= render partial: 'shared/email_sig' %>
