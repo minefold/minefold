@@ -120,8 +120,9 @@ describe WorldsController do
       delete :destroy, user_id: world.creator.slug, id: world.slug
     }
     
-    it "deletes world" do
+    it "safe deletes world" do
       World.where(_id: world.id).should be_empty
+      World.unscoped.where(_id: world.id).should have(1).world
     end
 
     it "redirects to dashboard" do

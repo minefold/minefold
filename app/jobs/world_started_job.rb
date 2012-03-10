@@ -11,7 +11,7 @@ class WorldStartedJob
     logger.info "world started:#{world.name}  whitelisted:#{world.memberships.size}  online: #{online_players.size}  offline: #{offline_players.size}"
     
     if online_players.any?
-      offline_players.each do |offline_player|
+      offline_players.map do |offline_player|
         if throttled?(offline_player)
           logger.info "throttled: #{offline_player.email}  last: #{offline_player.last_world_started_mail_sent_at}"
         else
@@ -21,6 +21,8 @@ class WorldStartedJob
           offline_player.save
         end
       end
+      
+      # world.say "notified #{offline_players.map(&:username).join(', ')}"
     end
   end
   
