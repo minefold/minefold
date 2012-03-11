@@ -25,6 +25,7 @@ module FacebookHelper
       'og:title' => h(world.name),
       'og:description' => h('Minecraft world'),
       'og:image' => world.photo.url,
+      'og:updated_time' => world.updated_at.to_i,
       'minefold:members' => world.members.count
     }
 
