@@ -25,6 +25,7 @@ class MinecraftAccount
   validates_length_of :username, within: 1..16
   validates_uniqueness_of :username, case_sensitive: false
   validate :blacklisted_username
+  scope :by_username, ->(username) { where(slug: sanitize_username(username)) }
 
   field :slug, type: String
   index :slug

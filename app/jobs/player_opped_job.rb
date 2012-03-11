@@ -1,9 +1,9 @@
 class PlayerOppedJob
   @queue = :low
 
-  def self.perform(world_id, player_username)
+  def self.perform(world_id, username)
     world = World.find(world_id)
-    user = User.by_username(player_username).first
+    user = User.by_username(username).first
 
     return unless user
 

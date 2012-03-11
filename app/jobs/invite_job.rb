@@ -3,12 +3,13 @@ class InviteJob
   # this comes from the game eg:
   # /invite dave@minefold.com check oot mah shiny thing!
   # the message is optional
-  def self.perform user_id, world_id, invitee
+  def self.perform world_id, username, invitee
     # todo: support other invite types like twitter and facebook
+    invitor = MinecraftAccount.where(slug: MinecraftAccount.sanitize_username(username)).first
     
-    if invitee =~ /([^@]+@\S+)\s*(.*)$/
+    if invitor && (invitee =~ /([^@]+@\S+)\s*(.*)$/)
       email, message = $1, $2
-      UserMailer.invite(user_id, world_id, email, message).deliver
+      UserMailer.invite(invitor.id, world_id, email, message).deliver
     end
   end
 

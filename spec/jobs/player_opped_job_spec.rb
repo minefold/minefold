@@ -2,14 +2,10 @@ require 'spec_helper'
 
 describe PlayerOppedJob do
   let(:world) { Fabricate(:world) }
-  let(:user) { Fabricate(:user) }
+  let(:account) { Fabricate(:minecraft_account) }
 
-  before {
-    world.add_member(user)
-  }
-
-  it "makes the player an op" do
+  it "adds player to ops" do
     subject.process! world, user
-    world.ops.should include(user)
+    world.ops.should include(account)
   end
 end

@@ -33,12 +33,6 @@ class World
 
   scope :by_creator, ->(user) { where(creator_id: user.id) }
 
-  def creator=(creator)
-    write_attribute :creator_id, creator.id
-    add_op(creator)
-  end
-
-
 # ---
 # Cover Photo
 
@@ -124,31 +118,35 @@ class World
 # Members
 
 
-  embeds_many :memberships, cascade_callbacks: true
-
-  def add_member(user)
-    memberships.find_or_initialize_by(user_id: user.id)
+  embeds_many :ops, class_name: 'MinecraftAccount', cascade_callbacks: true
+  embeds_many :whitelisted, class_name: 'MinecraftAccount', cascade_callbacks: true
+  embeds_many :blacklisted, class_name: 'MinecraftAccount', cascade_callbacks: true
+  
+  def accounts
+    ops | whitelisted
   end
 
-  def add_op(user)
-    add_member(user).tap {|m| m.op! }
-  end
-
-  def member?(user)
-    memberships.where(user_id: user.id).exists?
-  end
-
-  def op?(user)
-    memberships.ops.where(user_id: user.id).exists?
-  end
-
-  def ops
-    memberships.ops.pluck(:user)
-  end
-
-  def members
-    memberships.pluck(:user)
-  end
+  # embeds_many :memberships, cascade_callbacks: true
+  #
+  # def add_member(user)
+  #   memberships.find_or_initialize_by(user_id: user.id)
+  # end
+  #
+  # def add_op(user)
+  #   add_member(user).tap {|m| m.op! }
+  # end
+  #
+  # def member?(user)
+  #   memberships.where(user_id: user.id).exists?
+  # end
+  #
+  # def op?(account)
+  #   ops.include? account
+  # end
+  #
+  # def members
+  #   memberships.pluck(:user)
+  # end
 
   embeds_many :membership_requests, cascade_callbacks: true do
     def include_user?(user)
