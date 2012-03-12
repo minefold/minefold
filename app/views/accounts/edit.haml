@@ -16,6 +16,14 @@
     = f.text_field :email
     = error_messages_for(f.object, :email)
 
+  / TODO: enable link with facebook for signed in users
+  / %fieldset.facebook
+  /   - if current_user.facebook_linked?
+  /     %p Linked with facebook
+  /   - else
+  /     = link_to user_omniauth_authorize_path(:facebook), class: 'btn' do
+  /       Link with Facebook
+
   %fieldset.avatar
     %h3= f.label :avatar
 
