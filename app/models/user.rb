@@ -137,29 +137,33 @@ class User
     uid, data = access_token.uid, access_token.extra.raw_info
     email = data.email || email
 
-    case
-    when signed_in_user
-      signed_in_user.facebook_uid = uid
-      signed_in_user.save!
-      signed_in_user
+    begin
+      case
+      when signed_in_user
+        signed_in_user.facebook_uid = uid
+        signed_in_user.save!
+        signed_in_user
 
-    when user = where(facebook_uid: uid).first
-      user
-    when user = where(email: email).first
-      user.facebook_uid = uid
-      user.email = email if email
-      user.save!
-      user
-    else
-      # Create a user with a stub password.
-      user = new(
-        email: email,
-        password: Devise.friendly_token[0,20])
+      when user = where(facebook_uid: uid).first
+        user
+      when user = where(email: email).first
+        user.facebook_uid = uid
+        user.email = email if email
+        user.save!
+        user
+      else
+        # Create a user with a stub password.
+        user = new(
+          email: email,
+          password: Devise.friendly_token[0,20])
 
-      user.skip_confirmation!
-      user.facebook_uid = uid
-      user.save!
-      user
+        user.skip_confirmation!
+        user.facebook_uid = uid
+        user.save!
+        user
+      end
+    rescue => e
+      raise "#{access_token.inspect}\n#{e}\n#{e.backtrace}"
     end
   end
 
