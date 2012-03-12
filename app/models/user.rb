@@ -133,9 +133,9 @@ class User
   end
 
 
-  def self.find_or_create_for_facebook_oauth(access_token, signed_in_user=nil)
+  def self.find_or_create_for_facebook_oauth(access_token, signed_in_user=nil, email=nil)
     uid, data = access_token.uid, access_token.extra.raw_info
-    email = data.email
+    email = data.email || email
 
     case
     when signed_in_user
@@ -147,6 +147,7 @@ class User
       user
     when user = where(email: email).first
       user.facebook_uid = uid
+      user.email = email if email
       user.save!
       user
     else
