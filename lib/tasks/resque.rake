@@ -6,7 +6,7 @@ task "resque:setup" => :environment do
 
   Resque::Failure::Exceptional.configure do |config|
     config.api_key = ENV['EXCEPTIONAL_API_KEY']
-    config.use_ssl = true
+    config.use_ssl = false
   end
 
   Resque::Failure::Multiple.classes = [Resque::Failure::Redis, Resque::Failure::Exceptional]
