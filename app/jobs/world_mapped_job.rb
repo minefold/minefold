@@ -4,7 +4,9 @@ class WorldMappedJob
   attr_reader :world
 
   def self.perform(world_id, map_data)
-    world = World.find(world_id)
+    world = World.unscoped.find(world_id)
+    return if world.destroyed?
+
     new.process! world, map_data
   end
 

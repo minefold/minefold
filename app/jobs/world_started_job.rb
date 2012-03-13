@@ -1,15 +1,17 @@
 class WorldStartedJob
   include Resque::Logging
-  
+
   @queue = :low
 
   def self.perform world_id
-    world   = World.find(world_id)
+    world = World.unscoped.find(world_id)
+    return if world.destroyed?
+
     online_players  = world.players
     offline_players = world.offline_players
-    
+
     logger.info "world started:#{world.name}  whitelisted:#{world.memberships.size}  online: #{online_players.size}  offline: #{offline_players.size}"
-    
+
     if online_players.any?
       offline_players.map do |offline_player|
         if throttled?(offline_player)
@@ -21,11 +23,11 @@ class WorldStartedJob
           offline_player.save
         end
       end
-      
+
       # world.say "notified #{offline_players.map(&:username).join(', ')}"
     end
   end
-  
+
   def self.throttled? user
     if user.last_world_started_mail_sent_at
       (Time.now - user.last_world_started_mail_sent_at) < 24.hours

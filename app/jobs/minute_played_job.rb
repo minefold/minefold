@@ -3,7 +3,7 @@ class MinutePlayedJob
 
   def self.perform(user_id, world_id, timestamp)
     user = User.find(user_id)
-    world = World.find(world_id)
+    world = World.unscoped.find(world_id)
 
     new.process!(user, world, timestamp)
   end

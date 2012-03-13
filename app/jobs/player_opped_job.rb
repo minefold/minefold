@@ -2,10 +2,10 @@ class PlayerOppedJob
   @queue = :low
 
   def self.perform(world_id, player_username)
-    world = World.find(world_id)
+    world = World.unscoped.find(world_id)
     user = User.by_username(player_username).first
 
-    return unless user
+    return unless user and world
 
     new.process! world, user
   end
