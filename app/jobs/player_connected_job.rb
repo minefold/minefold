@@ -6,14 +6,14 @@ class PlayerConnectedJob
   def self.perform(username, connected_at)
     user = User.by_username(username).first
     world = user.current_world
+    return unless world
+
     new.process!(user, world, connected_at)
   end
 
   def process!(user, world, connected_at)
-    if world
-      world.last_played_at = connected_at
-      world.save
-    end
+    world.last_played_at = connected_at
+    world.save
 
     membership = world.memberships.where(user_id: user.id).first
     membership.last_played_at = connected_at if membership
