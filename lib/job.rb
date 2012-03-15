@@ -4,7 +4,7 @@ class Job
   def self.perform(*args)
     job = new(*args)
 
-    return unless job.perfom?
+    return unless job.perform?
 
     begin
       logger.info "started"
@@ -25,8 +25,12 @@ class Job
 
 # private
 
-  def logger
+  def self.logger
     @logger ||= Rails.logger
+  end
+
+  def logger
+    self.class.logger
   end
 
 end

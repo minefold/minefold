@@ -1,13 +1,7 @@
-class PlayerAddedToBlacklistJob < Job
+class PlayerAddedToBlacklistJob < OpActionJob
   @queue = :high
 
-  def initialize(world_id, username)
-    @world = World.find(world_id)
-    @player = MinecraftPlayer.by_username(username).first
-  end
-
   def perform!
-    @world.blacklisted_players.push(@player)
+    @world.add_to_set :blacklisted_player_ids, @player.id
   end
-
 end
