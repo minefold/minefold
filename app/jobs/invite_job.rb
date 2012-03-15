@@ -6,8 +6,9 @@
 class InviteJob < Job
   @queue = :low
 
-  def initialize(user_id, world_id, address)
-    @user_id, @world_id = user_id, world_id
+  def initialize(world_id, username, address)
+    @world = World.find(world_id)
+    @player = MinecraftPlayer.find_by_username(username)
     @address = address
   end
 
@@ -15,7 +16,7 @@ class InviteJob < Job
   def perform!(user_id, world_id, invitee)
     if address =~ /([^@]+@\S+)\s*(.*)$/
       email, message = $1, $2
-      UserMailer.invite(user_id, world_id, email, message).deliver
+      UserMailer.invite(invitor.id, world_id, email, message).deliver
     end
   end
 

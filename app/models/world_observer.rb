@@ -1,6 +1,8 @@
 class WorldObserver < Mongoid::Observer
 
   def before_create(world)
+    world.ops = [world.creator.minecraft_account]
+    
     if world.world_upload
       world.world_data_file = world.world_upload.world_data_file
     end

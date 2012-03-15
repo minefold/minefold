@@ -12,43 +12,38 @@ class Worlds::MembershipsController < ApplicationController
   def search
     authorize! :operate, world
 
-    @user = User
+    account = MinecraftAccount
       .by_username(params[:username])
-      .potential_members_for(world)
       .first
 
-    respond_with @user
+    respond_with(world.accounts.include?(account) ? nil : account)
   end
 
   def create
     authorize! :operate, world
 
-    @user = User
+    account = MinecraftAccount
       .by_username(params[:username])
-      .potential_members_for(world)
       .first
 
-    if @user
-      membership = world.add_member(@user)
-
+    if world.accounts.include?(account)
+      render nothing: true, status: :not_found
+    else
+      world.whitelisted << account
       world.save!
 
       # TODO Move to an observer
-      WorldMailer.membership_created(world.id, membership.id).deliver
+      # WorldMailer.membership_created(world.id, membership.id).deliver
       track 'added member'
 
-      respond_with membership, location: user_world_members_path(world.creator, world)
-    else
-      render nothing: true, status: :not_found
+      respond_with account, location: user_world_members_path(world.creator, world)
     end
   end
 
   def destroy
     authorize! :operate, world
 
-    membership = world.memberships.find(params[:id])
-    membership.delete
-
+    world.whitelisted.find(params[:id]).delete
     world.save!
 
     track 'removed member'

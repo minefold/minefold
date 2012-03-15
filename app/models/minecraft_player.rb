@@ -48,9 +48,6 @@ class MinecraftPlayer
   validates_length_of :username, within: 1..16
   validates_format_of :username, with: /^\w+$/
   validates_uniqueness_of :username, case_sensitive: false
-  attr_accessible :username
-
-  scope :by_username, ->(username){ where(slug: sanitize_username(username)) }
 
   field :slug, type: String
 
