@@ -17,8 +17,7 @@
     = render partial: 'shared/header'
     = render partial: 'shared/flash_messages'
 
-    #masthead
-      .container= yield :masthead
+    = yield :masthead
 
     #page
       .container= yield

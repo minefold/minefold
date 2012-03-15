@@ -5,9 +5,12 @@
     });
 
 %ol#account
-  - if not signed_in?
+  - if not user_signed_in?
     %li.account-signup= link_to 'Sign Up', new_user_path
     %li.account-signin= link_to 'Sign In', new_user_session_path
+
+  - elsif not current_user.minecraft_player
+    - # No current player
 
   - else
     %li.account-plan
@@ -17,10 +20,10 @@
           Upgrade to Pro!
 
     %li.account-user
-      = link_to current_user do
+      = link_to player_path(current_user.minecraft_player) do
         = avatar_tag current_user, :small, width: 20, height: 20
 
       %ol
-        %li.account-profile= link_to 'Profile', current_user
-        %li.account-settings= link_to 'Settings', account_path
+        %li.account-profile= link_to 'Profile', player_path(current_user.minecraft_player)
+        %li.account-settings= link_to 'Settings', edit_user_path
         %li.account-sign-out= link_to 'Sign out', destroy_user_session_path, method: :delete

@@ -1,19 +1,16 @@
-require 'time'
-
-class PlayerDisconnectedJob
+class PlayerDisconnectedJob < Job
   @queue = :high
 
-  def self.perform(user_id, world_id, connected_at, disconnected_at)
-    user = User.find(user_id)
-    world = World.find(world_id)
-
-    new.process!(user, world, Time.parse(connected_at), Time.parse(disconnected_at))
+  def initialize(player_id, world_id, timestamp)
+    @player = MinecraftPlayer.find(player_id)
+    @world = World.find(world_id)
+    @timestamp = timestamp
   end
 
-  def process!(user, world, connected_at, disconnected_at)
-    Events::Disconnection.create source: user,
-                                 target: world,
-                                 created_at: disconnected_at
+  def perform!
+    Events::Disconnection.create source: @user,
+                                 target: @world,
+                                 created_at: @timestamp
 
     if connected_at
       seconds = disconnected_at - connected_at
@@ -24,8 +21,6 @@ class PlayerDisconnectedJob
         distinct_id: user.mpid.to_s,
         mp_name_tag: user.email
     end
-
-    # TODO Broadcast pusher event
   end
 
 end

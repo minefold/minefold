@@ -1,40 +1,31 @@
-class WorldUploadJob
+class WorldUploadJob < Job
   @queue = :low
 
-  def self.perform(world_upload_id)
-    upload = WorldUpload.find(world_upload_id)
-    new(upload).process!
+  def initialize(world_upload_id)
+    @upload = WorldUpload.find(world_upload_id)
   end
 
-  def initialize(upload)
-    @upload = upload
-  end
-
-  def process!
-    puts "Processing WorldUpload##{@upload.id}"
-
-    puts "Downloading #{@upload.s3_key}"
+  def perform!
+    logger.info "Downloading #{@upload.s3_key}"
     @upload.download!
 
-    puts "Extracting #{@upload.uploaded_archive_path} to #{@upload.extraction_path}"
+    logger.info "Extracting #{@upload.uploaded_archive_path} to #{@upload.extraction_path}"
     @upload.extract!
 
-    puts "Parsing seed from #{@upload.level_dat_path}"
+    logger.info "Parsing seed from #{@upload.level_dat_path}"
     @upload.parse_seed!
 
-    puts "Cleaning data"
+    logger.info "Cleaning data"
     @upload.clean!
 
-    puts "Building archive"
+    logger.info "Building archive"
     @upload.build!
 
-    puts "Uploading archive"
+    logger.info "Uploading archive"
     @upload.upload!
 
-    puts "Saving WorldUpload##{@upload.id}"
+    logger.info "Saving WorldUpload##{@upload.id}"
     @upload.save!
-
-    puts "Done"
 
     pusher.trigger('success', @upload.to_json)
 

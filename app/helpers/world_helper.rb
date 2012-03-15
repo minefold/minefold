@@ -10,4 +10,8 @@ module WorldHelper
     ].join('/').html_safe
   end
 
+  def world_hostname(world)
+    [world.creator.username, world.name, 'minefold', 'com'].join('.')
+  end
+
 end

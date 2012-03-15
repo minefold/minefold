@@ -1,10 +1,13 @@
-class PlayerDeoppedJob
+class PlayerDeoppedJob < Job
   @queue = :low
 
-  def self.perform world_id, username
-    user = User.by_username(User.sanitize_username(username)).first
-    membership = World.find(world_id).memberships.where(user_id: user.id).first
-    membership.role = 'player'
-    membership.save
+  def initialize(world_id, username)
+    @world = World.find(world_id)
+    @player = MinecraftPlayer.find_or_create_by(username: username)
   end
+
+  def perform!
+    @world.opped_players.pull(@player)
+  end
+
 end

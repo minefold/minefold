@@ -10,41 +10,201 @@ describe User do
 # ---
 # Minecraft Account
 
-  it { should have_one(:minecraft_account) }
+  it { should have_one(:minecraft_player) }
 
+
+# ---
+# Identity
+
+
+  it "#username" do
+    subject.username.should be_nil
+
+    player = Fabricate.build(:minecraft_player)
+
+    subject.minecraft_player = player
+    subject.username.should == player.username
+  end
+
+
+# ---
+# Flags
+
+
+  it { should have_field(:admin).of_type(Boolean).with_default_value_of(false) }
+  it { should have_field(:beta).of_type(Boolean).with_default_value_of(false) }
+
+
+# ---
+# Authentication
+
+
+  # TODO Fill in Devise specs
+
+
+# ---
+# Email
 
 
   it { should have_field(:email) }
 
 
-  it { should have_field(:host) }
+# ---
+# OAuth
 
-  it { should have_field(:credits).of_type(Integer) }
-  it { should have_field(:minutes_played).of_type(Integer).with_default_value_of(0) }
+
+  # TODO Fill in OAuth specs
+
+
+# ---
+# Credits
+
+  it ".hours_to_credits" do
+    subject.class.hours_to_credits(0).should == 0
+    subject.class.hours_to_credits(1).should == 60
+    subject.class.hours_to_credits(2).should == 120
+  end
+
+  it { should have_field(:credits).of_type(Integer).with_default_value_of(0) }
+  it { should have_field(:last_credit_refresh_at).of_type(DateTime) }
+
+  it "#increment_credits!"
+  it "#increment_hours!"
+  it "#hours_left"
+
+
+# ---
+# Billing
+
+
+  it { should have_field(:plan_expires_at).of_type(DateTime) }
+
+  it "isn't Pro by default" do
+    subject.should_not be_pro
+  end
+
+  it "is Pro if beta user" do
+    subject.beta = true
+    subject.should be_pro
+  end
+
+  it "isn't Pro if plan has expired" do
+    subject.plan_expires_at = 1.hour.ago
+    subject.should_not be_pro
+  end
+
+  it "is Pro if plan expires in the future" do
+    subject.plan_expires_at = 1.hour.from_now
+    subject.should be_pro
+  end
+
+  it "#extend_plan_by works with no plan" do
+    subject.plan_expires_at = nil
+
+    Timecop.freeze do
+      subject.extend_plan_by 1.minute
+      subject.plan_expires_at.should == 1.minute.from_now
+    end
+  end
+
+  it "#extend_plan_by works with an existing plan" do
+    Timecop.freeze do
+      subject.plan_expires_at = 1.minute.from_now
+      subject.extend_plan_by 1.minute
+      subject.plan_expires_at.should == 2.minutes.from_now
+    end
+  end
+
+
+# ---
+# Settings
+
+
+  it { should have_field(:notifications).of_type(Hash) }
+  it { should have_field(:last_world_started_mail_sent_at).of_type(DateTime) }
+
+  it "#notify?"
+
+
+# ---
+# Invites
+
+
+  it ".invite_token_exists" do
+    token = 'abc'
+
+    subject.class.invite_token_exists?(token).should be_false
+
+    subject.invite_token = token
+    subject.save
+
+    subject.class.invite_token_exists?(token).should be_true
+  end
+
+  it ".free_invite_token" do
+    subject.class.stub(:invite_token_exists?).and_return(false)
+    subject.class.free_invite_token.should be_a(String)
+    subject.class.free_invite_token.should_not be_empty
+  end
+
+  it { should have_field(:invite_token).of_type(String) }
+  it { should validate_uniqueness_of(:invite_token) }
+
+  it { should belong_to(:referrer).of_type(User).as_inverse_of(:referrals) }
+  it { should reference_many(:referrals).of_type(User).as_inverse_of(:referrer) }
+
+
+# ---
+# Worlds
+
+
+  it { should have_many(:worlds).with_foreign_key('memberships.user_id') }
+  it { should have_many(:created_worlds).of_type(World).as_inverse_of(:creator) }
 
   it { should belong_to(:current_world).of_type(World).as_inverse_of(nil) }
-  it { should reference_many(:created_worlds).of_type(World).as_inverse_of(:creator) }
 
-  it { should validate_numericality_of(:credits)}
-  it { should validate_numericality_of(:minutes_played).greater_than_or_equal_to(0) }
+  it ".potential_members_for"
 
-  describe 'credits' do
-    it "gives FREE_HOURS by default" do
-      free_credits = subject.class::FREE_HOURS.hours / subject.class::CREDIT_PERIOD
-      subject.credits.should == free_credits
-    end
+  it "#member?"
+  it "#op?"
+  it "#current_world?"
+  it "#cloned?"
 
+
+# ---
+# Routing
+
+
+  it { should have_field(:host).of_type(String).with_default_value_of('pluto.minefold.com') }
+  it { should have_field(:last_played_at).of_type(DateTime) }
+
+  it "#played?" do
+    subject.should_not be_played
+    subject.last_played_at = 1.hour.ago
+    subject.should be_played
   end
 
-  describe "referrals" do
-    it { should validate_uniqueness_of(:referral_code) }
 
-    it "should have a short referral code" do
-      subject.save!
-      subject.referral_code.length.should == User::REFERRAL_CODE_LENGTH
-    end
+# ---
+# Photos
 
-    it { should belong_to(:referrer).of_type(User).as_inverse_of(:referrals) }
-    it { should reference_many(:referrals).of_type(User).as_inverse_of(:referrer) }
+
+  it { should have_many(:photos).as_inverse_of(:creator) }
+
+
+# ---
+# Stats
+
+
+  it ".mpid" do
+    uuid = double('uuid')
+    uuid.should_receive(:generate).and_return('uuid')
+    UUID.stub(:new).and_return(uuid)
+
+    subject.class.mpid.should == 'uuid'
   end
+
+  it { should have_field(:mpid).of_type(String) }
+
+
 end

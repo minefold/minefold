@@ -1,25 +1,33 @@
-class InviteJob
+# Triggered from in the game:
+#
+#   /invite dave@minefold.com check oot mah shiny thing!
+#
+# (message is optional)
+class InviteJob < Job
+  @queue = :low
 
-  # this comes from the game eg:
-  # /invite dave@minefold.com check oot mah shiny thing!
-  # the message is optional
-  def self.perform user_id, world_id, invitee
-    # todo: support other invite types like twitter and facebook
-    
-    if invitee =~ /([^@]+@\S+)\s*(.*)$/
+  def initialize(user_id, world_id, address)
+    @user_id, @world_id = user_id, world_id
+    @address = address
+  end
+
+  # TODO Support other invite types like Twitter and Facebook
+  def perform!(user_id, world_id, invitee)
+    if address =~ /([^@]+@\S+)\s*(.*)$/
       email, message = $1, $2
       UserMailer.invite(user_id, world_id, email, message).deliver
     end
   end
 
-  def self.tweet user, message
-    if Rails.env.production?
-      Twitter.direct_message_create user, message
-    else
-      Rails.logger.info "[Twitter DM] #{user} #{message}"
-    end
-
-  rescue Twitter::Forbidden # Duplicate tweet error
-  end
+  # def tweet(user, message)
+  #   if Rails.env.production?
+  #     Twitter.direct_message_create(user, message)
+  #   else
+  #     logger.info "[Twitter DM] #{user} #{message}"
+  #   end
+  #
+  # # Duplicate tweet error
+  # rescue Twitter::Forbidden
+  # end
 
 end

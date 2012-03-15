@@ -1,19 +1,27 @@
 class WorldsController < ApplicationController
   respond_to :html, :json
 
-  prepend_before_filter :authenticate_user!, except: [:show, :explore]
+  prepend_before_filter :authenticate_user!, except: [:index, :show]
   before_filter :set_invite_code, :only => [:show, :map]
 
-  expose(:creator) { User.find_by_slug!(params[:user_id]) }
+  expose(:player) {
+    MinecraftPlayer.find_by(slug: params[:player_id])
+  }
+
+  expose(:user) {
+    player.user
+  }
+
+
   expose(:world) do
     if params[:id]
-      World.find_by_creator_and_slug!(creator, params[:id])
+      user.created_worlds.find_by(name: params[:id])
     else
       World.new(params[:world])
     end
   end
 
-  def explore
+  def index
     @worlds = World.where(:photo.ne => nil)
       .page(params[:page].to_i)
       .order_by([:pageviews, :desc])

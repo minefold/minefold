@@ -2,7 +2,7 @@ footer {
   border-top: 1px solid rgba(black, 0.05);
   margin-bottom: $line * 20;
 
-  font-size: 12px; line-height: $line * 4;
+  font-size: 11px; line-height: $line * 4; font-family: $system;
 
   ol {
     @include row;
@@ -11,13 +11,12 @@ footer {
       @include gridColumn;
       a {
         display: block;
-        color: $blue;
-        font-weight: 600;
+        color: rgba(black, 0.4);
         text-decoration: none;
         line-height: 6*$line;
 
         &:hover {
-          color: darken($blue, 20%);
+          color: black;
         }
       }
 

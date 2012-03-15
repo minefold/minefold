@@ -1,19 +1,18 @@
 # Only use hash rockets here please.
 
 Minefold::Application.routes.draw do
-  root :to => 'pages#home'
 
   namespace :admin do
     mount Resque::Server.new, :at => "/resque"
   end
 
-  namespace :api do
-    resource :session, :only => [:show],  :controller => 'session'
-    post '/campaign/webhook' => 'campaign#webhook'
-    resources :photos, :only => [:index, :create]
-    get 'key' => 'Api#key'
-    get 'upload-policy' => 'Api#upload_policy'
-  end
+  # namespace :api do
+  #   resource :session, :only => [:show],  :controller => 'session'
+  #   post '/campaign/webhook' => 'campaign#webhook'
+  #   resources :photos, :only => [:index, :create]
+  #   get 'key' => 'Api#key'
+  #   get 'upload-policy' => 'Api#upload_policy'
+  # end
 
   post '/stripe/webhook' => 'stripe#webhook'
 
@@ -32,6 +31,10 @@ Minefold::Application.routes.draw do
 
   # Authentication
   devise_scope :user do
+    authenticated do
+      root :to => 'users#dashboard', :as => :user_root
+    end
+
     get    '/signin' => 'sessions#new', :as => :new_user_session
     post   '/signin' => 'sessions#create', :as => :user_session
     delete '/signout' => 'sessions#destroy', :as => :destroy_user_session
@@ -48,64 +51,60 @@ Minefold::Application.routes.draw do
     # post '/confirm' => 'confirmations#create', :as => :user_confirmation
     get  '/confirm/:confirmation_token' => 'confirmations#show', :as => :confirmation
 
-    resource :account, :only => [:edit, :update], :path_names => {:edit => '/'} do
-      get :pro
-      get :notifications
-      get :username
-    end
+    resource(:user,
+             :except => [:index, :show, :destroy],
+             :path_names => {:edit => 'settings'}) do
+   end
   end
 
-  devise_for :user, :skip => [:sessions, :passwords, :registrations, :confirmations],
-    :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
+  root :to => 'pages#home'
 
-  get '/dashboard' => 'dashboard#index', :as => :user_root
+  devise_for :user,
+    :skip => [:sessions, :passwords, :registrations, :confirmations],
+    :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
 
   resource :order, :only => [:create]
 
-  resources :photos do
-    get 'lightroom', :on => :collection
-    put 'lightroom', :action => :update_lightroom, :on => :collection
-    get :download, :on => :collection
+  # resources :photos do
+  #   get 'lightroom', :on => :collection
+  #   put 'lightroom', :action => :update_lightroom, :on => :collection
+  #   get :download, :on => :collection
+  # end
+
+  resources :worlds, :only => [:index, :new, :create] do
+  #   collection do
+  #     resource :upload, :module => :worlds, :only => [:new, :create] do
+  #       get :instructions
+  #       get :policy
+  #     end
+  #   end
   end
 
-  resources :worlds, :only => [:new, :create] do
-    collection do
-      get :explore
+  resources(:players,
+            :path => '/',
+            :contraints => { :id => /^[\w]{1,16}$/ },
+            :only => [:show]) do
 
-      resource :upload, :module => :worlds, :only => [:new, :create] do
-        get :instructions
-        get :policy
-      end
-    end
-  end
+    resources(:worlds,
+              :path => '/',
+              :except => [:index, :new, :create],
+              :path_names => {:edit => 'settings'}) do
 
-  devise_scope :user do
-    resources :users, :path => '/', :only => [:show] do
+      put :clone, :on => :member
 
-      scope :module => :users do
-        resources :photos
-      end
-
-      resources :worlds, :path => '/', :except => [:index], :path_names => {:edit => 'settings'} do
-        member do
-          put :join
-          put :clone
+      scope :module => :worlds do
+        resources :players, :controller => :memberships, :only => [:index, :create, :destroy] do
+          get  :search, :action => :search, :on => :collection
         end
 
-        scope :module => :worlds do
-          # resources :events, :only => [:index, :create]
-          resources :members, :controller => :memberships, :only => [:index, :create, :destroy] do
-            get  :search, :action => :search, :on => :collection
-          end
-
-          resources :membership_requests, :only => [:create, :destroy] do
-            put :approve, :on => :member
-          end
-
-          resources :comments, :only => [:create]
+        resources :membership_requests, :only => [:create, :destroy] do
+          put :approve, :on => :member
         end
-      end
 
+        resources :comments, :only => [:create]
+      end
     end
+
   end
+
 end

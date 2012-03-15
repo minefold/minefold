@@ -1,18 +1,7 @@
 // Fonts
 
-@font-face {
-  font-family: 'Patagonia';
-  src: url(font-path('patagonia.eot'));
-  src: url(font-path('patagonia.eot?#iefix')) format('embedded-opentype'),
-       url(font-path('patagonia.woff')) format('woff'),
-       url(font-path('patagonia.ttf')) format('truetype'),
-       url(font-path('patagonia.svg#patagonia')) format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
 
-
-$patagonia: "Patagonia", $helvetica;
+$system: "Lucida Grande", $helvetica;
 
 // Colors
 

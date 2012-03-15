@@ -1,9 +1,16 @@
 .worlds-controller #masthead {
+  padding: ($line * 4) 0;
 
   h1 {
-    float: left;
+    .slash { color: darken(white, 10%); margin: 0 0.2em; }
     .creator { color: darken(white, 40%); }
-    .slash { color: darken(white, 10%); }
+    .creator:hover { color: darken(white, 60%); }
+  }
+  h2 {
+    font-size: 12px;
+    font-family: $system;
+    line-height: $line * 4;
+    color: darken(white, 40%);
   }
 
   ol {
@@ -16,6 +23,7 @@
 
   form input[type=submit], a.btn {
     @include btn($blue, white, darken($blue, 20%));
-    padding: $line ($gutter); line-height: $line * 6;
+    padding: $line ($gutter); line-height: $line * 4;
+    margin: ($line) 0;
   }
 }

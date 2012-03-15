@@ -12,8 +12,5 @@
       %li.social.twitter= link_to 'Facebook', 'https://facebook.com/minefold'
       %li.social.twitter= link_to 'Twitter', 'https://twitter.com/minefold'
 
-    %a.mixpanel{href: 'https://mixpanel.com/f/partner'}
-      %img{src: '//mixpanel.com/site_media/images/partner/badge_blue.png', alt: 'Real Time Web Analytics'}
-
 - if Rails.env.production?
   = render partial: 'shared/analytics'

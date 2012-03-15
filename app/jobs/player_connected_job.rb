@@ -1,24 +1,18 @@
-class PlayerConnectedJob
+class PlayerConnectedJob < Job
   @queue = :high
 
-  # TODO Pass in user_id rather than username
-  # TODO Pass in world too
-  def self.perform(username, connected_at)
-    user = User.by_username(username).first
-    world = user.current_world
-    new.process!(user, world, connected_at)
+  def initialize(player_id, world_id, timestamp)
+    @player = MinecraftPlayer.find(player_id)
+    @world = World.find(world_id)
+    @timestamp = timestamp
   end
 
-  def process!(user, world, connected_at)
-    world.last_played_at = connected_at
-    membership = world.memberships.where(user_id: user.id).first
-    membership.last_played_at = connected_at if membership
+  def process!
+    @world.set :last_played_at, @timestamp
 
-    world.save
-
-    Events::Connection.create! source: user,
-                               target: world,
-                               created_at: connected_at
+    Events::Connection.create! source: @user,
+                               target: @world,
+                               created_at: @timestamp
   end
 
 end

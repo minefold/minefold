@@ -1,5 +1,5 @@
 Fabricator(:world) do
-  name { Faker::Company.name }
+  name { Faker::Internet.user_name.gsub('.','_')[0...16] }
   creator fabricator: :user
 end
 

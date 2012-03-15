@@ -1,7 +1,6 @@
 class Photo
   include Mongoid::Document
   include Mongoid::Timestamps
-  include Mongoid::Slug
   include Mongoid::Paranoia
 
   default_scope order_by([:created_at, :asc])
@@ -12,7 +11,7 @@ class Photo
   belongs_to :creator, class_name: 'User'
 
   field :title, type: String
-  slug :title, index: true
+  # slug :title, index: true
   attr_accessible :title
 
   field :desc, type: String

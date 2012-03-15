@@ -2,9 +2,4 @@
   - if signed_in?
     %li.nav-dashboard= link_to 'Dashboard', user_root_path
 
-    - unless current_user.photos.pending.count.zero?
-      %li.nav-photos= link_to 'Lightroom', lightroom_photos_path
-      %span.count= current_user.photos.pending.count
-    %li.nav-explore= link_to 'Explore', '/worlds/explore'
-  - else
-    %li.nav-explore= link_to 'Explore', '/worlds/explore'
+  %li.nav-explore= link_to 'Explore', worlds_path

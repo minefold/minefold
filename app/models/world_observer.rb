@@ -5,10 +5,9 @@ class WorldObserver < Mongoid::Observer
       world.world_data_file = world.world_upload.world_data_file
     end
   end
-  
+
   def after_create(world)
     if world.world_upload
-      puts "Scheduling map job"
       Resque.push 'maps_high', class: 'Job::MapWorld', args: [world.id.to_s]
     end
   end

@@ -39,17 +39,16 @@ module ApplicationHelper
     content_for(:title, page_title.to_s)
   end
 
-  def title_and_masthead(name)
-    title(name)
-    masthead { content_tag(:h1, name) }
-  end
-
   def head(&blk)
     content_for :head, capture_haml(&blk)
   end
 
   def masthead(attrs={}, &blk)
-    content_for :masthead, capture(&blk)
+    html = content_tag(:section,
+      content_tag(:div, capture(&blk), class: 'container'),
+      attrs.merge(id: 'masthead'))
+
+    content_for :masthead, html
   end
 
   def js(&blk)
@@ -66,6 +65,5 @@ module ApplicationHelper
     end
     opts
   end
-
 
 end

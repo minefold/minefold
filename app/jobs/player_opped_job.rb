@@ -1,19 +1,14 @@
-class PlayerOppedJob
+class PlayerOppedJob < Job
   @queue = :low
 
-  def self.perform(world_id, player_username)
-    world = World.find(world_id)
-    user = User.by_username(player_username).first
-
-    return unless user
-
-    new.process! world, user
+  def initialize(world_id, op_username, username)
+    @world = World.find(world_id)
+    @op = MinecraftPlayer.find()
+    @player = MinecraftPlayer.find_or_create_by(username: username)
   end
 
-  def process!(world, user)
-    membership = world.memberships.where(user_id: user.id).first
-    membership.op!
-
-    world.save
+  def perform!
+    @world.opped_players.push(@player)
   end
+
 end

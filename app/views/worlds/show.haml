@@ -1,4 +1,5 @@
 - track 'viewed world'
+- title world_fullname(world)
 - head do
   = og_tags(world)
 
@@ -24,31 +25,35 @@
         worldMapView.render();
       });
 
-#world-members
-  %span.by Members
-  - world.members.each do |member|
-    = link_to member do
-      = image_tag member.avatar.small.url, width: 20, height: 20
+%section.world-meta
+  .world-meta-players
+    - world.players.each do |player|
+      %li
+        = link_to player_path(player) do
+          = image_tag player.avatar.small.url, width: 20, height: 20
 
 .row
   %aside
     %ul.stats
-      - if world.children.any?
-        %li.stat
-          %span.val= number_with_delimiter world.children.size
-          %span.label= pluralize_text world.children.size, 'clone', 'clones'
+      %li.stat
+        %span.val= number_with_delimiter world.players.size
+        %span.label= pluralize_text world.players.size, 'member', 'players'
+
+      %li.stat
+        - man_hours = (world.minutes_played / 60.0).round(2)
+        %span.val= number_with_delimiter man_hours
+        %span.label
+          = pluralize_text man_hours, 'man hour', 'man hours'
 
       %li.stat
         %span.val= number_with_delimiter world.pageviews
         %span.label= pluralize_text world.pageviews, 'view', 'views'
 
-      %li.stat
-        %span.val= number_with_delimiter world.minutes_played
-        %span.label= pluralize_text world.minutes_played, 'min', 'mins'
+      - if world.children.any?
+        %li.stat
+          %span.val= number_with_delimiter world.children.size
+          %span.label= pluralize_text world.children.size, 'clone', 'clones'
 
-      %li.stat
-        %span.val= number_with_delimiter world.memberships.size
-        %span.label= pluralize_text world.memberships.size, 'member', 'members'
 
 
   %article
@@ -59,11 +64,11 @@
           - world.comments.each do |comment|
             %li[comment]
               %h2
-                %a.badge-link{href: '/pro'}
-                  %span.badge.badge-pro Pro
-                %a.url{rel: 'contact', title: comment.author.username, href:user_worlds_path(comment.author)}
-                  = image_tag comment.author.avatar.medium.url, width: 40, height: 40
-                  = comment.author.username
+                / %a.badge-link{href: '/pro'}
+                /   %span.badge.badge-pro Pro
+                %a.url{rel: 'contact', title: comment.author.minecraft_player.username, href: player_path(comment.author.minecraft_player)}
+                  = image_tag comment.author.minecraft_player.avatar.medium.url, width: 40, height: 40
+                  = comment.author.minecraft_player.username
               .comment-body
                 = markdown comment.text
 
@@ -77,7 +82,7 @@
         :coffeescript
           $ -> $('textarea#comment_text').elastic()
 
-      = form_for world.comments.new, url: user_world_comments_path(world.creator, world) do |f|
+      = form_for world.comments.new, url: player_world_comments_path(world.creator.minecraft_player, world) do |f|
         %h3 Add a new comment (<a href="http://daringfireball.net/projects/markdown/syntax" target="_blank">Markdown Syntax</a>)
         = f.text_area :text, rows: 3
         = f.submit 'Post comment'

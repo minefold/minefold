@@ -1,7 +1,27 @@
-class MinecraftAccount
+class MinecraftPlayer
   include Mongoid::Document
   include Mongoid::Paranoia
   include Mongoid::Timestamps
+
+
+  attr_accessible :username
+
+# --
+
+  index [
+    [:_id, Mongo::ASCENDING],
+    [:deleted_at, Mongo::ASCENDING],
+    [:slug, Mongo::ASCENDING]
+  ], unique: true
+
+  index [
+    [:_id, Mongo::ASCENDING],
+    [:user_id, Mongo::ASCENDING],
+  ]
+
+
+# ---
+
 
   belongs_to :user
 
@@ -19,30 +39,34 @@ class MinecraftAccount
       .split("\n")
   end
 
+  def self.find_by_username(username)
+    by_username(username).first || raise(Mongoid::Errors::DocumentNotFound.new(self, username: username))
+  end
 
   field :username, type: String
-  attr_accessible :username
+  validates_exclusion_of :username, in: blacklist
   validates_length_of :username, within: 1..16
+  validates_format_of :username, with: /^\w+$/
   validates_uniqueness_of :username, case_sensitive: false
-  validate :blacklisted_username
+  attr_accessible :username
+
+  scope :by_username, ->(username){ where(slug: sanitize_username(username)) }
 
   field :slug, type: String
-  index :slug
 
   def username=(str)
     super(str.strip)
     self.slug = self.class.sanitize_username(str)
   end
 
-  def blacklisted_username
-    if self.class.blacklist.include?(username)
-      errors.add(:username, 'is reserved')
-    end
+  def to_param
+    slug.to_param
   end
 
 
 # ---
 # Unlocking
+
 
   field :unlock_code, type: String, default: -> { rand(36 ** 4).to_s(36) }
 
@@ -54,12 +78,13 @@ class MinecraftAccount
 # ---
 # Avatars
 
+
   mount_uploader :avatar, AvatarUploader
 
   def fetch_avatar
-    # Minecraft's skins are case sensitive! So stupid.
     self.remote_avatar_url = "http://minecraft.net/skin/#{username}.png"
-    # Minecraft doesn't store default skins so it raises a HTTPError
+
+  # Minecraft doesn't store default skins so it raises a HTTPError
   rescue OpenURI::HTTPError
   end
 
@@ -69,6 +94,7 @@ class MinecraftAccount
 
 
   field :minutes_played, type: Integer, default: 0
+  field :last_connected_at, type: DateTime
 
 
 end

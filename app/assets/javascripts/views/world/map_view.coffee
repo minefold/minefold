@@ -26,6 +26,7 @@ class Mf.WorldMapView extends Backbone.View
     scaleControl: false
     mapTypeControl: false
     streetViewControl: false
+    scrollwheel: false
     mapTypeId: 'map'
     tileSize: 384
     zoomLevels: 7
@@ -192,11 +193,14 @@ class Mf.WorldMapView extends Backbone.View
 
     google.maps.event.trigger @map, 'resize'
 
+    @map.setOptions(scrollwheel: true)
+
     $(document).on 'keydown', @shortcutExitFullscreen
 
   exitFullscreen: =>
     @$el.removeClass('fullscreen').appendTo(@parent)
     google.maps.event.trigger @map, 'resize'
+    @map.setOptions(scrollwheel: false)
     @parent = null
 
   shortcutExitFullscreen: (e) =>

@@ -21,16 +21,16 @@ module FacebookHelper
   def world_og_attrs(world)
     attrs = {
       'og:type' => 'minefold:world',
-      'og:url' => user_world_url(world.creator, world),
+      'og:url' => player_world_url(world.creator.minecraft_player, world),
       'og:title' => h(world.name),
       'og:description' => h('Minecraft world'),
       'og:image' => world.photo.url,
       'og:updated_time' => world.updated_at.to_i,
-      'minefold:members' => world.members.count
+      'minefold:players' => world.players.count
     }
 
     if world.parent
-      attrs['minefold:parent'] = user_world_url(world.parent.creator, world.parent)
+      attrs['minefold:parent'] = player_world_url(world.parent.creator.minecraft_player, world.parent)
     end
 
     attrs

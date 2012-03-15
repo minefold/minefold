@@ -1,0 +1,39 @@
+- title 'Dashboard'
+- masthead do
+  %h1 Dashboard
+
+- if current_user.worlds.empty?
+  .onboard
+    %p You need to join or create a new world to play on Minefold. To join a friend's world, go to its page and tap “Ask to play here”. However, if you want to start a new world you can use the “#{link_to 'Create a new world', new_world_path}” button. If you already have a single player world you can import it while creating a new world.
+
+/ .row
+/   %article
+/     - if not current_user.confirmed?
+/       %h1 Confirm your account
+/       %p You should have recieved an email with instructions on how to confirm your account.
+/
+/     %h1 Your Worlds
+/     = link_to 'Create a new world', new_world_path, class: ['btn', 'new-world']
+/     - if current_user.worlds.any?
+/       .worlds
+/         %ol
+/           - current_user.worlds.each do |world|
+/             %li
+/               = link_to strong_world_fullname(world), player_world_path(world.creator.minecraft_player, world)
+/               .meta
+/                 = pluralize world.players.count, 'player', 'players'
+/
+/
+/     - else
+/       %p.empty You haven't created or joined any worlds yet.
+
+
+/ - if current_user.photos.recent.any?
+/   %aside
+/     %h1 Your Photos
+/     .photos
+/       %ol
+/         - current_user.photos.recent.each do |photo|
+/           %li
+/             = link_to photo_path(photo) do
+/               = image_tag photo.file.small.url

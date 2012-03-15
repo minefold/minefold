@@ -2,15 +2,13 @@
   padding: ($line * 8) 0;
 
   h1 {
-    font-size: 34px; line-height: $line * 8;
-    font-weight: 400; color: black;
+    color: black;
+    font-weight: 400; font-size: 34px; line-height: $line * 8;
   }
 
   h2 {
-    font-weight: 200;
-    font-size: 18px;
-    line-height: $line * 4;
     color: lighten(black, 60%);
+    font-weight: 200; font-size: 18px; line-height: $line * 4;
   }
 
   p {

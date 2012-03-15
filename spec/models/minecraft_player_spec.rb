@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe MinecraftAccount do
+describe MinecraftPlayer do
 
   it { should belong_to(:user) }
 
@@ -10,7 +10,9 @@ describe MinecraftAccount do
 
 
   it { should have_field(:username) }
+  it { should validate_exclusion_of(:username).in(subject.class.blacklist) }
   it { should validate_length_of(:username).within(1..16) }
+  it { should validate_format_of(:username).with_format(/^\w+$/) }
   it { should validate_uniqueness_of(:username) }
 
   it { should have_field(:slug) }
@@ -18,12 +20,6 @@ describe MinecraftAccount do
   it "sets the slug when setting the username" do
     subject.username = 'Foobar_baz'
     subject.slug.should == 'foobar_baz'
-  end
-
-  it "isn't valid if the username is reserved" do
-    subject.class.stub(:blacklist).and_return(['reserved'])
-    subject.username = 'reserved'
-    subject.should_not be_valid
   end
 
 
@@ -61,6 +57,8 @@ describe MinecraftAccount do
 
 
   it { should have_field(:minutes_played).of_type(Integer).with_default_value_of(0) }
+
+  it { should have_field(:last_connected_at).of_type(DateTime) }
 
 
 end

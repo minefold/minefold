@@ -11,9 +11,8 @@ gem 'uuid'
 
 # ORM
 gem 'mongo', '~>1.5'
-gem 'mongoid', '~>2.4'
+gem 'mongoid', git: 'git://github.com/mongoid/mongoid.git'
 gem 'bson_ext'
-gem 'mongoid_slug'
 
 # Authentication
 gem 'devise'
@@ -36,8 +35,6 @@ gem 'decent_exposure'
 gem 'rabl', '>=0.5'
 gem 'kaminari'
 gem 'rdiscount'
-
-gem 'asset_sync'
 
 # Uploads
 gem 'carrierwave', git: 'https://github.com/jnicklas/carrierwave.git'

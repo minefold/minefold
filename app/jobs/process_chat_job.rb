@@ -1,16 +1,16 @@
-class ProcessChatJob
+class ProcessChatJob < Job
   @queue = :high
 
-  def self.perform(world_id, username, text)
-    world, user = World.find(world_id), User.by_username(username).first
-
-    new.process!(world, user, text)
+  def initialize(world_id, username, text)
+    @world = World.find(world_id)
+    @player = MinecraftPlayer.find_or_create_by(username: username)
+    @text = text
   end
 
-  def process!(world, user, text)
-    chat = Events::Chat.create! source: user, target: world, text: text
-
-    world.broadcast "#{chat.pusher_key}-created", chat.attributes
+  def perform!
+    Events::Chat.create! source: @player,
+                         target: @world,
+                         text: @text
   end
 
 end

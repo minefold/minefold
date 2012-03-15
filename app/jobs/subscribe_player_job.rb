@@ -1,13 +1,21 @@
-class SubscribePlayerJob
+class SubscribePlayerJob < Job
   @queue = :low
 
-  def self.perform user_id
-    new.process! User.find(user_id)
+  def initialize(user_id)
+    @user = User.find(user_id)
   end
-  
-  def process! user
-    CreateSend::Subscriber.add ENV['CAMPAIGN_MONITOR_USER_LIST_ID'], 
-      user.email, user.username, [{ :Key => 'Username', :Value => user.username}], true
-    puts "subscribed #{user.id} #{user.username} #{user.email}"
+
+  def perform?
+    @user.email? and ENV['CAMPAIGN_MONITOR_USER_LIST_ID']
+  end
+
+  def perform!
+    CreateSend::Subscriber.add(
+      ENV['CAMPAIGN_MONITOR_USER_LIST_ID'],
+      @user.email,
+      @user.username,
+      [{ :Key => 'Username', :Value => @user.username}],
+      true
+    )
   end
 end

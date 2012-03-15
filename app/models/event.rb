@@ -5,9 +5,6 @@ class Event
   belongs_to :source, polymorphic: true
   belongs_to :target, polymorphic: true
 
-  index :source
-  index :target
-
   # can't eager load polymorphic belongs_to relationships
   # default_scope includes(:source, :target)
 

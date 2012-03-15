@@ -1,42 +1,63 @@
 class World
   include Mongoid::Document
   include Mongoid::Timestamps
-  include Mongoid::Slug
   include Mongoid::Paranoia
+
+
+  attr_accessible :name
+
+# --
+
+  index [
+    [:_id, Mongo::ASCENDING],
+    [:deleted_at, Mongo::ASCENDING],
+    [:creator_id, Mongo::ASCENDING],
+    [:slug, Mongo::ASCENDING]
+  ], unique: true
 
 
 # ---
 # Name
 
 
+  def self.sanitize_name(name)
+    name.strip.downcase
+  end
+
   field :name, type: String
-  # TODO Validate name being only [a-Z][0-9]\-
+
+  validates_format_of :name, with: /^\w+$/
   validates_uniqueness_of :name, scope: :creator_id
   validates_presence_of :name
-  slug  :name, index: true, scope: :creator_id
 
-  scope :by_name, ->(name) { where(name: name) }
+  field :slug, type: String
+  scope :find_by_name, ->(name) { find_by(slug: sanitize_name(name)) }
+
+  def name=(str)
+    super(str.strip)
+    self.slug = self.class.sanitize_name(str)
+  end
+
+  def to_param
+    slug.to_param
+  end
 
 
 # ---
 # Creator
 
 
-  belongs_to :creator,
-    inverse_of: :created_worlds,
-    class_name: 'User'
-  validates_presence_of :creator
-
   def self.find_by_creator_and_slug!(creator, slug)
     where(creator_id: creator.id).find_by_slug!(slug)
   end
 
-  scope :by_creator, ->(user) { where(creator_id: user.id) }
+  belongs_to :creator,
+    inverse_of: :created_worlds,
+    class_name: 'User'
 
-  def creator=(creator)
-    write_attribute :creator_id, creator.id
-    add_op(creator)
-  end
+  validates_presence_of :creator
+
+  scope :by_creator, ->(user) { where(creator_id: user.id) }
 
 
 # ---
@@ -49,6 +70,13 @@ class World
     self.remote_photo_url = "http://d14m45jej91i3z.cloudfront.net/#{id}/base.png"
   rescue OpenURI::HTTPError
   end
+
+
+# ---
+# Tags
+
+
+  embeds_many :tags
 
 
 
@@ -121,33 +149,23 @@ class World
 
 
 # ---
-# Members
+# Players
 
 
-  embeds_many :memberships, cascade_callbacks: true
+  has_and_belongs_to_many :opped_players,
+    class_name: 'MinecraftPlayer',
+    inverse_of: nil
 
-  def add_member(user)
-    memberships.find_or_initialize_by(user_id: user.id)
-  end
+  has_and_belongs_to_many :whitelisted_players,
+    class_name: 'MinecraftPlayer',
+    inverse_of: nil
 
-  def add_op(user)
-    add_member(user).tap {|m| m.op! }
-  end
+  has_and_belongs_to_many :blacklisted_players,
+    class_name: 'MinecraftPlayer',
+    inverse_of: nil
 
-  def member?(user)
-    memberships.where(user_id: user.id).exists?
-  end
-
-  def op?(user)
-    memberships.ops.where(user_id: user.id).exists?
-  end
-
-  def ops
-    memberships.ops.pluck(:user)
-  end
-
-  def members
-    memberships.pluck(:user)
+  def players
+    MinecraftPlayer.find(opped_player_ids | whitelisted_player_ids)
   end
 
   embeds_many :membership_requests, cascade_callbacks: true do
@@ -161,28 +179,24 @@ class World
 # Online Players
 
 
-  def player_ids
+  def connected_player_ids
     $redis.smembers("#{redis_key}:connected_players").map {|id| BSON::ObjectId(id)}
   end
 
-  def players
-    User.find(player_ids)
+  def connected_players
+    User.find(connected_player_ids)
   end
 
   def offline_players
-    User.find(memberships.map(&:user_id) - player_ids)
-  end
-
-  def broadcast(event_name, data, socket_id=nil)
-    pusher_channel.trigger event_name, data, socket_id
+    User.find(opped_player_ids + whitelisted_player_ids - player_ids)
   end
 
   def say(msg)
     send_stdin "say #{msg}"
   end
 
-  def tell(user, msg)
-    send_stdin "/tell #{user.username} #{msg}"
+  def tell(player, msg)
+    send_stdin "/tell #{player.username} #{msg}"
   end
 
 

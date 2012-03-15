@@ -1,12 +1,12 @@
-attributes :id, :created_at, :updated_at, :last_mapped_at, :map_assets_url, :map_data
+attributes :id, :created_at, :updated_at, :last_mapped_at, :map_assets_url, :map_data, :host
 
-node(:url) {|world| user_world_path(world.creator, world) }
+node(:url) {|world| player_world_url(world.creator.minecraft_player, world) }
 
-child(world.creator => :creator) {
-  extends 'users/_base'
+child(world.creator.minecraft_player => :creator) {
+  extends 'players/_base'
 }
 
-child(world.members => :members) {
-  extends 'users/_base'
-  node(:op, if: ->(u){ world.ops.include?(u)}) { true }
+child(world.players => :players) {
+  extends 'players/_base'
+  node(:op, if: ->(u){ world.opped_players.include?(u)}) { true }
 }

@@ -1,22 +1,33 @@
 class UsersController < Devise::RegistrationsController
+  respond_to :html
+
   prepend_before_filter :require_no_authentication, :only => [:new, :create]
   prepend_before_filter :authenticate_user!, :only => [:dashboard, :edit, :update]
 
-  respond_to :html, :json
+
+# ---
+
 
   expose(:user) {
-    if params[:user_id] || params[:id]
-      User.find_by_slug!(params[:user_id] || params[:id])
+    if signed_in?
+      current_user
     else
-      User.new params[:user]
+      User.new(params[:user])
     end
   }
 
   expose(:referrer) {
-    if cookies[:invite]
-      User.where(referral_code: cookies[:invite]).first
+    if cookies[:invite_code]
+      User.where(invite_code: cookies[:invite_code]).first
     end
   }
+
+
+# ---
+
+
+  def new
+  end
 
   def create
     user.mpid = cookies[:mpid]
@@ -27,22 +38,29 @@ class UsersController < Devise::RegistrationsController
 
       track '$signup', distinct_id: user.mpid.to_s, mp_name_tag: user.email
 
-      respond_with user, :location => user_root_path
+      respond_with(user, location: user_root_path)
     else
-      clean_up_passwords user
-      respond_with user
+      clean_up_passwords(user)
+      respond_with(user)
     end
   end
 
-  def show
-    authorize! :read, user
-
-    respond_with(user) do |format|
-      format.png {
-        redirect_to user.avatar_url(50)
-      }
-    end
+  def dashboard
   end
 
+  def edit
+  end
+
+  def update
+    authorize! :update, user
+
+    user.update_attributes(params[:user])
+
+    if user.save
+      flash[:success] = 'Your settings were changed'
+    end
+
+    respond_with(current_user, location: account_path)
+  end
 
 end

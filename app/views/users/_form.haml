@@ -1,10 +1,4 @@
 %fieldset
-  %section.username
-    = form.label :username, 'Minecraft Username'
-    = error_messages_for(form.object, :username)
-    = form.text_field :username, tabindex: 1, placeholder: 'notch'
-
-%fieldset
   %section.email
     = form.label :email
     = error_messages_for(form.object, :email)

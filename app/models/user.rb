@@ -2,15 +2,31 @@ class User
   include Mongoid::Document
   include Mongoid::MultiParameterAttributes
   include Mongoid::Timestamps
-  include Mongoid::Slug
   include Mongoid::Paranoia
+
+
+  attr_accessible :email, :password, :password_confirmation, :remember_me
+
+# --
+
+  # Indexes
 
 
 # ---
 # Minecraft Account
 
-  has_one :minecraft_account, dependent: :nullify
-  index :minecraft_account
+
+  has_one :minecraft_player, dependent: :nullify
+  default_scope includes(:minecraft_player)
+
+
+# ---
+# Identity
+
+
+  def username
+    minecraft_player and minecraft_player.username
+  end
 
 
 # ---
@@ -36,13 +52,11 @@ class User
          :omniauthable
 
   field :encrypted_password, type: String, null: true
-  attr_accessible :password, :password_confirmation
 
   field :reset_password_token, type: String
   field :reset_password_sent_at, type: Time
 
   field :remember_created_at, type: Time
-  attr_accessible :remember_me
 
   field :sign_in_count, type: Integer
   field :current_sign_in_at, type: Time
@@ -56,21 +70,12 @@ class User
   field :unconfirmed_email, type: String # Only if using reconfirmable
 
   field :authentication_token, type: String
-  index :authentication_token, unique: true
 
   attr_accessor :email_or_username
-  attr_accessible :email_or_username
-
-  scope :by_email_or_username, ->(str) {
-    any_of(
-      {safe_username: sanitize_username(str)},
-      {email: sanitize_email(str)}
-    )
-  }
 
   def self.find_for_database_authentication(conditions)
     login = conditions.delete(:email_or_username)
-    by_email_or_username(login).first
+    by_email(login).first or MinecraftPlayer.by_username(login).first.try(:user)
   end
 
 
@@ -79,20 +84,18 @@ class User
 
 
   field :email, type: String, null: true
-  index :email
   scope :by_email, ->(email) { where(email: sanitize_email(email)) }
-  # attr_accessible :email
 
   def self.sanitize_email(str)
     str.downcase.strip
   end
+
 
 # ---
 # OAuth
 
 
   field :facebook_uid, type: String, null: true
-  index :facebook_uid, unique: true
 
   def self.find_or_create_for_facebook_oauth(access_token, signed_in_resource=nil)
     uid, data = access_token.uid, access_token.extra.raw_info
@@ -117,28 +120,25 @@ class User
 # Credits
 
 
-  CREDIT_PERIOD = 1.minute
-  FREE_HOURS  = 10
-
-  field :credits, type: Integer, default: (FREE_HOURS.hours / CREDIT_PERIOD)
-  validates_numericality_of :credits
-
-  field :last_credit_reset, type: DateTime
+  BILLING_PERIOD = 1.minute
 
   def self.hours_to_credits(n)
-    n.hours / CREDIT_PERIOD
+    n.hours / BILLING_PERIOD
+  end
+
+  field :credits, type: Integer, default: 0
+  field :last_credit_refresh_at, type: DateTime
+
+  def increment_credits!(n)
+    inc(:credits, n.to_i)
   end
 
   def increment_hours!(n)
     increment_credits! self.class.hours_to_credits(n)
   end
 
-  def increment_credits!(n)
-    inc(:credits, n.to_i)
-  end
-
   def hours_left
-    credits / User::CREDIT_PERIOD
+    credits / BILLING_PERIOD
   end
 
 
@@ -149,11 +149,15 @@ class User
   field :plan_expires_at, type: DateTime
 
   def pro?
-    beta? or (not plan_expires_at.nil? and plan_expires_at.future?)
+    (not plan_expires_at.nil? and plan_expires_at.future?) or beta?
   end
 
-  def customer_description
-    [safe_username, id].join('-')
+  def extend_plan_by(time)
+    if plan_expires_at?
+      self.plan_expires_at += time
+    else
+      self.plan_expires_at = time.from_now
+    end
   end
 
   def create_charge!(stripe_token, pack)
@@ -161,19 +165,13 @@ class User
       card: stripe_token,
       amount: pack.cents,
       currency: 'usd',
-      description: "#{pack.months} months of Minefold Pro for #{username} (#{email})"
+      description: "User##{id} #{pack.id}"
     )
-  rescue Stripe::StripeError
-    false
   end
 
   def buy_pack!(stripe_token, pack)
-    create_charge!(stripe_token, pack) and extend_plan_expiry!(pack.months)
-  end
-
-  def extend_plan_expiry!(months)
-    current_expiry = plan_expires_at || Time.now
-    self.plan_expires_at = current_expiry + months.months
+    create_charge!(stripe_token, pack) and
+    extend_plan_by(pack.duration) and
     save!
   end
 
@@ -196,32 +194,38 @@ class User
 # Invites
 
 
-  REFERRAL_CODE_LENGTH = 6
-  REFERRAL_HOURS = 2
+  INVITE_TOKEN_LENGTH = 6
 
-  field :referral_code, type: String, default: ->{
-    self.class.free_referral_code
+  def self.invite_token_exists?(token)
+    where(invite_token: token).exists?
+  end
+
+  def self.free_invite_token
+    begin
+      token = rand(36 ** INVITE_TOKEN_LENGTH).to_s(36)
+    end while invite_token_exists?(token)
+    token
+  end
+
+  field :invite_token, type: String, default: ->{
+    self.class.free_invite_token
   }
-  validates_uniqueness_of :referral_code
+  validates_uniqueness_of :invite_token
+
 
   belongs_to :referrer, class_name: 'User', inverse_of: :referrals
   has_many :referrals, class_name: 'User', inverse_of: :referrer
-
-  validates_uniqueness_of :referral_code
-
-  def self.free_referral_code
-    begin
-      c = rand(36 ** REFERRAL_CODE_LENGTH).to_s(36)
-    end while self.where(referral_code: c).exists?
-    c
-  end
 
 
 # ---
 # Worlds
 
 
-  has_many :worlds, :foreign_key => 'memberships.user_id'
+  def worlds
+    World.all.limit(10)
+  end
+
+  # has_many :worlds, :foreign_key => 'memberships.user_id'
   has_many :created_worlds, class_name: 'World', inverse_of: :creator
 
   belongs_to :current_world, class_name: 'World', inverse_of: nil
@@ -248,50 +252,32 @@ class User
 
 
 # ---
-# Routing
-
-
-  field :host, default: 'pluto.minefold.com'
-
-  field :last_played_at, type: DateTime
-
-  def played?
-    not last_played_at.nil?
-  end
-
-
-# ---
 # Photos
 
 
-  has_many :photos, inverse_of: :creator, order: [:created_at, :asc]
-  accepts_nested_attributes_for :photos
+  # has_many :photos, inverse_of: :creator, order: [:created_at, :asc]
+  # accepts_nested_attributes_for :photos
 
-  def pending_photos
-    photos.pending
-  end
+  # def pending_photos
+  #   photos.pending
+  # end
 
-  def published_photos
-    photos.published
-  end
-
-  accepts_nested_attributes_for :pending_photos
+  # def published_photos
+  #   photos.published
+  # end
+  # accepts_nested_attributes_for :pending_photos
 
 
 # ---
 # Stats
 
 
-  field :mpid, type: String, default: ->{ self.id.to_s }
-  attr_accessible :mpid
-
-  field :minutes_played, type: Integer, default: 0
-  validates_numericality_of :minutes_played, greater_than_or_equal_to: 0
-
   def self.mpid
     @uuid ||= UUID.new
     @uuid.generate
   end
+
+  field :mpid, type: String, default: ->{ self.id.to_s }
 
 
 protected
