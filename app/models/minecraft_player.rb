@@ -40,7 +40,7 @@ class MinecraftPlayer
   end
 
   def self.find_by_username(username)
-    by_username(username).first || raise(Mongoid::Errors::DocumentNotFound.new(self, username: username))
+    where(slug: sanitize_username(username)).first || raise(Mongoid::Errors::DocumentNotFound.new(self, username: username))
   end
 
   field :username, type: String
