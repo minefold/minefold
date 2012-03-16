@@ -2,7 +2,7 @@
 - masthead do
   %h1 #{world.name} members
   %p
-    = link_to player_world_path(creator_player, world) do
+    = link_to player_world_path(player, world) do
       ← back to #{world.name}
 
 - if can? :operate, world
@@ -17,8 +17,8 @@
             .meta
               .username= r.user.username
               .actions
-                = button_to 'Approve', approve_player_world_membership_request_path(creator_player, world, r), method: :put, class: 'approve'
-                = button_to 'Ignore', player_world_membership_request_path(creator_player, world, r), method: :delete, class: 'ignore'
+                = button_to 'Approve', approve_player_world_membership_request_path(player, world, r), method: :put, class: 'approve'
+                = button_to 'Ignore', player_world_membership_request_path(player, world, r), method: :delete, class: 'ignore'
 
   %h2 Add a friend
   = form_tag player_world_players_path, method: :post, id: 'add-member' do

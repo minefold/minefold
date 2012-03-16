@@ -1,12 +1,12 @@
 class Worlds::MembershipsController < ApplicationController
   respond_to :html, :json
 
-  expose(:creator_player) {
+  expose(:player) {
     MinecraftPlayer.find_by(slug: params[:player_id])
   }
 
   expose(:creator) {
-    creator_player.user
+    player.user
   }
 
   expose(:world) {

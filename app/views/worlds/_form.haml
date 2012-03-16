@@ -4,7 +4,7 @@
   = form.text_field :name, tabindex: 1
 
 
-- if form.object.new?
+- if form.object.new_record?
   - head do
     = javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js'
     = javascript_include_tag '//d3ds63zw57jt09.cloudfront.net/1.10/pusher.min.js'
@@ -148,7 +148,7 @@
       = form.label :spawn_animals, 'Spawn animals'
 
 %fieldset.submit
-  - if form.object.new?
+  - if form.object.new_record?
     = form.submit 'Create world', tabindex: 8
   - else
     = form.submit 'Update settings', tabindex: 8
