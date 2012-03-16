@@ -25,8 +25,12 @@ class Job
 
 # private
 
-  def logger
+  def self.logger
     @logger ||= Rails.logger
+  end
+
+  def logger
+    self.class.logger
   end
 
 end
