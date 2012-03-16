@@ -6,7 +6,7 @@ describe Worlds::MembershipRequestsController do
   describe '#create' do
     context 'public' do
       before(:each) {
-        post :create, user_id: world.creator.slug, world_id: world.slug
+        post :create, user_id: world.creator.minecraft_player.slug, world_id: world.slug
       }
 
       subject { response }
@@ -22,7 +22,7 @@ describe Worlds::MembershipRequestsController do
           should_receive(:membership_request_created).
           with(world.id, anything, world.creator.id) { Struct.new(:deliver).new }
           
-        post :create, user_id: world.creator.slug, world_id: world.slug
+        post :create, user_id: world.creator.minecraft_player.slug, world_id: world.slug
       }
 
       subject { response }

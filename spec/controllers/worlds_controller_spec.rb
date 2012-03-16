@@ -19,7 +19,7 @@ describe WorldsController do
     let(:world) { Fabricate(:world) }
 
     it "renders" do
-      get :show, user_id: world.creator.slug, id: world.slug
+      get :show, user_id: world.creator.minecraft_player.slug, id: world.slug
       response.should be_successful
     end
 
@@ -36,7 +36,7 @@ describe WorldsController do
 
       context "who hasn't played before" do
         before {
-          get :show, user_id: world.creator.slug, id: world.slug
+          get :show, user_id: world.creator.minecraft_player.slug, id: world.slug
         }
         subject { response }
 
@@ -50,7 +50,7 @@ describe WorldsController do
     let(:world) { Fabricate(:world) }
 
     context 'public' do
-      before { post :join, user_id: world.creator.slug, id: world.slug }
+      before { post :join, user_id: world.creator.minecraft_player.slug, id: world.slug }
       it "is unauthorized"
     end
 
@@ -63,7 +63,7 @@ describe WorldsController do
 
         sign_in member
 
-        post :join, user_id: world.creator.slug, id: world.slug
+        post :join, user_id: world.creator.minecraft_player.slug, id: world.slug
       }
 
       subject { response }
@@ -82,7 +82,7 @@ describe WorldsController do
 
       it "does nothing" do
         lambda {
-          post :join, user_id: world.creator.slug, id: world.slug
+          post :join, user_id: world.creator.minecraft_player.slug, id: world.slug
         }.should_not change(current_user, :current_world)
       end
     end
@@ -93,7 +93,7 @@ describe WorldsController do
     signin_as { Fabricate(:user) }
 
     before {
-      post :clone, user_id: world.creator.slug, id: world.slug
+      post :clone, user_id: world.creator.minecraft_player.slug, id: world.slug
     }
 
     subject { response }
@@ -117,7 +117,7 @@ describe WorldsController do
       WorldMailer.should_receive(:world_deleted).
         with(world.name, world.creator.username, player.id) { Struct.new(:deliver).new }
       
-      delete :destroy, user_id: world.creator.slug, id: world.slug
+      delete :destroy, user_id: world.creator.minecraft_player.slug, id: world.slug
     }
     
     it "safe deletes world" do
