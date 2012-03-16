@@ -84,8 +84,8 @@ group :test do
   gem 'fog'
 
   gem 'fabrication'
-  gem 'mongoid-rspec', :git => 'git://github.com/shingara/mongoid-rspec.git',
-                       :branch => 'mongoid-2.0.0.rc1'
+  gem 'mongoid-rspec', :git => 'https://github.com/angelim/mongoid-rspec.git',
+                       :branch => 'mongoid-3.0-support'
   gem 'autotest-rails'
   gem 'database_cleaner'
   gem 'capybara', '~> 1.1.1'
