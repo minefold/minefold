@@ -25,6 +25,16 @@ GIT
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
 
+GIT
+  remote: https://github.com/rspec/rspec-rails.git
+  revision: 5e1b8a26b3c6a45c0b34a21c87eacc1703b355e2
+  specs:
+    rspec-rails (2.9.0.rc2)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      railties (>= 3.0)
+      rspec (= 2.9.0.rc2)
+
 GEM
   remote: https://code.stripe.com/
   remote: https://rubygems.org/
@@ -269,9 +279,6 @@ GEM
     rspec-expectations (2.9.0.rc2)
       diff-lcs (~> 1.1.3)
     rspec-mocks (2.9.0.rc2)
-    rspec-rails (1.3.2)
-      rack (>= 1.0.0)
-      rspec (>= 1.3.0)
     ruby-hmac (0.4.0)
     rubyzip (0.9.6.1)
     sass (3.1.15)
@@ -370,7 +377,7 @@ DEPENDENCIES
   resque_mailer
   rpm_contrib
   rspec
-  rspec-rails
+  rspec-rails!
   rubyzip
   sass-rails
   sprockets

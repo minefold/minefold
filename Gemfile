@@ -79,8 +79,10 @@ end
 
 group :test do
   gem 'rspec'
-  gem 'rspec-rails'
+  gem 'rspec-rails', git: 'https://github.com/rspec/rspec-rails.git'
   gem 'faker'
+  gem 'fog'
+
   gem 'fabrication'
   gem 'mongoid-rspec', :git => 'git://github.com/shingara/mongoid-rspec.git',
                        :branch => 'mongoid-2.0.0.rc1'
