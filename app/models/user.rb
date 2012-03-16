@@ -75,7 +75,14 @@ class User
 
   def self.find_for_database_authentication(conditions)
     login = conditions.delete(:email_or_username)
-    by_email(login).first or MinecraftPlayer.by_username(login).first.try(:user)
+
+    if user = by_email(login).first
+      user
+    elsif player = MinecraftPlayer.by_username(login).where(:user_id.ne => nil).first
+      player.user
+    else
+      false
+    end
   end
 
 
