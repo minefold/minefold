@@ -2,7 +2,7 @@ class PlayerOppedJob < OpActionJob
   @queue = :low
 
   def perform!
-    @world.add_to_set :opped_player_ids, @player.id
+    @world.op_player! @player
   end
 
 end

@@ -19,14 +19,14 @@ class Ability
     can [:update, :destroy], World, creator: user
 
     can :operate, World do |world|
-      world.opped_players.include? player
+      world.player_opped? player
     end
 
     can :play, World do |world|
-      not world.blacklisted_players.to_a.include?(player) and
+      not world.blacklisted_player_ids.include?(player.id) and
       (
-        world.opped_players.to_a.include?(player) or
-        world.whitelisted_players.to_a.include?(player)
+        world.opped_player_ids.include?(player.id) or
+        world.whitelisted_player_ids.include?(player.id)
       )
     end
 

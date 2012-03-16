@@ -2,7 +2,7 @@ class PlayerDeoppedJob < OpActionJob
   @queue = :low
 
   def perform!
-    @world.opped_players.pull(@player)
+    @world.deop_player! @player
   end
 
 end
