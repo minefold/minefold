@@ -21,7 +21,7 @@
 
     %li.account-user
       = link_to player_path(current_user.minecraft_player) do
-        = avatar_tag current_user, :small, width: 20, height: 20
+        = player_avatar_tag current_user.minecraft_player, size: :small
 
       %ol
         %li.account-profile= link_to 'Profile', player_path(current_user.minecraft_player)
