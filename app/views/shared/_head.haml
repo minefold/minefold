@@ -7,7 +7,9 @@
     —
   Minefold
 
+
 / ---
+
 
 %meta{name: 'description', content: 'Play Minecraft on demand with friends.'}
 %meta{name: 'keywords', content: %w(gaming games game minecraft server hosting multiplayer).join(',')}
@@ -21,6 +23,11 @@
 
 = csrf_meta_tags
 
+
+/ ---
+
+
+- # Crashm.at
 :javascript
   var _crashmat = #{crashmat_options.to_json};
   (function(w, d, cm, woe) {
@@ -34,11 +41,14 @@
     (d.head || d.getElementsByTagName('head')[0]).appendChild(e);
   })(window, document, window._crashmat, window.onerror);
 
+= javascript_include_tag "//use.typekit.com/#{ENV['TYPEKIT_ID']}.js"
 = javascript_include_tag '//d3ds63zw57jt09.cloudfront.net/1.10/pusher.min.js'
+= render partial: 'shared/mixpanel'
 
 /[if lt IE 9]
   = javascript_include_tag '//html5shim.googlecode.com/svn/trunk/html5.js'
 
-= render partial: 'shared/mixpanel'
+:javascript
+  try{Typekit.load();}catch(e){}
 
 = yield :head
