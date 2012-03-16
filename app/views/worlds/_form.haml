@@ -4,7 +4,7 @@
   = form.text_field :name, tabindex: 1
 
 
-- if form.object.new?
+- if form.object.new_record?
   - head do
     = javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js'
     = javascript_include_tag '//d3ds63zw57jt09.cloudfront.net/1.10/pusher.min.js'
@@ -54,7 +54,7 @@
                 el: newWorldForm.find('fieldset.upload')[0],
                 form: newWorldForm,
                 text: 'Choose your world archive file',
-                prefix: #{[current_user.safe_username, current_user.id, Time.now.strftime('%Y%m%d%H%M%S'), nil].join('-').to_json},
+                prefix: #{[current_user.username, current_user.id, Time.now.strftime('%Y%m%d%H%M%S'), nil].join('-').to_json},
                 worldUploadPolicyPath: #{policy_upload_path(format: :xml).to_json},
                 worldUploadPath: #{upload_path.to_json}
               });
@@ -148,7 +148,7 @@
       = form.label :spawn_animals, 'Spawn animals'
 
 %fieldset.submit
-  - if form.object.new?
+  - if form.object.new_record?
     = form.submit 'Create world', tabindex: 8
   - else
     = form.submit 'Update settings', tabindex: 8

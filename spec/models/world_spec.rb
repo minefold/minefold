@@ -16,26 +16,7 @@ describe World do
   it { should have_field(:name).of_type(String) }
   it { should validate_presence_of(:name) }
   it { should validate_format_of(:name).with_format(/^\w+$/) }
-  it { should validate_uniqueness_of(:name).with_scope(:creator_id) }
-
-
-# ---
-# Host
-
-
-  it { should have_field(:host).of_type(String) }
-  it { should validate_presence_of(:host) }
-  it { should validate_uniqueness_of(:host) }
-
-  it "#host gets set before the world is created" do
-    world.host.should be_nil
-
-    world.name = 'minebnb'
-    world.creator = Fabricate(:user, username: 'chrislloyd')
-    world.save
-
-    world.host.should == 'minebnb.chrislloyd.fold.to'
-  end
+  it { should validate_uniqueness_of(:name).scoped_to(:creator_id) }
 
 
 # ---
@@ -79,14 +60,14 @@ describe World do
 
   it {
     should have_and_belong_to_many(:opped_players)
-      .of_type(MinecraftPlayer)
       .as_inverse_of(nil)
+      .of_type(MinecraftPlayer)
   }
 
   it {
     should have_and_belong_to_many(:whitelisted_players)
-      .of_type(MinecraftPlayer)
       .as_inverse_of(nil)
+      .of_type(MinecraftPlayer)
   }
 
   it {

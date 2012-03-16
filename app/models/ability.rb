@@ -7,6 +7,8 @@ class Ability
 
     return unless user
 
+    player = user.minecraft_player
+
     # Admin abilities
     if user.admin?
       can [:update, :destroy, :operate, :play], World
@@ -17,14 +19,14 @@ class Ability
     can [:update, :destroy], World, creator: user
 
     can :operate, World do |world|
-      world.opped_players.include? user
+      world.opped_players.include? player
     end
 
     can :play, World do |world|
-      not world.blacklisted_players.include?(user) and
+      not world.blacklisted_players.to_a.include?(player) and
       (
-        world.opped_players.include?(user) or
-        world.whitelisted_players.include?(user)
+        world.opped_players.to_a.include?(player) or
+        world.whitelisted_players.to_a.include?(player)
       )
     end
 

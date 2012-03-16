@@ -12,16 +12,16 @@
 /       %h1 Confirm your account
 /       %p You should have recieved an email with instructions on how to confirm your account.
 /
-/     %h1 Your Worlds
-/     = link_to 'Create a new world', new_world_path, class: ['btn', 'new-world']
-/     - if current_user.worlds.any?
-/       .worlds
-/         %ol
-/           - current_user.worlds.each do |world|
-/             %li
-/               = link_to strong_world_fullname(world), player_world_path(world.creator.minecraft_player, world)
-/               .meta
-/                 = pluralize world.players.count, 'player', 'players'
+%h1 Your Worlds
+= link_to 'Create a new world', new_world_path, class: ['btn', 'new-world']
+- if current_user.worlds.any?
+  .worlds
+    %ol
+      - current_user.worlds.each do |world|
+        %li
+          = link_to strong_world_fullname(world), player_world_path(world.creator.minecraft_player, world)
+          .meta
+            = pluralize world.players.count, 'player', 'players'
 /
 /
 /     - else

@@ -8,12 +8,13 @@ module UsersHelper
     end
   end
 
-  def avatar_tag(user, format=:small, options={})
+  def avatar_tag(user_or_player, format=:small, options={})
+    player = user_or_player.respond_to?(:avatar) ? user_or_player : user_or_player.minecraft_player
     options = {
-      alt: user.username,
+      alt: player.username,
     }.merge(options)
 
-    image_tag user.minecraft_player.avatar.send(format).url, options
+    image_tag player.avatar.send(format).url, options
   end
 
 end

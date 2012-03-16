@@ -16,12 +16,12 @@
     %h3#friends Do all my friends need to pay too?
     %p Yes. Minefold makes paying for multiplayer simpler as everybody only pays for what they <em>individually</em> play. If you rent a traditional server by the month you have to collect donations or shout all your friends. If you prepay for your own time, you don't have to pay for all the time that Frank spends playing in your world.
 
-    %h3#connecting How do I play in a world?
-    - if signed_in? and current_user.current_world
-      %p To connect to #{link_to world_fullname(current_user.current_world), user_world_path(current_user.current_world.creator, current_user.current_world)} you need to open Minecraft, select “Multiplayer” and add a server with the address #{link_to current_user.host, "http://#{current_user.host}"} and the name “Minefold”.
-
-    - else
-      %p When you select a world to play in, you'll be given an address to connect to. Open Minecraft, select “Multiplayer” and add a server with that same address.
+    / %h3#connecting How do I play in a world?
+    / - if signed_in? and current_user.current_world
+    /   %p To connect to #{link_to world_fullname(current_user.current_world), player_world_path(current_user.current_world.creator, current_user.current_world)} you need to open Minecraft, select “Multiplayer” and add a server with the address #{link_to current_user.host, "http://#{current_user.host}"} and the name “Minefold”.
+    /
+    / - else
+    /   %p When you select a world to play in, you'll be given an address to connect to. Open Minecraft, select “Multiplayer” and add a server with that same address.
 
     %p You only need to do this once, even if you change the world you are playing in.
 

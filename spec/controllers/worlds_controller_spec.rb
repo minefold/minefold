@@ -12,7 +12,7 @@ describe WorldsController do
       }
     }
 
-    it { response.should redirect_to(user_world_path(current_user.slug, 'minebnb')) }
+    it { response.should redirect_to(player_world_path(current_user.player, 'minebnb')) }
   end
 
   describe "#show" do
@@ -68,7 +68,7 @@ describe WorldsController do
 
       subject { response }
 
-      it { should redirect_to(user_world_path(world.creator, world)) }
+      it { should redirect_to(player_world_path(world.creator.minecraft_player, world)) }
 
       it "sets the user's current world" do
         member.reload
@@ -98,7 +98,7 @@ describe WorldsController do
 
     subject { response }
 
-    it { should redirect_to(user_world_path(current_user, world.slug)) }
+    it { should redirect_to(player_world_path(current_user.player, world.slug)) }
   end
   
   describe '#destroy' do

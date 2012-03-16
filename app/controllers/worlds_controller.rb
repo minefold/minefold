@@ -39,7 +39,7 @@ class WorldsController < ApplicationController
       track 'created world'
     end
 
-    respond_with world, location: user_world_path(world.creator, world)
+    respond_with world, location: player_world_path(player, world)
   end
 
   def show
@@ -61,7 +61,7 @@ class WorldsController < ApplicationController
 
     world.update_attributes(params[:world])
 
-    respond_with world, location: user_world_path(world.creator, world)
+    respond_with world, location: player_world_path(player, world)
   end
 
   def join
@@ -72,7 +72,7 @@ class WorldsController < ApplicationController
 
     track 'joined world'
 
-    respond_with world, location: user_world_path(world.creator, world)
+    respond_with world, location: player_world_path(player, world)
   end
 
   def clone
@@ -86,7 +86,7 @@ class WorldsController < ApplicationController
 
     track 'cloned world'
 
-    respond_with clone, location: user_world_path(current_user, clone)
+    respond_with clone, location: player_world_path(current_user.player, clone)
   end
 
   def destroy

@@ -79,10 +79,13 @@ end
 
 group :test do
   gem 'rspec'
-  gem 'rspec-rails'
+  gem 'rspec-rails', git: 'https://github.com/rspec/rspec-rails.git'
   gem 'faker'
+  gem 'fog'
+
   gem 'fabrication'
-  gem 'mongoid-rspec'
+  gem 'mongoid-rspec', :git => 'https://github.com/angelim/mongoid-rspec.git',
+                       :branch => 'mongoid-3.0-support'
   gem 'autotest-rails'
   gem 'database_cleaner'
   gem 'capybara', '~> 1.1.1'

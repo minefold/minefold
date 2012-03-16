@@ -102,5 +102,7 @@ class MinecraftPlayer
   field :minutes_played, type: Integer, default: 0
   field :last_connected_at, type: DateTime
 
-
+  def played?
+    not last_connected_at.nil?
+  end
 end

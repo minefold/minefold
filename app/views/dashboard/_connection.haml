@@ -1,6 +1,6 @@
 .desc
   %span.user= link_to connection.source.username, user_path(connection.source)
   started playing in
-  %span.chat= link_to strong_world_fullname(connection.target), user_world_path(connection.target.creator, connection.target)
+  %span.chat= link_to strong_world_fullname(connection.target), player_world_path(connection.target.creator.minecraft_player, connection.target)
   = time_ago_in_words connection.created_at
   ago

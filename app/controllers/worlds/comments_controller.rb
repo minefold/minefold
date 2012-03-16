@@ -1,9 +1,14 @@
 class Worlds::CommentsController < ApplicationController
   respond_to :json, :html
 
-  expose(:creator) { User.find_by_slug! params[:user_id] }
+  expose(:player) {
+    MinecraftPlayer.find_by(slug: params[:player_id])
+  }
+  expose(:creator) {
+    player.user
+  }
   expose(:world) {
-    World.find_by_creator_and_slug!(creator, params[:world_id])
+    creator.created_worlds.find_by(name: params[:world_id])
   }
 
   expose(:comment) {
@@ -19,7 +24,7 @@ class Worlds::CommentsController < ApplicationController
     world.comments.push(comment)
     world.save!
 
-    respond_with world, location: user_world_path(creator, world)
+    respond_with world, location: player_world_path(player, world)
   end
 
 end

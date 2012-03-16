@@ -3,8 +3,15 @@ class Worlds::MembershipRequestsController < ApplicationController
 
   prepend_before_filter :authenticate_user!
 
-  expose(:creator) { User.find_by_slug!(params[:user_id]) }
-  expose(:world) { World.find_by_creator_and_slug!(creator, params[:world_id]) }
+  expose(:player) {
+    MinecraftPlayer.find_by(slug: params[:player_id])
+  }
+  expose(:creator) {
+    player.user
+  }
+  expose(:world) {
+    creator.created_worlds.find_by(name: params[:world_id])
+  }
 
   expose(:membership_request) {
     if params[:id]
@@ -26,7 +33,7 @@ class Worlds::MembershipRequestsController < ApplicationController
       track 'created membership request'
     end
 
-    respond_with world, location: user_world_path(world.creator, world)
+    respond_with world, location: player_world_path(player, world)
   end
 
   def approve
@@ -43,7 +50,7 @@ class Worlds::MembershipRequestsController < ApplicationController
       track 'approved membership request'
     end
 
-    respond_with world, location: user_world_path(world.creator, world)
+    respond_with world, location: player_world_path(player, world)
   end
 
   def destroy
@@ -53,6 +60,6 @@ class Worlds::MembershipRequestsController < ApplicationController
 
     track 'ignored membership request'
 
-    respond_with world, location: user_world_path(world.creator, world)
+    respond_with world, location: player_world_path(player, world)
   end
 end

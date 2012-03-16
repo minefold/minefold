@@ -2,7 +2,7 @@
 - masthead do
   %h1 #{world.name} members
   %p
-    = link_to user_world_path(world.creator, world) do
+    = link_to player_world_path(player, world) do
       ← back to #{world.name}
 
 - if can? :operate, world
@@ -17,11 +17,11 @@
             .meta
               .username= r.user.username
               .actions
-                = button_to 'Approve', approve_user_world_membership_request_path(world.creator, world, r), method: :put, class: 'approve'
-                = button_to 'Ignore', user_world_membership_request_path(world.creator, world, r), method: :delete, class: 'ignore'
+                = button_to 'Approve', approve_player_world_membership_request_path(player, world, r), method: :put, class: 'approve'
+                = button_to 'Ignore', player_world_membership_request_path(player, world, r), method: :delete, class: 'ignore'
 
   %h2 Add a friend
-  = form_tag user_world_members_path, method: :post, id: 'add-member' do
+  = form_tag player_world_players_path, method: :post, id: 'add-member' do
     = hidden_field_tag :id
     %fieldset.username
       = text_field_tag :username, nil, placeholder: 'notch'
@@ -34,7 +34,7 @@
     :javascript
       $(document).ready(function() {
         var addFriendView = new Mf.AddFriendView({
-          searchPath: #{search_user_world_members_path(world.creator, world).to_json}
+          searchPath: #{search_player_world_players_path(world.creator, world).to_json}
         });
         addFriendView.setElement($('form#add-member'));
         addFriendView.render();
@@ -42,18 +42,18 @@
 
 %section.members
   %ul
-    - world.memberships.each do |m|
+    - world.players.each do |p|
       %li
-        = link_to user_path(m.user), class: 'avatar' do
-          = avatar_tag m.user, :medium, width: 40, height: 40
+        = link_to player_path(p.slug), class: 'avatar' do
+          = avatar_tag p, :medium, width: 40, height: 40
         .meta
           .username
-            = m.user.username
-            - if m.op?
+            = p.username
+            - if world.opped_players.include? p
               %em.highlight (op)
-          Joined #{time_ago_in_words(m.created_at)} ago.
-          - if m.played?
-            Last played #{time_ago_in_words(m.last_played_at)} ago.
+          Joined #{time_ago_in_words(p.created_at)} ago.
+          - if p.played?
+            Last played #{time_ago_in_words(p.last_connected_at)} ago.
 
-          - if can?(:destroy, m)
-            = link_to 'Remove', user_world_member_path(world.creator, world, m), method: :delete
+          - if can?(:destroy, p)
+            = link_to 'Remove', player_world_player_path(world.creator, world, m), method: :delete

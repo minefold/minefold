@@ -49,10 +49,6 @@ class World
 # Creator
 
 
-  def self.find_by_creator_and_slug!(creator, slug)
-    where(creator_id: creator.id).find_by_slug!(slug)
-  end
-
   belongs_to :creator,
     inverse_of: :created_worlds,
     class_name: 'User'
@@ -78,7 +74,7 @@ class World
 # Tags
 
 
-  embeds_many :tags
+  # embeds_many :tags
 
 
 

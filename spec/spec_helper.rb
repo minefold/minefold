@@ -3,7 +3,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'capybara/rspec'
 
-Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f }
 
 RSpec.configure do |config|
   config.mock_with :rspec
@@ -16,7 +16,7 @@ RSpec.configure do |config|
   config.include Devise::TestHelpers, type: :controller
   config.include ControllerHelpers, type: :controller
   config.extend ControllerMacros, type: :controller
-  
+
   OmniAuth.config.test_mode = true
 
   config.before(:each) do

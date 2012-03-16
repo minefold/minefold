@@ -2,13 +2,13 @@
 - masthead do
   %h1 #{world.name} settings
   %p
-    = link_to user_world_path(world.creator, world) do
+    = link_to player_world_path(player, world) do
       ← Back to #{world.name}
 
-= form_for world, url: user_world_path(world.creator, world), html: {id: 'edit-world'} do |f|
+= form_for world, url: player_world_path(player, world), html: {id: 'edit-world'} do |f|
   = render partial: 'form', object: f
 
 %h2 Danger Zone!
 
 - if can? :destroy, world
-  = button_to "Delete this world", user_world_path(world.creator, world), method: 'delete', form_class: 'delete', confirm: 'Are you sure you want to delete this world?'
+  = button_to "Delete this world", player_world_path(player, world), method: 'delete', form_class: 'delete', confirm: 'Are you sure you want to delete this world?'

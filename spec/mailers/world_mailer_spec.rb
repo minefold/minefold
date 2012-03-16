@@ -18,7 +18,7 @@ describe WorldMailer do
     its(:body) { should include(membership.user.host) }
     its(:body) { should include(world.creator.username) }
     its(:body) { should include(world.name) }
-    its(:body) { should include(user_world_url(world.creator, world)) }
+    its(:body) { should include(player_world_url(world.creator.minecraft_player, world)) }
   end
 
 
@@ -79,17 +79,17 @@ describe WorldMailer do
     its(:to) { should include(user.email) }
 
     its(:body) { should include(world.name) }
-    its(:body) { should include(user_world_url(world.creator, world)) }
+    its(:body) { should include(player_world_url(world.creator.minecraft_player, world)) }
     its(:body) { should include(user.username) }
   end
 
   describe "#world_deleted" do
     let(:user) { Fabricate :user }
-  
+
     subject { WorldMailer.world_deleted('worldy', 'worldy-creator', user.id) }
-  
+
     its(:to) { should include(user.email) }
-  
+
     its(:body) { should include('worldy') }
     its(:body) { should include('worldy-creator') }
   end
