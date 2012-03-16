@@ -105,5 +105,4 @@ class MinecraftPlayer
   def played?
     not last_connected_at.nil?
   end
-
 end

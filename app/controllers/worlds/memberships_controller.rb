@@ -4,11 +4,9 @@ class Worlds::MembershipsController < ApplicationController
   expose(:player) {
     MinecraftPlayer.find_by(slug: params[:player_id])
   }
-
   expose(:creator) {
     player.user
   }
-
   expose(:world) {
     creator.created_worlds.find_by(name: params[:world_id])
   }
@@ -43,7 +41,7 @@ class Worlds::MembershipsController < ApplicationController
       # WorldMailer.membership_created(world.id, membership.id).deliver
       track 'added member'
 
-      respond_with account, location: user_world_members_path(world.creator, world)
+      respond_with account, location: player_world_players_path(player, world)
     end
   end
 
@@ -55,7 +53,7 @@ class Worlds::MembershipsController < ApplicationController
 
     track 'removed member'
 
-    respond_with membership, location: user_world_members_path(world.creator, world)
+    respond_with membership, location: player_world_players_path(player, world)
   end
 
 end

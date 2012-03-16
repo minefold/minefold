@@ -74,7 +74,7 @@ class World
 # Tags
 
 
-  embeds_many :tags
+  # embeds_many :tags
 
 
 

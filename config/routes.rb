@@ -72,12 +72,12 @@ Minefold::Application.routes.draw do
   # end
 
   resources :worlds, :only => [:index, :new, :create] do
-  #   collection do
-  #     resource :upload, :module => :worlds, :only => [:new, :create] do
-  #       get :instructions
-  #       get :policy
-  #     end
-  #   end
+    collection do
+      resource :upload, :module => :worlds, :only => [:new, :create] do
+        get :instructions
+        get :policy
+      end
+    end
   end
 
   resources(:players,

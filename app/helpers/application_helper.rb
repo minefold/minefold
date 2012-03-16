@@ -43,6 +43,11 @@ module ApplicationHelper
     content_for :head, capture_haml(&blk)
   end
 
+  def title_and_masthead(text)
+    title text
+    masthead { content_tag(:h1, text) }
+  end
+
   def masthead(attrs={}, &blk)
     html = content_tag(:section,
       content_tag(:div, capture(&blk), class: 'container'),
