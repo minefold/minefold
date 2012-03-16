@@ -1,7 +1,8 @@
 - title player.username
-- masthead do
-  .avatar= image_tag player.avatar.large.url
-  %h1= player.username
+- masthead(class: 'player') do
+  = player_avatar_tag player, size: :large
+
+  %h1.username= player.username
   .meta
     - if player.user and player.user.pro?
       = pro_link(player.user)
@@ -9,5 +10,5 @@
 
 %h2 Worlds
 
-/ - user.worlds.each do |world|
-/   %p= link_to strong_world_fullname(world), user_world_path(world.creator, world)
+- player.worlds.each do |world|
+  %p= link_to strong_world_fullname(world), player_world_path(world.creator.minecraft_player, world)

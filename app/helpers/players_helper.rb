@@ -16,10 +16,12 @@ module PlayersHelper
       options[:width], options[:height] = [60,60]
     end
 
+    options[:class] = ['img', *options[:class]]
+
     options[:src] ||= player.avatar.send(options[:size])
     options[:alrt] ||= player.username
 
-    tag(:img, options)
+    content_tag(:div, tag(:img, options), class: 'avatar')
   end
 
 end

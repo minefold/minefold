@@ -24,6 +24,10 @@ class World
     name.strip.downcase
   end
 
+  def self.find_by_name(name)
+    find_by(slug: sanitize_name(name))
+  end
+
   field :name, type: String
 
   validates_format_of :name, with: /^\w+$/
@@ -31,9 +35,6 @@ class World
   validates_presence_of :name
 
   field :slug, type: String
-  scope :find_by_name, ->(name) {
-    find_by(slug: sanitize_name(name))
-  }
 
   def name=(str)
     super(str.strip)
