@@ -4,7 +4,7 @@
   = render partial: 'nav'
 
   %article
-    = form_for current_user do |f|
+    = form_for current_user, url: '/user' do |f|
       %fieldset
         %h3 Receive emails for the following events
         = f.fields_for :notifications do |n|
