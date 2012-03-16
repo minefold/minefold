@@ -14,4 +14,8 @@ namespace :jobs do
 
     WorldUploadJob.new(world_upload).process!
   end
+
+  task :map_unmapped_worlds => :environment do
+    World.where(:last_mapped_at => nil, :minutes_played.gt => 0).each {|w| Resque.push 'maps_high', class: 'Job::MapWorld', args: [w.id.to_s]}
+  end
 end
