@@ -46,6 +46,7 @@ Minefold::Application.routes.draw do
 
     get '/pro' => 'users#pro', :as => :pro_account
     get '/notifications' => 'users#notifications', :as => :notifications_account
+    get '/settings' => 'users#edit', :as => :edit_user
 
     get  '/signup' => 'users#new', :as => :new_user
     post '/users' => 'users#create', :as => :users
@@ -55,8 +56,7 @@ Minefold::Application.routes.draw do
     get  '/confirm/:confirmation_token' => 'confirmations#show', :as => :confirmation
 
     resource(:user,
-             :except => [:index, :show, :destroy],
-             :path_names => {:edit => 'settings'}) do
+             :except => [:index, :show, :destroy, :edit]) do
    end
   end
 

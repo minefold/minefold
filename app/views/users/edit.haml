@@ -2,13 +2,14 @@
 
 = render partial: 'nav'
 
-= form_for current_user, url: account_path, method: :put do |f|
-  %fieldset.username
-    %h3= f.label :username, 'Minecraft Username'
+= form_for current_user, url: '/user', method: :put do |f|
+  = f.fields_for current_user.minecraft_player do |f|
+    %fieldset.username
+      %h3= f.label :username, 'Minecraft Username'
 
-    = f.text_field :username, maxlength: 16
-    = error_messages_for(f.object, :username)
-    = error_messages_for(f.object, :safe_username)
+      = f.text_field :username, maxlength: 16
+      = error_messages_for(f.object, :username)
+      = error_messages_for(f.object, :safe_username)
 
   %fieldset.email
     %h3= f.label :email
@@ -30,14 +31,6 @@
       - else
         Expires in #{time_ago_in_words current_user.plan_expires_at} from now (#{current_user.plan_expires_at.strftime("%d/%m/%Y")}).
 
-
-  %fieldset.host
-    %h3 Server Host
-    = current_user.host
-    %p.hint
-      Don't know
-      = link_to 'how to connect', help_page_path(anchor: 'connecting')
-      ?
 
   %fieldset.submit
     = f.submit 'Update account'

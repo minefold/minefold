@@ -18,7 +18,8 @@ class User
 
   has_one :minecraft_player, dependent: :nullify
   default_scope includes(:minecraft_player)
-
+  accepts_nested_attributes_for :minecraft_player
+  attr_accessible :minecraft_player
 
 # ---
 # Identity
