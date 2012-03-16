@@ -23,6 +23,7 @@ CarrierWave.configure do |config|
 
     config.root = Rails.root.join('public', 'uploads')
     config.cache_dir = Rails.root.join('tmp', 'uploads')
+    config.base_path = '/uploads'
   end
 
 end

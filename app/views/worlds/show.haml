@@ -30,7 +30,7 @@
     - world.players.each do |player|
       %li
         = link_to player_path(player) do
-          = image_tag player.avatar.small.url, width: 20, height: 20
+          = player_avatar_tag player, size: :small
 
 .row
   %aside
@@ -67,7 +67,7 @@
                 / %a.badge-link{href: '/pro'}
                 /   %span.badge.badge-pro Pro
                 %a.url{rel: 'contact', title: comment.author.minecraft_player.username, href: player_path(comment.author.minecraft_player)}
-                  = image_tag comment.author.minecraft_player.avatar.medium.url, width: 40, height: 40
+                  = player_avatar_tag comment.author.minecraft_player, size: :medium
                   = comment.author.minecraft_player.username
               .comment-body
                 = markdown comment.text
