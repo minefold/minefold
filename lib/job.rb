@@ -4,14 +4,16 @@ class Job
   def self.perform(*args)
     job = new(*args)
 
-    return unless job.perform?
-
     begin
-      job.logger.info "started"
-      job.perform!
-      job.logger.info "finished"
+      logger.info "starting #{self.name} [#{args.join(', ')}]"
+      if job.perform?
+        job.perform!
+        logger.info "finished"
+      else
+        logger.info "skipping"
+      end
     rescue => e
-      job.logger.warn e
+      logger.warn "#{e}\n#{e.backtrace.join("\n")}"
       raise e
     end
   end

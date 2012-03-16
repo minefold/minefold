@@ -14,4 +14,8 @@ namespace :jobs do
 
     WorldUploadJob.new(world_upload).process!
   end
+
+  task :minute_played => :environment do
+    Resque.enqueue MinutePlayedJob, ENV['PLAYER_ID'] || '4f611d4c594e986825f7327c', ENV['WORLD_ID'] || '4f593ad0c3b5a024e8000017', Time.now
+  end
 end
