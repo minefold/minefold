@@ -25,35 +25,24 @@
     = hidden_field_tag :id
     %fieldset.username
       = text_field_tag :username, nil, placeholder: 'notch'
-      = image_tag 'spinner.gif', class: 'loading'
 
     %fieldset.submit
       = submit_tag 'Add member'
 
-  - js do
-    :javascript
-      $(document).ready(function() {
-        var addFriendView = new Mf.AddFriendView({
-          searchPath: #{search_player_world_players_path(world.creator, world).to_json}
-        });
-        addFriendView.setElement($('form#add-member'));
-        addFriendView.render();
-      });
-
 %section.members
   %ul
-    - world.players.each do |p|
+    - world.players.sort_by{|p| (world.player_opped?(p) ? "0" : "1") + p.username.downcase }.each do |p|
       %li
         = link_to player_path(p.slug), class: 'avatar' do
           = avatar_tag p, :medium, width: 40, height: 40
         .meta
           .username
             = p.username
-            - if world.opped_players.include? p
+            - if world.player_opped? p
               %em.highlight (op)
           Joined #{time_ago_in_words(p.created_at)} ago.
           - if p.played?
             Last played #{time_ago_in_words(p.last_connected_at)} ago.
 
-          - if can?(:destroy, p)
-            = link_to 'Remove', player_world_player_path(world.creator, world, m), method: :delete
+          - if can?(:operate, world)
+            = link_to 'Remove', player_world_player_path(world.creator.minecraft_player, world, p), method: :delete

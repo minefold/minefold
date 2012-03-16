@@ -2,6 +2,6 @@ class PlayerRemovedFromWhitelistJob < OpActionJob
   @queue = :high
 
   def perform!
-    @world.whitelisted_players.pull(@player)
+    @world.unwhitelist_player! @player
   end
 end

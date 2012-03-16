@@ -163,7 +163,7 @@ class World
     inverse_of: nil
 
   def players
-    opped_players | whitelisted_players
+    (opped_players | whitelisted_players) - blacklisted_players
   end
 
   embeds_many :membership_requests, cascade_callbacks: true do
@@ -172,6 +172,44 @@ class World
     end
   end
 
+  # ops
+  def player_opped? player
+    opped_player_ids.include? player.id
+  end
+
+  def op_player! player
+    add_to_set :opped_player_ids, player.id
+  end
+
+  def deop_player! player
+    pull :opped_player_ids, player.id
+  end
+
+  # whitelist
+  def player_whitelisted? player
+    whitelist_player_ids.include? player.id
+  end
+
+  def whitelist_player! player
+    add_to_set :whitelisted_player_ids, player.id
+  end
+
+  def unwhitelist_player! player
+    pull :whitelisted_player_ids, player.id
+  end
+
+  # blacklist
+  def player_blacklisted? player
+    blacklisted_player_ids.include? player.id
+  end
+
+  def blacklist_player! player
+    add_to_set :blacklisted_player_ids, player.id
+  end
+
+  def pardon_player! player
+    pull :blacklisted_player_ids, player.id
+  end
 
 # ---
 # Online Players
