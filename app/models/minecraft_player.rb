@@ -49,6 +49,10 @@ class MinecraftPlayer
   validates_format_of :username, with: /^\w+$/
   validates_uniqueness_of :username, case_sensitive: false
 
+  scope :by_username, ->(username){
+    where(slug: sanitize_username(username))
+  }
+
   field :slug, type: String
 
   def username=(str)
