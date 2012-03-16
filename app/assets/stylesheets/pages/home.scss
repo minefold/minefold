@@ -1,5 +1,5 @@
+// TODO Move extract this to the better style.
 #pages-home {
-
   header {
     a#brand {
       .logo {
@@ -18,72 +18,76 @@
       margin-bottom: $line * 2;
     }
   }
+}
 
-  #masthead {
-    padding-top: $line * 12;
-    padding-bottom: $line * 36;
-    text-align: center;
+#masthead.homepage {
+  padding-top: $line * 12;
+  padding-bottom: $line * 36;
+  text-align: center;
 
-    .container {
-      @include columns($ncols - 2);
-    }
+  .container {
+    @include columns($ncols - 2);
+  }
 
 
-    h1 {
-      font-weight: 400; font-size: 36px; line-height: $line * 10;
+  h1 {
+    font-weight: 400; font-size: 36px; line-height: $line * 10;
 
-      span.trade {
-        color: desaturate(lighten($teal, 60%), 100%);
-        font-weight: 200; font-size: 18px;
-        position: relative; top: $line * -3;
-      }
-    }
-
-    h2 {
-      font-size: 24px; padding-bottom: $line * 12;
-    }
-
-    a.btn {
-      @include btn($blue, white, darken($blue, 20%));
-      @include box-sizing(border-box);
-      @include columns(6);
-      text-align: center;
-      margin: 0 auto 2*$line;
-
-      clear: both;
-
-      padding: ($line * 3) $gutter;
-      font-size: 18px; line-height: $line * 6;
-
-      span {
-        display: block;
-        font-style: italic; font-size: 12px; line-height: $line * 4;
-      }
-    }
-
-    .nofb {
-      font-size: 12px;
+    .tm {
+      color: desaturate(lighten($teal, 60%), 100%);
+      font-weight: 200; font-size: 18px;
+      position: relative; top: $line * -3;
     }
   }
 
-  .features {
-    margin-bottom: $line * 24;
-    @include row;
+  h2 {
+    font-size: 24px; padding-bottom: $line * 12;
+  }
 
-    li { @include makeColumn(4); margin-bottom: $line * 12; }
-
+  a.btn {
+    @include btn($blue, white, darken($blue, 20%));
+    @include box-sizing(border-box);
+    @include columns(6);
     text-align: center;
+    margin: 0 auto 2*$line;
 
-    figure { min-height: 210px; }
-    figure img { display: block; margin: 0 auto; }
-    figure figcaption { text-align: center; line-height: $line * 4; }
+    clear: both;
 
+    padding: ($line * 3) $gutter;
+    font-size: 18px; line-height: $line * 6;
 
-//    .perspective img { margin: 0 auto; }
+    span {
+      display: block;
+      font-style: italic; font-size: 12px; line-height: $line * 4;
+    }
+  }
 
-    .pricing figure { float: left; width: 50%; }
-    .pricing figure img { margin-top: $line * 10; margin-bottom: $line * 2; }
-
+  .nofb {
+    font-size: 12px;
   }
 }
 
+.product-features {
+  @include row;
+  text-align: center;
+  margin-bottom: $line * 24;
+
+
+  .feature { @include makeColumn(4); margin-bottom: $line * 12; }
+
+
+  .feature > .fig { min-height: 210px; }
+  // TODO Fix the 50px hack
+  .feature > .fig .img { margin: 0 50px; }
+  .feature > .fig .caption { text-align: center; line-height: $line * 4; }
+
+
+  .feature.pricing > .fig {
+    float: left; width: 50%;
+  }
+
+  .feature.pricing > .fig .img {
+    // TODO Fix the 25px hack
+    margin: ($line * 10) 25px ($line * 2) 25px;
+  }
+}

@@ -1,6 +1,6 @@
 - track 'visited homepage'
-- masthead do
-  %h1 Unlimited on-demand Minecraft<span class="trade">&trade;</span> servers
+- masthead(class: 'homepage') do
+  %h1 Unlimited on-demand Minecraft<span class="tm">&trade;</span> servers
   %h2 with super simple setup.
 
   = link_to user_omniauth_authorize_path(:facebook), class: 'btn' do
@@ -12,32 +12,31 @@
     = link_to 'sign up without Facebook', new_user_path
 
 
-%ol.features
-  %li.perspective
+%ol.product-features
+  %li.feature.perspective
+    %figure.fig
+      %a{href: '/chislloyd/minebnb'}
+        = image_tag 'maps.png', class: 'img'
 
-    %figure
-      = link_to '/chrislloyd/minebnb' do
-        = image_tag 'maps.png'
-
-    %h2 A fresh perspective
-    %p
+    %h2.tagline A fresh perspective
+    %p.desc
       Every world you create (or upload) gets a beautiful, interactive map that helps you find your bearings.
 
-  %li.pricing
-    %figure
-      = image_tag 'pricing-traditional.png'
+  %li.feature.pricing
+    %figure.fig
+      = image_tag 'pricing-traditional.png', class: 'img'
       %figcaption Traditional Pricing
 
-    %figure
-      = image_tag 'pricing-minefold.png'
+    %figure.fig
+      = image_tag 'pricing-minefold.png', class: 'img'
       %figcaption Minefold's Pricing
 
-    %h2 Pay individually
-    %p Instead of one person bearing the cost of a server, Minefold lets everybody join individually. Play for 10 hours a month <em>FREE</em> or upgrade to Minefold <span class="pro">Pro</span> for <em>unlimited</em> hours.
+    %h2.tagline Pay individually
+    %p.desc Instead of one person bearing the cost of a server, Minefold lets everybody join individually. Play for 10 hours a month <em>FREE</em> or upgrade to Minefold <span class="pro">Pro</span> for <em>unlimited</em> hours.
 
-  %li.sharing
-    %figure
-      = image_tag 'share.png'
+  %li.feature.sharing
+    %figure.fig
+      = image_tag 'share.png', class: 'img'
 
-    %h2 Show off
-    %p Minefold is the easiest way to display and share your builds. Anybody can explore your world's map and then “clone” it to have an instantly playable copy.
+    %h2.tagline Show off
+    %p.desc Minefold is the easiest way to display and share your builds. Anybody can explore your world's map and then “clone” it to have an instantly playable copy.
