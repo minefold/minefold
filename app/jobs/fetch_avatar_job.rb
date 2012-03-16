@@ -6,6 +6,8 @@ class FetchAvatarJob
   end
 
   def process!(user)
+    return if user.username.nil?
+
     user.fetch_avatar!
     user.save
     puts "downloaded skin for #{user.safe_username}"
