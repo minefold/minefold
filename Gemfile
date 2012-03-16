@@ -82,7 +82,8 @@ group :test do
   gem 'rspec-rails'
   gem 'faker'
   gem 'fabrication'
-  gem 'mongoid-rspec'
+  gem 'mongoid-rspec', :git => 'git://github.com/shingara/mongoid-rspec.git',
+                       :branch => 'mongoid-2.0.0.rc1'
   gem 'autotest-rails'
   gem 'database_cleaner'
   gem 'capybara', '~> 1.1.1'
