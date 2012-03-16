@@ -81,7 +81,11 @@ class MinecraftPlayer
 # Avatars
 
 
-  mount_uploader :avatar, AvatarUploader
+  mount_uploader :avatar, AvatarUploader do
+    def store_dir
+      File.join('player', mounted_as.to_s, model.id.to_s)
+    end
+  end
 
   def fetch_avatar
     self.remote_avatar_url = "http://minecraft.net/skin/#{username}.png"
