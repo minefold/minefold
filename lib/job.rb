@@ -7,9 +7,9 @@ class Job
     return unless job.perform?
 
     begin
-      job.logger.info "started"
+      job.logger.info "started #{self.name}"
       job.perform!
-      job.logger.info "finished"
+      job.logger.info "finished #{self.name}"
     rescue => e
       job.logger.warn e
       raise e
