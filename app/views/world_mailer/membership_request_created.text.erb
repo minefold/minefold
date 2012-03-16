@@ -2,7 +2,7 @@ Hi <%= @creator.username %>,
 
 <%= @user.username %> would like to play in "<%= @world.name %>". You can let them play in your world by going to:
 
-    <%= user_world_members_url(@world.creator, @world) %>
+    <%= player_world_players_url(@world.creator.minecraft_player, @world) %>
 
 You can also stalk <%= @user.username %> first at
 

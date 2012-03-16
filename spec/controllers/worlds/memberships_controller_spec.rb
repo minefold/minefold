@@ -20,7 +20,7 @@ describe Worlds::MembershipsController do
       post :create, user_id: world.creator.slug, world_id: world.slug, username: user.username
 
       # TODO Move out to another spec
-      response.should redirect_to(user_world_members_path(world.creator, world))
+      response.should redirect_to(player_world_players_path(world.creator.minecraft_player, world))
 
       world.reload
       world.members.should include(user)

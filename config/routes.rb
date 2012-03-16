@@ -44,6 +44,9 @@ Minefold::Application.routes.draw do
     get '/account/revive' => 'passwords#edit', :as => :edit_user_password
     put '/account/revive' => 'passwords#update', :as => nil
 
+    get '/pro' => 'users#pro', :as => :pro_account
+    get '/notifications' => 'users#notifications', :as => :notifications_account
+
     get  '/signup' => 'users#new', :as => :new_user
     post '/users' => 'users#create', :as => :users
 

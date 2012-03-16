@@ -119,7 +119,7 @@ class User
 # ---
 # Credits
 
-
+  FREE_HOURS = 10
   BILLING_PERIOD = 1.minute
 
   def self.hours_to_credits(n)

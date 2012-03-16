@@ -1,6 +1,6 @@
 .desc
   %span.user= link_to disconnection.source.username, user_path(disconnection.source)
   left
-  %span.chat= link_to strong_world_fullname(disconnection.target), player_world_path(disconnection.target.creator.player, disconnection.target)
+  %span.chat= link_to strong_world_fullname(disconnection.target), player_world_path(disconnection.target.creator.minecraft_player, disconnection.target)
   = time_ago_in_words disconnection.created_at
   ago

@@ -27,7 +27,7 @@ describe Worlds::MembershipRequestsController do
 
       subject { response }
 
-      it { should redirect_to(user_world_path(world.creator, world)) }
+      it { should redirect_to(player_world_path(world.creator.minecraft_player, world)) }
 
     end
   end
