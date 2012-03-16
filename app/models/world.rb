@@ -31,7 +31,9 @@ class World
   validates_presence_of :name
 
   field :slug, type: String
-  scope :find_by_name, ->(name) { find_by(slug: sanitize_name(name)) }
+  scope :find_by_name, ->(name) {
+    find_by(slug: sanitize_name(name))
+  }
 
   def name=(str)
     super(str.strip)
@@ -165,7 +167,7 @@ class World
     inverse_of: nil
 
   def players
-    MinecraftPlayer.find(opped_player_ids | whitelisted_player_ids)
+    opped_players | whitelisted_players
   end
 
   embeds_many :membership_requests, cascade_callbacks: true do

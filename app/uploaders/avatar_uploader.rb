@@ -2,16 +2,24 @@ class AvatarUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
   storage :fog
 
-  def fog_directory
-    ENV['AVATARS_BUCKET']
-  end
+  if Rails.env.production? or Rails.env.staging?
+    def fog_directory
+      ENV['AVATARS_BUCKET']
+    end
 
-  def fog_host
-    ENV['AVATARS_HOST']
+    def fog_host
+      ENV['AVATARS_HOST']
+    end
+
+  else
+    def fog_directory
+      Rails.root.join('public')
+    end
+
   end
 
   def store_dir
-    model.id.to_s
+    File.join(model.class.name.downcase, model.id.to_s, mounted_as.to_s)
   end
 
   def extension_white_list

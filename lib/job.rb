@@ -4,14 +4,14 @@ class Job
   def self.perform(*args)
     job = new(*args)
 
-    return unless job.perfom?
+    return unless job.perform?
 
     begin
-      logger.info "started"
+      job.logger.info "started"
       job.perform!
-      logger.info "finished"
+      job.logger.info "finished"
     rescue => e
-      logger.warn e
+      job.logger.warn e
       raise e
     end
   end

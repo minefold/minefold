@@ -65,11 +65,11 @@ Pivot.db[:worlds].find({}).each do |world|
 
   puts "Updating #{world["name"]}"
 
-  name = world["slug"].gsub(/[^\w]+/, '_').gsub(/^_|_$/,'')
+  slug = world["slug"].gsub(/[^\w]+/, '_').gsub(/^_|_$/,'')
 
-  if name.blank?
+  if slug.blank?
     print "#{world["name"]} => "
-    name = $stdin.gets
+    slug = $stdin.gets
   end
 
   Pivot.db[:worlds].update(
@@ -78,12 +78,11 @@ Pivot.db[:worlds].find({}).each do |world|
       "$set" => {
         "opped_player_ids" => opped_player_ids,
         "whitelisted_player_ids" => whitelisted_player_ids,
-        "name" => name,
+        "slug" => slug,
         "legacy_name" => world["name"]
       },
       "$unset" => {
-        "memberships" => 1,
-        "slug" => 1
+        "memberships" => 1
       }
     }
   )
