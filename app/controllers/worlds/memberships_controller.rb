@@ -1,9 +1,16 @@
 class Worlds::MembershipsController < ApplicationController
   respond_to :html, :json
 
-  expose(:creator) { User.find_by_slug!(params[:user_id]) }
+  expose(:creator_player) {
+    MinecraftPlayer.find_by(slug: params[:player_id])
+  }
+
+  expose(:creator) {
+    creator_player.user
+  }
+
   expose(:world) {
-    World.find_by_creator_and_slug!(creator, params[:world_id])
+    creator.created_worlds.find_by(name: params[:world_id])
   }
 
   def index
