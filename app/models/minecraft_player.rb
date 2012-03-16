@@ -9,9 +9,9 @@ class MinecraftPlayer
 # --
 
   index [
-    [:_id, Mongo::ASCENDING],
     [:deleted_at, Mongo::ASCENDING],
-    [:slug, Mongo::ASCENDING]
+    [:slug, Mongo::ASCENDING],
+    [:_id, Mongo::ASCENDING]
   ], unique: true
 
   index [
@@ -92,6 +92,23 @@ class MinecraftPlayer
 
   # Minecraft doesn't store default skins so it raises a HTTPError
   rescue OpenURI::HTTPError
+  end
+
+
+# ---
+# Worlds
+
+
+  def worlds
+    World
+      .any_of(
+        {opped_player_ids: self.id},
+        {whitelisted_player_ids: self.id}
+      )
+      .excludes(
+        {blacklisted_player_ids: self.id}
+      )
+      .order_by([:creator_id, :asc], [:slug, :asc])
   end
 
 

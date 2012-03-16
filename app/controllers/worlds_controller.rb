@@ -15,7 +15,7 @@ class WorldsController < ApplicationController
 
   expose(:world) do
     if params[:id]
-      user.created_worlds.find_by(name: params[:id])
+      user.created_worlds.find_by_name(params[:id])
     else
       World.new(params[:world])
     end
