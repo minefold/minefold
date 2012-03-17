@@ -15,7 +15,10 @@ class Ability
     end
 
     # User abilities
-    can [:create], World
+    can [:create], World do
+      user.minecraft_player
+    end
+
     can [:update, :destroy], World, creator: user
 
     can :operate, World do |world|
