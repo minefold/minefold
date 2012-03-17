@@ -179,7 +179,7 @@ class User
 
   def buy_pack!(stripe_token, pack)
     create_charge!(stripe_token, pack) and
-    extend_plan_by(pack.duration) and
+    extend_plan_by(pack.months.months) and
     save!
   end
 

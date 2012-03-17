@@ -15,8 +15,8 @@ class OrdersController < ApplicationController
     current_user.buy_pack!(params[:stripe_token], pack)
 
     track 'paid', amount: pack.cents,
-                  duration: pack.duration,
-                  months: (pack.duration / 1.month)
+                  days: pack.months / 1.day,
+                  months: pack.months
 
     redirect_to user_root_path,
       notice: "Thank you for buying #{pack.months} of Minefold Pro"
