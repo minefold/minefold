@@ -23,10 +23,10 @@ class Ability
     end
 
     can :play, World do |world|
-      not world.blacklisted_player_ids.include?(player.id) and
+      not world.player_blacklisted?(user.minecraft_player) and
       (
-        world.opped_player_ids.include?(player.id) or
-        world.whitelisted_player_ids.include?(player.id)
+        world.player_opped?(user.minecraft_player) or
+        world.player_whitelisted?(user.minecraft_player)
       )
     end
 

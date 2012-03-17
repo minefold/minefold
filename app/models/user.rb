@@ -229,11 +229,6 @@ class User
 # Worlds
 
 
-  # ???
-  def worlds
-    World.all.limit(10)
-  end
-
   has_many :created_worlds, class_name: 'World', inverse_of: :creator
 
   belongs_to :current_world, class_name: 'World', inverse_of: nil
