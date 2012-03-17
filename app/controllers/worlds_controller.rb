@@ -86,7 +86,7 @@ class WorldsController < ApplicationController
 
     track 'cloned world'
 
-    respond_with clone, location: player_world_path(current_user.player, clone)
+    respond_with clone, location: player_world_path(current_user.minecraft_player, clone)
   end
 
   def destroy

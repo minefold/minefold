@@ -20,7 +20,7 @@
   %fieldset.avatar
     %h3= f.label :avatar
 
-    = player_avatar_tag current_user.minecraft_player, size: :large
+    = player_avatar_tag current_user, :large, width: 60, height: 60
     .hint Change your avatar at #{link_to 'Minecraft.net', 'http://minecraft.net/profile', target: '_blank'}
 
   - if current_user.pro?

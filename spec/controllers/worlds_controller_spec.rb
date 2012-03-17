@@ -12,7 +12,7 @@ describe WorldsController do
       }
     }
 
-    it { response.should redirect_to(player_world_path(current_user.player, 'minebnb')) }
+    it { response.should redirect_to(player_world_path(current_user.minecraft_player, 'minebnb')) }
   end
 
   describe "#show" do
@@ -98,28 +98,28 @@ describe WorldsController do
 
     subject { response }
 
-    it { should redirect_to(player_world_path(current_user.player, world.slug)) }
+    it { should redirect_to(player_world_path(current_user.minecraft_player, world.slug)) }
   end
-  
+
   describe '#destroy' do
     let(:player) { Fabricate :user }
     let(:member) { Fabricate :user }
     let(:world) { Fabricate :world }
-    
+
     signin_as { world.creator }
-    
+
     before {
       world.add_member(member)
       world.add_member(player)
       player.current_world = world
       world.save
-      
+
       WorldMailer.should_receive(:world_deleted).
         with(world.name, world.creator.username, player.id) { Struct.new(:deliver).new }
-      
+
       delete :destroy, user_id: world.creator.minecraft_player.slug, id: world.slug
     }
-    
+
     it "safe deletes world" do
       World.where(_id: world.id).should be_empty
       World.unscoped.where(_id: world.id).should have(1).world
