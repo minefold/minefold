@@ -4,6 +4,10 @@ class WorldsController < ApplicationController
   prepend_before_filter :authenticate_user!, except: [:index, :show]
   before_filter :set_invite_code, :only => [:show, :map]
 
+
+# ---
+
+
   expose(:player) {
     MinecraftPlayer.find_by(slug: params[:player_id])
   }
@@ -11,7 +15,6 @@ class WorldsController < ApplicationController
   expose(:user) {
     player.user
   }
-
 
   expose(:world) do
     if params[:id]
@@ -21,10 +24,18 @@ class WorldsController < ApplicationController
     end
   end
 
+
+# ---
+
+
   def index
     @worlds = World.where(:photo.ne => nil)
       .page(params[:page].to_i)
       .order_by([:pageviews, :desc])
+  end
+
+  def new
+    authorize! :create, world
   end
 
   def create
