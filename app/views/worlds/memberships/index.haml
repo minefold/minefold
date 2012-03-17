@@ -13,7 +13,7 @@
         - world.membership_requests.each do |r|
           %li
             = link_to user_path(r.user) do
-              = avatar_tag r.user, :medium, width: 40, height: 40
+              = player_avatar_tag r.user.minecraft_player, size: :medium
             .meta
               .username= r.user.username
               .actions
@@ -34,7 +34,7 @@
     - world.players.sort_by{|p| (world.player_opped?(p) ? "0" : "1") + p.username.downcase }.each do |p|
       %li
         = link_to player_path(p.slug), class: 'avatar' do
-          = avatar_tag p, :medium, width: 40, height: 40
+          = player_avatar_tag p, size: :medium
         .meta
           .username
             = p.username
