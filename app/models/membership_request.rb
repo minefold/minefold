@@ -8,7 +8,7 @@ class MembershipRequest
   validates_presence_of :user
 
   def approve
-    world.add_member(user)
+    world.whitelist_player!(user)
   end
 
 end

@@ -220,12 +220,8 @@ class World
     $redis.smembers("#{redis_key}:connected_players").map {|id| BSON::ObjectId(id)}
   end
 
-  def connected_players
-    User.find(connected_player_ids)
-  end
-
   def offline_players
-    User.find(opped_player_ids + whitelisted_player_ids - player_ids)
+    MinecraftPlayer.find(players.map(&:id) - connected_player_ids)
   end
 
   def say(msg)
@@ -248,6 +244,9 @@ class World
 # ---
 # Settings
 
+  def host
+    "#{slug}.#{creator.username}.minefold.com"
+  end
 
   GAME_MODES = [:survival, :creative]
   LEVEL_TYPES = ['DEFAULT', 'FLAT']

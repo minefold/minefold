@@ -10,9 +10,10 @@ class WorldStartedJob < Job
   end
 
   def perform!
-    world.offline_players.each do |offline_player|
-      unless throttled?(offline_player)
-        WorldMailer.world_started(world.id, offline_player.id).deliver
+    @world.offline_players.each do |offline_player|
+      user = offline_player.user
+      unless user.nil? or throttled?(user)
+        WorldMailer.world_started(@world.id, user.id).deliver
       end
     end
   end

@@ -43,12 +43,14 @@ Pivot.db[:worlds].find({}).each do |world|
   puts "Updating players for #{world["name"]}"
 
   # Figure out player lists
+  creator_player = Pivot.db[:minecraft_players].find_one(user_id: world['creator_id'])
 
-  opped_player_ids = [world["creator_id"]]
-  whitelisted_player_ids = [world["creator_id"]]
+  opped_player_ids = [creator_player["_id"]]
+  whitelisted_player_ids = [creator_player["_id"]]
 
   # Memberships might be blank
   if memberships = world["memberships"]
+    puts "#{world['name']} #{memberships.size}"
     memberships.each do |membership|
       player = Pivot.db[:minecraft_players].find_one(
         {"user_id" => membership["user_id"]}
