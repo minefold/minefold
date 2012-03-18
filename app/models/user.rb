@@ -281,6 +281,7 @@ class User
   end
 
   field :mpid, type: String, default: ->{ self.id.to_s }
+  alias_method :distinct_id, :mpid
 
 
 protected

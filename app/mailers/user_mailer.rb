@@ -1,7 +1,7 @@
 class UserMailer < ActionMailer::Base
   include Resque::Mailer
 
-  include WorldHelper  
+  include WorldHelper
   helper :world
 
   def welcome(user_id)
@@ -16,25 +16,32 @@ class UserMailer < ActionMailer::Base
 
   def credits_reset(user_id)
     @user = User.find user_id
-    
+
     return unless @user.notify? :credits_reset
-    
+
     track @user, 'sent reset credit email'
     mail(to: @user.email, subject: 'You have more Minefold time!')
   end
-  
-  def invite(invitor_id, world_id, invitee_email, message = nil)
-    @invitor = User.find invitor_id
+
+  def invite(player_id, world_id, invitee_email, message = nil)
+    @player = MinecraftPlayer.find player_id
     @world = World.find world_id
-    
-    track @invitor, 'sent invite email'
-    mail(to: invitee_email, subject: "#{@invitor.username} wants you to play Minecraft in #{@world.name}")
+
+    track @player.user, 'sent invite email' if @player.user
+    mail(to: invitee_email, subject: "#{@player.username} wants you to play Minecraft in #{@world.name}")
   end
-  
+
+  def claim_account_info(player_id, email, message = nil)
+    @player = MinecraftPlayer.find player_id
+
+    track @player, 'sent claim email'
+    mail(to: email, subject: "Claim #{@player.username} on Minefold")
+  end
+
   private
-  
+
   def track user, event
-    Mixpanel.track event, distinct_id: user.mpid.to_s, mp_name_tag: user.email
+    Mixpanel.track event, distinct_id: user.distinct_id.to_s, mp_name_tag: user.username
   end
 
   # TODO

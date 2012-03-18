@@ -42,7 +42,7 @@ class WorldMailer < ActionMailer::Base
   def world_started(world_id, user_id)
     @world = World.find(world_id)
     @user = User.find(user_id)
-
+    return if @user.nil?
     return unless @user.notify? :world_started
 
     @user.last_world_started_mail_sent_at = Time.now

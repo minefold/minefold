@@ -22,7 +22,6 @@
         %li.clone
           = button_to 'Clone', clone_player_world_path(world.creator.minecraft_player, world), method: :put
 
-      - else
         %li.membership-request
           - if signed_in? and world.membership_requests.include_user?(current_user)
             = button_to 'Request sent', nil, disabled: true
