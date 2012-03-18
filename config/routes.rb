@@ -44,10 +44,6 @@ Minefold::Application.routes.draw do
     get '/account/revive' => 'passwords#edit', :as => :edit_user_password
     put '/account/revive' => 'passwords#update', :as => nil
 
-    get '/pro' => 'users#pro', :as => :pro_account
-    get '/notifications' => 'users#notifications', :as => :notifications_account
-    get '/settings' => 'users#edit', :as => :edit_user
-
     get  '/signup' => 'users#new', :as => :new_user
     post '/users' => 'users#create', :as => :users
 
@@ -56,8 +52,17 @@ Minefold::Application.routes.draw do
     get  '/confirm/:confirmation_token' => 'confirmations#show', :as => :confirmation
 
     resource(:user,
-             :except => [:index, :show, :destroy, :edit]) do
-   end
+             :path => '/',
+             :except => [:index, :show, :destroy, :edit],
+             :path_names => {:edit => 'settings'}) do
+      get :pro, :as => :pro_account
+      get :notifications, :as => :notifications_account
+      get :verify
+
+      # get '/pro' => 'users#pro', :as => :pro_account
+      # get '/notifications' => 'users#notifications', :as => :notifications_account
+      # get '/settings' => 'users#edit', :as => :edit_user
+    end
   end
 
   root :to => 'pages#home'

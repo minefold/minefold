@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
     render status: :unauthorized, text: 'unauthorized'
   end
 
+  # TODO Extract
   prepend_before_filter do
     if signed_in?
       Exceptional.context user_id: current_user.id,
@@ -22,6 +23,8 @@ class ApplicationController < ActionController::Base
   end
 
   before_filter :set_mpid
+
+  before_filter :require_player_verification
 
 private
 
@@ -39,6 +42,12 @@ private
       resource = warden.user(:user)
       flash[:alert] = I18n.t("devise.failure.already_authenticated")
       redirect_to after_sign_in_path_for(resource)
+    end
+  end
+
+  def require_player_verification
+    if signed_in? and not current_user.minecraft_player
+      redirect_to verify_user_path
     end
   end
 

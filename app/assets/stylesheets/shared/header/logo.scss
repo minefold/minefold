@@ -1,0 +1,76 @@
+.header .logo {
+  color: black; font-weight: 800; font-size: 24px;
+  text-decoration: none;
+
+  .img {
+    background-color: $red;
+    background-repeat: no-repeat;
+    background-image: asset-data-url('logo-small.png');
+  }
+
+  .name {
+    padding-left: $col + $gutter;
+  }
+}
+
+
+// ---
+// App
+
+
+.app .header .logo {
+  .img {
+    position: absolute; left: 0; top: 0; z-index: 100;
+    width: $col; height: $col;
+    background-position: center (($col - 22px) / 2);
+  }
+
+  .name {
+    display: none;
+    font-size: 24px;
+    color: darken(white, 5%);
+    text-shadow: 0 -1px 0 rgba(black, 0.1);
+  }
+}
+
+
+// ---
+// Home
+
+
+.home .header .logo {
+  .img {
+    position: absolute; left: 0; top: 0; z-index: 100;
+    width: $col; height: $col;
+
+    background-image: asset-data-url('logo-large.png');
+    background-position: center (($col - 33px) / 2);
+  }
+
+  .name {
+    font-size: 24px;
+    text-shadow: 0 -1px 0 rgba(black, 0.1);
+    font-weight: 800; text-transform: uppercase;
+
+    line-height: $line * 12;
+  }
+}
+
+
+// ---
+// System
+
+
+.system .header .logo {
+  .img {
+    margin-left: auto; margin-right: auto;
+    width: $col; height: $col;
+
+    background-color: rgba(black, 0.1);
+    background-position: center (($col - 22px) / 2);
+  }
+
+  .name {
+    display: none;
+  }
+}

@@ -1,16 +1,26 @@
-%footer
+%footer.footer
   .container
-    %ol
-      %li.about= link_to 'About', about_page_path
-      %li.pricing= link_to 'Pricing', pricing_page_path
-      %li.help= link_to 'Help', help_page_path
-      %li.blog= link_to 'Blog', 'http://blog.minefold.com'
-      %li.feedback= link_to 'Feedback', 'http://getsatisfaction.com/minefold'
-      %li.fineprint.privacy= link_to 'Privacy', privacy_page_path
-      %li.fineprint.terms= link_to 'Terms', terms_page_path
+    .footer-copy &copy; 2012 Minefold
 
-      %li.social.twitter= link_to 'Facebook', 'https://facebook.com/minefold'
-      %li.social.twitter= link_to 'Twitter', 'https://twitter.com/minefold'
+    %ol.footer-nav
+      %li.item.footer-nav-about
+        = link_to 'About', about_page_path
+      %li.item.footer-nav-pricing
+        = link_to 'Pricing', pricing_page_path
+      %li.item.footer-nav-help
+        = link_to 'Help', help_page_path
+      %li.item.footer-nav-blog
+        = link_to 'Blog', 'http://blog.minefold.com'
+      %li.item.footer-nav-feedback
+        = link_to 'Feedback', 'http://getsatisfaction.com/minefold'
 
-- if Rails.env.production?
-  = render partial: 'shared/analytics'
+      %li.item.footer-nav-privacy.fineprint
+        = link_to 'Privacy', privacy_page_path
+      %li.footer-nav-terms.fineprint
+        = link_to 'Terms', terms_page_path
+
+    %ol.footer-nav.social
+      %li.item.footer-nav-facebook
+        = link_to 'Facebook', 'https://facebook.com/minefold'
+      %li.item.footer-nav-twitter
+        = link_to 'Twitter', 'https://twitter.com/minefold'

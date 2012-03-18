@@ -1,0 +1,15 @@
+.system {
+  background: darken(white, 5%);
+
+  .header, .page, .footer {
+    & > .container {
+      @include columns(6);
+    }
+  }
+
+  .page .container {
+    @include box-sizing(border-box);
+    padding: ($line * 4) $gutter;
+    background: white;
+  }
+}

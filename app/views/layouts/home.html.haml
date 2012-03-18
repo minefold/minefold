@@ -1,5 +1,5 @@
 !!!
-%html.app{app_html_attrs}
+%html.home{app_html_attrs}
   %head{prefix: fb_head_prefix}
     = render partial: 'shared/head'
 
@@ -11,7 +11,7 @@
 
     = yield :masthead
 
-    #page
+    #page.page
       .container= yield
 
     = render partial: 'shared/footer'

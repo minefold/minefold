@@ -1,17 +1,18 @@
 !!!
-%html.app{app_html_attrs}
+%html.system{app_html_attrs}
   %head{prefix: fb_head_prefix}
     = render partial: 'shared/head'
 
   %body
     #fb-root
 
-    = render partial: 'shared/header'
-    = render partial: 'shared/flash_messages'
+    %header.header
+      .container
+        = render partial: 'shared/header/logo'
 
     = yield :masthead
 
-    #page
+    #page.page
       .container= yield
 
     = render partial: 'shared/footer'

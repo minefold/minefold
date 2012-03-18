@@ -2,7 +2,11 @@ class UsersController < Devise::RegistrationsController
   respond_to :html
 
   prepend_before_filter :require_no_authentication, :only => [:new, :create]
-  prepend_before_filter :authenticate_user!, :only => [:dashboard, :edit, :update]
+  prepend_before_filter :authenticate_user!, :only => [:dashboard, :edit, :update, :verify]
+
+  skip_before_filter :require_player_verification, :only => :verify
+
+  layout 'system', :only => :verify
 
 
 # ---
@@ -63,6 +67,10 @@ class UsersController < Devise::RegistrationsController
     respond_with(current_user, location: edit_user_path) do |format|
       format.html { redirect_to :back }
     end
+  end
+
+  def verify
+    redirect_to(user_root_path) 
   end
 
 end

@@ -1,19 +1,26 @@
-footer {
+.footer {
+  @include clearfix;
   border-top: 1px solid rgba(black, 0.05);
+  padding-top: $line * 2;
   margin-bottom: $line * 20;
-
   font-size: 11px; line-height: $line * 4; font-family: $system;
 
-  ol {
-    @include row;
 
-    li {
+  .footer-copy {
+    float: left;
+    color: rgba(black, 0.2);
+  }
+
+  .footer-nav {
+    float: left;
+
+    > li {
       @include gridColumn;
+
       a {
         display: block;
         color: rgba(black, 0.4);
         text-decoration: none;
-        line-height: 6*$line;
 
         &:hover {
           color: black;
@@ -21,21 +28,44 @@ footer {
       }
 
       &.fineprint a {
-        color: darken(white, 20%);
-        font-weight: 400;
+        color: darken(white, 20%); font-weight: 400;
 
         &:hover {
           color: darken(white, 40%);
         }
       }
-
-      &.social {
-        float: right;
-      }
     }
   }
 
-  .mixpanel {
-    float: right; margin-top: $line * 4; opacity: 0;
+  .footer-nav.social {
+    float: right;
+  }
+}
+
+
+// ---
+// System
+
+
+.system .footer {
+  border-top: none;
+  color: rgba(black, 0.2);
+  text-shadow: 0 1px 0 rgba(white, 0.8);
+
+  > .container {
+    @include box-sizing(border-box);
+    padding: $line $gutter;
+  }
+
+  .footer-nav .item {
+      margin-left: $line;
+  }
+
+  .footer-nav.social,
+  .footer-nav-blog,
+  .footer-nav-feedback,
+  .footer-nav-privacy,
+  .footer-nav-terms {
+    display: none;
   }
 }
