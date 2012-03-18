@@ -1,3 +1,7 @@
+@function grid-width($n) {
+  @return ($n * $col) + (($n - 1) * $gutter)
+}
+
 @mixin container {
   width: $width;
   margin-left: auto;
@@ -6,11 +10,11 @@
 }
 
 @mixin columns($n) {
-  width: ($col * $n) + ($gutter * ($n - 1));
+  width: grid-width($n);
 }
 
 @mixin offset($n) {
-  margin-left: ($col * $n) + ($gutter * ($n - 1)) + ($gutter * 2);
+  margin-left: grid-width($n) + ($gutter * 2);
 }
 
 @mixin gridColumn {

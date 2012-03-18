@@ -1,8 +1,8 @@
 .system {
   background: darken(white, 5%);
 
-  .header, .page, .footer {
-    & > .container {
+  .header, .masthead, .page, .footer {
+    > .container {
       @include columns(6);
     }
   }

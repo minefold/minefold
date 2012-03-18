@@ -1,0 +1,57 @@
+.verification-steps {
+  @include clearfix;
+  border-bottom: 2px solid black;
+
+  > .step {
+    @include box-sizing(border-box);
+    float: left;
+    line-height: $line * 8;
+    @include clearfix;
+
+
+    > .number {
+      display: block;
+      float: left;
+
+      width: $line * 8;
+      background: $blue;
+
+      line-height: $line * 8;
+
+      text-align: center; color: white; font-weight: 900;
+    }
+
+    > .desc {
+      display: block;
+      float: left;
+      font-size: 14px; font-weight: 900;
+      color: $blue;
+      margin: 0 ($gutter / 2);
+    }
+
+
+    &.is-done {
+      border-bottom-color: black;
+
+      > .number {
+        background-color: black;
+        content: '^';
+      }
+
+      > .desc {
+        color: black;
+        text-shadow: 0 1px 0 white;
+      }
+    }
+
+    &.is-pending {
+//      border-bottom-color: rgba(black, 0.1);
+      .number {
+        background-color: rgba(black, 0.1);
+      }
+      .desc {
+        color: rgba(black, 0.2);
+      }
+    }
+  }
+}

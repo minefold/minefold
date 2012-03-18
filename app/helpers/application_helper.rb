@@ -49,6 +49,8 @@ module ApplicationHelper
   end
 
   def masthead(attrs={}, &blk)
+    attrs[:class] = ['masthead', *attrs[:class]]
+
     html = content_tag(:section,
       content_tag(:div, capture(&blk), class: 'container'),
       attrs.merge(id: 'masthead'))
