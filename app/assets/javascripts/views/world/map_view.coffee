@@ -46,7 +46,7 @@ class Mf.WorldMapView extends Backbone.View
     mapType = new google.maps.ImageMapType(
       getTileUrl: @tileUrl
       tileSize: new google.maps.Size(@options.tileSize, @options.tileSize)
-      maxZoom: 7
+      maxZoom: @options.zoomLevels
       minZoom: 0
     )
 
