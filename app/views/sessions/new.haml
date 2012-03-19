@@ -2,29 +2,27 @@
 
 - title  'Sign in'
 - masthead do
-  %h1 Hey #{greetings.sample}, sign in
+  %h1 Sign in to Minefold
   %p
-    or #{link_to 'sign up for a new account', new_user_path}.
+    or #{link_to 'sign up', new_user_path}
 
-= form_for :user, as: :user, url: session_path(:user) do |f|
-  %section
-    = link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook), class: 'btn'
+%section
+  = link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook), class: ['btn', 'fb']
 
-  %section.divider – or –
+  = form_for :user, as: :user, url: session_path(:user) do |f|
+    %fieldset
+      %section.username
+        = f.text_field :email_or_username, placeholder: 'Email or username', tabindex: 1
 
-  %fieldset
-    %section.username
-      = f.text_field :email_or_username, placeholder: 'Email or username', tabindex: 1
+      %section.password
+        = f.password_field :password, placeholder: 'Password', tabindex: 2
 
-    %section.password
-      = f.password_field :password, placeholder: 'Password', tabindex: 2
+    %fieldset.submit
+      = f.submit 'Sign in', tabindex: 4
+      %section.remember-me
+        = f.check_box :remember_me, tabindex: 3
+        = f.label :remember_me
 
-  %fieldset.submit
-    = f.submit 'Sign in', tabindex: 4
-    %section.remember-me
-      = f.check_box :remember_me, tabindex: 3
-      = f.label :remember_me
-
-  %fieldset
-    = link_to new_user_password_path, class: 'forgot' do
-      Forgotten your password #{greetings.sample}?
+    %fieldset
+      = link_to new_user_password_path, class: 'forgot' do
+        Forgotten your password #{greetings.sample}?

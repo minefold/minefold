@@ -1,13 +1,21 @@
 - track 'visited new user page'
 - title  'Create your account'
 - masthead do
-  %h1 Sign up for Minefold
-  %p
-    or #{link_to 'sign in to an existing account', new_user_session_path}.
+  %ol.verification-steps
+    %li.step
+      Sign up
 
-= form_for user do |f|
-  %section
-    = link_to "Sign up with Facebook", user_omniauth_authorize_path(:facebook), class: 'btn'
+    %li.step.is-pending
+      Verify
 
-  %section.divider – or –
-  = render partial: 'form', object: f
+    %li.step.is-pending
+      Play!
+
+%section
+  = link_to "Sign up with Facebook", user_omniauth_authorize_path(:facebook), class: ['btn', 'fb']
+
+.conditional or…
+
+%section
+  = form_for user do |f|
+    = render partial: 'form', object: f

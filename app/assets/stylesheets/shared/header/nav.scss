@@ -13,3 +13,12 @@ ol#nav {
     color: white; font-size: 11px; line-height: $line * 2;
   }
 }
+
+
+// ---
+// System
+
+
+.system ol#nav {
+  display: none;
+}

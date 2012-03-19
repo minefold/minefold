@@ -1,4 +1,4 @@
-#page {
+.page {
   line-height: 5*$line;
   color: darken(white, 60%);
 
@@ -73,15 +73,22 @@
     background: darken(white, 5%);
     padding: $line ($gutter/2);
   }
-
-  .btn {
-    @include btn($blue, white, $green);
-  }
 }
 
 
 .system .page {
-  & > .container {
+  > .container > section {
+    @include box-sizing(border-box);
     @include box-shadow(0 1px 0 rgba(black, 0.1));
+    padding: ($line * 4) $gutter;
+    background: white;
+  }
+
+  > .container > .conditional {
+    margin: ($line * 4) 0; padding: 0 $gutter;
+    text-transform: uppercase;
+
+    text-shadow: 0 1px 0 rgba(white, 0.8);
+    color: rgba(black, 0.2); font-style: italic;
   }
 }

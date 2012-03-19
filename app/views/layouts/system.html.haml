@@ -5,17 +5,11 @@
 
   %body
     #fb-root
-
-    %header.header
-      .container
-        = render partial: 'shared/header/logo'
-
+    = render partial: 'shared/header'
     = yield :masthead
 
-    #page.page
-      .container= yield
+    = yield
 
     = render partial: 'shared/footer'
-
     = javascript_include_tag 'application'
     = yield :js

@@ -55,3 +55,7 @@
     cursor: default;
   }
 }
+
+.page a.btn {
+  @include btn($blue, white, darken($blue, 10%));
+}

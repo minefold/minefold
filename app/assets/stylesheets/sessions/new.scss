@@ -1,7 +1,7 @@
 #sessions-new, #sessions-create {
   form {
     @include columns(4);
-    
+
     .btn { text-align: center; }
 
     input[type=submit], .remember-me {
@@ -13,4 +13,17 @@
       line-height: $line * 4;
     }
   }
+}
+
+hr {
+  margin: ($line * 4) (-$gutter);
+  padding: 0 $gutter;
+  border: none;
+  border-bottom: 5px solid darken(white, 5%);
+}
+
+.page a.btn.fb {
+  text-align: center;
+  line-height: $line * 8;
+  font-size: 18px;
 }

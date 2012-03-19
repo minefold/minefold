@@ -44,7 +44,7 @@
     font-size: 24px; padding-bottom: $line * 12;
   }
 
-  a.btn {
+  .btn {
     @include btn($blue, white, darken($blue, 20%));
     @include box-sizing(border-box);
     @include columns(6);
