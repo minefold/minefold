@@ -15,6 +15,7 @@ Minefold::Application.routes.draw do
   # end
 
   post '/stripe/webhook' => 'stripe#webhook'
+  post '/pusher/auth' => 'pusher#auth'
 
   get '/oembed' => 'o_embed#show', :defaults => { :format => 'json' }
 
@@ -53,16 +54,17 @@ Minefold::Application.routes.draw do
 
     resource(:user,
              :path => '/',
-             :except => [:index, :show, :destroy, :edit],
+             :except => [:index, :show, :destroy],
              :path_names => {:edit => 'settings'}) do
       get :pro, :as => :pro_account
       get :notifications, :as => :notifications_account
       get :verify
 
       # get '/pro' => 'users#pro', :as => :pro_account
-      # get '/notifications' => 'users#notifications', :as => :notifications_account
       # get '/settings' => 'users#edit', :as => :edit_user
     end
+
+    get '/settings/notifications' => 'users#notifications', :as => :notifications_account
   end
 
   root :to => 'pages#home'

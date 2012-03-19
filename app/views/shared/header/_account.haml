@@ -5,14 +5,11 @@
     });
 
 %ol#account
-  - if not user_signed_in?
+  - if not signed_in?
     %li.account-signup= link_to 'Sign Up', new_user_path
     %li.account-signin= link_to 'Sign In', new_user_session_path
 
-  - elsif not current_user.minecraft_player
-    - # No current player
-
-  - else
+  - elsif current_user.verified?
     %li.account-plan
       - unless current_user.pro?
         %span.time #{current_user.hours_left}h left

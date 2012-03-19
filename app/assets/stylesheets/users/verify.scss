@@ -1,57 +1,71 @@
 .verification-steps {
-  @include clearfix;
-  border-bottom: 2px solid black;
+  @include row;
+  margin-left: 0;
 
   > .step {
-    @include box-sizing(border-box);
-    float: left;
-    line-height: $line * 8;
-    @include clearfix;
+    @include gridColumn;
+    line-height: $line * 4; margin-top: $line * 2; margin-bottom: $line * 2;
+    font-size: 18px;
 
-
-    > .number {
-      display: block;
-      float: left;
-
-      width: $line * 8;
-      background: $blue;
-
-      line-height: $line * 8;
-
-      text-align: center; color: white; font-weight: 900;
+    &:before {
+      display: block; float: left;
+      margin-right: $gutter / 2;
+      text-align: center; font-weight: 900;
     }
 
-    > .desc {
-      display: block;
-      float: left;
-      font-size: 14px; font-weight: 900;
-      color: $blue;
-      margin: 0 ($gutter / 2);
+    @for $i from 1 through 3 {
+      &:nth-child(#{$i}):before {
+        content: "#{$i}";
+      }
     }
-
 
     &.is-done {
-      border-bottom-color: black;
-
-      > .number {
-        background-color: black;
-        content: '^';
-      }
-
-      > .desc {
-        color: black;
-        text-shadow: 0 1px 0 white;
-      }
+      color: rgba(black, 0.2);
     }
 
     &.is-pending {
-//      border-bottom-color: rgba(black, 0.1);
-      .number {
-        background-color: rgba(black, 0.1);
-      }
-      .desc {
-        color: rgba(black, 0.2);
-      }
+      color: rgba(black, 0.2);
+    }
+  }
+}
+
+.verification-status {
+
+  > .host {
+    margin: ($line * 6) 0;
+    color: $blue; font-weight: 900; font-size: 28px;
+  }
+
+  > .spinner {
+    padding-left: 16px + ($gutter / 2);
+  }
+
+  > .success {
+    background: $green;
+    padding: ($line * 2) $gutter;
+    margin: 0 (-$gutter);
+    color: white;
+    font-weight: 600; font-size: 18px;
+    text-shadow: 0 1px 0 rgba(black, 0.1);
+  }
+
+  &.is-waiting {
+    > .spinner {
+      background: url(image-path('spinner.gif')) no-repeat left 4px;
+      opacity: 0.6;
+    }
+    > .success {
+      display: none;
+    }
+  }
+
+  &.is-verified {
+    > .host { display: none; }
+    > .spinner {
+      display: none;
+    }
+    > .success {
+      display: block;
     }
   }
 }

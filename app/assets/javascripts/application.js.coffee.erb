@@ -10,6 +10,7 @@
 #= require jquery.elastic
 
 #= require_self
+#= require ./pusher
 #= require_tree ./models
 #= require_tree ./collections
 #= require_tree ./views
@@ -17,8 +18,8 @@
 
 window.Mf = {}
 
-if Pusher?
-  Mf.pusher = new Pusher(<%= Pusher.key.to_json %>, encrypted: true)
+# TODO Transition namespace over to lowercase
+window.mf = window.Mf
 
 window.delay = (ms, fn) -> setTimeout(fn, ms)
 window.every = (ms, fn) -> setInterval(fn, ms)

@@ -4,7 +4,7 @@
 
 .header {
   @include clearfix;
-
+  @include box-shadow(0 1px 0 rgba(black, 0.1));
   position: relative; z-index: 99;
 
   .container {
@@ -17,27 +17,9 @@
 
 
 // ---
-// App
-
-
-.app .header {
-  @include box-shadow(0 1px 0 rgba(black, 0.1));
-}
-
-
-// ---
-// Home
-
-
-.home .header {
-  @include box-shadow(0 1px 0 rgba(black, 0.1));
-}
-
-
-// ---
 // System
 
 
 .system .header {
-  margin-bottom: $line * 16;
+  @include box-shadow(none);
 }

@@ -2,21 +2,37 @@
 - masthead do
   %ol.verification-steps
     %li.step.is-done
-      .number 1
-      .desc Sign up
+      Sign up
 
     %li.step
-      .number 2
-      .desc Verify Account
+      Verify
 
     %li.step.is-pending
-      .number 3
-      .desc Start playing
+      Play!
 
-%p You you need to verify your Minecraft username by connecting to
+.verification-status.is-waiting
+  %p.instructions Before you can play on Minefold we need to verify your Minecraft account. Just directly connect to this server in the game:
 
-%pre
-  %code xkcd.verify.minefold.com.
+  .host= current_user.verification_host
+  .spinner Waiting for you to connect…
+  .success
+    Verified player
+    %em.username chrislloyd
 
-%p
-  Waiting…
+- js do
+  :javascript
+    $(document).ready(function() {
+
+      mf.userChannel = mf.pusher.subscribe(#{current_user.private_channel_key.to_json});
+
+      mf.userChannel.bind('verified', function(data) {
+        $('.verification-status')
+          .removeClass('is-waiting')
+          .addClass('is-verified')
+          .find('.username')
+            .text(data.username);
+
+        window.location = '/';
+      });
+    });
+

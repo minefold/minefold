@@ -5,21 +5,55 @@ class User
   include Mongoid::Paranoia
 
 
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :email,
+                  :password,
+                  :password_confirmation,
+                  :remember_me,
+                  :minecraft_player
+
 
 # --
+# Indexes
 
-  # Indexes
+
+
 
 
 # ---
 # Minecraft Account
 
 
+  VERIFICATION_TOKEN_LENGTH = 6
+
+  def self.verification_token_exists?(token)
+    where(verification_token: token).exists?
+  end
+
+  def self.free_verification_token
+    begin
+      token = rand(36 ** VERIFICATION_TOKEN_LENGTH).to_s(36)
+    end while verification_token_exists?(token)
+    token
+  end
+
+
   has_one :minecraft_player, dependent: :nullify
   default_scope includes(:minecraft_player)
   accepts_nested_attributes_for :minecraft_player
-  attr_accessible :minecraft_player
+
+  def verified?
+    !!minecraft_player
+  end
+
+  field :verification_token, type: String, default: ->{
+    self.class.free_verification_token
+  }
+  validates_uniqueness_of :verification_token
+
+  def verification_host
+    "#{verification_token}.verify.minefold.com"
+  end
+
 
 # ---
 # Identity
@@ -269,6 +303,20 @@ class User
   #   photos.published
   # end
   # accepts_nested_attributes_for :pending_photos
+
+
+
+# ---
+# Messaging
+
+
+  def private_channel_key
+    "private-#{self.class.name.downcase}-#{id}"
+  end
+
+  def private_channel
+    Pusher[private_channel_key]
+  end
 
 
 # ---
