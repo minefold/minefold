@@ -9,6 +9,10 @@ html {
   text-rendering: optimizeLegibility;
 }
 
+body > section {
+  @include container;
+}
+
 strong {
   font-weight: 600;
 }

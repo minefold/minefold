@@ -1,7 +1,7 @@
 .system {
   background: darken(white, 5%);
 
-  .container {
+  .container, body > section {
     @include columns(6);
   }
 }
