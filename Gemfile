@@ -54,7 +54,7 @@ gem 'exceptional'
 gem 'statsd-instrument'
 gem 'rpm_contrib'
 gem 'newrelic_rpm'
-gem 'em-mixpanel'
+gem 'em-mixpanel', git: 'https://github.com/minefold/em-mixpanel'
 
 # Mail
 gem 'createsend'
