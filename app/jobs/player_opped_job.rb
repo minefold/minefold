@@ -12,8 +12,10 @@ class PlayerOppedJob
 
   def process!(world, user)
     membership = world.memberships.where(user_id: user.id).first
-    membership.op!
+    if membership
+      membership.op! 
 
-    world.save
+      world.save
+    end
   end
 end
