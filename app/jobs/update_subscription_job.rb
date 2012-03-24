@@ -7,11 +7,15 @@ class UpdateSubscriptionJob
   
   def process! user
     subscriber = CreateSend::Subscriber.new ENV['CAMPAIGN_MONITOR_USER_LIST_ID'], user.email
-    subscriber.update user.email, user.username, [{
-        Key: 'Username', 
-        Value: user.username
-      }],
-      false
-    puts "updated subscription #{user.id} #{user.username} #{user.email}"
+    begin
+      subscriber.update user.email, user.username, [{
+          Key: 'Username', 
+          Value: user.username
+        }],
+        false
+      puts "updated subscription #{user.id} #{user.username} #{user.email}"
+    rescue CreateSend::BadRequest => e
+      puts "#{e}"
+    end
   end
 end
