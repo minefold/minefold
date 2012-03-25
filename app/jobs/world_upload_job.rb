@@ -45,7 +45,7 @@ class WorldUploadJob
     pusher.trigger('error', e.message)
 
   rescue => e
-    pusher.trigger('error', 'Something horrible happend. Sorry!')
+    pusher.trigger('error', 'Something horrible happened. Sorry!')
 
     raise e
   end
