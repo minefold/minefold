@@ -1,11 +1,7 @@
 class PagesController < ApplicationController
 
-  skip_before_filter :require_player_verification
+  skip_before_filter :require_player_verification, except: [:home]
 
-  layout 'home', :only => :home
-
-  def home
-    redirect_to(user_root_path) if signed_in?
-  end
+  layout 'home', only: [:home]
 
 end

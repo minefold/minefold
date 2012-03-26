@@ -1,4 +1,4 @@
-@mixin btn($bg, $text, $hover: black) {
+@mixin button($bg, $text, $hover: black) {
   @include box-sizing(border-box);
   color: $text;
   background-color: $bg;
@@ -54,4 +54,8 @@
 
     cursor: default;
   }
+}
+
+.page a.btn {
+  @include button($blue, white, darken($blue, 10%));
 }

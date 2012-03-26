@@ -1,30 +1,29 @@
-- greetings = %w(buddy mate pal)
-
 - title  'Sign in'
 - masthead do
-  %h1 Hey #{greetings.sample}, sign in
-  %p
-    or #{link_to 'sign up for a new account', new_user_path}.
+  %h1 Sign in to Minefold
 
-= form_for :user, as: :user, url: session_path(:user) do |f|
-  %section
-    = link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook), class: 'btn'
+%section
+  = link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook), class: ['btn', 'fb']
 
-  %section.divider – or –
+.noop
+  or
 
-  %fieldset
-    %section.username
-      = f.text_field :email_or_username, placeholder: 'Email or username', tabindex: 1
+%section
+  = form_for :user, as: :user, url: session_path(:user) do |f|
+    %fieldset.details
+      %section.username
+        = f.text_field :email_or_username, placeholder: 'Email or Minecraft username', tabindex: 1
 
-    %section.password
-      = f.password_field :password, placeholder: 'Password', tabindex: 2
+      %section.password
+        = f.password_field :password, placeholder: 'Password', tabindex: 2
 
-  %fieldset.submit
-    = f.submit 'Sign in', tabindex: 4
-    %section.remember-me
-      = f.check_box :remember_me, tabindex: 3
-      = f.label :remember_me
+    %fieldset.submit
+      = f.submit 'Sign in', tabindex: 4, class: 'btn'
 
-  %fieldset
-    = link_to new_user_password_path, class: 'forgot' do
-      Forgotten your password #{greetings.sample}?
+      %section.remember-me
+        = f.check_box :remember_me, tabindex: 3
+        = f.label :remember_me
+
+    %fieldset.forgotten
+      = link_to new_user_password_path, class: 'forgot' do
+        Forgotten your password?

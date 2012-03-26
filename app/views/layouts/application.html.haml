@@ -5,14 +5,11 @@
 
   %body
     #fb-root
-
     = render partial: 'shared/header'
     = render partial: 'shared/flash_messages'
-
     = yield :masthead
 
-    #page
-      .container= yield
+    = yield
 
     = render partial: 'shared/footer'
 

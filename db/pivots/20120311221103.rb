@@ -1,7 +1,7 @@
 # Create MinecraftPlayers out of players
 
 Pivot.db[:users].find({}).each do |user|
-  if user["username"] and user["minutes_played"] > 0
+  if user["username"]
     puts "Creating player for #{user["username"]}"
 
     username = user["username"].gsub(/[^\w]/, '')

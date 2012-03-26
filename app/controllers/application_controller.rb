@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   class NotFound < StandardError; end
 
   rescue_from Mongoid::Errors::DocumentNotFound, NotFound do
-    render status: :not_found, template: 'errors/not_found'
+    render status: :not_found, template: 'errors/not_found', layout: 'system'
   end
 
   rescue_from CanCan::AccessDenied do
@@ -25,6 +25,10 @@ class ApplicationController < ActionController::Base
   before_filter :set_mpid
 
   before_filter :require_player_verification
+
+  # def authenticate_user!
+  #   raise devise_controller?.to_s
+  # end
 
 private
 
@@ -46,7 +50,7 @@ private
   end
 
   def require_player_verification
-    if signed_in? and not current_user.minecraft_player
+    if signed_in? and not current_user.verified?
       redirect_to verify_user_path
     end
   end

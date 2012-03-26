@@ -5,7 +5,7 @@ class Ability
     # Public abilities
     can :read, [World, User]
 
-    return unless user
+    return unless user and user.verified?
 
     player = user.minecraft_player
 
@@ -15,9 +15,7 @@ class Ability
     end
 
     # User abilities
-    can [:create], World do
-      user.minecraft_player
-    end
+    can [:create], World
 
     can [:update, :destroy], World, creator: user
 

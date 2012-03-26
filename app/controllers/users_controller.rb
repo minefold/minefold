@@ -1,12 +1,12 @@
 class UsersController < Devise::RegistrationsController
   respond_to :html
 
-  prepend_before_filter :require_no_authentication, :only => [:new, :create]
-  prepend_before_filter :authenticate_user!, :only => [:dashboard, :edit, :update, :verify]
+  prepend_before_filter :require_no_authentication, only: [:new, :create]
+  prepend_before_filter :authenticate_scope!, only: [:dashboard, :edit, :update, :verify]
 
   skip_before_filter :require_player_verification, :only => :verify
 
-  layout 'system', :only => :verify
+  layout 'system', only: [:new, :verify]
 
 
 # ---
@@ -42,7 +42,7 @@ class UsersController < Devise::RegistrationsController
 
       track '$signup', distinct_id: user.mpid.to_s, mp_name_tag: user.email
 
-      respond_with(user, location: user_root_path)
+      respond_with(user, location: verify_user_path)
     else
       clean_up_passwords(user)
       respond_with(user)
@@ -70,7 +70,7 @@ class UsersController < Devise::RegistrationsController
   end
 
   def verify
-    # redirect_to(:back) if current_user.verified?
+    # redirect_to(user_root_path) if current_user.verified?
   end
 
 end

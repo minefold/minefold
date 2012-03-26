@@ -1,15 +1,19 @@
 .system {
   background: darken(white, 5%);
 
-  .header, .masthead, .page, .footer {
-    > .container {
-      @include columns(6);
-    }
+  html {
+    min-width: 400px;
   }
 
-  .page .container {
-    @include box-sizing(border-box);
-    padding: ($line * 4) $gutter;
-    background: white;
+  .container, body > section {
+    @include columns(6);
+  }
+
+  body > .noop {
+    margin: ($line * 2) 0;
+    text-transform: uppercase;
+    text-shadow: 0 1px 0 rgba(white, 0.8);
+    color: rgba(black, 0.2); font-size: 18px; font-style: italic;
+    text-align: center;
   }
 }

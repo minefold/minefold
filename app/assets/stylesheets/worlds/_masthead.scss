@@ -1,4 +1,4 @@
-.worlds-controller #masthead {
+.worlds-controller .masthead {
   padding: ($line * 4) 0;
 
   h1 {
@@ -8,7 +8,7 @@
   }
   h2 {
     font-size: 12px;
-    font-family: $system;
+    font-family: $lucida-grande;
     line-height: $line * 4;
     color: darken(white, 40%);
   }
@@ -22,7 +22,7 @@
   }
 
   form input[type=submit], a.btn {
-    @include btn($blue, white, darken($blue, 20%));
+    @include button($blue, white, darken($blue, 20%));
     padding: $line ($gutter); line-height: $line * 4;
     margin: ($line) 0;
   }

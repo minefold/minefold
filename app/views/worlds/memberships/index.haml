@@ -5,21 +5,23 @@
     = link_to player_world_path(player, world) do
       ← back to #{world.name}
 
-- if can? :operate, world
-  - if world.membership_requests.any?
-    %h2 Pending Membership Requests
-    %section.members
-      %ul
-        - world.membership_requests.each do |r|
-          %li
-            = link_to user_path(r.user) do
-              = player_avatar_tag r.user.minecraft_player, size: :medium
-            .meta
-              .username= r.user.username
-              .actions
-                = button_to 'Approve', approve_player_world_membership_request_path(player, world, r), method: :put, class: 'approve'
-                = button_to 'Ignore', player_world_membership_request_path(player, world, r), method: :delete, class: 'ignore'
+%section
+  - if can? :operate, world
+    - if world.membership_requests.any?
+      %h2 Pending Membership Requests
+      %section.members
+        %ul
+          - world.membership_requests.each do |r|
+            %li
+              = link_to player_path(r.user.minecraft_player) do
+                = player_avatar_tag r.user.minecraft_player, size: :medium
+              .meta
+                .username= r.user.username
+                .actions
+                  = button_to 'Approve', approve_player_world_membership_request_path(player, world, r), method: :put, class: 'approve'
+                  = button_to 'Ignore', player_world_membership_request_path(player, world, r), method: :delete, class: 'ignore'
 
+%section
   %h2 Add a friend
   = form_tag player_world_players_path, method: :post, id: 'add-member' do
     = hidden_field_tag :id

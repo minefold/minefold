@@ -1,4 +1,5 @@
 - title_and_masthead 'Create a world'
 
-= form_for world, html: {id: 'new-world'} do |f|
-  = render partial: 'form', object: f
+%section
+  = form_for world, html: {id: 'new-world'} do |f|
+    = render partial: 'form', object: f

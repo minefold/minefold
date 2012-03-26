@@ -1,6 +1,7 @@
 ol#account {
   @include clearfix;
   margin-right: - $gutter/2;
+  float: right;
 
   li { float: left; }
   li a {
@@ -24,6 +25,7 @@ ol#account {
 
   li.account-user {
     position: relative;
+
     img { display: block; }
 
     ol {
@@ -32,7 +34,12 @@ ol#account {
     }
 
     ol li { float: none; margin: 0; font-weight: 600; }
-    ol li a { border: none; color: white; }
+    ol li a {
+      border: none; color: white;
+
+      font-family: $lucida-grande;
+      font-size: 12px; font-weight: normal; padding: $line ($gutter / 2);
+    }
 
     ol li a:hover { background-color: darken($blue, 20%); color: white; }
 

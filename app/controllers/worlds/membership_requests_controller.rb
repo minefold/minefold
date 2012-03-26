@@ -4,11 +4,13 @@ class Worlds::MembershipRequestsController < ApplicationController
   prepend_before_filter :authenticate_user!
 
   expose(:player) {
-    MinecraftPlayer.find_by(slug: params[:player_id])
+    MinecraftPlayer.find_by_username(params[:player_id])
   }
+
   expose(:creator) {
     player.user
   }
+
   expose(:world) {
     creator.created_worlds.find_by(name: params[:world_id])
   }

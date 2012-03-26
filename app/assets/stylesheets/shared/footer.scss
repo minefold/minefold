@@ -3,7 +3,7 @@
   border-top: 1px solid rgba(black, 0.05);
   padding-top: $line * 2;
   margin-bottom: $line * 20;
-  font-size: 11px; line-height: $line * 4; font-family: $system;
+  font-size: 11px; line-height: $line * 4; font-family: $lucida-grande;
 
 
   .footer-copy {
@@ -50,22 +50,23 @@
 .system .footer {
   border-top: none;
   color: rgba(black, 0.2);
-  text-shadow: 0 1px 0 rgba(white, 0.8);
+  text-shadow: 0 1px 0 rgba(white, 0.2);
 
   > .container {
     @include box-sizing(border-box);
     padding: $line $gutter;
   }
 
-  .footer-nav .item {
-      margin-left: $line;
-  }
+  .footer-nav {
+    > .item {
+      display: none;
+      margin-left: $gutter / 2;
+    }
 
-  .footer-nav.social,
-  .footer-nav-blog,
-  .footer-nav-feedback,
-  .footer-nav-privacy,
-  .footer-nav-terms {
-    display: none;
+    > .footer-nav-about,
+    > .footer-nav-pricing,
+    > .footer-nav-help {
+      display: block;
+    }
   }
 }

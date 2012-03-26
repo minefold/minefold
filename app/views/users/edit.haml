@@ -1,36 +1,42 @@
 - title_and_masthead 'Account Settings'
 
-= render partial: 'nav'
+%section
+  %article
+    = form_for current_user, url: edit_user_path, method: :put do |f|
+      %fieldset.minecraft-player
+        %h3= current_user.minecraft_player.username
+        = player_avatar_tag current_user.minecraft_player, size: :large
+        .username
 
-= form_for current_user, url: '/user', method: :put do |f|
-  = f.fields_for current_user.minecraft_player do |f|
-    %fieldset.username
-      %h3= f.label :username, 'Minecraft Username'
+        .hint Change your avatar at #{link_to 'Minecraft.net', 'http://minecraft.net/profile', target: '_blank'}
 
-      = f.text_field :username, maxlength: 16
-      = error_messages_for(f.object, :username)
-      = error_messages_for(f.object, :safe_username)
+      %fieldset.email
+        %h3= f.label :email
 
-  %fieldset.email
-    %h3= f.label :email
+        = f.text_field :email
+        = error_messages_for(f.object, :email)
 
-    = f.text_field :email
-    = error_messages_for(f.object, :email)
+      %fieldset.notifications
+        %h3 Receive emails when
+        = f.fields_for :notifications do |n|
 
-  %fieldset.avatar
-    %h3= f.label :avatar
+          = setting n, :world_membership_added, 'You are added to a world'
+          = setting n, :world_membership_request_created, 'Someone asks to join your world'
+          = setting n, :world_started, 'A friend starts playing'
+          = setting n, :credits_reset, 'Your monthly time is reset'
 
-    = player_avatar_tag current_user.minecraft_player, size: :large
-    .hint Change your avatar at #{link_to 'Minecraft.net', 'http://minecraft.net/profile', target: '_blank'}
-
-  - if current_user.pro?
-    %fieldset
-      %h3 Pro Account
-      - if current_user.beta?
-        Enjoy your Beta account bro!
-      - else
-        Expires in #{time_ago_in_words current_user.plan_expires_at} from now (#{current_user.plan_expires_at.strftime("%d/%m/%Y")}).
+          = setting n, :campaign, 'Minefold releases new features'
 
 
-  %fieldset.submit
-    = f.submit 'Update account'
+
+      - if current_user.pro?
+        %fieldset
+          %h3 Pro Account
+          - if current_user.beta?
+            Enjoy your Beta account bro!
+          - else
+            Expires in #{time_ago_in_words current_user.plan_expires_at} from now (#{current_user.plan_expires_at.strftime("%d/%m/%Y")}).
+
+
+      %fieldset.submit
+        = f.submit 'Update account'

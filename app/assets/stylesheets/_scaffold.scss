@@ -1,12 +1,12 @@
-@function grid-width($n) {
+@function grid-cols($n) {
   @return ($n * $col) + (($n - 1) * $gutter)
 }
 
 @mixin container {
+  @include clearfix;
   width: $width;
   margin-left: auto;
   margin-right: auto;
-  @include clearfix;
 }
 
 @mixin columns($n) {

@@ -51,11 +51,13 @@ module ApplicationHelper
   def masthead(attrs={}, &blk)
     attrs[:class] = ['masthead', *attrs[:class]]
 
-    html = content_tag(:section,
+    inner_html = content_tag(
+      :div,
       content_tag(:div, capture(&blk), class: 'container'),
-      attrs.merge(id: 'masthead'))
+      attrs
+    )
 
-    content_for :masthead, html
+    content_for :masthead, inner_html
   end
 
   def js(&blk)

@@ -24,3 +24,6 @@
         %li.account-profile= link_to 'Profile', player_path(current_user.minecraft_player)
         %li.account-settings= link_to 'Settings', edit_user_path
         %li.account-sign-out= link_to 'Sign out', destroy_user_session_path, method: :delete
+
+  - else
+    %li.sign-out= link_to 'Sign out', destroy_user_session_path, method: :delete

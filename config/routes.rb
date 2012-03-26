@@ -56,14 +56,13 @@ Minefold::Application.routes.draw do
              :path => '/',
              :except => [:index, :show, :destroy],
              :path_names => {:edit => 'settings'}) do
-      get :pro, :as => :pro_account
-      get :notifications, :as => :notifications_account
       get :verify
 
       # get '/pro' => 'users#pro', :as => :pro_account
       # get '/settings' => 'users#edit', :as => :edit_user
     end
 
+    get '/pro' => 'users#pro', :as => :pro_account
     get '/settings/notifications' => 'users#notifications', :as => :notifications_account
   end
 
