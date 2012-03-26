@@ -9,7 +9,7 @@ describe UserMailer do
     its(:to) { should include(user.email) }
 
     its(:body) { should include(user.username) }
-    its(:body) { should include(pro_account_url) }
+    its(:body) { should include(pro_account_user_url) }
   end
 
   describe "welcome" do
@@ -24,7 +24,7 @@ describe UserMailer do
 
     its(:to) { should include(user.email) }
     its(:body) { should include(user.username) }
-    its(:body) { should include(pro_account_url) }
+    its(:body) { should include(pro_account_user_url) }
   end
   
   describe "invite_player" do

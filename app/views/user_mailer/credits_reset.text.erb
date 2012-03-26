@@ -2,6 +2,6 @@ Hi <%= @user.username %>,
 
 We've just reset your monthly allowance on Minefold. You can now play Minecraft with your friends for another <%= pluralize User::FREE_HOURS, 'hour', 'hours' %>.
 
-If you want to play for longer, upgrade to a Pro account now for only $5 a month. You can then play for *all* the minutes this month! Visit <%= pro_account_url %> to get started.
+If you want to play for longer, upgrade to a Pro account now for only $5 a month. You can then play for *all* the minutes this month! Visit <%= pro_account_user_url %> to get started.
 
 <%= render partial: 'shared/email_sig' %>

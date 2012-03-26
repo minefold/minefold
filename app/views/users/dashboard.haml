@@ -12,7 +12,6 @@
       %h1 Confirm your account
       %p You should have recieved an email with instructions on how to confirm your account.
 
-
   %h1 Your Worlds
   - if can? :create, World
     = link_to 'Create a new world', new_world_path, class: ['btn', 'new-world']

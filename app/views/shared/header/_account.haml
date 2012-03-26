@@ -13,7 +13,7 @@
     %li.account-plan
       - unless current_user.pro?
         %span.time #{current_user.hours_left}h left
-        = link_to pro_account_path, class: 'upgrade' do
+        = link_to pro_account_user_path, class: 'upgrade' do
           Upgrade to Pro!
 
     %li.account-user

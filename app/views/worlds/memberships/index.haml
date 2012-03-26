@@ -26,7 +26,7 @@
   = form_tag player_world_players_path, method: :post, id: 'add-member' do
     = hidden_field_tag :id
     %fieldset.username
-      = text_field_tag :username, nil, placeholder: 'notch'
+      = text_field_tag :username, nil, placeholder: "Minecraft username", autocomplete: 'off'
 
     %fieldset.submit
       = submit_tag 'Add member'
