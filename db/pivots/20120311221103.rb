@@ -6,7 +6,9 @@ Pivot.db[:users].find({}).each do |user|
 
     username = user["username"].gsub(/[^\w]/, '')
 
-    player = Pivot.db[:minecraft_players].insert({
+    player = Pivot.db[:minecraft_players].update({
+      "username" => username,
+    },{
       "username" => username,
       "slug" => username.downcase,
       "created_at" => user["created_at"],
@@ -15,7 +17,7 @@ Pivot.db[:users].find({}).each do |user|
       "avatar" => user["avatar"],
       "minutes_played" => user["minutes_played"],
       "last_connected_at" => user["last_connected_at"]
-    })
+    }, upsert: true)
   end
 
   puts "Cleaning user #{user["_id"]}"
@@ -45,8 +47,15 @@ Pivot.db[:worlds].find({}).each do |world|
   # Figure out player lists
   creator_player = Pivot.db[:minecraft_players].find_one(user_id: world['creator_id'])
 
-  opped_player_ids = [creator_player["_id"]]
-  whitelisted_player_ids = [creator_player["_id"]]
+  opped_player_ids = []
+  whitelisted_player_ids = []
+
+  if creator_player.nil?
+    puts "no creator player for world"
+  else
+    opped_player_ids = [creator_player["_id"]]
+    whitelisted_player_ids = [creator_player["_id"]]
+  end
 
   # Memberships might be blank
   if memberships = world["memberships"]
@@ -56,10 +65,12 @@ Pivot.db[:worlds].find({}).each do |world|
         {"user_id" => membership["user_id"]}
       )
 
-      whitelisted_player_ids |= [player["_id"]]
+      if player
+        whitelisted_player_ids |= [player["_id"]]
 
-      if membership["role"] == "op"
-        opped_player_ids |= [player["_id"]]
+        if membership["role"] == "op"
+          opped_player_ids |= [player["_id"]]
+        end
       end
     end
   end
@@ -68,6 +79,18 @@ Pivot.db[:worlds].find({}).each do |world|
   puts "Updating #{world["name"]}"
 
   slug = world["slug"].gsub(/[^\w]+/, '_').gsub(/^_|_$/,'')
+
+  short_names = {
+    '.' => 'dot',
+    '?' => 'question',
+    '?!' => 'what',
+    ':)' => 'smile',
+    '[' => 'bracket'
+  }
+
+  if slug.blank?
+    slug = short_names[world["name"]]
+  end
 
   if slug.blank?
     print "#{world["name"]} => "
