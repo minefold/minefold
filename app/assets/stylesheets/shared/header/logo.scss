@@ -1,10 +1,13 @@
 .header .logo {
-  color: black; font-weight: 800; font-size: 24px;
+  float: left;
+  color: black; font-weight: 600; font-size: 24px; line-height: $line * 8;
   text-decoration: none;
 
-  .img {
+  > .img {
+    float: left;
     width: $col; height: $col;
-    position: absolute; left: 0; top: 0; z-index: 100;
+
+    margin-top: -$line * 2; margin-bottom: -$line * 2;
 
     background-color: $red;
     background-repeat: no-repeat;
@@ -12,9 +15,13 @@
     background-position: center (($col - 22px) / 2);
   }
 
-  .name {
+  > .name {
     display: none;
     padding-left: $col + $gutter;
+  }
+
+  .is-fullscreen & {
+    position: absolute; z-index: 99;
   }
 }
 
@@ -23,21 +30,8 @@
 // Home
 
 
-.home .header .logo {
-  .img {
-    background-image: asset-data-url('logo-large.png');
-    background-position: center (($col - 33px) / 2);
-  }
-
-  .name {
-    display: block;
-
-    font-size: 24px;
-    text-shadow: 0 -1px 0 rgba(black, 0.1);
-    font-weight: 800; text-transform: uppercase;
-
-    line-height: $line * 12;
-  }
+.home .header .logo > .name {
+  display: block;
 }
 
 
@@ -45,8 +39,6 @@
 // System
 
 
-.system .header .logo {
-  .img {
-    position: relative;
-  }
+.system .header .logo > .img {
+  position: relative;
 }

@@ -4,8 +4,9 @@
 
   > .step {
     @include gridColumn;
-    line-height: $line * 4; margin-top: $line * 2; margin-bottom: $line * 2;
-    font-size: 18px;
+    margin-right: $gutter;
+    font-size: 28px; line-height: $line * 8;
+
 
     &:before {
       display: block; float: left;
@@ -20,52 +21,52 @@
     }
 
     &.is-done {
-      color: rgba(black, 0.2);
+      color: darken(white, 20%);
+      text-decoration: line-through;
     }
 
     &.is-pending {
-      color: rgba(black, 0.2);
+      color: darken(white, 20%);
     }
   }
 }
 
 .verification-status {
+  text-align: center;
 
-  > .host {
-    margin: ($line * 6) 0;
-    color: $blue; font-weight: 900; font-size: 28px;
+  > .status {
+    margin: ($line * 4) auto;
+    padding: ($line * 2) ($gutter / 2);
+    @include border-radius(40px);
+    @include box-shadow(inset 0 1px 0 rgba(black, 0.1));
+    background: darken(white, 5%) url(image-path('spinner-big.gif')) no-repeat center;
+    width: 32px; height: 32px;
   }
 
-  > .spinner {
-    padding-left: 16px + ($gutter / 2);
-  }
-
-  > .success {
-    background: $green;
-    padding: ($line * 2) $gutter;
-    margin: 0 (-$gutter);
-    color: white;
-    font-weight: 600; font-size: 18px;
-    text-shadow: 0 1px 0 rgba(black, 0.1);
-  }
-
-  &.is-waiting {
-    > .spinner {
-      background: url(image-path('spinner.gif')) no-repeat left 4px;
-      opacity: 0.6;
-    }
-    > .success {
-      display: none;
-    }
+  > .notice {
+    margin-bottom: 0;
+    color: darken(white, 20%); font-family: $lucida-grande; font-size: 12px;
   }
 
   &.is-verified {
-    > .host { display: none; }
-    > .spinner {
-      display: none;
+    > .status {
+      background-color: $green;
+      background-image: url(image-path('icons/tick.png'));
     }
-    > .success {
-      display: block;
+    > .notice {
+      display: none;
     }
   }
 }
+
+.verification-instructions {
+  pre {
+
+    text-align: center;
+  }
+  code {
+    color: black;
+    font-size: 18px;
+  }
+}
+

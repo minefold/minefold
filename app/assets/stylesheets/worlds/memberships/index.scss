@@ -25,11 +25,11 @@
         @include clearfix;
 
         .approve {
-          @include btn($green, white, $blue);
+          @include button($green, white, $blue);
         }
 
         .ignore {
-          @include btn(darken(white, 20%), white, $blue);
+          @include button(darken(white, 20%), white, $blue);
         }
 
         .approve, .ignore {

@@ -1,43 +1,11 @@
-// TODO Move extract this to the better style.
-#pages-home {
-  header {
-    a#brand {
-      .logo {
-        height: ($line * 12) + ($line * 2);
-        width: $col + ($gutter / 2);
-        background-image: asset-data-url('logo-large.png');
-        background-position: center ((60px - 33px) / 2);
-      }
-      h1 {
-        display: block;
-      }
-    }
-
-    a#logo, ol li a, ol li.time {
-      margin-top: $line * 2;
-      margin-bottom: $line * 2;
-    }
-  }
-}
-
-#masthead.homepage {
-  padding-top: $line * 12;
-  padding-bottom: $line * 36;
+.home .masthead {
+  padding-top: $line * 12; padding-bottom: $line * 12;
   text-align: center;
 
-  .container {
-    @include columns($ncols - 2);
-  }
-
-
-  h1 {
-    font-weight: 400; font-size: 36px; line-height: $line * 10;
-
-    .tm {
-      color: desaturate(lighten($teal, 60%), 100%);
-      font-weight: 200; font-size: 18px;
-      position: relative; top: $line * -3;
-    }
+  h1 > .tm {
+    color: desaturate(lighten($teal, 60%), 100%);
+    font-weight: 200; font-size: 18px;
+    position: relative; top: $line * -3;
   }
 
   h2 {
@@ -45,15 +13,11 @@
   }
 
   .btn {
-    @include btn($blue, white, darken($blue, 20%));
+    @include button($blue, white);
     @include box-sizing(border-box);
     @include columns(6);
-    text-align: center;
-    margin: 0 auto 2*$line;
-
-    clear: both;
-
-    padding: ($line * 3) $gutter;
+    display: block; margin: 0 auto ($line*2) auto;
+    padding: ($line * 2) ($gutter * 2);
     font-size: 18px; line-height: $line * 6;
 
     span {
@@ -63,7 +27,7 @@
   }
 
   .nofb {
-    font-size: 12px;
+    font-size: 11px; font-family: $lucida-grande;
   }
 }
 

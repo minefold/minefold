@@ -1,4 +1,4 @@
-@function grid-width($n) {
+@function grid-cols($n) {
   @return ($n * $col) + (($n - 1) * $gutter)
 }
 

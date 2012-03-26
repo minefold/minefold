@@ -187,9 +187,11 @@ class Mf.WorldMapView extends Backbone.View
     point = new google.maps.LatLng(lat, lng)
 
   enterFullscreen: ->
+    $(document.body).addClass('is-fullscreen')
+
     @parent = @$el.parent()
 
-    @$el.addClass('fullscreen').appendTo(document.body)
+    @$el.appendTo(document.body)
 
     google.maps.event.trigger @map, 'resize'
 
@@ -198,7 +200,9 @@ class Mf.WorldMapView extends Backbone.View
     $(document).on 'keydown', @shortcutExitFullscreen
 
   exitFullscreen: =>
-    @$el.removeClass('fullscreen').appendTo(@parent)
+    $(document.body).removeClass('is-fullscreen')
+
+    @$el.appendTo(@parent)
     google.maps.event.trigger @map, 'resize'
     @map.setOptions(scrollwheel: false)
     @parent = null

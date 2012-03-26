@@ -1,15 +1,45 @@
 #sessions-new, #sessions-create {
   form {
-    @include columns(4);
+    margin-bottom: 0;
 
-    .btn { text-align: center; }
+
+
+    .details {
+      @include row;
+      margin-bottom: $line;
+
+      .username, .password {
+        @include makeColumn(3);
+
+        input {
+          font-size: 14px;
+          padding: $line $gutter/2;
+          line-height: $line * 4;
+        }
+      }
+    }
+
+    .submit {
+      margin-bottom: $line * 2;
+      .btn {
+        padding: $line $gutter;
+      }
+    }
+
+    .forgotten {
+      margin-bottom: 0;
+    }
+
+//    @include columns(4);
+
+//    .btn { text-align: center; }
 
     input[type=submit], .remember-me {
       @include gridColumn;
     }
 
     .remember-me {
-      margin-top: $line * 2;
+      margin-top: $line * 0;
       line-height: $line * 4;
     }
   }

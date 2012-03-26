@@ -13,6 +13,10 @@ body > section {
   @include container;
 }
 
+.is-fullscreen {
+  overflow: hidden;
+}
+
 strong {
   font-weight: 600;
 }

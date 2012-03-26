@@ -102,7 +102,7 @@
   .btn.buy, .btn.sign-up {
     @include columns(4);
     @include center-block;
-    @include btn($blue, white, darken($blue, 20%));
+//    @include btn($blue, white, darken($blue, 20%));
     text-align: center;
     margin-bottom: $line * 8;
   }

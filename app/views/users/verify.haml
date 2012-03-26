@@ -10,29 +10,38 @@
     %li.step.is-pending
       Play!
 
-.verification-status.is-waiting
-  %p.instructions Before you can play on Minefold we need to verify your Minecraft account. Just directly connect to this server in the game:
+%section.verification-status.is-waiting
+  .status
+  %p.notice Waiting for Minecraft account verification
 
-  .host= current_user.verification_host
-  .spinner Waiting for you to connect…
-  .success
-    Verified player
-    %em.username chrislloyd
+.noop
+
+%section.verification-instructions
+
+  %p Before you can continue, we need to verify your Minecraft account. If you are playing already please type the command:
+
+  %pre
+    %code.cmd /verify #{current_user.verification_token}
+
+  %p Otherwise open Minecraft and connect to:
+
+  %pre
+    %code.host= current_user.verification_host
 
 - js do
   :javascript
+    var onVerify = function(data) {
+      $('.verification-instructions').slideUp();
+
+      $('.verification-status')
+        .removeClass('is-waiting')
+        .addClass('is-verified');
+
+      window.location = '/';
+    };
+
     $(document).ready(function() {
-
       mf.userChannel = mf.pusher.subscribe(#{current_user.private_channel_key.to_json});
-
-      mf.userChannel.bind('verified', function(data) {
-        $('.verification-status')
-          .removeClass('is-waiting')
-          .addClass('is-verified')
-          .find('.username')
-            .text(data.username);
-
-        window.location = '/';
-      });
+      mf.userChannel.bind('verified', onVerify);
     });
 

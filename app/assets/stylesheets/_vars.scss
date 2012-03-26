@@ -1,8 +1,7 @@
 // Fonts
 
-
 $proxima: "proxima-nova-1", "proxima-nova-2", $helvetica;
-$system: "Lucida Grande", $helvetica;
+
 
 // Colors
 
@@ -12,16 +11,19 @@ $green:  #A1CF32;
 $blue:   #326ECF;
 $teal:   #145155;
 
+
 // Grid
 
-$line: 5px;
+$ncols:  12;
 
+$line: 5px;
 $gutter: 20px;
 $pad:    20px;
 $col:    $pad + 20px + $pad;
 
-$ncols:  12;
+$gw-column: $pad + 20px + $pad;
+$gw-gutter: $gutter;
 
-$width: ($ncols * $col) + ($gutter * ($ncols - 1));
+$width: grid-width($ncols);
 
 $radius: 3px;

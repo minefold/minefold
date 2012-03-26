@@ -227,7 +227,7 @@ class World
   def say(msg)
     send_stdin "say #{msg}"
   end
-
+  
   def tell(player, msg)
     send_stdin "/tell #{player.username} #{msg}"
   end

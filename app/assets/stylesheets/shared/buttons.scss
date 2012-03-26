@@ -1,4 +1,4 @@
-@mixin btn($bg, $text, $hover: black) {
+@mixin button($bg, $text, $hover: black) {
   @include box-sizing(border-box);
   color: $text;
   background-color: $bg;
@@ -57,5 +57,5 @@
 }
 
 .page a.btn {
-  @include btn($blue, white, darken($blue, 10%));
+  @include button($blue, white, darken($blue, 10%));
 }

@@ -1,28 +1,29 @@
-- greetings = %w(buddy mate pal)
-
 - title  'Sign in'
 - masthead do
   %h1 Sign in to Minefold
-  %p
-    or #{link_to 'sign up', new_user_path}
 
 %section
   = link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook), class: ['btn', 'fb']
 
+.noop
+  or
+
+%section
   = form_for :user, as: :user, url: session_path(:user) do |f|
-    %fieldset
+    %fieldset.details
       %section.username
-        = f.text_field :email_or_username, placeholder: 'Email or username', tabindex: 1
+        = f.text_field :email_or_username, placeholder: 'Email or Minecraft username', tabindex: 1
 
       %section.password
         = f.password_field :password, placeholder: 'Password', tabindex: 2
 
     %fieldset.submit
-      = f.submit 'Sign in', tabindex: 4
+      = f.submit 'Sign in', tabindex: 4, class: 'btn'
+
       %section.remember-me
         = f.check_box :remember_me, tabindex: 3
         = f.label :remember_me
 
-    %fieldset
+    %fieldset.forgotten
       = link_to new_user_password_path, class: 'forgot' do
-        Forgotten your password #{greetings.sample}?
+        Forgotten your password?

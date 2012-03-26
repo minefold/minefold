@@ -115,6 +115,20 @@ class MinecraftPlayer
       .order_by([:creator_id, :asc], [:slug, :asc])
   end
 
+  def current_world
+    World.find($redis.hget('players:playing', id.to_s))
+  rescue Mongoid::Errors::DocumentNotFound
+    nil
+  end
+
+  def tell(msg)
+    current_world.tell(self, msg)
+  end
+
+  def online?
+    $redis.hexists('players:playing', id.to_s) == 1
+  end
+
 
 # ---
 # Stats

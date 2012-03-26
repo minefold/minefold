@@ -3,7 +3,7 @@
 
   aside, article { @include columns(6); }
   aside img { display: block; }
-  .download .btn { @include btn($blue, white, darken($blue, 20%)); margin: 0; @include inline-block; }
+//  .download .btn { @include btn($blue, white, darken($blue, 20%)); margin: 0; @include inline-block; }
   .download small {
     display: block; padding: $line $gutter;
     color: lighten($blue, 20%); font-size: 12px; line-height: $line * 3;

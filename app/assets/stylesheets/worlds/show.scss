@@ -2,7 +2,8 @@
 
   #map {
     background: darken(white, 5%);
-    height: $line * 100;
+//    height: $line * 100;
+    height: $line * 60;
   }
 
   .world-map-view {
@@ -28,9 +29,10 @@
     }
 
   }
-  .world-map-view.fullscreen {
+
+  .is-fullscreen .world-map-view {
     position: fixed !important;
-    top: 40px; left: 0; right: 0; bottom: 0;
+    top: 0; left: 0; right: 0; bottom: 0;
     .world-map-control-view a.enter-fullscreen { display: none; }
     .world-map-control-view a.exit-fullscreen { display: block; }
   }
@@ -48,8 +50,8 @@
   .world-meta {
     padding: ($line * 2) ($gutter / 2);
     @include clearfix;
-    background: darken(white, 10%);
-    @include box-shadow(inset 0 1px 0 rgba(black, 0.1));
+//    background: darken(white, 5%);
+//    @include box-shadow(inset 0 1px 0 rgba(black, 0.1));
     margin-bottom: $line * 4;
 
     .world-meta-players {

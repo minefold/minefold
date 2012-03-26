@@ -47,11 +47,11 @@ form {
       }
 
       input[type=submit] {
-        @include btn($blue, white, darken($blue, 20%));
+        @include button($blue, white);
       }
 
       button[type=reset] {
-        @include btn(darken(white, 40%), white, darken(white, 30%));
+        @include button(darken(white, 40%), white);
       }
     }
   }

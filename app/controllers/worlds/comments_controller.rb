@@ -2,7 +2,7 @@ class Worlds::CommentsController < ApplicationController
   respond_to :json, :html
 
   expose(:player) {
-    MinecraftPlayer.find_by(slug: params[:player_id])
+    MinecraftPlayer.find_by_username(params[:player_id])
   }
   expose(:creator) {
     player.user
