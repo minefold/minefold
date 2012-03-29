@@ -23,3 +23,4 @@ production:
   identity_map_enabled: true
   persist_in_safe_mode: true
   max_retries_on_connection_failure: 3
+  slave_ok: true

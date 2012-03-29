@@ -1,5 +1,7 @@
 class PusherController < ApplicationController
   protect_from_forgery :except => :auth
+  
+  skip_before_filter :require_player_verification
 
   def auth
     if current_user

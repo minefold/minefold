@@ -70,7 +70,7 @@ class UsersController < Devise::RegistrationsController
   end
 
   def verify
-    # redirect_to(user_root_path) if current_user.verified?
+    redirect_to(user_root_path) if current_user.verified?
   end
 
 end

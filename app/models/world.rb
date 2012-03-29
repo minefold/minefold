@@ -216,12 +216,12 @@ class World
 # Online Players
 
 
-  def connected_player_ids
+  def online_player_ids
     $redis.smembers("#{redis_key}:connected_players").map {|id| BSON::ObjectId(id)}
   end
 
   def offline_players
-    MinecraftPlayer.find(players.map(&:id) - connected_player_ids)
+    MinecraftPlayer.find(players.map(&:id) - online_player_ids)
   end
 
   def say(msg)
@@ -229,7 +229,7 @@ class World
   end
   
   def tell(player, msg)
-    send_stdin "/tell #{player.username} #{msg}"
+    send_stdin "tell #{player.username} #{msg}"
   end
 
 
@@ -316,9 +316,10 @@ private
   end
 
   def send_stdin(str)
-    world_data = $redis.hget "worlds:running", id
+    world_data = $redis.hget "worlds:running", id.to_s
     if world_data
       instance_id = JSON.parse(world_data)['instance_id']
+      puts "workers:#{instance_id}:worlds:#{id}:stdin"
       $redis.publish("workers:#{instance_id}:worlds:#{id}:stdin", str)
     end
   end

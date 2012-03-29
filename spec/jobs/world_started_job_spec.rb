@@ -3,14 +3,14 @@ require 'spec_helper'
 describe WorldStartedJob do
   let(:world) { Fabricate :world }
   context '1 player online and 2 players offline' do
-    let(:players) { [Fabricate(:user), Fabricate(:user)] }
+    let(:users) { [Fabricate(:user), Fabricate(:user)] }
     
     before do
       # all players
-      players.each {|player| world.add_member player }
+      users.each {|user| world.whitelisted_players.push user.minecraft_player }
       
       # connected players
-      world.stub(:player_ids) { [world.creator.id] }
+      world.stub(:online_player_ids) { [world.creator.minecraft_player.id.to_s] }
     end
     
     it "should email offline players" do

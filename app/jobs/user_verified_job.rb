@@ -1,22 +1,29 @@
 class UserVerifiedJob < Job
   @queue = :high
 
-  def initialize(verification_code, username)
-    @user = User.find_by(verification_code: verification_code)
+  def initialize(username, verification_token)
+    @user = User.where(verification_token: verification_token).first
     @player = MinecraftPlayer.find_by_username(username)
   end
 
+  def tell_player message
+    @player.tell "[MINEFOLD] #{message}" if @player.online?
+  end
+
   def perform!
-    @player.user = @user
-    @player.fetch_avatar
-    @player.save
+    if @user.nil?
+      tell_player 'Sorry! That verification code is incorrect'
 
-    @user.unset :verification_code
+    else
+      @player.user = @user
+      @player.fetch_avatar
+      @player.save
 
-    @user.private_channel.trigger!('verified', @player.to_json)
+      # @user.unset :verification_token
 
-    if @player.playing?
-      @player.tell 'Your account has been verified'
+      @user.private_channel.trigger!('verified', @player.to_json)
+
+      tell_player 'Welcome! Your account is now verified'
     end
   end
 

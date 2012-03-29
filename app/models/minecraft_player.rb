@@ -104,7 +104,7 @@ class MinecraftPlayer
 
 
   def worlds
-    World
+    worlds = World
       .any_of(
         {opped_player_ids: self.id},
         {whitelisted_player_ids: self.id}
@@ -113,6 +113,9 @@ class MinecraftPlayer
         {blacklisted_player_ids: self.id}
       )
       .order_by([:creator_id, :asc], [:slug, :asc])
+
+    # TODO: get minecraft players for users with worlds and remove this check
+    worlds.select {|w| w.creator.minecraft_player }
   end
 
   def current_world
@@ -126,7 +129,7 @@ class MinecraftPlayer
   end
 
   def online?
-    $redis.hexists('players:playing', id.to_s) == 1
+    $redis.hexists('players:playing', id.to_s)
   end
 
 

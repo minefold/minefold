@@ -36,12 +36,15 @@
       $('.verification-status')
         .removeClass('is-waiting')
         .addClass('is-verified');
-
-      window.location = '/';
+        
+      setTimeout(function(){
+        window.location = '/';
+      }, 3000)
     };
 
     $(document).ready(function() {
-      mf.userChannel = mf.pusher.subscribe(#{current_user.private_channel_key.to_json});
-      mf.userChannel.bind('verified', onVerify);
+      var channelName = #{current_user.private_channel_key.to_json};
+      var channel = mf.pusher.subscribe(channelName);
+      channel.bind('verified', onVerify);
     });
 
