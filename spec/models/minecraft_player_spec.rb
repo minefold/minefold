@@ -10,7 +10,7 @@ describe MinecraftPlayer do
 
 
   it { should have_field(:username) }
-  it { should validate_exclusion_of(:username).in(subject.class.blacklist) }
+  # it { should validate_exclusion_of(:username).in(subject.class.blacklist) }
   it { should validate_length_of(:username).within(1..16) }
   it { should validate_format_of(:username).with_format(/^\w+$/) }
   it { should validate_uniqueness_of(:username) }

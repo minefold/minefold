@@ -2,30 +2,11 @@ require "spec_helper"
 
 describe WorldMailer do
 
-  describe "#membership_created" do
-    let(:world) { Fabricate(:world) }
-    let(:membership) {
-      world.memberships.create(user: Fabricate(:user))
-    }
-
-    subject {
-      WorldMailer.membership_created(world.id, membership.id)
-    }
-
-    its(:to) { should include(membership.user.email) }
-
-    its(:body) { should include(membership.user.username) }
-    its(:body) { should include(membership.user.host) }
-    its(:body) { should include(world.creator.username) }
-    its(:body) { should include(world.name) }
-    its(:body) { should include(player_world_url(world.creator.minecraft_player, world)) }
-  end
-
-
   describe "#membership_request_created" do
     let(:world) { Fabricate(:world) }
+    let(:user) { Fabricate(:user) }
     let(:membership_request) {
-      world.membership_requests.create(user: Fabricate(:user))
+      world.membership_requests.create(minecraft_player: user.minecraft_player)
     }
 
     subject {
@@ -34,12 +15,12 @@ describe WorldMailer do
 
     its(:to) { should include(world.creator.email) }
 
-    its(:subject) { should include(membership_request.user.username) }
+    its(:subject) { should include(membership_request.minecraft_player.username) }
     its(:subject) { should include(world.name) }
 
     its(:body) { should include(world.name) }
     its(:body) { should include(world.slug) }
-    its(:body) { should include(membership_request.user.username) }
+    its(:body) { should include(membership_request.minecraft_player.username) }
   end
 
   describe "#membership_request_approved" do

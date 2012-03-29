@@ -7,7 +7,7 @@ class MinutePlayedJob < Job
     @timestamp = timestamp
   end
 
-  def process!
+  def perform!
     @player.inc :minutes_played, 1
     @world.inc :minutes_played, 1
   end

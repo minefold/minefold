@@ -4,11 +4,11 @@ class MembershipRequest
 
   embedded_in :world
 
-  belongs_to :user
-  validates_presence_of :user
+  belongs_to :minecraft_player
+  validates_presence_of :minecraft_player
 
   def approve
-    world.whitelist_player!(user)
+    world.whitelist_player!(minecraft_player)
   end
 
 end

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe User do
-  subject { Fabricate.build(:user) }
+  subject { Fabricate.build(:user, minecraft_player: nil) }
 
   it { should be_timestamped_document }
   it { should be_paranoid_document }
@@ -165,13 +165,6 @@ describe User do
 
   it { should belong_to(:current_world).of_type(World).as_inverse_of(nil) }
 
-  it ".potential_members_for"
-
-  it "#member?"
-  it "#op?"
-  it "#current_world?"
-  it "#cloned?"
-
 
 # ---
 # Photos
@@ -183,14 +176,6 @@ describe User do
 # ---
 # Stats
 
-
-  it ".mpid" do
-    uuid = double('uuid')
-    uuid.should_receive(:generate).and_return('uuid')
-    UUID.stub(:new).and_return(uuid)
-
-    subject.class.mpid.should == 'uuid'
-  end
 
   it { should have_field(:mpid).of_type(String) }
 

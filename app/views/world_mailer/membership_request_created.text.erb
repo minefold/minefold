@@ -1,11 +1,11 @@
 Hi <%= @creator.username %>,
 
-<%= @user.username %> would like to play in "<%= @world.name %>". You can let them play in your world by going to:
+<%= @player.username %> would like to play in "<%= @world.name %>". You can let them play in your world by going to:
 
     <%= player_world_players_url(@world.creator.minecraft_player, @world) %>
 
-You can also stalk <%= @user.username %> first at
+You can also stalk <%= @player.username %> first at
 
-    <%= user_url(@user) %>
+    <%= player_url(@player) %>
 
 <%= render partial: 'shared/email_sig' %>

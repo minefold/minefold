@@ -50,7 +50,11 @@ class WorldsController < ApplicationController
       track 'created world'
     end
 
-    respond_with world, location: player_world_path(player, world)
+    respond_with world do |format|
+      format.html {
+        redirect_to player_world_path(current_user.minecraft_player, world)
+      }
+    end
   end
 
   def show
@@ -75,17 +79,6 @@ class WorldsController < ApplicationController
     respond_with world, location: player_world_path(player, world)
   end
 
-  def join
-    authorize! :play, world
-
-    current_user.current_world = world
-    current_user.save!
-
-    track 'joined world'
-
-    respond_with world, location: player_world_path(player, world)
-  end
-
   def clone
     clone = world.clone!
     clone.creator = current_user
@@ -103,11 +96,9 @@ class WorldsController < ApplicationController
   def destroy
     authorize! :destroy, world
 
-    members_to_notify = world.members - [world.creator]
-    members_to_notify.each do |member|
-      if member.current_world == world
-        WorldMailer.world_deleted(world.name, world.creator.username, member.id).deliver
-      end
+    members_to_notify = world.players - [world.creator.minecraft_player]
+    members_to_notify.select{|p| p.user }.each do |player|
+      WorldMailer.world_deleted(world.name, world.creator.minecraft_player.username, player.user.id).deliver
     end
 
     world.delete

@@ -24,6 +24,7 @@ class Job
   end
 
   def perform!
+    raise "must be overridden"
   end
 
 # private
