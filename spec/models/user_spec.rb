@@ -165,13 +165,6 @@ describe User do
 
   it { should belong_to(:current_world).of_type(World).as_inverse_of(nil) }
 
-  it ".potential_members_for"
-
-  it "#member?"
-  it "#op?"
-  it "#current_world?"
-  it "#cloned?"
-
 
 # ---
 # Photos

@@ -102,9 +102,7 @@ Minefold::Application.routes.draw do
       put :clone, :on => :member
 
       scope :module => :worlds do
-        resources :players, :controller => :memberships, :only => [:index, :create, :destroy] do
-          get  :search, :action => :search, :on => :collection
-        end
+        resources :players, :controller => :memberships, :only => [:index, :create, :destroy]
 
         resources :membership_requests, :only => [:create, :destroy] do
           put :approve, :on => :member

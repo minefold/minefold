@@ -11,7 +11,7 @@ class UserMailer < ActionMailer::Base
 
   def reminder(user_id)
     @user = User.find user_id
-    mail(to: @user.email, subject: 'Buy more Minefold time (running low)')
+    mail(to: @user.email, subject: 'Low on Minefold time!')
   end
 
   def credits_reset(user_id)

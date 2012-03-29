@@ -267,10 +267,6 @@ class User
 
   belongs_to :current_world, class_name: 'World', inverse_of: nil
 
-  scope :potential_members_for, ->(world) {
-    not_in(_id: world.memberships.map {|p| p.user_id})
-  }
-
   def member?(world)
     world.memberships.any? {|m| m.user == self}
   end

@@ -8,7 +8,7 @@ module AccountsHelper
 
   def pro_link(user)
     if signed_in?
-      link_to('Pro', pro_account_user_user_path, class: 'pro')
+      link_to('Pro', pro_account_user_path, class: 'pro')
     else
       content_tag(:span, 'Pro', class: 'pro')
     end
