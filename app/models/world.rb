@@ -215,13 +215,16 @@ class World
 # ---
 # Online Players
 
-
   def online_player_ids
     $redis.smembers("#{redis_key}:connected_players").map {|id| BSON::ObjectId(id)}
   end
+  
+  def offline_player_ids
+    players.map(&:id) - online_player_ids
+  end
 
   def offline_players
-    MinecraftPlayer.find(players.map(&:id) - online_player_ids)
+    MinecraftPlayer.find(offline_player_ids)
   end
 
   def say(msg)

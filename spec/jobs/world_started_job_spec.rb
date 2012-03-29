@@ -10,14 +10,14 @@ describe WorldStartedJob do
       users.each {|user| world.whitelisted_players.push user.minecraft_player }
       
       # connected players
-      world.stub(:online_player_ids) { [world.creator.minecraft_player.id.to_s] }
+      world.stub(:online_player_ids) { [world.creator.minecraft_player.id] }
     end
     
     it "should email offline players" do
       WorldStartedJob.perform world.id
 
       ActionMailer::Base.deliveries.map(&:to).flatten.
-        should == players.map(&:email)
+        should == users.map(&:email)
     end
   end
 end
