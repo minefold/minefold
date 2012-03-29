@@ -113,9 +113,6 @@ class MinecraftPlayer
         {blacklisted_player_ids: self.id}
       )
       .order_by([:creator_id, :asc], [:slug, :asc])
-
-    # TODO: get minecraft players for users with worlds and remove this check
-    worlds.select {|w| w.creator.minecraft_player }
   end
 
   def current_world
