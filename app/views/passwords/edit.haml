@@ -1,6 +1,6 @@
 - title_and_masthead 'Change Passwords'
 
-%article
+%section
   = form_for(:user, as: :user, :url => edit_password_path(:user), :method => :put) do |f|
     = f.hidden_field :reset_password_token
 
