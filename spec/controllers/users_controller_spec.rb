@@ -8,7 +8,6 @@ describe UsersController do
 
     before(:each) {
       post :create, user: {
-        username: 'notch',
         email: 'notch@mojang.com',
         password: 'password',
         password_confirmation: 'password'
@@ -16,10 +15,27 @@ describe UsersController do
     }
 
     subject { response }
-    it { should redirect_to(user_verify_path) }
+    it { should redirect_to(verify_user_path) }
 
     it "creates a user" do
-      User.by_username('notch').should exist
+      User.where(email: 'notch@mojang.com').should exist
     end
   end
+
+  context 'signed in' do
+    signin_as { Fabricate(:user) }
+
+    describe '#update' do
+      context 'changing a notification setting' do
+        before {
+          put :update, user: { notifications: { world_started: false } }
+        }
+
+        subject { current_user.reload }
+
+        its(:notifications) { should == { 'world_started' => false } }
+      end
+    end
+  end
+
 end

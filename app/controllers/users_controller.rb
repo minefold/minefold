@@ -64,9 +64,7 @@ class UsersController < Devise::RegistrationsController
       flash[:success] = 'Your settings were changed'
     end
 
-    respond_with(current_user, location: edit_user_path) do |format|
-      format.html { redirect_to :back }
-    end
+    respond_with(current_user, location: edit_user_path)
   end
 
   def verify

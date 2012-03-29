@@ -20,9 +20,13 @@ describe Worlds::MembershipRequestsController do
       before {
         WorldMailer.
           should_receive(:membership_request_created).
-          with(world.id, anything, world.creator.id) { Struct.new(:deliver).new }
-          
-        post :create, user_id: world.creator.minecraft_player.slug, world_id: world.slug
+          with(world.id, anything, world.creator.id) {
+            mailer = double('mailer')
+            mailer.should_receive(:deliver)
+            mailer
+          }
+
+        post :create, player_id: world.creator.minecraft_player.slug, world_id: world.slug
       }
 
       subject { response }
