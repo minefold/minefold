@@ -328,7 +328,7 @@ class User
     @uuid.generate
   end
 
-  field :mpid, type: String, default: ->{ self.id.to_s }
+  field :mpid, type: String, default: ->{ self.mpid.to_s }
   alias_method :distinct_id, :mpid
 
 

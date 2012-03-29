@@ -44,7 +44,7 @@ class MinecraftPlayer
   end
 
   field :username, type: String
-  validates_exclusion_of :username, in: blacklist
+  # validates_exclusion_of :username, in: blacklist
   validates_length_of :username, within: 1..16
   validates_format_of :username, with: /^\w+$/
   validates_uniqueness_of :username, case_sensitive: false
