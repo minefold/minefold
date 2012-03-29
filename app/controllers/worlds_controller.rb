@@ -50,7 +50,7 @@ class WorldsController < ApplicationController
       track 'created world'
     end
 
-    respond_with world, location: player_world_path(player, world)
+    respond_with world
   end
 
   def show
