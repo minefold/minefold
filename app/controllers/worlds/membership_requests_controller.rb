@@ -12,7 +12,7 @@ class Worlds::MembershipRequestsController < ApplicationController
   }
 
   expose(:world) {
-    creator.created_worlds.find_by(name: params[:world_id])
+    creator.created_worlds.find_by(slug: params[:world_id].downcase)
   }
 
   expose(:membership_request) {

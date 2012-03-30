@@ -19,8 +19,8 @@
               .meta
                 .username= player.username
                 .actions
-                  = button_to 'Approve', approve_player_world_membership_request_path(player, world, r), method: :put, class: 'approve'
-                  = button_to 'Ignore', player_world_membership_request_path(player, world, r), method: :delete, class: 'ignore'
+                  = button_to 'Approve', approve_player_world_membership_request_path(world.creator.minecraft_player, world, r), method: :put, class: 'approve'
+                  = button_to 'Ignore', player_world_membership_request_path(world.creator.minecraft_player, world, r), method: :delete, class: 'ignore'
 
 %section
   %h2 Add a friend
