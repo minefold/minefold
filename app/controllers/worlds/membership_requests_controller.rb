@@ -26,7 +26,8 @@ class Worlds::MembershipRequestsController < ApplicationController
   def create
     authorize! :read, world
 
-    if membership_request.new_record? and world.save!
+    if membership_request.new_record?
+      world.membership_requests.push(membership_request)
       world.opped_players.each do |op|
         WorldMailer
           .membership_request_created(world.id, membership_request.id, op.user.id)
@@ -44,13 +45,11 @@ class Worlds::MembershipRequestsController < ApplicationController
     membership_request.approve
     membership_request.destroy
 
-    if world.save!
-      WorldMailer
-        .membership_request_approved(world.id, membership_request.user.id)
-        .deliver
+    WorldMailer
+      .membership_request_approved(world.id, membership_request.user.id)
+      .deliver
 
-      track 'approved membership request'
-    end
+    track 'approved membership request'
 
     respond_with world, location: player_world_path(player, world)
   end

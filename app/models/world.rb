@@ -30,7 +30,7 @@ class World
 
 
   def self.sanitize_name(name)
-    name.strip.downcase
+    name.strip.downcase.gsub(/[^\w]/, '')
   end
 
   def self.find_by_name(name)
@@ -75,7 +75,7 @@ class World
   mount_uploader :photo, CoverPhotoUploader
 
   def fetch_photo!
-    self.remote_photo_url = "http://d14m45jej91i3z.cloudfront.net/#{id}/base.png"
+    set :remote_photo_url, "http://d14m45jej91i3z.cloudfront.net/#{id}/base.png"
   rescue OpenURI::HTTPError
   end
 
@@ -113,15 +113,15 @@ class World
 
   def clone!
     data = {
-      name: name,
+      name: self.class.sanitize_name(name),
       world_data_file: world_data_file,
       map_data: map_data
     }
-    
+
     settings = WORLD_SETTINGS.each_with_object({}) do |setting, h|
       h[setting.to_sym] = self.send(setting.to_sym)
     end
-    
+
     world = World.new(data.merge(settings))
     world.parent = self
     world
@@ -210,7 +210,7 @@ class World
 
   # whitelist
   def player_whitelisted? player
-    whitelist_player_ids.include? player.id
+    whitelisted_player_ids.include? player.id
   end
 
   def whitelist_player! player
