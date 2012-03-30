@@ -19,7 +19,7 @@ class Worlds::MembershipRequestsController < ApplicationController
     if params[:id]
       world.membership_requests.find(params[:id])
     else
-      world.membership_requests.find_or_initialize_by minecraft_player: current_user.minecraft_player
+      world.membership_requests.find_or_initialize_by user: current_user
     end
   }
 

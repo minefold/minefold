@@ -12,11 +12,12 @@
       %section.members
         %ul
           - world.membership_requests.each do |r|
+            - player = r.user.minecraft_player
             %li
-              = link_to player_path(r.user.minecraft_player) do
-                = player_avatar_tag r.user.minecraft_player, size: :medium
+              = link_to player_path(player) do
+                = player_avatar_tag player, size: :medium
               .meta
-                .username= r.user.username
+                .username= player.username
                 .actions
                   = button_to 'Approve', approve_player_world_membership_request_path(player, world, r), method: :put, class: 'approve'
                   = button_to 'Ignore', player_world_membership_request_path(player, world, r), method: :delete, class: 'ignore'

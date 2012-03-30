@@ -20,4 +20,16 @@ describe Worlds::MembershipsController do
       world.whitelisted_players.should include(player)
     end
   end
+  
+  describe '#index' do
+    signin_as { world.creator }
+    before {
+      get :index, player_id: world.creator.minecraft_player.slug, world_id: world.slug
+    }
+    
+    it "works" do
+      response.should be_success
+    end
+    
+  end
 end

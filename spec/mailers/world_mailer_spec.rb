@@ -6,7 +6,7 @@ describe WorldMailer do
     let(:world) { Fabricate(:world) }
     let(:user) { Fabricate(:user) }
     let(:membership_request) {
-      world.membership_requests.create(minecraft_player: user.minecraft_player)
+      world.membership_requests.create(user: user)
     }
 
     subject {
@@ -15,12 +15,12 @@ describe WorldMailer do
 
     its(:to) { should include(world.creator.email) }
 
-    its(:subject) { should include(membership_request.minecraft_player.username) }
+    its(:subject) { should include(membership_request.user.minecraft_player.username) }
     its(:subject) { should include(world.name) }
 
     its(:body) { should include(world.name) }
     its(:body) { should include(world.slug) }
-    its(:body) { should include(membership_request.minecraft_player.username) }
+    its(:body) { should include(membership_request.user.minecraft_player.username) }
   end
 
   describe "#membership_request_approved" do
