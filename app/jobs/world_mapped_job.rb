@@ -5,6 +5,10 @@ class WorldMappedJob < Job
     @world = World.find(world_id)
     @map_data = map_data
   end
+  
+  def perform?
+    not @world.destroyed?
+  end
 
   def process!
     @world.update_attributes last_mapped_at: Time.now,

@@ -10,9 +10,13 @@ class UnsubscribePlayerJob < Job
   end
 
   def perform!
-    CreateSend::Subscriber.new(
-      ENV['CAMPAIGN_MONITOR_USER_LIST_ID'],
-      @user.email
-    ).unsubscribe
+    begin
+      CreateSend::Subscriber.new(
+        ENV['CAMPAIGN_MONITOR_USER_LIST_ID'],
+        @user.email
+      ).unsubscribe
+    rescue
+      puts "player already unsubscribed"
+    end
   end
 end

@@ -2,7 +2,7 @@ class ProcessChatJob < Job
   @queue = :high
 
   def initialize(world_id, username, text)
-    @world = World.find(world_id)
+    @world = World.unscoped.find(world_id)
     @player = MinecraftPlayer.find_or_create_by(username: username)
     @text = text
   end

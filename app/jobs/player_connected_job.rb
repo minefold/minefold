@@ -14,5 +14,4 @@ class PlayerConnectedJob < Job
                                target: @world,
                                created_at: @timestamp
   end
-
 end

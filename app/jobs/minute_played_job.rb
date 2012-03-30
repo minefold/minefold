@@ -3,7 +3,7 @@ class MinutePlayedJob < Job
 
   def initialize(player_id, world_id, timestamp)
     @player = MinecraftPlayer.find(player_id)
-    @world = World.find(world_id)
+    @world = World.unscoped.find(world_id)
     @timestamp = timestamp
   end
 

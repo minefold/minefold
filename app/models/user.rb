@@ -139,21 +139,42 @@ class User
 
   field :facebook_uid, type: String, null: true
 
-  def self.find_or_create_for_facebook_oauth(access_token, signed_in_resource=nil)
-    uid, data = access_token.uid, access_token.extra.raw_info
-    email = data.email
+  def facebook_linked?
+    not facebook_uid.nil?
+  end
 
-    if user = where(facebook_uid: uid).first
-      user
-    elsif user = where(email: email).first
-      user.facebook_uid = uid
-      user.save!
-      user
-    else
-      # Create a user with a stub password.
-      user = create!(email: email, facebook_uid: uid, password: Devise.friendly_token[0,20])
-      user.confirm!
-      user
+
+  def self.find_or_create_for_facebook_oauth(access_token, signed_in_user=nil, email=nil)
+    uid, data = access_token.uid, access_token.extra.raw_info
+    email = data.email || email
+
+    begin
+      case
+      when signed_in_user
+        signed_in_user.facebook_uid = uid
+        signed_in_user.save!
+        signed_in_user
+
+      when user = where(facebook_uid: uid).first
+        user
+      when user = where(email: email).first
+        user.facebook_uid = uid
+        user.email = email if email
+        user.save!
+        user
+      else
+        # Create a user with a stub password.
+        user = new(
+          email: email,
+          password: Devise.friendly_token[0,20])
+
+        user.skip_confirmation!
+        user.facebook_uid = uid
+        user.save!
+        user
+      end
+    rescue => e
+      raise "#{access_token.inspect}\n#{e}\n#{e.backtrace}"
     end
   end
 

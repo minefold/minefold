@@ -18,4 +18,8 @@ namespace :jobs do
   task :minute_played => :environment do
     Resque.enqueue MinutePlayedJob, ENV['PLAYER_ID'] || '4f611d4c594e986825f7327c', ENV['WORLD_ID'] || '4f593ad0c3b5a024e8000017', Time.now
   end
+
+  task :map_unmapped_worlds => :environment do
+    World.where(:last_mapped_at => nil, :minutes_played.gt => 0).each {|w| Resque.push 'maps_high', class: 'Job::MapWorld', args: [w.id.to_s]}
+  end
 end

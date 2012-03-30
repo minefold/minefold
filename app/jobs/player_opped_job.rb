@@ -4,5 +4,4 @@ class PlayerOppedJob < OpActionJob
   def perform!
     @world.op_player! @player
   end
-
 end

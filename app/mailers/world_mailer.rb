@@ -9,9 +9,9 @@ class WorldMailer < ActionMailer::Base
   #   @creator = @world.creator
   #   @membership = @world.memberships.find(membership_id)
   #   @user = @membership.user
-  # 
+  #
   #   return unless @user.notify? :world_membership_added
-  # 
+  #
   #   mail to: @user.email,
   #        subject: "You can now play in #{@world.name}"
   # end
@@ -25,7 +25,7 @@ class WorldMailer < ActionMailer::Base
     if @user
       @op = User.find op_id
 
-      return unless @user.notify? :world_membership_request_created
+      return unless @op.notify? :world_membership_request_created
 
       mail to: @op.email,
            subject: "#{@user.username} would like to play in #{@world.name}"
