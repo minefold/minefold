@@ -1,7 +1,7 @@
 %fieldset.name
   %h3= form.label :name
   = error_messages_for form.object, :name
-  = form.text_field :name, tabindex: 1
+  = form.text_field :name, tabindex: 1, autocomplete: 'off'
 
 
 - if form.object.new_record?
@@ -129,8 +129,8 @@
 
     - World::DIFFICULTIES.each_with_index do |level, i|
       %section
-        = form.radio_button :difficulty_level, i, tabindex: 4
-        = form.label "difficulty_level_#{i}", level.to_s.titlecase
+        = form.radio_button :difficulty, i, tabindex: 4
+        = form.label "difficulty_#{i}", level.to_s.titlecase
 
   %fieldset.gameplay
     %h3= form.label 'Gameplay'

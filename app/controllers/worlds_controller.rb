@@ -43,17 +43,15 @@ class WorldsController < ApplicationController
 
     world.creator = current_user
 
-    if world.save
-      current_user.current_world = world
-      current_user.save
-
-      track 'created world'
-    end
-
-    respond_with world do |format|
-      format.html {
-        redirect_to player_world_path(current_user.minecraft_player, world)
-      }
+    respond_with(world) do |format|
+      if world.save
+        current_user.current_world = world
+        current_user.save
+        track 'created world'
+        format.html { redirect_to player_world_path(world.creator.minecraft_player, world) }
+      else
+        format.html { render action: :new }
+      end
     end
   end
 

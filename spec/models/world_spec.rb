@@ -159,15 +159,25 @@ describe World do
   #     world.seed.should == Time.now.to_i.to_s
   #   end
   # end
-  #
-  # describe 'clone_world' do
-  #   subject { world.clone! }
-  #
-  #   its(:parent) { eq world }
-  #   its(:world_data_file) { eq world.world_data_file }
-  #   its(:map_data) { eq world.map_data }
-  # end
-  #
+
+  describe 'clone_world' do
+    subject { world.clone! }
+  
+    its(:parent) { should == world }
+    its(:world_data_file) { should == world.world_data_file }
+    its(:map_data) { should == world.map_data }
+    
+    its(:game_mode) { should == world.game_mode }
+    its(:level_type) { should == world.level_type }
+    its(:seed) { should == world.seed }
+    its(:difficulty) { should == world.difficulty }
+    its(:pvp) { should == world.pvp }
+    its(:spawn_monsters) { should == world.spawn_monsters }
+    its(:spawn_animals) { should == world.spawn_animals }
+    its(:generate_structures) { should == world.generate_structures }
+    its(:spawn_npcs) { should == world.spawn_npcs }
+  end
+
   # describe "#creator=" do
   #   it "makes the creator an op" do
   #     world.ops.should include(world.creator)

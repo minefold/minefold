@@ -4,7 +4,16 @@ class World
   include Mongoid::Paranoia
 
 
-  attr_accessible :name
+  attr_accessible :name,
+    :seed,
+    :game_mode,
+    :difficulty,
+    :level_type,
+    :pvp,
+    :spawn_monsters,
+    :spawn_animals,
+    :generate_structures,
+    :spawn_npcs
 
 # --
 
@@ -90,19 +99,32 @@ class World
     not parent.nil?
   end
 
+  WORLD_SETTINGS = %w(
+    game_mode
+    level_type
+    seed
+    difficulty
+    pvp
+    spawn_monsters
+    spawn_animals
+    generate_structures
+    spawn_npcs )
+
+
   def clone!
-    World.new(
-      parent: self,
+    data = {
       name: name,
-      # settings: settings,
-      # map: map
-      seed: seed,
-      game_mode: game_mode,
-      level_type: level_type,
-      difficulty_level: difficulty_level,
       world_data_file: world_data_file,
       map_data: map_data
-    )
+    }
+    
+    settings = WORLD_SETTINGS.each_with_object({}) do |setting, h|
+      h[setting.to_sym] = self.send(setting.to_sym)
+    end
+    
+    world = World.new(data.merge(settings))
+    world.parent = self
+    world
   end
 
 
@@ -218,7 +240,7 @@ class World
   def online_player_ids
     $redis.smembers("#{redis_key}:connected_players").map {|id| BSON::ObjectId(id)}
   end
-  
+
   def offline_player_ids
     players.map(&:id) - online_player_ids
   end
@@ -230,7 +252,7 @@ class World
   def say(msg)
     send_stdin "say #{msg}"
   end
-  
+
   def tell(player, msg)
     send_stdin "tell #{player.username} #{msg}"
   end
@@ -263,8 +285,8 @@ class World
     greater_than_or_equal_to: 0,
     less_than: GAME_MODES.size
 
-  field :difficulty_level, type: Integer, default: DIFFICULTIES.index(:easy)
-  validates_numericality_of :difficulty_level,
+  field :difficulty, type: Integer, default: DIFFICULTIES.index(:easy)
+  validates_numericality_of :difficulty,
     only_integer: true,
     greater_than_or_equal_to: 0,
     less_than: DIFFICULTIES.size
@@ -275,6 +297,8 @@ class World
   field :pvp, type: Boolean, default: true
   field :spawn_monsters, type: Boolean, default: true
   field :spawn_animals, type: Boolean, default: true
+  field :generate_structures, type: Boolean, default: true
+  field :spawn_npcs, type: Boolean, default: true
 
 
 # ---
