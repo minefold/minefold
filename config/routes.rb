@@ -52,9 +52,10 @@ Minefold::Application.routes.draw do
     # post '/confirm' => 'confirmations#create', :as => :user_confirmation
     get  '/confirm/:confirmation_token' => 'confirmations#show', :as => :confirmation
 
+    put '/settings' => 'users#update', :as => :update_user
     resource(:user,
              :path => '/',
-             :except => [:index, :show, :destroy],
+             :except => [:index, :show, :destroy, :update],
              :path_names => {:edit => 'settings'}) do
       get :verify
 
