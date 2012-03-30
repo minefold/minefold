@@ -22,7 +22,7 @@ class WorldMailer < ActionMailer::Base
     @user = @world.membership_requests.find(request_id).user
     @op = User.find op_id
     
-    return unless @user.notify? :world_membership_request_created
+    return unless @op.notify? :world_membership_request_created
     
     mail to: @op.email,
          subject: "#{@user.username} would like to play in #{@world.name}"
