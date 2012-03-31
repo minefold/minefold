@@ -1,4 +1,6 @@
 class ConfirmationsController < Devise::ConfirmationsController
+  
+  skip_before_filter :require_player_verification
 
   expose(:user) {
     if params[:confirmation_token]

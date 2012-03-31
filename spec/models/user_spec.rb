@@ -65,7 +65,7 @@ describe User do
     subject.class.hours_to_credits(2).should == 120
   end
 
-  it { should have_field(:credits).of_type(Integer).with_default_value_of(0) }
+  it { should have_field(:credits).of_type(Integer) }
   it { should have_field(:last_credit_refresh_at).of_type(DateTime) }
 
   it "#increment_credits!"
@@ -78,6 +78,10 @@ describe User do
 
 
   it { should have_field(:plan_expires_at).of_type(DateTime) }
+  
+  it "has free time on creation" do
+    subject.credits.should == User.hours_to_credits(User::FREE_HOURS)
+  end
 
   it "isn't Pro by default" do
     subject.should_not be_pro

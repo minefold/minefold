@@ -9,6 +9,10 @@ class UserVerifiedJob < Job
   def tell_player message
     @player.tell "[MINEFOLD] #{message}" if @player.online?
   end
+  
+  def perform?
+    not @player.verified?
+  end
 
   def perform!
     if @user.nil?

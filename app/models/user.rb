@@ -189,7 +189,7 @@ class User
     n.hours / BILLING_PERIOD
   end
 
-  field :credits, type: Integer, default: 0
+  field :credits, type: Integer, default: ->{ self.class.hours_to_credits FREE_HOURS }
   field :last_credit_refresh_at, type: DateTime
 
   def increment_credits!(n)

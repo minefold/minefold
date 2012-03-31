@@ -24,7 +24,9 @@ class MinecraftPlayer
 
 
   belongs_to :user
-
+  def verified?
+    not user.nil?
+  end
 
 # ---
 # Identity
