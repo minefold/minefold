@@ -2,7 +2,7 @@
 
 %section
   %article
-    = form_for current_user, url: edit_user_path, method: :put do |f|
+    = form_for current_user, url: update_user_path, method: :put do |f|
       %fieldset.minecraft-player
         %h3= current_user.minecraft_player.username
         = player_avatar_tag current_user.minecraft_player, size: :large

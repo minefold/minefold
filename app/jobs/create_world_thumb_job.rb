@@ -7,7 +7,6 @@ class CreateWorldThumbJob < Job
 
   def process!(world)
     @world.fetch_photo!
-    @world.save
   end
 
 end

@@ -52,9 +52,10 @@ Minefold::Application.routes.draw do
     # post '/confirm' => 'confirmations#create', :as => :user_confirmation
     get  '/confirm/:confirmation_token' => 'confirmations#show', :as => :confirmation
 
+    put '/settings' => 'users#update', :as => :update_user
     resource(:user,
              :path => '/',
-             :except => [:index, :show, :destroy],
+             :except => [:index, :show, :destroy, :update],
              :path_names => {:edit => 'settings'}) do
       get :verify
 
@@ -91,27 +92,26 @@ Minefold::Application.routes.draw do
 
   resources(:players,
             :path => '/',
-            :contraints => { :id => /^[\w]{1,16}$/ },
             :only => [:show]) do
-
+  
     resources(:worlds,
               :path => '/',
               :except => [:index, :new, :create],
               :path_names => {:edit => 'settings'}) do
-
+      
       put :clone, :on => :member
-
+      
       scope :module => :worlds do
         resources :players, :controller => :memberships, :only => [:index, :create, :destroy]
-
+      
         resources :membership_requests, :only => [:create, :destroy] do
           put :approve, :on => :member
         end
-
+      
         resources :comments, :only => [:create]
       end
     end
-
+  
   end
 
 end

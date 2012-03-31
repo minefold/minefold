@@ -20,7 +20,7 @@ class WorldMailer < ActionMailer::Base
     @world = World.find(world_id)
     @creator = @world.creator
     @membership = @world.membership_requests.find(request_id)
-    @player = @membership.minecraft_player
+    @player = @membership.user.minecraft_player
     @user = @player.user
     if @user
       @op = User.find op_id

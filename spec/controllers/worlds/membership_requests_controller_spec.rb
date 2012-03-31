@@ -35,4 +35,7 @@ describe Worlds::MembershipRequestsController do
 
     end
   end
+  
+  describe '#approve' do
+  end
 end
