@@ -19,7 +19,7 @@ class OrdersController < ApplicationController
                   months: pack.months
 
     redirect_to user_root_path,
-      notice: "Thank you for buying #{pack.months} of Minefold Pro"
+      notice: "Thank you for buying #{pack.months} months of Minefold Pro"
 
   rescue Stripe::StripeError
     render(nothing: true, status: :payment_required)

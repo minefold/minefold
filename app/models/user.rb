@@ -249,7 +249,7 @@ class User
   field :last_world_started_mail_sent_at, type: DateTime
 
   def notify?(notification)
-    notifications[notification.to_s] != "0"
+    confirmed? and notifications[notification.to_s] != "0"
   end
 
 

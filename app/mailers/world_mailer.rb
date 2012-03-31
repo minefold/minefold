@@ -45,7 +45,7 @@ class WorldMailer < ActionMailer::Base
   def world_started(world_id, user_id)
     @world = World.find(world_id)
     @user = User.find(user_id)
-    return if @user.nil?
+
     return unless @user.notify? :world_started
 
     @user.last_world_started_mail_sent_at = Time.now
@@ -59,6 +59,8 @@ class WorldMailer < ActionMailer::Base
     @world_name = world_name
     @world_creator = world_creator
     @user = User.find(user_id)
+    
+    return unless @user.confirmed?
 
     mail to: @user.email,
          subject: "#{@world_creator} removed the world #{@world_name} you were playing in"
