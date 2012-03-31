@@ -209,7 +209,7 @@ class World
   end
 
   def deop_player! player
-    pull :opped_player_ids, player.id
+    pull :opped_player_ids, player.id unless player == creator.minecraft_player
   end
 
   # whitelist

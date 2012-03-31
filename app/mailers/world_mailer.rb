@@ -35,7 +35,7 @@ class WorldMailer < ActionMailer::Base
     @world = World.find(world_id)
     @op = User.find(op_id)
     @new_user = User.find(user_id)
-
+    
     return unless @new_user.notify? :world_membership_added
 
     mail to: @new_user.email,

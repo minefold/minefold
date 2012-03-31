@@ -50,6 +50,7 @@ class Worlds::MembershipRequestsController < ApplicationController
       .deliver
 
     track 'approved membership request'
+    flash[:notice] = "Approved membership request"
 
     respond_with world, location: player_world_path(player, world)
   end
