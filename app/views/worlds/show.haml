@@ -6,10 +6,47 @@
 = render partial: 'worlds/masthead'
 
 - if not world.map?
-  .empty
-    %p
-      = image_tag 'spinner.gif'
-      Waiting for the map to render.
+  %section.welcome
+    %p Awesomesauce! You can connect to this server at
+    %span.host= world.host
+
+    %p.gentle-nudge
+      Your map will appear sooner if you invite your friends to play too:
+
+    .share
+      %a{href: 'https://twitter.com/share', class: 'twitter-share-button', data: {url: player_world_url(world.creator.minecraft_player, world), related: 'minefold', lang: 'en', size: 'large', count: 'none', text: "Join my new Minecraft server at #{world.host}", hashtags: 'minefold:Keep up to date with the latest changes to Minefold'}} Tweet
+
+      %a.facebook-post-button{onClick: 'postToFeed(); return false;' } Post to Facebook
+
+
+      - js do
+        :javascript
+          !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+
+
+        <script src='http://connect.facebook.net/en_US/all.js'></script>
+
+        :javascript
+          FB.init({appId: #{ENV['FB_APP_ID'].to_i.to_json}, status: true, cookie: true});
+
+          function postToFeed() {
+
+            // calling the API ...
+            var obj = {
+              method: 'feed',
+              link: #{player_world_url(world.creator.minecraft_player, world).to_json},
+              picture: #{("http://minefold.com" + current_user.minecraft_player.avatar.large.url).to_json},
+              name: #{world.name.to_json},
+              summary: #{world.host.to_json},
+              description: "Start playing with me on my new Minecraft server!",
+              ref: 'new'
+            };
+
+            function callback(response) {
+            }
+
+            FB.ui(obj, callback);
+          }
 
 - else
   #map

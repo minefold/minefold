@@ -28,10 +28,9 @@
           - else
             = button_to 'Ask to play here', player_world_membership_requests_path(world.creator.minecraft_player, world), method: :post
 
-  %h1
-    = link_to world.creator.username, player_path(world.creator.minecraft_player), class: 'creator'
-
+  %h1.world
+    %span.creator= world.creator.username
     %span.slash> /
-    = link_to world.name, player_world_path(world.creator.minecraft_player, world), class: 'name'
+    %strong.name= world.name
 
   %h2 #{world.slug}.#{world.creator.username}.minefold.com

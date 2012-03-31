@@ -143,3 +143,61 @@
 
 
 }
+
+.welcome {
+  font-size: 18px;
+  padding: ($line * 8) 0;
+  text-align: center;
+  line-height: $line * 8;
+
+  border: $radius dashed darken(white, 20%);
+  @include border-radius($radius);
+
+  color: black;
+
+  .host {
+    display: block;
+    font-weight: 900;
+    font-size: 28px;
+    color: $blue;
+    margin-bottom: $line * 4;
+  }
+
+  .gentle-nudge {
+    font-size: 14px;
+    color: darken(white, 60%);
+  }
+
+  .share {
+    height: 40px;
+    width: 240px;
+    margin: 0 auto;
+    .twitter-share-button {
+      float: left;
+      margin-right: $gutter;
+    }
+    .facebook-post-button {
+      float: left;
+      @include inline-block;
+      height: 24px;
+      border: 1px solid #CCC;
+      @include border-radius(4px);
+      @include linear-gradient(white, #DEDEDE);
+      color: #333;
+      text-shadow: 0 1px 0 rgba(white, 0.5);
+
+      font: normal normal normal 11px/18px 'Helvetica Neue',Arial,sans-serif;
+      font-weight: bold;
+      font-size: 13px;
+      line-height: 26px;
+      @include box-sizing(border-box);
+      height: 28px;
+
+      cursor: pointer;
+
+      padding: 0 7px 0 7px;
+
+    }
+  }
+}
+

@@ -1,10 +1,9 @@
 .worlds-controller .masthead {
   padding: ($line * 4) 0;
 
-  h1 {
+  .world {
     .slash { color: darken(white, 10%); margin: 0 0.2em; }
-    .creator { color: darken(white, 40%); }
-    .creator:hover { color: darken(white, 60%); }
+    .name { font-weight: 900;}
   }
   h2 {
     font-size: 12px;
