@@ -150,27 +150,30 @@
 }
 
 .welcome {
-  font-size: 18px;
+  font-size: 14px;
   padding: ($line * 8) 0;
   text-align: center;
   line-height: $line * 8;
 
-  border: $radius dashed darken(white, 20%);
-  @include border-radius($radius);
-
   color: black;
+
+  background-image: url(image-path('terrain.png'));
+  @include box-shadow(inset 0 ($line * 0) ($line * 1) rgba(black, 0.2));
+
+  text-shadow: 0 1px 0 white;
 
   .host {
     display: block;
     font-weight: 900;
-    font-size: 28px;
+    font-size: 24px;
     color: $blue;
     margin-bottom: $line * 4;
+    font-family: monospace;
   }
 
   .gentle-nudge {
     font-size: 14px;
-    color: darken(white, 60%);
+    color: darken(white, 40%);
   }
 
   .share {

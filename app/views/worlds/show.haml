@@ -6,18 +6,18 @@
 = render partial: 'worlds/masthead'
 
 - if not world.map?
-  %section.welcome
-    %p Awesomesauce! You can connect to this server at
-    %span.host= world.host
+  .welcome
+    %section
+      %p Awesomesauce! You can connect to this server at
+      %span.host= world.host
 
-    %p.gentle-nudge
-      Your map will appear sooner if you invite your friends to play too:
+      %p.gentle-nudge
+        Your map will appear sooner if you invite your friends to play too:
 
-    .share
-      %a{href: 'https://twitter.com/share', class: 'twitter-share-button', data: {url: player_world_url(world.creator.minecraft_player, world), related: 'minefold', lang: 'en', size: 'large', count: 'none', text: "Join my new Minecraft server at #{world.host}", hashtags: 'minefold:Keep up to date with the latest changes to Minefold'}} Tweet
+      .share
+        %a{href: 'https://twitter.com/share', class: 'twitter-share-button', data: {url: player_world_url(world.creator.minecraft_player, world), related: 'minefold', lang: 'en', size: 'large', count: 'none', text: "Join my new Minecraft server at #{world.host}", hashtags: 'minefold:Keep up to date with the latest changes to Minefold'}} Tweet
 
-      %a.facebook-post-button{onClick: 'postToFeed(); return false;' } Post to Facebook
-
+        %a.facebook-post-button{onClick: 'postToFeed(); return false;' } Post to Facebook
 
       - js do
         :javascript
@@ -42,10 +42,7 @@
               ref: 'new'
             };
 
-            function callback(response) {
-            }
-
-            FB.ui(obj, callback);
+            FB.ui(obj, function() {});
           }
 
 - else
