@@ -1,9 +1,9 @@
-Hi <%= @user.username %>,
+Hi <%= @new_user.minecraft_player.username %>,
 
-<%= @creator.username %> would like you to play in their Minecraft world "<%= @world.name %>". You can start playing here straight away by going to:
+<%= @op.minecraft_player.username %> has added you to the Minecraft world:
 
-    <%= player_world_url(@world.creator.minecraft_player, @world) %>
+    <%= @world.host %>
 
-and "Play here". The next time you connect to <%= @user.host %> in Minecraft you'll be connected to <%= @world.name %>.
+Jump in and play now!
 
 <%= render partial: 'shared/email_sig' %>

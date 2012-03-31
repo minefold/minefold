@@ -1,6 +1,6 @@
 Hi <%= @user.username %>,
 
-<%= @world.players.collect {|p| p.username}.to_sentence(:last_word_connector => ' and ') %> just started playing in <%= @world.name %>.
+<%= @world.online_players.map(&:username).to_sentence(:last_word_connector => ' and ') %> just started playing in <%= @world.name %>.
 
 Visit <%= player_world_url(@world.creator.minecraft_player, @world) %> to join in!
 

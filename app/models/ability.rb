@@ -5,7 +5,9 @@ class Ability
     # Public abilities
     can :read, [World, User]
 
-    return unless user and user.verified?
+    # raise user.inspect
+
+    return false unless user and user.verified?
 
     player = user.minecraft_player
 

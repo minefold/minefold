@@ -35,7 +35,7 @@
             var obj = {
               method: 'feed',
               link: #{player_world_url(world.creator.minecraft_player, world).to_json},
-              picture: #{("http://minefold.com" + current_user.minecraft_player.avatar.large.url).to_json},
+              picture: #{("http://minefold.com" + world.creator.minecraft_player.avatar.large.url).to_json},
               name: #{world.name.to_json},
               summary: #{world.host.to_json},
               description: "Start playing with me on my new Minecraft server!",

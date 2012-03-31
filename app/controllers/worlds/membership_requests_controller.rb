@@ -46,7 +46,7 @@ class Worlds::MembershipRequestsController < ApplicationController
     membership_request.destroy
 
     WorldMailer
-      .membership_request_approved(world.id, membership_request.user.id)
+      .membership_request_approved(world.id, current_user.id, membership_request.user.id)
       .deliver
 
     track 'approved membership request'

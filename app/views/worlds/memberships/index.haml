@@ -22,15 +22,16 @@
                   = button_to 'Approve', approve_player_world_membership_request_path(world.creator.minecraft_player, world, r), method: :put, class: 'approve'
                   = button_to 'Ignore', player_world_membership_request_path(world.creator.minecraft_player, world, r), method: :delete, class: 'ignore'
 
-%section
-  %h2 Add a friend
-  = form_tag player_world_players_path, method: :post, id: 'add-member' do
-    = hidden_field_tag :id
-    %fieldset.username
-      = text_field_tag :username, nil, placeholder: "Minecraft username", autocomplete: 'off'
+- if can? :operate, world
+  %section
+    %h2 Add a friend
+    = form_tag player_world_players_path, method: :post, id: 'add-member' do
+      = hidden_field_tag :id
+      %fieldset.username
+        = text_field_tag :username, nil, placeholder: "Minecraft username", autocomplete: 'off'
 
-    %fieldset.submit
-      = submit_tag 'Add member'
+      %fieldset.submit
+        = submit_tag 'Add member'
 
 %section.members
   %ul

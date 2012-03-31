@@ -7,6 +7,8 @@
     - if player.user and player.user.pro?
       = pro_link(player.user)
     %span.created-at Member since #{player.created_at.strftime("%-d %b, %Y")}
+  - if world = player.online_world
+    .meta Playing right now in #{link_to strong_world_fullname(world), player_world_path(world.creator.minecraft_player, world)}
 
 %section
   %h2 Worlds

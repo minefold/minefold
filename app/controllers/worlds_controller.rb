@@ -73,6 +73,8 @@ class WorldsController < ApplicationController
     authorize! :update, world
 
     world.update_attributes(params[:world])
+    
+    flash[:notice] = "World settings updated"
 
     respond_with world, location: player_world_path(player, world)
   end

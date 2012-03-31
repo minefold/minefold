@@ -117,20 +117,21 @@ class MinecraftPlayer
       .order_by([:creator_id, :asc], [:slug, :asc])
   end
 
-  def current_world
-    World.find($redis.hget('players:playing', id.to_s))
-  rescue Mongoid::Errors::DocumentNotFound
-    nil
+  def online?
+    not online_world_id.nil?
+  end
+  
+  def online_world_id
+    $redis.hget('players:playing', id.to_s)
+  end
+
+  def online_world
+    World.where(_id: online_world_id).first
   end
 
   def tell(msg)
-    current_world.tell(self, msg)
+    online_world_id.tell(self, msg)
   end
-
-  def online?
-    $redis.hexists('players:playing', id.to_s)
-  end
-
 
 # ---
 # Stats

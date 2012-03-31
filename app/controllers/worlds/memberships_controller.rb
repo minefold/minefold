@@ -17,9 +17,12 @@ class Worlds::MembershipsController < ApplicationController
   def create
     authorize! :operate, world
 
-    world.whitelist_player!(
-      MinecraftPlayer.find_or_create_by(username: params[:username])
-    )
+    new_player = MinecraftPlayer.find_or_create_by(username: params[:username])
+    world.whitelist_player!(new_player)
+
+    if user = new_player.user
+      WorldMailer.membership_created(world.id, current_user.id, user.id).deliver
+    end
 
     track 'added member'
 

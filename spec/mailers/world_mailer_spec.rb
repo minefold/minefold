@@ -28,30 +28,46 @@ describe WorldMailer do
     let(:user) { Fabricate(:user) }
 
     subject {
-      WorldMailer.membership_request_approved(world.id, user.id)
+      WorldMailer.membership_request_approved(world.id, world.creator.id, user.id)
     }
 
     its(:to) {should include(user.email)}
 
     its(:subject) { should include(world.creator.username) }
-    its(:subject) { should include(world.name) }
 
     its(:body) { should include(user.username) }
     its(:body) { should include(world.name) }
     its(:body) { should include(world.slug) }
   end
 
-  describe "#world_started" do
-    let(:members) { [Fabricate(:user), Fabricate(:user)] }
-    let(:players) { [Fabricate(:user), Fabricate(:user)] }
+  describe "#membership_created" do
+    let(:world) { Fabricate(:world) }
+    let(:new_user) { Fabricate(:user) }
 
-    let(:user) { members.first }
+    subject {
+      WorldMailer.membership_created(world.id, world.creator.id, new_user.id)
+    }
+
+    its(:to) {should include(new_user.email)}
+
+    its(:subject) { should include(world.creator.username) }
+    its(:subject) { should include(world.name) }
+
+    its(:body) { should include(new_user.minecraft_player.username) }
+    its(:body) { should include(world.creator.minecraft_player.username) }
+    its(:body) { should include(world.host) }
+  end
+
+  describe "#world_started" do
+    let(:offline_players) { [Fabricate(:user), Fabricate(:user)] }
+    let(:online_players)  { [Fabricate(:user), Fabricate(:user)] }
+
+    let(:user) { offline_players.first }
 
     let(:world) do
-      w = Fabricate(:world, creator: players.first)
-      w.stub(:members) { players + members }
-      w.stub(:player_ids) { players.pluck(:id) }
-      w.events.create source: players.first, text: 'come mine with me!'
+      w = Fabricate(:world, creator: offline_players.first)
+      w.stub(:player_ids) { offline_players.map(&:id) + online_players.map(&:id) }
+      w.stub(:online_players) { online_players }
       w
     end
 

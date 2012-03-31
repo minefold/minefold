@@ -185,8 +185,12 @@ class World
     class_name: 'MinecraftPlayer',
     inverse_of: nil
 
+  def player_ids
+    (opped_player_ids | whitelisted_player_ids) - blacklisted_player_ids
+  end
+  
   def players
-    (opped_players | whitelisted_players) - blacklisted_players
+    MinecraftPlayer.find(player_ids)
   end
 
   embeds_many :membership_requests, cascade_callbacks: true do
@@ -240,9 +244,13 @@ class World
   def online_player_ids
     $redis.smembers("#{redis_key}:connected_players").map {|id| BSON::ObjectId(id)}
   end
+  
+  def online_players
+    MinecraftPlayer.find(online_player_ids)
+  end
 
   def offline_player_ids
-    players.map(&:id) - online_player_ids
+    player_ids - online_player_ids
   end
 
   def offline_players

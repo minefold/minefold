@@ -1,5 +1,5 @@
-Hi there,
+<%= @player.username %> wants you to play Minecraft right now!
 
-<%= @player.username %> is playing Minecraft right now at <%= @world.host %> and wants you to join in!
+Join <%= @player.username %> right now by connecting to: <%= @world.host %>
 
 <%= render partial: 'shared/email_sig' %>

@@ -4,17 +4,16 @@ class WorldMailer < ActionMailer::Base
   include WorldHelper
   helper :world
 
-  # def membership_created(world_id, membership_id)
-  #   @world = World.find(world_id)
-  #   @creator = @world.creator
-  #   @membership = @world.memberships.find(membership_id)
-  #   @user = @membership.user
-  #
-  #   return unless @user.notify? :world_membership_added
-  #
-  #   mail to: @user.email,
-  #        subject: "You can now play in #{@world.name}"
-  # end
+  def membership_created(world_id, op_id, new_user_id)
+    @world = World.find(world_id)
+    @op = User.find(op_id)
+    @new_user = User.find(new_user_id)
+
+    return unless @new_user.notify? :world_membership_added
+
+    mail to: @new_user.email,
+         subject: "You've been added to #{@world.host}"
+  end
 
   def membership_request_created(world_id, request_id, op_id)
     @world = World.find(world_id)
@@ -32,15 +31,15 @@ class WorldMailer < ActionMailer::Base
     end
   end
 
-  def membership_request_approved(world_id, user_id)
+  def membership_request_approved(world_id, op_id, user_id)
     @world = World.find(world_id)
-    @creator = @world.creator
-    @user = User.find(user_id)
+    @op = User.find(op_id)
+    @new_user = User.find(user_id)
 
-    return unless @user.notify? :world_membership_added
+    return unless @new_user.notify? :world_membership_added
 
-    mail to: @user.email,
-         subject: "#{@creator.username} has added you to #{@world.name}"
+    mail to: @new_user.email,
+         subject: "#{@op.minecraft_player.username} has approved your request to play"
   end
 
   def world_started(world_id, user_id)
