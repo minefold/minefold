@@ -40,7 +40,8 @@ class UsersController < Devise::RegistrationsController
     if user.save
       sign_in :user, user
 
-      track '$signup', distinct_id: user.mpid.to_s, mp_name_tag: user.email
+      track '$signup', distinct_id: user.mpid.to_s, mp_name_tag: user.email,
+        'initial credit' => User::FREE_CREDITS
 
       respond_with(user, location: verify_user_path)
     else

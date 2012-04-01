@@ -1,7 +1,40 @@
 form#new-world, form#edit-world {
 
+  .container {
+    @include columns(9);
+    border: solid 1px #ccc;
+    float:left;
+  }
+
   .name {
-    @include columns($ncols / 2);
+    input, .host {
+      font-family: $proxima;
+      display: block;
+      font-size: 28px;
+      line-height: $line * 9;
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+
+    input {
+      color: $blue;
+      font-weight: 900;
+      width: 340px;
+      float: left;
+      margin-top: 0;
+      margin-bottom: 0;
+      margin-right: 0;
+      padding-right: 0;
+      border: 0;
+      outline: none;
+    }
+
+    .host {
+      color: #ccc;
+      font-weight: 600;
+      float: right;
+      padding-right: $gutter;
+    }
   }
 
   .upload {

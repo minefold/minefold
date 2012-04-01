@@ -15,11 +15,12 @@ class PlayerDisconnectedJob < Job
     if @connected_at
       seconds = @disconnected_at - @connected_at
       Mixpanel.track 'played',
+        distinct_id: @player.distinct_id,
+        mp_name_tag: @player.friendly_id,
         seconds: seconds,
         minutes: (seconds / 60.0).to_i,
         hours: (seconds / 60.0 / 60.0).to_i,
-          distinct_id: @player.distinct_id,
-          mp_name_tag: @player.friendly_id
+        pro: (@player.user and @player.user.pro?)
     end
   end
 

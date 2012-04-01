@@ -1,7 +1,9 @@
 %fieldset.name
-  %h3= form.label :name
-  = error_messages_for form.object, :name
-  = form.text_field :name, tabindex: 1, autocomplete: 'off'
+  %h3= form.label 'Server Name (No spaces)'
+  .container
+    = error_messages_for form.object, :name
+    = form.text_field :name, tabindex: 1, autocomplete: 'off'
+    %span.host= ".#{current_user.slug}.minefold.com"
 
 
 - if form.object.new_record?
@@ -152,3 +154,13 @@
     = form.submit 'Create world', tabindex: 8
   - else
     = form.submit 'Update settings', tabindex: 8
+
+- js do
+  :javascript
+    $('input#world_name').keyup(function() {
+      var text = $(this).val();
+      if (text.match(/[^a-zA-Z0-9_]/g) !== null) {
+        var replacement = text.replace(/[^a-zA-Z0-9_]/g, '_');
+        $(this).val(replacement);
+      }
+    });
