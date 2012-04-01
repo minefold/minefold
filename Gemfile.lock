@@ -89,6 +89,7 @@ GEM
       hashie (~> 1.0)
       httparty (~> 0.8)
       json
+    curb (0.8.0)
     daemons (1.1.8)
     database_cleaner (0.7.1)
     decent_exposure (1.0.1)
@@ -167,6 +168,10 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    mailgun-rails (0.1.1)
+      actionmailer
+      activesupport
+      curb
     mime-types (1.17.2)
     mini_magick (3.4)
       subexec (~> 0.2.1)
@@ -354,6 +359,7 @@ DEPENDENCIES
   jquery-rails
   kaminari
   letter_opener
+  mailgun-rails
   mini_magick
   mongo (~> 1.5)
   mongoid (~> 2.4)

@@ -58,6 +58,7 @@ gem 'em-mixpanel', git: 'https://github.com/minefold/em-mixpanel'
 
 # Mail
 gem 'createsend'
+gem 'mailgun-rails'
 
 group :development, :test do
   gem 'letter_opener'
