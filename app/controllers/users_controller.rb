@@ -5,7 +5,7 @@ class UsersController < Devise::RegistrationsController
   prepend_before_filter :authenticate_scope!, only: [:dashboard, :edit, :update, :verify]
 
   skip_before_filter :require_player_verification, :only => :verify
-
+  
   layout 'system', only: [:new, :verify]
 
 

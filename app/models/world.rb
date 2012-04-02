@@ -30,7 +30,7 @@ class World
 
 
   def self.sanitize_name(name)
-    name.strip.downcase.gsub(/[^\w]/, '')
+    name.strip.downcase.gsub(/[^\w]+/, '_')
   end
 
   def self.find_by_name(name)
@@ -39,7 +39,6 @@ class World
 
   field :name, type: String
 
-  validates_format_of :name, with: /^\w+$/
   validates_uniqueness_of :name, scope: :creator_id
   validates_presence_of :name
 

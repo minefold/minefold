@@ -2,8 +2,8 @@ class WorldsController < ApplicationController
   respond_to :html, :json
 
   prepend_before_filter :authenticate_user!, except: [:index, :show]
-  before_filter :set_invite_code, :only => [:show, :map]
-
+  before_filter :set_invite_code, :only => [:show]
+  before_filter :redirect_to_correct_case, :only => [:show]
 
 # ---
 
@@ -73,7 +73,7 @@ class WorldsController < ApplicationController
     authorize! :update, world
 
     world.update_attributes(params[:world])
-    
+
     flash[:notice] = "World settings updated"
 
     respond_with world, location: player_world_path(player, world)
@@ -112,6 +112,16 @@ private
 
   def set_invite_code
     cookies[:invite] = params[:i] if params[:i] and not signed_in?
+  end
+
+  def redirect_to_correct_case
+    if params[:id] and params[:id] != world.slug
+      redirect_to player_world_path(world.creator.minecraft_player, world)
+    end
+    
+    if params[:player_id] != world.creator.minecraft_player.slug
+      redirect_to player_world_path(world.creator.minecraft_player, world)
+    end
   end
 
 end

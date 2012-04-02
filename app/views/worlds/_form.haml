@@ -1,8 +1,13 @@
 %fieldset.name
-  %h3= form.label 'Server Name (No spaces)'
-  .container
-    = error_messages_for form.object, :name
-    = form.text_field :name, tabindex: 1, autocomplete: 'off'
+  %h3= form.label 'Name'
+  = error_messages_for form.object, :name
+  = form.text_field :name, tabindex: 1, autocomplete: 'off'
+
+%fieldset
+  %h3= form.label 'Server Address'
+  %p
+    = form.hidden_field :slug, tabindex: 1, readonly: 'readonly'
+    %span.slug
     %span.host= ".#{current_user.slug}.minefold.com"
 
 
@@ -159,8 +164,7 @@
   :javascript
     $('input#world_name').keyup(function() {
       var text = $(this).val();
-      if (text.match(/[^a-zA-Z0-9_]/g) !== null) {
-        var replacement = text.replace(/[^a-zA-Z0-9_]/g, '_');
-        $(this).val(replacement);
-      }
+      var replacement = text.replace(/[^\w]+/g, '_').toLowerCase();
+      $('input#world_slug').val(replacement);
+      $('.slug').text(replacement);
     });
