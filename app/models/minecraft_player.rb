@@ -7,6 +7,8 @@ class MinecraftPlayer
   attr_accessible :username
 
 # --
+# Indexes
+
 
   index [
     [:deleted_at, Mongo::ASCENDING],
@@ -18,9 +20,6 @@ class MinecraftPlayer
     [:_id, Mongo::ASCENDING],
     [:user_id, Mongo::ASCENDING],
   ]
-
-
-# ---
 
 
   belongs_to :user

@@ -72,9 +72,9 @@ class WorldsController < ApplicationController
   def update
     authorize! :update, world
 
-    world.update_attributes(params[:world])
-
-    flash[:notice] = "World settings updated"
+    if world.update_attributes(params[:world])
+      flash[:notice] = "World settings updated"
+    end
 
     respond_with world, location: player_world_path(player, world)
   end
@@ -116,11 +116,11 @@ private
 
   def redirect_to_correct_case
     if params[:id] and params[:id] != world.slug
-      redirect_to player_world_path(world.creator.minecraft_player, world)
+      redirect_to player_world_path(world.creator.minecraft_player, world), status: :moved_permanently
     end
     
     if params[:player_id] != world.creator.minecraft_player.slug
-      redirect_to player_world_path(world.creator.minecraft_player, world)
+      redirect_to player_world_path(world.creator.minecraft_player, world), status: :moved_permanently
     end
   end
 

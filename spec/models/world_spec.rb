@@ -15,8 +15,18 @@ describe World do
 
   it { should have_field(:name).of_type(String) }
   it { should validate_presence_of(:name) }
-  it { should validate_format_of(:name).with_format(/^\w+$/) }
   it { should validate_uniqueness_of(:name).scoped_to(:creator_id) }
+
+
+# ---
+# Slug
+
+
+  it { should have_field(:slug).of_type(String) }
+  it { should validate_presence_of(:slug) }
+  it { should validate_format_of(:slug).with_format(/^[a-z0-9_]+$/) }
+  it { should validate_uniqueness_of(:slug).scoped_to(:creator_id) }
+  it { should validate_length_of(:slug).within(1..16) }
 
 
 # ---

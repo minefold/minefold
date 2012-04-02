@@ -7,8 +7,9 @@
   %h3= form.label 'Server Address'
   %p
     = form.hidden_field :slug, tabindex: 1, readonly: 'readonly'
-    %span.slug
+    %span.slug= form.object.slug
     %span.host= ".#{current_user.slug}.minefold.com"
+  = error_messages_for form.object, :slug
 
 
 - if form.object.new_record?
@@ -164,7 +165,7 @@
   :javascript
     $('input#world_name').keyup(function() {
       var text = $(this).val();
-      var replacement = text.replace(/[^\w]+/g, '_').toLowerCase();
+      var replacement = text.toLowerCase().replace(/[^\w]+/g, '_').replace(/^_/,'').replace(/_$/,'').substring(0, #{World::SLUG_LENGTH});
       $('input#world_slug').val(replacement);
       $('.slug').text(replacement);
     });

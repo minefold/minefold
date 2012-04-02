@@ -21,7 +21,7 @@ class PlayersController < ApplicationController
   
   def redirect_to_correct_case
     if params[:id] and params[:id] != player.slug
-      redirect_to player_path(player)
+      redirect_to player_path(player), status: :moved_permanently
     end
   end
   

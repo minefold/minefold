@@ -30,7 +30,7 @@ class World
 
 
   def self.sanitize_name(name)
-    name.strip.downcase.gsub(/[^\w]+/, '_')
+    name.strip.downcase.gsub(/[^\w]+/, '_').gsub(/^_+/, '').gsub(/_+$/, '')
   end
 
   def self.find_by_name(name)
@@ -42,12 +42,18 @@ class World
   validates_uniqueness_of :name, scope: :creator_id
   validates_presence_of :name
 
-  field :slug, type: String
-
   def name=(str)
     super(str.strip)
-    self.slug = self.class.sanitize_name(str)
+    self.slug = self.class.sanitize_name(str)[0...SLUG_LENGTH]
   end
+  
+  SLUG_LENGTH = 20
+
+  field :slug, type: String
+  validates_uniqueness_of :slug, scope: :creator_id
+  validates_presence_of :slug
+  validates_length_of :slug, within: (1..SLUG_LENGTH)
+  validates_format_of :slug, with: /^[a-z0-9_]+$/
 
   def to_param
     slug.to_param
@@ -187,7 +193,7 @@ class World
   def player_ids
     (opped_player_ids | whitelisted_player_ids) - blacklisted_player_ids
   end
-  
+
   def players
     MinecraftPlayer.find(player_ids)
   end
@@ -217,7 +223,11 @@ class World
   end
 
   def whitelist_player! player
-    add_to_set :whitelisted_player_ids, player.id
+    if whitelisted_player_ids.include? player.id
+      false
+    else
+      add_to_set :whitelisted_player_ids, player.id
+    end
   end
 
   def unwhitelist_player! player
@@ -243,7 +253,7 @@ class World
   def online_player_ids
     $redis.smembers("#{redis_key}:connected_players").map {|id| BSON::ObjectId(id)}
   end
-  
+
   def online_players
     MinecraftPlayer.find(online_player_ids)
   end
@@ -277,7 +287,7 @@ class World
 # Settings
 
   def host
-    "#{slug}.#{creator.username}.minefold.com"
+    "#{slug}.#{creator.slug}.minefold.com"
   end
 
   GAME_MODES = [:survival, :creative]

@@ -28,7 +28,8 @@
     = form_tag player_world_players_path, method: :post, id: 'add-member' do
       = hidden_field_tag :id
       %fieldset.username
-        = text_field_tag :username, nil, placeholder: "Minecraft username", autocomplete: 'off'
+        = text_field_tag :username, (@new_player.username if @new_player), placeholder: "Minecraft username", autocomplete: 'off', maxlength: 16
+        = error_messages_for @new_player, :username if @new_player
 
       %fieldset.submit
         = submit_tag 'Add member'

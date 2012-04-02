@@ -17,16 +17,28 @@ class Worlds::MembershipsController < ApplicationController
   def create
     authorize! :operate, world
 
-    new_player = MinecraftPlayer.find_or_create_by(username: params[:username])
-    world.whitelist_player!(new_player)
-
-    if user = new_player.user
-      WorldMailer.membership_created(world.id, current_user.id, user.id).deliver
+    slug = MinecraftPlayer.sanitize_username(params[:username])
+    @new_player = MinecraftPlayer.where(slug: slug).first
+    unless @new_player
+      @new_player = MinecraftPlayer.create(username: params[:username])
     end
 
-    track 'added member'
+    if @new_player.valid?
+      if world.whitelist_player!(@new_player)
+        if user = @new_player.user
+          WorldMailer.membership_created(world.id, current_user.id, user.id).deliver
+        end
+        track 'added member', 'new player' => @new_player.user.nil?.to_s
+      end
+    end
 
-    respond_with world, location: player_world_players_path(player, world)
+    respond_with(world) do |format|
+      if @new_player.valid?
+        format.html { redirect_to player_world_players_path(player, world) }
+      else
+        format.html { render action: :index }
+      end
+    end
   end
 
   def destroy
