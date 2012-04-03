@@ -4,6 +4,8 @@ class WorldMailer < ActionMailer::Base
   include WorldHelper
   helper :world
 
+  default :from => 'Minefold <team@minefold.com>'
+
   def membership_created(world_id, op_id, new_user_id)
     @world = World.find(world_id)
     @op = User.find(op_id)
@@ -18,17 +20,13 @@ class WorldMailer < ActionMailer::Base
   def membership_request_created(world_id, request_id, op_id)
     @world = World.find(world_id)
     @creator = @world.creator
-    @membership = @world.membership_requests.find(request_id)
-    @player = @membership.user.minecraft_player
-    @user = @player.user
-    if @user
-      @op = User.find op_id
+    @user = @world.membership_requests.find(request_id).user
+    @op = User.find op_id
 
-      return unless @op.notify? :world_membership_request_created
+    return unless @op.notify? :world_membership_request_created
 
-      mail to: @op.email,
-           subject: "#{@user.username} would like to play in #{@world.name}"
-    end
+    mail to: @op.email,
+         subject: "#{@user.username} would like to play in #{@world.name}"
   end
 
   def membership_request_approved(world_id, op_id, user_id)

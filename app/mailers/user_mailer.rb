@@ -4,6 +4,8 @@ class UserMailer < ActionMailer::Base
   include WorldHelper
   helper :world
 
+  default :from => 'Minefold <team@minefold.com>'
+
   def welcome(user_id)
     @user = User.find user_id
     mail(to: @user.email, subject: 'Welcome to Minefold!')
