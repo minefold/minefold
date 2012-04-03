@@ -12,7 +12,7 @@ namespace :jobs do
       s3_key: 'pflurch-4f2cb421578e830001000157-20120205003744Hardcore Straightedge.zip'
     )
 
-    WorldUploadJob.new(world_upload).process!
+    WorldUploadJob.new(world_upload).perform!
   end
 
   task :minute_played => :environment do

@@ -6,7 +6,7 @@ class PhotoUploadJob < Job
     @remote_file_url = remote_file_url
   end
 
-  def process!
+  def perform!
     photo = Photo.new
     photo.remote_file_url = @remote_file_url
     photo.creator = @user

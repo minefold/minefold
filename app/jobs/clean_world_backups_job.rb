@@ -1,7 +1,7 @@
 class CleanWorldBackupsJob < Job
   @queue = :low
 
-  def process!
+  def perform!
     all_files = page_world_files
     # all_files.each{|f| puts f.key }
 

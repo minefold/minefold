@@ -5,11 +5,11 @@ class UpdateSubscriptionJob < Job
     @user = User.find(user_id)
   end
 
-  def process?
+  def perform?
     @user.email? and ENV['CAMPAIGN_MONITOR_USER_LIST_ID']
   end
 
-  def process!
+  def perform!
     begin
       subscriber = CreateSend::Subscriber.new(
         ENV['CAMPAIGN_MONITOR_USER_LIST_ID'],

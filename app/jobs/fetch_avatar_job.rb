@@ -5,7 +5,7 @@ class FetchAvatarJob < Job
     @player = MinecraftPlayer.find(player_id)
   end
   
-  def process!
+  def perform!
     @player.fetch_avatar
     @player.save
   rescue OpenURI::HTTPError

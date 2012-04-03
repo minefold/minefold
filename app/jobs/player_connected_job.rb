@@ -7,7 +7,7 @@ class PlayerConnectedJob < Job
     @timestamp = timestamp
   end
 
-  def process!
+  def perform!
     @world.set :last_played_at, @timestamp
 
     Events::Connection.create! source: @user,
