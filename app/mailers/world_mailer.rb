@@ -21,6 +21,7 @@ class WorldMailer < ActionMailer::Base
     @world = World.find(world_id)
     @creator = @world.creator
     @user = @world.membership_requests.find(request_id).user
+    @player = @user.minecraft_player
     @op = User.find op_id
 
     return unless @op.notify? :world_membership_request_created
