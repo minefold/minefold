@@ -29,9 +29,11 @@ class Worlds::MembershipRequestsController < ApplicationController
     if membership_request.new_record?
       world.membership_requests.push(membership_request)
       world.opped_players.each do |op|
-        WorldMailer
-          .membership_request_created(world.id, membership_request.id, op.user.id)
-          .deliver
+        if op.user and op.user.notify?(:world_membership_request_created)
+          WorldMailer
+            .membership_request_created(world.id, membership_request.id, op.user.id)
+            .deliver
+        end
       end
       track 'created membership request'
     end
@@ -45,9 +47,11 @@ class Worlds::MembershipRequestsController < ApplicationController
     membership_request.approve
     membership_request.destroy
 
-    WorldMailer
-      .membership_request_approved(world.id, current_user.id, membership_request.user.id)
-      .deliver
+    if membership_request.user.notify?(:world_membership_added)
+      WorldMailer
+        .membership_request_approved(world.id, current_user.id, membership_request.user.id)
+        .deliver
+    end
 
     track 'approved membership request'
     flash[:notice] = "Approved membership request"

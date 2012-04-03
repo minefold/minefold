@@ -98,7 +98,9 @@ class WorldsController < ApplicationController
 
     members_to_notify = world.players - [world.creator.minecraft_player]
     members_to_notify.select{|p| p.user }.each do |player|
-      WorldMailer.world_deleted(world.name, world.creator.minecraft_player.username, player.user.id).deliver
+      if player.user and player.user.confirmed?
+        WorldMailer.world_deleted(world.name, world.creator.minecraft_player.username, player.user.id).deliver
+      end
     end
 
     world.delete
@@ -118,7 +120,7 @@ private
     if params[:id] and params[:id] != world.slug
       redirect_to player_world_path(world.creator.minecraft_player, world), status: :moved_permanently
     end
-    
+
     if params[:player_id] != world.creator.minecraft_player.slug
       redirect_to player_world_path(world.creator.minecraft_player, world), status: :moved_permanently
     end

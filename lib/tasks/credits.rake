@@ -16,8 +16,10 @@ namespace :users do
         end
 
         user.save
-
-        UserMailer.credits_reset(user.id).deliver unless user.pro?
+        
+        if user.notify?(credits_reset) and !user.pro?
+          UserMailer.credits_reset(user.id).deliver unless user.pro?
+        end
       end
       puts "reset #{users_to_reset.size} users"
     end

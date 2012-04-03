@@ -13,7 +13,9 @@ class WorldStartedJob < Job
     @world.offline_players.each do |offline_player|
       user = offline_player.user
       unless user.nil? or throttled?(user)
-        WorldMailer.world_started(@world.id, user.id).deliver
+        if user.notify?(:world_started)
+          WorldMailer.world_started(@world.id, user.id).deliver
+        end
       end
     end
   end
