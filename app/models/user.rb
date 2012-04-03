@@ -63,6 +63,10 @@ class User
     minecraft_player and minecraft_player.username
   end
 
+  def slug
+    minecraft_player and minecraft_player.slug
+  end
+
 
 # ---
 # Flags

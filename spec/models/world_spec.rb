@@ -26,7 +26,7 @@ describe World do
   it { should validate_presence_of(:slug) }
   it { should validate_format_of(:slug).with_format(/^[a-z0-9_]+$/) }
   it { should validate_uniqueness_of(:slug).scoped_to(:creator_id) }
-  it { should validate_length_of(:slug).within(1..16) }
+  it { should validate_length_of(:slug).within(1..20) }
 
 
 # ---
