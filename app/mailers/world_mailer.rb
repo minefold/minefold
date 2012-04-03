@@ -14,7 +14,8 @@ class WorldMailer < ActionMailer::Base
     return unless @new_user.notify? :world_membership_added
 
     mail to: @new_user.email,
-         subject: "You've been added to #{@world.host}"
+         subject: "You've been added to #{@world.host}",
+         from: 'Minefold <team@minefold.com>'
   end
 
   def membership_request_created(world_id, request_id, op_id)
@@ -27,7 +28,8 @@ class WorldMailer < ActionMailer::Base
     return unless @op.notify? :world_membership_request_created
 
     mail to: @op.email,
-         subject: "#{@user.username} would like to play in #{@world.name}"
+         subject: "#{@user.username} would like to play in #{@world.name}",
+          from: 'Minefold <team@minefold.com>'
   end
 
   def membership_request_approved(world_id, op_id, user_id)
@@ -38,7 +40,8 @@ class WorldMailer < ActionMailer::Base
     return unless @new_user.notify? :world_membership_added
 
     mail to: @new_user.email,
-         subject: "#{@op.minecraft_player.username} has approved your request to play"
+         subject: "#{@op.minecraft_player.username} has approved your request to play",
+          from: 'Minefold <team@minefold.com>'
   end
 
   def world_started(world_id, user_id)
@@ -51,7 +54,8 @@ class WorldMailer < ActionMailer::Base
     @user.save
 
     mail to: @user.email,
-         subject: "Your friends are playing on Minefold in #{@world.name}"
+         subject: "Your friends are playing on Minefold in #{@world.name}",
+          from: 'Minefold <team@minefold.com>'
   end
 
   def world_deleted world_name, world_creator, user_id
@@ -62,6 +66,7 @@ class WorldMailer < ActionMailer::Base
     return unless @user.confirmed?
 
     mail to: @user.email,
-         subject: "#{@world_creator} removed the world #{@world_name} you were playing in"
+         subject: "#{@world_creator} removed the world #{@world_name} you were playing in",
+          from: 'Minefold <team@minefold.com>'
   end
 end

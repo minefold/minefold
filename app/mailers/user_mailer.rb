@@ -8,12 +8,12 @@ class UserMailer < ActionMailer::Base
 
   def welcome(user_id)
     @user = User.find user_id
-    mail(to: @user.email, subject: 'Welcome to Minefold!')
+    mail(to: @user.email, subject: 'Welcome to Minefold!', from: 'Minefold <team@minefold.com>')
   end
 
   def reminder(user_id)
     @user = User.find user_id
-    mail(to: @user.email, subject: 'Low on Minefold time!')
+    mail(to: @user.email, subject: 'Low on Minefold time!', from: 'Minefold <team@minefold.com>')
   end
 
   def credits_reset(user_id)
@@ -22,7 +22,7 @@ class UserMailer < ActionMailer::Base
     return unless @user.notify? :credits_reset
 
     track @user, 'sent reset credit email'
-    mail(to: @user.email, subject: 'You have more Minefold time!')
+    mail(to: @user.email, subject: 'You have more Minefold time!', from: 'Minefold <team@minefold.com>')
   end
 
   def invite(player_id, world_id, invitee_email, message = nil)
@@ -30,14 +30,14 @@ class UserMailer < ActionMailer::Base
     @world = World.find world_id
 
     track @player.user, 'sent invite email' if @player.user
-    mail(to: invitee_email, subject: "#{@player.username} wants you to play Minecraft in #{@world.name}")
+    mail(to: invitee_email, subject: "#{@player.username} wants you to play Minecraft in #{@world.name}", from: 'Minefold <team@minefold.com>')
   end
 
   def claim_account_info(player_id, email, message = nil)
     @player = MinecraftPlayer.find player_id
 
     track @player, 'sent claim email'
-    mail(to: email, subject: "Claim #{@player.username} on Minefold")
+    mail(to: email, subject: "Claim #{@player.username} on Minefold", from: 'Minefold <team@minefold.com>')
   end
 
   private
