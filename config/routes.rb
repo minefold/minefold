@@ -64,7 +64,6 @@ Minefold::Application.routes.draw do
     end
 
     get '/pro' => 'users#pro', :as => :pro_account
-    get '/settings/notifications' => 'users#notifications', :as => :notifications_account
   end
 
   root :to => 'pages#home'
