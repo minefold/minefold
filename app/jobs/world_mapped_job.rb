@@ -10,7 +10,7 @@ class WorldMappedJob < Job
     not @world.destroyed?
   end
 
-  def process!
+  def perform!
     @world.update_attributes last_mapped_at: Time.now,
                              map_data: @map_data
 
