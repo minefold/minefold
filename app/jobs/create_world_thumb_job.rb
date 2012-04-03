@@ -5,7 +5,7 @@ class CreateWorldThumbJob < Job
     @world = World.unscoped.find(world_id)
   end
 
-  def perform!(world)
+  def perform!
     @world.fetch_photo!
   end
 
