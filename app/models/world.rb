@@ -251,7 +251,9 @@ class World
 # Online Players
 
   def online_player_ids
-    $redis.smembers("#{redis_key}:connected_players").map {|id| BSON::ObjectId(id)}
+    $redis.hgetall("players:playing").select {|player_id, world_id| 
+      world_id == id.to_s 
+    }.keys.map{|player_id| BSON::ObjectId(player_id) }
   end
 
   def online_players
