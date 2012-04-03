@@ -2,7 +2,7 @@ class WorldMappedJob < Job
   @queue = :low
 
   def initialize(world_id, map_data)
-    @world = World.find(world_id)
+    @world = World.unscoped.find(world_id)
     @map_data = map_data
   end
   
