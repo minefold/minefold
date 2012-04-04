@@ -1,7 +1,7 @@
 CarrierWave.configure do |config|
   if Rails.env.production? or Rails.env.staging?
     config.root = Rails.root.join('tmp')
-    config.cache_dir = 'uploads'
+    config.cache_dir = Rails.root.join('tmp', 'uploads')
 
     config.fog_credentials = {
       provider: 'AWS',
@@ -11,7 +11,7 @@ CarrierWave.configure do |config|
     }
 
     config.fog_directory = ENV['ASSETS_BUCKET']
-    config.fog_directory = ENV['ASSET_HOST']
+    config.fog_host = ENV['ASSET_HOST']
 
     config.fog_public = true
     config.fog_attributes = {
