@@ -1,5 +1,7 @@
 CarrierWave.configure do |config|
   if Rails.env.production? or Rails.env.staging?
+    config.storage = :fog
+    
     config.root = Rails.root.join('tmp')
     config.cache_dir = Rails.root.join('tmp', 'uploads')
 
