@@ -260,7 +260,7 @@ class World
   end
 
   def online_players
-    MinecraftPlayer.find(online_player_ids)
+    MinecraftPlayer.where(_id: {'$in' => online_player_ids})
   end
 
   def offline_player_ids
@@ -268,7 +268,7 @@ class World
   end
 
   def offline_players
-    MinecraftPlayer.find(offline_player_ids)
+    MinecraftPlayer.where(_id: {'$in' => offline_player_ids})
   end
 
   def say(msg)
