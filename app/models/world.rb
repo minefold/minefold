@@ -77,7 +77,11 @@ class World
 # Cover Photo
 
 
-  mount_uploader :cover_photo, CoverPhotoUploader
+  mount_uploader :cover_photo, CoverPhotoUploader do
+    def store_dir
+      File.join('world', mounted_as.to_s, model.id.to_s)
+    end
+  end
 
   def fetch_cover_photo!
     self.remote_cover_photo_url = "http://d14m45jej91i3z.cloudfront.net/#{id}/base.png"
