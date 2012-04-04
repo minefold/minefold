@@ -10,7 +10,7 @@ CarrierWave.configure do |config|
       region:'us-east-1'
     }
 
-    config.fog_directory = ENV['ASSET_BUCKET']
+    config.fog_directory = ENV['ASSETS_BUCKET']
     config.fog_directory = ENV['ASSET_HOST']
 
     config.fog_public = true
