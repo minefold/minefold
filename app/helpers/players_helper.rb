@@ -18,8 +18,8 @@ module PlayersHelper
 
     options[:class] = ['img', *options[:class]]
 
-    options[:src] ||= player.avatar.send(options[:size])
-    options[:alrt] ||= player.username
+    options[:src] ||= player.avatar.send(options[:size]).url
+    options[:alt] ||= player.username
 
     content_tag(:div, tag(:img, options), class: 'avatar')
   end
