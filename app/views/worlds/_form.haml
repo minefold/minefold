@@ -117,7 +117,7 @@
     = form.label :level_type_default do
       Natural
       .hint
-        Terrain is like real life. The seed is <span class="seed">#{form.object.seed}</span>.
+        Terrain is like real life.
 
   %section.level-type-flat
     = form.radio_button :level_type, 'FLAT'
@@ -126,10 +126,12 @@
       .hint
         Works best in Creative mode.
 
-  %section.seed{hidden}
-    = form.label :seed, 'Map seed'
+%fieldset.seed
+  %h3= form.label :level_type, 'Map Seed'
+  %section
     = form.text_field :seed, tabindex: 2
-
+    .hint
+      Don't worry if you're not sure what this is!
 
 .row
   %fieldset.difficulty

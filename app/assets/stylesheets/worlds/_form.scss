@@ -10,7 +10,7 @@ form#new-world, form#edit-world {
       padding-right: 0;
     }
   }
-  
+
   .slug, .host {
     font-family: $proxima;
     font-size: 28px;
@@ -29,7 +29,7 @@ form#new-world, form#edit-world {
     font-weight: 700;
     padding-right: $gutter;
   }
-  
+
 
   .upload {
     @include row;
@@ -96,6 +96,10 @@ form#new-world, form#edit-world {
         font-size: 90%;
       }
     }
+  }
+
+  .seed {
+    @include columns($ncols / 4);
   }
 
   .mode, .level-type {
