@@ -1,4 +1,4 @@
-class CreateWorldThumbJob < Job
+class FetchCoverPhotoJob < Job
   @queue = :low
 
   def initialize(world_id)
@@ -6,7 +6,8 @@ class CreateWorldThumbJob < Job
   end
 
   def perform!
-    @world.fetch_photo!
+    @world.fetch_cover_photo!
+    @world.save!
   end
 
 end

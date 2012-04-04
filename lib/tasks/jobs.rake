@@ -22,4 +22,16 @@ namespace :jobs do
   task :map_unmapped_worlds => :environment do
     World.where(:last_mapped_at => nil, :minutes_played.gt => 0).each {|w| Resque.push 'maps_high', class: 'Job::MapWorld', args: [w.id.to_s]}
   end
+  
+  task :fetch_avatars => :environment do
+    MinecraftPlayer.all.each do |u|
+      Resque.enqueue FetchAvatarJob, u.id
+    end
+  end
+  
+  task :fetch_cover_photos => :environment do
+    World.all.each do |w|
+      Resque.enqueue FetchCoverPhotoJob, w.id
+    end
+  end  
 end

@@ -24,7 +24,7 @@ module FacebookHelper
       'og:url' => player_world_url(world.creator.minecraft_player, world),
       'og:title' => h(world.name),
       'og:description' => h('Minecraft world'),
-      'og:image' => world.photo.url,
+      'og:image' => world.cover_photo.url,
       'og:updated_time' => world.updated_at.to_i,
       'minefold:players' => world.players.count
     }

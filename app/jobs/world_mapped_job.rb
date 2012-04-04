@@ -14,7 +14,7 @@ class WorldMappedJob < Job
     @world.update_attributes last_mapped_at: Time.now,
                              map_data: @map_data
 
-    Resque.enqueue(CreateWorldThumbJob, @world.id)
+    Resque.enqueue(FetchCoverPhotoJob, @world.id)
   end
 
 end

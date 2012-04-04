@@ -77,10 +77,10 @@ class World
 # Cover Photo
 
 
-  mount_uploader :photo, CoverPhotoUploader
+  mount_uploader :cover_photo, CoverPhotoUploader
 
-  def fetch_photo!
-    set :remote_photo_url, "http://d14m45jej91i3z.cloudfront.net/#{id}/base.png"
+  def fetch_cover_photo!
+    self.remote_cover_photo_url = "http://d14m45jej91i3z.cloudfront.net/#{id}/base.png"
   rescue OpenURI::HTTPError
   end
 
