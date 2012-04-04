@@ -195,7 +195,10 @@ class World
   end
 
   def players
-    MinecraftPlayer.find(player_ids)
+    # MinecraftPlayer.find(player_ids)
+    
+    # TODO: this is a hack while I figure out why some player_ids don't exist
+    MinecraftPlayer.where(_id: {'$in' => player_ids })
   end
 
   embeds_many :membership_requests, cascade_callbacks: true do
