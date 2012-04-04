@@ -4,6 +4,10 @@ class AvatarUploader < CarrierWave::Uploader::Base
   def extension_white_list
     %w(png)
   end
+  
+  def fog_host
+    ENV['AVATARS_HOST']
+  end
 
   process :crop_head!
 
