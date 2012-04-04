@@ -30,7 +30,7 @@
     }
 
     &:hover a.thumb { border-color: darken(white, 20%); }
-    &:hover .pro { @include inline-block; }
+    &:hover .pro { display: inline-block; position: absolute; }
   }
 
   .pagination {
