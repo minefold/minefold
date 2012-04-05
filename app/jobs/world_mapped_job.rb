@@ -11,8 +11,9 @@ class WorldMappedJob < Job
   end
 
   def perform!
-    @world.update_attributes last_mapped_at: Time.now,
-                             map_data: @map_data
+    @world.last_mapped_at = Time.now
+    @world.map_data = @map_data
+    @world.save!
 
     Resque.enqueue(FetchCoverPhotoJob, @world.id)
   end
