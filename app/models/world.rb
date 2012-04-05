@@ -52,7 +52,7 @@ class World
   field :slug, type: String
   validates_uniqueness_of :slug, scope: :creator_id
   validates_presence_of :slug
-  validates_length_of :slug, within: (1..SLUG_LENGTH)
+  validates_length_of :slug, within: (1..SLUG_LENGTH), on: :create
   validates_format_of :slug, with: /^[a-z0-9_]+$/
 
   def to_param
