@@ -3,23 +3,40 @@
   margin-right: - $gutter/2;
   float: right;
 
-  li { float: left; }
-  li a {
-    display: block; padding: ($line * 2) ($gutter / 2);
-    color: darken(white, 40%); font-size: 14px; line-height: $line * 4; text-decoration: none;
+  > li {
+    float: left;
   }
-  li a:hover { color: black; }
+
+  > li a {
+    display: block;
+    padding: ($line * 2) ($gutter / 2);
+    color: darken(white, 40%);
+    font-size: 14px;
+    line-height: $line * 4;
+    text-decoration: none;
+  }
+
+  > li a:hover {
+    color: black;
+  }
 
   .plan {
     margin: ($line * 2) ($gutter / 2);
     color: darken(white, 20%); font-size: 14px;
 
-    a.upgrade {
+    .upgrade {
       @include inline-block;
-      margin-left: $gutter / 2; padding: 0 ($gutter / 4); background-color: $yellow;
-      color: black; font-weight: 600; line-height: $line * 4;
+      margin-left: $gutter / 2;
+      padding: 0 ($gutter / 4);
+      background-color: $yellow;
+      color: black;
+      font-weight: 600;
+      line-height: $line * 4;
 
-      &:hover { background-color: $red; color: white; }
+      &:hover {
+        background-color: $red;
+        color: white;
+      }
     }
   }
 
@@ -29,11 +46,19 @@
     img { display: block; }
 
     ol {
-      display: none; position: absolute; z-index: 101; right: 0; background-color: $blue;
+      display: none;
+      position: absolute;
+      z-index: 101;
+      right: 0;
+      background-color: $blue;
       @include columns(2);
     }
 
-    ol li { float: none; margin: 0; font-weight: 600; }
+    ol li {
+      float: none;
+      margin: 0;
+      font-weight: 600;
+    }
     ol li a {
       border: none; color: white;
 

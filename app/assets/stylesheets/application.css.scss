@@ -2,12 +2,12 @@
 //= require_self
 
 @charset 'utf-8';
-
 @import 'bourbon';
 
 @import 'vars';
 @import 'mixins';
 @import 'scaffold';
+
 
 @import 'shared/buttons';
 @import 'shared/flash';
@@ -18,42 +18,42 @@
 @import 'shared/page';
 @import 'shared/pro';
 
-@import 'layouts/global';
+@import 'hacks/layouts/global';
 
-@import 'accounts/dashboard';
-@import 'accounts/edit';
-@import 'accounts/pro';
-@import 'accounts/notifications';
+@import 'hacks/accounts/dashboard';
+@import 'hacks/accounts/edit';
+@import 'hacks/accounts/pro';
+@import 'hacks/accounts/notifications';
 
-@import 'dashboard/index';
+@import 'hacks/dashboard/index';
 
-@import 'passwords/index';
+@import 'hacks/passwords/index';
 
-@import 'photos/index';
-@import 'photos/show';
-@import 'photos/lightroom';
+@import 'hacks/photos/index';
+@import 'hacks/photos/show';
+@import 'hacks/photos/lightroom';
 
-@import 'worlds/masthead';
-@import 'worlds/form';
+@import 'hacks/worlds/masthead';
+@import 'hacks/worlds/form';
 
-@import 'worlds/show';
-@import 'worlds/info';
-@import 'worlds/edit';
-@import 'worlds/index';
+@import 'hacks/worlds/show';
+@import 'hacks/worlds/info';
+@import 'hacks/worlds/edit';
+@import 'hacks/worlds/index';
 
-@import 'worlds/memberships/index';
+@import 'hacks/worlds/memberships/index';
 
-@import 'pages/home';
-@import 'pages/about';
-@import 'pages/pricing';
+@import 'hacks/pages/home';
+@import 'hacks/pages/about';
+@import 'hacks/pages/pricing';
 
-@import 'sessions/new';
+@import 'hacks/sessions/new';
 
-@import 'users/new';
-@import 'users/show';
-@import 'users/verify';
+@import 'hacks/users/new';
+@import 'hacks/users/show';
+@import 'hacks/users/verify';
 
 
-@import 'layouts/system';
-@import 'players/players';
+@import 'hacks/layouts/system';
+@import 'hacks/players/players';
 
