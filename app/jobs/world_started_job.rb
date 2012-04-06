@@ -2,11 +2,11 @@ class WorldStartedJob < Job
   @queue = :low
 
   def initialize(world_id)
-    @world = World.find(world_id)
+    @world = World.unscoped.find(world_id)
   end
 
   def perform?
-    @world.players.any?
+    !world.destroyed? and @world.players.any?
   end
 
   def perform!
