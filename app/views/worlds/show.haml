@@ -68,6 +68,12 @@
 
 %section
   %aside
+    %ol.tags
+      - world.tags.each do |tag|
+        %li.tag
+          %a= tag.name
+
+
     %ul.stats
       %li.stat
         %span.val= number_with_delimiter world.players.size

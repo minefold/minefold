@@ -1,3 +1,5 @@
+require 'set'
+
 class World
   include Mongoid::Document
   include Mongoid::Timestamps
@@ -46,7 +48,7 @@ class World
     super(str.strip)
     self.slug = self.class.sanitize_name(str)[0...SLUG_LENGTH]
   end
-  
+
   SLUG_LENGTH = 20
 
   field :slug, type: String
@@ -200,7 +202,7 @@ class World
 
   def players
     # MinecraftPlayer.find(player_ids)
-    
+
     # TODO: this is a hack while I figure out why some player_ids don't exist
     MinecraftPlayer.where(_id: {'$in' => player_ids })
   end
@@ -258,8 +260,8 @@ class World
 # Online Players
 
   def online_player_ids
-    $redis.hgetall("players:playing").select {|player_id, world_id| 
-      world_id == id.to_s 
+    $redis.hgetall("players:playing").select {|player_id, world_id|
+      world_id == id.to_s
     }.keys.map{|player_id| BSON::ObjectId(player_id) }
   end
 
@@ -331,6 +333,26 @@ class World
 # Comments
 
   embeds_many :comments, as: :commentable
+
+
+# ---
+# Tags
+
+
+  def tags
+    @tags ||= Set.new.tap do |s|
+      s.add Tag.new(GAME_MODES[game_mode].to_s)
+      s.add Tag.new(DIFFICULTIES[difficulty].to_s)
+
+      s.add(Tag.new(level_type)) if level_type == 'flat'
+
+      s.add(Tag.new('pvp')) if pvp?
+      s.add(Tag.new('monsters')) if spawn_monsters?
+      s.add(Tag.new('animals')) if spawn_animals?
+      s.add(Tag.new('structures')) if generate_structures?
+      s.add(Tag.new('npcs')) if generate_structures?
+    end
+  end
 
 
 # ---
