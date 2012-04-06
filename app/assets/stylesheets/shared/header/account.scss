@@ -1,4 +1,4 @@
-ol#account {
+.current-user-nav {
   @include clearfix;
   margin-right: - $gutter/2;
   float: right;
@@ -10,7 +10,7 @@ ol#account {
   }
   li a:hover { color: black; }
 
-  li.account-plan {
+  .plan {
     margin: ($line * 2) ($gutter / 2);
     color: darken(white, 20%); font-size: 14px;
 
@@ -23,7 +23,7 @@ ol#account {
     }
   }
 
-  li.account-user {
+  .player {
     position: relative;
 
     img { display: block; }
