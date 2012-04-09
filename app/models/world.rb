@@ -7,6 +7,7 @@ class World
 
 
   attr_accessible :name,
+    :world_upload_id,
     :seed,
     :game_mode,
     :difficulty,

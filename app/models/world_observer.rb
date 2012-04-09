@@ -2,7 +2,7 @@ class WorldObserver < Mongoid::Observer
 
   def before_create(world)
     world.opped_players = [world.creator.minecraft_player]
-    
+
     world.seed ||= Time.now.to_i.to_s
 
     if world.world_upload

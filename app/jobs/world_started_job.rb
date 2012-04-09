@@ -6,7 +6,7 @@ class WorldStartedJob < Job
   end
 
   def perform?
-    !world.destroyed? and @world.players.any?
+    !@world.destroyed? and @world.players.any?
   end
 
   def perform!
