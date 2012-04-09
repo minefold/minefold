@@ -53,6 +53,8 @@ Minefold::Application.routes.draw do
     get  '/confirm/:confirmation_token' => 'confirmations#show', :as => :confirmation
 
     put '/settings' => 'users#update', :as => :update_user
+    put '/unlink_player' => 'users#unlink_player', :as => :unlink_player
+    
     resource(:user,
              :path => '/',
              :except => [:index, :show, :destroy, :update],

@@ -4,7 +4,11 @@
   %article
     = form_for current_user, url: update_user_path, method: :put do |f|
       %fieldset.minecraft-player
-        %h3= current_user.minecraft_player.username
+        %h3 Minecraft Account
+        = current_user.minecraft_player.username
+
+        = link_to '(not your account?)', unlink_player_path, method: :put, confirm: 'You will need to verify your new Minecraft account'
+
         = player_avatar_tag current_user.minecraft_player, size: :large
         .username
 
@@ -35,7 +39,7 @@
           - if current_user.beta?
             Enjoy your Beta account bro!
           - else
-            Expires in #{time_ago_in_words current_user.plan_expires_at} from now (#{current_user.plan_expires_at.strftime("%d/%m/%Y")}).
+            Expires #{time_ago_in_words current_user.plan_expires_at} from now (#{I18n.l current_user.plan_expires_at.to_date, format: :long}).
 
 
       %fieldset.submit

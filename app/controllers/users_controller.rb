@@ -5,7 +5,7 @@ class UsersController < Devise::RegistrationsController
   prepend_before_filter :authenticate_scope!, only: [:dashboard, :edit, :update, :verify]
 
   skip_before_filter :require_player_verification, :only => :verify
-  
+
   layout 'system', only: [:new, :verify]
 
 
@@ -64,6 +64,16 @@ class UsersController < Devise::RegistrationsController
     if user.save
       flash[:success] = 'Your settings were changed'
     end
+
+    respond_with(current_user, location: edit_user_path)
+  end
+
+  def unlink_player
+    authorize! :update, user
+
+    user.minecraft_player = nil
+
+    user.save!
 
     respond_with(current_user, location: edit_user_path)
   end
