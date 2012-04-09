@@ -9,7 +9,7 @@ class UserVerifiedJob < Job
   def tell_player message
     @player.tell "[MINEFOLD] #{message}" if @player.online?
   end
-  
+
   def perform?
     not @player.verified?
   end
@@ -20,10 +20,16 @@ class UserVerifiedJob < Job
 
     else
       @player.user = @user
-      @player.fetch_avatar
       @player.save
 
-      # @user.unset :verification_token
+      begin
+        @player.fetch_avatar
+        @player.save
+      rescue
+        puts "fetch avatar failed"
+      end
+
+      @user.unset :verification_token
 
       @user.private_channel.trigger!('verified', @player.to_json)
 
