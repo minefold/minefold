@@ -129,7 +129,7 @@ class MinecraftPlayer
   end
 
   def tell(msg)
-    online_world_id.tell(self, msg)
+    online_world.tell(self, msg)
   end
 
 # ---
