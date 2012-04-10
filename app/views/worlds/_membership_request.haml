@@ -1,8 +1,0 @@
-%li
-  / # = membership_request.user.username
-  / = form_for membership_request, method: :put, url: approve_world_membership_request_path(world, request) do |f|
-  /   %button.approve
-  /     Approve
-  / = form_for membership_request, method: :delete, url: [world, membership_request] do |f|
-  /   %button.ignore
-  /     Ignore

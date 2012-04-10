@@ -210,7 +210,7 @@ class World
 
   embeds_many :membership_requests, cascade_callbacks: true do
     def include_user?(user)
-      where(user_id: user.id).exists?
+      any_of({user_id: user.id}, {minecraft_player_id: user.minecraft_player.id}).exists?
     end
   end
 

@@ -12,7 +12,7 @@
       %section.members
         %ul
           - world.membership_requests.each do |r|
-            - player = r.user.minecraft_player
+            - player = r.player
             %li
               = link_to player_path(player) do
                 = player_avatar_tag player, size: :medium

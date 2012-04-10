@@ -19,12 +19,11 @@ class WorldMailer < ActionMailer::Base
   def membership_request_created(world_id, request_id, op_id)
     @world = World.find(world_id)
     @creator = @world.creator
-    @user = @world.membership_requests.find(request_id).user
-    @player = @user.minecraft_player
+    @player = @world.membership_requests.find(request_id).player
     @op = User.find op_id
 
     mail to: @op.email,
-         subject: "#{@user.username} would like to play in #{@world.name}",
+         subject: "#{@player.username} would like to play in #{@world.name}",
           from: 'Minefold <team@minefold.com>'
   end
 
