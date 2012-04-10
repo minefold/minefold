@@ -22,6 +22,15 @@ class UserVerifiedJob < Job
       @player.user = @user
       @player.save
 
+      minutes = @player.minutes_played
+
+      Mixpanel.track 'player verified',
+        distinct_id: @player.distinct_id,
+        mp_name_tag: @player.friendly_id,
+        minutes: minutes,
+        hours: (minutes / 60.0).to_i,
+        pro: @user.pro?
+
       begin
         @player.fetch_avatar
         @player.save
