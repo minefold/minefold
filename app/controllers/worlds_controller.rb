@@ -62,6 +62,11 @@ class WorldsController < ApplicationController
       format.html {
         world.inc :pageviews, 1
       }
+      format.zip {
+        s3_file = "#{ENV['WORLD_DOWNLOAD_BUCKET']}/#{world.world_data_file}"
+        filename = "#{world.slug}-#{world.creator.slug}.zip"
+        redirect_to "#{ENV['NODE_DOWNLOAD']}/#{s3_file}?name=#{filename}"
+      }
     end
   end
 
