@@ -26,7 +26,8 @@
           - if signed_in? and world.membership_requests.include_user?(current_user)
             = button_to 'Request sent', nil, disabled: true
           - else
-            = button_to 'Ask to play here', player_world_membership_requests_path(world.creator.minecraft_player, world), method: :post
+            - unless can? :play, world
+              = button_to 'Ask to play here', player_world_membership_requests_path(world.creator.minecraft_player, world), method: :post
 
   %h1.world
     %span.creator= world.creator.username
