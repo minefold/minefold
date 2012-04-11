@@ -102,20 +102,21 @@
         %h1= pluralize world.comments.count, 'comment', 'comments'
         %ol
           - world.comments.each do |comment|
-            %li[comment]
-              %h2
-                / %a.badge-link{href: '/pro'}
-                /   %span.badge.badge-pro Pro
-                %a.url{rel: 'contact', title: comment.author.minecraft_player.username, href: player_path(comment.author.minecraft_player)}
-                  = player_avatar_tag comment.author.minecraft_player, size: :medium
-                  = comment.author.minecraft_player.username
-              .comment-body
-                = markdown comment.text
+            - if comment.author.minecraft_player
+              %li[comment]
+                %h2
+                  / %a.badge-link{href: '/pro'}
+                  /   %span.badge.badge-pro Pro
+                  %a.url{rel: 'contact', title: comment.author.minecraft_player.username, href: player_path(comment.author.minecraft_player)}
+                    = player_avatar_tag comment.author.minecraft_player, size: :medium
+                    = comment.author.minecraft_player.username
+                .comment-body
+                  = markdown comment.text
 
-              .comment-meta
-                = link_to "#comment_#{comment.id}", class: 'posted' do
-                  = time_ago_in_words(comment.created_at)
-                  ago
+                .comment-meta
+                  = link_to "#comment_#{comment.id}", class: 'posted' do
+                    = time_ago_in_words(comment.created_at)
+                    ago
 
     - if can? :read, world
       - js do

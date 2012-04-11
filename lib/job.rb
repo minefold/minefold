@@ -30,7 +30,7 @@ class Job
 # private
 
   def self.logger
-    @logger ||= Rails.logger
+    @logger = Logger.new(STDOUT) # ||= Rails.logger
   end
 
   def logger

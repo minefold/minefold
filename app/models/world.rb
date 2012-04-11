@@ -395,7 +395,6 @@ private
     world_data = $redis.hget "worlds:running", id.to_s
     if world_data
       instance_id = JSON.parse(world_data)['instance_id']
-      puts "workers:#{instance_id}:worlds:#{id}:stdin"
       $redis.publish("workers:#{instance_id}:worlds:#{id}:stdin", str)
     end
   end
