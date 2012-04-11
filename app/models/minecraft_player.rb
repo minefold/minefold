@@ -114,6 +114,8 @@ class MinecraftPlayer
         {blacklisted_player_ids: self.id}
       )
       .order_by([:creator_id, :asc], [:slug, :asc])
+      
+    worlds.select {|w| w.creator.minecraft_player }
   end
 
   def online?
