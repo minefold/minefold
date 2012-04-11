@@ -47,15 +47,8 @@ class Worlds::MembershipRequestsController < ApplicationController
     authorize! :operate, world
 
     player = membership_request.player
-    membership_request.approve
+    membership_request.approve(current_user)
     membership_request.destroy
-
-    if player.user and player.user.notify?(:world_membership_added)
-      WorldMailer
-        .membership_request_approved(world.id, current_user.id, player.user.id)
-        .deliver
-    end
-
 
     track 'approved membership request'
     flash[:notice] = "Approved membership request"

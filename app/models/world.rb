@@ -236,6 +236,8 @@ class World
     if whitelisted_player_ids.include? player.id
       false
     else
+      request = membership_requests.where(minecraft_player_id:player.id).first
+      request.destroy if request
       add_to_set :whitelisted_player_ids, player.id
     end
   end

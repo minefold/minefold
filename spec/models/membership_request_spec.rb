@@ -13,7 +13,7 @@ describe MembershipRequest do
 
   describe "#approve" do
     it "adds the user as a member of the world" do
-      subject.approve
+      subject.approve(user)
       world.reload.whitelisted_players.should include(subject.player)
     end
   end

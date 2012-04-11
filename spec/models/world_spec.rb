@@ -102,6 +102,32 @@ describe World do
     world.players.size.should == 2
   end
 
+  describe '#whitelist_player!' do
+    let(:player) { Fabricate :minecraft_player }
+    before { world.save! }
+    context 'without membership request' do
+      it 'adds player to whitelist' do
+        world.whitelisted_players.should be_empty
+        world.whitelist_player! player
+        world.reload.whitelisted_players.should include(player)
+      end
+    end
+    
+    context 'with membership request' do
+      let(:request) { world.membership_requests.find_or_initialize_by minecraft_player: player }
+      before { 
+        world.membership_requests.push(request)
+        world.save!
+      }
+      
+      it 'approves membership request' do
+        world.whitelist_player! player
+        
+        world.reload.membership_requests.should be_empty
+      end
+    end
+  end
+
 
 # ---
 # Events
@@ -172,11 +198,11 @@ describe World do
 
   describe 'clone_world' do
     subject { world.clone! }
-  
+
     its(:parent) { should == world }
     its(:world_data_file) { should == world.world_data_file }
     its(:map_data) { should == world.map_data }
-    
+
     its(:game_mode) { should == world.game_mode }
     its(:level_type) { should == world.level_type }
     its(:seed) { should == world.seed }
