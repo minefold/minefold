@@ -4,8 +4,6 @@
 
 .header {
   @include clearfix;
-  @include box-shadow(0 0px 1px rgba(black, 0.1));
-  margin-top: $line * 2;
   background-color: white;
 }
 
