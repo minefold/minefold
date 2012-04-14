@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/mongoid/mongoid.git
-  revision: 058e5bc0340cec253aeb0b3e215b09666e070fb5
+  revision: 5f05ad7faf0378f50177337ba797d5cbf60dfd23
   specs:
     mongoid (3.0.0)
       activemodel (~> 3.1)
@@ -84,7 +84,7 @@ GEM
     bcrypt-ruby (3.0.1)
     bourbon (1.4.0)
       sass (>= 3.1)
-    bson (1.6.1)
+    bson (1.6.2)
     bson_ext (1.6.1)
       bson (~> 1.6.1)
     builder (3.0.0)
@@ -201,8 +201,8 @@ GEM
     mime-types (1.18)
     mini_magick (3.4)
       subexec (~> 0.2.1)
-    mongo (1.6.1)
-      bson (~> 1.6.1)
+    mongo (1.6.2)
+      bson (~> 1.6.2)
     multi_json (1.2.0)
     multi_xml (0.4.2)
     multipart-post (1.1.5)
@@ -327,7 +327,7 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.32)
+    tzinfo (0.3.33)
     uglifier (1.2.4)
       execjs (>= 0.3.0)
       multi_json (>= 1.0.2)

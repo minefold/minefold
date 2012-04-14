@@ -16,6 +16,15 @@ class User
 # Indexes
 
 
+  index [
+    [:deleted_at, Mongo::ASCENDING],
+    [:invite_token, Mongo::ASCENDING]
+  ], unique: true
+
+  index [
+    [:deleted_at, Mongo::ASCENDING],
+    [:referrer_id, Mongo::ASCENDING]
+  ]
 
 
 
@@ -38,7 +47,11 @@ class User
 
 
   has_one :minecraft_player, dependent: :nullify
-  default_scope includes(:minecraft_player)
+
+  # TODO: this causes a bug with mongoid
+  # user.referrals
+  # as it adds minecraft_player to a scope which may be nil
+  # default_scope includes(:minecraft_player)
   accepts_nested_attributes_for :minecraft_player
 
   def verified?
@@ -283,9 +296,13 @@ class User
   }
   validates_uniqueness_of :invite_token
 
-
   belongs_to :referrer, class_name: 'User', inverse_of: :referrals
   has_many :referrals, class_name: 'User', inverse_of: :referrer
+
+  # def referrer=(user)
+  #   write_attribute :referrer_id, user.id unless user.nil? or self == user
+  # end
+
 
 
 # ---
