@@ -66,7 +66,7 @@ describe User do
   end
 
   it { should have_field(:credits).of_type(Integer) }
-  it { should have_field(:last_credit_refresh_at).of_type(DateTime) }
+  it { should have_field(:last_credit_reset).of_type(DateTime) }
 
   it "#increment_credits!"
   it "#increment_hours!"

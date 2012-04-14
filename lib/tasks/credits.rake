@@ -2,7 +2,7 @@ namespace :users do
   namespace :credits do
     desc "Reset users credits back to monthly free allowance"
     task :reset => :environment do
-      monthly_credits = (User::FREE_HOURS.hours / User::CREDIT_PERIOD)
+      monthly_credits = User::FREE_CREDITS
       users_to_reset = User.where(:credits.lt => monthly_credits).select{|u| Time.now > (u.last_credit_reset || u.created_at) + 1.month }
 
       users_to_reset.each do |user|
@@ -17,7 +17,7 @@ namespace :users do
 
         user.save
         
-        if user.notify?(credits_reset) and !user.pro?
+        if user.notify?(:credits_reset) and !user.pro?
           UserMailer.credits_reset(user.id).deliver unless user.pro?
         end
       end

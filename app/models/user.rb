@@ -211,7 +211,7 @@ class User
 
 
   field :credits, type: Integer, default: FREE_CREDITS
-  field :last_credit_refresh_at, type: DateTime
+  field :last_credit_reset, type: DateTime
 
   def increment_credits!(n)
     inc(:credits, n.to_i)
