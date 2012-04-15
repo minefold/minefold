@@ -16,7 +16,7 @@ namespace :users do
         end
 
         user.save
-        
+
         if user.notify?(:credits_reset) and !user.pro?
           UserMailer.credits_reset(user.id).deliver unless user.pro?
         end

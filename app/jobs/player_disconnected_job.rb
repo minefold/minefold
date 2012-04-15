@@ -3,7 +3,7 @@ class PlayerDisconnectedJob < Job
 
   def initialize(player_id, world_id, connected_at, disconnected_at)
     @player = MinecraftPlayer.find(player_id)
-    @world = World.unscoped.find(world_id)
+    @world = World.unscoped.where(_id: world_id).first
     @connected_at, @disconnected_at = Time.parse(connected_at), Time.parse(disconnected_at)
   end
 

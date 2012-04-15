@@ -11,7 +11,7 @@ gem 'uuid'
 
 # ORM
 gem 'mongo', '~>1.5'
-gem 'mongoid', git: 'git://github.com/mongoid/mongoid.git'
+gem 'mongoid', git: 'https://github.com/mongoid/mongoid.git', ref: 'e5a6f2f841ba7ab32fe5e16039381d744ab27842'
 gem 'bson_ext'
 
 # Authentication
