@@ -6,6 +6,8 @@ describe WorldStartedJob do
     let(:offline_users) { [Fabricate(:user), Fabricate(:user)] }
 
     before do
+      ActionMailer::Base.deliveries.clear
+
       # all players
       offline_users.each {|user| world.whitelisted_players.push user.minecraft_player }
 
@@ -21,9 +23,6 @@ describe WorldStartedJob do
     end
 
     it "should email offline players" do
-      p "online: #{world.online_player_ids}"
-      p "offline: #{world.offline_player_ids}"
-
       WorldStartedJob.perform world.id
 
       ActionMailer::Base.deliveries.map(&:to).flatten.

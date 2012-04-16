@@ -24,23 +24,6 @@ describe MinecraftPlayer do
 
 
 # ---
-# Unlocking
-
-
-  it { should have_field(:unlock_code) }
-
-  it "has a random unlock code" do
-    subject.unlock_code.should_not be_empty
-  end
-
-  it "is unlocked when a user is associated with it" do
-    subject.should_not be_unlocked
-    subject.user = Fabricate(:user)
-    subject.should be_unlocked
-  end
-
-
-# ---
 # Avatar
 
 
@@ -59,6 +42,8 @@ describe MinecraftPlayer do
   it { should have_field(:minutes_played).of_type(Integer).with_default_value_of(0) }
 
   it { should have_field(:last_connected_at).of_type(DateTime) }
+
+
 
 
 end

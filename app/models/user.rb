@@ -3,6 +3,7 @@ class User
   include Mongoid::MultiParameterAttributes
   include Mongoid::Timestamps
   include Mongoid::Paranoia
+  include Verifiable
 
 
   attr_accessible :email,
@@ -32,20 +33,6 @@ class User
 # Minecraft Account
 
 
-  VERIFICATION_TOKEN_LENGTH = 6
-
-  def self.verification_token_exists?(token)
-    where(verification_token: token).exists?
-  end
-
-  def self.free_verification_token
-    begin
-      token = rand(36 ** VERIFICATION_TOKEN_LENGTH).to_s(36)
-    end while verification_token_exists?(token)
-    token
-  end
-
-
   has_one :minecraft_player, dependent: :nullify
 
   # TODO: this causes a bug with mongoid
@@ -57,11 +44,6 @@ class User
   def verified?
     !!minecraft_player
   end
-
-  field :verification_token, type: String, default: ->{
-    self.class.free_verification_token
-  }
-  validates_uniqueness_of :verification_token
 
   def verification_host
     "#{verification_token}.verify.minefold.com"
