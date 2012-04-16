@@ -5,7 +5,7 @@ class Worlds::MembershipsController < ApplicationController
     MinecraftPlayer.find_by_username(params[:player_id])
   }
   expose(:creator) {
-    player.user
+    player.user or raise NotFound
   }
   expose(:world) {
     creator.created_worlds.find_by(slug: params[:world_id].downcase)
