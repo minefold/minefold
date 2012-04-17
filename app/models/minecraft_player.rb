@@ -23,6 +23,9 @@ class MinecraftPlayer
   ]
 
 
+  REFERRER_CREDITS = 600
+  REFEREE_CREDITS = 600
+
   belongs_to :user
   def verified?
     not user.nil?
@@ -32,12 +35,13 @@ class MinecraftPlayer
     self.user = user
     save!
 
-    begin
-      fetch_avatar
-      save!
-    rescue
-      puts "fetch avatar failed"
-    end
+    # if user.referrer
+    #   user.credits += REFEREE_CREDITS
+    #   user.save!
+    # 
+    #   user.referrer.credits += REFEREE_CREDITS
+    #   user.referrer.save!
+    # end
 
     user.private_channel.trigger!('verified', @player.to_json)
 

@@ -44,6 +44,27 @@ describe MinecraftPlayer do
   it { should have_field(:last_connected_at).of_type(DateTime) }
 
 
+  # ---
+  # Referrals
+
+  describe '#verify!' do
+    let(:new_user) { Fabricate :user, minecraft_player: nil }
+    let(:new_player) { Fabricate :minecraft_player }
+    let(:referring_user) { Fabricate :user }
+
+    context 'referred by user' do
+      before { new_user.referrer = referring_user }
+
+      it 'credits both sides' do
+        new_user.private_channel.should_receive(:trigger!).with('verified', new_player.to_json)
+        new_player.verify!(new_user)
+
+        new_user.credits.should == User::FREE_CREDITS + MinecraftPlayer::REFERRER_CREDITS
+        referring_user.credits.should == User::FREE_CREDITS + MinecraftPlayer::REFEREE_CREDITS
+      end
+    end
+  end
+
 
 
 end
