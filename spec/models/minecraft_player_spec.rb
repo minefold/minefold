@@ -56,7 +56,12 @@ describe MinecraftPlayer do
       before { new_user.referrer = referring_user }
 
       it 'credits both sides' do
-        new_user.private_channel.should_receive(:trigger!).with('verified', new_player.to_json)
+        channel = double('channel')
+        new_user.stub(:private_channel) { channel }
+        channel.stub(:trigger!)
+        
+        new_player.stub(:tell)
+
         new_player.verify!(new_user)
 
         new_user.credits.should == User::FREE_CREDITS + MinecraftPlayer::REFERRER_CREDITS

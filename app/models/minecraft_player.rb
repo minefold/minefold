@@ -43,7 +43,7 @@ class MinecraftPlayer
     #   user.referrer.save!
     # end
 
-    user.private_channel.trigger!('verified', @player.to_json)
+    user.private_channel.trigger!('verified', to_json)
 
     tell 'Welcome! Your account is now verified'
   end
