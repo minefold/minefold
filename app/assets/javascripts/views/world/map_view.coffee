@@ -42,7 +42,12 @@ class Mf.WorldMapView extends Backbone.View
 
   render: ->
     @map = new google.maps.Map(@el, @options)
-    window.map = @map
+
+    @overlay = new google.maps.OverlayView()
+    @overlay.draw = ->
+    @overlay.setMap(@map)
+
+
 
     mapType = new google.maps.ImageMapType(
       getTileUrl: @tileUrl
@@ -82,22 +87,6 @@ class Mf.WorldMapView extends Backbone.View
     if window.localStorage?
       google.maps.event.addListener map, 'center_changed', @persistViewport
       google.maps.event.addListener map, 'zoom_changed', @persistViewport
-
-  # enter: ->
-  #   @map.setOptions
-  #     disableDoubleClickZoom: false
-  #     draggable: true
-  #     scrollwheel: true
-  #     navigationControl: true
-  #     keyboardShortcuts: true
-  #
-  # exit: ->
-  #   @map.setOptions
-  #     disableDoubleClickZoom: true
-  #     draggable: false
-  #     scrollwheel: false
-  #     navigationControl: false
-  #     keyboardShortcuts: false
 
   persistViewport: =>
     center = @map.getCenter()
@@ -189,11 +178,23 @@ class Mf.WorldMapView extends Backbone.View
   enterFullscreen: ->
     $(document.body).addClass('is-fullscreen')
 
-    @parent = @$el.parent()
+    # w = @$el.outerWidth()
+    # h = @$el.outerHeight()
+    #
+    # @parent = @$el.parent()
+    #
+    # @$el.appendTo(document.body)
+    #
+    # c = new google.maps.Point(10, 10)
+    # pt = @overlay.getProjection().fromContainerPixelToLatLng(c)
 
-    @$el.appendTo(document.body)
+    # @map.setCenter(pt)
+
+    c = @map.getCenter()
 
     google.maps.event.trigger @map, 'resize'
+
+    @map.setCenter(c)
 
     @map.setOptions(scrollwheel: true)
 
