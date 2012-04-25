@@ -1,5 +1,6 @@
 <%= @player.username %> wants you to play Minecraft right now!
 
-Join <%= @player.username %> right now by connecting to: <%= @world.host %>
+<% referral = @player.user ? { i: @player.user.invite_token } : {} %>
+Visit <%= player_world_url @world.creator.minecraft_player, @world, referral %>
 
 <%= render partial: 'shared/email_sig' %>

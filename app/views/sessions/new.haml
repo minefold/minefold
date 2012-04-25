@@ -10,6 +10,10 @@
 
 %section
   = form_for :user, as: :user, url: session_path(:user) do |f|
+    - if flash[:alert]
+      %section.errors
+        = flash[:alert]
+
     %fieldset.details
       %section.username
         = f.text_field :email_or_username, placeholder: 'Email or Minecraft username', tabindex: 1

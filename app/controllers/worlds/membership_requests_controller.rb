@@ -8,7 +8,7 @@ class Worlds::MembershipRequestsController < ApplicationController
   }
 
   expose(:creator) {
-    player.user
+    player.user or raise NotFound
   }
 
   expose(:world) {

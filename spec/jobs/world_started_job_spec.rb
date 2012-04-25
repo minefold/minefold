@@ -6,11 +6,20 @@ describe WorldStartedJob do
     let(:offline_users) { [Fabricate(:user), Fabricate(:user)] }
 
     before do
+      ActionMailer::Base.deliveries.clear
+
       # all players
       offline_users.each {|user| world.whitelisted_players.push user.minecraft_player }
 
       # connected players
-      world.stub(:online_player_ids) { [world.creator.minecraft_player.id] }
+      $redis = double('Redis')
+      $redis.stub(:hgetall).with('players:playing') do
+        { "#{world.creator.minecraft_player.id}" => "#{world.id}" }
+      end
+    end
+
+    after do
+      $redis = nil
     end
 
     it "should email offline players" do

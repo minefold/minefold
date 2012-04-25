@@ -76,7 +76,7 @@ describe WorldMailer do
     its(:to) { should include(user.email) }
 
     its(:body) { should include(world.name) }
-    its(:body) { should include(player_world_url(world.creator.minecraft_player, world)) }
+    its(:body) { should include(world.host) }
     its(:body) { should include(user.username) }
   end
 
