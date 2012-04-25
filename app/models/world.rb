@@ -75,6 +75,11 @@ class World
 
   scope :by_creator, ->(user) { where(creator_id: user.id) }
 
+  def fullname
+    [creator.username, slug].join('/')
+  end
+
+
 
 # ---
 # Cover Photo
