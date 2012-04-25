@@ -1,6 +1,6 @@
 Minefold::Application.configure do
   StatsD.mode = :production
-  
+
   config.action_mailer.default_url_options = {
     host: 'minefold.com',
     protocol: 'https'
@@ -11,9 +11,9 @@ Minefold::Application.configure do
       :api_key  => ENV['MAILGUN_API_KEY'],
       :api_host => ENV['MAILGUN_DOMAIN']
   }
-  
-  ActionMailer::Base.default :from => 'Minefold <team@minefold.com>'
-  
+
+  ActionMailer::Base.default from: 'Minefold <team@minefold.com>'
+
   config.middleware.use Rack::WWW, www: false
 
   # Code is not reloaded between requests
@@ -30,7 +30,7 @@ Minefold::Application.configure do
   config.assets.compress = true
 
   config.assets.digest = true
-  
+
   # Fix for Devise
   config.assets.initialize_on_precompile = false
 
