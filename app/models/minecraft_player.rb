@@ -2,6 +2,7 @@ class MinecraftPlayer
   include Mongoid::Document
   include Mongoid::Paranoia
   include Mongoid::Timestamps
+  include Verifiable
 
 
   attr_accessible :username
@@ -22,9 +23,29 @@ class MinecraftPlayer
   ]
 
 
+  REFERRER_CREDITS = 600
+  REFEREE_CREDITS = 600
+
   belongs_to :user
   def verified?
     not user.nil?
+  end
+
+  def verify!(user)
+    self.user = user
+    save!
+
+    # if user.referrer
+    #   user.credits += REFEREE_CREDITS
+    #   user.save!
+    # 
+    #   user.referrer.credits += REFEREE_CREDITS
+    #   user.referrer.save!
+    # end
+
+    user.private_channel.trigger!('verified', to_json)
+
+    tell 'Welcome! Your account is now verified'
   end
 
 # ---
@@ -72,17 +93,6 @@ class MinecraftPlayer
   end
 
 # ---
-# Unlocking
-
-
-  field :unlock_code, type: String, default: -> { rand(36 ** 4).to_s(36) }
-
-  def unlocked?
-    not user.nil?
-  end
-
-
-# ---
 # Avatars
 
 
@@ -114,14 +124,14 @@ class MinecraftPlayer
         {blacklisted_player_ids: self.id}
       )
       .order_by([:creator_id, :asc], [:slug, :asc])
-      
+
     worlds.select {|w| w.creator.minecraft_player }
   end
 
   def online?
     not online_world_id.nil?
   end
-  
+
   def online_world_id
     $redis.hget('players:playing', id.to_s)
   end
@@ -130,8 +140,8 @@ class MinecraftPlayer
     World.where(_id: online_world_id).first
   end
 
-  def tell(msg)
-    online_world.tell(self, msg)
+  def tell(message)
+    online_world.tell(self, "[MINEFOLD] #{message}") if online?
   end
 
 # ---

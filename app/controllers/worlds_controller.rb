@@ -13,7 +13,7 @@ class WorldsController < ApplicationController
   }
 
   expose(:user) {
-    player.user
+    player.user or raise NotFound
   }
 
   expose(:world) do
@@ -32,6 +32,8 @@ class WorldsController < ApplicationController
     @worlds = World.where(:photo.ne => nil)
       .page(params[:page].to_i)
       .order_by([:pageviews, :desc])
+
+    @worlds.select{|w| w.creator.minecraft_player }
   end
 
   def new
@@ -111,7 +113,17 @@ class WorldsController < ApplicationController
 private
 
   def set_invite_code
-    cookies[:invite] = params[:i] if params[:i] and not signed_in?
+    if params[:i] and
+       cookies[:invite_code].nil? and
+       referrer = User.find_by(invite_token: params[:i])
+
+      cookies[:invite_code] = params[:i]
+
+      if signed_in? and current_user.referrer.nil?
+        current_user.referrer = referrer
+        current_user.save!
+      end
+    end
   end
 
   def redirect_to_correct_case
