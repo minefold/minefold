@@ -1,0 +1,7 @@
+Hi <%= @user.username %>,
+
+<%= yield %>
+
+--
+
+To manage your notifications, visit your <%= link_to 'account settings', edit_user_url(auth_token: @user.authentication_token) %>.

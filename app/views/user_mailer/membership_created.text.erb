@@ -1,9 +1,7 @@
-Hi <%= @new_user.minecraft_player.username %>,
+Hi <%= @user.minecraft_player.username %>,
 
 <%= @op.minecraft_player.username %> has added you to the Minecraft world:
 
     <%= @world.host %>
 
 Jump in and play now!
-
-<%= render partial: 'shared/email_sig' %>

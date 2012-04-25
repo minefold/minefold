@@ -1,10 +1,14 @@
-# Only use hash rockets here please.
+# Hash rocket stylee please
 
 Minefold::Application.routes.draw do
+  admin_only = lambda {|req| (u = req.env['warden'].user) and u.admin? }
+  development_only = lambda {|req| Rails.env.development? }
 
-  namespace :admin do
-    mount Resque::Server.new, :at => "/resque"
+  constraints(development_only) do
+    mount CampaignMailer::Preview, :at => '/mailers/campaign'
+    mount UserMailer::Preview, :at => '/mailers/user'
   end
+
 
   # namespace :api do
   #   resource :session, :only => [:show],  :controller => 'session'
@@ -54,7 +58,7 @@ Minefold::Application.routes.draw do
 
     put '/settings' => 'users#update', :as => :update_user
     put '/unlink_player' => 'users#unlink_player', :as => :unlink_player
-    
+
     resource(:user,
              :path => '/',
              :except => [:index, :show, :destroy, :update],
@@ -94,25 +98,25 @@ Minefold::Application.routes.draw do
   resources(:players,
             :path => '/',
             :only => [:show]) do
-  
+
     resources(:worlds,
               :path => '/',
               :except => [:index, :new, :create],
               :path_names => {:edit => 'settings'}) do
-      
+
       put :clone, :on => :member
-      
+
       scope :module => :worlds do
         resources :players, :controller => :memberships, :only => [:index, :create, :destroy]
-      
+
         resources :membership_requests, :only => [:create, :destroy] do
           put :approve, :on => :member
         end
-      
+
         resources :comments, :only => [:create]
       end
     end
-  
+
   end
 
 end

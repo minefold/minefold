@@ -3,7 +3,7 @@
   text-align: center;
 
   h1 > .tm {
-    color: desaturate(lighten($teal, 60%), 100%);
+    color: #CCC;
     font-weight: 200; font-size: 18px;
     position: relative; top: $line * -3;
   }

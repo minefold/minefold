@@ -1,0 +1,6 @@
+- content_for :image do
+  = image_tag @user.minecraft_player.avatar.medium.url, width: 40, height: 40
+
+Thanks for signing up for Minefold. We're thrilled to have you aboard and can't wait to see what you build. We've given you #{pluralize User::FREE_HOURS, 'hour', 'hours'} free to help you get started!
+
+Be sure to email us at team@minefold.com when you have something awesome to show off!

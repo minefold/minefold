@@ -1,83 +1,141 @@
 class UserMailer < ActionMailer::Base
   include Resque::Mailer
-
-  include WorldHelper
-  helper :world
-
-  default :from => 'Minefold <team@minefold.com>'
+  add_template_helper(ActionView::Helpers::DateHelper)
 
   def welcome(user_id)
-    @user = User.find user_id
-    mail(to: @user.email, subject: 'Welcome to Minefold!', from: 'Minefold <team@minefold.com>')
+    @user = User.find(user_id)
+    mail to: @user.email,
+         subject: 'Welcome to Minefold!'
   end
 
-  def reminder(user_id)
-    @user = User.find user_id
-    mail(to: @user.email, subject: 'Low on Minefold time!', from: 'Minefold <team@minefold.com>')
+
+  def credit_reminder(user_id)
+    @user = User.find(user_id)
+
+    track(@user, 'sent credit reminder email')
+    mail to: @user.email,
+         subject: "Time for Minefold Pro"
   end
 
-  def credits_reset(user_id)
-    @user = User.find user_id
 
-    track @user, 'sent reset credit email'
-    mail(to: @user.email, subject: 'You have more Minefold time!', from: 'Minefold <team@minefold.com>')
+  def credit_reset(user_id)
+    @user = User.find(user_id)
+
+    track(@user, 'sent credit reset email')
+    mail to: @user.email,
+         subject: 'You have more Minefold time!'
   end
 
-  def invite(player_id, world_id, invitee_email, message = nil)
-    @player = MinecraftPlayer.find player_id
-    @world = World.find world_id
 
-    track @player.user, 'sent invite email' if @player.user
-    mail(to: invitee_email, subject: "#{@player.username} wants you to play Minecraft in #{@world.name}", from: 'Minefold <team@minefold.com>')
+  def membership_created(user_id, world_id, op_id)
+    @user = User.find(user_id)
+    @world = World.find(world_id)
+    @op = User.find(op_id)
+
+    mail to: @user.email,
+         subject: "#{@op.username} has added you to #{@world.fullname}"
   end
 
-  def claim_account_info(player_id, email, message = nil)
-    @player = MinecraftPlayer.find player_id
 
-    track @player, 'sent claim email'
-    mail(to: email, subject: "Claim #{@player.username} on Minefold", from: 'Minefold <team@minefold.com>')
+  def membership_request_created(user_id, world_id, request_id)
+    @user = User.find(user_id)
+    @world = World.find(world_id)
+    @request = @world.membership_requests.find(request_id)
+
+    mail to: @user.email,
+         subject: "#{@request.player.username} would like to play in #{@world.fullname}"
   end
 
-  private
 
-  def track user, event
-    Mixpanel.track event, distinct_id: user.distinct_id.to_s, mp_name_tag: user.username
+  def membership_request_approved(user_id, world_id, op_id)
+    @user = User.find(user_id)
+    @world = World.find(world_id)
+    @op = User.find(op_id)
+
+    mail to: @user.email,
+         subject: "#{@op.username} has let you play in #{@world.fullname}"
   end
 
-  # TODO
-  # def thanks(user_id)
-  #   # @order = Order.find(order_id)
-  #   # mail(to: @order.user.email, subject: 'Thank you for buying Minefold minutes!')
-  # end
 
-  # TODO
-  # def payment_failed user_id
-  #
-  # end
+  def world_started(user_id, world_id)
+    @world = World.find(world_id)
+    @user = User.find(user_id)
 
-  # class Preview < MailView
-  #
-  #   def invite
-  #     ::UserMailer.invite User.chris, User.chris.created_worlds.first, 'dave@minefold.com'
-  #   end
-  #
-  #   def welcome
-  #     ::UserMailer.welcome User.chris.id
-  #   end
-  #
-  #   def reminder
-  #     ::UserMailer.reminder User.chris.id
-  #   end
-  #
-  #   def thanks
-  #     # order = Order.new
-  #     # order.transactions.new option_selection1: 8
-  #     # order.user = User.chris
-  #     # order.save
-  #     #
-  #     # ::OrderMailer.thanks(order.id)
-  #   end
-  #
-  # end
+    @user.last_world_started_mail_sent_at = Time.now
+    @user.save
+
+    mail to: @user.email,
+         subject: "Your friends are playing on Minefold in #{@world.name}"
+  end
+
+
+  def world_deleted(user_id, world_name, world_creator_username)
+    @user = User.find(user_id)
+    @world_name = world_name
+    @world_creator_username = world_creator_username
+
+    mail to: @user.email,
+         subject: "#{@world_creator_username} removed the world #{@world_name} you were playing in"
+  end
+
+
+# ---
+
+
+  class Preview < ::MailView
+    def welcome
+      user = User.dave
+
+      UserMailer.welcome(user.id)
+    end
+
+    def credit_reminder
+      user = User.dave
+
+      UserMailer.credit_reminder(user.id)
+    end
+
+    def credit_reset
+      user = User.dave
+
+      UserMailer.credit_reset(user.id)
+    end
+
+    def membership_created
+      user = User.dave
+      op = User.chris
+      world = World.find_by(name: 'minebnb', creator_id: op.id)
+
+      UserMailer.membership_created(user.id, world.id, op.id)
+    end
+
+    # # (user_id, world_id, request_id)
+    # def membership_request_created
+    #   user = User.dave
+    #   world = World.create(creator: dave)
+    #   request = world.membership_requests.create(
+    #     player: User.chris.minecraft_player
+    #   )
+    #
+    #   UserMailer.membership_request_created(user.id, world.id, request.id)
+    # end
+    #
+    # # (user_id, world_id, op_id)
+    # def membership_request_approved
+    #   user = User.chris
+    #   world = World.create(creator: )
+    #   @op = User.find(op_id)
+    #
+    #   mail to: @user.email,
+    #        subject: "#{@op.username} has let you play in #{@world.fullname}"
+    # end
+
+  end
+
+private
+
+  def track(user, event)
+    Mixpanel.track(event, distinct_id: user.distinct_id.to_s)
+  end
 
 end

@@ -19,10 +19,10 @@ class MembershipRequest
   def approve(approver)
     # todo: don't use user
     world.whitelist_player!(player)
-    
-    if player.user and player.user.notify?(:world_membership_added)
-      WorldMailer
-        .membership_request_approved(world.id, approver.id, player.user.id)
+
+    if player.user && player.user.notify?(:world_membership_added)
+      UserMailer
+        .membership_request_approved(player.user.id, world.id, approver.id)
         .deliver
     end
   end

@@ -51,11 +51,15 @@ gem 'exceptional'
 gem 'statsd-instrument'
 gem 'rpm_contrib'
 gem 'newrelic_rpm'
-gem 'em-mixpanel', git: 'https://github.com/minefold/em-mixpanel'
+gem 'em-mixpanel', git: 'https://github.com/minefold/em-mixpanel.git'
 
 # Mail
 gem 'createsend'
 gem 'mailgun-rails'
+gem 'mail_view'
+gem 'premailer'
+gem 'premailer-rails3', git: 'https://github.com/stammy/premailer-rails3.git'
+
 
 group :development, :test do
   gem 'letter_opener'
@@ -85,8 +89,8 @@ group :test do
   gem 'fog'
 
   gem 'fabrication'
-  gem 'mongoid-rspec', :git => 'https://github.com/angelim/mongoid-rspec.git',
-                       :branch => 'mongoid-3.0-support'
+  gem 'mongoid-rspec', git: 'https://github.com/angelim/mongoid-rspec.git',
+                       branch: 'mongoid-3.0-support'
   gem 'autotest-rails'
   gem 'database_cleaner'
   gem 'capybara', '~> 1.1.1'
