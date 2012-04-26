@@ -26,7 +26,7 @@ class PlayerDisconnectedJob < Job
       if user = @player.user
         Mixpanel.track 'user played',
           distinct_id: user.distinct_id,
-          mp_name_tag: user.friendly_id,
+          mp_name_tag: user.email,
           seconds: seconds,
           minutes: (seconds / 60.0).to_i,
           hours: (seconds / 60.0 / 60.0).to_i,
