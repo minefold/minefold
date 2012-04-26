@@ -17,16 +17,24 @@
 .noop
 
 %section.verification-instructions
+  - if $rollout.active?(:verify_screenshot, current_user)
+    %p We need to link your Minecraft account. Open Minecraft and connect to:
 
-  %p Before you can continue, we need to verify your Minecraft account. If you are playing already please type the command:
+    %pre
+      %code.host= current_user.verification_host
 
-  %pre
-    %code.cmd /verify #{current_user.verification_token}
+    = image_tag "verify.png"
 
-  %p Otherwise open Minecraft and connect to:
+  - else
+    %p Before you can continue, we need to verify your Minecraft account. If you are playing already please type the command:
 
-  %pre
-    %code.host= current_user.verification_host
+    %pre
+      %code.cmd /verify #{current_user.verification_token}
+
+    %p Otherwise open Minecraft and connect to:
+
+    %pre
+      %code.host= current_user.verification_host
 
 - js do
   :javascript
@@ -36,7 +44,7 @@
       $('.verification-status')
         .removeClass('is-waiting')
         .addClass('is-verified');
-        
+
       setTimeout(function(){
         window.location = '/';
       }, 3000)
