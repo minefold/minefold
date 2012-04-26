@@ -24,6 +24,13 @@ class UserVerifiedJob < Job
         minutes: minutes,
         hours: (minutes / 60.0).to_i,
         pro: @user.pro?
+
+      Mixpanel.track 'user verified',
+        distinct_id: @user.distinct_id,
+        mp_name_tag: @user.friendly_id,
+        minutes: minutes,
+        hours: (minutes / 60.0).to_i,
+        pro: @user.pro?
     end
   end
 
