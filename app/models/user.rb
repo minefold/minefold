@@ -336,6 +336,30 @@ class User
   field :mpid, type: String, default: ->{ self.mpid.to_s }
   alias_method :distinct_id, :mpid
 
+  def minutes_played
+    minecraft_player ? minecraft_player.minutes_played : 0
+  end
+  
+  def worlds
+    minecraft_player ? minecraft_player.worlds : []
+  end
+  
+  def world_player_counts
+    worlds.map{|w| w.player_ids.size }
+  end
+
+  def tracking_data
+    {
+      'created worlds' => created_worlds.count,
+      'facebook?' => (facebook_linked?),
+      'hours played' => (minutes_played / 60),
+      'max world players' => world_player_counts.max,
+      'member worlds' => worlds.count,
+      'pro?' => pro?,
+      'verified?' => verified?,
+    }
+  end
+
 
 protected
 
