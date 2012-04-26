@@ -56,15 +56,15 @@ gem 'em-mixpanel', git: 'https://github.com/minefold/em-mixpanel.git'
 # Mail
 gem 'createsend'
 gem 'mailgun-rails'
-gem 'mail_view'
 gem 'premailer'
-gem 'premailer-rails3', git: 'https://github.com/stammy/premailer-rails3.git'
-
+gem 'premailer-rails3'
 
 group :development, :test do
-  gem 'letter_opener'
   gem 'heroku'
   gem 'foreman'
+
+  gem 'letter_opener'
+  gem 'mail_view'
 end
 
 # Gems used only for assets and not required
