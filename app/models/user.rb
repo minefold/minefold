@@ -71,6 +71,17 @@ class User
   field :admin, type: Boolean, default: false
   field :beta, type: Boolean, default: false
 
+  field :r, type: Integer
+
+  def rollout
+    self[:r] || begin
+      n = rand(100)
+      set :r, n
+      n
+    end
+  end
+
+
 
 # ---
 # Authentication
