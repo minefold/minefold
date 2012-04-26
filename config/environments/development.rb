@@ -18,7 +18,9 @@ Minefold::Application.configure do
   }
 
   config.action_mailer.delivery_method = :letter_opener
-  ActionMailer::Base.default from: 'Minefold <team@localhost.minefold.com>'
+  config.action_mailer.default_url_options = {
+    host: 'localhost.minefold.com'
+  }
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
@@ -31,8 +33,4 @@ Minefold::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
-
-  config.action_mailer.default_url_options = {
-    host: 'localhost:5000'
-  }
 end
