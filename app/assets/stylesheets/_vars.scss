@@ -1,6 +1,6 @@
 // Fonts
 
-$proxima: "proxima-nova-1", "proxima-nova-2", $helvetica;
+$proxima: $helvetica;
 
 
 // Colors
@@ -10,6 +10,18 @@ $yellow: #FFE23E;
 $green:  #A1CF32;
 $blue:   #326ECF;
 $teal:   #145155;
+
+// -- new
+
+$red:    #FF5544;
+$yellow: #FFBB44;
+
+$blue:   #3366DD;
+$bluealt: #33AADD;
+
+$green:   #33DD66;
+$greenalt: #99EE44;
+
 
 
 // Grid

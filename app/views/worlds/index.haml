@@ -4,14 +4,8 @@
 
 %section
   .worlds
-    - @worlds.per(12).each do |world|
-      .world
-        = link_to player_world_path(world.creator.minecraft_player, world), class: 'thumb' do
-          = image_tag world.cover_photo.small.url, width: 140, height: 140
-
-        .creator
-          .avatar= image_tag world.creator.minecraft_player.avatar.small.url, width: 15, height: 15
-          = link_to_player world.creator.minecraft_player
+    - @worlds.per(16).each do |world|
+      = render world
 
   .pagintion
     = paginate @worlds

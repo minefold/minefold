@@ -1,9 +1,10 @@
 module PlayersHelper
 
-  def link_to_player(player, options={})
-    content_tag(:span, class: 'username') {
-      link_to(player.username, player_path(player), options)
-    } + (link_to_pro(player.user) if player.user and player.user.pro?)
+  def link_to_player(player)
+    content_tag(:span, class: 'player-username') {
+      link_to(player.username, player_path(player), class: 'username') +
+      (link_to_pro(player.user) if player.user and player.user.pro?)
+    }
   end
 
   def player_avatar_tag(player, options={})
