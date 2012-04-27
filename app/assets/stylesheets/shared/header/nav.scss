@@ -7,7 +7,7 @@ ol#nav {
   }
 
   li a {
-    display: block;
+    display: inline-block;
     padding: ($line * 2) ($gutter / 2);
     color: lighten(black, 60%);
     font-weight: 600;
@@ -19,6 +19,17 @@ ol#nav {
 
   li a:hover {
     color: black;
+  }
+  
+  #Intercom {
+    padding-left: 26px;
+    background: transparent url(https://www.intercom.io/assets/black_env.png) no-repeat left center;
+  }
+  
+  #Intercom em {
+    color: $blue;
+    font-weight: bold;
+    font-style: normal;
   }
 }
 
