@@ -52,6 +52,7 @@ gem 'statsd-instrument'
 gem 'rpm_contrib'
 gem 'newrelic_rpm'
 gem 'em-mixpanel', git: 'https://github.com/minefold/em-mixpanel'
+gem 'intercom'
 
 # Mail
 gem 'createsend'

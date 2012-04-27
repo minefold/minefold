@@ -66,7 +66,7 @@
     = render partial: 'shared/analytics'
     
 - js do
-  - if signed_in?
+  - if Rails.env.production? and signed_in?
     %script#IntercomSettingsScriptTag
       :plain
         var intercomSettings = {
@@ -74,7 +74,7 @@
           email: '#{current_user.email}',
           created_at: #{current_user.created_at.to_i},
           user_hash: '#{Digest::SHA1.hexdigest('kczzht6c' + current_user.email)}',
-          custom_data: #{user.tracking_data.to_json},
+          custom_data: #{current_user.tracking_data.to_json},
           widget: {
             activator: '#Intercom',
             use_counter: true,

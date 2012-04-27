@@ -351,11 +351,12 @@ class User
   def tracking_data
     {
       'created worlds' => created_worlds.count,
-      'facebook?' => (facebook_linked?),
-      'hours played' => (minutes_played / 60),
+      'facebook?' => facebook_linked?,
+      'minutes played' => minutes_played,
       'max world players' => world_player_counts.max,
       'member worlds' => worlds.count,
       'pro?' => pro?,
+      'username' => username,
       'verified?' => verified?,
     }
   end
