@@ -18,9 +18,9 @@ describe Worlds::MembershipRequestsController do
       signin_as { Fabricate(:user) }
 
       before {
-        WorldMailer.
+        UserMailer.
           should_receive(:membership_request_created).
-          with(world.id, anything, world.creator.id) {
+          with(anything, world.id, world.creator.id) {
             mailer = double('mailer')
             mailer.should_receive(:deliver)
             mailer
@@ -35,7 +35,7 @@ describe Worlds::MembershipRequestsController do
 
     end
   end
-  
+
   describe '#approve' do
   end
 end

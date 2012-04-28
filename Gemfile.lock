@@ -10,9 +10,9 @@ GIT
 
 GIT
   remote: https://github.com/jnicklas/carrierwave.git
-  revision: 9c6826394506bf41c94a30e41657a047bb099251
+  revision: 024f3029927c3ba82789576d081cee55b16398d6
   specs:
-    carrierwave (0.6.1)
+    carrierwave (0.6.2)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
 
@@ -33,16 +33,6 @@ GIT
       mongo (~> 1.3)
       origin (~> 1.0.0.beta)
       tzinfo (~> 0.3.22)
-
-GIT
-  remote: https://github.com/rspec/rspec-rails.git
-  revision: b11800fd7c611a8adffb5e0de08049a5ed54209a
-  specs:
-    rspec-rails (2.9.0)
-      actionpack (>= 3.0)
-      activesupport (>= 3.0)
-      railties (>= 3.0)
-      rspec (~> 2.9.0)
 
 GEM
   remote: https://code.stripe.com/
@@ -80,14 +70,14 @@ GEM
     arel (3.0.2)
     autotest-rails (4.1.2)
       ZenTest (~> 4.5)
-    backbone-rails (0.9.1)
+    backbone-rails (0.9.2)
       rails (>= 3.0.0)
     bcrypt-ruby (3.0.1)
     bourbon (1.4.0)
       sass (>= 3.1)
     bson (1.6.2)
-    bson_ext (1.6.1)
-      bson (~> 1.6.1)
+    bson_ext (1.6.2)
+      bson (~> 1.6.2)
     builder (3.0.0)
     cancan (1.6.7)
     capybara (1.1.2)
@@ -100,7 +90,7 @@ GEM
     carrierwave-mongoid (0.1.0)
       carrierwave
       mongoid
-    childprocess (0.3.1)
+    childprocess (0.3.2)
       ffi (~> 1.0.6)
     coffee-filter (0.1.1)
       coffee-script (>= 2.2.0)
@@ -111,11 +101,15 @@ GEM
     coffee-script (2.2.0)
       coffee-script-source
       execjs
-    coffee-script-source (1.2.0)
+    coffee-script-source (1.3.1)
+    cookiejar (0.3.0)
     createsend (1.0.3)
       hashie (~> 1.0)
       httparty (~> 0.8)
       json
+    css_parser (1.2.6)
+      addressable
+      rdoc
     curb (0.8.0)
     daemons (1.1.8)
     database_cleaner (0.7.2)
@@ -126,25 +120,26 @@ GEM
       railties (~> 3.1)
       warden (~> 1.1.1)
     diff-lcs (1.1.3)
-    em-http-request (0.3.0)
-      addressable (>= 2.0.0)
-      escape_utils
-      eventmachine (>= 0.12.9)
+    em-http-request (1.0.2)
+      addressable (>= 2.2.3)
+      cookiejar
+      em-socksify
+      eventmachine (>= 1.0.0.beta.4)
+      http_parser.rb (>= 0.5.3)
+    em-socksify (0.2.0)
+      eventmachine (>= 1.0.0.beta.4)
     erubis (2.7.0)
-    escape_utils (0.2.4)
-    eventmachine (0.12.10)
+    eventmachine (1.0.0.beta.4)
     exceptional (2.0.32)
       rack
-    excon (0.13.2)
-    execjs (1.3.0)
+    excon (0.13.4)
+    execjs (1.3.1)
       multi_json (~> 1.0)
     fabrication (1.3.2)
     faker (1.0.1)
       i18n (~> 0.4)
-    faraday (0.7.6)
-      addressable (~> 2.2)
+    faraday (0.8.0)
       multipart-post (~> 1.1)
-      rack (~> 1.1)
     ffi (1.0.11)
     fog (1.3.1)
       builder
@@ -156,25 +151,28 @@ GEM
       net-ssh (>= 2.1.3)
       nokogiri (~> 1.5.0)
       ruby-hmac
-    foreman (0.41.0)
+    foreman (0.45.0)
       thor (>= 0.13.6)
     formatador (0.2.1)
     haml (3.1.4)
     hashie (1.2.0)
-    heroku (2.23.0)
+    heroku (2.25.0)
       launchy (>= 0.3.2)
       netrc (~> 0.7.1)
       rest-client (~> 1.6.1)
       rubyzip
     hike (1.2.1)
-    httparty (0.8.1)
-      multi_json
+    htmlentities (4.3.1)
+    http_parser.rb (0.5.3)
+    httparty (0.8.3)
+      multi_json (~> 1.0)
       multi_xml
+    httpauth (0.1)
     i18n (0.6.0)
     intercom (0.0.5)
       rest-client
     journey (1.0.3)
-    jquery-rails (2.0.1)
+    jquery-rails (2.0.2)
       railties (>= 3.2.0, < 5.0)
       thor (~> 0.14)
     json (1.6.6)
@@ -186,12 +184,15 @@ GEM
       addressable (~> 2.2.6)
     letter_opener (0.0.2)
       launchy
+    libwebsocket (0.1.3)
+      addressable
     macaddr (1.5.0)
       systemu (>= 2.4.0)
     mail (2.4.4)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    mail_view (1.0.2)
     mailgun-rails (0.1.1)
       actionmailer
       activesupport
@@ -201,35 +202,42 @@ GEM
       subexec (~> 0.2.1)
     mongo (1.6.2)
       bson (~> 1.6.2)
-    multi_json (1.2.0)
-    multi_xml (0.4.2)
+    multi_json (1.3.2)
+    multi_xml (0.4.4)
     multipart-post (1.1.5)
     nbtfile (0.2.0)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-ssh (2.3.0)
     netrc (0.7.1)
-    newrelic_rpm (3.3.3)
+    newrelic_rpm (3.3.4.1)
     nokogiri (1.5.2)
-    oauth2 (0.5.2)
+    oauth2 (0.6.1)
       faraday (~> 0.7)
-      multi_json (~> 1.0)
-    omniauth (1.0.3)
+      httpauth (~> 0.1)
+      multi_json (~> 1.3)
+    omniauth (1.1.0)
       hashie (~> 1.2)
       rack
     omniauth-facebook (1.2.0)
       omniauth-oauth2 (~> 1.0.0)
-    omniauth-oauth2 (1.0.0)
-      oauth2 (~> 0.5.0)
+    omniauth-oauth2 (1.0.2)
+      oauth2 (~> 0.6.0)
       omniauth (~> 1.0)
     origin (1.0.0.beta)
     orm_adapter (0.0.7)
     polyglot (0.3.3)
+    premailer (1.7.3)
+      css_parser (>= 1.1.9)
+      htmlentities (>= 4.0.0)
+    premailer-rails3 (1.1.0)
+      premailer (~> 1.7)
+      rails (~> 3)
     pusher (0.9.2)
       multi_json (~> 1.0)
       ruby-hmac (~> 0.4.0)
       signature (~> 0.1.2)
-    rabl (0.6.6)
+    rabl (0.6.10)
       activesupport (>= 2.3.14)
       multi_json (~> 1.0)
     rack (1.4.1)
@@ -288,16 +296,22 @@ GEM
     rspec-expectations (2.9.1)
       diff-lcs (~> 1.1.3)
     rspec-mocks (2.9.0)
+    rspec-rails (2.9.0)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      railties (>= 3.0)
+      rspec (~> 2.9.0)
     ruby-hmac (0.4.0)
-    rubyzip (0.9.6.1)
-    sass (3.1.15)
+    rubyzip (0.9.8)
+    sass (3.1.16)
     sass-rails (3.2.5)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
-    selenium-webdriver (2.20.0)
+    selenium-webdriver (2.21.2)
       childprocess (>= 0.2.5)
       ffi (~> 1.0)
+      libwebsocket (~> 0.1.3)
       multi_json (~> 1.0)
       rubyzip
     signature (0.1.2)
@@ -306,14 +320,14 @@ GEM
       rack (~> 1.3, >= 1.3.6)
       rack-protection (~> 1.2)
       tilt (~> 1.3, >= 1.3.3)
-    sprockets (2.1.2)
+    sprockets (2.1.3)
       hike (~> 1.2)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    statsd-instrument (1.1.2)
+    statsd-instrument (1.2.0)
     stripe (1.6.3)
       rest-client (~> 1.4)
-    subexec (0.2.1)
+    subexec (0.2.2)
     systemu (2.5.0)
     thin (1.3.1)
       daemons (>= 1.0.9)
@@ -368,6 +382,7 @@ DEPENDENCIES
   jquery-rails
   kaminari
   letter_opener
+  mail_view
   mailgun-rails
   mini_magick
   mongo (~> 1.5)
@@ -376,6 +391,8 @@ DEPENDENCIES
   nbtfile
   newrelic_rpm
   omniauth-facebook
+  premailer
+  premailer-rails3
   pusher
   rabl (>= 0.5)
   rack-www
@@ -387,7 +404,7 @@ DEPENDENCIES
   resque_mailer
   rpm_contrib
   rspec
-  rspec-rails!
+  rspec-rails
   rubyzip
   sass-rails
   sprockets

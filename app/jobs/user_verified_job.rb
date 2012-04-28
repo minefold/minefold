@@ -15,9 +15,12 @@ class UserVerifiedJob < Job
       @player.tell 'Sorry! That verification code is incorrect'
     else
       @player.verify!(@user)
-      
+
+      # TODO: Move to the model
+      UserMailer.welcome(@user.id).deliver
+
       minutes = @player.minutes_played
-      
+
       Mixpanel.track 'player verified',
         distinct_id: @player.distinct_id,
         mp_name_tag: @player.friendly_id,

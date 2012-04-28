@@ -31,9 +31,9 @@ class Worlds::MembershipRequestsController < ApplicationController
       world.save!
       # raise world.membership_requests.inspect
       world.opped_players.each do |op|
-        if op.user and op.user.notify?(:world_membership_request_created)
-          WorldMailer
-            .membership_request_created(world.id, membership_request.id, op.user.id)
+        if op.user && op.user.notify?(:world_membership_request_created)
+          UserMailer
+            .membership_request_created(op.user.id, world.id, membership_request.id)
             .deliver
         end
       end

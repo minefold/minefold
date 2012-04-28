@@ -83,9 +83,6 @@ describe WorldsController do
     signin_as { world.creator }
 
     before {
-      WorldMailer.should_receive(:world_deleted).
-        with(world.name, world.creator.username, user.id) { Struct.new(:deliver).new }
-
       delete :destroy, player_id: world.creator.minecraft_player.slug, id: world.slug
     }
 

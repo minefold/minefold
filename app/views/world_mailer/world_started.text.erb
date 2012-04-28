@@ -1,7 +1,0 @@
-Hi <%= @user.username %>,
-
-<%= @world.online_players.map(&:username).to_sentence(:last_word_connector => ' and ') %> just started playing in <%= @world.name %>.
-
-Join <%= @world.host %> to start playing!
-
-<%= render partial: 'shared/email_sig' %>

@@ -14,7 +14,7 @@ class WorldStartedJob < Job
       user = offline_player.user
       unless user.nil? or throttled?(user)
         if user.notify?(:world_started)
-          WorldMailer.world_started(@world.id, user.id).deliver
+          UserMailer.world_started(user.id, @world.id).deliver
         end
       end
     end

@@ -1,0 +1,4 @@
+- content_for :image do
+  = image_tag 'user_mailer/credit_reset.png', width: 40, height: 40
+
+We love you so much we're giving you <strong>#{time_ago_in_words 50.minutes.ago}</strong> extra time. You can now play for <i>free</i> on Minefold for <strong>#{pluralize User::FREE_HOURS, 'hour', 'hours'}</strong>.

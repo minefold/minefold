@@ -57,11 +57,15 @@ gem 'intercom'
 # Mail
 gem 'createsend'
 gem 'mailgun-rails'
+gem 'premailer'
+gem 'premailer-rails3'
 
 group :development, :test do
-  gem 'letter_opener'
   gem 'heroku'
   gem 'foreman'
+
+  gem 'letter_opener'
+  gem 'mail_view'
 end
 
 # Gems used only for assets and not required
@@ -81,13 +85,13 @@ end
 
 group :test do
   gem 'rspec'
-  gem 'rspec-rails', git: 'https://github.com/rspec/rspec-rails.git'
+  gem 'rspec-rails'
   gem 'faker'
   gem 'fog'
 
   gem 'fabrication'
-  gem 'mongoid-rspec', :git => 'https://github.com/angelim/mongoid-rspec.git',
-                       :branch => 'mongoid-3.0-support'
+  gem 'mongoid-rspec', git: 'https://github.com/angelim/mongoid-rspec.git',
+                       branch: 'mongoid-3.0-support'
   gem 'autotest-rails'
   gem 'database_cleaner'
   gem 'capybara', '~> 1.1.1'

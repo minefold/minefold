@@ -1,0 +1,3 @@
+<%= @request.minecraft_player.username %> would like to play in <%= @world.fullname %>. You can let <%= @request.minecraft_player.username %> play there by going to:
+
+  <%= player_world_players_url(@world.creator.minecraft_player, @world, auth_token: @user.authentication_token) %>

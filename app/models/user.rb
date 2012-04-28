@@ -161,26 +161,32 @@ class User
 
     begin
       case
+      # User is already signed in
       when signed_in_user
         signed_in_user.facebook_uid = uid
         signed_in_user.save!
         signed_in_user
-
+      
+      # User exists
       when user = where(facebook_uid: uid).first
         user
-      when user = where(email: email).first
+      
+      # User exists with the same email
+      when user = by_email(email).first
         user.facebook_uid = uid
-        user.email = email if email
         user.save!
         user
+      
+      # No user exists
       else
-        # Create a user with a stub password.
         user = new(
           email: email,
-          password: Devise.friendly_token[0,20])
+          password: Devise.friendly_token[0,20] # Stub password
+        )
 
-        user.skip_confirmation!
         user.facebook_uid = uid
+        user.skip_confirmation!
+
         user.save!
         user
       end
