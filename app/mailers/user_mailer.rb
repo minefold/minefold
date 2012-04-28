@@ -37,16 +37,6 @@ class UserMailer < ActionMailer::Base
   end
 
 
-  def membership_request_created(user_id, world_id, request_id)
-    @user = User.find(user_id)
-    @world = World.find(world_id)
-    @request = @world.membership_requests.find(request_id)
-
-    mail to: @user.email,
-         subject: "#{@request.player.username} would like to play in #{@world.fullname}"
-  end
-
-
   def membership_request_approved(user_id, world_id, op_id)
     @user = User.find(user_id)
     @world = World.find(world_id)
@@ -54,6 +44,16 @@ class UserMailer < ActionMailer::Base
 
     mail to: @user.email,
          subject: "#{@op.username} has let you play in #{@world.fullname}"
+  end
+
+
+  def membership_request_created(user_id, world_id, request_id)
+    @user = User.find(user_id)
+    @world = World.find(world_id)
+    @request = @world.membership_requests.find(request_id)
+
+    mail to: @user.email,
+         subject: "#{@request.player.username} would like to play in #{@world.fullname}"
   end
 
 
@@ -109,27 +109,28 @@ class UserMailer < ActionMailer::Base
       UserMailer.membership_created(user.id, world.id, op.id)
     end
 
-    # # (user_id, world_id, request_id)
-    # def membership_request_created
-    #   user = User.dave
-    #   world = World.create(creator: dave)
-    #   request = world.membership_requests.create(
-    #     player: User.chris.minecraft_player
-    #   )
-    #
-    #   UserMailer.membership_request_created(user.id, world.id, request.id)
-    # end
-    #
-    # # (user_id, world_id, op_id)
-    # def membership_request_approved
-    #   user = User.chris
-    #   world = World.create(creator: )
-    #   @op = User.find(op_id)
-    #
-    #   mail to: @user.email,
-    #        subject: "#{@op.username} has let you play in #{@world.fullname}"
-    # end
+    def membership_request_approved
+      user = User.dave
+      op = User.chris
+      world = World.find_by(name: 'minebnb', creator_id: op.id)
 
+      UserMailer.membership_request_approved(user.id, world.id, op.id)
+    end
+
+    def membership_request_created
+      user = User.chris
+      world = World.find_by(name: 'minebnb', creator_id: user.id)
+      request = world.membership_requests.last
+
+      UserMailer.membership_request_created(user.id, world.id, request.id)
+    end
+
+    def world_started
+      user = User.chris
+      world = World.find_by(name: 'minebnb', creator_id: user.id)
+
+      UserMailer.world_started(user.id, world.id)
+    end
   end
 
 private

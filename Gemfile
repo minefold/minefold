@@ -84,7 +84,7 @@ end
 
 group :test do
   gem 'rspec'
-  gem 'rspec-rails', git: 'https://github.com/rspec/rspec-rails.git'
+  gem 'rspec-rails'
   gem 'faker'
   gem 'fog'
 

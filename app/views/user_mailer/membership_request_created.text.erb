@@ -1,7 +1,3 @@
-<%= @request.player.username %> would like to play in "<%= @world.name %>". You can let them play in your world by going to:
+<%= @request.minecraft_player.username %> would like to play in <%= @world.fullname %>. You can let <%= @request.minecraft_player.username %> play there by going to:
 
-    <%= player_world_players_url(@world.creator.minecraft_player, @world) %>
-
-You can also stalk <%= @request.player.username %> first at
-
-    <%= player_url(@request.player) %>
+  <%= player_world_players_url(@world.creator.minecraft_player, @world, auth_token: @user.authentication_token) %>

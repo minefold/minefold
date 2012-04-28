@@ -1,5 +1,5 @@
 class ConfirmationsController < Devise::ConfirmationsController
-  
+
   skip_before_filter :require_player_verification
 
   expose(:user) {
@@ -14,8 +14,6 @@ class ConfirmationsController < Devise::ConfirmationsController
     if resource.errors.empty?
       set_flash_message(:notice, :confirmed) if is_navigational_format?
       sign_in(resource_name, resource)
-
-      UserMailer.welcome(resource.id).deliver
 
       respond_with_navigational(resource){ redirect_to user_root_path }
     else
