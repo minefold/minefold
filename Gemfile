@@ -59,13 +59,13 @@ gem 'createsend'
 gem 'mailgun-rails'
 gem 'premailer'
 gem 'premailer-rails3'
+gem 'mail_view'
 
 group :development, :test do
   gem 'heroku'
   gem 'foreman'
 
   gem 'letter_opener'
-  gem 'mail_view'
 end
 
 # Gems used only for assets and not required
