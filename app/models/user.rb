@@ -165,17 +165,17 @@ class User
         signed_in_user.facebook_uid = uid
         signed_in_user.save!
         signed_in_user
-      
+
       # User exists
       when user = where(facebook_uid: uid).first
         user
-      
+
       # User exists with the same email
       when user = by_email(email).first
         user.facebook_uid = uid
         user.save!
         user
-      
+
       # No user exists
       else
         user = new(
@@ -306,7 +306,8 @@ class User
   end
 
   def friend_players
-    MinecraftPlayer.includes(:user).in(_id: friend_player_ids)
+    friend_player_ids.empty? ? [] :
+      MinecraftPlayer.includes(:user).in(_id: friend_player_ids)
   end
 
   def friend_user_ids
@@ -314,8 +315,10 @@ class User
   end
 
   def friend_users
-    @friend_users ||= 
-      User.includes(:minecraft_player).in(_id: friend_user_ids)
+    @friend_users ||= begin
+      friend_user_ids.empty? ? [] :
+        User.includes(:minecraft_player).in(_id: friend_user_ids)
+    end
   end
 
 
