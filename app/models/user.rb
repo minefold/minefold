@@ -377,6 +377,7 @@ class User
   def tracking_data
     {
       'created worlds' => created_worlds.count,
+      'credits' => credits,
       'facebook?' => facebook_linked?,
       'minutes played' => minutes_played,
       'max world players' => world_player_counts.max,

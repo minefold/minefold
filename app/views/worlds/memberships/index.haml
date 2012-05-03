@@ -12,15 +12,15 @@
       %section.members
         %ul
           - world.membership_requests.each do |r|
-            - player = r.player
-            %li
-              = link_to player_path(player) do
-                = player_avatar_tag player, size: :medium
-              .meta
-                .username= player.username
-                .actions
-                  = button_to 'Approve', approve_player_world_membership_request_path(world.creator.minecraft_player, world, r), method: :put, class: 'approve'
-                  = button_to 'Ignore', player_world_membership_request_path(world.creator.minecraft_player, world, r), method: :delete, class: 'ignore'
+            - if player = r.player
+              %li
+                = link_to player_path(player) do
+                  = player_avatar_tag player, size: :medium
+                .meta
+                  .username= player.username
+                  .actions
+                    = button_to 'Approve', approve_player_world_membership_request_path(world.creator.minecraft_player, world, r), method: :put, class: 'approve'
+                    = button_to 'Ignore', player_world_membership_request_path(world.creator.minecraft_player, world, r), method: :delete, class: 'ignore'
 
 - if can? :operate, world
   %section
