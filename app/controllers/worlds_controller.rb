@@ -50,7 +50,10 @@ class WorldsController < ApplicationController
         current_user.current_world = world
         current_user.save
         track 'created world'
-        format.html { redirect_to player_world_path(world.creator.minecraft_player, world) }
+        format.html {
+          flash[:new_world] = true
+          redirect_to invite_player_world_path(world.creator.minecraft_player, world)
+        }
       else
         format.html { render action: :new }
       end
@@ -98,6 +101,10 @@ class WorldsController < ApplicationController
     track 'cloned world'
 
     respond_with clone, location: player_world_path(current_user.minecraft_player, clone)
+  end
+
+  def invite
+    authorize! :update, world
   end
 
   def destroy

@@ -45,7 +45,8 @@
 
   &:disabled, &.disabled {
     background-color: darken(white, 5%);
-    color: rgba(black, 0.1);
+    color: rgba(black, 0.4);
+    font-weight: normal;
 
     border-color: darken(white, 10%);
 
@@ -56,6 +57,6 @@
   }
 }
 
-.page a.btn {
+.page .btn {
   @include button($blue, white, darken($blue, 10%));
 }

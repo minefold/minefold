@@ -1,0 +1,66 @@
+- title "#{world.name} invites"
+- masthead do
+  %h1
+    %span Invite Friends
+    - if flash[:new_world]
+      = link_to 'Done adding friends', player_world_path(player, world), class: 'skip btn'
+
+  %p.back
+    = link_to player_world_path(player, world) do
+      ← back to #{world.name}
+
+
+%section#invite_friends
+  %p Minecraft is better with friends! Invite some to your new world.
+
+  #fb-ui-wrapper
+    #fb-root
+
+  #invites
+  #friends
+
+  - friends = current_user.friend_users.sort_by{|u| u.username.downcase }
+  - players = world.players
+  - js do
+    :plain
+      <script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId: #{ENV['FB_APP_ID'].to_json},
+            level: "debug"
+          });
+
+          var friends = #{friends.map{ |u|
+                            { id: u.id,
+                              username: u.username,
+                              avatar_url: u.minecraft_player.avatar_url,
+                              added: players.include?(u.minecraft_player)
+                            }
+                          }.to_json};
+
+          var friendUids = #{friends.map{|u| u.facebook_uid }.compact.to_json};
+
+          friendsView = new Mf.FriendsAddView({
+            friends: new Mf.WorldMembersCollection(friends, {
+              worldUrl: #{player_world_path(player, world).to_json}
+            })
+          });
+          friendsView.setElement($('#friends')[0]);
+          friendsView.render();
+
+          var pendingFbInvites = #{
+            current_user.invites.reject(&:claimed?).map{|i|
+              i.facebook_uid
+            }.to_json};
+
+          invitesView = new Mf.FacebookInvitesView({
+            friendUids: friendUids,
+            inviteUids: pendingFbInvites,
+            inviteUrl: "https://minefold.com#{player_world_path(player, world, i: current_user.invite_token)}"
+          });
+          invitesView.setElement($('#invites')[0]);
+          invitesView.render();
+
+        };
+
+      </script>

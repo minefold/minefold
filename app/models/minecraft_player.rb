@@ -2,8 +2,6 @@ class MinecraftPlayer
   include Mongoid::Document
   include Mongoid::Paranoia
   include Mongoid::Timestamps
-  include Verifiable
-
 
   attr_accessible :username
 
@@ -38,7 +36,7 @@ class MinecraftPlayer
     # if user.referrer
     #   user.credits += REFEREE_CREDITS
     #   user.save!
-    # 
+    #
     #   user.referrer.credits += REFEREE_CREDITS
     #   user.referrer.save!
     # end
@@ -115,17 +113,21 @@ class MinecraftPlayer
 
 
   def worlds
-    worlds = World
-      .any_of(
+    worlds = World.any_of(
         {opped_player_ids: self.id},
         {whitelisted_player_ids: self.id}
-      )
-      .excludes(
+      ).excludes(
         {blacklisted_player_ids: self.id}
-      )
-      .order_by([:creator_id, :asc], [:slug, :asc])
+      ).order_by([:creator_id, :asc], [:slug, :asc]).to_a
 
-    worlds.select {|w| w.creator.minecraft_player }
+    creator_ids = worlds.map(&:creator_id).uniq
+
+    world_creator_players = MinecraftPlayer.in(user_id: creator_ids)
+    user_ids_with_players = world_creator_players.map{|p| p.user_id }
+
+    worlds.select {|w| 
+      user_ids_with_players.include? w.creator_id 
+    }.to_a.sort_by{|w| w.name.downcase }
   end
 
   def online?

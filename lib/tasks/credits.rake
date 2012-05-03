@@ -7,7 +7,7 @@ namespace :users do
 
       users_to_reset.each do |user|
         reset_due = (user.last_credit_reset || user.created_at) + 1.month
-        puts "#{user.id}  signed up: #{user.created_at.strftime('%d %b %Y')}  reset due: #{reset_due.strftime('%d %b %Y')}  #{user.username.ljust(18)} #{'PRO' if user.pro?} credits #{user.credits} => #{monthly_credits}"
+        puts "#{user.id}  signed up: #{user.created_at.strftime('%d %b %Y')}  reset due: #{reset_due.strftime('%d %b %Y')}  #{(user.username || '').ljust(18)} #{'PRO' if user.pro?} credits #{user.credits} => #{monthly_credits}"
         user.credits = monthly_credits
         user.last_credit_reset = Time.now
 

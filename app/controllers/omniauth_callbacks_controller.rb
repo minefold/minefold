@@ -12,4 +12,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => "Facebook"
     sign_in_and_redirect user, :event => :authentication
   end
+
+  def after_sign_in_path_for(resource)
+    request.env['omniauth.params']['callback_path'] || user_root_path
+  end
 end

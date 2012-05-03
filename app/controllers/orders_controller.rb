@@ -16,7 +16,8 @@ class OrdersController < ApplicationController
 
     track 'paid', amount: pack.cents,
                   days: pack.months / 1.day,
-                  months: pack.months
+                  months: pack.months,
+                  'referred?' => current_user.referred?
 
     redirect_to user_root_path,
       notice: "Thank you for buying #{pack.months} months of Minefold Pro"

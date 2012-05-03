@@ -34,7 +34,7 @@ describe WorldsController do
       its(:generate_structures) { should == true }
       its(:spawn_npcs) { should == false }
 
-      it { response.should redirect_to(player_world_path(current_user.minecraft_player, 'minebnb')) }
+      it { response.should redirect_to(invite_player_world_path(current_user.minecraft_player, 'minebnb')) }
     end
 
     context 'with upload' do

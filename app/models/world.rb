@@ -210,7 +210,7 @@ class World
     # MinecraftPlayer.find(player_ids)
 
     # TODO: this is a hack while I figure out why some player_ids don't exist
-    MinecraftPlayer.where(_id: {'$in' => player_ids })
+    MinecraftPlayer.includes(:user).in(_id: player_ids)
   end
 
   embeds_many :membership_requests, cascade_callbacks: true do
@@ -274,7 +274,7 @@ class World
   end
 
   def online_players
-    MinecraftPlayer.where(_id: {'$in' => online_player_ids})
+    MinecraftPlayer.in(_id: online_player_ids)
   end
 
   def offline_player_ids
@@ -282,7 +282,7 @@ class World
   end
 
   def offline_players
-    MinecraftPlayer.where(_id: {'$in' => offline_player_ids})
+    MinecraftPlayer.in(_id: offline_player_ids)
   end
 
   def say(msg)

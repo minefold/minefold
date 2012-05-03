@@ -78,7 +78,7 @@ describe User do
 
 
   it { should have_field(:plan_expires_at).of_type(DateTime) }
-  
+
   it "has free time on creation" do
     subject.credits.should == User.hours_to_credits(User::FREE_HOURS)
   end
@@ -136,29 +136,11 @@ describe User do
 # ---
 # Invites
 
-
-  it ".invite_token_exists" do
-    token = 'abc'
-
-    subject.class.invite_token_exists?(token).should be_false
-
-    subject.invite_token = token
-    subject.save
-
-    subject.class.invite_token_exists?(token).should be_true
-  end
-
-  it ".free_invite_token" do
-    subject.class.stub(:invite_token_exists?).and_return(false)
-    subject.class.free_invite_token.should be_a(String)
-    subject.class.free_invite_token.should_not be_empty
-  end
-
   it { should have_field(:invite_token).of_type(String) }
   it { should validate_uniqueness_of(:invite_token) }
 
-  it { should belong_to(:referrer).of_type(User).as_inverse_of(:referrals) }
-  it { should reference_many(:referrals).of_type(User).as_inverse_of(:referrer) }
+  it { should belong_to(:referrer) }
+  it { should reference_many(:referrals) }
 
 
 # ---

@@ -20,7 +20,7 @@
       });
 
   #flash
-    - flash.each do |type, message|
+    - flash.select{|type, _| [:alert, :notice, :success].include? type }.each do |type, message|
       %div.message{class: type}
         %a.hide{href: '#'} Hide
         = simple_format(message)

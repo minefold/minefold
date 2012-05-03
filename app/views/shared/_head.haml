@@ -29,18 +29,19 @@
 
 
 - # Crashm.at
-:javascript
-  var _crashmat = #{crashmat_options.to_json};
-  (function(w, d, cm, woe) {
-    w.onerror = function(e,f,l) {
-      cm.e = cm.e || []; cm.e.push([e,f,l]);
-      if (woe) woe(e,f,l);
-    };
-    var e = d.createElement('script');
-    e.async = true;
-    e.src = '//tracker.crashm.at/';
-    (d.head || d.getElementsByTagName('head')[0]).appendChild(e);
-  })(window, document, window._crashmat, window.onerror);
+- if Rails.env.production?
+  :javascript
+    var _crashmat = #{crashmat_options.to_json};
+    (function(w, d, cm, woe) {
+      w.onerror = function(e,f,l) {
+        cm.e = cm.e || []; cm.e.push([e,f,l]);
+        if (woe) woe(e,f,l);
+      };
+      var e = d.createElement('script');
+      e.async = true;
+      e.src = '//tracker.crashm.at/';
+      (d.head || d.getElementsByTagName('head')[0]).appendChild(e);
+    })(window, document, window._crashmat, window.onerror);
 
 = javascript_include_tag "//use.typekit.com/#{ENV['TYPEKIT_ID']}.js"
 = javascript_include_tag '//d3ds63zw57jt09.cloudfront.net/1.10/pusher.min.js'
@@ -53,18 +54,11 @@
   try{Typekit.load();}catch(e){}
 
 - js do
-  :javascript
-    (function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=#{ENV['FB_APP_ID']}";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
+  %script(src="//connect.facebook.net/en_US/all.js")
 
   - if Rails.env.production?
     = render partial: 'shared/analytics'
-    
+
 - js do
   - if Rails.env.production? and signed_in?
     %script#IntercomSettingsScriptTag
@@ -79,7 +73,6 @@
             activator: '#Intercom',
             use_counter: true,
             activator_html: function (obj) {
-              console.log(obj.activator_html_functions)
               return obj.activator_html_functions.unwrapped_with_span();
             }
           }

@@ -4,29 +4,29 @@ module Referrable
   INVITE_TOKEN_LENGTH = 6
 
   included do
-    field :invite_token, type: String, default: ->{
-      self.class.free_invite_token
-    }
+    field :invite_token, type: String
     validates_uniqueness_of :invite_token
 
-    belongs_to :referrer, class_name: 'User', inverse_of: :referrals
-    has_many :referrals, class_name: 'User', inverse_of: :referrer
-
-    def referrer=(user)
-      write_attribute :referrer_id, user.id unless user.nil? or self == user
+    belongs_to :referrer, class_name: 'Referral', inverse_of: :target
+    has_many :referrals, class_name: 'Referral', inverse_of: :source
+    
+    embeds_many :invites
+  end
+  
+  def referrer=(user)
+    unless user.nil? or self == user
+      write_attribute :referrer_id, user.id
+      user.claim_invite!(self)
     end
   end
-
-  module ClassMethods
-    def invite_token_exists?(token)
-      where(invite_token: token).exists?
-    end
-
-    def free_invite_token
-      begin
-        token = rand(36 ** INVITE_TOKEN_LENGTH).to_s(36)
-      end while invite_token_exists?(token)
-      token
+  
+  def referred?
+    !!referrer
+  end
+  
+  def claim_invite!(referred_user)
+    if invite = invites.where(facebook_uid: referred_user.facebook_uid)
+      invite.claim!(referred_user)
     end
   end
 end

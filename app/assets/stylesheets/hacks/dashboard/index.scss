@@ -1,5 +1,24 @@
 //.thumb-grid
 
+#users-dashboard {
+  h1 {
+    span, a { float: left;}
+    a {
+      margin-left: 20px;
+      line-height: 20px;
+    }
+  }
+
+  .worlds {
+    clear: both;
+    padding-top: $line * 4;
+
+    li {
+      padding-bottom: $line * 2;
+    }
+  }
+}
+
 #dashboard-index #page {
   article, aside { @include columns(6); }
 

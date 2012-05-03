@@ -22,7 +22,7 @@ Minefold::Application.routes.draw do
   post '/pusher/auth' => 'pusher#auth'
 
   get '/oembed' => 'o_embed#show', :defaults => { :format => 'json' }
-
+  get '/facebook_channel' => 'omniauth_callbacks#channel', :as => :facebook_channel
 
   # Static Pages
   { '/about'   => :about,
@@ -95,6 +95,8 @@ Minefold::Application.routes.draw do
     end
   end
 
+  resources :invites, only: [:create]
+
   resources(:players,
             :path => '/',
             :only => [:show]) do
@@ -104,7 +106,10 @@ Minefold::Application.routes.draw do
               :except => [:index, :new, :create],
               :path_names => {:edit => 'settings'}) do
 
-      put :clone, :on => :member
+      member do
+        put :clone
+        get :invite
+      end
 
       scope :module => :worlds do
         resources :players, :controller => :memberships, :only => [:index, :create, :destroy]

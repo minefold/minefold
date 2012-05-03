@@ -6,7 +6,6 @@ class User
   include Verifiable
   include Referrable
 
-
   attr_accessible :email,
                   :password,
                   :password_confirmation,
@@ -300,6 +299,27 @@ class User
 
 
 # ---
+# Friends
+
+  def friend_player_ids
+    worlds.map{|w| w.player_ids }.flatten.uniq
+  end
+
+  def friend_players
+    MinecraftPlayer.includes(:user).in(_id: friend_player_ids)
+  end
+
+  def friend_user_ids
+    friend_players.map{|p| p.user_id }.compact
+  end
+
+  def friend_users
+    @friend_users ||= 
+      User.includes(:minecraft_player).in(_id: friend_user_ids)
+  end
+
+
+# ---
 # Photos
 
 
@@ -345,11 +365,11 @@ class User
   def minutes_played
     minecraft_player ? minecraft_player.minutes_played : 0
   end
-  
+
   def worlds
     minecraft_player ? minecraft_player.worlds : []
   end
-  
+
   def world_player_counts
     worlds.map{|w| w.player_ids.size }
   end
