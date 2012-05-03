@@ -122,12 +122,16 @@ class MinecraftPlayer
 
     creator_ids = worlds.map(&:creator_id).uniq
 
-    world_creator_players = MinecraftPlayer.in(user_id: creator_ids)
-    user_ids_with_players = world_creator_players.map{|p| p.user_id }
+    if creator_ids.empty?
+      []
+    else
+      world_creator_players = MinecraftPlayer.in(user_id: creator_ids)
+      user_ids_with_players = world_creator_players.map{|p| p.user_id }
 
-    worlds.select {|w| 
-      user_ids_with_players.include? w.creator_id 
-    }.to_a.sort_by{|w| w.name.downcase }
+      worlds.select {|w|
+        user_ids_with_players.include? w.creator_id
+      }.to_a.sort_by{|w| w.name.downcase }
+    end
   end
 
   def online?
@@ -157,3 +161,4 @@ class MinecraftPlayer
     not last_connected_at.nil?
   end
 end
+
