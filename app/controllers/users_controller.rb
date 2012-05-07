@@ -6,7 +6,7 @@ class UsersController < Devise::RegistrationsController
 
   skip_before_filter :require_player_verification, :only => :verify
 
-  layout 'system', only: [:new, :verify]
+  layout 'system', only: [:new, :create, :verify]
 
 
 # ---
@@ -40,8 +40,8 @@ class UsersController < Devise::RegistrationsController
         referral.referrer = user
       end
 
-      track '$signup', 
-        distinct_id: user.mpid.to_s, 
+      track '$signup',
+        distinct_id: user.mpid.to_s,
         mp_name_tag: user.email,
         'initial credit' => User::FREE_CREDITS,
         'referred?' => user.referred?
