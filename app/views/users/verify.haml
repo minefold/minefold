@@ -1,4 +1,4 @@
-- track_pageview verify_screenshot: $rollout.active?(:verify_screenshot, current_user)
+- track_pageview verify_screenshot: true
 
 - title 'Verify your Minecraft account'
 - masthead do
@@ -19,24 +19,12 @@
 .noop
 
 %section.verification-instructions
-  - if $rollout.active?(:verify_screenshot, current_user)
-    %p We need to link your Minecraft account. Open Minecraft and connect to:
+  %p We need to link your Minecraft account. Open Minecraft and connect to:
 
-    %pre
-      %code.host= current_user.verification_host
+  %pre
+    %code.host= current_user.verification_host
 
-    = image_tag "verify.png"
-
-  - else
-    %p Before you can continue, we need to verify your Minecraft account. If you are playing already please type the command:
-
-    %pre
-      %code.cmd /verify #{current_user.verification_token}
-
-    %p Otherwise open Minecraft and connect to:
-
-    %pre
-      %code.host= current_user.verification_host
+  = image_tag "verify.png"
 
 - js do
   :javascript

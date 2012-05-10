@@ -1,8 +1,7 @@
 %ol#nav
   - if signed_in?
-    %li.nav-support
-      %a#Intercom(href='#') Support
-        
+    %li.nav-support= link_to 'Help', help_page_path
+
     %li.nav-dashboard= link_to 'Dashboard', user_root_path
 
   %li.nav-explore= link_to 'Explore Worlds', worlds_path
