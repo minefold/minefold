@@ -21,13 +21,10 @@
 
         %a.facebook-post-button{onClick: 'postToFeed(); return false;' } Post to Facebook
 
-      - js do
-        :javascript
+      - content_for :facebook do
+        :plain
           !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
 
-
-        :javascript
-          FB.init({appId: #{ENV['FB_APP_ID'].to_i.to_json}, status: true, cookie: true});
 
           function postToFeed() {
 

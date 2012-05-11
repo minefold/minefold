@@ -21,46 +21,39 @@
 
   - friends = current_user.friend_users.sort_by{|u| u.username.downcase }
   - players = world.players
-  - js do
+
+  - content_for :facebook do
     :plain
-      <script>
-        window.fbAsyncInit = function() {
-          FB.init({
-            appId: #{ENV['FB_APP_ID'].to_json},
-            level: "debug"
-          });
+      window.fbAsyncInit = function() {
+        var friends = #{friends.map{ |u|
+                          { id: u.id,
+                            username: u.username,
+                            avatar_url: u.minecraft_player.avatar.medium.url,
+                            added: players.include?(u.minecraft_player)
+                          }
+                        }.to_json};
 
-          var friends = #{friends.map{ |u|
-                            { id: u.id,
-                              username: u.username,
-                              avatar_url: u.minecraft_player.avatar.medium.url,
-                              added: players.include?(u.minecraft_player)
-                            }
-                          }.to_json};
+        var friendUids = #{friends.map{|u| u.facebook_uid }.compact.to_json};
 
-          var friendUids = #{friends.map{|u| u.facebook_uid }.compact.to_json};
+        friendsView = new Mf.FriendsAddView({
+          friends: new Mf.WorldMembersCollection(friends, {
+            worldUrl: #{player_world_path(player, world).to_json}
+          })
+        });
+        friendsView.setElement($('#friends')[0]);
+        friendsView.render();
 
-          friendsView = new Mf.FriendsAddView({
-            friends: new Mf.WorldMembersCollection(friends, {
-              worldUrl: #{player_world_path(player, world).to_json}
-            })
-          });
-          friendsView.setElement($('#friends')[0]);
-          friendsView.render();
+        var pendingFbInvites = #{
+          current_user.invites.reject(&:claimed?).map{|i|
+            i.facebook_uid
+          }.to_json};
 
-          var pendingFbInvites = #{
-            current_user.invites.reject(&:claimed?).map{|i|
-              i.facebook_uid
-            }.to_json};
+        invitesView = new Mf.FacebookInvitesView({
+          friendUids: friendUids,
+          inviteUids: pendingFbInvites,
+          inviteUrl: "https://minefold.com#{player_world_path(player, world, i: current_user.invite_token)}"
+        });
+        invitesView.setElement($('#invites')[0]);
+        invitesView.render();
 
-          invitesView = new Mf.FacebookInvitesView({
-            friendUids: friendUids,
-            inviteUids: pendingFbInvites,
-            inviteUrl: "https://minefold.com#{player_world_path(player, world, i: current_user.invite_token)}"
-          });
-          invitesView.setElement($('#invites')[0]);
-          invitesView.render();
-
-        };
-
-      </script>
+      };
