@@ -9,6 +9,10 @@ Minefold::Application.routes.draw do
     mount UserMailer::Preview, :at => '/mailers/user'
   end
 
+  constraints(admin_only) do
+    mount Resque::Server, :at => '/admin/resque'
+  end
+
 
   # namespace :api do
   #   resource :session, :only => [:show],  :controller => 'session'
