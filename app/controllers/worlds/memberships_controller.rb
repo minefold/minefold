@@ -27,7 +27,7 @@ class Worlds::MembershipsController < ApplicationController
       if world.whitelist_player!(@new_player)
         if user = @new_player.user
           if user.notify? :world_membership_added
-            UserMailer.membership_created(world.id, current_user.id, user.id).deliver
+            UserMailer.membership_created(user.id, world.id, current_user.id).deliver
           end
         end
         track 'added member', 'new player' => @new_player.user.nil?.to_s
