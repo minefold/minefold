@@ -387,6 +387,7 @@ class User
       'member worlds' => worlds.count,
       'pro?' => pro?,
       'username' => username,
+      'verify host' => verification_host,
       'verified?' => verified?,
     }
   end
