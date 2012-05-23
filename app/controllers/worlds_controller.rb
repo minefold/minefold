@@ -33,7 +33,7 @@ class WorldsController < ApplicationController
       .page(params[:page].to_i)
       .order_by([:pageviews, :desc])
 
-    @worlds = @worlds.select{|w| w.creator.minecraft_player }
+    # @worlds = @worlds.select{|w| w.creator.minecraft_player }
   end
 
   def new
