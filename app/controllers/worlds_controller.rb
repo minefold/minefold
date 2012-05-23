@@ -32,8 +32,6 @@ class WorldsController < ApplicationController
     @worlds = World.where(:photo.ne => nil)
       .page(params[:page].to_i)
       .order_by([:pageviews, :desc])
-
-    # @worlds = @worlds.select{|w| w.creator.minecraft_player }
   end
 
   def new

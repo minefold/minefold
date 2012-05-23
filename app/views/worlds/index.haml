@@ -5,7 +5,7 @@
 %section
   .worlds
     - @worlds.per(16).each do |world|
-      = render world
+      = render world if world.creator.minecraft_player
 
   .pagintion
     = paginate @worlds
