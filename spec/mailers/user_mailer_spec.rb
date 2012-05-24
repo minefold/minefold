@@ -7,7 +7,7 @@ describe UserMailer do
     subject { UserMailer.welcome(user.id) }
 
     its(:to) { should include(user.email) }
-    its(:body) { should include(user.username) }
+    it { subject.html_part.body.should include('Thanks') }
   end
 
   describe "credit_reminder" do
@@ -15,11 +15,11 @@ describe UserMailer do
 
     its(:to) { should include(user.email) }
 
-    it { subject.html_part.body.should include(user.username) }
-    it { subject.text_part.body.should include(user.username) }
+    # it { subject.html_part.body.should include(user.username) }
+    it { subject.body.should include(user.username) }
 
-    it { subject.html_part.body.should include(pro_account_url) }
-    it { subject.text_part.body.should include(pro_account_url) }
+    # it { subject.html_part.body.should include(pro_account_url) }
+    it { subject.body.should include(pro_account_url) }
   end
 
   describe "credit_reset" do
@@ -27,11 +27,11 @@ describe UserMailer do
 
     its(:to) { should include(user.email) }
 
-    it { subject.html_part.body.should include(user.username) }
-    it { subject.text_part.body.should include(user.username) }
+    # it { subject.html_part.body.should include(user.username) }
+    it { subject.body.should include(user.username) }
 
-    it { subject.html_part.body.should include(pro_account_url) }
-    it { subject.text_part.body.should include(pro_account_url) }
+    # it { subject.html_part.body.should include(pro_account_url) }
+    it { subject.body.should include(pro_account_url) }
   end
 
 
@@ -48,14 +48,14 @@ describe UserMailer do
     its(:subject) { should include(world.creator.username) }
     its(:subject) { should include(world.name) }
 
-    it { subject.html_part.body.should include(user.username) }
-    it { subject.text_part.body.should include(user.username) }
+    # it { subject.html_part.body.should include(user.username) }
+    it { subject.body.should include(user.username) }
 
-    it { subject.html_part.body.should include(world.creator.username) }
-    it { subject.text_part.body.should include(world.creator.username) }
+    # it { subject.html_part.body.should include(world.creator.username) }
+    it { subject.body.should include(world.creator.username) }
 
-    it { subject.html_part.body.should include(world.host) }
-    it { subject.text_part.body.should include(world.host) }
+    # it { subject.html_part.body.should include(world.host) }
+    it { subject.body.should include(world.host) }
   end
 
   describe "#membership_request_created" do
@@ -74,14 +74,14 @@ describe UserMailer do
     its(:subject) { should include(membership_request.player.username) }
     its(:subject) { should include(world.name) }
 
-    it { subject.html_part.body.should include(world.name) }
-    it { subject.text_part.body.should include(world.name) }
+    # it { subject.html_part.body.should include(world.name) }
+    it { subject.body.should include(world.name) }
 
-    it { subject.html_part.body.should include(world.slug) }
-    it { subject.text_part.body.should include(world.slug) }
+    # it { subject.html_part.body.should include(world.slug) }
+    it { subject.body.should include(world.slug) }
 
-    it { subject.html_part.body.should include(membership_request.player.username) }
-    it { subject.text_part.body.should include(membership_request.player.username) }
+    # it { subject.html_part.body.should include(membership_request.player.username) }
+    it { subject.body.should include(membership_request.player.username) }
   end
 
   describe "#membership_request_approved" do
@@ -96,14 +96,14 @@ describe UserMailer do
 
     its(:subject) { should include(world.creator.username) }
 
-    it { subject.html_part.body.should include(user.username) }
-    it { subject.text_part.body.should include(user.username) }
+    # it { subject.html_part.body.should include(user.username) }
+    it { subject.body.should include(user.username) }
 
-    it { subject.html_part.body.should include(world.name) }
-    it { subject.text_part.body.should include(world.name) }
+    # it { subject.html_part.body.should include(world.name) }
+    it { subject.body.should include(world.name) }
 
-    it { subject.html_part.body.should include(world.slug) }
-    it { subject.text_part.body.should include(world.slug) }
+    # it { subject.html_part.body.should include(world.slug) }
+    it { subject.body.should include(world.slug) }
   end
 
   describe "#world_started" do
@@ -123,14 +123,14 @@ describe UserMailer do
 
     its(:to) { should include(user.email) }
 
-    it { subject.html_part.body.should include(world.name) }
-    it { subject.text_part.body.should include(world.name) }
+    # it { subject.html_part.body.should include(world.name) }
+    it { subject.body.should include(world.name) }
 
-    it { subject.html_part.body.should include(player_world_url(world.creator.minecraft_player, world)) }
-    it { subject.text_part.body.should include(player_world_url(world.creator.minecraft_player, world)) }
+    # it { subject.html_part.body.should include(player_world_url(world.creator.minecraft_player, world)) }
+    it { subject.body.should include(world.host) }
 
-    it { subject.html_part.body.should include(user.username) }
-    it { subject.text_part.body.should include(user.username) }
+    # it { subject.html_part.body.should include(user.username) }
+    it { subject.body.should include(user.username) }
   end
 
   # describe "invite_player" do

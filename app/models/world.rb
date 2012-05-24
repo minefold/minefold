@@ -368,6 +368,8 @@ class World
 
 
   field :minutes_played, type: Integer, default: 0
+  field :world_minutes_played, type: Integer, default: 0
+
   field :pageviews, type: Integer, default: 0
   validates_numericality_of :pageviews,
     only_integer: true,

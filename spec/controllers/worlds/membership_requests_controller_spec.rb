@@ -20,7 +20,7 @@ describe Worlds::MembershipRequestsController do
       before {
         UserMailer.
           should_receive(:membership_request_created).
-          with(anything, world.id, world.creator.id) {
+          with(world.creator.id, world.id, anything) {
             mailer = double('mailer')
             mailer.should_receive(:deliver)
             mailer
