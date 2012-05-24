@@ -77,6 +77,14 @@ class UserMailer < ActionMailer::Base
     mail to: @user.email,
          subject: "#{@world_creator_username} removed the world #{@world_name} you were playing in"
   end
+  
+  def invite(player_id, world_id, email, message)
+    @player = MinecraftPlayer.find(player_id)
+    @world = World.find(world_id)
+    
+    mail to: email,
+         subject: "#{player.username} wants you to play Minecraft on Minefold"
+  end
 
 
 # ---
