@@ -1,11 +1,10 @@
 class OutboundMailer < ActionMailer::Base
   include Resque::Mailer
 
-  layout 'mailer'
-
   def invite(player_id, world_id, invitee_email, message = nil)
     @player = MinecraftPlayer.find(player_id)
     @world = World.find world_id
+    @message = message
 
     track(@player.user, 'sent invite email') if @player.user
 
@@ -19,6 +18,16 @@ class OutboundMailer < ActionMailer::Base
     track(@player, 'sent claim email')
     mail to: email,
          subject: "Claim #{@player.username} on Minefold"
+  end
+  
+  class Preview < ::MailView
+    def invite
+      user = User.chris
+      player = user.player
+      world = World.find_by(name: 'minebnb', creator_id: user.id)
+
+      UserMailer.world_started(player.id, world.id, 'dave@minefold.com', 'hey sup!')
+    end
   end
 
 private

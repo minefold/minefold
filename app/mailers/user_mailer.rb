@@ -81,6 +81,7 @@ class UserMailer < ActionMailer::Base
   def invite(player_id, world_id, email, message)
     @player = MinecraftPlayer.find(player_id)
     @world = World.find(world_id)
+    @message = message
     
     mail to: email,
          subject: "#{@player.username} wants you to play Minecraft on Minefold"

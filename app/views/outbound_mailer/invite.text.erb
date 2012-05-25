@@ -1,0 +1,16 @@
+<%= @player.username %> wants you to play Minecraft right now!
+
+<% unless @message.empty? %>
+"<%= @message %>"
+<% end %>
+
+<% referral = @player.user ? { i: @player.user.invite_token } : {} %>
+Visit <%= player_world_url @world.creator.minecraft_player, @world, referral %> to join in!
+
+Lots of love,
+
+The Minefold Team
+
+--
+<%= root_url %>
+@minefold

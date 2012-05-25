@@ -132,14 +132,4 @@ describe UserMailer do
     # it { subject.html_part.body.should include(user.username) }
     it { subject.body.should include(user.username) }
   end
-
-  # describe "invite_player" do
-  #   let(:world) { Fabricate :world }
-  #   let(:invitor) { Fabricate :user }
-  #   subject { UserMailer.invite(invitor.minecraft_player.id, world.id, 'dave@minefold.com') }
-  #
-  #   its(:to) { should include('dave@minefold.com') }
-  #   its(:body) { should include(invitor.minecraft_player.username) }
-  # end
-
 end

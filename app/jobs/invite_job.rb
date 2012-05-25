@@ -11,12 +11,12 @@ class InviteJob < Job
     @player = MinecraftPlayer.find_by_username(username)
     @address = address
   end
-
+  
   # TODO Support other invite types like Twitter and Facebook
   def perform!
     if @address =~ /([^@]+@\S+)\s*(.*)$/
       email, message = $1, $2
-      UserMailer.invite(@player.id, @world_id, email, message).deliver
+      OutboundMailer.invite(@player.id, @world_id, email, message).deliver
     end
   end
 
