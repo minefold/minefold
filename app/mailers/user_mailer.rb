@@ -83,7 +83,7 @@ class UserMailer < ActionMailer::Base
     @world = World.find(world_id)
     
     mail to: email,
-         subject: "#{player.username} wants you to play Minecraft on Minefold"
+         subject: "#{@player.username} wants you to play Minecraft on Minefold"
   end
 
 
