@@ -46,7 +46,9 @@ class Worlds::MembershipsController < ApplicationController
   def destroy
     authorize! :operate, world
 
-    world.unwhitelist_player!(MinecraftPlayer.find_by_username(params[:id]))
+    player_to_remove = MinecraftPlayer.find_by_username(params[:id])
+    world.deop_player! player_to_remove
+    world.unwhitelist_player! player_to_remove
 
     track 'removed member'
 
