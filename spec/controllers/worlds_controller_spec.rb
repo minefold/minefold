@@ -10,6 +10,7 @@ describe WorldsController do
       before {
         post :create, world: {
           name: 'minebnb',
+          funpack: 'minecraft-essentials',
           game_mode: '1',
           level_type: 'FLAT',
           seed: 's33d',
@@ -24,6 +25,7 @@ describe WorldsController do
 
       subject { World.where(name: 'minebnb').first }
 
+      its(:funpack) { should == 'minecraft-essentials' }
       its(:game_mode) { should == 1 }
       its(:level_type) { should == 'FLAT' }
       its(:seed) { should == 's33d' }

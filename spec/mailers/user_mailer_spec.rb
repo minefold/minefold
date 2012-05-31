@@ -132,4 +132,27 @@ describe UserMailer do
     # it { subject.html_part.body.should include(user.username) }
     it { subject.body.should include(user.username) }
   end
+
+  describe "#world_comment_added" do
+    let(:user) { Fabricate :user }
+
+    let(:world) { Fabricate(:world, creator: user) }
+    
+    let(:comment) do 
+      c = Comment.new text: 'wassssssuuuuuuuuuuup!'
+      c.author = user
+      c
+    end
+
+    before { world.comments.push comment }
+    subject { UserMailer.world_comment_added(user.id, world.id, comment.id) }
+
+    its(:to) { should include(user.email) }
+
+    # it { subject.html_part.body.should include(world.name) }
+    it { subject.body.should include(world.name) }
+
+    # it { subject.html_part.body.should include(user.username) }
+    it { subject.body.should include(user.username) }
+  end
 end

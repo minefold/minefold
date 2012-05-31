@@ -8,6 +8,7 @@ class World
 
   attr_accessible :name,
     :world_upload_id,
+    :funpack,
     :seed,
     :game_mode,
     :difficulty,
@@ -57,6 +58,10 @@ class World
   validates_presence_of :slug
   validates_length_of :slug, within: (1..SLUG_LENGTH), on: :create
   validates_format_of :slug, with: /^[a-z0-9_]+$/
+  
+  def name_with_creator
+    "#{creator.username}/#{name}"
+  end
 
   def to_param
     slug.to_param
@@ -116,6 +121,10 @@ class World
     not parent.nil?
   end
 
+  field :funpack, default: 'minecraft-vanilla'
+  
+  field :minecraft_version, default: 'HEAD'
+
   WORLD_SETTINGS = %w(
     game_mode
     level_type
@@ -131,6 +140,7 @@ class World
   def clone!
     data = {
       name: self.class.sanitize_name(name),
+      funpack: funpack,
       world_data_file: world_data_file,
       map_data: map_data
     }

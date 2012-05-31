@@ -77,14 +77,14 @@ class UserMailer < ActionMailer::Base
     mail to: @user.email,
          subject: "#{@world_creator_username} removed the world #{@world_name} you were playing in"
   end
-  
-  def invite(player_id, world_id, email, message)
-    @player = MinecraftPlayer.find(player_id)
+
+  def world_comment_added(user_id, world_id, comment_id)
+    @user = User.find(user_id)
     @world = World.find(world_id)
-    @message = message
-    
-    mail to: email,
-         subject: "#{@player.username} wants you to play Minecraft on Minefold"
+    @comment = @world.comments.find(comment_id)
+
+    mail to: @user.email,
+         subject: "[#{@world.name_with_creator}] #{@comment.text.truncate(60)}"
   end
 
 
@@ -139,6 +139,14 @@ class UserMailer < ActionMailer::Base
       world = World.find_by(name: 'minebnb', creator_id: user.id)
 
       UserMailer.world_started(user.id, world.id)
+    end
+    
+    def world_comment_added
+      user = User.chris
+      world = World.find_by(name: 'minebnb', creator_id: user.id)
+      comment = world.comments.last
+      
+      UserMailer.world_comment_added(user.id, world.id, comment.id)
     end
   end
 

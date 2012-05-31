@@ -23,6 +23,18 @@ class Worlds::CommentsController < ApplicationController
 
     world.comments.push(comment)
 
+    (world.player_ids - [current_user.minecraft_player.id]).each do |player_id|
+      player = MinecraftPlayer.find(player_id)
+      if user = player.user
+        if user.notify? :world_comment_added
+          UserMailer
+            .world_comment_added(user.id, world.id, comment.id)
+            .deliver
+        end
+      end
+    end
+
+
     respond_with world, location: player_world_path(player, world)
   end
 

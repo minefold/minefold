@@ -1,0 +1,5 @@
+<%= @comment.author.username %> commented on [<%= @world.name_with_creator %>]:
+
+ |  <%= @comment.text.gsub(/\n/, " |  ") %>
+
+View more comments at: <%= player_world_url(@world.creator.minecraft_player, @world) %>

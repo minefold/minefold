@@ -197,6 +197,7 @@ describe World do
   # end
 
   describe 'clone_world' do
+    before { world.funpack = 'minecraft-essentials' }
     subject { world.clone! }
 
     its(:parent) { should == world }
@@ -212,6 +213,7 @@ describe World do
     its(:spawn_animals) { should == world.spawn_animals }
     its(:generate_structures) { should == world.generate_structures }
     its(:spawn_npcs) { should == world.spawn_npcs }
+    its(:funpack) { should == 'minecraft-essentials' }
   end
 
   # describe "#creator=" do
