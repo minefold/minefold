@@ -157,6 +157,25 @@
       = form.check_box :spawn_animals, tabindex: 7
       = form.label :spawn_animals, 'Spawn animals'
 
+- if $rollout.active? :funpack_settings, current_user
+  - funpack = Funpack.find(world.funpack || 'minecraft-vanilla')
+  .row
+    %h2= form.label 'Advanced Settings'
+
+  - funpack.settings.each do |setting|
+    .row
+      %fieldset.difficulty
+        %h3= setting[:label]
+        .hint= setting[:hint]
+
+        - case setting[:type]
+        - when :radio
+          - setting[:options].each do |name, value|
+            %section
+              = form.radio_button setting[:name], value
+              = form.label "#{name}_#{value}", name.to_s
+
+
 %fieldset.submit
   - if form.object.new_record?
     = form.submit 'Create world', tabindex: 8

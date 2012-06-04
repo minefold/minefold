@@ -5,6 +5,7 @@ class World
   include Mongoid::Timestamps
   include Mongoid::Paranoia
 
+  # TODO: manage these settings with funpacks
 
   attr_accessible :name,
     :world_upload_id,
@@ -17,7 +18,8 @@ class World
     :spawn_monsters,
     :spawn_animals,
     :generate_structures,
-    :spawn_npcs
+    :spawn_npcs,
+    :minecraft_version
 
 # --
 

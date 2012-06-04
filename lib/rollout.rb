@@ -19,11 +19,11 @@ class Rollout
   end
 
   def activate_user(feature, user)
-    @redis.sadd(user_key(feature), user.id)
+    @redis.sadd(user_key(feature), user.id.to_s)
   end
 
   def deactivate_user(feature, user)
-    @redis.srem(user_key(feature), user.id)
+    @redis.srem(user_key(feature), user.id.to_s)
   end
 
   def define_group(group, &block)
@@ -75,7 +75,7 @@ private
   end
 
   def active_user_ids(feature)
-    @redis.smembers(user_key(feature)).map { |id| id.to_i }
+    @redis.smembers(user_key(feature))
   end
 
   def active_percentage(feature)
@@ -89,7 +89,7 @@ private
   end
 
   def user_active?(feature, user)
-    @redis.sismember(user_key(feature), user.id)
+    @redis.sismember(user_key(feature), user.id.to_s)
   end
 
   def user_within_active_percentage?(feature, user)

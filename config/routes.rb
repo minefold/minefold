@@ -11,6 +11,7 @@ Minefold::Application.routes.draw do
 
   constraints(admin_only) do
     mount Resque::Server, :at => '/admin/resque'
+    # mount RolloutUi::Engine, :at => '/admin/rollout'
   end
 
 
