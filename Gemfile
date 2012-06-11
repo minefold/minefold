@@ -43,8 +43,8 @@ gem 'mini_magick'
 
 # Job Processing
 gem 'resque', require: ['resque', 'resque/server']
-
 gem 'resque_mailer'
+gem 'fog'
 
 # Logs & Stats
 gem 'exceptional'
@@ -78,7 +78,6 @@ end
 
 group :worker do
   gem 'rubyzip'
-  gem 'fog'
   gem 'resque-exceptional'
   gem 'nbtfile'
 end

@@ -60,7 +60,7 @@ class World
   validates_presence_of :slug
   validates_length_of :slug, within: (1..SLUG_LENGTH), on: :create
   validates_format_of :slug, with: /^[a-z0-9_]+$/
-  
+
   def name_with_creator
     "#{creator.username}/#{name}"
   end
@@ -124,8 +124,11 @@ class World
   end
 
   field :funpack, default: 'minecraft-vanilla'
-  
+
+  # TODO: these should go into a settings hash
+
   field :minecraft_version, default: 'HEAD'
+  field :new_player_can_build, default: 'true'
 
   WORLD_SETTINGS = %w(
     game_mode

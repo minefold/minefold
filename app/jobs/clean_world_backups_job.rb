@@ -12,7 +12,7 @@ class CleanWorldBackupsJob < Job
     # end
 
 
-    puts "#{b.size} backups found (#{sum_gb b})"
+    puts "#{b.size} backups found (#{sum_gb b} Gb)"
 
     ## retention
     # all for an hour
@@ -63,14 +63,16 @@ class CleanWorldBackupsJob < Job
 
     puts "Deleting #{to_delete.size} files (#{sum_gb to_delete})"
 
+    i = 0
     to_delete.each do |backup|
-      puts "  delete: #{backup[:key]}"
+      i += 1
+      puts "  delete (#{i}/#{to_delete.size}): #{backup[:key]}"
       backup[:file].destroy
     end
   end
 
   def storage
-    @storage ||= Fog::Storage.new provider: 'AWS',
+    @storage ||= ::Fog::Storage.new provider: 'AWS',
                          aws_access_key_id: ENV['S3_KEY'],
                      aws_secret_access_key: ENV['S3_SECRET']
   end

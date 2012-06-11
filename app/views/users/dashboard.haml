@@ -4,7 +4,7 @@
 
 - if current_user.minecraft_player.worlds.empty?
   %section.onboard
-    %p You need to join or create a new world to play on Minefold. To join a friend's world, go to its page and tap “Ask to play here”. However, if you want to start a new world you can use the “#{link_to 'Create a new world', new_world_path}” button. If you already have a single player world you can import it while creating a new world.
+    %p You need to join or create a new world to play on Minefold. To join a friend's world, go to its page and tap “Ask to play here”. However, if you want to start a new world you can use the “#{link_to 'Create a new world', new_worlds_path}” button. If you already have a single player world you can import it while creating a new world.
 
 %section
   %article
@@ -15,7 +15,7 @@
   %h1
     %span Your Worlds
     - if can? :create, World
-      = link_to 'Create a new world', new_world_path, class: ['btn', 'new-world']
+      = link_to 'Create a new world', new_worlds_path, class: ['btn', 'new-world']
 
   - if current_user.minecraft_player.worlds.any?
     .worlds

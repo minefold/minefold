@@ -91,8 +91,10 @@ Minefold::Application.routes.draw do
   #   get :download, :on => :collection
   # end
 
-  resources :worlds, :only => [:index, :new, :create] do
+  resources :worlds, :only => [:index, :create] do
     collection do
+      get 'new/(:funpack)' => 'worlds#new', :as => :new
+
       resource :upload, :module => :worlds, :only => [:new, :create] do
         get :instructions
         get :policy

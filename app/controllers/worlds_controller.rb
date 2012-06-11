@@ -20,8 +20,14 @@ class WorldsController < ApplicationController
     if params[:id]
       user.created_worlds.where(slug: params[:id]).first || user.created_worlds.find_by_name(params[:id])
     else
-      World.new(params[:world])
+      world = World.new(params[:world])
+      world.funpack = params[:funpack] if params[:funpack]
+      world
     end
+  end
+
+  expose(:funpack) do
+    Funpack.find(world.funpack || 'minecraft-vanilla')
   end
 
 

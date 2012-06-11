@@ -22,6 +22,20 @@ class Funpack < Struct.new(:id, :name, :description, :settings)
           }]
       ),
 
+      Funpack.new(
+        id: 'minecraft-essentials',
+        name: 'Minecraft Essentials',
+        description: 'Modified Minecraft! With bukkit, Essentials, WorldEdit, WorldGuard and LWC',
+        settings: [{
+            name: :new_player_can_build,
+            type: :radio,
+            options: {'Can build' => 'true', 'Read only' => 'false'},
+            default: 'true',
+            label: 'New Players',
+            group: :admin
+          }]
+      ),
+
     ]
   end
 
