@@ -16,7 +16,7 @@ class CleanWorldBackupsJob < Job
 
     ## retention
     # all for an hour
-    # hourly for a day
+    # hourly for 2 days
     # daily forever
 
     grouped = b.each_with_object({}) do |backup, hash|
@@ -39,7 +39,7 @@ class CleanWorldBackupsJob < Job
       puts "  all:"
       in_period.each {|b| puts "    #{b[:time]} #{b[:key]}"}
 
-      period_end -= 1.day
+      period_end -= 2.days
       in_period, rest = rest.partition {|b| b[:time] > period_end  }
       in_period.group_by {|b| b[:hour] }.each do |hour, backups|
         puts " hourly (#{hour}):"
@@ -61,8 +61,8 @@ class CleanWorldBackupsJob < Job
       end
     end
 
-    puts "Deleting #{to_delete.size} files (#{sum_gb to_delete})"
-
+    puts "Deleting #{to_delete.size} files (#{sum_gb to_delete} Gb)"
+    
     i = 0
     to_delete.each do |backup|
       i += 1
@@ -82,7 +82,7 @@ class CleanWorldBackupsJob < Job
   end
 
   def page_world_files
-    dir = storage.directories.create key: 'minefold.production.worlds' #  ENV['WORLDS_BUCKET']
+    dir = storage.directories.create key: 'minefold-production-worlds' #  ENV['WORLDS_BUCKET']
 
     all_files = []
     files = dir.files.all
@@ -90,7 +90,8 @@ class CleanWorldBackupsJob < Job
 
     all_files += files.to_a
 
-    while truncated
+    while truncated && all_files.size < 100000
+      puts "#{all_files.size} files"
       set = dir.files.all( :marker => files.last.key )
       all_files += set.to_a
       truncated = set.is_truncated

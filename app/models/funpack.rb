@@ -14,7 +14,7 @@ class Funpack < Struct.new(:id, :name, :description, :settings)
         settings: [{
             name: :minecraft_version,
             type: :radio,
-            options: {'Latest' => 'HEAD', '12w21b' => '12w21b'},
+            options: {'Latest' => 'HEAD', '12w23b' => '12w23b'},
             default: 'HEAD',
             label: 'Minecraft Version',
             hint: 'Use Latest for the current version of Minecraft',
