@@ -58,7 +58,6 @@ module Minefold
 
     config.mongoid.observers =
       :world_observer,
-      :campaign_observer,
       :avatar_observer,
       :user_observer
   end
