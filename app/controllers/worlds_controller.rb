@@ -27,7 +27,7 @@ class WorldsController < ApplicationController
   end
 
   expose(:funpack) do
-    Funpack.find(world.funpack || 'minecraft-vanilla')
+    Funpack.find(world.funpack)
   end
 
 
@@ -42,6 +42,10 @@ class WorldsController < ApplicationController
 
   def new
     authorize! :create, world
+
+    unless params[:funpack] || current_user.beta?
+      redirect_to new_worlds_path(funpack: Funpack.default.id)
+    end
   end
 
   def create

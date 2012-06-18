@@ -42,4 +42,8 @@ class Funpack < Struct.new(:id, :name, :description, :settings)
   def self.find id
     all.find {|f| f.id == id }
   end
+  
+  def self.default
+    find 'minecraft-vanilla'
+  end
 end
