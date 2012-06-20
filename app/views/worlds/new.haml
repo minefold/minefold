@@ -10,4 +10,4 @@
   - Funpack.all.each do |funpack|
     %section.well
       %h1= link_to funpack.name, new_worlds_path(funpack: funpack.id)
-      %p= funpack.description
+      %p= markdown funpack.description

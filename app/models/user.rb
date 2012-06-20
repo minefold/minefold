@@ -379,6 +379,7 @@ class User
 
   def tracking_data
     {
+      'beta?' => beta?,
       'created worlds' => created_worlds.count,
       'credits' => credits,
       'facebook?' => facebook_linked?,

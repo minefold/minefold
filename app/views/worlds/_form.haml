@@ -157,10 +157,11 @@
       = form.check_box :spawn_animals, tabindex: 7
       = form.label :spawn_animals, 'Spawn animals'
 
-- if $rollout.active? :funpack_settings, current_user
+- if current_user.beta?
   = form.hidden_field :funpack, value: funpack.id
-  .row
-    %h2= form.label 'Advanced Settings'
+  - if funpack.settings.any?
+    .row
+      %h2= form.label 'Advanced Settings'
 
   - funpack.settings.each do |setting|
     .row
