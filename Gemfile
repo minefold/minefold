@@ -1,6 +1,8 @@
 source 'https://code.stripe.com'
 source 'https://rubygems.org'
 
+ruby "1.9.3"
+
 gem 'rake'
 gem 'thin'
 gem 'rails'
