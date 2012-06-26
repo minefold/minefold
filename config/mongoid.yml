@@ -18,9 +18,25 @@ staging:
   persist_in_safe_mode: true
   max_retries_on_connection_failure: 3
 
+<%
+  if ENV['MONGO_URI']
+    uri = Mongo::URIParser.new(ENV['MONGO_URI'])
+    nodes = uri.nodes
+    auth = uri.auths.first
+%>
 production:
-  uri: <%= ENV['MONGOHQ_URI'] %>
-  identity_map_enabled: true
+  database: <%= auth['db_name'] %>
+  username: <%= auth['username'] %>
+  password: <%= auth['password'] %>
+  hosts:
+  <% nodes.each do |node| %>
+    - - <%= node[0] %>
+      - <%= node[1] %>
+  <% end %>
+
+  read: :secondary
   persist_in_safe_mode: true
   max_retries_on_connection_failure: 3
   slave_ok: true
+  identity_map_enabled: true
+<% end %>
