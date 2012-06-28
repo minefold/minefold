@@ -1,27 +1,32 @@
 - title player.username
-- masthead(class: 'player') do
-  = player_avatar_tag player, size: :large
 
-  %h1.username= player.username
-  .meta
-    - if player.user and player.user.pro?
-      = pro_link(player.user)
-    %span.created-at Member since #{player.created_at.strftime("%-d %b, %Y")}
-  - if world = player.online_world
-    .meta Playing right now in #{link_to strong_world_fullname(world), player_world_path(world.creator.minecraft_player, world)}
+.page-header
+  .row
+    .span1
+      = player_avatar_tag player, size: :large
+    .span11
+      %h1.username= player.username
 
-- if signed_in? and current_user.admin? and player.user
-  %section.referrals
-    %h2 Referrals
-    .players
-      - player.user.referrals.each do |referred_user|
-        - if referred_player = referred_user.minecraft_player
-          %li
-            = link_to player_path(referred_player) do
-              = player_avatar_tag referred_player, size: :small
+      %p
+        - if player.user and player.user.pro?
+          = pro_link(player.user)
+        Member since #{player.created_at.strftime("%B %-d, %Y")}
 
-%section.worlds
-  %h2 Worlds
+      - if world = player.online_world
+        %p Playing right now in #{link_to strong_world_fullname(world), player_world_path(world.creator.minecraft_player, world)}
 
-  - player.worlds.each do |world|
-    %p= link_to strong_world_fullname(world), player_world_path(world.creator.minecraft_player, world)
+/ - if signed_in? and current_user.admin? and player.user
+/   %section.referrals
+/     %h2 Referrals
+/     .players
+/       - player.user.referrals.each do |referred_user|
+/         - if referred_player = referred_user.minecraft_player
+/           %li
+/             = link_to player_path(referred_player) do
+/               = player_avatar_tag referred_player, size: :small
+
+
+%h2 Worlds
+
+- player.worlds.each do |world|
+  %p= link_to strong_world_fullname(world), player_world_path(world.creator.minecraft_player, world)

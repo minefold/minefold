@@ -1,72 +1,12 @@
 - title  'About Minefold'
-- masthead do
+- layout :page
+
+.page-header
   %h1 About Minefold
-  %h2 We make it easier to play games with your friends.
-
-%section
-  = render partial: 'pages/nav'
-
-  %article
-    %p
-      Games are fun! We want to make playing them with your friends just as fun. It's difficult and nerdy to maintain a multiplayer server and get your friends into it. We're making this as easy as possible. In fact, we don't want you to even to have to know what a "server" is! Whether you've formed a clan at school or want to spend time with your daughter or re-connect with a travelling friend, we can help you.
-
-    %p In December 2011, Minefold moved from Sydney to Mountain View to join the <a href="http://ycombinator.com">Y Combinator</a> Winter 2012 batch.
-
-    %h2 The Team
-
-    .row
-      .founder
-        %h3 Chris Lloyd
-
-        %p With degrees in Art History and Computer Science, Chris has always seen himself as a slashie. That's designer/developer, not the other way around. He's worked for companies in Chicago, Norway, Australia & Singapore making things that people love. Chris is passionate about clean design, minimalism and hipster music. He'd share a band with you but you wouldn't have heard of them yet.
-
-        %p
-          = link_to 'Follow @chrislloyd', 'https://twitter.com/chrislloyd', class: 'twitter-follow-button', data: {show_count: false}
-          %br
-          = mail_to 'chris@minefold.com'
 
 
-      .founder
-        %h3 Dave Newman
+%h2 Vision
 
-        %p Dave is the closest thing you'll find to the “rockstar programmer” cliché. After founding a successful IT consultancy, he started writing hit iPad games and jumping out of planes. These days when he's taking time out from learning new languages or working on difficult scaling problems, he can be found topless in #{link_to 'Ding Dong Dang', 'http://www.au.timeout.com/sydney/bars/venues/2178/ding-dong-dang'} singing karaoke like the careless whisper of a good friend.
+%p Games are fun! We want to make playing them with your friends just as fun. It's difficult and nerdy to maintain a multiplayer server and get your friends into it. We're making this as easy as possible. In fact, we don't want you to even to have to know what a "server" is! Whether you've formed a clan at school or want to spend time with your daughter or re-connect with a travelling friend, we can help you.
 
-        %p
-          = link_to 'Follow @whatupdave', 'https://twitter.com/whatupdave', class: 'twitter-follow-button', data: {show_count: false}
-          %br
-          = mail_to 'dave@minefold.com'
-
-    :javascript
-      !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
-
-    %figure
-      = image_tag 'LDX04680.jpg', alt: 'Chris & Dave looking at videos of cats', width: 700
-
-      %figcaption Minefold was founded in 2011 by Chris Lloyd (left) & Dave Newman (right). We were frustrated at how difficult it was to play Minecraft together so we sat down and stared longingly at a screen.
-
-    %h2 Contact
-
-    %figure.vcard
-      %p.adr
-        %a.fn.org.url{href: root_url, style: 'display:none'} Minefold
-        %span.street 179 Stockwell Drive
-        %br
-        %span.locality Mountain View
-        \,
-        %abbr.region{title: 'California'} CA
-        %span.postal-code 94043
-        %br
-        %span.country-name United States of America
-
-      .map
-
-- js do
-  = javascript_include_tag '//maps.google.com/maps/api/js?sensor=false'
-  :javascript
-    var map = new google.maps.Map($('.vcard .map')[0], {
-      zoom: 13,
-      center: new google.maps.LatLng(37.391748, -122.05798),
-      mapTypeId: google.maps.MapTypeId.HYBRID,
-      mapTypeControl: false,
-      scrollwheel: false
-    });
+%p In December 2011, Minefold moved from Sydney to Mountain View to join the <a href="http://ycombinator.com">Y Combinator</a> Winter 2012 batch.

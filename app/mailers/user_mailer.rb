@@ -91,64 +91,64 @@ class UserMailer < ActionMailer::Base
 # ---
 
 
-  class Preview < ::MailView
-    def welcome
-      user = User.dave
-
-      UserMailer.welcome(user.id)
-    end
-
-    def credit_reminder
-      user = User.dave
-
-      UserMailer.credit_reminder(user.id)
-    end
-
-    def credit_reset
-      user = User.dave
-
-      UserMailer.credit_reset(user.id)
-    end
-
-    def membership_created
-      user = User.dave
-      op = User.chris
-      world = World.find_by(name: 'minebnb', creator_id: op.id)
-
-      UserMailer.membership_created(user.id, world.id, op.id)
-    end
-
-    def membership_request_approved
-      user = User.dave
-      op = User.chris
-      world = World.find_by(name: 'minebnb', creator_id: op.id)
-
-      UserMailer.membership_request_approved(user.id, world.id, op.id)
-    end
-
-    def membership_request_created
-      user = User.chris
-      world = World.find_by(name: 'minebnb', creator_id: user.id)
-      request = world.membership_requests.last
-
-      UserMailer.membership_request_created(user.id, world.id, request.id)
-    end
-
-    def world_started
-      user = User.chris
-      world = World.find_by(name: 'minebnb', creator_id: user.id)
-
-      UserMailer.world_started(user.id, world.id)
-    end
-    
-    def world_comment_added
-      user = User.chris
-      world = World.find_by(name: 'minebnb', creator_id: user.id)
-      comment = world.comments.last
-      
-      UserMailer.world_comment_added(user.id, world.id, comment.id)
-    end
-  end
+  # class Preview < ::MailView
+  #   def welcome
+  #     user = User.dave
+  #
+  #     UserMailer.welcome(user.id)
+  #   end
+  #
+  #   def credit_reminder
+  #     user = User.dave
+  #
+  #     UserMailer.credit_reminder(user.id)
+  #   end
+  #
+  #   def credit_reset
+  #     user = User.dave
+  #
+  #     UserMailer.credit_reset(user.id)
+  #   end
+  #
+  #   def membership_created
+  #     user = User.dave
+  #     op = User.chris
+  #     world = World.find_by(name: 'minebnb', creator_id: op.id)
+  #
+  #     UserMailer.membership_created(user.id, world.id, op.id)
+  #   end
+  #
+  #   def membership_request_approved
+  #     user = User.dave
+  #     op = User.chris
+  #     world = World.find_by(name: 'minebnb', creator_id: op.id)
+  #
+  #     UserMailer.membership_request_approved(user.id, world.id, op.id)
+  #   end
+  #
+  #   def membership_request_created
+  #     user = User.chris
+  #     world = World.find_by(name: 'minebnb', creator_id: user.id)
+  #     request = world.membership_requests.last
+  #
+  #     UserMailer.membership_request_created(user.id, world.id, request.id)
+  #   end
+  #
+  #   def world_started
+  #     user = User.chris
+  #     world = World.find_by(name: 'minebnb', creator_id: user.id)
+  #
+  #     UserMailer.world_started(user.id, world.id)
+  #   end
+  #
+  #   def world_comment_added
+  #     user = User.chris
+  #     world = World.find_by(name: 'minebnb', creator_id: user.id)
+  #     comment = world.comments.last
+  #
+  #     UserMailer.world_comment_added(user.id, world.id, comment.id)
+  #   end
+  # end
 
 private
 

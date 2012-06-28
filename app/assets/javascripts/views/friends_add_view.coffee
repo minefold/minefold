@@ -1,8 +1,8 @@
 #= require collections/world_members_collection
 #= require views/friend_add_view
 
-class Mf.FriendsAddView extends Backbone.View
-  collection: Mf.WorldMembersCollection
+class Application.FriendsAddView extends Backbone.View
+  collection: Application.WorldMembersCollection
   className: 'friends'
 
   initialize: (options) ->

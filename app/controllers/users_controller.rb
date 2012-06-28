@@ -6,22 +6,24 @@ class UsersController < Devise::RegistrationsController
 
   skip_before_filter :require_player_verification, :only => :verify
 
-  layout 'system', only: [:new, :create, :verify]
-
 
 # ---
 
 
   expose(:user) {
-    if signed_in?
-      current_user
-    else
+    if params[:user]
       User.new(params[:user])
+    elsif params[:id]
+      User.find(params[:id])
+    else
+      User.new
     end
   }
 
 # ---
 
+  def show
+  end
 
   def new
   end

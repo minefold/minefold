@@ -1,7 +1,7 @@
 #= require models/photo
 
-class Mf.FriendAddView extends Backbone.View
-  model: Mf.WorldMember
+class Application.FriendAddView extends Backbone.View
+  model: Application.WorldMember
   tagName: 'li'
   className: 'friend'
 

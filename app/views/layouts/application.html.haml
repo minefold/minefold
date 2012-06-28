@@ -1,18 +1,153 @@
 !!!
-%html.app{app_html_attrs}
+%html{lang: 'en', dir: 'ltr'}
   %head{prefix: fb_head_prefix}
-    = render partial: 'shared/head'
+    %meta{charset: 'utf-8'}
+    = stylesheet_link_tag 'application', media: 'all'
 
-  %body
-    = render partial: 'shared/header'
-    = render partial: 'shared/flash_messages'
-    = yield :masthead
+    - # TODO Improve titles for SEO
+    %title
+      - if content_for?(:title)
+        =  yield :title
+        —
+      Minefold
 
-    = yield
+    %meta{name: 'author', content: 'Mutli Corp <http://mutlicorp.com>'}
+    %meta{name: 'description', content: 'Play Minecraft on demand with friends.'}
+    %meta{name: 'keywords', content: %w(gaming games game minecraft server hosting multiplayer).join(',')}
 
-    = render partial: 'shared/footer'
+    = favicon_link_tag
 
+    %link{title: 'channel-url', href: facebook_channel_url(protocol: '//'), type: 'text/html'}
+    %meta{property: 'fb:app_id', content: ENV['FACEBOOK_KEY']}
+    = yield :open_graph
+
+    %meta{name: 'viewport', content: 'width=device-width, initial-scale=1.0'}
+    - [144, 114, 72, 57].each do |size|
+      = favicon_link_tag "apple-touch-icon-#{size}-precomposed.png", rel: 'apple-touch-icon-precomposed', sizes: "#{size}x#{size}", type: 'image/png'
+
+    /[if lt IE 9]
+      %script{src: '//html5shim.googlecode.com/svn/trunk/html5.js'}
+    %meta{'http-equiv' => 'X-UA-Compatible', :content => 'IE=edge,chrome=1'}
+
+    = csrf_meta_tags
+
+    :javascript
+      (function(d,c){var a,b,g,e;a=d.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===d.location.protocol?"https:":"http:")+'//api.mixpanel.com/site_media/js/api/mixpanel.2.js';b=d.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b);c._i=[];c.init=function(a,d,f){var b=c;"undefined"!==typeof f?b=c[f]=[]:f="mixpanel";g="disable track track_pageview track_links track_forms register register_once unregister identify name_tag set_config".split(" ");
+        for(e=0;e<g.length;e++)(function(a){b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,0)))}})(g[e]);c._i.push([a,d,f])};window.mixpanel=c})(document,[]);
+        mixpanel.init(#{ENV['MIXPANEL'].to_json
+      });
+
+    = yield :head
+
+
+  %body{class: @layouts}
+    #fb-root
+
+    %header.container
+      .navbar
+        .navbar-inner
+          %a.btn.btn-navbar{data: {toggle: 'collapse', target: '.nav-collapse'}}
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+
+          = link_to 'Minefold', root_path, class: 'brand'
+
+          .nav-collapse.pull-right
+            %ul.nav
+              - if signed_in?
+                %li= link_to 'Dashboard', user_root_path
+              %li= link_to 'Explore', worlds_path
+
+              - if not signed_in?
+                %li= link_to 'Sign Up', new_user_path
+                %li.divider-vertical
+                %li= link_to 'Sign In', new_user_session_path
+
+              - else
+                %li.divider-vertical
+                %li.dropdown#user-account-dropdown
+                  %a.dropdown-toggle{href: '#user-account-dropdown', data: {toggle: 'dropdown'}}
+                    = current_user.username
+                  %ul.dropdown-menu
+                    %li= link_to 'Profile', player_path(current_user.minecraft_player)
+                    %li= link_to 'Settings', edit_user_path(current_user)
+                    %li= link_to 'Sign out', destroy_user_session_path, method: :delete
+
+    .container
+      - flash.each do |name, msg|
+        %div.alert.alert-block{class: "alert-#{name}"}
+          %a.close{data: {dismiss: 'alert'}} &#215;
+          - if msg.is_a?(String)
+            %div{:id => "flash_#{name}"}= msg
+
+    .container
+      #app= yield
+
+    %footer
+      .container
+        .row
+          .span2
+            = link_to 'Help', help_page_path
+            %br
+            = link_to 'Pricing', pricing_page_path
+
+          .span2
+            = link_to 'About', about_page_path
+            %br
+            = link_to 'Jobs', jobs_page_path
+
+          .span2
+            = link_to 'Facebook', 'https://facebook.com/minefold'
+            %br
+            = link_to 'Twitter', 'https://twitter.com/minefold'
+
+          .span2.copyright
+            &copy; 2012
+            %a{href: 'http://mutlicorp.com'} Mütli Corp.
+            %br
+            = link_to 'Privacy', privacy_page_path
+            = link_to 'Terms', terms_page_path
+
+
+    / ---
+
+    = javascript_include_tag '//d3dy5gmtp8yhk7.cloudfront.net/1.12/pusher.min.js'
     = javascript_include_tag 'application'
-    = yield :js
 
+    :javascript
+      window.app = new Application();
+      // TODO Think about what happense when Pusher hasn't loaded
+      app.pusher = new Pusher(#{Pusher.key.to_json});
 
+      $(function() {
+        Backbone.history.start({pushState: true});
+      });
+
+    = yield :tail
+
+    :javascript
+      (function(d){
+         var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement('script'); js.id = id; js.async = true;
+         js.src = "//connect.facebook.net/en_US/all.js";
+         ref.parentNode.insertBefore(js, ref);
+       }(document));
+
+    / = intercom_script_tag
+    :javascript
+      (function() {
+        function async_load() {
+          var s = document.createElement('script');
+          s.type = 'text/javascript'; s.async = true;
+          s.src = 'https://api.intercom.io/api/js/library.js';
+          var x = document.getElementsByTagName('script')[0];
+          x.parentNode.insertBefore(s, x);
+        }
+        if (window.attachEvent) {
+          window.attachEvent('onload', async_load);
+        } else {
+          window.addEventListener('load', async_load, false);
+        }
+      })();

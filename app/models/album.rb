@@ -6,7 +6,7 @@ class Album
 
   has_many :shots, dependent: :nullify
 
-  field :name, type: String, index: true
+  field :name, type: String
   # slug  :name, index: true
 
   field :description, type: String

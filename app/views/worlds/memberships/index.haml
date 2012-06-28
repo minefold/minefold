@@ -1,6 +1,7 @@
-- title "#{world.name} members"
-- masthead do
-  %h1 #{world.name} members
+- title "#{world.name} players"
+
+.page-header
+  %h1 #{world.name} players
   %p
     = link_to player_world_path(player, world) do
       ← back to #{world.name}

@@ -16,16 +16,15 @@ class User
 # --
 # Indexes
 
+  index(
+    {deleted_at: 1, invite_token: 1},
+    {unique: true}
+  )
 
-  index [
-    [:deleted_at, Mongo::ASCENDING],
-    [:invite_token, Mongo::ASCENDING]
-  ], unique: true
-
-  index [
-    [:deleted_at, Mongo::ASCENDING],
-    [:referrer_id, Mongo::ASCENDING]
-  ]
+  index(
+    {deleted_at: 1, referrer_id: 1},
+    {unique: true}
+  )
 
 
 
@@ -96,7 +95,7 @@ class User
          :token_authenticatable,
          :omniauthable
 
-  field :encrypted_password, type: String, null: true
+  field :encrypted_password, type: String
 
   field :reset_password_token, type: String
   field :reset_password_sent_at, type: Time
@@ -135,7 +134,7 @@ class User
 # Email
 
 
-  field :email, type: String, null: true
+  field :email, type: String
   scope :by_email, ->(email) { where(email: sanitize_email(email)) }
 
   def self.sanitize_email(str)
@@ -147,7 +146,7 @@ class User
 # OAuth
 
 
-  field :facebook_uid, type: String, null: true
+  field :facebook_uid, type: String
 
   def facebook_linked?
     not facebook_uid.nil?

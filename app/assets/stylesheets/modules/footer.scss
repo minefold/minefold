@@ -1,0 +1,28 @@
+@import 'vars';
+
+footer {
+  border-top: 2px solid darken(white, 5%);
+  margin-top: lines(8) - 2px;
+  padding: lines(8) 0;
+  font-weight: 800;
+
+  a {
+    color: $blue;
+  }
+
+  a:hover {
+    color: $blue;
+    text-decoration: none;
+  }
+
+
+  .copyright {
+    color: #CCC;
+    font-size: 11px;
+    font-weight: normal;
+    a {
+      color: #999;
+    }
+  }
+
+}

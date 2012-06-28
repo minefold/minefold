@@ -119,20 +119,20 @@ table td, table tr {
   }
 
   .game {
-    background-color: rgba($bluealt, 0.2);
-    border: 2px solid darken(rgba($bluealt, 0.2), 20%);
+    background-color: rgba($blue, 0.2);
+    border: 2px solid darken(rgba($blue, 0.2), 20%);
     border-bottom: none;
 
     padding: $line ($gutter/2);
 
     strong {
-      color: darken($bluealt, 20%);
+      color: darken($blue, 20%);
       font-weight: 600;
       font-size: 12px;
     }
 
     font-size: 12px;
-    color: $bluealt;
+    color: $blue;
 
     line-height: ($line * 3) - 2px;
   }

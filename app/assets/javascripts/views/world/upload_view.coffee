@@ -1,6 +1,6 @@
 #= require jquery.s3upload
 
-class Mf.WorldUploadView extends Backbone.View
+class Application.WorldUploadView extends Backbone.View
   @maxFileSize: 1 * 1024 * 1024 * 1024 # 1 Gb
   events:
     '.error a.retry': 'retry'

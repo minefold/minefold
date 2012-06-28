@@ -1,0 +1,6 @@
+@import 'vars';
+
+.well {
+  @include box-shadow(none);
+  border: none;
+}

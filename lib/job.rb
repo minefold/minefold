@@ -1,21 +1,27 @@
 class Job
-  @queue = :low
+
+  def self.queue
+    :low
+  end
 
   def self.perform(*args)
-    job = new(*args)
+    logger.tagged(name.underscore) do
+      begin
+        logger.info "starting [#{args.map(&:inspect).join(',')}]"
+        job = new(*args)
 
-    begin
-      logger.info "starting #{self.name}(#{args.join(', ')})"
-
-      if job.perform?
-        job.perform!
-        logger.info "finished"
-      else
-        logger.info "skipping"
+        if job.perform?
+          logger.info "performing"
+          job.perform!
+          logger.info "finished"
+        else
+          logger.info "skipping"
+        end
+      rescue => e
+        logger.warn e.to_s
+        # TODO Add extra Exceptional context here.
+        raise e
       end
-    rescue => e
-      logger.warn "#{e}\n#{e.backtrace.join("\n")}"
-      raise e
     end
   end
 
@@ -30,7 +36,6 @@ class Job
 # private
 
   def self.logger
-    # @logger ||= Logger.new(STDOUT)
     @logger ||= Rails.logger
   end
 

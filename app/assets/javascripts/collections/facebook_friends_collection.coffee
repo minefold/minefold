@@ -1,8 +1,8 @@
 #= require models/facebook_user
 
-class Mf.FacebookFriendsCollection extends Backbone.Collection
+class Application.FacebookFriendsCollection extends Backbone.Collection
   url: -> 'https://graph.facebook.com/me/friends?access_token=' + @accessToken
-  model: Mf.FacebookUser
+  model: Application.FacebookUser
 
   initialize: (models, options) ->
     @accessToken = options.accessToken

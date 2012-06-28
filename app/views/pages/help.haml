@@ -1,49 +1,49 @@
-- title_and_masthead  'Help & FAQ'.html_safe
+- title  'Help & FAQ'
+- layout :help
 - track_pageview
 
-%section
-  = render partial: 'pages/nav'
+.page-header
+  %h1 Help & FAQ
 
-  %article
-    %h3#bukkit Can I add plugins?
-    %p Not yet! We are planning on supporting Bukkit, but for the moment we only support the offical Notchian server.
+%h4#bukkit Can I add plugins?
+%p Not yet! We are planning on supporting Bukkit, but for the moment we only support the offical Notchian server.
 
-    %h3#minecraft Do I need a copy of Minecraft to play?
-    %p Yes. You can buy a copy for €19.95 from #{link_to 'http://minecraft.net/store', 'http://minecraft.net/store'}.
+%h4#minecraft Do I need a copy of Minecraft to play?
+%p Yes. You can buy a copy for €19.95 from #{link_to 'http://minecraft.net/store', 'http://minecraft.net/store'}.
 
-    %h3#friends Do all my friends need to pay too?
-    %p Yes. Minefold makes it simpler as everybody only pays for what they <em>individually</em> play. If you rent a traditional server by the month you have to collect donations or shout all your friends. If you prepay for your own time, you don't have to pay for all the time that Frank spends playing in your world.
+%h4#friends Do all my friends need to pay too?
+%p Yes. Minefold makes it simpler as everybody only pays for what they <em>individually</em> play. If you rent a traditional server by the month you have to collect donations or shout all your friends. If you prepay for your own time, you don't have to pay for all the time that Frank spends playing in your world.
 
-    %h3#minecraft Can I make my server public?
-    %p All the servers are whitelisted at the moment. This keeps them safe from random griefers!
+%h4#minecraft Can I make my server public?
+%p All the servers are whitelisted at the moment. This keeps them safe from random griefers!
 
-    %h3#avatar How do I change my avatar?
-    %p You can change it at #{link_to 'http://minecraft.net/profile', 'http://minecraft.net/profile'}.
+%h4#avatar How do I change my avatar?
+%p You can change it at #{link_to 'http://minecraft.net/profile', 'http://minecraft.net/profile'}.
 
-    %h3#firstnight So I'm in the game, what do I do now?
-    %p Minecraft is all about exploration and creativity. You can do anything! It's a good idea to build a small house so that you can survive the first night. For more detailed help, there is a #{link_to 'series of videos', '//minecraft.net/game/howtoplay'} on the official Minecraft website.
+%h4#firstnight So I'm in the game, what do I do now?
+%p Minecraft is all about exploration and creativity. You can do anything! It's a good idea to build a small house so that you can survive the first night. For more detailed help, there is a #{link_to 'series of videos', '//minecraft.net/game/howtoplay'} on the official Minecraft website.
 
-    %h3#spawnprotection Why do blocks keep reappearing?
-    %p This happens if you dig too close to where you spawned. Minecraft does this to ensure the area doesn't get “griefed”. Sometimes people will do nasty things like placing a big lava pool there so other players die as soon as they join. Ouch!
+%h4#spawnprotection Why do blocks keep reappearing?
+%p This happens if you dig too close to where you spawned. Minecraft does this to ensure the area doesn't get “griefed”. Sometimes people will do nasty things like placing a big lava pool there so other players die as soon as they join. Ouch!
 
-    %h3#chunkerrors Big chunks of the world are missing
-    %p Chunk errors can happen sometimes but they don't affect your world. You can simply walk around them and everything should be fine. You can try and fix them by either waiting it out or disconnecting and reconnecting to the world. You can also try killing your player by typing <code>t</code> and entering the <code>/kill</code> command. Only do this as a last resort!
+%h4#chunkerrors Big chunks of the world are missing
+%p Chunk errors can happen sometimes but they don't affect your world. You can simply walk around them and everything should be fine. You can try and fix them by either waiting it out or disconnecting and reconnecting to the world. You can also try killing your player by typing <code>t</code> and entering the <code>/kill</code> command. Only do this as a last resort!
 
-    -if signed_in?
-      .note
-        If you have any problems or questions that are not covered here, please hit us up at
-        %a#Intercom(href='javascript:') Support
-        and we'll get back to you straight away.
+-if signed_in?
+  .well
+    If you have any problems or questions that are not covered here, please hit us up at
+    %a#Intercom(href='javascript:') Support
+    and we'll get back to you straight away.
 
-      - if Rails.env.production?
-        - content_for :intercom do
-          :plain
-            intercomSettings.widget = {
-              activator: '#Intercom',
-              activator_html: function (obj) {
-                return obj.activator_html_functions.unwrapped_with_span();
-              }
-            };
+  - if Rails.env.production?
+    - content_for :intercom do
+      :plain
+        intercomSettings.widget = {
+          activator: '#Intercom',
+          activator_html: function (obj) {
+            return obj.activator_html_functions.unwrapped_with_span();
+          }
+        };
 
 
 

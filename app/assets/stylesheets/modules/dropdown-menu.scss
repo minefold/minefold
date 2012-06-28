@@ -1,0 +1,10 @@
+@import 'vars';
+
+// TODO This is a bit of a hack
+
+.navbar .navbar-inner .dropdown-menu {
+  a:hover {
+    background: $blue;
+    color: $white;
+  }
+}

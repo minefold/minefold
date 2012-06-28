@@ -5,20 +5,16 @@ class Ability
     # Public abilities
     can :read, [World, User]
 
-    # raise user.inspect
+    return false unless user
 
-    return false unless user and user.verified?
-
-    player = user.minecraft_player
-
-    # Admin abilities
-    if user.admin?
-      can [:update, :destroy, :operate, :play], World
-    end
+    # # Admin abilities
+    # if user.admin?
+    #   can [:update, :destroy, :operate, :play], World
+    # end
 
     # User abilities
     can [:create], World
-
+    
     can [:update, :destroy], World, creator: user
 
     can :operate, World do |world|

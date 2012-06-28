@@ -1,10 +1,10 @@
-class Mf.UserMenuView extends Backbone.View
+class Application.UserMenuView extends Backbone.View
   events:
     'mouseenter': 'show'
     'mouseleave': 'hide'
 
   show: =>
-    $(@el).addClass 'active'
+    $(@el).addClass('is-active')
 
   hide: =>
-    $(@el).removeClass 'active'
+    $(@el).removeClass('is-active')

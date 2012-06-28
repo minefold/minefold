@@ -1,33 +1,39 @@
 - title  'Sign in'
-- masthead do
+- layout :auth
+
+.page-header
   %h1 Sign in to Minefold
 
-%section
-  = link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook), class: ['btn', 'fb']
+.row
+  .span4.offset4
+    %center
+      = link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook), class: %w(btn btn-large btn-primary)
 
-.noop
-  or
+    %hr
 
-%section
-  = form_for :user, as: :user, url: session_path(:user) do |f|
-    - if flash[:alert]
-      %section.errors
-        = flash[:alert]
+    = form_for :user, as: :user, url: session_path(:user), class: %w(form-horizontal) do |f|
+      - if flash[:alert]
+        %section.errors
+          = flash[:alert]
 
-    %fieldset.details
-      %section.username
-        = f.text_field :email_or_username, placeholder: 'Email or Minecraft username', tabindex: 1
+      %fieldset
+        .control-group
+          .controls
+            = f.text_field :email_or_username, placeholder: 'Email or Minecraft username', tabindex: 1, class: %w(span4)
 
-      %section.password
-        = f.password_field :password, placeholder: 'Password', tabindex: 2
+        .control-group
+          .controls
+            = f.password_field :password, placeholder: 'Password', tabindex: 2, class: %w(span4)
 
-    %fieldset.submit
-      = f.submit 'Sign in', tabindex: 4, class: 'btn'
+        .control-group
+          .controls
+            = f.label :remember_me, class: 'checkbox' do
+              = f.check_box :remember_me, tabindex: 3
+              Remember me
 
-      %section.remember-me
-        = f.check_box :remember_me, tabindex: 3
-        = f.label :remember_me
+        .form-actions
+          = f.submit 'Sign in', tabindex: 4, class: %w(btn)
 
-    %fieldset.forgotten
-      = link_to new_user_password_path, class: 'forgot' do
-        Forgotten your password?
+      %fieldset.forgotten
+        = link_to new_user_password_path, class: 'forgot' do
+          Forgotten your password?

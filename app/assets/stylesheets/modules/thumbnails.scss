@@ -1,0 +1,19 @@
+@import 'vars';
+
+.thumbnails {
+  .thumbnail {
+    border: 2px solid darken(white, 10%);
+    @include box-shadow(none);
+    @include box-sizing(border-box);
+
+    &:hover {
+      border-color: $blue;
+      @include box-shadow(none);
+    }
+
+    img {
+      outline: none;
+    }
+
+  }
+}

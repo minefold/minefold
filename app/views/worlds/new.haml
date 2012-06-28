@@ -1,11 +1,15 @@
 - if params[:funpack]
-  - title_and_masthead 'Create a world'
-  %section
-    = form_for world, html: {id: 'new-world'} do |f|
-      = render partial: 'form', object: f
-- else
+  - title 'Create a world'
+  .page-header
+    %h1 Create a world
 
-  - title_and_masthead 'Choose a Funpack'
+  = form_for world, html: {id: 'new-world', class: 'form-horizontal'} do |f|
+    = render partial: 'form', object: f
+
+- else
+  - title 'Choose a Funpack'
+  .page-header
+    %h1 Choose a Funpack
 
   - Funpack.all.each do |funpack|
     %section.well

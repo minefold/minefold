@@ -1,7 +1,7 @@
 #= require models/world
 
-class Mf.WorldPageView extends Backbone.View
-  model: Mf.World
+class Application.WorldPageView extends Backbone.View
+  model: Application.World
   tagName: 'article'
 
   initialize: (options) ->

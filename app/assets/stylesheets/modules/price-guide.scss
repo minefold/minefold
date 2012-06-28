@@ -1,0 +1,23 @@
+@import 'vars';
+
+.price-guide {
+  margin-top: lines(4);
+  margin-bottom: lines(4);
+
+  > .pack {
+    border: 2px solid #CCC;
+    @include border-radius($radius);
+    padding: lines(2) 10px;
+    @include box-sizing(border-box);
+    text-align: center;
+
+    &:nth-child(2) {
+      border-color: $blue;
+    }
+
+    > .savings {
+      color: $green;
+    }
+  }
+
+}

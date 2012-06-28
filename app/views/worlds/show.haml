@@ -1,6 +1,7 @@
 - track 'viewed world'
 - title world_fullname(world)
-- head do
+- layout :world
+- provide :opengraph do
   = og_tags(world)
 
 = render partial: 'worlds/masthead'
@@ -43,85 +44,84 @@
           }
 
 - else
-  #map
-  - head do
+  .row
+    .map.span12
+  - content_for :tail do
     = javascript_include_tag '//maps.google.com/maps/api/js?sensor=false'
-  - js do
     :javascript
       $(document).ready(function() {
-        var world = new Mf.World(#{render('worlds/base', object: world, formats: [:json])});
+        var world = new Application.World(#{render('worlds/world.json', world: world)});
 
-        var worldMapView = new Mf.WorldMapView({model: world});
-        $('#map').append(worldMapView.el);
-        worldMapView.render();
+        var worldMapView = new Application.WorldMapView({model: world});
+        $('.map').append(worldMapView.el);
+        delay(2000, function(){
+          worldMapView.render();
+          console.log('done');
+        });
+
       });
 
-%section.world-meta
-  .world-meta-players
-    - world.players.each do |player|
-      %li
-        = link_to player_path(player) do
-          = player_avatar_tag player, size: :small
+%ul.player-grid.unstyled
+  - world.players.each do |player|
+    %li.player
+      = link_to player_path(player) do
+        = player_avatar_tag player, size: :small
 
-%section
-  %aside
-    %ol.tags
-      - world.tags.each do |tag|
-        %li.tag
-          %a= tag.name
-
-
-    %ul.stats
-      %li.stat
-        %span.val= number_with_delimiter world.players.size
-        %span.label= pluralize_text world.players.size, 'member', 'players'
-
-      %li.stat
-        - man_hours = (world.minutes_played / 60.0).round(2)
-        %span.val= number_with_delimiter man_hours
-        %span.label
-          = pluralize_text man_hours, 'man hour', 'man hours'
-
-      %li.stat
-        %span.val= number_with_delimiter world.pageviews
-        %span.label= pluralize_text world.pageviews, 'view', 'views'
-
-      - if world.children.any?
-        %li.stat
-          %span.val= number_with_delimiter world.children.size
-          %span.label= pluralize_text world.children.size, 'clone', 'clones'
-
-
-
-  %article
+.row
+  .span8.comments
     - if world.comments.any?
-      #world-comments
-        %h1= pluralize world.comments.count, 'comment', 'comments'
-        %ol
-          - world.comments.each do |comment|
-            - if comment.author.minecraft_player
-              %li[comment]
-                %h2
-                  / %a.badge-link{href: '/pro'}
-                  /   %span.badge.badge-pro Pro
-                  %a.url{rel: 'contact', title: comment.author.minecraft_player.username, href: player_path(comment.author.minecraft_player)}
-                    = player_avatar_tag comment.author.minecraft_player, size: :medium
-                    = comment.author.minecraft_player.username
-                .comment-body
-                  = markdown comment.text
+      %h4= pluralize world.comments.count, 'comment', 'comments'
 
-                .comment-meta
-                  = link_to "#comment_#{comment.id}", class: 'posted' do
-                    = time_ago_in_words(comment.created_at)
-                    ago
+      %hr
+
+      - world.comments.select {|c| c.author.minecraft_player}.each do |comment|
+        .row[comment]
+          .span1
+            = player_avatar_tag comment.author.minecraft_player, size: :medium
+
+          .span7
+            %h5
+              %a.url{rel: 'contact', title: comment.author.minecraft_player.username, href: player_path(comment.author.minecraft_player)}
+                = comment.author.minecraft_player.username
+
+            .body= markdown comment.text
+            %p.meta
+              = time_ago_in_words(comment.created_at)
+              ago
 
     - if can? :read, world
-      - js do
-        :coffeescript
-          $ -> $('textarea#comment_text').elastic()
+      - content_for :tail do
+        :javascript
+          $(function() {
+            $('textarea#comment_text').elastic();
+          });
 
-      = form_for world.comments.new, url: player_world_comments_path(world.creator.minecraft_player, world) do |f|
-        %h3 Add a new comment (<a href="http://daringfireball.net/projects/markdown/syntax" target="_blank">Markdown Syntax</a>)
-        = f.text_area :text, rows: 3
-        = f.submit 'Post comment'
+      %hr
 
+      = form_for world.comments.new, url: player_world_comments_path(world.creator.minecraft_player, world), class: 'form-horizontal' do |f|
+        %p.pull-right
+          %a{href: 'http://daringfireball.net/projects/markdown/syntax', target: '_blank'}Markdown Syntax
+        %h4 Post a new comment
+
+        .control-group
+          .control
+            = f.text_area :text, rows: 3, class: %w(input-xlarge span8)
+        .form-actions
+          = f.submit 'Post comment', class: %w(btn btn-primary)
+
+  .span2
+    %ol.tags.unstyled
+      - world.tags.each do |tag|
+        %li.tag= tag.name
+
+    %dl
+      %dt= pluralize_text world.players.size, 'member', 'players'
+      %dd= number_with_delimiter world.players.size
+
+      - man_hours = (world.minutes_played / 60.0).round(2)
+      %dt= pluralize_text man_hours, 'man hour', 'man hours'
+      %dd= number_with_delimiter man_hours
+
+      - if world.children.any?
+        %dt= pluralize_text world.children.size, 'clone', 'clones'
+        %dd= number_with_delimiter world.children.size

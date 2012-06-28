@@ -17,7 +17,7 @@ class Photo
   field :desc, type: String
   attr_accessible :desc
 
-  field :sha, type: String, index: true
+  field :sha, type: String
 
   field :published, type: Boolean
   scope :published, where(published: true)

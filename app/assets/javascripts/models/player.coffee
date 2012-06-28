@@ -1,1 +1,1 @@
-class Mf.User extends Backbone.Model
+class Application.User extends Backbone.Model

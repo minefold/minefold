@@ -8,17 +8,14 @@ class MinecraftPlayer
 # --
 # Indexes
 
+  index(
+    {deleted_at: 1, slug: 1, _id: 1},
+    {unique: true}
+  )
 
-  index [
-    [:deleted_at, Mongo::ASCENDING],
-    [:slug, Mongo::ASCENDING],
-    [:_id, Mongo::ASCENDING]
-  ], unique: true
-
-  index [
-    [:_id, Mongo::ASCENDING],
-    [:user_id, Mongo::ASCENDING],
-  ]
+  index(
+    {_id: 1, user_id: 1}
+  )
 
 
   REFERRER_CREDITS = 600

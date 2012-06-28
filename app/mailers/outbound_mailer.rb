@@ -19,16 +19,16 @@ class OutboundMailer < ActionMailer::Base
     mail to: email,
          subject: "Claim #{@player.username} on Minefold"
   end
-  
-  class Preview < ::MailView
-    def invite
-      user = User.chris
-      player = user.player
-      world = World.find_by(name: 'minebnb', creator_id: user.id)
 
-      UserMailer.world_started(player.id, world.id, 'dave@minefold.com', 'hey sup!')
-    end
-  end
+  # class Preview < ::MailView
+  #   def invite
+  #     user = User.chris
+  #     player = user.player
+  #     world = World.find_by(name: 'minebnb', creator_id: user.id)
+  #
+  #     UserMailer.world_started(player.id, world.id, 'dave@minefold.com', 'hey sup!')
+  #   end
+  # end
 
 private
 

@@ -1,4 +1,4 @@
-class Mf.WorldMember extends Backbone.Model
+class Application.WorldMember extends Backbone.Model
   defaults: ->
     added: false
 

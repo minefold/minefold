@@ -1,7 +1,7 @@
 #= require models/photo
 
-class Mf.FacebookInviteView extends Backbone.View
-  model: Mf.FacebookUser
+class Application.FacebookInviteView extends Backbone.View
+  model: Application.FacebookUser
   tagName: 'li'
   className: 'friend'
 

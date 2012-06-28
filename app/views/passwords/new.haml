@@ -1,13 +1,17 @@
-- title_and_masthead 'Reset your password'
+- title 'Reset your password'
 
-%section
-  = form_for :user, url: new_user_password_path, method: :post do |f|
-    - # TODO Show errors when user enters a email that doesn't exist
+.page-header
+  %h1 Reset your password
 
-    %fieldset
-      %section.email
-        = f.label :email
-        = f.email_field :email
+.row
+  .span4
+    = form_for :user, url: new_user_password_path, method: :post do |f|
+      - # TODO Show errors when user enters a email that doesn't exist
 
-    %fieldset.submit
-      = f.submit 'Send password reset email'
+      %fieldset
+        %section.email
+          = f.label :email
+          = f.email_field :email
+
+
+      = f.submit 'Send password reset email', class: %w(btn btn-primary)

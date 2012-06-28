@@ -1,4 +1,4 @@
-class Mf.WorldMapControlView extends Backbone.View
+class Application.WorldMapControlView extends Backbone.View
   className: 'world-map-control-view'
   events:
     'click .enter-fullscreen': 'enterFullscreen'

@@ -8,11 +8,11 @@ class CampaignMailer < ActionMailer::Base
          from: "Minefold <team@minefold.com>"
   end
 
-  class Preview < ::MailView
-
-    def downtime_20120424
-      user = User.chris
-      CampaignMailer.downtime_20120424(user.id)
-    end
-  end
+  # class Preview < ::MailView
+  #
+  #   def downtime_20120424
+  #     user = User.chris
+  #     CampaignMailer.downtime_20120424(user.id)
+  #   end
+  # end
 end

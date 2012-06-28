@@ -1,41 +1,43 @@
-- masthead do
-  - if not signed_in? and false
-    %section.upsell
-      %p
-        %strong
-          #{world.creator.username} is playing Minecraft here.
+- if not signed_in? and false
+  %section.upsell
+    %p
+      %strong
+        #{world.creator.username} is playing Minecraft here.
 
-        You can create a server just like this too. #{link_to 'Sign up now', new_user_path} and play <em>FREE</em> for 10 hours each month.
+      You can create a server just like this too. #{link_to 'Sign up now', new_user_path} and play <em>FREE</em> for 10 hours each month.
 
-  / ---
+/ ---
 
-  %aside
-    %ol.actions
-      - if can? :update, world
-        %li.settings
-          = link_to 'Settings', edit_player_world_path(player, world), class: 'btn'
+.page-header
+  .row
+    .span6
+      %h1
+        %span.creator= world.creator.username
+        %span.slash> /
+        %strong.name= world.name
+      %h3= world.host
 
-      %li.members
-        = link_to 'Players', player_world_players_path(player, world), class: 'btn'
+    .span6
+      %ol.actions.unstyled.pull-right
+        - if can? :update, world
+          %li.settings.pull-right
+            = link_to 'Settings', edit_player_world_path(player, world), class: %w(btn btn-medium)
 
-      - if not signed_in? or can? :clone, world
-        %li.clone
-          = button_to 'Clone', clone_player_world_path(player, world), method: :put
+        %li.members.pull-right
+          = link_to 'Players', player_world_players_path(player, world), class: %w(btn)
 
-        %li.membership-request
-          - if signed_in? and world.membership_requests.include_user?(current_user)
-            = button_to 'Request sent', nil, disabled: true
-          - else
-            - unless can? :play, world
-              = button_to 'Ask to play here', player_world_membership_requests_path(player, world), method: :post
+        - if not signed_in? or can? :clone, world
+          %li.clone.pull-right
+            = button_to 'Clone', clone_player_world_path(player, world), method: :put, class: %w(btn btn-primary)
 
-      - if can? :update, world
-        %li.invites
-          = link_to 'Invite Friends', invite_player_world_path(player, world), class: 'btn'
+          %li.membership-request.pull-right
+            - if signed_in? and world.membership_requests.include_user?(current_user)
+              = button_to 'Request sent', nil, disabled: true, class: %w(btn)
+            - else
+              - unless can? :play, world
+                = button_to 'Ask to play here', player_world_membership_requests_path(player, world), method: :post, class: %w(btn btn-success)
 
-  %h1.world
-    %span.creator= world.creator.username
-    %span.slash> /
-    %strong.name= world.name
+        - if can? :update, world
+          %li.invites.pull-right
+            = link_to 'Invite Friends', invite_player_world_path(player, world), class: 'btn'
 
-  %h2= world.host

@@ -1,0 +1,26 @@
+- title user.username
+
+.page-header
+  %h1= user.username
+
+.meta
+  %span.created-at Member since #{user.created_at.strftime("%-d %b, %Y")}
+
+/ - if world = user.online_world
+/   .meta Playing right now in #{link_to strong_world_fullname(world), player_world_path(world.creator.minecraft_player, world)}
+
+/ - if signed_in? and current_user.admin? and player.user
+/   %section.referrals
+/     %h2 Referrals
+/     .players
+/       - player.user.referrals.each do |referred_user|
+/         - if referred_player = referred_user.minecraft_player
+/           %li
+/             = link_to player_path(referred_player) do
+/               = player_avatar_tag referred_player, size: :small
+
+%section.worlds
+  %h2 Worlds
+
+  / - user.worlds.each do |world|
+  /   %p= link_to strong_world_fullname(world), player_world_path(world.creator.minecraft_player, world)

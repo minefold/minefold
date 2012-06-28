@@ -1,0 +1,27 @@
+@import 'vars';
+
+.alert {
+  border: none;
+  text-shadow: none;
+  font-weight: 800;
+  @include border-radius($radius);
+
+  color: darken($yellow, 40%);
+  background-color: $yellow;
+
+  &.alert-success, &.alert-notice {
+    color: $white;
+    background-color: $green;
+  }
+
+  &.alert-error {
+    color: $white;
+    background-color: $red;
+  }
+
+  &.alert-info {
+    color: $white;
+    background-color: $blue;
+  }
+
+}

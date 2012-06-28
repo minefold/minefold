@@ -17,8 +17,8 @@ class MapProjection
     new google.maps.LatLng(lat, lng)
 
 
-class Mf.WorldMapView extends Backbone.View
-  model: Mf.World
+class Application.WorldMapView extends Backbone.View
+  model: Application.World
   className: 'world-map-view'
 
   defaults:
@@ -35,7 +35,7 @@ class Mf.WorldMapView extends Backbone.View
     markers: []
 
   initialize: (options) ->
-    @controls = new Mf.WorldMapControlView(mapView: @)
+    @controls = new Application.WorldMapControlView(mapView: @)
 
     @options = _.extend @defaults, options.map
     @options = _.extend @options, @model.get('map_data') or {}
@@ -46,8 +46,6 @@ class Mf.WorldMapView extends Backbone.View
     @overlay = new google.maps.OverlayView()
     @overlay.draw = ->
     @overlay.setMap(@map)
-
-
 
     mapType = new google.maps.ImageMapType(
       getTileUrl: @tileUrl
@@ -85,8 +83,8 @@ class Mf.WorldMapView extends Backbone.View
       @addMarker spawn, 'Spawn', '//google-maps-icons.googlecode.com/files/home.png'
 
     if window.localStorage?
-      google.maps.event.addListener map, 'center_changed', @persistViewport
-      google.maps.event.addListener map, 'zoom_changed', @persistViewport
+      google.maps.event.addListener @map, 'center_changed', @persistViewport
+      google.maps.event.addListener @map, 'zoom_changed', @persistViewport
 
   persistViewport: =>
     center = @map.getCenter()

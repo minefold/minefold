@@ -1,6 +1,6 @@
 #= require views/event_view
 
-class Mf.ChatView extends Mf.EventView
+class Application.ChatView extends Application.EventView
   template: _.template """
     <div class="avatar">
       <% if(source) { %>

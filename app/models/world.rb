@@ -23,12 +23,10 @@ class World
 
 # --
 
-  index [
-    [:_id, Mongo::ASCENDING],
-    [:deleted_at, Mongo::ASCENDING],
-    [:creator_id, Mongo::ASCENDING],
-    [:slug, Mongo::ASCENDING]
-  ], unique: true
+  index(
+    {_id: 1, deleted_at: 1, creator_id: 1, slug: 1},
+    {unique: true}
+  )
 
 
 # ---

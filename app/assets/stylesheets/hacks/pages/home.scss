@@ -13,7 +13,7 @@
   }
 
   .btn {
-    @include button($blue, white, darken(blue, 20%));
+    @include button($blue, white, $blue);
     @include box-sizing(border-box);
     @include columns(6);
     display: block; margin: 0 auto ($line*2) auto;

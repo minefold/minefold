@@ -1,14 +1,12 @@
 require File.expand_path('../boot', __FILE__)
 
-require 'action_controller/railtie'
-require 'action_mailer/railtie'
-require 'sprockets/railtie'
+require 'rails/all'
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
-  # Bundler.require *Rails.groups(:assets => %w(development test))
+  Bundler.require(*Rails.groups(:assets => %w(development test)))
   # If you want your assets lazily compiled in production, use this line
-  Bundler.require(:default, :assets, Rails.env)
+  # Bundler.require(:default, :assets, Rails.env)
 end
 
 module Minefold
@@ -18,13 +16,8 @@ module Minefold
     # -- all .rb files in that directory are automatically loaded.
 
     # Custom directories with classes and modules you want to be autoloadable.
-    %w{ app/jobs lib lib/core_ext app/models/concerns }.each do |path|
-      config.autoload_paths << Rails.root.join(path)
-    end
-
-    config.generators do |g|
-      g.test_framework :rspec, fixture: true
-      g.fixture_replacement :fabrication
+    %w(lib app/jobs).each do |path|
+      config.autoload_paths << config.root.join(path)
     end
 
     # Only load the plugins named here, in the order given (default is alphabetical).
@@ -54,11 +47,21 @@ module Minefold
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    # Fix for Devise on Heroku
+    #   https://github.com/plataformatec/devise#heroku
+    config.assets.initialize_on_precompile = false
+
     config.assets.paths << Rails.root.join('app', 'assets', 'flash')
 
-    config.mongoid.observers =
-      :world_observer,
-      :avatar_observer,
-      :user_observer
+    config.generators do |g|
+      g.stylesheets = false
+      g.javascripts = false
+    end
+
+    initializer 'redis' do
+      uri = URI.parse(ENV["REDISTOGO_URL"])
+      $redis = Redis.new(host: uri.host, port: uri.port, password: uri.password)
+    end if ENV['REDISTOGO_URL']
+
   end
 end

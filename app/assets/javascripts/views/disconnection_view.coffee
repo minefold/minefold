@@ -1,6 +1,6 @@
 #= require views/event_view
 
-class Mf.DisconnectionView extends Mf.EventView
+class Application.DisconnectionView extends Application.EventView
   template: _.template """
     <div class="meta">
       <time class="timeago" datetime="<%= created_at %>"></time>

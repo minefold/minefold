@@ -1,6 +1,6 @@
 #= require ./page_view
 
-class Mf.WorldInfoView extends Mf.WorldPageView
+class Application.WorldInfoView extends Application.WorldPageView
   className: 'info'
 
   enter: ->

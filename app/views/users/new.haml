@@ -1,22 +1,30 @@
 - track 'visited new user page'
 - title  'Create your account'
-- masthead do
-  %ol.verification-steps
-    %li.step
-      Sign up
 
-    %li.step.is-pending
-      Verify
+.page-header
+  %h1 Create an account
 
-    %li.step.is-pending
-      Play!
+.row
+  .span4
+    = form_for user do |f|
+      %fieldset
+        .control-group
+          = f.label :email, class: 'control-label'
+          .control
+            = f.email_field :email, class: %w(span4)
 
-%section
-  = link_to "Sign up with Facebook", user_omniauth_authorize_path(:facebook), class: ['btn', 'fb']
+        .row
+          .span2
+            .control-group
+              = f.label :password, class: 'control-label'
+              .control
+                = f.password_field :password, class: %w(span2)
 
-.noop
-  or
+          .span2
+            .control-group
+              = f.label :password_confirmation, class: 'control-label'
+              .control
+                = f.password_field :password_confirmation, class: %w(span2)
 
-%section
-  = form_for user do |f|
-    = render partial: 'form', object: f
+        .form-actions
+          = f.submit 'Create account', class: %w(btn btn-primary)

@@ -13,8 +13,6 @@ Devise.setup do |config|
   # available as additional gems.
   require 'devise/orm/mongoid'
 
-  config.apply_schema = false
-
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
   # just :email. You can configure it to use [:username, :subdomain], so for
@@ -85,10 +83,6 @@ Devise.setup do |config|
 
   # If true, extends the user's remember period when remembered via cookie.
   # config.extend_remember_period = false
-
-  # If true, uses the password salt as remember token. This should be turned
-  # to false if you are not using database authenticatable.
-  config.use_salt_as_remember_token = true
 
   # Options to be passed to the created cookie. For instance, you can set
   # :secure => true in order to force SSL only cookies.
@@ -194,7 +188,7 @@ Devise.setup do |config|
     fb_omniauth_options[:client_options] = {:ssl => {:ca_file => '/usr/lib/ssl/certs/ca-certificates.crt'}}
   end
 
-  config.omniauth :facebook, ENV["FB_APP_ID"], ENV["FB_APP_SECRET"], fb_omniauth_options
+  config.omniauth :facebook, ENV["FACEBOOK_KEY"], ENV["FACEBOOK_SECRET"], fb_omniauth_options
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

@@ -1,3 +1,3 @@
-class Mf.FacebookUser extends Backbone.Model
+class Application.FacebookUser extends Backbone.Model
   defaults: ->
     inviteSent: false

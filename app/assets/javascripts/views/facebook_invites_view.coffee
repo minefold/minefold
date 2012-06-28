@@ -1,7 +1,7 @@
 #= require collections/facebook_friends_collection
 #= require views/facebook_invite_view
 
-class Mf.FacebookConnection extends Backbone.Model
+class Application.FacebookConnection extends Backbone.Model
   defaults:
     state: null
     friends: []
@@ -30,8 +30,8 @@ class Mf.FacebookConnection extends Backbone.Model
 
 
 
-class Mf.FacebookInvitesView extends Backbone.View
-  collection: Mf.FacebookFriendsCollection
+class Application.FacebookInvitesView extends Backbone.View
+  collection: Application.FacebookFriendsCollection
   className: 'invites'
 
   initialize: (options) ->

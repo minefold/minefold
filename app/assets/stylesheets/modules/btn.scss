@@ -1,0 +1,79 @@
+@import 'vars';
+
+.form-actions {
+  border: none;
+}
+
+.btn {
+  font-weight: 800;
+  @include border-radius($radius);
+  @include box-shadow(none);
+  @include box-sizing(border-box);
+  text-shadow: none;
+
+  padding: 4px 10px;
+  font-size: 13px;
+  line-height: 18px;
+
+
+  &.btn-large {
+    font-size: 16px;
+    padding: 20px 35px;
+  }
+
+  &.btn-mini {
+    line-height: 20px;
+    padding: 0 7px;
+  }
+
+  // Colors
+
+  background: $white;
+  border: 2px solid #CCC;
+
+  &:hover {
+    border-color: $black;
+    background-color: $white;
+    text-shadow: none;
+  }
+
+  &.btn-primary,
+  &.btn-info,
+  &.btn-success,
+  &.btn-warning,
+  &.btn-danger,
+  &.btn-inverse {
+    border: none;
+  }
+
+  &.btn-primary,
+  &.btn-primary:hover {
+    background: $blue;
+  }
+
+  &.btn-info,
+  &.btn-info:hover {
+    background: $blue;
+  }
+
+  &.btn-success,
+  &.btn-success:hover {
+    background: $green;
+  }
+
+  &.btn-warning,
+  &.btn-warning:hover {
+    background: $yellow;
+  }
+
+  &.btn-danger,
+  &.btn-danger:hover {
+    background: $red;
+  }
+
+  &.btn-inverse,
+  &.btn-inverse:hover {
+    background: $black;
+  }
+
+}

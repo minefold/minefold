@@ -4,10 +4,10 @@ Minefold::Application.routes.draw do
   admin_only = lambda {|req| (u = req.env['warden'].user) and u.admin? }
   development_only = lambda {|req| Rails.env.development? }
 
-  constraints(development_only) do
-    mount CampaignMailer::Preview, :at => '/mailers/campaign'
-    mount UserMailer::Preview, :at => '/mailers/user'
-  end
+  # constraints(development_only) do
+  #   mount CampaignMailer::Preview, :at => '/mailers/campaign'
+  #   mount UserMailer::Preview, :at => '/mailers/user'
+  # end
 
   constraints(admin_only) do
     mount Resque::Server, :at => '/admin/resque'
@@ -31,6 +31,7 @@ Minefold::Application.routes.draw do
   # Static Pages
   { '/about'   => :about,
     '/help'    => :help,
+    '/jobs'    => :jobs,
     '/pricing' => :pricing,
     '/privacy' => :privacy,
     '/terms'   => :terms
@@ -38,8 +39,13 @@ Minefold::Application.routes.draw do
     get url, :controller => 'pages',:action => name, :as => "#{name}_page"
   end
 
+
+
   # Authentication
   devise_scope :user do
+
+    resources :users
+
     authenticated do
       root :to => 'users#dashboard', :as => :user_root
     end

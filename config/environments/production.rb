@@ -1,5 +1,8 @@
 Minefold::Application.configure do
-  StatsD.mode = :production
+  # Settings specified here will take precedence over those in config/application.rb
+
+  # Log to stdout
+  config.logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
 
   config.action_mailer.default_url_options = {
     host: 'minefold.com',
@@ -30,9 +33,6 @@ Minefold::Application.configure do
   config.assets.compress = true
 
   config.assets.digest = true
-
-  # Fix for Devise
-  config.assets.initialize_on_precompile = false
 
   # Compress both stylesheets and JavaScripts
   # config.assets.js_compressor  = :uglifier
@@ -79,6 +79,10 @@ Minefold::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+
+  # Log the query plan for queries taking more than this (works
+  # with SQLite, MySQL, and PostgreSQL)
+  # config.active_record.auto_explain_threshold_in_seconds = 0.5
 end
 
 

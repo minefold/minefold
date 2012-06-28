@@ -1,0 +1,28 @@
+@import 'vars';
+
+.hero-unit {
+  @include border-radius($radius * 2);
+  border: 2px solid darken(white, 10%);
+  background: transparent;
+
+  p {
+    font-weight: normal;
+  }
+
+}
+
+.hero-unit.hero-unit-home {
+
+  h2 {
+    margin-bottom: lines(4);
+  }
+
+  .btn.btn-primary {
+    margin-bottom: lines(2);
+  }
+
+  p {
+    font-size: 12px;
+  }
+
+}
