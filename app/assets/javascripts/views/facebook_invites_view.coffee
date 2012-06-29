@@ -56,7 +56,7 @@ class Application.FacebookInvitesView extends Backbone.View
     <% } else { %>
       <p>Invite facebook friends to play</p>
       <input class="name" type="text" placeholder="Name" autocomplete="off" />
-      <ul class="friends">
+      <ul class="friends unstyled">
       </ul>
     <% } %>
   """

@@ -15,7 +15,7 @@ class Application.FriendsAddView extends Backbone.View
     <h2>Minefold</h2>
     <p>Add minefold players to your world</p>
     <input class="name" type="text" placeholder="Username" autocomplete="off" />
-    <ul class="friends">
+    <ul class="friends unstyled">
     </ul>
   """
 

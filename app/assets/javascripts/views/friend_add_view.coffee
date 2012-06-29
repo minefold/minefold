@@ -3,18 +3,18 @@
 class Application.FriendAddView extends Backbone.View
   model: Application.WorldMember
   tagName: 'li'
-  className: 'friend'
+  className: 'friend-to-invite'
 
   events:
     'click .add': 'add'
 
   template: _.template """
-    <img src="<%= avatar_url %>" />
+    <img src="<%= avatar_url %>" class="avatar" />
     <span class="name"><%= username %></span>
     <% if (added) { %>
-    <span class="btn disabled">Added</a>
+    <span class="btn disabled pull-right">Added</a>
     <% } else { %>
-    <a class="btn add" href="javascript:">Add</a>
+    <a class="btn add pull-right" href="javascript:">Add</a>
     <% } %>
   """
 

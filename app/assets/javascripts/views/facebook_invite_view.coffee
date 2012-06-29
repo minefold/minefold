@@ -3,18 +3,18 @@
 class Application.FacebookInviteView extends Backbone.View
   model: Application.FacebookUser
   tagName: 'li'
-  className: 'friend'
+  className: 'friend-to-invite'
 
   events:
     'click .invite': 'invite'
 
   template: _.template """
-    <img src="https://graph.facebook.com/<%= id %>/picture?type=square" />
+    <img src="https://graph.facebook.com/<%= id %>/picture?type=square" class="avatar" />
     <span class="name"><%= name %></span>
     <% if (this.friendIsInvited) { %>
     <span class="btn disabled">Invite Sent</span>
     <% } else if (!this.friendIsUser) { %>
-    <a class="btn invite" href="javascript:">Invite</a>
+    <a class="btn invite pull-right" href="javascript:">Invite</a>
     <% } else { %>
     <span class="btn disabled">Already a member</span>
     <% } %>

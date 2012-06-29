@@ -17,8 +17,9 @@
   #fb-ui-wrapper
     #fb-root
 
-  #invites
-  #friends
+.row
+  #invites.span6
+  #friends.span6
 
   - friends = current_user.friend_users.sort_by{|u| u.username.downcase }
   - players = world.players
