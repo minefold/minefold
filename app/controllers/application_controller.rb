@@ -22,6 +22,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  before_filter :set_mpid
+
   before_filter :require_player_verification
 
   # def authenticate_user!
@@ -30,12 +32,12 @@ class ApplicationController < ActionController::Base
 
 private
 
-  # def set_mpid
-  #   if not cookies[:mpid]
-  #     mpid = signed_in? ? current_user.mpid : User.mpid
-  #     cookies[:mpid] = {value: mpid, expires: 1.year.from_now}
-  #   end
-  # end
+  def set_mpid
+    if not cookies[:mpid]
+      mpid = signed_in? ? current_user.mpid : User.mpid
+      cookies[:mpid] = {value: mpid, expires: 1.year.from_now}
+    end
+  end
 
   def require_no_authentication!
     no_input = devise_mapping.no_input_strategies

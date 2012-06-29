@@ -5,7 +5,7 @@
       = form.label 'Name', class: 'control-label'
       .controls
         .input-append
-          = form.text_field :name, tabindex: 1, autocomplete: 'off'
+          = form.text_field :name, tabindex: 1, autocomplete: 'off', maxlength: 16, class: %w(input-small)
           %span.add-on> .#{current_user.slug}.minefold.com
 
 
@@ -187,13 +187,6 @@
                   .val(originalSubmitButtonName);
               });
             });
-
-
-.form-actions
-  - if form.object.new_record?
-    = form.submit 'Create world', tabindex: 8, class: %w(btn btn-primary)
-  - else
-    = form.submit 'Update settings', tabindex: 8, class: %w(btn btn-primary)
 
 - content_for :tail do
   :javascript

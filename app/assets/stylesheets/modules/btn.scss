@@ -8,8 +8,9 @@
   font-weight: 800;
   @include border-radius($radius);
   @include box-shadow(none);
-  @include box-sizing(border-box);
+//  @include box-sizing(border-box);
   text-shadow: none;
+  border: none;
 
   padding: 4px 10px;
   font-size: 13px;
@@ -29,21 +30,21 @@
   // Colors
 
   background: $white;
-  border: 2px solid #CCC;
+  @include box-shadow(0 0 1px rgba($black, 0.4));
 
-  &:hover {
-    border-color: $black;
+  &:hover, .hover {
     background-color: $white;
     text-shadow: none;
   }
 
+  &.btn-primary,
   &.btn-primary,
   &.btn-info,
   &.btn-success,
   &.btn-warning,
   &.btn-danger,
   &.btn-inverse {
-    border: none;
+    @include box-shadow(none);
   }
 
   &.btn-primary,

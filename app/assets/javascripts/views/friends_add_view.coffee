@@ -31,7 +31,7 @@ class Application.FriendsAddView extends Backbone.View
         user.get('username').toLowerCase().indexOf(@query) != -1
 
     users.map (player) =>
-      subView = new Mf.FriendAddView(model: player)
+      subView = new Application.FriendAddView(model: player)
       $('ul.friends', @el).append(subView.el)
       subView.render()
 

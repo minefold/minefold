@@ -13,11 +13,6 @@
     = form_for user, url: update_user_path, method: :put, class: %w(form-horizontal) do |f|
 
       .control-group
-        = f.label :username, class: 'control-label'
-        .control
-          = f.text_field :username, class: 'input-xlarge'
-
-      .control-group
         = f.label :email, class: 'control-label'
         .control
           = f.text_field :email, class: 'input-xlarge'

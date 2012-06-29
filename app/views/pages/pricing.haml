@@ -2,10 +2,12 @@
 - layout :content
 - track_pageview
 
-.page-header
-  %h1 Pricing
+.row
+  %center.span6.offset3
+    .page-header
+      %h1 Pricing
 
-%p Minefold is <i>free</i> for everybody if you play for less than 10 hours a week. If you want to play longer, you can book a server or upgrade to Minefold Pro.
+    %p You can play for <i>free</i> on any Minefold server for 10 hours a month. If you want to play longer, you can book a server or upgrade to Minefold Pro.
 
 .price-guide.row
   .pack.span3.offset1
@@ -44,14 +46,14 @@
 
 %center
   - if signed_in?
-    = link_to 'Upgrade to Pro now!', pro_account_path, class: %w(btn btn-primary btn-large)
+    = link_to 'Upgrade to Minefold Pro', pro_account_path, class: %w(btn btn-primary btn-large)
   - else
-    = link_to 'Upgrade to Pro', new_user_path, class: %w(btn btn-primary btn-large)
-
-%hr
+    = link_to 'Upgrade to Pro', pro_account_path, class: %w(btn btn-primary btn-large)
 
 .row.testimonials
-  .span8.offset2
+  .span6.offset3
+    %hr
+
     %h3 Happy Campers
 
     %ul.unstyled

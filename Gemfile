@@ -23,7 +23,10 @@ gem 'exceptional'
 gem 'intercom'
 gem 'mailgun-rails'
 gem 'jbuilder'
+
+# TODO KILL KILL KILL
 gem 'mongoid', '3.0.0.rc'
+gem 'uuid'
 
 gem 'carrierwave', git: 'https://github.com/jnicklas/carrierwave.git'
 gem 'carrierwave-mongoid', require: 'carrierwave/mongoid'

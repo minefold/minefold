@@ -21,7 +21,7 @@ class Application.FacebookConnection extends Backbone.Model
       @fetchFriends(response.authResponse.accessToken)
 
   fetchFriends: (accessToken) ->
-    collection = new Mf.FacebookFriendsCollection([],
+    collection = new Application.FacebookFriendsCollection([],
       accessToken: accessToken
     )
 
@@ -38,7 +38,7 @@ class Application.FacebookInvitesView extends Backbone.View
     @options = options
     @friendUids = options.friendUids
     @inviteUids = options.inviteUids
-    @model = new Mf.FacebookConnection()
+    @model = new Application.FacebookConnection()
     @model.bind 'change', @render, @
 
   events:
@@ -78,7 +78,7 @@ class Application.FacebookInvitesView extends Backbone.View
       friendIsUser = _.find @friendUids, (uid) -> uid == user.get('id')
       friendIsInvited = _.find @inviteUids, (uid) -> uid == user.get('id')
 
-      subView = new Mf.FacebookInviteView
+      subView = new Application.FacebookInviteView
         model: user
         friendIsUser: friendIsUser
         friendIsInvited: friendIsInvited

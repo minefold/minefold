@@ -1,4 +1,5 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
+
   def facebook
     existing_user = current_user || if params[:user_id]
       User.find(params[:user_id])
@@ -9,11 +10,13 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     cookies[:mpid] = user.mpid
 
-    flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => "Facebook"
     sign_in_and_redirect user, :event => :authentication
   end
 
+# private
+
   def after_sign_in_path_for(resource)
-    request.env['omniauth.params']['callback_path'] || user_root_path
+    request.env['omniauth.params']['callback_path'] || super(resource)
   end
+
 end

@@ -109,6 +109,16 @@ Minefold::Application.routes.draw do
 
   resources :invites, only: [:create]
 
+
+# ---
+
+
+  get 'channel.html' => 'facebook#channel', :as => :facebook_channel
+
+
+# ---
+
+
   resources(:players,
             :path => '/',
             :only => [:show]) do

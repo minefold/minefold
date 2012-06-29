@@ -277,6 +277,10 @@ class World
     pull :blacklisted_player_ids, player.id
   end
 
+  def player_count_without_creator
+    player_ids.size - 1
+  end
+
 # ---
 # Online Players
 

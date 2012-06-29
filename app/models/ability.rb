@@ -14,11 +14,11 @@ class Ability
 
     # User abilities
     can [:create], World
-    
+
     can [:update, :destroy], World, creator: user
 
     can :operate, World do |world|
-      world.player_opped? player
+      world.player_opped? user.minecraft_player
     end
 
     can :play, World do |world|

@@ -113,16 +113,33 @@
     / ---
 
     = javascript_include_tag '//d3dy5gmtp8yhk7.cloudfront.net/1.12/pusher.min.js'
+    = javascript_include_tag 'https://js.stripe.com/v1'
     = javascript_include_tag 'application'
 
     :javascript
       window.app = new Application();
-      // TODO Think about what happense when Pusher hasn't loaded
-      app.pusher = new Pusher(#{Pusher.key.to_json});
 
       $(function() {
         Backbone.history.start({pushState: true});
       });
+
+    :javascript
+      app.pusher = new Pusher(#{Pusher.key.to_json});
+
+    :javascript
+      Stripe.setPublishableKey(#{ENV['STRIPE_PUBLISHABLE'].to_json});
+
+    :javascript
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId: #{ENV['FACEBOOK_KEY'].to_json},
+          cookie: true,
+          logging: #{(not Rails.env.production?).to_json},
+          channelUrl: #{facebook_channel_url(protocol: '//').to_json}
+        });
+
+        app.trigger('fb:init');
+      }
 
     = yield :tail
 

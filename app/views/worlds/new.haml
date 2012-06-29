@@ -6,6 +6,10 @@
   = form_for world, html: {id: 'new-world', class: 'form-horizontal'} do |f|
     = render partial: 'form', object: f
 
+    .form-actions
+      = f.submit 'Create world', tabindex: 8, class: %w(btn btn-primary)
+
+
 - else
   - title 'Choose a Funpack'
   .page-header

@@ -1,6 +1,11 @@
 @import 'vars';
 
 .l-world {
+
+  .page-header .nav-pills {
+    margin-bottom: 0;
+  }
+
   .map {
     margin-bottom: lines(4);
   }

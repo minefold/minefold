@@ -10,13 +10,10 @@
 .row
   .span8
     - if current_user.minecraft_player.worlds.any?
-      .worlds
-        %ol
-          - current_user.minecraft_player.worlds.each do |world|
-            %li
-              = link_to strong_world_fullname(world), player_world_path(world.creator.minecraft_player, world)
-              .meta
-                = pluralize world.player_ids.count, 'player', 'players'
+      - current_user.minecraft_player.worlds.each do |world|
+        %p
+          = link_to strong_world_fullname(world), player_world_path(world.creator.minecraft_player, world)
+          = pluralize world.player_ids.count, 'player', 'players'
 
     - else
       %p.empty You haven't created or joined any worlds yet.

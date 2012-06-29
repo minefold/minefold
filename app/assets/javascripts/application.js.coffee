@@ -25,9 +25,5 @@ class window.Application extends Backbone.Router
     '': 'home'
 
   initialize: ->
-    userMenuView = new Application.UserMenuView(
-      el: $('.user-menu-view')
-    )
 
   home: ->
-

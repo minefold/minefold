@@ -18,26 +18,28 @@
       %h3= world.host
 
     .span6
-      %ol.actions.unstyled.pull-right
-        - if can? :update, world
-          %li.settings.pull-right
-            = link_to 'Settings', edit_player_world_path(player, world), class: %w(btn btn-medium)
-
-        %li.members.pull-right
-          = link_to 'Players', player_world_players_path(player, world), class: %w(btn)
-
+      %ul.nav
         - if not signed_in? or can? :clone, world
-          %li.clone.pull-right
-            = button_to 'Clone', clone_player_world_path(player, world), method: :put, class: %w(btn btn-primary)
+          %li= link_to 'Clone', clone_player_world_path(player, world), method: :put, class: %w(btn btn-primary pull-right)
 
-          %li.membership-request.pull-right
-            - if signed_in? and world.membership_requests.include_user?(current_user)
-              = button_to 'Request sent', nil, disabled: true, class: %w(btn)
-            - else
-              - unless can? :play, world
-                = button_to 'Ask to play here', player_world_membership_requests_path(player, world), method: :post, class: %w(btn btn-success)
+        - if signed_in? and world.membership_requests.include_user?(current_user)
+          %li= link_to 'Request sent', nil, disabled: true, class: %w(btn pull-right)
+        - elsif not can?(:play, world)
+          %li= link_to 'Ask to play here', player_world_membership_requests_path(player, world), method: :post, class: %w(btn btn-success pull-right)
+
+      %div{style: 'clear:both'}
+
+      %ul.nav.nav-pills.pull-right
+        - if can? :update, world
+          %li.pull-right
+            = link_to 'Settings', edit_player_world_path(player, world)
+
+        %li.pull-right
+          = link_to 'Players', player_world_players_path(player, world)
+
+        %li.pull-right.active
+          = link_to 'Map', player_world_path(player, world)
 
         - if can? :update, world
-          %li.invites.pull-right
-            = link_to 'Invite Friends', invite_player_world_path(player, world), class: 'btn'
-
+          %li.pull-right
+            = link_to 'Invite Friends', invite_player_world_path(player, world)
