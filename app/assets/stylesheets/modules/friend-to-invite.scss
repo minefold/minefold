@@ -1,0 +1,18 @@
+@import 'vars';
+
+.friend-to-invite {
+  padding-bottom: lines(2);
+  border-bottom: 1px solid darken(white, 5%);
+  margin-bottom: lines(2);
+  line-height: 40px;
+  @include clearfix;
+
+  .btn {
+    margin-top: lines(2);
+  }
+
+  > .avatar {
+    width: 40px;
+    height: 40px;
+  }
+}
