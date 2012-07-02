@@ -35,7 +35,7 @@ class Application.WorldMapView extends Backbone.View
     markers: []
 
   initialize: (options) ->
-    @controls = new Application.WorldMapControlView(mapView: @)
+    # @controls = new Application.WorldMapControlView(mapView: @)
 
     @options = _.extend @defaults, options.map
     @options = _.extend @options, @model.get('map_data') or {}
@@ -74,9 +74,9 @@ class Application.WorldMapView extends Backbone.View
     @map.mapTypes.set 'map', mapType
 
     # Adds the control view to the top right
-    @controls.el.index = 1
-    @map.controls[google.maps.ControlPosition.TOP_RIGHT].push @controls.el
-    @controls.render()
+    # @controls.el.index = 1
+    # @map.controls[google.maps.ControlPosition.TOP_RIGHT].push @controls.el
+    # @controls.render()
 
     spawn = @model.spawn()
     if spawn?
@@ -173,41 +173,41 @@ class Application.WorldMapView extends Backbone.View
 
     point = new google.maps.LatLng(lat, lng)
 
-  enterFullscreen: ->
-    $(document.body).addClass('is-fullscreen')
-
-    # w = @$el.outerWidth()
-    # h = @$el.outerHeight()
-    #
-    # @parent = @$el.parent()
-    #
-    # @$el.appendTo(document.body)
-    #
-    # c = new google.maps.Point(10, 10)
-    # pt = @overlay.getProjection().fromContainerPixelToLatLng(c)
-
-    # @map.setCenter(pt)
-
-    c = @map.getCenter()
-
-    google.maps.event.trigger @map, 'resize'
-
-    @map.setCenter(c)
-
-    @map.setOptions(scrollwheel: true)
-
-    $(document).on 'keydown', @shortcutExitFullscreen
-
-  exitFullscreen: =>
-    $(document.body).removeClass('is-fullscreen')
-
-    @$el.appendTo(@parent)
-    google.maps.event.trigger @map, 'resize'
-    @map.setOptions(scrollwheel: false)
-    @parent = null
-
-  shortcutExitFullscreen: (e) =>
-    if e.keyCode is 27
-      @exitFullscreen()
-      $(document).off 'keydown', @shortcutExitFullscreen
+  # enterFullscreen: ->
+  #   $(document.body).addClass('is-fullscreen')
+  #
+  #   # w = @$el.outerWidth()
+  #   # h = @$el.outerHeight()
+  #   #
+  #   # @parent = @$el.parent()
+  #   #
+  #   # @$el.appendTo(document.body)
+  #   #
+  #   # c = new google.maps.Point(10, 10)
+  #   # pt = @overlay.getProjection().fromContainerPixelToLatLng(c)
+  #
+  #   # @map.setCenter(pt)
+  #
+  #   c = @map.getCenter()
+  #
+  #   google.maps.event.trigger @map, 'resize'
+  #
+  #   @map.setCenter(c)
+  #
+  #   @map.setOptions(scrollwheel: true)
+  #
+  #   $(document).on 'keydown', @shortcutExitFullscreen
+  #
+  # exitFullscreen: =>
+  #   $(document.body).removeClass('is-fullscreen')
+  #
+  #   @$el.appendTo(@parent)
+  #   google.maps.event.trigger @map, 'resize'
+  #   @map.setOptions(scrollwheel: false)
+  #   @parent = null
+  #
+  # shortcutExitFullscreen: (e) =>
+  #   if e.keyCode is 27
+  #     @exitFullscreen()
+  #     $(document).off 'keydown', @shortcutExitFullscreen
 
