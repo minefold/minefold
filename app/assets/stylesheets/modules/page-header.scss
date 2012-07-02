@@ -1,0 +1,10 @@
+@import 'vars';
+
+.page-header {
+
+  > h2 {
+    color: lighten($black, 60%);
+    font-weight: 400;
+  }
+
+}
