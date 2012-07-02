@@ -1,143 +1,149 @@
 - track_pageview
 - title 'Upgrade to Pro'
+- layout :purchase
+
 - content_for :masthead do
   %h1
     Upgrade to Minefold
     %span.pro Pro
 
-%section
-  %ol.time-packs
-    %li{data: {months: 3, amount: 1500}}
-      %a
-        %h1.time
-          Buy for
-          %strong 3 months
-        %h2
-          %span.price= number_to_currency(15.00)
+.row.time-packs
+  %a.three-months.span4{data: {months: 3, amount: 1500}, href: '#'}
+    %p.time
+      Buy for
+      %strong 3 months
+    %p.price= number_to_currency(15.00)
 
-    %li.six-months{data: {months: 6, amount: 2500}}
-      %a
-        %h1.time
-          Buy for
-          %strong 6 months
-        %h2
-          %span.price= number_to_currency(25.00)
+  %a.six-months.span4{data: {months: 6, amount: 2500}, href: '#'}
+    %p.time
+      Buy for
+      %strong 6 months
+    %p.price= number_to_currency(25.00)
 
-    %li{data: {months: 12, amount: 4500}}
-      %a
-        %h1.time
-          Buy for
-          %strong 12 months
-        %h2
-          %span.price= number_to_currency(45.00)
+  %a.twelve-months.span4{data: {months: 12, amount: 4500}, href: '#'}
+    %p.time
+      Buy for
+      %strong 12 months
+    %p.price= number_to_currency(45.00)
 
 
+.row
+  .span6.offset3
 
-  = form_tag order_path, method: :post, id: 'new-order', style: 'display:none' do
-    = hidden_field_tag :hours
+    = form_tag order_path, method: :post, id: 'new-order', style: 'display:none', class: 'form-vertical' do
+      = hidden_field_tag :hours
 
-    .row
-      %fieldset.card
+      .errors{hidden}
 
-        .errors{hidden}
+      %p
+        You will be charged
+        %strong.dollar-amount $74.95
+        for
+        %strong.months 0
+        months of Minefold <span class="pro">Pro</span>.
 
-        %section.card-number
-          = label_tag :number, 'Card Number'
+      %p.security AES-256 Secure payment by #{link_to 'Stripe', 'https://stripe.com/help/security', target: '_blank'}.
+
+
+      .control-group.number
+        .control-label Card Number
+        .controls
           = text_field_tag :number, nil, name: nil, size: 20, autocomplete: 'off', id: 'card-number'
-          = image_tag 'cc-types.png'
+          %span.help-inline= image_tag 'cc-types.png'
 
-        %section.card-cvc
-          = label_tag :cvc, 'CVC'
-          = text_field_tag :cvc, nil, name: nil, size: 4, autocomplete: 'off', id: 'card-cvc'
-
-        %section.card-expiry
-          = label_tag :expiry_month, 'Expiry Date'
-
-          = text_field_tag :expiry_month, nil, name: nil, size: 2, id: 'card-exp-month', placeholder: 'MM'
+      .control-group.exp_month.exp_year
+        .control-label Expiry Date
+        .controls
+          = text_field_tag :expiry_month, nil, name: nil, size: 2, id: 'card-exp-month', placeholder: 'MM', class: %w(input-mini)
           %span.slash /
-          = text_field_tag :expiry_year, nil, name: nil, size: 4, id: 'card-exp-year', placeholder: 'YYYY'
+          = text_field_tag :expiry_year, nil, name: nil, size: 4, id: 'card-exp-year', placeholder: 'YYYY', class: %w(input-mini)
 
-      %aside
-        %p
-          You will be charged
-          %strong.dollar-amount $74.95
-          for
-          %strong.months 0
-          months of Minefold <span class="pro">Pro</span>.
+      .control-group.cvc
+        .control-label CVC
+        .controls
+          = text_field_tag :cvc, nil, name: nil, size: 4, autocomplete: 'off', id: 'card-cvc', class: %w(input-mini)
 
-        %p.security AES-256 Secure payment by #{link_to 'Stripe', 'https://stripe.com/help/security', target: '_blank'}.
+      .form-actions
+        = submit_tag 'Purchase Pro', class: %w(btn btn-primary)
+        = button_tag 'Reset', type: 'reset', class: %w(btn)
 
-    %fieldset.submit
-      = submit_tag 'Purchase Pro'
-      = button_tag 'Reset', type: 'reset'
+- content_for :tail do
+  :javascript
+    var aside, form, timePacks, timePacksData;
 
-  - content_for :tail do
-    :javascript
-      var aside, form, timePacks, timePacksData;
+    timePacks = $('.time-packs a');
 
-      timePacks = $('ol.time-packs li');
+    form = $('form#new-order');
 
-      form = $('form#new-order');
+    aside = form.find('aside');
 
-      aside = form.find('aside');
+    timePacksData = #{TimePack.all.to_json};
 
-      timePacksData = timePacks.find('a').click(function(e) {
-        var months, pack, price;
-        pack = $(this).parent('li');
-        timePacks.removeClass('active');
-        pack.addClass('active');
-        price = pack.data('amount') / 100;
-        months = pack.data('months');
-        aside.find('.dollar-amount').text("$" + price);
-        aside.find('.months').text(months);
-        form.find('input[name=months]').val(months);
-        return form.show();
+    timePacks.click(function(e) {
+      e.preventDefault();
+
+      var months, pack, price;
+      pack = $(this);
+      timePacks.removeClass('active');
+      pack.addClass('active');
+      price = pack.data('amount') / 100;
+      months = pack.data('months');
+      form.find('.dollar-amount').text("$" + price);
+      form.find('.months').text(months);
+      form.find('input[name=months]').val(months);
+      return form.show();
+    });
+
+    form.find('button[type=reset]').click(function() {
+      timePacks.removeClass('active');
+      return form.hide();
+    });
+
+    form.submit(function(e) {
+      var amount, card, months, pack, selectedPack, submitButton;
+      e.preventDefault();
+      submitButton = form.find('input[type=submit]').attr({
+        disabled: true
       });
-
-      form.find('button[type=reset]').click(function() {
-        timePacks.removeClass('active');
-        return form.hide();
+      card = {
+        number: form.find('#card-number').val(),
+        cvc: form.find('#card-cvc').val(),
+        exp_month: form.find('#card-exp-month').val(),
+        exp_year: form.find('#card-exp-year').val()
+      };
+      selectedPack = timePacks.filter('.active');
+      months = parseInt(selectedPack.data('months'), 10);
+      pack = _(timePacksData).find(function(pack) {
+        return pack.months === months;
       });
+      amount = pack.cents;
+      if (amount == null) {
+        return alert('Nice try buddy');
+      }
+      return Stripe.createToken(card, amount, function(status, response) {
+        var token;
+        if (status !== 200) {
+          submitButton.attr({
+            disabled: false
+          });
 
-      form.submit(function(e) {
-        var amount, card, months, pack, selectedPack, submitButton;
-        e.preventDefault();
-        submitButton = form.find('input[type=submit]').attr({
-          disabled: true
-        });
-        card = {
-          number: form.find('#card-number').val(),
-          cvc: form.find('#card-cvc').val(),
-          exp_month: form.find('#card-exp-month').val(),
-          exp_year: form.find('#card-exp-year').val()
-        };
-        selectedPack = timePacks.filter('.active');
-        months = parseInt(selectedPack.data('months'), 10);
-        pack = _(timePacksData).find(function(pack) {
-          return pack.months === months;
-        });
-        amount = pack.cents;
-        if (amount == null) {
-          return alert('Nice try buddy');
+          var errorMsg = $('<p></p>').addClass('help-block').text(response.error.message);
+
+          $('.control-group.'+response.error.param)
+            .addClass('error')
+            .find('.controls').append(errorMsg)
+
+        } else {
+          token = response.id;
+          $('<input></input>').attr({
+            type: 'hidden',
+            name: 'stripe_token'
+          }).val(token).appendTo(form);
+          $('<input></input>').attr({
+            type: 'hidden',
+            name: 'pack_id'
+          }).val(pack.id).appendTo(form);
+          return form.get(0).submit();
         }
-        return Stripe.createToken(card, amount, function(status, response) {
-          var token;
-          if (status !== 200) {
-            submitButton.attr({
-              disabled: false
-            });
-            return $('<p></p>').addClass('stripe').text(response.error.message).appendTo(form.find('.errors').empty().show());
-          } else {
-            token = response.id;
-            $('<input></input>').attr({
-              type: 'hidden',
-              name: 'stripe_token'
-            }).val(token).appendTo(form);
-            $('<input></input>').attr({
-              type: 'hidden',
-              name: 'pack_id'
-            }).val(pack.id).appendTo(form);
-            return form.get(0).submit();
-          }
-        });
       });
+    });

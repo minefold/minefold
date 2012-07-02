@@ -38,6 +38,10 @@
     a:hover {
       color: $green;
     }
+
+    &.upgrade a {
+      color: $red;
+    }
   }
 
   .divider-vertical {

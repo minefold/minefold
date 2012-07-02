@@ -1,0 +1,33 @@
+@import 'vars';
+
+// TODO Think harder about this name
+
+.time-packs {
+  > * {
+    text-align: center;
+    padding: lines(4) 0;
+    border: 2px solid darken(white, 5%);
+    @include border-radius($radius);
+    @include box-sizing(border-box);
+
+    &:hover {
+      text-decoration: none;
+      border-color: lighten($blue, 40%);
+    }
+
+    &.active {
+      border-color: $blue;
+    }
+  }
+
+  .time {
+    font-size: 28px;
+    line-height: 60px;
+    color: $black;
+  }
+
+  .price {
+    font-size: 16px;
+  }
+
+}

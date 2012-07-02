@@ -57,6 +57,9 @@
             %ul.nav
               - if signed_in?
                 %li= link_to 'Dashboard', user_root_path
+                - if current_user.pro?
+                  %li.upgrade= link_to 'Upgrade to Pro', pro_account_path
+
               %li= link_to 'Explore', worlds_path
 
               - if not signed_in?
