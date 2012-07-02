@@ -57,7 +57,7 @@ class WorldsController < ApplicationController
       if world.save
         current_user.current_world = world
         current_user.save
-        track 'created world'
+
         format.html {
           flash[:new_world] = true
           redirect_to invite_player_world_path(world.creator.minecraft_player, world)
@@ -106,8 +106,6 @@ class WorldsController < ApplicationController
     current_user.current_world = clone
     current_user.save
 
-    track 'cloned world'
-
     respond_with clone, location: player_world_path(current_user.minecraft_player, clone)
   end
 
@@ -119,8 +117,6 @@ class WorldsController < ApplicationController
     authorize! :destroy, world
 
     world.delete
-
-    track 'deleted world'
 
     redirect_to user_root_path, flash: { info: "#{world.name} was deleted" }
   end

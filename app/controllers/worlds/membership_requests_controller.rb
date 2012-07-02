@@ -37,7 +37,6 @@ class Worlds::MembershipRequestsController < ApplicationController
             .deliver
         end
       end
-      track 'created membership request'
     end
 
     respond_with world, location: player_world_path(world.creator.minecraft_player, world)
@@ -50,7 +49,6 @@ class Worlds::MembershipRequestsController < ApplicationController
     membership_request.approve(current_user)
     membership_request.destroy
 
-    track 'approved membership request'
     flash[:notice] = "Approved membership request"
 
     respond_with world, location: player_world_players_path(world.creator.minecraft_player, world)
@@ -58,10 +56,7 @@ class Worlds::MembershipRequestsController < ApplicationController
 
   def destroy
     authorize! :operate, world
-
     membership_request.destroy
-
-    track 'ignored membership request'
 
     respond_with world, location: player_world_players_path(world.creator.minecraft_player, world)
   end
