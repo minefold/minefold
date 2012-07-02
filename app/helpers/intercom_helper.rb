@@ -2,7 +2,7 @@ module IntercomHelper
 
   def intercom_settings
     settings = {
-      app_id: ENV['INTERCOM_APP_ID'],
+      app_id: '8oc9zbvo',
       custom_data: {},
       widget: {
         activator: '#Intercom'
