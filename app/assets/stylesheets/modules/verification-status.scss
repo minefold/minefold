@@ -1,0 +1,29 @@
+@import 'vars';
+
+.verification-status {
+  padding-top: lines(2);
+  padding-bottom: lines(2);
+  color: #999;
+
+  > .status {
+    background: transparent url(image-path('spinner-big.gif')) no-repeat center;
+    width: 32px;
+    height: 32px;
+    margin-bottom: lines(2);
+    padding: 10px;
+    @include border-radius($radius);
+  }
+
+}
+
+
+.verification-status.is-verified {
+  > .status {
+    background-color: $green;
+    background-image: url(image-path('icons/tick.png'));
+  }
+
+  > .notice {
+    display: none;
+  }
+}

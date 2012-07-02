@@ -1,34 +1,25 @@
 - track_pageview verify_screenshot: true
-
 - title 'Verify your Minecraft account'
-- masthead do
-  %ol.verification-steps
-    %li.step.is-done
-      Sign up
 
-    %li.step
-      Verify
+.row
+  .span6.offset3
+    .page-header
+      %h1 Mojang account verification
 
-    %li.step.is-pending
-      Play!
+    %center.verification-status.is-waiting
+      .status
+      %p.notice Waiting for Minecraft account verification
 
-%section.verification-status.is-waiting
-  .status
-  %p.notice Waiting for Minecraft account verification
+    %section.verification-instructions
+      %p We need to link your Minecraft account. If you don't have one you have to <a href="http://www.minecraft.net/">purchase an account</a>.
+      %p To verify your account, open Minecraft and choose Multiplayer > Direct Connect and paste:
 
-.noop
+      %pre
+        %code.host= current_user.verification_host
 
-%section.verification-instructions
-  %p We need to link your Minecraft account. 
-  %p If you don't have one you can <a href="http://www.minecraft.net/">purchase an account here</a>
-  %p Open Minecraft and choose Multiplayer > Direct Connect and paste:
+      = image_tag "verify.png"
 
-  %pre
-    %code.host= current_user.verification_host
-
-  = image_tag "verify.png"
-
-- js do
+- content_for :tail do
   :javascript
     var onVerify = function(data) {
       $('.verification-instructions').slideUp();
@@ -44,7 +35,6 @@
 
     $(document).ready(function() {
       var channelName = #{current_user.private_channel_key.to_json};
-      var channel = mf.pusher.subscribe(channelName);
+      var channel = app.pusher.subscribe(channelName);
       channel.bind('verified', onVerify);
     });
-
