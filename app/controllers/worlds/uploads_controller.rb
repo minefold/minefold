@@ -3,9 +3,9 @@ class Worlds::UploadsController < ApplicationController
 
   expose(:world)
 
-  def new
-    world.creator = current_user
-  end
+  # def new
+  #   world.creator = current_user
+  # end
 
   def create
     upload = WorldUpload.create s3_key: params[:key],

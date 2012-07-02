@@ -23,6 +23,7 @@ gem 'exceptional'
 gem 'intercom'
 gem 'mailgun-rails'
 gem 'jbuilder'
+gem 'fog'
 
 # TODO KILL KILL KILL
 gem 'mongoid', '3.0.0.rc'

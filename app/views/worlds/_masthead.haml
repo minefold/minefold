@@ -18,14 +18,14 @@
       %h3= world.host
 
     .span6
-      %ul.nav
+      .btn-group.pull-right
         - if not signed_in? or can? :clone, world
-          %li= link_to 'Clone', clone_player_world_path(player, world), method: :put, class: %w(btn btn-primary pull-right)
+          = link_to 'Clone', clone_player_world_path(player, world), method: :put, class: %w(btn)
 
         - if signed_in? and world.membership_requests.include_user?(current_user)
-          %li= link_to 'Request sent', nil, disabled: true, class: %w(btn pull-right)
+          = link_to 'Request sent', nil, disabled: true, class: %w(btn)
         - elsif not can?(:play, world)
-          %li= link_to 'Ask to play here', player_world_membership_requests_path(player, world), method: :post, class: %w(btn btn-success pull-right)
+          = link_to 'Ask to play here', player_world_membership_requests_path(player, world), method: :post, class: %w(btn)
 
       %div{style: 'clear:both'}
 

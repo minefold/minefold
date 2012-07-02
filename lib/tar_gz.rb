@@ -26,8 +26,10 @@ class TarGz
 
     def sh(*argv)
       cmd = Shellwords.join(argv)
-      puts cmd
-      puts `#{cmd}`
+      Rails.logger.info(cmd)
+      out = `#{cmd}`
+      Rails.logger.info(out)
+      out
     end
 
   end

@@ -22,11 +22,9 @@ Minefold::Application.routes.draw do
   #   get 'upload-policy' => 'Api#upload_policy'
   # end
 
-  post '/stripe/webhook' => 'stripe#webhook'
-  post '/pusher/auth' => 'pusher#auth'
+
 
   get '/oembed' => 'o_embed#show', :defaults => { :format => 'json' }
-  get '/facebook_channel' => 'omniauth_callbacks#channel', :as => :facebook_channel
 
   # Static Pages
   { '/about'   => :about,
@@ -100,8 +98,7 @@ Minefold::Application.routes.draw do
     collection do
       get 'new/(:funpack)' => 'worlds#new', :as => :new
 
-      resource :upload, :module => :worlds, :only => [:new, :create] do
-        get :instructions
+      resource :upload, :module => :worlds, :only => [:create] do
         get :policy
       end
     end
@@ -113,7 +110,11 @@ Minefold::Application.routes.draw do
 # ---
 
 
-  get 'channel.html' => 'facebook#channel', :as => :facebook_channel
+  post '/stripe/webhook' => 'stripe#webhook'
+
+  post '/pusher/auth' => 'pusher#auth'
+
+  get '/channel.html' => 'facebook#channel', :as => :facebook_channel
 
 
 # ---

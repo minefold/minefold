@@ -1,198 +1,197 @@
-.row
-  .span6
-
-    .control-group
-      = form.label 'Name', class: 'control-label'
-      .controls
-        .input-append
-          = form.text_field :name, tabindex: 1, autocomplete: 'off', maxlength: 16, class: %w(input-small)
-          %span.add-on> .#{current_user.slug}.minefold.com
+.control-group
+  .control-label Name
+  .controls
+    .input-append
+      = form.text_field :name, tabindex: 1, autocomplete: 'off', maxlength: 16, class: %w(input-large)
+      %span.add-on> .#{current_user.slug}.minefold.com
 
 
-
-
-
-    .control-group
-      .control-label Mode
-      .controls
-        = form.label :game_mode_0, class: 'radio' do
-          = form.radio_button :game_mode, 0, tabindex: 3
-          Survival
-        %p.help-block
-          Search for resources, crafting, gain levels, health and hunger
-
-      %section
-        = form.radio_button :game_mode, 1, tabindex: 3
-        = form.label :game_mode_1 do
-          Creative
-          .hint
-            Unlimited resources, free flying and destroy blocks instantly
-
-    %fieldset.level-type
-      %h3= form.label :level_type, 'Terrain'
-
-      %section.level-type-default
-        = form.radio_button :level_type, 'DEFAULT'
-        = form.label :level_type_default do
-          Natural
-          .hint
-            Terrain is like real life.
-
-      %section.level-type-flat
-        = form.radio_button :level_type, 'FLAT'
-        = form.label :level_type_flat do
-          Flat
-          .hint
-            Works best in Creative mode.
-
-    %fieldset.seed
-      %h3= form.label :level_type, 'Map Seed'
-      %section
-        = form.text_field :seed, tabindex: 2
-        .hint
-          Don't worry if you're not sure what this is!
-
-    .row
-      %fieldset.difficulty
-        %h3= form.label 'Difficulty'
-
-        - World::DIFFICULTIES.each_with_index do |level, i|
-          %section
-            = form.radio_button :difficulty, i, tabindex: 4
-            = form.label "difficulty_#{i}", level.to_s.titlecase
-
-      %fieldset.gameplay
-        %h3= form.label 'Gameplay'
-
-        %section.pvp
-          = form.check_box :pvp, tabindex: 5
-          = form.label :pvp, 'Player vs. Player'
-
-        %section.spawn-monsters
-          = form.check_box :spawn_monsters, tabindex: 6
-          = form.label :spawn_monsters, 'Spawn monsters'
-
-        %section.spawn-animals
-          = form.check_box :spawn_animals, tabindex: 7
-          = form.label :spawn_animals, 'Spawn animals'
-
-    - if current_user.beta?
-      = form.hidden_field :funpack, value: funpack.id
-      - if funpack.settings.any?
-        .row
-          %h2= form.label 'Advanced Settings'
-
-      - funpack.settings.each do |setting|
-        .row
-          %fieldset.difficulty
-            %h3= setting[:label]
-            .hint= setting[:hint]
-
-            - case setting[:type]
-            - when :radio
-              - setting[:options].each do |name, value|
-                %section
-                  = form.radio_button setting[:name], value
-                  = form.label "#{name}_#{value}", name.to_s
-
-
-
-
-
-
-
-
-
-
-
-  .span6
-    - if form.object.new_record?
-      - content_for :head do
-        = javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js'
-
-      %fieldset
-        %legend Upload
-
-        .control-group
-          .help-block.well
-            %ol
-              = render partial: "worlds/uploads/instructions_#{os}"
-
-          = form.label :upload, class: 'control-label' do
-            Upload your own existing world
-            %span.optional (optional)
-
-          .control
-            = form.hidden_field :world_upload_id
-            = form.file_field :path
-
-            .progress
-              .bar{style: 'width:65%'} 65%
-
-          .error
-            There was a problem with the zip file.
-            %a.retry{href: url_for} Fasdf
-          .processing
-            Processing
-            %span.filename
-            …
-          .success
-            Successfully uploaded
-            %span.filename
-
-          %p.state.processing{hidden}
-            %strong Processing world
-            This may take a few minutes depending on the size of your world.
-
-          %p.state.error{hidden}
-            %strong Error:
-            %span.message
-
-        - content_for :tail do
-          :javascript
-            $(document).ready(function () {
-              var newWorldForm = $('form#new-world'),
-                  newWorldSubmitButton = newWorldForm.find('input[type=submit]'),
-                  originalSubmitButtonName = newWorldSubmitButton.val(),
-                  worldUploadView = new Mf.WorldUploadView({
-                    el: newWorldForm.find('fieldset.upload')[0],
-                    form: newWorldForm,
-                    text: 'Choose your world archive file',
-                    prefix: #{[current_user.username, current_user.id, Time.now.strftime('%Y%m%d%H%M%S'), nil].join('-').to_json},
-                    worldUploadPolicyPath: #{policy_upload_path(format: :xml).to_json},
-                    worldUploadPath: #{upload_path.to_json}
-                  });
-
-              newWorldForm.submit(function(e) {
-                if(newWorldSubmitButton.is(':disabled')) {
-                  e.preventDefault();
-                } else {
-                  $(window).off('beforeunload');
-                }
-              });
-
-              newWorldForm.bind('upload:started', function() {
-                newWorldSubmitButton.attr('disabled', true).val('Waiting for upload to finish');
-              });
-
-              newWorldForm.bind('upload:finished', function(e, data) {
-                if(data) {
-                  newWorldForm.find('input#world_world_upload_id').val(data.id);
-                  newWorldForm.find('.level-type-default .seed').text(data.seed);
-                  newWorldForm.find('input#world_seed').val(data.seed);
-                }
-
-                newWorldSubmitButton
-                  .attr('disabled', false)
-                  .val(originalSubmitButtonName);
-              });
+- if form.object.new_record?
+  - content_for :tail do
+    = javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js'
+    :javascript
+      $(document).ready(function () {
+        var el = $('#world-upload-view'),
+            uploadView = new Application.WorldUploadView({
+              btnText: 'Choose your world archive file',
+              uploadPrefix: #{[current_user.username, current_user.id, Time.now.strftime('%Y%m%d%H%M%S'), nil].join('-').to_json},
+              uploadPolicyPath: #{policy_upload_path(format: :xml).to_json},
+              uploadPath: #{upload_path.to_json}
             });
 
-- content_for :tail do
-  :javascript
-    $('input#world_name').keyup(function() {
-      var text = $(this).val();
-      var replacement = text.toLowerCase().replace(/[^\w]+/g, '_').replace(/^_/,'').replace(/_$/,'').substring(0, #{World::SLUG_LENGTH});
-      $('input#world_slug').val(replacement);
-      $('.slug').text(replacement);
-    });
+        uploadView.setElement(el);
+        uploadView.render();
+
+        var form = el.parent('form'),
+            formSubmit = form.find('input[type=submit]'),
+            originalSubmitButtonName = formSubmit.val();
+
+        form.submit(function(e) {
+          if(formSubmit.is(':disabled')) {
+            e.preventDefault();
+          } else {
+            $(window).off('beforeunload');
+          }
+        });
+
+        uploadView.on('start', function() {
+          formSubmit
+            .attr('disabled', true)
+            .val('Waiting for upload to finish');
+        });
+
+        uploadView.on('error', function() {
+          formSubmit
+            .attr('disabled', false)
+            .val(originalSubmitButtonName);
+        })
+
+        uploadView.on('success', function(data) {
+          form.find('input#world_world_upload_id').val(data.id);
+          form.find('.level-type-default .seed').text(data.seed);
+          form.find('input#world_seed').val(data.seed);
+
+          formSubmit
+            .attr('disabled', false)
+            .val(originalSubmitButtonName);
+        });
+      });
+
+
+  .control-group#world-upload-view
+    = form.label :upload, class: 'control-label'
+
+    .controls
+      .help-block
+        - case os
+        - when :win
+          %ol
+            %li Open Explorer and navigate to <code>%APPDATA%\.minecraft\saves\</code>
+            %li You should see folders with all your Minecraft worlds here. Select the folder of the world you want to upload right mouse button click and select "Send To > Compressed Zip Folder". This will create a <code>.zip</code> file which you can upload to Minefold.
+
+        - when :mac
+          %ol
+            %li Open Finder and go to <code class="highlight">~/Library/Application Support/minecraft/saves</code>.
+            %li There should be folders with your existing Minecraft worlds. Select the folder of the world you want to upload and right mouse button click and select <span class="highlight">"Compress"</span>. This will create a file called <code class="highlight">{world name}.zip</code>.
+
+        - when :linux
+          %ol
+            %li Open up your terminal and navigate to your local world save folder: <code>cd ~/.minecraft/saves</code>
+            %li Zip up the world you want with something like <code>zip -r world.zip MyWorld</code>
+
+
+
+      = form.hidden_field :world_upload_id
+      = form.file_field :path, class: %w(btn)
+
+      %br
+      %br
+
+      .progress
+        .bar{style: 'width:0%'}
+
+      %p.help-block.error-help-block{hidden}
+        There was a problem with the zip file.
+        %span.reason
+        %br
+        %a.btn.btn-primary.btn-mini.retry{href: '#'} Retry
+
+      %p.help-block.processing-help-block{hidden}
+        Processing
+        %span.filename
+
+      %p.help-block.success-help-block{hidden}
+        Successfully uploaded
+        %span.filename
+
+
+.control-group
+  .control-label Mode
+  .controls
+    = form.label :game_mode_0, class: 'radio' do
+      = form.radio_button :game_mode, 0, tabindex: 3
+      Survival
+      %p.help-block
+        Search for resources, crafting, gain levels, health and hunger
+
+  .controls
+    = form.label :game_mode_1, class: 'radio' do
+      = form.radio_button :game_mode, 1, tabindex: 3
+      Creative
+      %p.help-block
+        Unlimited resources, free flying and destroy blocks instantly
+
+.control-group
+  .control-label Terrain
+
+  .controls
+    = form.label :level_type_default, class: 'radio' do
+      = form.radio_button :level_type, 'DEFAULT'
+      Natural
+      %p.help-block
+        Terrain is like real life.
+
+  .controls
+    = form.label :level_type_flat, class: 'radio' do
+      = form.radio_button :level_type, 'FLAT'
+      Flat
+      %p.help-block
+        Works best in Creative mode.
+
+.control-group
+  .control-label Map Seed
+  .controls
+    = form.text_field :seed, tabindex: 2
+
+.control-group
+  .control-label Difficulty
+  - World::DIFFICULTIES.each_with_index do |level, i|
+    .controls
+      = form.label "difficulty_#{i}", class: 'radio' do
+        = form.radio_button :difficulty, i, tabindex: 4
+        = level.to_s.titlecase
+
+.control-group
+  .control-label Gameplay
+
+  .controls
+    = form.label :pvp, class: 'checkbox' do
+      = form.check_box :pvp, tabindex: 5
+      Player vs. Player
+
+  .controls
+    = form.label :spawn_monsters, class: 'checkbox' do
+      = form.check_box :spawn_monsters, tabindex: 6
+      Spawn Monsters
+
+  .controls
+    = form.label :spawn_animals, class: 'checkbox' do
+      = form.check_box :spawn_animals, tabindex: 7
+      Spawn animals
+
+- if current_user.beta?
+  = form.hidden_field :funpack, value: funpack.id
+  - if funpack.settings.any?
+    %fieldset
+      %legend Advanced Settings
+
+      - funpack.settings.each do |setting|
+        .control-group
+          .control-label= setting[:label]
+          - case setting[:type]
+          - when :radio
+            - setting[:options].each do |name, value|
+              .controls
+                = form.label "#{name}_#{value}", class: 'radio' do
+                  = form.radio_button setting[:name], value
+                  = name.to_s
+
+
+/ - content_for :tail do
+/   :javascript
+/     $('input#world_name').keyup(function() {
+/       var text = $(this).val();
+/       var replacement = text.toLowerCase().replace(/[^\w]+/g, '_').replace(/^_/,'').replace(/_$/,'').substring(0, #{World::SLUG_LENGTH});
+/       $('input#world_slug').val(replacement);
+/       $('.slug').text(replacement);
+/     });

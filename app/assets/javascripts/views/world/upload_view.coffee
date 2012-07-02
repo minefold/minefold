@@ -2,17 +2,17 @@
 
 class Application.WorldUploadView extends Backbone.View
   @maxFileSize: 1 * 1024 * 1024 * 1024 # 1 Gb
+
   events:
-    '.error a.retry': 'retry'
+    'a.retry': 'retry'
 
-  initialize: (options) ->
-    @form = options.form
-    @worldUploadPath = options.worldUploadPath
+  initialize: ({@btnText, @uploadPath, @uploadPrefix, @uploadPolicyPath}) ->
 
-    $(@el).find('input[type=file]').s3upload
-      text: options.text
-      prefix: options.prefix
-      signature_url: options.worldUploadPolicyPath
+  render: ->
+    @$('input[type=file]').s3upload
+      text: @btnText
+      prefix: @uploadPrefix
+      signature_url: @uploadPolicyPath
       submit_on_all_complete: false
       file_types: [['Archives', '*.zip']]
 
@@ -24,62 +24,69 @@ class Application.WorldUploadView extends Backbone.View
       onrollover: @rollOver
       onrollout: @rollOut
 
-    @button = @$('input#world_path')
-    @progress = @$('#progress')
-
   rollOver: =>
-    @button.addClass 'hover'
+    @$('input[type=file]').addClass 'hover'
 
   rollOut: =>
-    @button.removeClass 'hover'
+    @$('input[type=file]').removeClass 'hover'
 
   select: (info, swf) =>
     if parseInt(info.size) < @constructor.maxFileSize
-      @progress.find('.filename').text(info.name)
       swf.upload()
       false
 
   unloadMsg = -> 'Your upload will be lost.'
 
-  start: =>
-    @button.hide()
+  start: (a) =>
+    @$('.help-block').hide()
+    @$('filename').text(a.name)
+    @$('input[type=file]').hide()
+    # @$('.progress').show()
+
+    # $('#s3upload_world_path object').hide()
 
     $(window).on 'beforeunload', unloadMsg
-
-    @progress.attr('class', 'started')
-    @form.trigger 'upload:started'
+    @trigger 'start'
 
   progress: (progress, info) =>
     percent = "#{Math.floor(progress * 100)}%"
-    @progress.find('.bar').css(width: percent).text(percent)
+    @$('.progress .bar').css(width: percent)
     false
 
   error: (msg) =>
-    @progress.find('.error').text(msg)
+    @$('.help-block').hide()
+    @$('.help-block-error .reason').text(msg)
+    @$('.help-block-error').show()
+    @$('.progress').addClass('progress-danger')
+
+    $('#s3upload_world_path').show()
 
     $(window).off 'beforeunload', unloadMsg
 
-    @progress.attr 'class', 'failed'
-    @form.trigger 'upload:finished'
+    @trigger 'error'
 
-  retry: =>
-    @progress.attr('class', '')
-    @buttn.show()
+  retry: (e) =>
+    e.preventDefault()
+    @$('.progress').removeClass('progress-danger')
+    @$('input[type=file]').show()
 
   complete: (info) =>
-    @progress.attr 'class', 'uploaded'
+    @$('.help-block').hide()
+    @$('.processing-help-block').show()
 
     $.ajax
       type: 'POST'
-      url: @worldUploadPath
+      url: @uploadPath
       data: info
       dataType: 'json'
       success: (data) =>
         channel_name = 'WorldUpload-' + data.id
-        channel = Mf.pusher.subscribe(channel_name)
+        channel = app.pusher.subscribe(channel_name)
 
         channel.bind 'success', (data) =>
-          @progress.attr 'class', 'succeeded'
-          @form.trigger 'upload:finished', data
+          @$('.help-block').hide()
+          @$('.progress').addClass('progress-success')
+          # @$('.success-help-block').show()
+          @trigger 'success', data
 
         channel.bind 'error', @error
