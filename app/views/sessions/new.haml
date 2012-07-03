@@ -11,9 +11,6 @@
     %hr
 
     = form_for :user, as: :user, url: session_path(:user), class: %w(form-horizontal) do |f|
-      - if flash[:alert]
-        %section.errors
-          = flash[:alert]
 
       %fieldset
         .control-group

@@ -1,9 +1,10 @@
-.control-group
+.control-group{class: error_class(form, :name)}
   .control-label Name
   .controls
     .input-append
       = form.text_field :name, tabindex: 1, autocomplete: 'off', maxlength: 16, class: %w(input-large)
       %span.add-on> .#{current_user.slug}.minefold.com
+    = error_message form, :name
 
 
 - if form.object.new_record?
@@ -142,6 +143,7 @@
   .control-label Map Seed
   .controls
     = form.text_field :seed, tabindex: 2
+    = error_message form, :seed
 
 .control-group
   .control-label Difficulty

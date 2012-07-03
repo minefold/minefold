@@ -45,16 +45,3 @@
         If you have any problems or questions that are not covered here, please hit us up at
         %a#Intercom(href='javascript:') Support
         and we'll get back to you straight away.
-
-      - if Rails.env.production?
-        - content_for :intercom do
-          :plain
-            intercomSettings.widget = {
-              activator: '#Intercom',
-              activator_html: function (obj) {
-                return obj.activator_html_functions.unwrapped_with_span();
-              }
-            };
-
-
-

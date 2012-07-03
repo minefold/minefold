@@ -8,15 +8,13 @@ module IntercomHelper
         activator: '#Intercom'
       }
     }
-
     if signed_in?
       settings.merge!(
         email: current_user.email,
-        created_at: current_user.created_at.to_i
+        created_at: current_user.created_at.to_i,
+        user_hash: Digest::SHA1.hexdigest('kczzht6c' + current_user.email)
       )
-      settings[:custom_data].merge!(
-        "profile url" => user_url(current_user)
-      )
+      settings[:custom_data].merge! current_user.tracking_data
     end
 
     settings

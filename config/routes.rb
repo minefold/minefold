@@ -42,8 +42,6 @@ Minefold::Application.routes.draw do
   # Authentication
   devise_scope :user do
 
-    resources :users
-
     authenticated do
       root :to => 'users#dashboard', :as => :user_root
     end

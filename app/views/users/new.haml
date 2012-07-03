@@ -12,23 +12,26 @@
 
     = form_for user do |f|
       %fieldset
-        .control-group
+        .control-group{class: error_class(f, :email)}
           = f.label :email, class: 'control-label'
           .control
             = f.email_field :email, class: %w(span4)
+            = error_message(f, :email)
 
         .row
           .span2
-            .control-group
+            .control-group{class: error_class(f, :password)}
               = f.label :password, class: 'control-label'
               .control
                 = f.password_field :password, class: %w(span2)
+                = error_message(f, :password)
 
           .span2
-            .control-group
+            .control-group{class: error_class(f, :password_confirmation)}
               = f.label :password_confirmation, class: 'control-label'
               .control
                 = f.password_field :password_confirmation, class: %w(span2)
+                = error_message(f, :password_confirmation)
 
         .form-actions
           = f.submit 'Sign up', class: %w(btn btn-primary)
