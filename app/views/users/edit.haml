@@ -78,4 +78,4 @@
           %h4= current_user.minecraft_player.username
           %p
             Mojang.
-            = link_to 'Not your username?', unlink_player_path, method: :put, confirm: 'You will need to verify your new Minecraft account'
+            = link_to 'Not your username?', unlink_player_path, method: :put, data: {confirm: 'You will need to verify your new Minecraft account'}

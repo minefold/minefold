@@ -46,6 +46,9 @@ group :test do
   gem 'ruby-prof'
   gem 'sqlite3'
   gem 'timecop'
+
+  gem 'fabrication'
+  gem 'faker'
 end
 
 group :production do

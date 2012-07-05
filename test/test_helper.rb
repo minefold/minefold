@@ -4,7 +4,7 @@ require 'rails/test_help'
 require 'turn/autorun'
 
 Turn.config.ansi = true
-Turn.config.trace = 3
+Turn.config.trace = 1
 
 OmniAuth.config.test_mode = true
 
@@ -12,9 +12,28 @@ class ActiveSupport::TestCase
   include RR::Adapters::TestUnit
   fixtures :all
 
-  # Add more helper methods to be used by all tests here...
+  def self.pending(name, msg='not implemented')
+    test(name) { skip(msg) }
+  end
+
 end
 
 class ActionController::TestCase
   include Devise::TestHelpers
+
+  def self.setup_devise_mapping(scope)
+    setup do
+      @request.env["devise.mapping"] = Devise.mappings[scope]
+    end
+  end
+
+  def assert_unauthenticated_response
+    assert_response :redirect
+    assert_redirected_to new_user_session_path
+  end
+
+  def assert_unauthorized_response
+    assert_response :unauthorized
+  end
+
 end

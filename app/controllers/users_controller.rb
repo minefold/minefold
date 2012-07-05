@@ -22,9 +22,6 @@ class UsersController < Devise::RegistrationsController
 
 # ---
 
-  def show
-  end
-
   def new
   end
 
@@ -59,10 +56,6 @@ class UsersController < Devise::RegistrationsController
   end
 
   def edit
-  end
-
-  def friends
-    respond_with current_user.friend_users
   end
 
   def update

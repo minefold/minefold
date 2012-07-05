@@ -1,5 +1,3 @@
-# TODO: move to resque
-
 module Mixpanel
   def self.track event, properties
     params = {"event" => event, "properties" => properties.merge(token: ENV['MIXPANEL_TOKEN'])}

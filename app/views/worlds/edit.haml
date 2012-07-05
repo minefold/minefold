@@ -16,4 +16,4 @@
 
       - if can? :destroy, world
         .pull-right
-          = button_to "Delete this world", player_world_path(player, world), method: 'delete', form_class: 'delete', confirm: 'Are you sure you want to delete this world?', class: %w(btn btn-danger)
+          = button_to "Delete this world", player_world_path(player, world), method: 'delete', form_class: 'delete', data: {confirm: 'Are you sure you want to delete this world?'}, class: %w(btn btn-danger)

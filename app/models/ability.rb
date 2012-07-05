@@ -8,9 +8,9 @@ class Ability
     return false unless user
 
     # # Admin abilities
-    # if user.admin?
-    #   can [:update, :destroy, :operate, :play], World
-    # end
+    if user.admin?
+      can [:update, :destroy, :operate, :play], World
+    end
 
     # User abilities
     can [:create], World
