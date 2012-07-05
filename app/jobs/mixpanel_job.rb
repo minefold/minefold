@@ -4,8 +4,12 @@ class MixpanelJob < Job
     @event, @options = event, options
   end
 
+  def perform?
+    Rails.env.production?
+  end
+
   def perform!
-    Mixpanel.track(event, options)
+    Mixpanel.track(@event, @options)
   end
 
 end

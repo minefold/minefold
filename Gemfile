@@ -24,6 +24,7 @@ gem 'intercom'
 gem 'mailgun-rails'
 gem 'jbuilder'
 gem 'fog'
+gem 'rest-client'
 
 # TODO KILL KILL KILL
 gem 'mongoid', '3.0.0.rc'

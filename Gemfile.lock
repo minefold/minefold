@@ -299,6 +299,7 @@ DEPENDENCIES
   resque
   resque-exceptional
   resque_mailer
+  rest-client
   rr
   ruby-prof
   rubyzip

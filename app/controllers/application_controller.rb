@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   # extend StatsD::Instrument
-  include Mixpanel
 
   protect_from_forgery
 
@@ -31,6 +30,10 @@ class ApplicationController < ActionController::Base
   # end
 
 private
+
+  def track(event_name, properties={})
+    Resque.enqueue(MixpanelJob, event_name, properties)
+  end
 
   def set_mpid
     if not cookies[:mpid]
