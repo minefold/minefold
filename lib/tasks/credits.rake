@@ -3,7 +3,7 @@ namespace :users do
     desc "Reset users credits back to monthly free allowance"
     task :reset => :environment do
       monthly_credits = User::FREE_CREDITS
-      users_to_reset = User.where(:credits.lt => monthly_credits).select{|u| Time.now > (u.last_credit_reset || u.created_at) + 1.month }
+      users_to_reset = User.where(:credits.lt => monthly_credits).select{|u| Time.now >= (u.last_credit_reset || u.created_at) + 1.month }
 
       users_to_reset.each do |user|
         reset_due = (user.last_credit_reset || user.created_at) + 1.month
