@@ -51,6 +51,23 @@ Included plugins:
         #     group: :admin
         #   }]
       ),
+      Funpack.new(
+        id: 'minecraft-tekkit',
+        name: 'Minecraft Tekkit (Beta)',
+        description:
+%Q{
+Hi beta tester! This pack is **Bukkit enabled**
+
+Tekkit is the Multiplayer version of the amazing Technic Mod Pack developed and maintained by the amazing Technic Pack team.
+
+Tekkit's mods introduce an astounding amount of options to automate and industrialize your worlds and even more options to power it.
+
+For more info see [the Tekkit Wiki](http://thetekkit.wikia.com/wiki/The_Tekkit_Wiki)
+
+**Please report any issues you have!**
+},
+        settings: []
+      ),
 
     ]
   end
