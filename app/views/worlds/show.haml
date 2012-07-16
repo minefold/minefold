@@ -9,27 +9,29 @@
 #fb-root
 
 - if not world.map?
-  .welcome
-    %section
-      %p Awesomesauce! You can connect to this server at
-      %span.host= world.host
+  .hero-unit.hero-unit-welcome-world
+    %h2
+      Awesomesauce! Your server's address is
 
-      %p.gentle-nudge
-        Your map will appear once you start playing. Invite your friends to play too!
+    %pre
+      %code.host= world.host
 
-      .share
-        %a{href: 'https://twitter.com/share', class: 'twitter-share-button', data: {url: player_world_url(world.creator.minecraft_player, world), related: 'minefold', lang: 'en', size: 'large', count: 'none', text: "Join my new Minecraft server at #{world.host}", hashtags: 'minefold:Keep up to date with the latest changes to Minefold'}} Tweet
+    %p.gentle-nudge
+      (the map will start rendering after you've started playing)
 
-        %a.facebook-post-button{onClick: 'postToFeed(); return false;' } Post to Facebook
+    .share
+      %a{href: 'https://twitter.com/share', class: 'twitter-share-button', data: {url: player_world_url(world.creator.minecraft_player, world), related: 'minefold', lang: 'en', size: 'large', count: 'none', text: "Join my new Minecraft server", hashtags: 'minefold:Keep up to date with the latest changes to Minefold'}} Tweet
 
-      - content_for :facebook do
-        :plain
-          !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+      :javascript
+        !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
 
+    %a.facebook-post-button Share on Facebook
 
-          function postToFeed() {
+    - content_for :tail do
+      :javascript
+        app.on('fb:connected', function() {
+          $('a.facebook-post-button').click(function() {
 
-            // calling the API ...
             var obj = {
               method: 'feed',
               link: #{player_world_url(world.creator.minecraft_player, world).to_json},
@@ -41,7 +43,9 @@
             };
 
             FB.ui(obj, function() {});
-          }
+
+          });
+        });
 
 - else
   .row

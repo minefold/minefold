@@ -1,15 +1,10 @@
 - title "#{world.name} invites"
 
 .page-header
-  %h1
-    %span Invite Friends
-    - if flash[:new_world]
-      = link_to 'Done adding friends', player_world_path(player, world), class: 'skip btn'
+  .pull-right
+    = link_to 'Finish inviting friends', player_world_path(player, world), class: %w(btn btn-primary)
 
-  %p.back
-    = link_to player_world_path(player, world) do
-      ← back to #{world.name}
-
+  %h1 Invite Friends
 
 %section#invite_friends
   %p Minecraft is better with friends! Invite some to your new world.
@@ -26,7 +21,7 @@
 
   - content_for :tail do
     :javascript
-      app.on('fb:init', function() {
+      app.on('fb:connected', function() {
         var friends = #{friends.map{ |u|
                           { id: u.id,
                             username: u.username,

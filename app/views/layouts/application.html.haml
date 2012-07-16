@@ -79,11 +79,10 @@
                     %li= link_to 'Sign out', destroy_user_session_path, method: :delete
 
     .container
-      - flash.each do |name, msg|
+      - flash.select {|_,msg| msg.is_a?(String) }.each do |name, msg|
         %div.alert.alert-block{class: "alert-#{name}"}
           %a.close{data: {dismiss: 'alert'}} &#215;
-          - if msg.is_a?(String)
-            %div{:id => "flash_#{name}"}= msg
+          %div{:id => "flash_#{name}"}= msg
 
     .container
       #app= yield
@@ -143,6 +142,15 @@
         });
 
         app.trigger('fb:init');
+
+        FB.Event.subscribe('auth.authResponseChange', function(response) {
+          if(response.status === 'connected') {
+            app.trigger('fb:connected');
+          } else if (response.status === 'not_authorized') {
+            app.trigger('fb:not_authorized');
+          }
+        });
+
       }
 
     = yield :tail

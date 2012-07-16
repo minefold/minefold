@@ -3,7 +3,7 @@
 .hero-unit {
   @include border-radius($radius * 2);
   border: 2px solid darken(white, 10%);
-  background: transparent;
+  background-color: transparent;
 
   p {
     font-weight: normal;
@@ -25,4 +25,9 @@
     font-size: 12px;
   }
 
+}
+
+.hero-unit.hero-unit-welcome-world {
+  text-align: center;
+  background-image: url(image-path('terrain.png'));
 }

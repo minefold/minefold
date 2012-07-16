@@ -10,7 +10,7 @@
 
 
   .span6
-    = form_for user, url: update_user_path, method: :put, class: %w(form-horizontal) do |f|
+    = form_for current_user, url: update_user_path, method: :put, class: %w(form-horizontal) do |f|
 
       .control-group
         = f.label :email, class: 'control-label'
@@ -56,12 +56,13 @@
               Minefold releases new features
 
         %fieldset
-          %legend Billing
+          %legend Time
+          - if current_user.pro?
+            %p All the time!
+            %p Your plan expires #{time_ago_in_words current_user.plan_expires_at} from now (#{I18n.l current_user.plan_expires_at.to_date, format: :long}).
 
-          - if current_user.beta?
-            %p Enjoy your Beta account!
           - else
-            %p Expires #{time_ago_in_words current_user.plan_expires_at} from now (#{I18n.l current_user.plan_expires_at.to_date, format: :long}).
+
 
 
       .form-actions
@@ -70,7 +71,7 @@
   .span4
     %h2 Linked Accounts
 
-    - if user.minecraft_player
+    - if current_user.minecraft_player
       .row.mojang
         .span1
           = player_avatar_tag current_user.minecraft_player, size: :medium
