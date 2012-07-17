@@ -76,7 +76,11 @@ class WorldsController < ApplicationController
         world.inc :pageviews, 1
       }
       format.zip {
-        s3_file = "#{ENV['WORLD_DOWNLOAD_BUCKET']}/#{world.world_data_file}"
+        s3_file = if world.world_data_file =~ /\.gz/
+          "#{ENV['WORLD_DOWNLOAD_BUCKET']}/#{world.world_data_file}"
+        else
+          "minefold-#{Rails.env}/worlds/#{world.world_data_file}"
+        end
         filename = "#{world.slug}-#{world.creator.slug}.zip"
         redirect_to "#{ENV['NODE_DOWNLOAD']}/#{s3_file}?name=#{filename}"
       }

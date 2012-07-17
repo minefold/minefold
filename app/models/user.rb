@@ -386,6 +386,7 @@ class User
       'max world players' => world_player_counts.max,
       'member worlds' => worlds.count,
       'pro?' => pro?,
+      'profile' => "https://minefold.com/#{username}",
       'username' => username,
       'verify host' => verification_host,
       'verified?' => verified?,

@@ -90,7 +90,7 @@ class CleanWorldBackupsJob < Job
 
     all_files += files.to_a
 
-    while truncated && all_files.size < 100000
+    while truncated && all_files.size < 200000
       puts "#{all_files.size} files"
       set = dir.files.all( :marker => files.last.key )
       all_files += set.to_a
