@@ -32,10 +32,8 @@ production:
       username: minefold
       password: Aru06kAy8xE2
       hosts:
-        - - sun.member0.mongohq.com
-          - 10018
-        - sun.member1.mongohq.com
-          - 10018
+        - sun.member0.mongohq.com:10018
+        - sun.member1.mongohq.com:10018
       options:
         skip_version_check: true
         identity_map_enabled: true
