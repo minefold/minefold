@@ -1,8 +1,8 @@
 @import 'vars';
 
 // TODO HACK For Bootstrap and Google Maps
-img[src^="http://maps.gstatic.com"] {
-    max-width: none;
+img[src^="http://maps.gstatic.com"], img[src^="https://maps.gstatic.com"] {
+  max-width: none;
 }
 
 .map, .world-map-view {
