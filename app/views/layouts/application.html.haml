@@ -74,8 +74,9 @@
                   %a.dropdown-toggle{href: '#user-account-dropdown', data: {toggle: 'dropdown'}}
                     = current_user.username
                   %ul.dropdown-menu
-                    %li= link_to 'Profile', player_path(current_user.minecraft_player)
-                    %li= link_to 'Settings', edit_user_path(current_user)
+                    - if current_user.minecraft_player
+                      %li= link_to 'Profile', player_path(current_user.minecraft_player)
+                    %li= link_to 'Settings', edit_user_path
                     %li= link_to 'Sign out', destroy_user_session_path, method: :delete
 
     .container
