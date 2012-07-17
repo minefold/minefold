@@ -1,7 +1,5 @@
-@import 'bourbon';
 @import 'vars';
 
-//#message_headers { display: none !important; }
 
 #outlook a {
   padding: 0;
@@ -97,7 +95,7 @@ table td, table tr {
   }
 
   .btn {
-    padding: ($line * 2) $gutter;
+    padding: ($line * 2) $gw-gutter;
     display: block;
 
     color: white;
@@ -123,7 +121,7 @@ table td, table tr {
     border: 2px solid darken(rgba($blue, 0.2), 20%);
     border-bottom: none;
 
-    padding: $line ($gutter/2);
+    padding: $line ($gw-gutter/2);
 
     strong {
       color: darken($blue, 20%);
@@ -150,7 +148,7 @@ table td, table tr {
       border: 0;
       padding: 0;
 
-            padding: $line ($gutter/2);
+            padding: $line ($gw-gutter/2);
 
       height: 40px; line-height: 40px;
       width: 100%;
@@ -161,7 +159,7 @@ table td, table tr {
     border: 2px solid #CCC;
     border-top: none;
     border-left: none;
-    padding: $line ($gutter / 2);
+    padding: $line ($gw-gutter / 2);
 
     a {
       display: block;
