@@ -5,7 +5,7 @@ module IntercomHelper
       app_id: '8oc9zbvo',
       custom_data: {},
       widget: {
-        activator: '#Intercom'
+        label: 'Support'
       }
     }
     if signed_in?
@@ -21,7 +21,7 @@ module IntercomHelper
   end
 
   def intercom_script_tag
-    js = "var intercomSettings = #{intercom_settings.to_json};".html_safe
+    js = "intercomSettings = #{intercom_settings.to_json};".html_safe
     content_tag :script, js, id: 'IntercomSettingsScriptTag'
   end
 

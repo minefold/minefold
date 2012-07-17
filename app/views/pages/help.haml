@@ -43,5 +43,8 @@
     -if signed_in?
       .well
         If you have any problems or questions that are not covered here, please hit us up at
-        %a#Intercom(href='javascript:') Support
+        %a#Intercom(href='#') Support
         and we'll get back to you straight away.
+
+      - content_for :tail do
+        = intercom_script_tag
