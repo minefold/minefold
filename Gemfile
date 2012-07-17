@@ -63,10 +63,11 @@ group :worker do
 end
 
 group :assets do
-  gem 'sass-rails'
-  gem 'bourbon'
   gem 'coffee-rails'
   gem 'jquery-rails'
   gem 'backbone-rails'
   gem 'uglifier'
 end
+
+gem 'sass-rails'
+gem 'bourbon'
