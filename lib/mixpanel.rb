@@ -8,7 +8,7 @@ module Mixpanel
       )
     }
 
-    payload = ActiveSupport::Base64.strict_encode64(params.to_json)
+    payload = Base64.strict_encode64(params.to_json)
 
     RestClient.post('http://api.mixpanel.com/track', data: payload)
   end
