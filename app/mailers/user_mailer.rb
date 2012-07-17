@@ -84,7 +84,7 @@ class UserMailer < ActionMailer::Base
     @comment = @world.comments.find(comment_id)
 
     mail to: @user.email,
-         subject: "[#{@world.name_with_creator}] #{@comment.text.truncate(60)}"
+         subject: "#{@comment.author.username} commented on #{@world.name_with_creator}"
   end
 
 
