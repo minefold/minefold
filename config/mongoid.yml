@@ -25,10 +25,24 @@ staging:
         consistency: :eventual
         identity_map_enabled: true
 
+
+<%
+  if ENV['MONGO_URI']
+    uri = Mongo::URIParser.new(ENV['MONGO_URI'])
+    nodes = uri.nodes
+    auth = uri.auths.first
+%>
 production:
   sessions:
     default:
-      uri: <%= ENV['MONGO_URI'] %>
+      database: <%= auth['db_name'] %>
+      username: <%= auth['username'] %>
+      password: <%= auth['password'] %>
+      hosts:
+      <% nodes.each do |node| %>
+        - <%= node[0] %>:<%= node[1] %>
+      <% end %>
       options:
         consistency: :eventual
         identity_map_enabled: true
+<% end %>
