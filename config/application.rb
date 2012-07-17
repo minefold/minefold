@@ -28,7 +28,6 @@ module Minefold
     # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
     config.mongoid.observers =
        :world_observer,
-       :campaign_observer,
        :avatar_observer,
        :user_observer
 
