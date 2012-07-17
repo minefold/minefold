@@ -25,24 +25,18 @@ staging:
         consistency: :eventual
         identity_map_enabled: true
 
-
-<%
-  if ENV['MONGO_URI']
-    uri = Mongo::URIParser.new(ENV['MONGO_URI'])
-    nodes = uri.nodes
-    auth = uri.auths.first
-%>
 production:
   sessions:
     default:
-      database: <%= auth['db_name'] %>
-      username: <%= auth['username'] %>
-      password: <%= auth['password'] %>
+      database: production
+      username: minefold
+      password: Aru06kAy8xE2
       hosts:
-      <% nodes.each do |node| %>
-        - <%= node[0] %>:<%= node[1] %>
-      <% end %>
+        - - sun.member0.mongohq.com
+          - 10018
+        - sun.member1.mongohq.com
+          - 10018
       options:
-        consistency: :eventual
+        skip_version_check: true
         identity_map_enabled: true
-<% end %>
+        safe: true
