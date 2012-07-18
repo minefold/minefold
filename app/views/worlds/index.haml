@@ -5,10 +5,11 @@
 
 %ul.thumbnails
   - @worlds.per(16).each do |world|
-    %li.span3.thumbnail
-      %a{href: player_world_path(world.creator.minecraft_player, world)}
-        = image_tag world.cover_photo.small.url, width: 260, height: 195, alt: world.fullname
+    - if world.creator.minecraft_player
+      %li.span3.thumbnail
+        %a{href: player_world_path(world.creator.minecraft_player, world)}
+          = image_tag world.cover_photo.small.url, width: 260, height: 195, alt: world.fullname
 
-      .caption
-        %h5= world.name
-        by #{link_to world.creator.username, player_path(world.creator.minecraft_player)}
+        .caption
+          %h5= world.name
+          by #{link_to world.creator.username, player_path(world.creator.minecraft_player)}
