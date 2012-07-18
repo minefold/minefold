@@ -36,7 +36,7 @@
 
         %hr
 
-      - if world.membership_requests.any?
+      - if can?(:operate, world) and world.membership_requests.any?
         %h3 Pending Membership Requests
         - world.membership_requests.each do |r|
           - if player = r.player
