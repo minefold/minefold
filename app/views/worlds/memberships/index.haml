@@ -8,6 +8,16 @@
 
 .row
   .span6
+    - if can?(:operate, world)
+      = form_tag player_world_players_path, method: :post, id: 'add-member', class: %w(form-inline well) do
+        = hidden_field_tag :id
+        = text_field_tag :username, (@new_player.username if @new_player), placeholder: "Minecraft username", autocomplete: 'off', maxlength: 16
+        = error_messages_for @new_player, :username if @new_player
+
+        = submit_tag 'Add friend', class: %w(btn btn-primary)
+
+      %hr
+
     %ul.unstyled
       - world.players.sort_by{|p| (world.player_opped?(p) ? "0" : "1") + p.username.downcase }.each do |p|
         %li
@@ -25,27 +35,17 @@
             - if can?(:operate, world) and p != world.creator.minecraft_player
               = link_to 'Remove', player_world_player_path(world.creator.minecraft_player, world, p), method: :delete
 
+  - if can?(:operate, world) and world.membership_requests.any?
     .span6
-      - if can?(:operate, world)
-        = form_tag player_world_players_path, method: :post, id: 'add-member', class: %w(form-inline well) do
-          = hidden_field_tag :id
-          = text_field_tag :username, (@new_player.username if @new_player), placeholder: "Minecraft username", autocomplete: 'off', maxlength: 16
-          = error_messages_for @new_player, :username if @new_player
+      %h3 Pending Membership Requests
+      - world.membership_requests.each do |r|
+        - if player = r.player
+          .friend-to-invite
+            = link_to 'Ignore', player_world_membership_request_path(world.creator.minecraft_player, world, r), method: :delete, class: %w(btn pull-right)
 
-          = submit_tag 'Add friend', class: %w(btn btn-primary)
+            = button_to 'Approve', approve_player_world_membership_request_path(world.creator.minecraft_player, world, r), method: :put, class: %w(btn btn-success pull-right)
 
-        %hr
-
-      - if can?(:operate, world) and world.membership_requests.any?
-        %h3 Pending Membership Requests
-        - world.membership_requests.each do |r|
-          - if player = r.player
-            .friend-to-invite
-              = link_to 'Ignore', player_world_membership_request_path(world.creator.minecraft_player, world, r), method: :delete, class: %w(btn pull-right)
-
-              = button_to 'Approve', approve_player_world_membership_request_path(world.creator.minecraft_player, world, r), method: :put, class: %w(btn btn-success pull-right)
-
-              .pull-left
-                = link_to player_avatar_tag(player, size: :medium), player_path(player)
-              .pull-left
-                = player.username
+            .pull-left
+              = link_to player_avatar_tag(player, size: :medium), player_path(player)
+            .pull-left
+              = player.username
