@@ -25,7 +25,6 @@
             - if can?(:operate, world) and p != world.creator.minecraft_player
               = link_to 'Remove', player_world_player_path(world.creator.minecraft_player, world, p), method: :delete
 
-  - if can?(:operate, world) and world.membership_requests.any?
     .span6
       - if can?(:operate, world)
         = form_tag player_world_players_path, method: :post, id: 'add-member', class: %w(form-inline well) do
@@ -37,15 +36,16 @@
 
         %hr
 
-      %h3 Pending Membership Requests
-      - world.membership_requests.each do |r|
-        - if player = r.player
-          .friend-to-invite
-            = link_to 'Ignore', player_world_membership_request_path(world.creator.minecraft_player, world, r), method: :delete, class: %w(btn pull-right)
+      - if world.membership_requests.any?
+        %h3 Pending Membership Requests
+        - world.membership_requests.each do |r|
+          - if player = r.player
+            .friend-to-invite
+              = link_to 'Ignore', player_world_membership_request_path(world.creator.minecraft_player, world, r), method: :delete, class: %w(btn pull-right)
 
-            = button_to 'Approve', approve_player_world_membership_request_path(world.creator.minecraft_player, world, r), method: :put, class: %w(btn btn-success pull-right)
+              = button_to 'Approve', approve_player_world_membership_request_path(world.creator.minecraft_player, world, r), method: :put, class: %w(btn btn-success pull-right)
 
-            .pull-left
-              = link_to player_avatar_tag(player, size: :medium), player_path(player)
-            .pull-left
-              = player.username
+              .pull-left
+                = link_to player_avatar_tag(player, size: :medium), player_path(player)
+              .pull-left
+                = player.username
