@@ -59,11 +59,11 @@ class UsersController < Devise::RegistrationsController
   end
 
   def update
-    authorize! :update, user
+    authorize! :update, current_user
 
-    user.update_attributes(params[:user])
+    current_user.update_attributes(params[:user])
 
-    if user.save
+    if current_user.save
       flash[:success] = 'Your settings were changed'
     end
 
