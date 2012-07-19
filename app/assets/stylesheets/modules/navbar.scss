@@ -23,7 +23,7 @@
     margin-right: 10px;
     @include inline-block;
     float: left;
-    background: $red asset-data-url('logo-small.png') no-repeat 50% 50%;
+    background: lighten($red, 20%) asset-data-url('logo-small.png') no-repeat 50% 50%;
     @include border-radius($radius);
   }
 
