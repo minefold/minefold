@@ -9,12 +9,11 @@
 .row
   .span6
     - if can?(:operate, world)
-      = form_tag player_world_players_path, method: :post, id: 'add-member', class: %w(form-inline well) do
-        = hidden_field_tag :id
-        = text_field_tag :username, (@new_player.username if @new_player), placeholder: "Minecraft username", autocomplete: 'off', maxlength: 16
-        = error_messages_for @new_player, :username if @new_player
+      = form_tag player_world_players_path, method: :post, class: %w(form-inline well) do
 
-        = submit_tag 'Add friend', class: %w(btn btn-primary)
+        = text_field_tag :username, nil, placeholder: "Minecraft username", autocomplete: 'off', maxlength: 16
+
+        = submit_tag 'Add to whitelist', class: %w(btn btn-primary)
 
       %hr
 

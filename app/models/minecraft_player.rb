@@ -48,7 +48,7 @@ class MinecraftPlayer
 
 
   def self.sanitize_username(str)
-    str.strip.downcase
+    str.gsub(/[^\w]/, '')[0..16].downcase
   end
 
   def self.blacklist
@@ -73,8 +73,10 @@ class MinecraftPlayer
   field :slug, type: String
 
   def username=(str)
-    super(str.strip)
-    self.slug = self.class.sanitize_username(str)
+    stripped_username = str.gsub(/[^\w]/, '')[0..16]
+
+    super(stripped_username)
+    self.slug = self.class.sanitize_username(stripped_username)
   end
 
   def to_param
