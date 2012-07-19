@@ -170,6 +170,8 @@
     / Intercom
 
     - if signed_in?
+      = intercom_script_tag
+
       :javascript
         (function() {
           function async_load() {
