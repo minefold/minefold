@@ -1,9 +1,11 @@
+
+%h1= params[:funpack].inspect
 - if params[:funpack]
   - title 'Create a world'
   .page-header
     %h1 Create a world
 
-  = form_for world, html: {id: 'new-world', class: 'form-horizontal'} do |f|
+  = form_for world, html: {id: 'new-world', class: 'form-horizontal'}, url: {action: :create, funpack: params[:funpack]} do |f|
     = render partial: 'form', object: f
 
     .form-actions
