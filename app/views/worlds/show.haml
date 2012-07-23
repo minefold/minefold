@@ -58,11 +58,7 @@
 
         var worldMapView = new Application.WorldMapView({model: world});
         $('.map').append(worldMapView.el);
-        delay(2000, function(){
-          worldMapView.render();
-          console.log('done');
-        });
-
+        worldMapView.render();
       });
 
 %ul.player-grid.unstyled
