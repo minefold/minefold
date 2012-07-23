@@ -66,15 +66,45 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-
           = link_to 'Minefold', root_path, class: 'brand'
+
+          - if signed_in?
+            .credit-advice.pull-right.nav-collapse
+              - if current_user.pro?
+                .credits-bar.is-pro
+              - else
+                .credits-bar#credits-bar-view
+                  .bar
+                  .overflow
+
+                - content_for :tail do
+                  :javascript
+                    $(document).ready(function () {
+                      var user = new Application.User(#{user_credits(current_user).to_json}),
+                          creditsBarView = new Application.CreditsBarView({
+                            model: user
+                          });
+
+                      // TODO Update credits number when it changes
+
+                      creditsBarView.setElement($('#credits-bar-view'));
+                      creditsBarView.render();
+                    });
+
+              %p
+                - if current_user.pro?
+                  %span.pro Unlimited
+                - else
+                  %span.credits= number_with_delimiter current_user.credits
+
+                  &middot;
+
+                  = link_to 'Get unlimited credits', pro_account_path, class: %w(upgrade)
 
           .nav-collapse.pull-right
             %ul.nav
               - if signed_in?
                 %li= link_to 'Dashboard', user_root_path
-                - if not current_user.pro?
-                  %li.upgrade= link_to 'Upgrade to Pro', pro_account_path
 
               %li= link_to 'Explore', worlds_path
 
