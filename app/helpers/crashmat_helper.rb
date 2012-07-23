@@ -10,7 +10,8 @@ module CrashmatHelper
   def crashmat_user
     signed_in? and {
       id:    current_user.id,
-      email: current_user.email
+      email: current_user.email,
+      name:  current_user.name
     }
   end
 
