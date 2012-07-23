@@ -10,7 +10,7 @@ module IntercomHelper
 
     if signed_in?
       settings[:email] = current_user.email
-      settings[:name] = current_user.name,
+      settings[:name] = current_user.name.to_s,
       settings[:created_at] = current_user.created_at.to_i
       settings[:user_hash] = Digest::SHA1.hexdigest('kczzht6c' + current_user.email)
 
@@ -23,11 +23,14 @@ module IntercomHelper
         'max world players' => current_user.world_player_counts.max,
         'member worlds' => current_user.worlds.count,
         'pro?' => current_user.pro?,
-        'profile' => player_url(current_user.minecraft_player),
         'username' => current_user.username,
         'verify host' => current_user.verification_host,
         'verified?' => current_user.verified?,
       }
+
+      if current_user.verified?
+        settings[:custom_data][:profile] = player_url(current_user.minecraft_player)
+      end
     end
 
     settings
