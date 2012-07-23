@@ -148,6 +148,12 @@ class User
 
   field :facebook_uid, type: String
 
+  attr_accessible :name, :first_name, :last_name
+
+  field :name, type: String
+  field :first_name, type: String
+  field :last_name, type: String
+
   def facebook_linked?
     not facebook_uid.nil?
   end
@@ -161,24 +167,40 @@ class User
       case
       # User is already signed in
       when signed_in_user
-        signed_in_user.facebook_uid = uid
-        signed_in_user.save!
+        user.update_attributes!(
+          facebook_uid: uid,
+          name: data.name,
+          first_name: data.first_name,
+          last_name: data.last_name
+        )
         signed_in_user
 
       # User exists
       when user = where(facebook_uid: uid).first
+        user.update_attributes!(
+          name: data.name,
+          first_name: data.first_name,
+          last_name: data.last_name
+        )
         user
 
       # User exists with the same email
       when user = by_email(email).first
-        user.facebook_uid = uid
-        user.save!
+        user.update_attributes!(
+          facebook_uid: uid,
+          name: data.name,
+          first_name: data.first_name,
+          last_name: data.last_name
+        )
         user
 
       # No user exists
       else
         user = new(
           email: email,
+          name: data.name,
+          first_name: data.first_name,
+          last_name: data.last_name,
           password: Devise.friendly_token[0,20] # Stub password
         )
 
