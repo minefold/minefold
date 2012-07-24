@@ -15,4 +15,10 @@ module UsersHelper
     end
   end
 
+  def credits_to_minutes(credits)
+    hours = (credits / 60).floor
+    mins = credits % 60
+    "%dh %dm" % [hours, mins]
+  end
+
 end

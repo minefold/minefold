@@ -95,11 +95,11 @@
                 - if current_user.pro?
                   %span.pro Unlimited
                 - else
-                  %span.credits= number_with_delimiter current_user.credits
+                  %span.credits= credits_to_minutes current_user.credits
 
                   &middot;
 
-                  = link_to 'Get unlimited credits', pro_account_path, class: %w(upgrade)
+                  = link_to 'Get unlimited time', pro_account_path, class: %w(upgrade)
 
           .nav-collapse.pull-right
             %ul.nav
