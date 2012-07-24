@@ -27,12 +27,13 @@ Minefold::Application.routes.draw do
   get '/oembed' => 'o_embed#show', :defaults => { :format => 'json' }
 
   # Static Pages
-  { '/about'   => :about,
-    '/help'    => :help,
-    '/jobs'    => :jobs,
-    '/pricing' => :pricing,
-    '/privacy' => :privacy,
-    '/terms'   => :terms
+  { '/about'    => :about,
+    '/help'     => :help,
+    '/jobs'     => :jobs,
+    '/pricing'  => :pricing,
+    '/privacy'  => :privacy,
+    '/terms'    => :terms,
+    '/freetime' => :freetime
   }.each do |url, name|
     get url, :controller => 'pages',:action => name, :as => "#{name}_page"
   end

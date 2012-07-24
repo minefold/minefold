@@ -1,0 +1,11 @@
+@import 'vars';
+
+.objective {
+  .hours {
+    color: $green;
+    font-size: 18px;
+    font-weight: 800;
+    line-height: lines(8);
+    margin-left: $gw-gutter;
+  }
+}

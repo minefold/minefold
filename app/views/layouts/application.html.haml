@@ -99,7 +99,11 @@
 
                   &middot;
 
-                  = link_to 'Get unlimited time', pro_account_path, class: %w(upgrade)
+                  = link_to 'Get free time', freetime_page_path
+
+                  &middot;
+
+                  = link_to 'Upgrade to Pro', pro_account_path, class: %w(upgrade)
 
           .nav-collapse.pull-right
             %ul.nav
@@ -183,6 +187,7 @@
         FB.init({
           appId: #{ENV['FACEBOOK_KEY'].to_json},
           cookie: true,
+          xfbml: true,
           logging: #{(not Rails.env.production?).to_json},
           channelUrl: #{facebook_channel_url(protocol: '//').to_json}
         });
@@ -197,6 +202,9 @@
           }
         });
 
+        FB.Event.subscribe('edge.create', function(url) {
+          alert('You liked the URL: ' + url);
+        });
       }
 
     = yield :tail

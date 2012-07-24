@@ -18,9 +18,13 @@
 
   .span9
     - if current_user.minecraft_player.worlds.any?
+      - ws = current_user.minecraft_player.worlds.sort_by {|w| t = w[:last_played_at] ; case t; when nil; 10.years.ago ; when String; Time.parse(t) ; else t; end }.reverse
       %ul.thumbnails
-        - current_user.minecraft_player.worlds.each do |world|
+        - ws.take(3).each do |world|
           = render partial: 'worlds/card', object: world
+
+      - ws[3..-1].each do |world|
+        %p= world.name
 
     - else
       %p.empty You haven't created or joined any worlds yet.
