@@ -11,7 +11,7 @@ module CrashmatHelper
     signed_in? and {
       id:    current_user.id,
       email: current_user.email,
-      name:  current_user.name
+      name:  current_user.full_name || current_user.username
     }
   end
 

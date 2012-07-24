@@ -13,9 +13,18 @@
     = form_for current_user, url: update_user_path, method: :put, class: %w(form-horizontal) do |f|
 
       .control-group
+        = f.label :first_name, 'Name', class: 'control-label'
+        .control
+          .row
+            .span2
+              = f.text_field :first_name, class: %w(span2), placeholder: 'First'
+            .span2
+              = f.text_field :last_name, class: %w(span2), placeholder: 'Last'
+
+      .control-group
         = f.label :email, class: 'control-label'
         .control
-          = f.text_field :email, class: 'input-xlarge'
+          = f.text_field :email, class: %w(span4)
 
       %fieldset.notifications
         %legend Notifications

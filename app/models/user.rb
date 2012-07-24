@@ -61,6 +61,14 @@ class User
     minecraft_player and minecraft_player.slug
   end
 
+  def full_name
+    if name.blank? and not first_name.blank? and not last_name.blank?
+      [first_name, last_name].join(' ')
+    else
+      name
+    end
+  end
+
 
 # ---
 # Flags
