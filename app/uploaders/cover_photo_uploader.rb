@@ -9,4 +9,8 @@ class CoverPhotoUploader < CarrierWave::Uploader::Base
     process resize_to_fill: [220, 140]
   end
 
+  def default_url
+    "/assets/default_world.png"
+  end
+
 end
