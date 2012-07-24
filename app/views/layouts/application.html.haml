@@ -68,7 +68,7 @@
             %span.icon-bar
           = link_to 'Minefold', root_path, class: 'brand'
 
-          - if signed_in?
+          - if signed_in? and current_user.verified?
             .credit-advice.pull-right.nav-collapse
               - if current_user.pro?
                 .credits-bar.is-pro
@@ -103,15 +103,20 @@
 
           .nav-collapse.pull-right
             %ul.nav
-              - if signed_in?
+              - if signed_in? and current_user.verified?
                 %li= link_to 'Dashboard', user_root_path
 
               %li= link_to 'Explore', worlds_path
 
-              - if not signed_in?
+              - case
+              - when !signed_in?
                 %li= link_to 'Sign Up', new_user_path
                 %li.divider-vertical
                 %li= link_to 'Sign In', new_user_session_path
+
+              - when signed_in? && !current_user.verified?
+                %li.divider-vertical
+                %li= link_to 'Sign out', destroy_user_session_path, method: :delete
 
               - else
                 %li.divider-vertical
