@@ -97,9 +97,10 @@
                 - else
                   %span.credits= credits_to_minutes current_user.credits
 
-                  &middot;
+                  - if false # feature flag!
+                    &middot;
 
-                  = link_to 'Get free time', freetime_page_path
+                    = link_to 'Get free time', freetime_page_path
 
                   &middot;
 
