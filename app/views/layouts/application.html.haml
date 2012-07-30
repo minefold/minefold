@@ -121,6 +121,7 @@
 
               - when signed_in? && !current_user.verified?
                 %li.divider-vertical
+                %li.navbar-text= current_user.full_name || current_user.email
                 %li= link_to 'Sign out', destroy_user_session_path, method: :delete
 
               - else
