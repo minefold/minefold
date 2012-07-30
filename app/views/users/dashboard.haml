@@ -22,9 +22,22 @@
       %ul.thumbnails
         - ws.take(3).each do |world|
           = render partial: 'worlds/card', object: world
+      .row
+        - ws[3..-1].each do |world|
+          %a.span6.world-card-mini{href: player_world_path(world.creator.minecraft_player, world)}
+            %strong.fullname= world.fullname
+            .world-stats
+              .stat
+                %i.icon-user
+                = world.player_ids.count
 
-      - ws[3..-1].each do |world|
-        %p= world.name
+              .stat
+                %i.icon-time
+                = credits_to_minutes(world.minutes_played)
+
+              .stat
+                %i.icon-eye-open
+                = number_with_delimiter world.pageviews
 
     - else
       %p.empty You haven't created or joined any worlds yet.

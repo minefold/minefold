@@ -5,6 +5,7 @@
     border: 2px solid darken(white, 10%);
     @include box-shadow(none);
     @include box-sizing(border-box);
+    padding-bottom: 0;
 
     &:hover {
       border-color: $blue;
@@ -13,6 +14,19 @@
 
     img {
       outline: none;
+    }
+
+    .caption {
+      padding-bottom: 0;
+    }
+
+    .caption > p {
+      margin-bottom: 0;
+      font-size: 12px;
+    }
+
+    .world-stats {
+      margin-top: lines(2);
     }
 
   }
