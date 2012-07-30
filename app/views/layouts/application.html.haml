@@ -196,9 +196,11 @@
 
         FB.Event.subscribe('auth.authResponseChange', function(response) {
           if(response.status === 'connected') {
-            app.trigger('fb:connected');
+            app.trigger('fb:connected', response);
           } else if (response.status === 'not_authorized') {
-            app.trigger('fb:not_authorized');
+            app.trigger('fb:not_authorized', response);
+          } else {
+            app.trigger('fb:'+response.status, response);
           }
         });
 
