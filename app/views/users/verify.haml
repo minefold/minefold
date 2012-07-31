@@ -3,12 +3,13 @@
 
 .row
   .span6.offset3
-    .page-header
+    %center.page-header
       %h1 Mojang account verification
 
     %center.verification-status.is-waiting
       .status
       %p.notice Waiting for Minecraft account verification
+      %p.warning Your Mojang account <strong class="username">chrislloyd</strong> is already linked with another Minefold account. Sign out and and sign in with that account!
 
     %section.verification-instructions
       %p We need to link your Minecraft account. If you don't have one you have to <a href="http://www.minecraft.net/">purchase an account</a>.
@@ -22,19 +23,29 @@
 - content_for :tail do
   :javascript
     var onVerify = function(data) {
-      $('.verification-instructions').slideUp();
+      $('.verification-instructions').slideUp(function() {
+        $('.verification-status')
+          .removeClass('is-waiting')
+          .addClass('is-verified');
 
-      $('.verification-status')
-        .removeClass('is-waiting')
-        .addClass('is-verified');
-
-      setTimeout(function(){
-        window.location = '/';
-      }, 3000)
+        setTimeout(function(){
+          window.location = '/';
+        }, 3000);
+      });
     };
+
+    var onAlreadyVerified = function(data) {
+      $('.verification-instructions').slideUp(function() {
+        $('.verification-status')
+          .removeClass('is-waiting')
+          .addClass('is-already-verified')
+          .find('.username').text(data.username);
+      });
+    }
 
     $(document).ready(function() {
       var channelName = #{current_user.private_channel_key.to_json};
       var channel = app.pusher.subscribe(channelName);
       channel.bind('verified', onVerify);
+      channel.bind('alreadyVerified', onAlreadyVerified);
     });
