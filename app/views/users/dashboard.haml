@@ -18,7 +18,7 @@
 
   .span9
     - if current_user.minecraft_player.worlds.any?
-      - ws = current_user.minecraft_player.worlds.sort_by {|w| t = w[:last_played_at] ; case t; when nil; 10.years.ago ; when String; Time.parse(t) ; else t; end }.reverse
+      - ws = current_user.minecraft_player.worlds.sort_by {|w| t = w[:last_played_at] ; case t; when nil; 10.years.ago ; when String; Time.parse(t) ; else t; end }.select {|w| !!w.creator.minecraft_player }.reverse
       %ul.thumbnails
         - ws.take(3).each do |world|
           = render partial: 'worlds/card', object: world
