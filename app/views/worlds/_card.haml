@@ -1,19 +1,10 @@
-- if card.creator.minecraft_player
-  %li.span3.thumbnail
-    %a{href: player_world_path(card.creator.minecraft_player, card)}
-      = image_tag card.cover_photo.small.url, width: 260, height: 195, alt: card.fullname
+- if world.creator.minecraft_player
+  .world-card
+    %a{href: player_world_path(world.creator.minecraft_player, world)}
+      = image_tag world.cover_photo.small.url, width: 260, height: 195, alt: world.fullname
 
     .caption
-      %h4= card.name
-      %p= link_to card.creator.username, player_path(card.creator.minecraft_player)
+      %h4= world.name
+      .creator= link_to world.creator.username, player_path(world.creator.minecraft_player)
 
-      .world-stats
-        .stat
-          %i.icon-user
-          = card.player_ids.count
-        .stat
-          %i.icon-time
-          = credits_to_minutes(card.minutes_played)
-        .stat
-          %i.icon-eye-open
-          = number_with_delimiter card.pageviews
+    = render partial: 'worlds/meta', locals: {world: world}

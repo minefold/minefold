@@ -2,31 +2,30 @@
 
 .page-header
   .row
+    - if signed_in? && player == current_user.minecraft_player
+      .pull-right
+        = link_to 'Edit your profile', edit_user_path, class: %w(btn btn-primary)
+
     .span1
       = player_avatar_tag player, size: :large
-    .span11
-      %h1.username= player.username
+    .span9
+      %h1
+        %span.username= player.username
+        - if not player.user.full_name.blank?
+          %span.fullname (#{player.user.full_name})
 
       %p
-        - if player.user and player.user.pro?
-          = pro_link(player.user)
-        Member since #{player.created_at.strftime("%B %-d, %Y")}
+        Member since
+        = player.created_at.strftime("%B %-d, %Y")
 
-      - if world = player.online_world
-        %p Playing right now in #{link_to strong_world_fullname(world), player_world_path(world.creator.minecraft_player, world)}
+.row
+  .span6
+    %h3 Worlds
 
-/ - if signed_in? and current_user.admin? and player.user
-/   %section.referrals
-/     %h2 Referrals
-/     .players
-/       - player.user.referrals.each do |referred_user|
-/         - if referred_player = referred_user.minecraft_player
-/           %li
-/             = link_to player_path(referred_player) do
-/               = player_avatar_tag referred_player, size: :small
+    - player.worlds.each do |world|
+      = render partial: 'worlds/card_mini', locals: {world: world}
 
+  .span6
+    %h3 Bio
 
-%h2 Worlds
-
-- player.worlds.each do |world|
-  %p= link_to strong_world_fullname(world), player_world_path(world.creator.minecraft_player, world)
+    = markdown player.user.bio

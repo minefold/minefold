@@ -3,6 +3,6 @@
 .page-header
   %h1 Explore
 
-%ul.thumbnails
+.worlds.row
   - @worlds.per(12).each do |world|
-    = render partial: 'worlds/card', object: world
+    .span3= render partial: 'worlds/card', locals: {world: world}

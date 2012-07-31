@@ -19,27 +19,16 @@
   .span9
     - if current_user.minecraft_player.worlds.any?
       - ws = current_user.minecraft_player.worlds.sort_by {|w| t = w[:last_played_at] ; case t; when nil; 10.years.ago ; when String; Time.parse(t) ; else t; end }.select {|w| !!w.creator.minecraft_player }.reverse
-      %ul.thumbnails
+
+      .poster-worlds.row
         - ws.take(3).each do |world|
-          = render partial: 'worlds/card', object: world
+          .span3= render partial: 'worlds/card', locals: {world: world}
 
       - if ws.size > 3
         .row
           - ws[3..-1].each do |world|
-            %a.span6.world-card-mini{href: player_world_path(world.creator.minecraft_player, world)}
-              %strong.fullname= world.fullname
-              .world-stats
-                .stat
-                  %i.icon-user
-                  = world.player_ids.count
+            .span6= render partial: 'worlds/card_mini', locals: {world: world}
 
-                .stat
-                  %i.icon-time
-                  = credits_to_minutes(world.minutes_played)
-
-                .stat
-                  %i.icon-eye-open
-                  = number_with_delimiter world.pageviews
 
     - else
       %p.empty You haven't created or joined any worlds yet.

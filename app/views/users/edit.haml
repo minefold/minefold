@@ -26,6 +26,12 @@
         .control
           = f.text_field :email, class: %w(span4)
 
+      .control-group
+        = f.label :bio, class: 'control-label'
+        .control
+          = f.text_area :bio, class: %w(span5), rows: 6
+
+
       %fieldset.notifications
         %legend Notifications
         = f.fields_for :notifications do |n|

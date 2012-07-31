@@ -6,6 +6,9 @@ class User
   include Verifiable
   include Referrable
 
+  field :bio, type: String, default: ''
+  attr_accessible :bio
+
   attr_accessible :email,
                   :password,
                   :password_confirmation,

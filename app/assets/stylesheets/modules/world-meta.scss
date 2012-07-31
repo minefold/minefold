@@ -1,0 +1,20 @@
+@import 'vars';
+
+.world-meta {
+  font-size: 11px;
+  color: darken(white, 60%);
+  @include clearfix;
+  background: darken(white, 2%);
+
+  padding: lines(2) ($gw-gutter / 2);
+  padding-left: 0;
+
+  .stat {
+    margin-left: $gw-gutter / 2;
+  }
+
+  .game {
+    color: darken(white, 20%);
+  }
+
+}
