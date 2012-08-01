@@ -33,6 +33,8 @@
     margin-left: (-$gw-gutter / 2) + 2px;
     margin-right: (-$gw-gutter / 2) + 2px;
 
+    @include border-radius(0 0 $radius $radius);
+
     > .game {
       display: none;
     }
@@ -58,6 +60,7 @@
 
   &:hover {
     border-color: $blue;
+    text-decoration: none;
   }
 
 }
