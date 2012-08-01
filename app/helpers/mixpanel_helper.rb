@@ -30,6 +30,7 @@ module MixpanelHelper
       '$first_name' => current_user.first_name,
       '$last_name' => current_user.last_name,
       '$name' => current_user.name,
+      '$username' => current_user.username,
       'credits' => current_user.credits,
       'pro' => current_user.pro?
     }
