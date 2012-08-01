@@ -7,10 +7,4 @@ class ProcessChatJob < Job
     @text = text
   end
 
-  def perform!
-    Events::Chat.create! source: @player,
-                         target: @world,
-                         text: @text
-  end
-
 end

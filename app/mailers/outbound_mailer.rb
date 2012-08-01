@@ -6,7 +6,7 @@ class OutboundMailer < ActionMailer::Base
     @world = World.find world_id
     @message = message
 
-    track(@player.user, 'sent invite email') if @player.user
+    # track(@player.user, 'sent invite email') if @player.user
 
     mail to: invitee_email,
          subject: "#{@player.username} wants you to play Minecraft in #{@world.name}"
@@ -15,7 +15,7 @@ class OutboundMailer < ActionMailer::Base
   def claim_account_info(player_id, email, message = nil)
     @player = MinecraftPlayer.find(player_id)
 
-    track(@player, 'sent claim email')
+    # track(@player, 'sent claim email')
     mail to: email,
          subject: "Claim #{@player.username} on Minefold"
   end
@@ -30,10 +30,10 @@ class OutboundMailer < ActionMailer::Base
   #   end
   # end
 
-private
-
-  def track(user, event)
-    Mixpanel.track(event, distinct_id: user.distinct_id.to_s)
-  end
+  # private
+  #
+  #   def track(user, event)
+  #     Mixpanel.track(event, distinct_id: user.distinct_id.to_s)
+  #   end
 
 end

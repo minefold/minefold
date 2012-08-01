@@ -8,29 +8,16 @@ class PlayerDisconnectedJob < Job
   end
 
   def perform!
-    Events::Disconnection.create source: @user,
-                                 target: @world,
-                                 created_at: @disconnected_at
-
     if @connected_at
       seconds = @disconnected_at - @connected_at
-      
-      Mixpanel.track 'player played',
-        distinct_id: @player.distinct_id,
-        mp_name_tag: @player.friendly_id,
-        seconds: seconds,
-        minutes: (seconds / 60.0).to_i,
-        hours: (seconds / 60.0 / 60.0).to_i,
-        pro: (@player.user and @player.user.pro?)
-        
+
       if user = @player.user
-        Mixpanel.track 'user played',
-          distinct_id: user.distinct_id,
-          mp_name_tag: user.email,
+        Mixpanel.track 'played',
+          distinct_id: user.id,
           seconds: seconds,
           minutes: (seconds / 60.0).to_i,
           hours: (seconds / 60.0 / 60.0).to_i,
-          pro: (user.pro?)
+          pro: user.pro?
       end
     end
   end

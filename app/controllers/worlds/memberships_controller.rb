@@ -30,7 +30,6 @@ class Worlds::MembershipsController < ApplicationController
             UserMailer.membership_created(user.id, world.id, current_user.id).deliver
           end
         end
-        track 'added member', 'new player' => @new_player.user.nil?.to_s
       end
     end
 
@@ -49,8 +48,6 @@ class Worlds::MembershipsController < ApplicationController
     player_to_remove = MinecraftPlayer.find_by_username(params[:id])
     world.deop_player! player_to_remove
     world.unwhitelist_player! player_to_remove
-
-    track 'removed member'
 
     respond_with world, location: player_world_players_path(player, world)
   end

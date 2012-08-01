@@ -15,11 +15,10 @@ namespace :users do
 
         if user.notify?(:credits_reset) and !user.pro?
           UserMailer.credit_reset(user.id).deliver
-          Mixpanel.track 'sent reset credit email', distinct_id: user.mpid.to_s, mp_name_tag: user.email
         end
 
-        Mixpanel.track 'reset credits', distinct_id: user.mpid.to_s, mp_name_tag: user.email
       end
+
       puts "reset #{users_to_reset.size} users"
     end
   end

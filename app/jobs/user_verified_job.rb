@@ -21,19 +21,10 @@ class UserVerifiedJob < Job
 
       minutes = @player.minutes_played
 
-      Mixpanel.track 'player verified',
-        distinct_id: @player.distinct_id,
-        mp_name_tag: @player.friendly_id,
+      Mixpanel.track 'verified',
+        distinct_id: @user.id,
         minutes: minutes,
-        hours: (minutes / 60.0).to_i,
-        pro: @user.pro?
-
-      Mixpanel.track 'user verified',
-        distinct_id: @user.distinct_id,
-        mp_name_tag: @user.email,
-        minutes: minutes,
-        hours: (minutes / 60.0).to_i,
-        pro: @user.pro?
+        hours: (minutes / 60.0).to_i
     end
   end
 
