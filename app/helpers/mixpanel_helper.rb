@@ -20,4 +20,19 @@ module MixpanelHelper
     code = %Q{mixpanel.track('page viewed', {"page name":document.title, "url":window.location.pathname#{extras}});}.html_safe
     haml_tag('script', code)
   end
+
+
+  def mixpanel_person
+    signed_in? and {
+      '$created' => current_user.created_at,
+      '$last_login' => current_user.current_sign_in_at,
+      '$email' => current_user.email,
+      '$first_name' => current_user.first_name,
+      '$last_name' => current_user.last_name,
+      '$name' => current_user.name,
+      'credits' => current_user.credits,
+      'pro' => current_user.pro?
+    }
+  end
+
 end

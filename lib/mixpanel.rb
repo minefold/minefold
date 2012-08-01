@@ -4,7 +4,7 @@ module Mixpanel
     params = {
       event: event,
       properties: properties.merge(
-        token: ENV['MIXPANEL_TOKEN']
+        token: ENV['MIXPANEL']
       )
     }
 
