@@ -4,7 +4,7 @@
   border: none;
   text-shadow: none;
   font-weight: 800;
-  @include border-radius($radius);
+  border-radius: $radius;
 
   color: darken($yellow, 40%);
   background-color: $yellow;

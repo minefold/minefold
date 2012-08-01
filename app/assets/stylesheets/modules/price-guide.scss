@@ -6,7 +6,7 @@
 
   > .pack {
     border: 2px solid #CCC;
-    @include border-radius($radius);
+    border-radius: $radius;
     padding: lines(2) 10px;
     @include box-sizing(border-box);
     text-align: center;

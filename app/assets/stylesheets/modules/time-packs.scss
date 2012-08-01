@@ -7,7 +7,7 @@
     text-align: center;
     padding: lines(4) 0;
     border: 2px solid darken(white, 5%);
-    @include border-radius($radius);
+    border-radius: $radius;
     @include box-sizing(border-box);
 
     &:hover {

@@ -11,7 +11,7 @@
     height: 32px;
     margin-bottom: lines(2);
     padding: 10px;
-    @include border-radius($radius);
+    border-radius: $radius;
   }
 
   > .warning {

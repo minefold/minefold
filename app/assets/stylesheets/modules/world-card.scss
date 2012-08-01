@@ -9,7 +9,7 @@
   display: block;
   margin-bottom: lines(4);
 
-  @include border-radius($radius);
+  border-radius: $radius;
 
   &:hover {
     border-color: $blue;
@@ -33,7 +33,7 @@
     margin-left: (-$gw-gutter / 2) + 2px;
     margin-right: (-$gw-gutter / 2) + 2px;
 
-    @include border-radius(0 0 $radius $radius);
+    border-radius: 0 0 $radius $radius;
 
     > .game {
       display: none;
@@ -46,7 +46,7 @@
   margin-bottom: lines(4);
   padding: 10px;
   @include box-sizing(border-box);
-  @include border-radius($radius);
+  border-radius: $radius;
 
   .world-meta {
     margin: lines(2) (-10px);

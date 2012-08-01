@@ -1,7 +1,7 @@
 @import 'vars';
 
 .hero-unit {
-  @include border-radius($radius * 2);
+  border-radius: $radius * 2;
   border: 2px solid darken(white, 10%);
   background-color: transparent;
 

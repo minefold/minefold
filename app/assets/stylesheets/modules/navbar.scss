@@ -26,7 +26,7 @@
     @include inline-block;
     float: left;
     background: lighten($red, 20%) asset-data-url('logo-small.png') no-repeat 50% 50%;
-    @include border-radius($radius);
+    border-radius: $radius;
   }
 
   .nav {

@@ -163,7 +163,7 @@ table td, table tr {
 
     a {
       display: block;
-      @include border-radius($line * 2);
+      border-radius: $line * 2;
       background-color: darken(white, 5%);
       color: white;
       width: 20px;

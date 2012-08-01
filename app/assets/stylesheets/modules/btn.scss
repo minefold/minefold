@@ -6,7 +6,7 @@
 
 .btn {
   font-weight: 800;
-  @include border-radius($radius);
+  border-radius: $radius;
   @include box-shadow(none);
 //  @include box-sizing(border-box);
   text-shadow: none;
