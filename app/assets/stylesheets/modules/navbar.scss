@@ -29,20 +29,24 @@
     @include border-radius($radius);
   }
 
-  .nav li {
-    a {
-      font-weight: 800;
-      font-size: 16px;
-      text-shadow: none;
-      color: $black;
-    }
+  .nav {
+    margin-right: 0;
 
-    a:hover {
-      color: $green;
-    }
+    li {
+      a {
+        font-weight: 800;
+        font-size: 16px;
+        text-shadow: none;
+        color: $black;
+      }
 
-    &.upgrade a {
-      color: $red;
+      a:hover {
+        color: $green;
+      }
+
+      &.upgrade a {
+        color: $red;
+      }
     }
   }
 
