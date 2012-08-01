@@ -59,90 +59,92 @@
     #fb-root
     #Intercom
 
-    %header.container
-      .navbar
-        .navbar-inner
-          %a.btn.btn-navbar{data: {toggle: 'collapse', target: '.nav-collapse'}}
-            %span.icon-bar
-            %span.icon-bar
-            %span.icon-bar
-          = link_to 'Minefold', root_path, class: 'brand'
+    #page-background-block
 
-          - if signed_in? and current_user.verified?
-            .credit-advice.pull-right.nav-collapse
-              - if current_user.pro?
-                .credits-bar.is-pro
-              - else
-                .credits-bar#credits-bar-view
-                  .bar
-                  .overflow
+      %header.container
+        .navbar
+          .navbar-inner
+            %a.btn.btn-navbar{data: {toggle: 'collapse', target: '.nav-collapse'}}
+              %span.icon-bar
+              %span.icon-bar
+              %span.icon-bar
+            = link_to 'Minefold', root_path, class: 'brand'
 
-                - content_for :tail do
-                  :javascript
-                    $(document).ready(function () {
-                      var user = new Application.User(#{user_credits(current_user).to_json}),
-                          creditsBarView = new Application.CreditsBarView({
-                            model: user
-                          });
-
-                      // TODO Update credits number when it changes
-
-                      creditsBarView.setElement($('#credits-bar-view'));
-                      creditsBarView.render();
-                    });
-
-              %p
+            - if signed_in? and current_user.verified?
+              .credit-advice.pull-right.nav-collapse
                 - if current_user.pro?
-                  %span.pro Unlimited
+                  / .credits-bar.is-pro
                 - else
-                  %span.credits= credits_to_minutes current_user.credits
+                  .credits-bar#credits-bar-view
+                    .bar
+                    .overflow
 
-                  - if false # feature flag!
+                  - content_for :tail do
+                    :javascript
+                      $(document).ready(function () {
+                        var user = new Application.User(#{user_credits(current_user).to_json}),
+                            creditsBarView = new Application.CreditsBarView({
+                              model: user
+                            });
+
+                        // TODO Update credits number when it changes
+
+                        creditsBarView.setElement($('#credits-bar-view'));
+                        creditsBarView.render();
+                      });
+
+                %p
+                  - if current_user.pro?
+                    / %span.pro Unlimited
+                  - else
+                    %span.credits= credits_to_minutes current_user.credits
+
+                    - if false # feature flag!
+                      &middot;
+
+                      = link_to 'Get free time', freetime_page_path
+
                     &middot;
 
-                    = link_to 'Get free time', freetime_page_path
+                    = link_to 'Upgrade to Pro', pro_account_path, class: %w(upgrade)
 
-                  &middot;
+            .nav-collapse.pull-right
+              %ul.nav
+                - if signed_in? and current_user.verified?
+                  %li= link_to 'Dashboard', user_root_path
 
-                  = link_to 'Upgrade to Pro', pro_account_path, class: %w(upgrade)
+                %li= link_to 'Explore', worlds_path
 
-          .nav-collapse.pull-right
-            %ul.nav
-              - if signed_in? and current_user.verified?
-                %li= link_to 'Dashboard', user_root_path
+                - case
+                - when !signed_in?
+                  %li= link_to 'Sign Up', new_user_path
 
-              %li= link_to 'Explore', worlds_path
+                  %li.sign-in= link_to 'Sign In', new_user_session_path
 
-              - case
-              - when !signed_in?
-                %li= link_to 'Sign Up', new_user_path
-                %li.divider-vertical
-                %li= link_to 'Sign In', new_user_session_path
+                - when signed_in? && !current_user.verified?
 
-              - when signed_in? && !current_user.verified?
-                %li.divider-vertical
-                %li.navbar-text= current_user.full_name || current_user.email
-                %li= link_to 'Sign out', destroy_user_session_path, method: :delete
+                  %li.navbar-text= current_user.full_name || current_user.email
+                  %li= link_to 'Sign out', destroy_user_session_path, method: :delete
 
-              - else
-                %li.divider-vertical
-                %li.dropdown#user-account-dropdown
-                  %a.dropdown-toggle{href: '#user-account-dropdown', data: {toggle: 'dropdown'}}
-                    = current_user.username
-                  %ul.dropdown-menu
-                    - if current_user.minecraft_player
-                      %li= link_to 'Profile', player_path(current_user.minecraft_player)
-                    %li= link_to 'Settings', edit_user_path
-                    %li= link_to 'Sign out', destroy_user_session_path, method: :delete
+                - else
 
-    .container
-      - flash.select {|_,msg| msg.is_a?(String) }.each do |name, msg|
-        %div.alert.alert-block{class: "alert-#{name}"}
-          %a.close{data: {dismiss: 'alert'}} &#215;
-          %div{:id => "flash_#{name}"}= msg
+                  %li#user-account-dropdown.user.dropdown
+                    %a.dropdown-toggle{href: '#user-account-dropdown', data: {toggle: 'dropdown'}}
+                      = current_user.username
+                    %ul.dropdown-menu
+                      - if current_user.minecraft_player
+                        %li= link_to 'Profile', player_path(current_user.minecraft_player)
+                      %li= link_to 'Settings', edit_user_path
+                      %li= link_to 'Sign out', destroy_user_session_path, method: :delete
 
-    .container
-      #app= yield
+      .container
+        - flash.select {|_,msg| msg.is_a?(String) }.each do |name, msg|
+          %div.alert.alert-block{class: "alert-#{name}"}
+            %a.close{data: {dismiss: 'alert'}} &#215;
+            %div{:id => "flash_#{name}"}= msg
+
+      .container
+        #app= yield
 
     %footer
       .container

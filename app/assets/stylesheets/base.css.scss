@@ -1,6 +1,28 @@
 @import 'vars';
 
+html {
+  background-color: darken(white, 5%);
+}
+
 body {
   font: 14px/20px $helvetica;
   -webkit-font-smoothing: antialiased;
+}
+
+#page-background-block {
+  background-color: $white;
+}
+
+hr {
+  border: none;
+  margin: 0;
+  height: lines(8);
+
+  &.small {
+    height: lines(4);
+  }
+
+  &.large {
+    height: lines(16);
+  }
 }

@@ -12,9 +12,13 @@
 }
 
 .hero-unit.hero-unit-home {
+  padding-left: 0; padding-right: 0;
+  border: none;
 
   h2 {
-    margin-bottom: lines(4);
+    margin-bottom: lines(16);
+    font-weight: 500;
+    color: lighten($black, 40%);
   }
 
   .btn.btn-primary {

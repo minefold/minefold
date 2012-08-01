@@ -89,7 +89,7 @@
               = time_ago_in_words(comment.created_at)
               ago
 
-    - if can? :read, world
+    - if can? :play, world
       - content_for :tail do
         :javascript
           $(function() {

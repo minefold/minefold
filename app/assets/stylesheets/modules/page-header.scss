@@ -1,10 +1,17 @@
 @import 'vars';
 
 .page-header {
+  border-bottom: none;
+
+  > h1 {
+    font-size: 28px;
+  }
 
   > h2 {
     color: lighten($black, 60%);
+    font-size: 18px;
     font-weight: 400;
+    margin-top: - lines(1);
   }
 
 }

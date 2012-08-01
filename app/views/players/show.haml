@@ -25,7 +25,7 @@
     - player.worlds.each do |world|
       = render partial: 'worlds/card_mini', locals: {world: world}
 
-  .span6
-    %h3 Bio
-
-    = markdown player.user.bio
+  - if player.user
+    .span6
+      %h3 Bio
+      = markdown player.user.bio

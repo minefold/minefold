@@ -4,7 +4,9 @@
       = image_tag world.cover_photo.small.url, width: 260, height: 195, alt: world.fullname
 
     .caption
-      %h4= world.name
-      .creator= link_to world.creator.username, player_path(world.creator.minecraft_player)
+      .world-fullname
+        %span.creator= world.creator.username
+        %span.slash> /
+        %strong.name= world.name
 
     = render partial: 'worlds/meta', locals: {world: world}
