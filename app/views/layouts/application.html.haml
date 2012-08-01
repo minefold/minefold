@@ -70,43 +70,37 @@
               %span.icon-bar
             = link_to 'Minefold', root_path, class: 'brand'
 
-            - if signed_in? and current_user.verified?
+            - if signed_in? and current_user.verified? and not current_user.pro?
+              - content_for :tail do
+                :javascript
+                  $(document).ready(function () {
+                    var user = new Application.User(#{user_credits(current_user).to_json}),
+                        creditsBarView = new Application.CreditsBarView({
+                          model: user
+                        });
+
+                    // TODO Update credits number when it changes
+
+                    creditsBarView.setElement($('#credits-bar-view'));
+                    creditsBarView.render();
+                  });
+
               .credit-advice.pull-right.nav-collapse
-                - if current_user.pro?
-                  / .credits-bar.is-pro
-                - else
-                  .credits-bar#credits-bar-view
-                    .bar
-                    .overflow
-
-                  - content_for :tail do
-                    :javascript
-                      $(document).ready(function () {
-                        var user = new Application.User(#{user_credits(current_user).to_json}),
-                            creditsBarView = new Application.CreditsBarView({
-                              model: user
-                            });
-
-                        // TODO Update credits number when it changes
-
-                        creditsBarView.setElement($('#credits-bar-view'));
-                        creditsBarView.render();
-                      });
+                .credits-bar#credits-bar-view
+                  .bar
+                  .overflow
 
                 %p
-                  - if current_user.pro?
-                    / %span.pro Unlimited
-                  - else
-                    %span.credits= credits_to_minutes current_user.credits
+                  %span.credits= credits_to_minutes current_user.credits
 
-                    - if false # feature flag!
-                      &middot;
-
-                      = link_to 'Get free time', freetime_page_path
-
+                  - if false # feature flag!
                     &middot;
 
-                    = link_to 'Upgrade to Pro', pro_account_path, class: %w(upgrade)
+                    = link_to 'Get free time', freetime_page_path
+
+                  &middot;
+
+                  = link_to 'Upgrade to Pro', pro_account_path, class: %w(upgrade)
 
             .nav-collapse.pull-right
               %ul.nav

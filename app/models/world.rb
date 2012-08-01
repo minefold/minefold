@@ -327,7 +327,7 @@ class World
   end
 
   GAME_MODES = [:survival, :creative]
-  LEVEL_TYPES = ['DEFAULT', 'FLAT']
+  LEVEL_TYPES = ['DEFAULT', 'FLAT', 'LARGEBIOMES']
   DIFFICULTIES = [:peaceful, :easy, :normal, :hard]
 
   field :seed, type: String, default: -> { Time.now.to_i.to_s }

@@ -139,6 +139,13 @@
       %p.help-block
         Works best in Creative mode.
 
+  .controls
+    = form.label :level_type_large_biomes, class: 'radio' do
+      = form.radio_button :level_type, 'LARGEBIOMES'
+      Large Biomes
+      %p.help-block
+        Same as default but all biomes are larger.
+
 .control-group
   .control-label Map Seed
   .controls
