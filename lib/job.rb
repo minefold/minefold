@@ -19,7 +19,6 @@ class Job
         end
       rescue => e
         logger.warn e.to_s
-        # TODO Add extra Exceptional context here.
         raise e
       end
     end

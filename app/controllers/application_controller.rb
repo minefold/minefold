@@ -13,21 +13,9 @@ class ApplicationController < ActionController::Base
     render status: :unauthorized, text: 'unauthorized'
   end
 
-  # TODO Extract
-  prepend_before_filter do
-    if signed_in?
-      Exceptional.context user_id: current_user.id,
-                          email: current_user.email
-    end
-  end
-
   before_filter :set_mpid
 
   before_filter :require_player_verification
-
-  # def authenticate_user!
-  #   raise devise_controller?.to_s
-  # end
 
 private
 

@@ -19,12 +19,12 @@ gem 'rdiscount'
 gem 'mini_magick'
 gem 'resque', require: ['resque', 'resque/server']
 gem 'resque_mailer'
-gem 'exceptional'
 gem 'intercom'
 gem 'mailgun-rails'
 gem 'jbuilder'
 gem 'fog'
 gem 'rest-client'
+gem 'bugsnag'
 
 # TODO KILL KILL KILL
 gem 'mongoid', '3.0.0.rc'
@@ -58,7 +58,6 @@ end
 
 group :worker do
   gem 'rubyzip'
-  gem 'resque-exceptional'
   gem 'nbtfile'
 end
 
