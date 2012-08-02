@@ -7,4 +7,7 @@ class ProcessChatJob < Job
     @text = text
   end
 
+  def perform!
+  end
+
 end
