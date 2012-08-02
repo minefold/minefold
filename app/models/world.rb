@@ -5,6 +5,9 @@ class World
   include Mongoid::Timestamps
   include Mongoid::Paranoia
 
+  store_in collection: 'worlds'
+
+
   # TODO: manage these settings with funpacks
 
   attr_accessible :name,

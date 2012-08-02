@@ -6,6 +6,8 @@ class User
   include Verifiable
   include Referrable
 
+  store_in collection: 'users'
+
   field :bio, type: String, default: ''
   attr_accessible :bio
 

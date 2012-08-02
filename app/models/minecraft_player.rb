@@ -3,6 +3,9 @@ class MinecraftPlayer
   include Mongoid::Paranoia
   include Mongoid::Timestamps
 
+  store_in collection: 'minecraft_players'
+
+
   attr_accessible :username
 
 # --

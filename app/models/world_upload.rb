@@ -8,6 +8,8 @@ class WorldUpload
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  store_in collection: 'world_uploads'
+
   class InvalidUploadError < Exception; end
   class UnreadableUploadError < Exception; end
 
