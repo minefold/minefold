@@ -13,21 +13,12 @@ class ApplicationController < ActionController::Base
     render status: :unauthorized, text: 'unauthorized'
   end
 
-  before_filter :set_mpid
-
   before_filter :require_player_verification
 
 private
 
   def track(event_name, properties={})
     Resque.enqueue(MixpanelJob, event_name, properties)
-  end
-
-  def set_mpid
-    if not cookies[:mpid]
-      mpid = signed_in? ? current_user.mpid : User.mpid
-      cookies[:mpid] = {value: mpid, expires: 1.year.from_now}
-    end
   end
 
   def require_no_authentication!

@@ -153,7 +153,7 @@ class UserMailer < ActionMailer::Base
 private
 
   def track(user, event)
-    Mixpanel.track(event, distinct_id: user.to_s)
+    Mixpanel.track(event, distinct_id: user.id.to_s)
   end
 
 end

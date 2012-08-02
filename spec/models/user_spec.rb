@@ -159,11 +159,4 @@ describe User do
   # it { should have_many(:photos).as_inverse_of(:creator) }
 
 
-# ---
-# Stats
-
-
-  it { should have_field(:mpid).of_type(String) }
-
-
 end

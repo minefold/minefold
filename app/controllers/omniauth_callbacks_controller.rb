@@ -8,8 +8,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     user = User.find_or_create_for_facebook_oauth(request.env["omniauth.auth"], existing_user, params[:email])
     user.remember_me = true
 
-    cookies[:mpid] = user.mpid
-
     sign_in_and_redirect user, :event => :authentication
   end
 

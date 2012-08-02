@@ -83,8 +83,6 @@ class MinecraftPlayer
     slug.to_param
   end
 
-  field :distinct_id, type: String, default: ->{ UUID.new.generate }
-
   def friendly_id
     user and user.email or username
   end

@@ -389,14 +389,6 @@ class User
 # Stats
 
 
-  def self.mpid
-    @uuid ||= UUID.new
-    @uuid.generate
-  end
-
-  field :mpid, type: String, default: ->{ self.mpid.to_s }
-  alias_method :distinct_id, :mpid
-
   def minutes_played
     minecraft_player ? minecraft_player.minutes_played : 0
   end

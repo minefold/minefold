@@ -26,8 +26,6 @@ class UsersController < Devise::RegistrationsController
   end
 
   def create
-    user.mpid = cookies[:mpid]
-
     if user.save
       sign_in :user, user
 
@@ -40,8 +38,7 @@ class UsersController < Devise::RegistrationsController
       end
 
       track '$signup',
-        distinct_id: user.mpid.to_s,
-        mp_name_tag: user.email,
+        distinct_id: user.id.to_s,
         'initial credit' => User::FREE_CREDITS,
         'referred?' => user.referred?
 
