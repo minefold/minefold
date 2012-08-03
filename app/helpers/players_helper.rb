@@ -20,10 +20,8 @@ module PlayersHelper
     options[:class] = ['img', *options[:class]]
 
     # TODO Hack around shitty Carrierwave
-    path = player.avatar.send(options[:size]).path
-    if path
-      options[:src] ||= File.join(ENV['ASSET_HOST'], path)
-    end
+    avatar = player.avatar.send(options[:size])
+    options[:src] ||= File.join(ENV['ASSET_HOST'], avatar.path || avatar.default_url)
 
     options[:alt] ||= player.username
 
