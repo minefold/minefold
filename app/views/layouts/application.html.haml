@@ -52,7 +52,7 @@
 
     - if signed_in?
       :javascript
-        mixpanel.identify(#{current_user.id.to_json});
+        mixpanel.identify(#{current_user.id.to_s.to_json});
         mixpanel.people.set(#{mixpanel_person.to_json});
 
     = yield :head
