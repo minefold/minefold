@@ -21,7 +21,11 @@ module PlayersHelper
 
     # TODO Hack around shitty Carrierwave
     avatar = player.avatar.send(options[:size])
-    options[:src] ||= File.join(ENV['ASSET_HOST'], avatar.path || avatar.default_url)
+    options[:src] ||= if avatar.path
+      File.join(ENV['ASSET_HOST'], avatar.path)
+    else
+      avatar.default_url
+    end
 
     options[:alt] ||= player.username
 
