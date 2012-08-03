@@ -19,7 +19,8 @@ module PlayersHelper
 
     options[:class] = ['img', *options[:class]]
 
-    options[:src] ||= player.avatar.send(options[:size]).url
+    # TODO Hack around shitty Carrierwave
+    options[:src] ||= File.join(ENV['ASSET_HOST'], player.avatar.send(options[:size]).path)
     options[:alt] ||= player.username
 
     content_tag(:div, tag(:img, options), class: 'avatar')

@@ -1,12 +1,12 @@
 class AvatarUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
+  def fog_attributes
+    super.merge('Cache-Control' => "max-age=#{1.day.to_i}")
+  end
+
   def extension_white_list
     %w(png)
-  end
-  
-  def fog_host
-    ENV['AVATARS_HOST']
   end
 
   process :crop_head!
@@ -26,13 +26,8 @@ class AvatarUploader < CarrierWave::Uploader::Base
 
   # Returns the digest path of the default image so that it can be served out from CloudFront like the other static assets.
   def default_url
-    filename = [version_name, 'default.png'].compact.join('_')
-    path = File.join('avatar', filename)
-
-    # TODO: Fix
-    "/assets/#{path}"
-
-    # Rails.application.assets[path].digest_path
+    path = File.join 'avatar', [version_name, 'default.png'].compact.join('_')
+    image_path(path)
   end
 
   def sample(width, height)

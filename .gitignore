@@ -5,8 +5,5 @@
 tmp
 .env
 public/assets
-public/maps
-public/uploads/*
-public/world-tiles
-public/world
+public/uploads
 dump

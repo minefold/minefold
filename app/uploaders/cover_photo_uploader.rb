@@ -1,16 +1,12 @@
 class CoverPhotoUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
-  def fog_host
-    ENV['AVATARS_HOST']
-  end
-
   version :small do
     process resize_to_fill: [260, 195]
   end
 
   def default_url
-    "/assets/default_world.png"
+    image_path('default_world.png')
   end
 
 end
