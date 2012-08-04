@@ -62,10 +62,5 @@ module Minefold
       g.javascripts = false
     end
 
-    initializer 'redis' do
-      uri = URI.parse(ENV["REDISTOGO_URL"])
-      $redis = Redis.new(host: uri.host, port: uri.port, password: uri.password)
-    end if ENV['REDISTOGO_URL']
-
   end
 end
