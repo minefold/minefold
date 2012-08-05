@@ -16,7 +16,7 @@
     %meta{name: 'keywords', content: %w(gaming games game minecraft server hosting multiplayer).join(',')}
 
     - if Rails.env.production?
-      = favicon_link_tag
+      = favicon_link_tag 'favicon.ico'
     - else
       = favicon_link_tag 'favicon-dev.ico'
 
