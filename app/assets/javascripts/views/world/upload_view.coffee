@@ -32,6 +32,7 @@ class Application.WorldUploadView extends Backbone.View
 
   select: (info, swf) =>
     if parseInt(info.size) < @constructor.maxFileSize
+      @$('.processing-help-block .filename').text(info.name)
       swf.upload()
       false
 
@@ -82,6 +83,9 @@ class Application.WorldUploadView extends Backbone.View
       success: (data) =>
         channel_name = 'WorldUpload-' + data.id
         channel = app.pusher.subscribe(channel_name)
+
+        channel.bind 'update', (msg) =>
+          @$('.processing-help-block .step').text("(#{msg})")
 
         channel.bind 'success', (data) =>
           @$('.help-block').hide()

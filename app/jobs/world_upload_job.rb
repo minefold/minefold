@@ -6,24 +6,31 @@ class WorldUploadJob < Job
   end
 
   def perform!
+    pusher.trigger('update', 'downloading file')
     logger.info "Downloading #{@upload.s3_key}"
     @upload.download!
 
+    pusher.trigger('update', 'extracting archive')
     logger.info "Extracting #{@upload.uploaded_archive_path} to #{@upload.extraction_path}"
     @upload.extract!
 
+    pusher.trigger('update', 'parsing seed')
     logger.info "Parsing seed from #{@upload.level_dat_path}"
     @upload.parse_seed!
 
+    pusher.trigger('update', 'cleaning data')
     logger.info "Cleaning data"
     @upload.clean!
 
+    pusher.trigger('update', 'rebuilding archive')
     logger.info "Building archive"
     @upload.build!
 
+    pusher.trigger('update', 'uploading archive')
     logger.info "Uploading archive"
     @upload.upload!
 
+    pusher.trigger('update', 'saving metadata')
     logger.info "Saving WorldUpload##{@upload.id}"
     @upload.save!
 
