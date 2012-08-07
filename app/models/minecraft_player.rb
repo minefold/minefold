@@ -101,7 +101,8 @@ class MinecraftPlayer
   end
 
   def fetch_avatar
-    self.remote_avatar_url = "http://minecraft.net/skin/#{username}.png"
+    file = self.class.sanitize_username(username)
+    self.remote_avatar_url = "http://minecraft.net/skin/#{file}.png"
 
   # Minecraft doesn't store default skins so it raises a HTTPError
   rescue OpenURI::HTTPError
