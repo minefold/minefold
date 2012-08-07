@@ -10,5 +10,7 @@ class FetchAvatarJob < Job
     @player.save
   rescue OpenURI::HTTPError
     puts "no skin for #{@player.username}"
+  rescue Excon::Errors::SocketError
+    retry
   end
 end

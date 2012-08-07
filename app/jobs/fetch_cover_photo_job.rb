@@ -8,6 +8,8 @@ class FetchCoverPhotoJob < Job
   def perform!
     @world.fetch_cover_photo!
     @world.save!
+  rescue Excon::Errors::SocketError
+    retry
   end
 
 end
