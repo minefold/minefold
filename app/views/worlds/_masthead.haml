@@ -26,6 +26,7 @@
           = link_to 'Request sent', nil, disabled: true, class: %w(btn)
         - elsif not can?(:play, world)
           = link_to 'Ask to play here', player_world_membership_requests_path(player, world), method: :post, class: %w(btn)
+        = link_to 'Download', player_world_path(player, world, format: :zip), class: %w(btn)
 
       %div{style: 'clear:both'}
 
