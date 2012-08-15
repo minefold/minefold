@@ -4,8 +4,10 @@ source 'https://rubygems.org'
 ruby '1.9.3'
 
 gem 'unicorn'
-gem 'rails', '3.2.6'
+gem 'rails', '3.2.8'
 gem 'rake'
+gem 'pg'
+gem 'postgres_ext', git: 'https://github.com/dockyard/postgres_ext.git'
 gem 'rack-www'
 gem 'devise'
 gem 'cancan'
@@ -50,10 +52,6 @@ group :test do
 
   gem 'fabrication'
   gem 'faker'
-end
-
-group :production do
-  gem 'pg'
 end
 
 group :worker do
