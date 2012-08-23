@@ -1,47 +1,112 @@
 - title  'Help & FAQ'
 - layout :help
-- track_pageview
 
-.page-header
-  %h1 Help & FAQ
+.hero-unit
+  %h1 Help Center
+  %h2 Fast answers. What can we help you with?
 
 .row
-  .span8
+  .span7
+    %h2 Getting Started
 
-    %h3#bukkit Can I add plugins?
-    %p Yes. We're currently trialing Bukkit support with a select group of Pro members. We aim on releasing it shortly.
+    %h3 Do you have to have Minecraft?
+    %p Yes, you need a paid copy of Minecraft for the PC or Mac before you can play on Minefold servers. You can buy it from #{link_to 'http://minecraft.net/store', 'http://minecraft.net/store'}.
+    
+    %h3 Do you have to pay for Minecraft?
+    %p Yes. You can't play multiplayer with the demo of Minecraft.
+    
+    / %h3 How do I connect to a server?
+    / %p If you connect to the server's URL.
+    
+    %h3 “End of Stream” errors
+    %p There are a lots of causes of “end of stream” errors like running a modified client or a pre-release version of Minecraft. A good test is to see if you can connect to another (non-Minefold) server like <code>mc-lc.com</code>. If you can't then the problem is likely with your client. If you can connect to other servers please contact support.
+    
+    
+    %hr#help-servers
+    %h2 Servers
+    
+    %h3 Do we run cracked servers?
+    %p No.
+    
+    %h3 Can you install plugins or mods?
+    %p Soon. We're currently trialing Bukkit & Tekkit support with a select group of Pro members.
+    
+    %h3 Public servers?
+    %p No. All servers are whitelisted to help prevent griefing. You have to individually approve anybody who wants to play.
+    
+    %h3 Where are our servers located?
+    %p Our servers are located in North Virginia. We've found this is the best location to provide the best service for the majority of our users.
+    
+    %h3 Experiencing lag?
+    %p Please contact support. We hate lag and want to get rid of it.
 
-    %h3#minecraft Do I need a copy of Minecraft to play?
-    %p Yes. You can buy a copy from #{link_to 'http://minecraft.net/store', 'http://minecraft.net/store'}.
 
-    %h3#friends Do all my friends need to pay too?
-    %p Yes. Minefold makes it simpler as everybody only pays for what they <em>individually</em> play. If you rent a traditional server by the month you have to collect donations or shout all your friends. If you prepay for your own time, you don't have to pay for all the time that Frank spends playing in your world.
-
-    %h3#minecraft Can I make my server public?
-    %p All the servers are whitelisted at the moment. This keeps them safe from random griefers!
-
-    %h3#avatar How do I change my avatar?
-    %p You can change it at #{link_to 'http://minecraft.net/profile', 'http://minecraft.net/profile'}. It can take up to 24 hours to reflect on Minefold.
-
-    %h3#firstnight I'm in the game, what do I do now?
+    %hr#help-billing
+    %h2 Billing
+    
+    %h3 Your child sole your credit card
+    %p Please file a support ticket so we can assess your situation. You may be eligable for a refund.
+    
+    %h3 Do we accept PayPal?
+    %p No.
+    
+    %h3 Friends need to pay too?
+    %p Yes. Minefold Pro is a subscription. It makes paying for servers cheaper for everybody as you only pay for what you <em>individually</em> play. If you rent a traditional server month to month you have to collect donations or shout all your friends. If you pay for your own time, you don't have to pay for when your friends play on your server.
+    
+    %h3 Time hasn't reset after a month
+    %p We reset your time ever 30 days from when you signed up, not on the first of the month.
+    
+    
+    %hr#help-minecraft
+    %h2 Minecraft
+    
+    %h3 You've started playing, what happens now?
     %p Minecraft is all about exploration and creativity. You can do anything! It's a good idea to build a small house so that you can survive the first night. For more detailed help, there is a #{link_to 'series of videos', '//minecraft.net/game/howtoplay'} on the official Minecraft website.
 
-    %h3#spawnprotection Why do blocks keep reappearing?
-    %p This happens if you dig too close to where you spawned. Minecraft does this to ensure the area doesn't get “griefed”. Sometimes people will do nasty things like placing a big lava pool there so other players die as soon as they join. Ouch!
+    %h3 Blocks keep reappearing / can't build around spawn
+    %p This happens if you dig too close to where you spawned. Minecraft does this to ensure the area doesn't get “griefed”. Sometimes people do nasty things like placing a big lava pool there so other players die as soon as they join. Ouch!
 
-    %h3#chunkerrors Big chunks of the world are missing
+    %h3 Missing big chunks of the world
     %p Chunk errors can happen sometimes but they don't affect your world. You can simply walk around them and everything should be fine. You can try and fix them by either waiting it out or disconnecting and reconnecting to the world. You can also try killing your player by typing <code>t</code> and entering the <code>/kill</code> command. Only do this as a last resort!
-
-    %h3#commands What commands can I use in the game?
+    
+    %h3 What commands can you use in the game?
     %p Minecraft Wiki has a <a href="http://www.minecraftwiki.net/wiki/SMP_Server_commands">comprehensive list</a> of all the commands you can use in the game.
 
-    %h3#spawnpoint How do I change the spawn point?
+    %h3 Changing the spawn point
     %p Vanilla Minecraft lets you change the spawn point individually by crafting a bed and sleeping in it.
+    
+    
+    %hr#help-website
+    %h2 Website
+    
+    %h3 Uploads are failing / taking too long
+    %p There are a variety of reasons this can happen. Please contact support and include the progress message.
+    
+    %h3 Map hasn't updated
+    %p The maps can take a while to render, especially on large worlds. We run tens of thousands of servers so sometimes rendering a map can take up to two days. If your map still hasn't updated after two days, please contact support and include the name of your server.
+    
+    %h3 Changing your avatar
+    %p You can change it at #{link_to 'http://minecraft.net/profile', 'http://minecraft.net/profile'}. It can take up to 24 hours to reflect on Minefold.
 
-    %h3#eos I keep getting "End of Stream" errors
-    %p There are a variety of things that can cause this error. Are you running a modified client? Are you running a pre-release version of Minecraft? Also, can you connect to another (non-Minefold) server such as <code>mc-lc.com</code>? If you're still getting errors, please contact support below.
+  %aside.span4.offset1.affix.affix-top{data: {:spy => 'affix', 'offset-top' => 340}}
+    .well
+      %h4 Need help with something that isn't here?
 
-  .span4
-    -if signed_in?
-      .well
-        If you have any problems or questions that are not covered here, please hit us up at support in the bottom corner and we'll get back to you as soon as we can.
+      %hr.light.small
+      
+      %h3 You can…
+      %a.pull-right{href: 'https://twitter.com/minefold', title: 'Minefold on Twitter'}
+        = image_tag 'twitter-small.png', width: 40, height: 40
+
+      %p
+        %strong Get fast answers on Twitter.
+        %br
+        For fast answers, tweet quick questions to <a href="https://twitter.com/minefold" title="Minefold on Twitter">@minefold</a>.
+
+      - if signed_in?
+
+        %h3 Or…      
+        %p
+          %strong Contact support.
+          %br
+          For in-depth questions, <a class="ActivateIntercom" href="#">file a support ticket</a>. One of our friendly support folks will get in touch.

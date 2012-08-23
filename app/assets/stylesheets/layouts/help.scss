@@ -1,4 +1,72 @@
 @import 'vars';
 
+#Intercom {
+  display: inline-block;
+  text-decoration: underline;
+  padding: 0;
+}
+
 .l-help {
+  
+  .hero-unit {
+    background-color: $green;
+    border-color: darken($green, 10%);
+    border: none;
+    text-align: center;
+    
+    h1 {
+      color: white;
+    }
+    h2 {
+      color: rgba(white, 0.6);
+    }
+  }
+  
+  h2 {
+    font-size: 28px;
+    color: lighten($purple, 0%);
+  }
+  
+  h3 {
+    font-size: 20px;
+    line-height: 40px;
+  }
+  
+  p {
+    font-size: 18px;
+    line-height: 25px;
+  }
+  
+  aside {
+    
+    .well {
+      background-color: lighten($yellow, 30%);
+    }
+    
+    h4 {
+      font-size: 20px;
+      line-height: 25px;
+      font-style: italic;
+      margin-bottom: lines(4);
+    }
+    
+    p {
+      font-size: 16px;
+    }
+    
+    h3 {
+      padding: lines(1) 0;
+      font-size: 18px;
+      line-height: 20px;
+      font-weight: normal;
+      color: rgba(lighten($black, 0%), 0.4);
+    }
+  }
+  
+}
+
+aside {
+  top: 40px;
+  // TODO: Look at this magic young one!
+  left: grid-width(8) + 43px;
 }

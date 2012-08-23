@@ -61,14 +61,14 @@
     = yield :head
 
 
-  %body{class: @layouts}
+  %body{class: @layouts, data: {spy: 'scroll', target: '.scroll-spyable'}}
     #fb-root
     #Intercom
 
     #page-background-block
 
       %header.container
-        .navbar
+        .navbar.navbar-static-top
           .navbar-inner
             %a.btn.btn-navbar{data: {toggle: 'collapse', target: '.nav-collapse'}}
               %span.icon-bar
@@ -76,7 +76,7 @@
               %span.icon-bar
             = link_to 'Minefold', root_path, class: 'brand'
 
-            - if signed_in? and current_user.verified? and not current_user.pro?
+            - if signed_in? and not current_user.pro?
               - content_for :tail do
                 :javascript
                   $(document).ready(function () {
@@ -106,14 +106,14 @@
 
                   &middot;
 
-                  = link_to 'Upgrade to Pro', pro_account_path, class: %w(upgrade)
+                  - #= link_to 'Upgrade to Pro', pro_account_path, class: %w(upgrade)
 
             .nav-collapse.pull-right
               %ul.nav
-                - if signed_in? and current_user.verified?
+                - if signed_in?
                   %li= link_to 'Dashboard', user_root_path
 
-                %li= link_to 'Explore', worlds_path
+                %li= link_to 'Explore', servers_path
 
                 - case
                 - when !signed_in?
@@ -121,20 +121,14 @@
 
                   %li.sign-in= link_to 'Sign In', new_user_session_path
 
-                - when signed_in? && !current_user.verified?
-
-                  %li.navbar-text= current_user.full_name || current_user.email
-                  %li= link_to 'Sign out', destroy_user_session_path, method: :delete
-
                 - else
 
                   %li#user-account-dropdown.user.dropdown
                     %a.dropdown-toggle{href: '#user-account-dropdown', data: {toggle: 'dropdown'}}
                       = current_user.username
                     %ul.dropdown-menu
-                      - if current_user.minecraft_player
-                        %li= link_to 'Profile', player_path(current_user.minecraft_player)
-                      %li= link_to 'Settings', edit_user_path
+                      %li= link_to 'Profile', user_path(current_user)
+                      %li= link_to 'Settings', edit_user_path(current_user)
                       %li= link_to 'Sign out', destroy_user_session_path, method: :delete
 
       .container
@@ -150,7 +144,7 @@
       .container
         .row
           .span2
-            = link_to 'Help', help_page_path
+            = link_to 'Help Center', help_page_path
             %br
             = link_to 'Pricing', pricing_page_path
 
@@ -235,7 +229,8 @@
 
     - if signed_in?
       = intercom_script_tag
-
+    
+    - if signed_in?
       :javascript
         (function() {
           function async_load() {
