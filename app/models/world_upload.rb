@@ -119,17 +119,23 @@ class WorldUpload
   end
 
   def level_dat_path
-    @level_dat_path ||= Find.find(extraction_path) do |path|
-      if path =~ /\/level\.dat$/
-        break(path)
-      else
-        next
-      end
-    end || raise(InvalidUploadError.new("Couldn't find level.dat in archive"))
+    begin
+      @level_dat_path ||= Find.find(extraction_path) do |path|
+        if path =~ /\/level\.dat$/
+          break(path)
+        else
+          next
+        end
+      end || raise(Errno::ENOENT)
+
+    rescue Errno::ENOENT
+      raise InvalidUploadError.new("Couldn't find level.dat in archive")
+
+    end
   end
 
   def world_path
-     File.dirname(level_dat_path)
+    File.dirname(level_dat_path)
   end
 
   def level_path
