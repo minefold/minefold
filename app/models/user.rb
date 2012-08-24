@@ -270,7 +270,7 @@ class User
   end
 
   def extend_plan_by(time)
-    if plan_expires_at?
+    if plan_expires_at? and plan_expires_at >= Time.now
       self.plan_expires_at += time
     else
       self.plan_expires_at = time.from_now
