@@ -40,7 +40,18 @@
   aside {
     
     .well {
+      @include box-sizing(border-box);
       background-color: lighten($yellow, 30%);
+      
+      &.affix {
+        top: 40px;
+        min-height: 1px;
+      }
+
+      &.affix,
+      &.affix-top {
+        margin-left: 0;
+      }
     }
     
     h4 {
@@ -63,10 +74,4 @@
     }
   }
   
-}
-
-aside {
-  top: 40px;
-  // TODO: Look at this magic young one!
-  left: grid-width(8) + 43px;
 }

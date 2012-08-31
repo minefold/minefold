@@ -2,8 +2,8 @@ require 'test_helper'
 
 class PagesControllerTest < ActionController::TestCase
 
-  %w(home about freetime help pricing jobs privacy terms).each do |page|
-    test "get #{page}" do
+  %w(home about help pricing jobs privacy terms).each do |page|
+    test "GET ##{page}" do
       get page
       assert_response :success
     end

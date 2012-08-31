@@ -26,10 +26,10 @@ module Minefold
 
     # Activate observers that should always be running.
     # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
-    config.mongoid.observers =
-       :world_observer,
-       :avatar_observer,
-       :user_observer
+    # config.mongoid.observers =
+    #    :world_observer,
+    #    :avatar_observer,
+    #    :user_observer
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
@@ -58,9 +58,17 @@ module Minefold
     config.assets.paths << Rails.root.join('app', 'assets', 'flash')
 
     config.generators do |g|
+      g.orm :active_record
+      g.template_engine :haml
+      g.test_framework :test_unit, fixture: true
+      g.fixture_replacement :machinist
+
       g.stylesheets = false
       g.javascripts = false
     end
+
+    # Neutralize field_with_errors
+    config.action_view.field_error_proc = ->(html_tag, instance){ html_tag.html_safe }
 
   end
 end

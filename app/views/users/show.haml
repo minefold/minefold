@@ -1,0 +1,29 @@
+- title user.username
+
+.page-header
+  .row
+    - if signed_in? && user == current_user
+      .pull-right
+        = link_to 'Edit your profile', edit_user_registration_path, class: %w(btn btn-primary)
+
+    .span1
+      -# = player_avatar_tag player, size: :large
+    .span9
+      %h1
+        %span.username= user.username
+
+      %p
+        Member since
+        = user.created_at.strftime("%B %-d, %Y")
+
+.row
+  .span6
+    %h3 Worlds
+
+    / - player.worlds.each do |world|
+    /   = render partial: 'worlds/card_mini', locals: {world: world}
+
+    / - if player.user
+    /   .span6
+    /     %h3 Bio
+    /     = markdown(player.user.bio)

@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
 
-  prepend_before_filter :authenticate_user!, :only => [:freetime]
+  prepend_before_filter :authenticate_user!, :only => [:welcome]
 
   def about
   end
@@ -24,6 +24,9 @@ class PagesController < ApplicationController
   end
 
   def terms
+  end
+
+  def welcome
   end
 
 end

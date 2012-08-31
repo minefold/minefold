@@ -4,6 +4,6 @@ Thanks for creating an account on Minefold, we just need you to confirm your ema
 
 You can confirm your email by visiting the link below:
 
-    <%= confirmation_url(@resource.confirmation_token) %>
+    <%= user_confirmation_url(@resource, confirmation_token: @resource.confirmation_token) %>
 
 <%= render partial: 'shared/email_sig' %>

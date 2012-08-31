@@ -13,7 +13,6 @@
 
     %meta{name: 'author', content: 'Mütli Corp <http://mutlicorp.com>'}
     %meta{name: 'description', content: 'Play Minecraft on demand with friends.'}
-    %meta{name: 'keywords', content: %w(gaming games game minecraft server hosting multiplayer).join(',')}
 
     - if Rails.env.production?
       = favicon_link_tag 'favicon.ico'
@@ -61,7 +60,7 @@
     = yield :head
 
 
-  %body{class: @layouts, data: {spy: 'scroll', target: '.scroll-spyable'}}
+  %body{class: @layouts}
     #fb-root
     #Intercom
 
@@ -97,12 +96,7 @@
                   .overflow
 
                 %p
-                  %span.credits= credits_to_minutes current_user.credits
-
-                  - if false # feature flag!
-                    &middot;
-
-                    = link_to 'Get free time', freetime_page_path
+                  %span.cr= current_user.cr
 
                   &middot;
 
@@ -113,22 +107,22 @@
                 - if signed_in?
                   %li= link_to 'Dashboard', user_root_path
 
-                %li= link_to 'Explore', servers_path
+                %li= link_to 'Browse', servers_path
 
                 - case
                 - when !signed_in?
-                  %li= link_to 'Sign Up', new_user_path
+                  %li= link_to 'Sign Up', new_user_registration_path
 
                   %li.sign-in= link_to 'Sign In', new_user_session_path
 
                 - else
 
                   %li#user-account-dropdown.user.dropdown
-                    %a.dropdown-toggle{href: '#user-account-dropdown', data: {toggle: 'dropdown'}}
+                    %a#user-account-dropdown.dropdown-toggle{href: '#', data: {toggle: 'dropdown'}}
                       = current_user.username
                     %ul.dropdown-menu
-                      %li= link_to 'Profile', user_path(current_user)
-                      %li= link_to 'Settings', edit_user_path(current_user)
+                      %li= link_to 'Profile', current_user
+                      %li= link_to 'Settings', edit_user_registration_path
                       %li= link_to 'Sign out', destroy_user_session_path, method: :delete
 
       .container
@@ -229,7 +223,7 @@
 
     - if signed_in?
       = intercom_script_tag
-    
+
     - if signed_in?
       :javascript
         (function() {

@@ -1,85 +1,55 @@
 require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
-
   setup_devise_mapping(:user)
 
-
-  test "get new" do
-    get :new
+  test "GET #show" do
+    user = User.make!
+    get :show, id: user.slug
     assert_response :success
   end
 
-  test "post create" do
-    post :create
-    assert_response :success
-  end
-
-# ---
-
-  test "get edit unauthenticated" do
-    get :edit
-    assert_unauthenticated_response
-  end
-
-  test "get edit" do
-    user = Fabricate(:user)
-    sign_in(user)
-
-    get :edit
-    assert_response :success
-  end
-
-# ---
-
-  test "put update unauthenticated" do
-    put :update
-    assert_unauthenticated_response
-  end
-
-  test "put update" do
-    user = Fabricate(:user)
-    sign_in(user)
-
-    put :update
-    assert_response :success
-  end
-
-# ---
-
-  test "get dashboard unauthenticated" do
+  test "GET #dashboard unauthenticated" do
     get :dashboard
     assert_unauthenticated_response
   end
 
-  test "get dashboard" do
-    user = Fabricate(:user)
+  test "GET #dashboard" do
+    user = User.make!
     sign_in(user)
 
     get :dashboard
     assert_response :success
   end
 
-# ---
 
-  test "get unlink_player" do
-    put :unlink_player
-    assert_response :success
-  end
-
-# ---
-
-  test "get verify unauthenticated" do
-    get :verify
+  test "PUT #update" do
+    user = User.make!
+    put :update, id: user.id
     assert_unauthenticated_response
   end
 
-  test "get verify" do
-    user = Fabricate(:user)
-    sign_in(:user)
+  test "PUT #update unauthorized" do
+    user = User.make!
+    punk = User.make!
 
-    get :verify
-    assert_response :success
+    sign_in(punk)
+
+    put :update, id: user.id
+    assert_unauthorized_response
+  end
+
+  test "PUT #update authenticated" do
+    user = User.make!
+    sign_in(user)
+
+    assert user.username != 'test', 'username precondition failed'
+
+    put :update, id: user.id, user: { username: 'test' }
+    assert_redirected_to user_root_path
+
+    user.reload
+    assert_equal user.username, 'test'
   end
 
 end

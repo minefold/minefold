@@ -4,25 +4,24 @@ html {
   background-color: darken(white, 5%);
 }
 
-body {
-  font: 14px/20px $helvetica;
-  -webkit-font-smoothing: antialiased;
-}
-
 #page-background-block {
   background-color: $white;
 }
 
 hr {
   border: none;
-  margin: 0;
-  height: lines(8);
-
+  margin: lines(4) 0;
+  height: 0;
+  
+  &.light {
+    border-top: 1px solid white;
+  }
+  
   &.small {
-    height: lines(4);
+    margin: lines(2) 0;
   }
 
   &.large {
-    height: lines(16);
+    margin: lines(8) 0;
   }
 }

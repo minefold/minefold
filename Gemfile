@@ -7,7 +7,6 @@ gem 'unicorn'
 gem 'rails', '3.2.8'
 gem 'rake'
 gem 'pg'
-gem 'postgres_ext', git: 'https://github.com/dockyard/postgres_ext.git'
 gem 'rack-www'
 gem 'devise'
 gem 'cancan'
@@ -27,6 +26,7 @@ gem 'jbuilder'
 gem 'fog'
 gem 'rest-client'
 gem 'bugsnag'
+gem 'friendly_id'
 
 # TODO KILL KILL KILL
 gem 'mongoid', '3.0.0.rc'
@@ -47,11 +47,11 @@ group :test do
   gem 'minitest'
   gem 'rr'
   gem 'ruby-prof'
-  gem 'sqlite3'
-  gem 'timecop'
 
-  gem 'fabrication'
+  gem 'machinist'
   gem 'faker'
+  gem 'timecop'
+  gem 'fakeweb'
 end
 
 group :worker do

@@ -5,27 +5,25 @@
 }
 
 .btn {
-  font-weight: 800;
+  font-weight: 600;
   border-radius: $radius;
   @include box-shadow(none);
-//  @include box-sizing(border-box);
   text-shadow: none;
   border: none;
 
-  padding: 4px 10px;
-  font-size: 13px;
-  line-height: 18px;
+//  font-size: 13px;
+//  line-height: 18px;
 
 
-  &.btn-large {
-    font-size: 16px;
-    padding: 20px 35px;
-  }
-
-  &.btn-mini {
-    line-height: 20px;
-    padding: 0 7px;
-  }
+//  &.btn-large {
+//    font-size: 16px;
+//    padding: 20px 35px;
+//  }
+//
+//  &.btn-mini {
+//    line-height: 20px;
+//    padding: 0 7px;
+//  }
 
   // Colors
 

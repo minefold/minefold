@@ -1,0 +1,130 @@
+- title 'Settings'
+
+.page-header
+  %h1 Settings
+
+.row
+  .span3
+    %ul.nav.nav-tabs.nav-stacked
+      %li.active= link_to 'Profile', '#profile', data: {toggle: 'tab'}
+      %li= link_to 'Notifications', '#notifications', data: {toggle: 'tab'}
+      %li= link_to 'Billing', '#billing', data: {toggle: 'tab'}
+      %li= link_to 'Password', '#password', data: {toggle: 'tab'}
+
+    %p You can change your avatar at #{link_to 'Minecraft.net', 'http://minecraft.net/profile', target: '_blank'}. If you do, it may take up to 24 hours to update.
+
+
+  .span6.tab-content
+    #profile.tab-pane.active
+      = form_for resource, method: :put do |f|
+        .control-group
+          = f.label :username
+          .controls
+            = f.text_field :username
+
+        .control-group
+          = f.label :first_name, 'Name'
+          .controls
+            = f.text_field :first_name, placeholder: 'First name'
+            = f.text_field :last_name, placeholder: 'Last name'
+
+        .form-actions
+          = f.submit 'Update settings', class: %w(btn btn-primary)
+
+
+    #notifications.tab-pane
+      = form_for resource, method: :put do |f|
+
+        .control-group
+          .controls
+            = f.label :server_emails, class: %w(checkbox) do
+              = f.check_box :server_emails
+              Server emails
+
+            = f.label :membership_emails, class: %w(checkbox) do
+              = f.check_box :membership_emails
+              Membership emails
+
+            = f.label :membership_request_emails, class: %w(checkbox) do
+              = f.check_box :membership_request_emails
+              Membership Request emails
+
+            = f.label :session_emails, class: %w(checkbox) do
+              = f.check_box :session_emails
+              Session emails
+
+        .form-actions
+          = f.submit 'Update notification preferences', class: %w(btn btn-primary)
+
+
+    #billing.tab-pane
+
+
+    #password.tab-pane
+      = form_for resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }, class: %w(form-horizontal) do |f|
+
+        .control-group
+          = f.label :current_password, 'Curent Password', class: 'control-label'
+          .controls
+            = f.text_field :current_password, class: %w()
+
+        .control-group
+          = f.label :password, 'New Password', class: 'control-label'
+          .controls
+            = f.text_field :password, class: %w()
+
+        .control-group
+          = f.label :password_confirmation, 'Confirm New Password', class: 'control-label'
+          .controls
+            = f.text_field :password_confirmation, class: %w()
+
+        .form-actions
+          = f.submit 'Change password', class: %w(btn btn-primary)
+
+
+
+      / %fieldset.notifications
+      /   %legend Notifications
+      /   = f.fields_for :notifications do |n|
+      /     .control-group
+      /       = n.label :world_membership_added, class: 'checkbox' do
+      /         = n.check_box :world_membership_added, checked: f.object.notify?(:world_membership_added)
+      /         You are added to a world
+      /
+      /     .control-group
+      /       = n.label :world_membership_request_created, class: 'checkbox' do
+      /         = n.check_box :world_membership_request_created, checked: f.object.notify?(:world_membership_request_created)
+      /         Someone asks to join your world
+      /
+      /     .control-group
+      /       = n.label :world_started, class: 'checkbox' do
+      /         = n.check_box :world_started, checked: f.object.notify?(:world_started)
+      /         A friend starts playing
+      /
+      /     .control-group
+      /       = n.label :world_started, class: 'checkbox' do
+      /         = n.check_box :world_started, checked: f.object.notify?(:world_started)
+      /         A friend starts playing
+      /
+      /     .control-group
+      /       = n.label :credits_reset, class: 'checkbox' do
+      /         = n.check_box :credits_reset, checked: f.object.notify?(:credits_reset)
+      /         Your monthly time is reset
+      /
+      /     .control-group
+      /       = n.label :world_comment_added, class: 'checkbox' do
+      /         = n.check_box :world_comment_added, checked: f.object.notify?(:world_comment_added)
+      /         Someone comments on a world
+      /
+      /     .control-group
+      /       = n.label :campaign, class: 'checkbox' do
+      /         = n.check_box :campaign, checked: f.object.notify?(:campaign)
+      /         Minefold releases new features
+
+      / %fieldset
+      /   %legend Time
+      /   - if current_user.pro?
+      /     %p All the time!
+      /     %p Your plan expires #{time_ago_in_words current_user.plan_expires_at} from now (#{I18n.l current_user.plan_expires_at.to_date, format: :long}).
+      /
+      /   - else

@@ -1,84 +1,49 @@
 class UsersController < Devise::RegistrationsController
-  respond_to :html, :json
+  respond_to :html
 
   prepend_before_filter :require_no_authentication, only: [:new, :create]
   prepend_before_filter :authenticate_scope!, only: [:dashboard, :edit, :update, :verify, :pro]
 
-  skip_before_filter :require_player_verification, :only => :verify
-
-
 # ---
 
-
-  expose(:user) {
-    if params[:user]
-      User.new(params[:user])
-    elsif params[:id]
-      User.find(params[:id])
-    else
-      User.new
-    end
-  }
+  expose(:user)
 
 # ---
 
   def new
   end
 
-  def create
-    if user.save
-      sign_in :user, user
-
-      if cookies[:invite_code] and
-        referrer = User.where(invite_code: cookies[:invite_code]).first
-
-        referral = Referral.new
-        referral.source = referrer
-        referral.referrer = user
-      end
-
-      track '$signup',
-        distinct_id: user.id.to_s,
-        'initial credit' => User::FREE_CREDITS,
-        'referred?' => user.referred?
-
-      respond_with(user, location: verify_user_path)
-    else
-      clean_up_passwords(user)
-      respond_with(user)
-    end
+  def show
   end
 
   def dashboard
   end
 
-  def edit
-  end
-
   def update
-    authorize! :update, current_user
-
-    current_user.update_attributes(params[:user])
-
-    if current_user.save
-      flash[:success] = 'Your settings were changed'
-    end
-
-    respond_with(current_user, location: edit_user_path)
-  end
-
-  def unlink_player
     authorize! :update, user
 
-    user.minecraft_player = nil
+    respond_to do |format|
+      if user.update_attributes(params[:user])
+        format.html { redirect_to user_root_path, notice: 'Updated settings' }
+      else
+        format.html { render controller: 'devise::registrations', action: 'edit' }
+      end
+    end
 
-    user.save!
-
-    respond_with(current_user, location: edit_user_path)
   end
 
-  def verify
-    redirect_to(user_root_path) if current_user.verified?
-  end
+  # def unlink_player
+  #   authorize! :update, user
+  #
+  #   user.minecraft_player = nil
+  #
+  #   user.save!
+  #
+  #   respond_with(current_user, location: edit_user_path)
+  # end
+
+  # def verify
+  #   redirect_to(user_root_path) if current_user.verified?
+  # end
 
 end

@@ -1,10 +1,10 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
-require 'turn/autorun'
+require File.expand_path('../blueprints', __FILE__)
 
 Turn.config.ansi = true
-Turn.config.trace = 1
+Turn.config.trace = 5
 
 OmniAuth.config.test_mode = true
 

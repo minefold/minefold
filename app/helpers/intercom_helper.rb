@@ -17,7 +17,7 @@ module IntercomHelper
       settings[:custom_data] = {
         # 'beta?' => current_user.beta?,
         # 'created worlds' => current_user.created_worlds.count,
-        'credits' => current_user.credits,
+        'cr' => current_user.cr,
         # 'facebook?' => current_user.facebook_linked?,
         # 'minutes played' => current_user.minutes_played,
         # 'max world players' => current_user.world_player_counts.max,
