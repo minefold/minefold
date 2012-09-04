@@ -11,6 +11,12 @@ minecraft = Game.create(
   name: 'Minecraft'
 )
 
+# Funpacks
+
+vanilla = Funpack.new(name: 'Vanilla Minecraft')
+vanilla.game = minecraft
+vanilla.save
+
 
 # Users
 

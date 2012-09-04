@@ -105,9 +105,10 @@
             .nav-collapse.pull-right
               %ul.nav
                 - if signed_in?
-                  %li= link_to 'Dashboard', user_root_path
-
-                %li= link_to 'Browse', servers_path
+                  %li= link_to 'Servers', servers_path
+                
+                %li= link_to 'Games', games_path
+                %li= link_to 'Help', help_page_path
 
                 - case
                 - when !signed_in?

@@ -8,15 +8,25 @@ html {
   background-color: $white;
 }
 
+a {
+  color: $blue;
+  text-decoration: none;
+}
+
+a:hover {
+  color: darken($blue, 20%);
+  text-decoration: none;
+}
+
 hr {
   border: none;
   margin: lines(4) 0;
   height: 0;
-  
+
   &.light {
     border-top: 1px solid white;
   }
-  
+
   &.small {
     margin: lines(2) 0;
   }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120828185222) do
+ActiveRecord::Schema.define(:version => 20120903225628) do
 
   create_table "credit_packs", :force => true do |t|
     t.integer  "cents",      :default => 0, :null => false
@@ -20,11 +20,30 @@ ActiveRecord::Schema.define(:version => 20120828185222) do
     t.datetime "updated_at",                :null => false
   end
 
+  create_table "funpacks", :force => true do |t|
+    t.string  "name"
+    t.integer "game_id"
+    t.integer "creator_id"
+  end
+
+  add_index "funpacks", ["game_id"], :name => "index_funpacks_on_game_id"
+
   create_table "games", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "memberships", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "server_id"
+    t.string   "role"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "memberships", ["server_id"], :name => "index_memberships_on_server_id"
+  add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
 
   create_table "players", :force => true do |t|
     t.integer  "game_id"

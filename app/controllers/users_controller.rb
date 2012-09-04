@@ -2,7 +2,7 @@ class UsersController < Devise::RegistrationsController
   respond_to :html
 
   prepend_before_filter :require_no_authentication, only: [:new, :create]
-  prepend_before_filter :authenticate_scope!, only: [:dashboard, :edit, :update, :verify, :pro]
+  prepend_before_filter :authenticate_scope!, only: [:edit, :update, :verify, :pro]
 
 # ---
 
@@ -14,9 +14,6 @@ class UsersController < Devise::RegistrationsController
   end
 
   def show
-  end
-
-  def dashboard
   end
 
   def update

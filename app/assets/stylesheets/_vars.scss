@@ -25,3 +25,14 @@ $radius: 3px;
 @function lines($n: 1) {
   @return $n * $line;
 }
+
+
+// Bootstrap mixins
+
+@mixin pull-right {
+  float: right;
+}
+
+@mixin pull-left {
+  float: left;
+}

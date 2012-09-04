@@ -6,7 +6,7 @@
     %center
       .page-header
         %h1 Sign in to Minefold
-        
+
       = link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook), class: %w(btn btn-large btn-primary)
 
     %hr
@@ -15,24 +15,25 @@
 
       %fieldset
         .control-group
-          = f.label :email_or_username, class: %w(control-label)
           .controls
-            = f.text_field :email_or_username, tabindex: 1, class: %w(span4)
+            = f.text_field :email_or_username, tabindex: 1, class: %w(span4), placeholder: 'Email or username'
 
         .control-group
-          = f.label :password, class: %w(control-label)
           .controls
-            = f.password_field :password, tabindex: 2, class: %w(span4)
-            %p.help-block
+            = f.password_field :password, tabindex: 2, class: %w(span4), placeholder: 'Password'
+            %small.help-block
               = link_to new_user_password_path, class: 'forgot' do
                 Forgotten your password?
 
         .control-group
           .controls
-            = f.label :remember_me, class: 'checkbox' do
-              = f.check_box :remember_me, tabindex: 3
-              Stay signed in
 
         .form-actions
-          = f.submit 'Sign in', tabindex: 4, class: %w(btn btn-primary)
-          = link_to 'Cancel', root_path, tabindex: 4, class: %w(btn)
+          .control-group.pull-left
+            .controls
+              = f.label :remember_me, class: 'checkbox' do
+                = f.check_box :remember_me, tabindex: 3
+                Stay signed in
+
+          .pull-right
+            = f.submit 'Sign in', tabindex: 4, class: %w(btn)

@@ -1,6 +1,14 @@
 # TODO: this stuff shouldn't be hardcoded
 
-class Funpack < Struct.new(:id, :name, :description, :settings)
+class Funpack < ActiveRecord::Base
+
+  attr_accessible :name
+
+  belongs_to :creator, class_name: 'User'
+  belongs_to :game
+
+
+  # Struct.new(:id, :name, :description, :settings)
 #   def initialize options
 #     super(options[:id], options[:name], options[:description], options[:settings])
 #   end

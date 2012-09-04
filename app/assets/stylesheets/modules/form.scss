@@ -1,6 +1,16 @@
 @import 'vars';
 
 form {
+
+  textarea, #{$all-text-inputs} {
+    border: none;
+    @include box-shadow(0 0 0 2px rgba(black, 0.1) inset );
+
+    &:focus {
+      @include box-shadow(0 0 0 2px rgba($blue, 0.4) inset );
+    }
+  }
+
   .form-actions {
     background-color: transparent;
     padding: 0;

@@ -28,20 +28,17 @@ Minefold::Application.routes.draw do
   devise_for :user,
     :controllers => { :omniauth_callbacks => 'omniauth_callbacks' }
 
-  resource :order, :only => [:create]
-
-
-  # ---
-
-  resources :games
-
-  resources :servers
-
   # Authentication
   devise_scope :user do
 
+    resource :order, :only => [:create]
+
+    resources :games
+
+    resources :servers
+
     authenticated do
-      root :to => 'users#dashboard', :as => :user_root
+      root :to => 'servers#index', :as => :user_root
     end
 
     resources :users, :path => '/',

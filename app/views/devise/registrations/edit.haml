@@ -3,83 +3,88 @@
 .page-header
   %h1 Settings
 
-.row
-  .span3
-    %ul.nav.nav-tabs.nav-stacked
-      %li.active= link_to 'Profile', '#profile', data: {toggle: 'tab'}
-      %li= link_to 'Notifications', '#notifications', data: {toggle: 'tab'}
-      %li= link_to 'Billing', '#billing', data: {toggle: 'tab'}
-      %li= link_to 'Password', '#password', data: {toggle: 'tab'}
+.account-form-section.row
+  .section-label.span3
+    %h3 Profile
+    / %ul.nav.nav-tabs.nav-stacked
+    /   %li.active= link_to 'Profile', '#profile', data: {toggle: 'tab'}
+    /   %li= link_to 'Notifications', '#notifications', data: {toggle: 'tab'}
+    /   %li= link_to 'Billing', '#billing', data: {toggle: 'tab'}
+    /   %li= link_to 'Password', '#password', data: {toggle: 'tab'}
 
-    %p You can change your avatar at #{link_to 'Minecraft.net', 'http://minecraft.net/profile', target: '_blank'}. If you do, it may take up to 24 hours to update.
-
-
-  .span6.tab-content
-    #profile.tab-pane.active
-      = form_for resource, method: :put do |f|
-        .control-group
-          = f.label :username
-          .controls
-            = f.text_field :username
-
-        .control-group
-          = f.label :first_name, 'Name'
-          .controls
-            = f.text_field :first_name, placeholder: 'First name'
-            = f.text_field :last_name, placeholder: 'Last name'
-
-        .form-actions
-          = f.submit 'Update settings', class: %w(btn btn-primary)
+    / %p You can change your avatar at #{link_to 'Minecraft.net', 'http://minecraft.net/profile', target: '_blank'}. If you do, it may take up to 24 hours to update.
 
 
-    #notifications.tab-pane
-      = form_for resource, method: :put do |f|
+  .span6
+    = form_for resource, method: :put do |f|
+      .control-group
+        .controls
+          = f.text_field :username, placeholder: 'Username'
 
-        .control-group
-          .controls
-            = f.label :server_emails, class: %w(checkbox) do
-              = f.check_box :server_emails
-              Server emails
+      .control-group
+        .controls
+          = f.text_field :first_name, placeholder: 'First name'
+          = f.text_field :last_name, placeholder: 'Last name'
 
-            = f.label :membership_emails, class: %w(checkbox) do
-              = f.check_box :membership_emails
-              Membership emails
+      .form-actions
+        = f.submit 'Save', class: %w(btn btn-mini)
 
-            = f.label :membership_request_emails, class: %w(checkbox) do
-              = f.check_box :membership_request_emails
-              Membership Request emails
+.account-form-section.row
+  .section-label.span3
+    %h3 Notifications
 
-            = f.label :session_emails, class: %w(checkbox) do
-              = f.check_box :session_emails
-              Session emails
+  .span6
+    = form_for resource, method: :put do |f|
 
-        .form-actions
-          = f.submit 'Update notification preferences', class: %w(btn btn-primary)
+      .control-group
+        .controls
+          = f.label :server_emails, class: %w(checkbox) do
+            = f.check_box :server_emails
+            Server emails
+
+          = f.label :membership_emails, class: %w(checkbox) do
+            = f.check_box :membership_emails
+            Membership emails
+
+          = f.label :membership_request_emails, class: %w(checkbox) do
+            = f.check_box :membership_request_emails
+            Membership Request emails
+
+          = f.label :session_emails, class: %w(checkbox) do
+            = f.check_box :session_emails
+            Session emails
+
+      .form-actions
+        = f.submit 'Save', class: %w(btn btn-mini)
 
 
-    #billing.tab-pane
+.account-form-section.row
+  .section-label.span3
+    %h3 Billing
+  .span6
 
 
-    #password.tab-pane
-      = form_for resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }, class: %w(form-horizontal) do |f|
+.account-form-section.row
+  .section-label.span3
+    %h3 Password
 
-        .control-group
-          = f.label :current_password, 'Curent Password', class: 'control-label'
-          .controls
-            = f.text_field :current_password, class: %w()
+  .span6
+    = form_for resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }, class: %w(form-horizontal) do |f|
 
-        .control-group
-          = f.label :password, 'New Password', class: 'control-label'
-          .controls
-            = f.text_field :password, class: %w()
+      .control-group
+        .controls
+          = f.password_field :current_password, placeholder: 'Current password'
 
-        .control-group
-          = f.label :password_confirmation, 'Confirm New Password', class: 'control-label'
-          .controls
-            = f.text_field :password_confirmation, class: %w()
+      .control-group
+        .controls
+          = f.password_field :password, placeholder: 'New password'
 
-        .form-actions
-          = f.submit 'Change password', class: %w(btn btn-primary)
+      .control-group
+        .controls
+          = f.password_field :password_confirmation, placeholder: 'Confirm new password'
+
+      .form-actions
+        = f.submit 'Save', class: %w(btn btn-mini)
 
 
 

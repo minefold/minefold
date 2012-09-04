@@ -2,6 +2,12 @@ class Server < ActiveRecord::Base
 
   belongs_to :creator, class_name: 'User'
 
+  belongs_to :funpack
+  validates_presence_of :funpack
+
+  has_many :memberships
+  has_many :users, through: :memberships
+
   #
   # mount_uploader :pic, PictureUploader
   #
