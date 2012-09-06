@@ -3,9 +3,9 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require File.expand_path('../blueprints', __FILE__)
 
-Turn.config.format = :dot
-Turn.config.ansi = true
-Turn.config.trace = 5
+Turn.config.ansi = ENV['ansi'] || true
+Turn.config.format = ENV['rpt'] || 'pretty'
+Turn.config.trace = ENV['backtrace'] || 5
 
 OmniAuth.config.test_mode = true
 
