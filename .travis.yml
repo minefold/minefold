@@ -3,4 +3,4 @@ rvm:
   - 1.9.3
 before_script:
   - gem install bundler --pre
-  - psql -c 'create database minefold_test;'
+  - psql -c 'create database minefold_test;' -U postgres
