@@ -9,20 +9,6 @@ class UsersControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "GET #dashboard unauthenticated" do
-    get :dashboard
-    assert_unauthenticated_response
-  end
-
-  test "GET #dashboard" do
-    user = User.make!
-    sign_in(user)
-
-    get :dashboard
-    assert_response :success
-  end
-
-
   test "PUT #update" do
     user = User.make!
     put :update, id: user.id

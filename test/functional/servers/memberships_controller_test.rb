@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Worlds::MembershipsControllerTest < ActionController::TestCase
+class Servers::MembershipsControllerTest < ActionController::TestCase
 
 #   test "get index" do
 #     world = Fabricate(:world)

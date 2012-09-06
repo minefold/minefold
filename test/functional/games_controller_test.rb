@@ -4,7 +4,7 @@ class GamesControllerTest < ActionController::TestCase
 
   test "GET #show" do
     game = Game.make!
-    get :index, id: game.id
+    get :show, id: game.id
     assert_response :success
   end
 

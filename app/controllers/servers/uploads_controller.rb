@@ -1,7 +1,12 @@
-class Worlds::UploadsController < ApplicationController
+class Servers::UploadsController < ApplicationController
+
   prepend_before_filter :authenticate_user!
 
-  expose(:world)
+# --
+
+  expose :server
+
+# --
 
   def create
     upload = WorldUpload.create s3_key: params[:key],

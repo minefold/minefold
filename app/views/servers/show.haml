@@ -3,6 +3,11 @@
 .page-title
   %h1= server.name
 
+%ul.nav
+  %li= link_to 'Activity', server_path(server)
+  %li= link_to 'Map', map_server_path(server)
+  %li= link_to 'Members', server_memberships_path(server)
+
 - if server.individual?
   Server is running!
 - else

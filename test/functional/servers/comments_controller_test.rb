@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Worlds::CommentsControllerTest < ActionController::TestCase
+class Servers::CommentsControllerTest < ActionController::TestCase
 
   # test "post create" do
   #   world = Fabricate(:world)

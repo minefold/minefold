@@ -35,7 +35,17 @@ Minefold::Application.routes.draw do
 
     resources :games
 
-    resources :servers
+    resources :servers do
+      get :map, :on => :member
+
+      resources :memberships
+
+      get 'policy.xml',
+        :controller => 'servers/uploads',
+        :action => :policy,
+        :format => :xml,
+        :on => :collection
+    end
 
     authenticated do
       root :to => 'servers#index', :as => :user_root

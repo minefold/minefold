@@ -19,21 +19,6 @@ class S3UploadPolicy
     @expires = opts[:expires] || (Time.now + 3600)
   end
 
-  def to_hash
-    { s3: {
-        accessKeyId: access_key_id,
-        acl: acl,
-        bucket: bucket,
-        contentType: content_type,
-        expires: expiration_time,
-        key: key,
-        secure: false,
-        signature: signature,
-        policy: policy
-      }
-    }
-  end
-
   def expiration_time
     @expires.utc.strftime('%Y-%m-%dT%H:%M:%S.000Z')
   end
