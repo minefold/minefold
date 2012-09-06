@@ -4,3 +4,4 @@ rvm:
 before_script:
   - gem install bundler --pre
   - psql -c 'create database minefold_test;' -U postgres
+  - rake db:test:prepare
