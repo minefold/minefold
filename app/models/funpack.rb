@@ -1,8 +1,7 @@
 # TODO: this stuff shouldn't be hardcoded
 
 class Funpack < ActiveRecord::Base
-
-  attr_accessible :name
+  attr_accessible :name, :game, :creator
 
   belongs_to :creator, class_name: 'User'
   belongs_to :game

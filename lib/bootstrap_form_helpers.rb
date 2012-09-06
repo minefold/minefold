@@ -1,12 +1,13 @@
 module BootstrapFormHelpers
   include TextHelper
 
+  # TODO Put show error messages on field
   def control_group(*fields, &blk)
     group_class = ['control-group']
 
-    if object.errors.any? and fields.any? {|field| self.object.errors[field].any? }
-      group_class << 'error'
-    end
+    # if object.errors.any? and fields.any? {|field| self.object.errors[field].any? }
+    #   group_class << 'error'
+    # end
 
     @template.content_tag(:div, class: group_class, &blk)
   end

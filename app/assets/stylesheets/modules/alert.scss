@@ -3,11 +3,11 @@
 .alert {
   border: none;
   text-shadow: none;
-  font-weight: 800;
+  font-weight: 400;
   border-radius: $radius;
 
-  color: darken($yellow, 40%);
-  background-color: $yellow;
+  color: darken($yellow, 30%);
+  background-color: lighten($yellow, 30%);
 
   &.alert-success, &.alert-notice {
     color: $white;

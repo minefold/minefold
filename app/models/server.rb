@@ -1,4 +1,5 @@
 class Server < ActiveRecord::Base
+  attr_accessible :name, :funpack_id, :individual, :settings
 
   belongs_to :creator, class_name: 'User'
 
@@ -8,33 +9,17 @@ class Server < ActiveRecord::Base
   has_many :memberships
   has_many :users, through: :memberships
 
-  #
+
+  validates_presence_of :name
+
   # mount_uploader :pic, PictureUploader
-  #
-  #
-  # # Minecraft Specific Server stuff
-  #
-  # store :settings, accessors: [ :game_mode, :level_type, :seed, :difficulty,
-  #                               :pvp, :spawn_monsters, :spawn_animals,
-  #                               :generate_structures, :spawn_npcs, :whitelist,
-  #                               :blacklist, :ops ]
-  #
-  #
-  # GAME_MODES = [:survival, :creative]
-  # LEVEL_TYPES = %w(DEFAULT FLAT LARGEBIOMES)
-  # DIFFICULTIES = [:peaceful, :easy, :normal, :hard]
-  #
-  # validates_numericality_of :game_mode,
-  #   only_integer: true,
-  #   greater_than_or_equal_to: 0,
-  #   less_than: GAME_MODES.size
-  #
-  # validates_numericality_of :difficulty,
-  #   only_integer: true,
-  #   greater_than_or_equal_to: 0,
-  #   less_than: DIFFICULTIES.size
-  #
-  #
+
+
+  # Minecraft Specific Server stuff
+
+  store :settings
+
+
   # def user_whitelisted?(username)
   # end
   #

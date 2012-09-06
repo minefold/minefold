@@ -15,7 +15,7 @@
     / %p You can change your avatar at #{link_to 'Minecraft.net', 'http://minecraft.net/profile', target: '_blank'}. If you do, it may take up to 24 hours to update.
 
 
-  .span6
+  .span9
     = form_for resource, method: :put do |f|
       .control-group
         .controls
@@ -29,11 +29,19 @@
       .form-actions
         = f.submit 'Save', class: %w(btn btn-mini)
 
+
+.account-form-section.row
+  .section-label.span3
+    %h3 Accounts
+
+  .span9
+
+
 .account-form-section.row
   .section-label.span3
     %h3 Notifications
 
-  .span6
+  .span9
     = form_for resource, method: :put do |f|
 
       .control-group
@@ -61,14 +69,16 @@
 .account-form-section.row
   .section-label.span3
     %h3 Billing
-  .span6
+  .span9
+    %p
+      You currently have <strong>#{pluralize(current_user.cr, 'credit', 'credits')}.
 
 
 .account-form-section.row
   .section-label.span3
     %h3 Password
 
-  .span6
+  .span9
     = form_for resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }, class: %w(form-horizontal) do |f|
 
       .control-group
@@ -85,51 +95,3 @@
 
       .form-actions
         = f.submit 'Save', class: %w(btn btn-mini)
-
-
-
-      / %fieldset.notifications
-      /   %legend Notifications
-      /   = f.fields_for :notifications do |n|
-      /     .control-group
-      /       = n.label :world_membership_added, class: 'checkbox' do
-      /         = n.check_box :world_membership_added, checked: f.object.notify?(:world_membership_added)
-      /         You are added to a world
-      /
-      /     .control-group
-      /       = n.label :world_membership_request_created, class: 'checkbox' do
-      /         = n.check_box :world_membership_request_created, checked: f.object.notify?(:world_membership_request_created)
-      /         Someone asks to join your world
-      /
-      /     .control-group
-      /       = n.label :world_started, class: 'checkbox' do
-      /         = n.check_box :world_started, checked: f.object.notify?(:world_started)
-      /         A friend starts playing
-      /
-      /     .control-group
-      /       = n.label :world_started, class: 'checkbox' do
-      /         = n.check_box :world_started, checked: f.object.notify?(:world_started)
-      /         A friend starts playing
-      /
-      /     .control-group
-      /       = n.label :credits_reset, class: 'checkbox' do
-      /         = n.check_box :credits_reset, checked: f.object.notify?(:credits_reset)
-      /         Your monthly time is reset
-      /
-      /     .control-group
-      /       = n.label :world_comment_added, class: 'checkbox' do
-      /         = n.check_box :world_comment_added, checked: f.object.notify?(:world_comment_added)
-      /         Someone comments on a world
-      /
-      /     .control-group
-      /       = n.label :campaign, class: 'checkbox' do
-      /         = n.check_box :campaign, checked: f.object.notify?(:campaign)
-      /         Minefold releases new features
-
-      / %fieldset
-      /   %legend Time
-      /   - if current_user.pro?
-      /     %p All the time!
-      /     %p Your plan expires #{time_ago_in_words current_user.plan_expires_at} from now (#{I18n.l current_user.plan_expires_at.to_date, format: :long}).
-      /
-      /   - else

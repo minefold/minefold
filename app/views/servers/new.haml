@@ -1,0 +1,63 @@
+- title 'Create a new server'
+
+- @games = Game.all
+- @funpack = Funpack.first
+
+.row
+  .span6.offset3
+    .page-header.page-header-progress
+      %ol
+        %li.active Game
+        %li Settings
+        %li Billing
+
+    = form_for server do |f|
+      %fieldset
+        %legend Game
+
+        - @games.each do |game|
+          .control-group
+            .control-label= game.name
+            .controls
+              - game.funpacks.each do |funpack|
+                %label.radio{for: "server_funpack_id_#{funpack.id.to_s}"}
+                  = funpack.name
+                  %input{type: 'radio', name: 'server[funpack_id]', value: funpack.id.to_s, id: "server_funpack_id_#{funpack.id.to_s}"}
+
+
+      %fieldset
+        %legend Settings
+
+        = f.control_group :name do
+          .controls
+            = f.text_field :name, placeholder: 'Name', class: %w(span6)
+
+        // Game specific setings
+        = f.fields_for :settings do |s|
+          = render partial: @funpack.game.settings_partial, locals: {f: s}
+
+
+      %fieldset
+        %legend Billing
+
+        = f.control_group :individual do
+          .controls
+            %label.radio
+              = f.radio_button :individual, false
+              %strong Community
+              %p It costs you (the owner) <strong>5 cr</strong> an hour to run the server. Any member can play on the server without costing them any credits. You choose when to start and stop the server.
+              %p Reccomended for families and schools.
+
+            %label.radio{class: ('muted' if !@funpack.game.individual?)}
+              = f.radio_button :individual, true, disabled: !@funpack.game.individual?
+              %strong Individual
+              %p It costs each person <strong>1cr</strong> an hour to play on the server. The server is always running.
+              %p Reccomended for groups of friends.
+
+              - if !@funpack.game.individual?
+                .alert
+                  #{@funpack.game.name} doesn't support individual billing.
+
+
+      .form-actions
+        = f.submit 'Create server', class: %w(btn)

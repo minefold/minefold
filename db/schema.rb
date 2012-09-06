@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120903225628) do
+ActiveRecord::Schema.define(:version => 20120905183708) do
 
   create_table "credit_packs", :force => true do |t|
     t.integer  "cents",      :default => 0, :null => false
@@ -30,8 +30,9 @@ ActiveRecord::Schema.define(:version => 20120903225628) do
 
   create_table "games", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "individual", :default => false, :null => false
   end
 
   create_table "memberships", :force => true do |t|
@@ -73,6 +74,7 @@ ActiveRecord::Schema.define(:version => 20120903225628) do
     t.integer  "pageviews",            :default => 0
     t.datetime "created_at",                                            :null => false
     t.datetime "updated_at",                                            :null => false
+    t.boolean  "individual",           :default => false,               :null => false
   end
 
   add_index "servers", ["host"], :name => "index_servers_on_host", :unique => true

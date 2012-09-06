@@ -3,9 +3,12 @@
 .account-form-section {
   padding-top: lines(2);
   padding-bottom: lines(2);
+  margin-left: 0px;
   border-top: 1px solid darken(white, 5%);
 
   .section-label {
+    margin-left: 0;
+
     h3 {
       font-size: 14px;
       line-height: lines(4);

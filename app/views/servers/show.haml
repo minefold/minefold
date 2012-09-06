@@ -1,0 +1,20 @@
+- title server.name
+
+.page-title
+  %h1= server.name
+
+- if server.individual?
+  Server is running!
+- else
+  Server <strong>isn't</strong> running.
+
+  %p
+    Run the server for
+    %select
+      - (1..24).each do |hour|
+        %option= pluralize hour, 'hour', 'hours'
+  %p
+    This will cost <strong>10 credits</strong>. (You have #{current_user.cr} cr)
+    It will stop running at #{5.hours.from_now}
+  %p
+    %a.btn.btn-primary{href: '#'} Start

@@ -8,14 +8,13 @@ one_year     = CreditPack.create(cents: 4_500, cr: 22_500)
 # Games
 
 minecraft = Game.create(
-  name: 'Minecraft'
+  name: 'Minecraft',
+  individual: true
 )
 
-# Funpacks
-
-vanilla = Funpack.new(name: 'Vanilla Minecraft')
-vanilla.game = minecraft
-vanilla.save
+tf2 = Game.create(
+  name: 'Team Fortress 2'
+)
 
 
 # Users
@@ -48,3 +47,18 @@ dave.admin = true
 dave.players.new(game: minecraft, uid: 'dave@snappyco.de')
 
 dave.save!
+
+
+# Funpacks
+
+Funpack.create(
+  name: 'Minecraft Official',
+  game: minecraft,
+  creator: chris
+)
+
+Funpack.create(
+  name: 'Team Fortress 2 Official',
+  game: tf2,
+  creator: chris
+)
