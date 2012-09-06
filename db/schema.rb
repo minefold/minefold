@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120905183708) do
+ActiveRecord::Schema.define(:version => 20120906175614) do
 
   create_table "credit_packs", :force => true do |t|
     t.integer  "cents",      :default => 0, :null => false
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20120905183708) do
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.boolean  "individual", :default => false, :null => false
+    t.string   "slug",       :default => ""
   end
 
   create_table "memberships", :force => true do |t|
