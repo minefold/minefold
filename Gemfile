@@ -38,7 +38,6 @@ gem 'carrierwave-mongoid', require: 'carrierwave/mongoid'
 group :development do
   gem 'heroku'
   gem 'foreman'
-  gem 'sqlite3'
 end
 
 group :test do
