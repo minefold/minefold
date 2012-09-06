@@ -10,15 +10,12 @@ class PusherControllerTest < ActionController::TestCase
 
   test "GET #auth authorized" do
     user = User.make!
-    sign_in user
+    sign_in(user)
 
-    any_instance_of(Pusher::Channel) do |ch|
-      mock(ch).authenticate('socket', user_id: user.id.to_s) do
-        {status: 'ok'}
-      end
-    end
+    channel_mock = mock(Object.new).authenticate('socket_1', user_id: user.id.to_s)
+    stub(Pusher, :[]).with('user/1') { channel_mock }
 
-    get :auth, socket_id: 'socket'
+    get :auth, socket_id: 'socket_1', channel_name: 'user/1'
 
     assert_response :success
   end
