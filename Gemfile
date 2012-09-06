@@ -46,7 +46,6 @@ group :test do
   gem 'turn'
   gem 'minitest'
   gem 'rr'
-  gem 'ruby-prof'
 
   gem 'machinist'
   gem 'faker'
