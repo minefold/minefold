@@ -28,12 +28,12 @@ class Servers::UploadsControllerTest < ActionController::TestCase
   # end
 
   # TODO Not sure why this is failing with 401 unauthorized
-  # test "get policy unauthenticated" do
-  #   get :policy, format: :xml
-  #   assert_unauthenticated_response
-  # end
+  test "GET #policy unauthenticated" do
+    get :policy, format: :xml
+    assert_unauthenticated_response
+  end
 
-  test "get policy" do
+  test "GET #policy" do
     user = User.make!
     sign_in(user)
 

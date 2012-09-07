@@ -29,8 +29,9 @@ class ActionController::TestCase
   end
 
   def assert_unauthenticated_response
-    assert_response :redirect
-    assert_redirected_to new_user_session_path
+    # This is so hacky but there doesn't seem to be a cleaner way.
+    assert @request.env['action_controller.instance'].is_a?(Devise::FailureApp),
+      "Unauthenticated #{@request.method} #{@request.path} wasn't a FailureApp"
   end
 
   def assert_unauthorized_response
