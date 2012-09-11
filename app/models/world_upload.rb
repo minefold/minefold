@@ -27,12 +27,12 @@ class WorldUpload
 
   # Copies the uploaded file from S3 to a local tmpdir
   def download!
-    remote = self.class.storage.directories
-      .create(key: ENV['UPLOADS_BUCKET'])
-      .files.get(s3_key)
+    File.open(uploaded_archive_path, File::RDWR|File::CREAT) do |local|
+      directory = self.class.storage.directories.create(key: ENV['UPLOADS_BUCKET'])
 
-    File.open(uploaded_archive_path, 'wb') do |f|
-      f.write(remote.body)
+      remote = directory.files.get(s3_key)
+      remote.body = local
+      remote.save
     end
   end
 

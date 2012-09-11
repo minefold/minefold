@@ -42,6 +42,7 @@ class Application.WorldUploadView extends Backbone.View
     @$('.help-block').hide()
     @$('filename').text(a.name)
     @$('input[type=file]').hide()
+    @$('.progress').removeClass('progress-danger')
     # @$('.progress').show()
 
     # $('#s3upload_world_path object').hide()
@@ -56,8 +57,8 @@ class Application.WorldUploadView extends Backbone.View
 
   error: (msg) =>
     @$('.help-block').hide()
-    @$('.help-block-error .reason').text(msg)
-    @$('.help-block-error').show()
+    @$('.error-help-block .reason').text(msg)
+    @$('.error-help-block').show()
     @$('.progress').addClass('progress-danger')
 
     $('#s3upload_world_path').show()
