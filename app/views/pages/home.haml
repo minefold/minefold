@@ -93,7 +93,7 @@
     #latest-blog-post.span6
     - content_for :tail do
       :javascript
-        window.displayLatestBlogPost = function(data) {
+        window.renderLatestBlogPost = function(data) {
           var post = data.posts[0];
           var link = $('<a></a>').
                        text(post['regular-title']).
@@ -102,7 +102,7 @@
           $('#latest-blog-post').empty().append(link);
         };
         
-      %script{src: 'http://blog.minefold.com/api/read/json?callback=displayLatestBlogPost&num=1'}
+      %script{src: 'http://blog.minefold.com/api/read/json?callback=renderLatestBlogPost&num=1'}
   
     .span2
       Follow Minefold
