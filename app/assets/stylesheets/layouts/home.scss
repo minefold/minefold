@@ -1,4 +1,95 @@
 @import 'vars';
 
 .l-home {
+  
+  #movie {
+    width: 640px;
+    height: 360px;
+    margin: 0 auto;
+    background-color: black;
+    border: 1px solid rgba(black, 0.1);
+    
+    margin-bottom: lines(16);
+  }
+  
+  
+  section {
+    padding-top: lines(4);
+    padding-bottom: lines(4) - 1px;
+    border-bottom: 1px solid darken(white, 5%);
+    
+    h3 {
+      font-family: $futura;
+      margin: 0;
+      line-height: lines(4);
+      color: rgba(black, 0.2);
+      font-size: 18px;
+    }
+  }
+  
+  .games-list {
+    .game {
+      a {
+        display: block;
+        line-height: lines(4);
+      }
+      
+      i {
+        color: rgba(black, 0.6);
+      }
+    }
+    
+    .coming-soon {
+      color: rgba($green, 1);
+    }
+  }
+  
+  .feature-gallery {
+    
+    .nav {
+      border-bottom: none;
+      margin-left: -$gw-gutter;
+      
+      li {
+        padding: 0;
+        -webkit-font-smoothing: antialiased;
+      
+        h4 {
+          font-family: $futura;
+          font-weight: 600;
+          font-style: italic;
+        }
+        
+        a {
+          padding: 0; margin: 0;
+          color: #CCC;
+          display: block;
+        }
+        
+        &:hover {
+          border: none;
+          margin-top: 0; padding-top: 0;
+          margin-bottom: 0; padding-bottom: 0; 
+          margin: 0; padding: 0;
+          margin-left: $gw-gutter;
+        }
+      
+        &:hover a {margin: 0; padding: 0;
+          border: none;
+          background-color: transparent;
+          color: rgba(black, 0.3);
+        }
+        
+
+        &.active a {
+          color: black;
+          border: none;
+          @include box-shadow(none);
+//          border-bottom: 1px solid black;
+//          padding-bottom: lines(4);
+//          margin-bottom: -lines(8);
+        }
+      } 
+    }
+  }
 }

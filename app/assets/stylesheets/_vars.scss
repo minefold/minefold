@@ -1,5 +1,7 @@
 @import 'bourbon';
 
+$futura: "futura-pt-1","futura-pt-2";
+
 // Colors
 
 $purple: #549;
@@ -12,6 +14,8 @@ $white: #FFF;
 $black: #000;
 
 
+$bg: $purple;
+
 // Grid
 
 $ncols:  12;
@@ -20,7 +24,7 @@ $line: 5px;
 $gw-column: 60px;
 $gw-gutter: 20px;
 
-$radius: 3px;
+$radius: 0px;
 
 @function lines($n: 1) {
   @return $n * $line;

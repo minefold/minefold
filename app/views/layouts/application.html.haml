@@ -56,7 +56,10 @@
       :javascript
         mixpanel.identify(#{current_user.id.to_s.to_json});
         mixpanel.people.set(#{mixpanel_person.to_json});
-
+    
+    <script type="text/javascript" src="//use.typekit.net/qzl8aqw.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    
     = yield :head
 
 
@@ -78,11 +81,11 @@
                   %li= link_to 'Servers', servers_path
 
                 %li= link_to 'Games', games_path
-                %li= link_to 'Help', help_page_path
+                %li= link_to 'Support', help_page_path
 
                 - case
                 - when !signed_in?
-                  %li= link_to 'Sign Up', new_user_registration_path
+                  %li.sign-up= link_to 'Sign Up', new_user_registration_path
 
                   %li.sign-in= link_to 'Sign In', new_user_session_path
 
@@ -135,28 +138,19 @@
 
     %footer
       .container
-        .row
-          .span2
-            = link_to 'Help Center', help_page_path
-            %br
-            = link_to 'Pricing', pricing_page_path
+        %ul.unstyled
+          %li= link_to 'Pricing', pricing_page_path
+          %li= link_to 'Support', help_page_path
+          %li= link_to 'About', about_page_path
+          %li= link_to 'Jobs', jobs_page_path
+          %li= link_to 'Blog', 'http://blog.minefold.com'
 
-          .span2
-            = link_to 'About', about_page_path
-            %br
-            = link_to 'Jobs', jobs_page_path
-
-          .span2
-            = link_to 'Facebook', 'https://facebook.com/minefold'
-            %br
-            = link_to 'Twitter', 'https://twitter.com/minefold'
-
-          .span2.copyright
-            &copy; 2012
-            %a{href: 'http://mutlicorp.com'} Mütli Corp.
-            %br
-            = link_to 'Privacy', privacy_page_path
-            = link_to 'Terms', terms_page_path
+        %p.copyright
+          &copy; 2012
+          %a{href: 'http://mutlicorp.com'} Mütli Corp.
+          Made by coffee in San Francisco.
+          = link_to 'Privacy', privacy_page_path
+          = link_to 'Terms', terms_page_path
 
 
     / ---

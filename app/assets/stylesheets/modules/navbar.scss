@@ -1,7 +1,9 @@
 @import 'vars';
 
 .navbar {
-  margin-bottom: lines(4);
+  padding-bottom: lines(4);
+  margin-bottom: lines(2);
+  border-bottom: 1px solid rgba(black, 0.05);
 
   > .navbar-inner {
     background: transparent;
@@ -16,6 +18,7 @@
   .brand {
     color: $black;
     font-weight: 800;
+    font-family: $futura;
   }
 
   .brand:before {
@@ -26,7 +29,7 @@
     margin-right: 10px;
     @include inline-block;
     float: left;
-    background: lighten($red, 20%) asset-data-url('logo-small.png') no-repeat 50% 50%;
+    background: lighten($blue, 0%) asset-data-url('logo-small.png') no-repeat 50% 50%;
     border-radius: $radius;
   }
 
@@ -46,7 +49,11 @@
       &.upgrade a {
         color: $red;
       }
-
+      
+      &.sign-up a {
+        color: $green;
+      }
+      
       &.sign-in a, &.user a {
         color: $blue;
       }

@@ -5,13 +5,14 @@
   text-rendering: optimizeLegibility;
 
   > h1 {
-    font-size: 28px;
+    font-size: 34px;
+    font-family: $futura;
   }
 
   > h2 {
     color: lighten($black, 60%);
     font-size: 18px;
-    font-weight: 400;
+    font-weight: 200;
     margin-top: - lines(4);
   }
 

@@ -3,25 +3,117 @@
 - track 'visited homepage'
 
 .hero-unit.hero-unit-home
-  %h1 Simple Minecraft servers
-  %h2 Available instantly, free to play for 10 hours a month.
+  %h1 Simple game servers.
+  %h2 Available instantly, free to get started.
 
-  %a.btn.btn-large.btn-primary{href: user_omniauth_authorize_path(:facebook)}
-    Sign up for free now
+#movie{width: 640, height: 360}
 
-  %p
-    or
-    = link_to 'sign up without Facebook', new_user_registration_path
+%section.games-list
+  .row
+    .span2
+      %h3 Games
+  
+    .game.span2
+      = link_to 'Minecraft', '/games/minecraft'
+      %i 50,000 servers
+    
+    .game.span2
+      = link_to 'Team Fortress 2', '/games/team-fortress-2'
+      %i 26,000 servers
+  
+    .game.span2
+      = link_to 'Counter-Strike: GO', '/games/counter-strike-go'
+      %i 10,000 servers
+  
+    .game.span2
+      = link_to 'DayZ', '/games/day-z'
+      %i 5,000 servers
+  
+    .coming-soon.span2 More coming soon!
 
-.row
-  .span4
-    %h2 A fresh perspective
-    %p Every world you create (or upload) gets a beautiful, interactive map that helps you find your bearings.
 
-  .span4
-    %h2 Pay individually
-    %p Instead of one person bearing the cost of a server, Minefold lets everybody join individually. Play for 10 hours a month <em>FREE</em> or upgrade to Minefold <span class="pro">Pro</span> for <em>unlimited</em> hours.
+%section.feature-gallery
+  %ul.nav.nav-tabs.row
+    %li.feature.span4.active
+      %a{href: '#feature-setup', data: {toggle: 'tab'}}
+        %h4 Start
+        %p It takes seconds to start a game server for you and your friends. No technical mumbo-jumbo. You also get a choice in how to pay: split it between your friends of shout them yourself.
+        
+    %li.feature.span4
+      %a{href: '#feature-play', data: {toggle: 'tab'}}
+        %h4 Play
+        %p Our servers are super fast. Using Minefold's proprietry networking software you'll never experience lag again.
+    
+    %li.feature.span4
+      %a{href: '#feature-show-off', data: {toggle: 'tab'}}
+        %h4 Show off
+        %p Once you've finished playing, you get maps, leaderboards and stats about your game.
+      
+  .row
+    .tab-content
+      #feature-setup.tab-pane.active.span6.offset3
+        = image_tag 'setup.png'
+        %center Setup
+        
+      #feature-play.tab-pane.span6.offset3
+        = image_tag 'setup.png'
+        %center Play
+      
+      #feature-show-off.tab-pane.span6.offset3
+        = image_tag 'setup.png'
+        %center Show off
 
-  .span4
-    %h2 Show off
-    %p Minefold is the easiest way to display and share your builds. Anybody can explore your world's map and then “clone” it to have an instantly playable copy.
+
+%section.press
+  .row
+    .span2
+      %h3 Featured in
+  
+    %a.span2{href: 'http://kotaku.com/5846894/minefold-offers-hosted-minecraft-servers-for-you-and-your-friends', title: 'Minefold Offers Hosted Minecraft Servers for You and Your Friends'}
+      = image_tag 'kotaku.png'
+  
+    .span2
+      = image_tag 'ign.png'
+  
+    .span2
+      = image_tag 'gamasutra.png'
+  
+    .span2
+      = image_tag 'rps.png'
+  
+    .span2
+      = image_tag 'techcrunch.png'
+  
+
+%section
+  .row
+    .span2
+      %h3 Latest news
+    
+    #latest-blog-post.span6
+    - content_for :tail do
+      :javascript
+        window.displayLatestBlogPost = function(data) {
+          var post = data.posts[0];
+          var link = $('<a></a>').
+                       text(post['regular-title']).
+                       attr('href', post['url']);
+
+          $('#latest-blog-post').empty().append(link);
+        };
+        
+      %script{src: 'http://blog.minefold.com/api/read/json?callback=displayLatestBlogPost&num=1'}
+  
+    .span2
+      Follow Minefold
+    .span2
+      %a{href: 'https://twitter.com/minefold', title: 'Minefold on Twitter'}= image_tag 'twitter-xs.png'
+      %a{href: 'https://facebook.com/minefold', title: 'Minefold on Facebook'}= image_tag 'facebook-xs.png'
+
+
+%hr.large
+
+.row.call-to-action
+  %center.span4.offset4
+    %p Sign up for your free account now
+    %a.btn.btn-large.btn-block.btn-success Sign up now

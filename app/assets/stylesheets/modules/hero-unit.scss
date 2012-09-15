@@ -4,7 +4,13 @@
   border-radius: $radius * 2;
   border: 2px solid darken(white, 10%);
   background-color: transparent;
-
+  -webkit-font-smoothing: antialiased;
+  
+  h1 {
+    font-family: $futura;
+    margin-bottom: lines(4);
+  }
+  
   p {
     font-weight: normal;
   }
@@ -14,15 +20,22 @@
 .hero-unit.hero-unit-home {
   padding-left: 0; padding-right: 0;
   border: none;
+  text-align: center;
+
+  h1 {
+    color: darken($blue, 20%);
+  }
 
   h2 {
-    margin-bottom: lines(16);
-    font-weight: 500;
-    color: lighten($black, 40%);
+    font-size: 24px;
+    margin-bottom: lines(0);
+    font-weight: 400;
+    color: $blue;
   }
 
   .btn.btn-primary {
     margin-bottom: lines(2);
+    background-color: lighten($green, 10%);
   }
 
   p {

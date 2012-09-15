@@ -9,16 +9,14 @@
 .l-help {
   
   .hero-unit {
-    background-color: $green;
-    border-color: darken($green, 10%);
     border: none;
     text-align: center;
     
     h1 {
-      color: white;
+      color: $green;
     }
     h2 {
-      color: rgba(white, 0.6);
+      color: rgba($green, 0.6);
     }
   }
   
@@ -28,13 +26,8 @@
   }
   
   h3 {
-    font-size: 20px;
-    line-height: 40px;
-  }
-  
-  p {
     font-size: 18px;
-    line-height: 25px;
+    line-height: 40px;
   }
   
   aside {
@@ -55,20 +48,13 @@
     }
     
     h4 {
-      font-size: 20px;
-      line-height: 25px;
       font-style: italic;
       margin-bottom: lines(4);
     }
     
-    p {
-      font-size: 16px;
-    }
-    
     h3 {
       padding: lines(1) 0;
-      font-size: 18px;
-      line-height: 20px;
+      line-height: lines(4);
       font-weight: normal;
       color: rgba(lighten($black, 0%), 0.4);
     }
