@@ -8,7 +8,7 @@ class PagesController < ApplicationController
   def freetime
   end
 
-  def help
+  def support
   end
 
   def home

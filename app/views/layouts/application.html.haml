@@ -81,7 +81,7 @@
                   %li= link_to 'Servers', servers_path
 
                 %li= link_to 'Games', games_path
-                %li= link_to 'Support', help_page_path
+                %li= link_to 'Support', support_page_path
 
                 - case
                 - when !signed_in?
@@ -140,7 +140,7 @@
       .container
         %ul.unstyled
           %li= link_to 'Pricing', pricing_page_path
-          %li= link_to 'Support', help_page_path
+          %li= link_to 'Support', support_page_path
           %li= link_to 'About', about_page_path
           %li= link_to 'Jobs', jobs_page_path
           %li= link_to 'Blog', 'http://blog.minefold.com'

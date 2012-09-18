@@ -1,47 +1,49 @@
 @import 'vars';
 
 .hero-unit {
-  border-radius: $radius * 2;
-  border: 2px solid darken(white, 10%);
+  border: none;
+  text-align: center;
   background-color: transparent;
   -webkit-font-smoothing: antialiased;
+
+  padding-left: 0; padding-right: 0;
   
   h1 {
     font-family: $futura;
     margin-bottom: lines(4);
   }
   
+  h2 {
+    font-size: 24px;
+    margin-bottom: lines(0);
+    font-weight: 400;
+  }
+  
   p {
     font-weight: normal;
+    font-size: 14px;
   }
 
 }
 
 .hero-unit.hero-unit-home {
-  padding-left: 0; padding-right: 0;
-  border: none;
-  text-align: center;
-
   h1 {
     color: darken($blue, 20%);
   }
 
   h2 {
-    font-size: 24px;
-    margin-bottom: lines(0);
-    font-weight: 400;
     color: $blue;
   }
+}
 
-  .btn.btn-primary {
-    margin-bottom: lines(2);
-    background-color: lighten($green, 10%);
+.hero-unit.hero-unit-support {
+  h1 {
+    color: $green;
   }
 
-  p {
-    font-size: 14px;
+  h2 {
+    color: lighten($green, 20%);
   }
-
 }
 
 .hero-unit.hero-unit-welcome-world {
