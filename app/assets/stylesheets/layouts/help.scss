@@ -8,18 +8,6 @@
 
 .l-help {
   
-  .hero-unit {
-    border: none;
-    text-align: center;
-    
-    h1 {
-      color: $green;
-    }
-    h2 {
-      color: rgba($green, 0.6);
-    }
-  }
-  
   h2 {
     font-size: 28px;
     color: lighten($purple, 0%);
@@ -35,6 +23,7 @@
     .well {
       @include box-sizing(border-box);
       background-color: lighten($yellow, 30%);
+      @include border-radius($radius);
       
       &.affix {
         top: 40px;
