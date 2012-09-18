@@ -47,11 +47,12 @@
   .feature-gallery {
     
     .nav {
-      border-bottom: none;
+      border: none;
       margin-left: -$gw-gutter;
       
       li {
-        padding: 0;
+        border: none;
+        padding: 0; margin-bottom: 0;
         -webkit-font-smoothing: antialiased;
       
         h4 {
@@ -61,21 +62,17 @@
         }
         
         a {
-          padding: 0; margin: 0;
+          border: none;
+          padding: 0;
           color: #CCC;
           display: block;
         }
         
         &:hover {
           border: none;
-          margin-top: 0; padding-top: 0;
-          margin-bottom: 0; padding-bottom: 0; 
-          margin: 0; padding: 0;
-          margin-left: $gw-gutter;
         }
       
-        &:hover a {margin: 0; padding: 0;
-          border: none;
+        &:hover a {
           background-color: transparent;
           color: rgba(black, 0.3);
         }
