@@ -1,14 +1,16 @@
 - title  'Sign in'
 - layout :auth
 
+%center
+  .page-header
+    %h1 Sign in
+  
 .row
-  .span6
+  .span4.offset4
     %center
-      .page-header
-        %h1 Sign in to Minefold
-
-  .span4
-    = link_to "Sign in using Facebook", user_omniauth_authorize_path(:facebook), class: %w(btn btn-large btn-primary)
+      = link_to "Sign in using Facebook", user_omniauth_authorize_path(:facebook), class: %w(btn btn-large btn-primary)
+    
+    %hr
     
     = form_for :user, as: :user, url: session_path(:user), class: %w(form-horizontal) do |f|
 
@@ -28,11 +30,10 @@
           .controls
 
         .form-actions
+          .pull-left
+            = f.submit 'Sign in', tabindex: 4, class: %w(btn)
           .control-group.pull-left
             .controls
               = f.label :remember_me, class: 'checkbox' do
                 = f.check_box :remember_me, tabindex: 3
-                Stay signed in
-
-          .pull-right
-            = f.submit 'Sign in', tabindex: 4, class: %w(btn)
+                Remember me
