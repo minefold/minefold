@@ -15,5 +15,11 @@ class Game < ActiveRecord::Base
 
     "games/settings/#{partial_name}"
   end
+  
+  
+  # Ideally this should be extracted out into "capabilities". Things should be turned on and off based on the capabilities of the game. In this case it would be persistant & mappable.
+  def minecraft?
+    self.name == 'Minecraft'
+  end
 
 end

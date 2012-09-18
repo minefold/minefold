@@ -14,5 +14,19 @@ class ServersControllerTest < ActionController::TestCase
     get :index
     assert_response :success
   end
+  
+  test "GET #map" do
+    server = Server.make!
+    
+    get :map, id: server.id
+    assert_response :not_found
+  end
+  
+  test "GET #map for Minecraft server" do
+    server = Server.make!(:minecraft)
+    
+    get :map, id: server.id
+    assert_response :success
+  end
 
 end

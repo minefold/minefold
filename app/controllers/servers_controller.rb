@@ -1,9 +1,13 @@
 class ServersController < ApplicationController
   respond_to :html
 
-  prepend_before_filter :authenticate_user!, :except => [:show]
+  prepend_before_filter :authenticate_user!, :except => [:show, :map]
+
+# --
 
   expose(:server)
+
+# --
 
   def index
   end
@@ -23,6 +27,10 @@ class ServersController < ApplicationController
   end
 
   def show
+  end
+  
+  def map
+    not_found unless server.funpack.game.minecraft?
   end
 
   def edit

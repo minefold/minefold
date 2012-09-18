@@ -18,15 +18,36 @@ Player.blueprint do
   uid { Faker::Internet.user_name }
 end
 
+CreditPack.blueprint do
+  cr { rand(1000) }
+  cents { rand(1000) }
+end
+
 Game.blueprint do
   name { Faker::Company.name }
 end
+
+Funpack.blueprint do
+  name { Faker::Company.name }
+  game
+end
+
+
+
+Server.blueprint do
+  name { Faker::Company.name }
+  funpack
+end
+
 
 Game.blueprint(:minecraft) do
   name { 'Minecraft' }
 end
 
-CreditPack.blueprint do
-  cr { rand(1000) }
-  cents { rand(1000) }
+Funpack.blueprint(:minecraft) do
+  game(:minecraft)
+end
+
+Server.blueprint(:minecraft) do
+  funpack(:minecraft)
 end

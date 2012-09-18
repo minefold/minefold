@@ -20,7 +20,7 @@
             %ul.nav.nav-pills.nav-pills-images.pull-right
               - if server.funpack.game.name == 'Minecraft'
                 %li
-                  %a{href: '#'}= image_tag '101.png', width: 24, height: 24
+                  = link_to image_tag('101.png', width: 24, height: 24), map_server_path(server)
 
               %li
                 %a{href: '#'}= image_tag '243.png', width: 24, height: 24
