@@ -148,7 +148,19 @@
         %p.copyright
           &copy; 2012
           %a{href: 'http://mutlicorp.com'} Mütli Corp.
-          Made by coffee in San Francisco.
+          
+          // Default text is replaced onready in the case the user doesn't have Javascript enabled.
+          %span#funnie Made
+          in San Francisco.
+          
+          - content_for :tail do
+            :javascript
+              var funnies = #{Funnies.to_json};
+              $(document).ready(function() {
+                $('#funnie').text(funnies[rand(funnies.length)]);
+              });
+            
+          
           = link_to 'Privacy', privacy_page_path
           = link_to 'Terms', terms_page_path
 

@@ -6,3 +6,6 @@ window.every = (ms, fn) ->
 
 window.pluralize = (num, singular, plural) ->
   "#{num} " + if num is 1 then singular else plural
+
+window.rand = (n) ->
+  Math.floor(Math.random() * n)
