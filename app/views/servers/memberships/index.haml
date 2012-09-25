@@ -1,0 +1,15 @@
+- title "Players"
+
+- server.memberships.each do |membership|
+  %p= membership.to_json
+  %p= membership.user.to_json
+
+%h2 Whitelist
+%p Usernames of players who are allowed to play in the world.
+%textarea
+  chrislloyd
+  whatupdave
+
+%h2 Blacklist
+%textarea
+  notch

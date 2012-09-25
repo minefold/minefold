@@ -34,4 +34,17 @@ hr {
   &.large {
     margin: lines(8) 0;
   }
+  
+  &.x-large {
+    margin: lines(16) 0;
+  }
+  
+  &.xx-large {
+    margin: lines(32) 0;
+  }
+}
+
+h3 {
+  margin-top: lines(2);
+  margin-bottom: lines(2);
 }

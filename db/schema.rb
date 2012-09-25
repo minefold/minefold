@@ -11,11 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120906175614) do
+ActiveRecord::Schema.define(:version => 20120921214628) do
 
   create_table "credit_packs", :force => true do |t|
     t.integer  "cents",      :default => 0, :null => false
-    t.integer  "cr",         :default => 0, :null => false
+    t.integer  "credits",    :default => 0, :null => false
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
   end
@@ -94,7 +94,7 @@ ActiveRecord::Schema.define(:version => 20120906175614) do
     t.string   "locale"
     t.integer  "timezone",               :default => 0
     t.string   "gender"
-    t.integer  "cr",                     :default => 0,     :null => false
+    t.integer  "credits",                :default => 0,     :null => false
     t.string   "customer_id"
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"

@@ -18,6 +18,7 @@ class PagesController < ApplicationController
   end
 
   def pricing
+    @packs = CreditPack.active.all
   end
 
   def privacy

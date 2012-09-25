@@ -7,6 +7,7 @@
   -webkit-font-smoothing: antialiased;
 
   padding-left: 0; padding-right: 0;
+  margin-bottom: 0;
   
   h1 {
     font-family: $futura;
@@ -17,22 +18,12 @@
     font-size: 24px;
     margin-bottom: lines(0);
     font-weight: 400;
+    color: lighten(black, 40%);
   }
   
   p {
     font-weight: normal;
     font-size: 14px;
-  }
-
-}
-
-.hero-unit.hero-unit-home {
-  h1 {
-    color: darken($blue, 20%);
-  }
-
-  h2 {
-    color: $blue;
   }
 }
 

@@ -80,7 +80,6 @@
                 - if signed_in?
                   %li= link_to 'Servers', servers_path
 
-                %li= link_to 'Games', games_path
                 %li= link_to 'Support', support_page_path
 
                 - case
@@ -91,42 +90,48 @@
 
                 - else
 
-                  %li#user-account-dropdown.user.dropdown
-                    %a#user-account-dropdown.dropdown-toggle{href: '#', data: {toggle: 'dropdown'}}
+                  %li.user.dropdown
+                    %a.dropdown-toggle{href: '#', data: {toggle: 'dropdown'}}
                       = current_user.username
-                    %ul.dropdown-menu
-                      %li= link_to 'Profile', current_user
+
+                      %b.caret
+                    %ul.dropdown-menu.pull-right
                       %li= link_to 'Settings', edit_user_registration_path
                       %li= link_to 'Sign out', destroy_user_session_path, method: :delete
-
-            - if signed_in? and not current_user.pro?
-              - content_for :tail do
-                :javascript
-                  $(document).ready(function () {
-                    var user = new Application.User(#{user_credits(current_user).to_json}),
-                        creditsBarView = new Application.CreditsBarView({
-                          model: user
-                        });
-
-                    // TODO Update credits number when it changes
-
-                    creditsBarView.setElement($('#credits-bar-view'));
-                    creditsBarView.render();
-                  });
-
-              .credit-advice.pull-right.nav-collapse
-                .credits-bar#credits-bar-view
-                  .bar
-                  .overflow
-
-                %p
-                  %span.cr= current_user.cr
-
-                  &middot;
-
-                  - #= link_to 'Upgrade to Pro', pro_account_path, class: %w(upgrade)
-
-
+                  %li.credits.dropdown
+                    %a.dropdown-toggle{href: '#', data: {toggle: 'dropdown'}}
+                      = format_credits current_user.credits
+                    .dropdown-menu.pull-right
+                      %a.buy-credits.btn.btn-success{href: '#'} Buy more credits
+      
+      - content_for :tail do
+        :javascript
+          $('.credit-refresh .bar').animate({width: '100%'}, 72000, function() {
+            var cr = parseInt($('.cr').text(), 10);
+            $('.cr').text(cr + 1);
+          });
+        
+          // var date = new Date("December 25, 2012"),
+          //     msPerSec = 1000,
+          //     msPerMinute = msPerSec * 60,
+          //     msPerHour = msPerMinute * 60
+          //     msPerDay = msPerHour * 24;
+          // 
+          // every(1000, function() {
+          //   var diff = date.getTime() - (new Date().getTime()),
+          //     days = Math.floor(diff / msPerDay),
+          //     hours = Math.floor(diff / msPerHour) - (days * 24),
+          //     minutes = Math.floor(diff / msPerMinute) - ((days * 24) + (hours * 60 * 24)),
+          //     secs = Math.floor(diff / msPerSec) - (minutes * 60);
+          //                   
+          //   $('.credit-refresh time').text(
+          //     days + "d " +
+          //     hours + "h " +
+          //     minutes + "m " +
+          //     secs + "s"
+          //   );
+          // });
+              
       .container
         - flash.select {|_,msg| msg.is_a?(String) }.each do |name, msg|
           %div.alert.alert-block{class: "alert-#{name}"}
@@ -143,6 +148,7 @@
           %li= link_to 'Support', support_page_path
           %li= link_to 'About', about_page_path
           %li= link_to 'Jobs', jobs_page_path
+          %li= link_to 'Developers', 'http://partycloud.com'
           %li= link_to 'Blog', 'http://blog.minefold.com'
 
         %p.copyright

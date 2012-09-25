@@ -35,10 +35,10 @@ Minefold::Application.routes.draw do
 
     resources :games
 
-    resources :servers do
+    resources :servers, :path_names => {:edit => 'settings'} do
       get :map, :on => :member
-
-      resources :memberships
+      
+      resources :memberships, :path => :players, :module => :servers
 
       get 'policy.xml',
         :controller => 'servers/uploads',

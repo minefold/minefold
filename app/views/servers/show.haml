@@ -1,12 +1,18 @@
 - title server.name
+- layout :server
 
-.page-title
+.page-header.page-header-server
   %h1= server.name
 
-%ul.nav
-  %li= link_to 'Activity', server_path(server)
-  %li= link_to 'Map', map_server_path(server)
-  %li= link_to 'Members', server_memberships_path(server)
+
+%ul.nav.nav-horizontal.nav-server
+  %li.active= link_to 'Overview', server
+  - if server.funpack.game.minecraft?
+    %li= link_to 'Map', [:map, server]
+  %li= link_to 'Players', [server, :memberships]
+  - if can? :edit, server
+    %li= link_to 'Settings', [:edit, server]
+    
 
 - if server.individual?
   Server is running!

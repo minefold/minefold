@@ -10,8 +10,8 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :username
 
 
-  validates_presence_of :cr
-  validates_numericality_of :cr
+  validates_presence_of :credits
+  validates_numericality_of :credits
 
   # NOTE: there arn't any User emails here. They can't be turned off for the
   # moment.
@@ -86,11 +86,16 @@ class User < ActiveRecord::Base
     )
     self.customer_id = c.id
   end
-
+  
+  # Stub
+  # def credits
+  #   cr * 60
+  # end
+  
   # Atomically increment credits
   # Warning: doesn't update the model's internal representation.
   def increment_cr!(n)
-    self.class.update_counters(self.id, cr: n) == 1
+    self.class.update_counters(self.id, credits: n) == 1
   end
 
 

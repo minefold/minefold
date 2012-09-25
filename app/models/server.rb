@@ -5,6 +5,8 @@ class Server < ActiveRecord::Base
 
   belongs_to :funpack
   validates_presence_of :funpack
+  
+  default_scope includes(:funpack => :game)
 
   has_many :memberships
   has_many :users, through: :memberships

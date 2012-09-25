@@ -1,0 +1,9 @@
+%ul.nav.nav-horizontal.nav-server
+  %li= link_to 'Overview', server
+  - if server.funpack.game.minecraft?
+    %li.active= link_to 'Map', [:map, server]
+    
+  %li= link_to 'Players', [server, :memberships]
+  
+  - if can? :edit, server
+    %li= link_to 'Settings', [:edit, server]

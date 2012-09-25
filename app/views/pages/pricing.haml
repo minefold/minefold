@@ -1,82 +1,79 @@
-/ - title 'Pricing'
-/ - layout :content
-/ - track_pageview
-/ 
-/ .row
-/   %center.span6.offset3
-/     .page-header
-/       %h1 Pricing
-/ 
-/     %p You can play for <i>free</i> on any Minefold server for 10 hours a month. If you want to play longer upgrade to Minefold Pro and play for <i>unlimited</i> hours.
-/ 
-/ .price-guide.row
-/   .pack.span3.offset1
-/     %h3 3 months
-/     .tagline
-/       of Minefold
-/       %span.pro Pro
-/ 
-/     .price
-/       %span.dollar $
-/       15.00
-/ 
-/   .pack.span4
-/     %h3 6 months
-/     .tagline
-/       of Minefold
-/       %span.pro Pro
-/ 
-/     .savings
-/       You save
-/       %strong $5
-/ 
-/     .price
-/       %span.dollar $
-/       25.00
-/ 
-/   .pack.span3
-/     %h3 12 months
-/     .tagline
-/       of Minefold
-/       %span.pro Pro
-/ 
-/     .price
-/       %span.dollar $
-/       45.00
-/ 
-/ %center
-/   - if signed_in?
-/     = link_to 'Upgrade to Minefold Pro', pro_account_path, class: %w(btn btn-primary btn-large)
-/   - else
-/     = link_to 'Upgrade to Pro', pro_account_path, class: %w(btn btn-primary btn-large)
-/ 
-/ .row.testimonials
-/   .span6.offset3
-/     %hr
-/ 
-/     %h3 Happy Campers
-/ 
-/     %ul.unstyled
-/       %li.testimonial
-/         %q{cite: 'https://twitter.com/technoweenie/status/139955603111018496'}
-/           Really impressed with how easy
-/           = link_to '@minefold', 'https://twitter.com/minefold'
-/           is to play Minecraft with my son.
-/         %cite
-/           %a{href: 'https://twitter.com/technoweenie/status/139955603111018496'} Rick Olsen
-/ 
-/       %li.testimonial
-/         %q{cite: 'https://twitter.com/qrush/status/117244523083595776'}
-/           Wow, pay by the hour Minecraft with chat, live maps, and more.
-/         %cite
-/           %a{href: 'https://twitter.com/qrush/status/117244523083595776'} Nick Quaranto
-/ 
-/       %li.testimonial
-/         %q
-/           I have only been playing for about 30 minutes, but I am loving it so far.
-/         %cite Joshua Antonishen
-/ 
-/       %li.testimonial
-/         %q
-/           Thank you so much guys, you are so boss.
-/         %cite Chris Elliott
+- title 'Pricing'
+- layout :pricing
+
+.hero-unit
+  %h1 Pricing
+  %h2
+    Buy credits to #{link_to 'run your own server', new_server_path} or to play on #{link_to 'Super Servers', '#'}.
+
+.credit-packs.row
+  - @packs.each_with_index do |pack, i|
+    .credit-pack.span3{class: ('highlight' if i == 3)}
+      - case i
+      - when 1
+        .note Most popular
+      - when 3
+        .note Best value
+
+      %h4.price= number_to_currency(pack.cents / 100)
+      = format_credits pack.credits
+      
+      %p.rate #{number_to_currency(pack.cents_per_credit)} per 100 credits
+      
+      / TODO Rename this class, it sucks
+      %p.equiv 
+        %strong= pluralize pack.normal_hours, 'hour', 'hours'
+        running a normal server
+        
+      %p.equiv
+        %strong= pluralize pack.super_hours, 'hour', 'hours'
+        playing on Super Servers
+
+
+%hr
+
+.row
+  - 4.times do |i|
+    %center.span3
+      - if i != 3
+        %a.btn Sign up now
+      - else
+        %a.btn.btn-primary Sign up now
+
+%hr.x-large
+
+.row
+  .span6
+    %h3 Quick Questions
+    %h4 How much RAM does my server have?
+    %p Unlimited. Your server will run on Minefold's custom build hosting platform.
+    
+    %h4 What are super servers?
+    %p Super servers are servers that are supported by everybody who play on it
+  
+  .testimonials.span6
+    %h3 Happy Campers
+
+    .testimonial
+      %q{cite: 'https://twitter.com/technoweenie/status/139955603111018496'}
+        Really impressed with how easy
+        = link_to '@minefold', 'https://twitter.com/minefold'
+        is to play Minecraft with my son.
+      %cite
+        %a{href: 'https://twitter.com/technoweenie/status/139955603111018496'} Rick Olsen
+  
+    .testimonial
+      %q{cite: 'https://twitter.com/qrush/status/117244523083595776'}
+        Wow, pay by the hour Minecraft with chat, live maps, and more.
+      %cite
+        %a{href: 'https://twitter.com/qrush/status/117244523083595776'} Nick Quaranto
+
+    .testimonial
+      %q
+        I have only been playing for about 30 minutes, but I am loving it so far.
+      %cite Joshua Antonishen
+
+    .testimonial
+      %q
+        Thank you so much guys, you are so boss.
+      %cite Chris Elliott

@@ -1,7 +1,7 @@
 class Servers::MembershipsController < ApplicationController
   respond_to :html
 
-  expose :server
+  expose(:server)
 
   def index
   end

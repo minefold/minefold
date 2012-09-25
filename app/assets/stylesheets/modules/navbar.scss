@@ -2,7 +2,6 @@
 
 .navbar {
   padding-bottom: lines(4);
-  margin-bottom: lines(2);
   border-bottom: 1px solid rgba(black, 0.05);
 
   > .navbar-inner {
@@ -61,16 +60,29 @@
       &.sign-in a, &.user a {
         color: $blue;
       }
-    }
-  }
+      
+      .dropdown-menu {
+        @include box-shadow(none);
+        @include border-radius($radius);
 
-  .nav .dropdown-menu {
-    @include box-shadow(none);
-
-    a {
-      color: $blue;
-      &:hover {
-        background-color: $blue;
+        a {
+          color: $blue;
+          &:hover {
+            background-color: $blue;
+          }
+        }
+      }
+      
+      &.credits .dropdown-menu {
+        padding: lines(2) $gw-gutter;
+        
+        .buy-credits {
+          margin-top: 0;
+          color: white;
+          font-size: 14px;
+          font-weight: 600;
+        }
+        
       }
     }
   }

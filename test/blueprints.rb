@@ -19,8 +19,8 @@ Player.blueprint do
 end
 
 CreditPack.blueprint do
-  cr { rand(1000) }
   cents { rand(1000) }
+  credits { rand(1000) }
 end
 
 Game.blueprint do

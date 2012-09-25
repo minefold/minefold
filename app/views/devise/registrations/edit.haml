@@ -70,8 +70,7 @@
   .section-label.span3
     %h3 Billing
   .span9
-    %p
-      You currently have <strong>#{pluralize(current_user.cr, 'credit', 'credits')}.
+    = format_credits current_user.credits
 
 
 .account-form-section.row

@@ -1,0 +1,35 @@
+@import 'vars';
+
+.nav {
+}
+
+.nav.nav-horizontal {
+  @include clearfix;
+  
+  > li {
+    float: left;
+    
+    > a {
+      display: block;
+    }
+  }
+}
+
+.nav.nav-server {
+  border-bottom: 1px solid darken(white, 5%);
+  
+  > li > a {
+    color: lighten(black, 60%);
+    line-height: lines(6);
+    padding: 0 10px;
+    
+    &:hover {
+      color: black;
+      background-color: transparent;
+    }
+  }
+  
+  .active > a, .active > a:hover {
+    color: $blue;
+  }
+}

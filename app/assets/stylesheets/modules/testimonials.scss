@@ -1,27 +1,23 @@
 @import 'vars';
 
 .testimonials {
-  margin-top: lines(4);
   text-align: center;
-
-  h3 {
-    margin-bottom: lines(4);
-  }
 
   .testimonial {
     margin-bottom: lines(2);
 
-    > q {
+    q {
       display: block;
       margin-bottom: lines();
       font-size: 16px;
     }
 
-    > q, > cite {
-      margin-left: 20px;
+    q, cite {
+//      margin-left: 20px;
     }
 
-    > cite, > cite a {
+    cite, cite a {
+      display: block;
       color: #CCC;
     }
   }
