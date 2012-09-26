@@ -67,28 +67,31 @@ class UserTest < ActiveSupport::TestCase
     assert_equal 'cus_1', user.customer_id
   end
 
-  test "#increment_cr!" do
-    user = User.make!(cr: 10)
-    assert_equal 10, user.cr
+  test "#increment_credits!" do
+    user = User.make!
+    user.credits = 10
+    user.save
 
-    user.increment_cr!(10)
+    user.increment_credits!(10)
     # This test is because increment_cr! is fire and forget. Being atomic it
     # doesn't update the model's own data without force reloading it.
-    assert_equal 10, user.cr
+    assert_equal 10, user.credits
 
     user.reload
-    assert_equal 20, user.cr
+    assert_equal 20, user.credits
   end
 
-  test "#increment_cr! works atomically" do
-    user = User.make!(cr: 0)
+  test "#increment_credits! works atomically" do
+    user = User.make!
+    user.credits = 0
+    user.save
     same_user = User.find(user.id)
 
-    user.increment_cr! 1
-    same_user.increment_cr! 1
+    user.increment_credits! 1
+    same_user.increment_credits! 1
 
     user.reload
-    assert_equal 2, user.cr
+    assert_equal 2, user.credits
   end
 
 end

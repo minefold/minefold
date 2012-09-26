@@ -94,7 +94,7 @@ class User < ActiveRecord::Base
   
   # Atomically increment credits
   # Warning: doesn't update the model's internal representation.
-  def increment_cr!(n)
+  def increment_credits!(n)
     self.class.update_counters(self.id, credits: n) == 1
   end
 

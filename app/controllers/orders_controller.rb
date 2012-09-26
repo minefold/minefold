@@ -10,12 +10,12 @@ class OrdersController < ApplicationController
 
     if order.valid? and order.fulfill
       track 'paid', total: order.total,
-                    cr: order.cr
+                    cr: order.credits
 
       # TODO Send Receipt
 
       redirect_to user_root_path,
-        notice: "Thank you for buying #{order.cr} credits on Minefold"
+        notice: "Thank you for buying #{order.credits} credits on Minefold"
 
     else
       render nothing: true, :status => :payment_required

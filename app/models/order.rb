@@ -28,8 +28,8 @@ class Order < Struct.new(:credit_pack_id, :user, :card_token)
     credit_pack.cents
   end
 
-  def cr
-    credit_pack.cr
+  def credits
+    credit_pack.credits
   end
 
 # protected
@@ -61,7 +61,7 @@ class Order < Struct.new(:credit_pack_id, :user, :card_token)
   end
 
   def credit_user
-    user.increment_cr!(credit_pack.cr)
+    user.increment_credits!(credit_pack.credits)
   end
 
 end
