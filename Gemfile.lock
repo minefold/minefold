@@ -172,6 +172,7 @@ GEM
       omniauth (~> 1.0)
     origin (1.0.4)
     orm_adapter (0.4.0)
+    parallel (0.5.18)
     pg (0.14.0)
     polyglot (0.3.3)
     pusher (0.9.4)
@@ -297,6 +298,7 @@ DEPENDENCIES
   mongoid (= 3.0.0.rc)
   nbtfile
   omniauth-facebook
+  parallel
   pg
   pusher
   rack-www

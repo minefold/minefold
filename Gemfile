@@ -59,6 +59,7 @@ end
 group :worker do
   gem 'rubyzip'
   gem 'nbtfile'
+  gem 'parallel'
 end
 
 group :assets do

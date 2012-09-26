@@ -2,17 +2,14 @@ class CleanWorldBackupsJob < Job
   @queue = :low
 
   def perform!
+    require 'parallel'
+    
     file_limit = (ENV['FILE_LIMIT'] || 10000).to_i
     all_files = page_world_files('minefold-production-worlds', '', file_limit)
     all_files += page_world_files('minefold-production', 'world-backups', file_limit)
 
     b = backups all_files
-
-    # b.select{|f| f[:key] =~ /4ec7187fa3f63e0001000134/ }.sort{|a,b| b[:time] <=> a[:time]}.each do |f|
-    #   puts "#{f[:time]} #{f[:content_length]}"
-    # end
-
-
+    
     puts "#{b.size} backups found (#{sum_gb b} Gb)"
 
     ## retention
@@ -28,8 +25,6 @@ class CleanWorldBackupsJob < Job
     to_delete = []
 
     grouped.each do |world_id, backups|
-      # p world_id, backups
-
       rest = backups.sort_by {|b| -b[:time].to_i }
       puts "#{world_id}: (#{backups.size})"
 
@@ -75,20 +70,22 @@ class CleanWorldBackupsJob < Job
 
     puts "Deleting #{to_delete.size} files (#{sum_gb to_delete} Gb)"
 
-    i = 0
-    to_delete.each do |backup|
-      i += 1
-      puts "  delete (#{i}/#{to_delete.size}): #{backup[:key]}" unless ENV['DRY_RUN']
-      # backup[:file].destroy # unless ENV['DRY_RUN']
-    end
+    unless ENV['DRY_RUN']
+      i = 0
+      Parallel.map(to_delete, :in_threads=>10) do |backup|
+        i += 1
+        puts "  delete (#{i}/#{to_delete.size}): #{backup[:key]}"
+        backup[:file].destroy
+      end
 
-    puts "Deleting #{to_delete.size} files (#{sum_gb to_delete} Gb)"
+      puts "Deleted #{to_delete.size} ((#{sum_gb to_delete} Gb) / #{b.size} (#{sum_gb b} Gb) files"
+    end
   end
 
   def storage
     @storage ||= ::Fog::Storage.new provider: 'AWS',
-                         aws_access_key_id: ENV['S3_KEY'],
-                     aws_secret_access_key: ENV['S3_SECRET']
+                         aws_access_key_id: ENV['AWS_ACCESS_KEY'],
+                     aws_secret_access_key: ENV['AWS_SECRET_KEY']
   end
 
   def sum_gb backups
@@ -122,7 +119,7 @@ class CleanWorldBackupsJob < Job
     puts "#{files.size} files found"
 
     files.map do |f|
-      f.key =~ /([a-z0-9]+)\.([0-9]+)\.tar\.gz/i
+      f.key =~ /([a-z0-9]{24}).*\.([0-9]+)\.tar/i
       if $2
         time = Time.at($2.to_i)
         {
