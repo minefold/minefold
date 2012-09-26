@@ -17,6 +17,15 @@ class ServersController < ApplicationController
     # TODO replace with actual data in Javascript
     @funpack = Funpack.first
   end
+  
+  # TODO This method is a bit of a hack, but I can't think of any better way to do it without re-implementing the entire thing in Javascript and shipping it all down to the client.
+  def new_funpack_settings
+    @funpack = Funpack.find(params[:funpack_id])
+    
+    render layout: false
+    # = f.fields_for :settings do |s|
+    #       = render partial: @funpack.game.settings_partial, locals: {f: s}
+  end
 
   def create
     server.creator = current_user

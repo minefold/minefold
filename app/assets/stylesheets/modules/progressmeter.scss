@@ -1,0 +1,97 @@
+@import 'vars';
+
+.progressmeter {
+  list-style-type: none;
+  @include clearfix;
+  margin: lines(6) 0;
+
+  > li {
+    float: left;
+    text-align: center;
+      
+    // Default width
+    width: 33%;
+    position: relative;
+    padding-top: 50px;
+    
+    color: darken(white, 20%);
+    
+    // Ball
+    &:before {
+      width: 40px;
+      height: 40px;
+      background-color: darken(white, 10%);
+      display: block;
+      content: "";
+      margin: 0 auto;
+      margin-bottom: lines(4);
+      color: white;
+      line-height: 40px;
+      font-weight: 800;
+      z-index: 1;
+      position: absolute;
+      left: 50%;
+      margin-left: -20px;
+      top: 0;
+        
+      @include border-radius(20px);
+    }
+      
+    &.previous:after, &.active:after {
+      border-style: solid;
+    }
+    
+    &.previous a {
+      color: darken($green, 20%);
+    }
+    
+    &.active a {
+      color: $green;
+    }
+      
+    &.previous:before {
+      background-color: darken($green, 20%);
+    }
+      
+    &.active:before {
+      background-color: $green;
+    }
+    
+    &.previous:after {
+      border-color: darken($green, 20%);
+    }
+      
+    &.active:after {
+      border-color: $green;
+    }
+      
+    // Inner text
+    @for $i from 1 through 4 {
+      &:nth-child(#{$i}):before {
+        content: "#{$i}";
+      }
+    }
+      
+    // Line
+    &:after {
+      border-top: 4px dashed darken(white, 10%);
+      width: 100%;
+      display: block;
+      content: "";
+      position: absolute;
+      top: 20px - (4px / 2);
+      left: -50%;
+      z-index: 0;
+    }
+      
+    &:nth-child(1):after {
+      display: none;
+    }
+  }
+}
+  
+@for $i from 1 through 4 {
+  .progressmeter.progressmeter-#{$i} > ol > li {
+    width: (100% / $i);
+  }
+}

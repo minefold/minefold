@@ -14,15 +14,13 @@
 
   // Colors
 
-  color: rgba(black, 0.6);
-  background: white;
-  @include box-shadow(0 0 0 2px rgba(black, 0.3) inset);
+  color: white;
+  background: darken(white, 40%);
 
   &:hover, .hover {
-    color: black;
-    background-color: white;
+    color: white;
+    background-color: black;
     text-shadow: none;
-    @include box-shadow(0 0 0 2px black inset);
   }
 
   &:active, .active {

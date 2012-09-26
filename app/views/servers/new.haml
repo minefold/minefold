@@ -3,18 +3,25 @@
 - @games = Game.all
 - @funpack = Funpack.first
 
+:css
+  fieldset, .tab-pane, .tab-content {
+    overflow: visible;
+  }
+
 .row
   .span6.offset3
-    .page-header.page-header-progress
-      %ol
-        %li.active Game
-        %li Settings
-        %li Billing
-
-    = form_for server do |f|
-      %fieldset
-        %legend Game
-
+    = form_for server, html: {class: 'tab-content'} do |f|
+      
+      / Game
+      / --
+    
+      %fieldset.tab-pane.active#game        
+        %ol.progressmeter.progressmeter-3
+          %li.active
+            %a{href: '#game', data: {toggle: 'tab'}} Game
+          %li Settings
+          %li Billing
+      
         - @games.each do |game|
           .control-group
             .control-label= game.name
@@ -23,34 +30,88 @@
                 %label.radio{for: "server_funpack_id_#{funpack.id.to_s}"}
                   = funpack.name
                   %input{type: 'radio', name: 'server[funpack_id]', value: funpack.id.to_s, id: "server_funpack_id_#{funpack.id.to_s}"}
+        
+        .form-actions
+          %a.btn.btn-primary.pull-right#game-next-button{href: '#settings', disabled: true} Select the settings
+      
+      - content_for :tail do
+        :javascript
+          $('input[name="server[funpack_id]"]').change(function() {
+            var $this = $(this),
+                funpackId = $this.val(),
+                url = #{new_funpack_settings_servers_path.to_json};
+                
+            $.ajax(url, {
+              accepts: 'text/html',
+              data: { funpack_id: funpackId },
+              dataType: 'html',
+              type: 'GET'  
+            })
+            .error(function() {
+              console.log('error');
+            })
+            .done(function(html) {
+              $('#new_funpack_settings').html(html);
+              $('#game-next-button')
+                .click(function(e) {
+                  e.preventDefault();
+                  $(this).tab('show');
+                })
+                .attr('disabled', false);
+            });
+            
+          });
 
-
-      %fieldset
-        %legend Settings
-
+      
+      / Settings
+      / --
+      
+      %fieldset.tab-pane#settings
+        %ol.progressmeter.progressmeter-3
+          %li.previous
+            %a{href: '#game', data: {toggle: 'tab'}} Game
+        
+          %li.active
+            %a{href: '#settings', data: {toggle: 'tab'}} Settings
+        
+          %li Billing
+      
         = f.control_group :name do
           .controls
             = f.text_field :name, placeholder: 'Name', class: %w(span6)
-
-        // Game specific setings
-        = f.fields_for :settings do |s|
-          = render partial: @funpack.game.settings_partial, locals: {f: s}
-
-
-      %fieldset
-        %legend Billing
-
+        
+        #new_funpack_settings
+        
+        .form-actions
+          %a.btn.pull-left{href: '#game', data: {toggle: 'tab'}} &larr; Change game
+          %a.btn.btn-primary.pull-right{href: '#billing', data: {toggle: 'tab'}} Choose billing style
+      
+      
+      / Billing
+      / --
+       
+      %fieldset.tab-pane#billing
+        %ol.progressmeter.progressmeter-3
+          %li.previous
+            %a{href: '#game', data: {toggle: 'tab'}} Game
+        
+          %li.previous
+            %a{href: '#settings', data: {toggle: 'tab'}} Settings
+        
+          %li.active
+            %a{href: '#settings', data: {toggle: 'tab'}} Billing
+      
         = f.control_group :individual do
           .controls
             %label.radio
               = f.radio_button :individual, false
-              %strong Community
+              %strong Normal Server
               %p It costs you (the owner) <strong>5 cr</strong> an hour to run the server. Any member can play on the server without costing them any credits. You choose when to start and stop the server.
               %p Reccomended for families and schools.
 
             %label.radio{class: ('muted' if !@funpack.game.individual?)}
               = f.radio_button :individual, true, disabled: !@funpack.game.individual?
-              %strong Individual
+              %strong Super Server
               %p It costs each person <strong>1cr</strong> an hour to play on the server. The server is always running.
               %p Reccomended for groups of friends.
 
@@ -59,5 +120,6 @@
                   #{@funpack.game.name} doesn't support individual billing.
 
 
-      .form-actions
-        = f.submit 'Create server', class: %w(btn)
+        .form-actions
+          %a.btn.pull-left &larr; Change settings
+          = f.submit 'Create server', class: %w(btn btn-primary pull-right)
