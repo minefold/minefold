@@ -27,12 +27,11 @@ class WorldUpload
 
   # Copies the uploaded file from S3 to a local tmpdir
   def download!
-    File.open(uploaded_archive_path, File::RDWR|File::CREAT) do |local|
-      directory = self.class.storage.directories.create(key: ENV['UPLOADS_BUCKET'])
-
-      remote = directory.files.get(s3_key)
-      remote.body = local
-      remote.save
+    directory = self.class.storage.directories.get(ENV['UPLOADS_BUCKET'])
+    File.open(uploaded_archive_path, File::RDWR|File::CREAT) do |file|
+      directory.files.get(s3_key) do |chunk, remaining_bytes, total_bytes|
+        file.write(chunk.force_encoding('utf-8'))
+      end
     end
   end
 
@@ -48,6 +47,7 @@ class WorldUpload
       }
 
   rescue => e
+    Rails.logger.error(e)
     raise UnreadableUploadError.new("Couldn't read the Zip archive")
   end
 
