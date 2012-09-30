@@ -6,12 +6,15 @@
 .row
   .span4
     = form_for :user, url: new_user_password_path, method: :post do |f|
-      - # TODO Show errors when user enters a email that doesn't exist
 
       %fieldset
         %section.email
           = f.label :email
           = f.email_field :email
+          - resource.errors[:email].each do |error|
+            .alert.alert-error
+              Email
+              = error
 
 
       = f.submit 'Send password reset email', class: %w(btn btn-primary)
