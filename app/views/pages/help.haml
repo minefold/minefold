@@ -2,6 +2,9 @@
 - layout :help
 - track_pageview
 
+- content_for :intercom do
+  = intercom_script_tag(support_link: '#Intercom')
+
 .page-header
   %h1 Help & FAQ
 
@@ -44,4 +47,8 @@
   .span4
     -if signed_in?
       .well
-        If you have any problems or questions that are not covered here, please hit us up at support in the bottom corner and we'll get back to you as soon as we can.
+        %p
+          If you have any problems or questions that are not covered here, please hit the Support link below and we'll get back to you as soon as we can.
+        %p
+          %a.btn.btn-primary(id="Intercom" href="#") Support
+        

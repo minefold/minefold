@@ -1,12 +1,13 @@
 module IntercomHelper
 
-  def intercom_settings
-    settings = {
-      app_id: '8oc9zbvo',
-      widget: {
-        label: 'Support'
+  def intercom_settings(options = {})
+    settings = { app_id: '8oc9zbvo' }
+
+    if options[:support_link]
+      settings[:widget] = {
+        activator: options[:support_link]
       }
-    }
+    end
 
     if signed_in?
       settings[:email] = current_user.email
@@ -36,8 +37,9 @@ module IntercomHelper
     settings
   end
 
-  def intercom_script_tag
-    js = "var intercomSettings = #{intercom_settings.to_json};".html_safe
+  def intercom_script_tag(options = {})
+    options[:support_link] ||= nil
+    js = "var intercomSettings = #{intercom_settings(options).to_json};".html_safe
     content_tag :script, js, id: 'IntercomSettingsScriptTag'
   end
 
