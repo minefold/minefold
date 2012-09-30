@@ -233,7 +233,7 @@
     / Intercom
 
     - if signed_in?
-      - if content_for(:intercom)
+      - if content_for?(:intercom)
         = yield :intercom
       - else
         = intercom_script_tag
