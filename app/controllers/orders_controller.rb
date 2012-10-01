@@ -1,6 +1,11 @@
 class OrdersController < ApplicationController
   prepend_before_filter :authenticate_user!
-
+  layout false
+  
+  def new
+    @credit_packs = CreditPack.active.all
+  end
+  
   def create
     order = Order.new(
       params[:credit_pack_id],

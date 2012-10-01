@@ -1,7 +1,13 @@
+# Handles anything to do with forrectly formatting
+
 module CreditsHelper
 
-  def format_credits(credits, opts={})
-    content_tag(:div, number_with_delimiter(credits), {class: 'cr'}.merge(opts))
+  def format_credits(credits)
+    number_with_delimiter(credits)
   end
 
+  def credits_with_image(credits, opts={})
+    content_tag(:div, format_credits(credits), {class: 'cr'}.merge(opts))
+  end
+  
 end

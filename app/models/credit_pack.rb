@@ -10,6 +10,10 @@ class CreditPack < ActiveRecord::Base
     cents
   end
   
+  def dollars
+    cents.to_f / 100
+  end
+  
   def cents_per_credit
     cents / credits.to_f
   end

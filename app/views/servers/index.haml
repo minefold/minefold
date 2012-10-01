@@ -1,47 +1,50 @@
 - title 'Servers'
 - layout :server
 
-.page-header.page-header-server
-  - if can? :create, Server
-    = link_to 'Start a new server', new_server_path, class: %w(btn pull-right)
+.row
+  .span8.offset2
 
-  %h1 Servers
+    .page-header.page-header-server
+      - if can? :create, Server
+        = link_to 'Start a new server', new_server_path, class: %w(btn pull-right)
 
-%ul.server-list.unstyled
-  - current_user.servers.group_by {|s| s.funpack.game }.each do |game, servers|
-    %li.divider= game.name
-    - servers.each do |server|
-      %li.item
-        %a.primary-action{href: server_path(server)}
-          %h2.name= server.name
+      %h1 Servers
 
-        %ul.nav.nav-pills.nav-pills-images.pull-right
-          - if server.funpack.game.name == 'Minecraft'
-            %li
-              = link_to image_tag('101.png', width: 24, height: 24), map_server_path(server)
+    %ul.server-list.unstyled
+      - current_user.servers.group_by {|s| s.funpack.game }.each do |game, servers|
+        %li.divider= game.name
+        - servers.each do |server|
+          %li.item
+            %a.primary-action{href: server_path(server)}
+              %h2.name= server.name
 
-          %li
-            %a{href: '#'}= image_tag '243.png', width: 24, height: 24
-          %li
-            %a{href: edit_server_path(server)}
-              = image_tag '265.png', width: 24, height: 24
+            %ul.nav.nav-pills.nav-pills-images.pull-right
+              - if server.funpack.game.name == 'Minecraft'
+                %li
+                  = link_to image_tag('101.png', width: 24, height: 24), map_server_path(server)
 
-- if not current_user.confirmed?
-  %h4 Confirm your account
-  %p You should have recieved an email with instructions on how to confirm your account.
+              %li
+                %a{href: '#'}= image_tag '243.png', width: 24, height: 24
+              %li
+                %a{href: edit_server_path(server)}
+                  = image_tag '265.png', width: 24, height: 24
 
-/ - if current_user.minecraft_player.worlds.any?
-/   - ws = current_user.minecraft_player.worlds.sort_by {|w| t = w[:last_played_at] ; case t; when nil; 10.years.ago ; when String; Time.parse(t) ; else t; end }.select {|w| !!w.creator.minecraft_player }.reverse
-/
-/   .poster-worlds.row
-/     - ws.take(3).each do |world|
-/       .span3= render partial: 'worlds/card', locals: {world: world}
-/
-/   - if ws.size > 3
-/     .row
-/       - ws[3..-1].each do |world|
-/         .span6= render partial: 'worlds/card_mini', locals: {world: world}
-/
-/
-/ - else
-/   %p.empty You haven't created or joined any worlds yet.
+    - if not current_user.confirmed?
+      %h4 Confirm your account
+      %p You should have recieved an email with instructions on how to confirm your account.
+
+    / - if current_user.minecraft_player.worlds.any?
+    /   - ws = current_user.minecraft_player.worlds.sort_by {|w| t = w[:last_played_at] ; case t; when nil; 10.years.ago ; when String; Time.parse(t) ; else t; end }.select {|w| !!w.creator.minecraft_player }.reverse
+    /
+    /   .poster-worlds.row
+    /     - ws.take(3).each do |world|
+    /       .span3= render partial: 'worlds/card', locals: {world: world}
+    /
+    /   - if ws.size > 3
+    /     .row
+    /       - ws[3..-1].each do |world|
+    /         .span6= render partial: 'worlds/card_mini', locals: {world: world}
+    /
+    /
+    / - else
+    /   %p.empty You haven't created or joined any worlds yet.

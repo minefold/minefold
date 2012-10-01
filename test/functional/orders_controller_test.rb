@@ -1,7 +1,20 @@
 require 'test_helper'
 
 class OrdersControllerTest < ActionController::TestCase
-
+  
+  test "GET #new unauthenticated" do
+    get :new
+    assert_unauthenticated_response
+  end
+  
+  test "GET #new" do
+    user = User.make!
+    sign_in(user)
+    
+    get :new
+    assert_response :success
+  end
+  
   test "POST #create unauthenticated" do
     post :create
     assert_unauthenticated_response

@@ -1,0 +1,50 @@
+@import 'vars';
+
+.credit-pack-display {
+    
+  .credit-pack {
+    text-align: center;
+    border: 2px solid darken(white, 40%);
+      
+    padding: lines(8) ($gw-gutter / 2);
+
+    @include box-sizing(border-box);
+      
+    .note {
+      text-transform: uppercase;
+      color: lighten($green, 0%);
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      margin-top: - lines(2);
+      margin-bottom: - lines(2);
+    }
+      
+    .price {
+      font-size: 36px;
+      line-height: 60px;
+    }
+      
+    .rate {
+      font-size: 10px;
+      color: #999;
+    }
+      
+    .equiv {
+      font-size: 11px;
+      color: #666;
+        
+      & + .equiv {
+        margin-top: - lines(2);
+      }
+    }
+  }
+    
+  .credit-pack.highlight {
+    border-color: $blue;
+      
+    .note {
+      color: darken($yellow, 20%);
+    }
+  }
+  
+}

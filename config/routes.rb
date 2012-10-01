@@ -31,7 +31,7 @@ Minefold::Application.routes.draw do
   # Authentication
   devise_scope :user do
 
-    resource :order, :only => [:create]
+    resource :orders, :only => [:new, :create]
 
     resources :games
 

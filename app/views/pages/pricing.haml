@@ -6,7 +6,7 @@
   %h2
     Buy credits to #{link_to 'run your own server', new_server_path} or to play on #{link_to 'Super Servers', '#'}.
 
-.credit-packs.row
+.credit-pack-display.row
   - @packs.each_with_index do |pack, i|
     .credit-pack.span3{class: ('highlight' if i == 3)}
       - case i
@@ -16,7 +16,7 @@
         .note Best value
 
       %h4.price= number_to_currency(pack.cents / 100)
-      = format_credits pack.credits
+      = credits_with_image pack.credits
       
       %p.rate #{number_to_currency(pack.cents_per_credit)} per 100 credits
       

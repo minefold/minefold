@@ -1,0 +1,89 @@
+- title 'Billing Details'
+
+.credit-pack-picker
+  - @credit_packs.each do |pack|
+    .credit-pack
+      %h4.credits= format_credits pack.credits
+      .price= number_to_currency(pack.cents / 100)
+      
+      %p.rate #{number_to_currency(pack.cents_per_credit)} per 100 credits
+
+/ - head do
+/   %script{src: 'https://js.stripe.com/v1'}
+/   :coffeescript
+/     Stripe.setPublishableKey #{ENV['STRIPE_PUBLISHABLE'].to_json}
+
+
+/ :javascript
+/   $('input.stripe.number').keyup (e) ->
+/     target = $(e.target)
+/     cardType = Stripe.cardType(target.val())
+/       .toLowerCase()
+/       .replace(/\s/,'-')
+/ 
+/     $('.card-types span')
+/       .toggleClass('unknown', cardType isnt 'unknown')
+/       .removeClass('active')
+/       .filter(-> $(@).hasClass(cardType))
+/       .addClass('active')
+
+%form{hidden}
+  .control-group
+    %label.control-label{for: 'asdf'} Card Number
+    .controls
+      %input{type: 'text', name: nil, autocomplete: false}
+      .help-block
+        We accept <span class="visa">Visa</span>, <span class="mastercard">MasterCard</span>, <span class="american-express">American Express</span>, <span class="discover">Discover</span>, <span class="jcb">JCB</span> and <span class="diners-club">Diners Club</span>.
+    
+  .control-group
+    %label.control-label{for: 'asdf'} CVC
+    .controls
+      %input{type: 'number', name: nil, size: 4, autocomplete: false, min: 0}
+  
+  .control-group
+    %label.control-label{for: 'asdf'} Expiration (MM/YYYY)
+    .controls
+      %input{type: 'number', name: nil, size: 2, min: 0}
+      %span /
+      %input{type: 'number', name: nil, size: 4, min: 0}
+  
+  %p
+    %a#secured-by{href: 'https://stripe.com', target: '_blank'}
+      Secured by
+      = image_tag 'stripe.png', width: 72, height: 31
+
+:javascript
+  form = $('form.edit_user')
+
+  form.submit (e) ->
+    e.preventDefault()
+
+    button = form.find('input[type=submit]')
+
+    button.attr(disabled: true)
+    form.find('.spinner').show()
+
+    card =
+      number:    $('#stripe-number').val()
+      cvc:       $('#stripe-cvc').val()
+      exp_month: $('#stripe-exp-month').val()
+      exp_year:  $('#stripe-exp-year').val()
+
+
+    Stripe.createToken card, #{@amount.to_i.to_json}, (status, response) ->
+      if status isnt 200
+        button.attr(disabled: false)
+
+        $('<p></p>')
+          .addClass('stripe')
+          .text(response.error.message)
+          .appendTo form.find('.errors').empty()
+
+      else
+        token = response.id
+        $('<input></input>')
+          .attr(type: 'hidden', name: 'user[stripe_token]')
+          .val(token)
+          .appendTo(form)
+
+        form.get(0).submit()

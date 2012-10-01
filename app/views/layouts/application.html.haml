@@ -33,6 +33,7 @@
 
     = csrf_meta_tags
 
+    // Crashm.at
     - if Rails.env.production?
       :javascript
         var _crashmat = #{crashmat_config.to_json};
@@ -47,18 +48,22 @@
           e.src = '//db2uk9yp28y61.cloudfront.net/';
           (d.head || d.getElementsByTagName('head')[0]).appendChild(e);
         })(window, document, window._crashmat, window.onerror);
-
+    
+    // Mixpanel
     :javascript
       (function(c,a){window.mixpanel=a;var b,d,h,e;b=c.createElement("script");b.type="text/javascript";b.async=!0;b.src=("https:"===c.location.protocol?"https:":"http:")+'//api.mixpanel.com/site_media/js/api/mixpanel.2.js';d=c.getElementsByTagName("script")[0];d.parentNode.insertBefore(b,d);a._i=[];a.init=function(b,c,f){function d(a,b){var c=b.split(".");2==c.length&&(a=a[c[0]],b=c[1]);a[b]=function(){a.push([b].concat(Array.prototype.slice.call(arguments,0)))}}var g=a;"undefined"!== typeof f?g=a[f]=[]:f="mixpanel";g.people=g.people||[];h="disable track track_pageview track_links track_forms register register_once unregister identify name_tag set_config people.set people.increment".split(" ");for(e=0;e<h.length;e++)d(g,h[e]);a._i.push([b,c,f])};a.__SV=1.1})(document,window.mixpanel||[]);
       mixpanel.init(#{ENV['MIXPANEL'].to_json});
-
+    
+    // Mixpanel
     - if signed_in?
       :javascript
         mixpanel.identify(#{current_user.id.to_s.to_json});
         mixpanel.people.set(#{mixpanel_person.to_json});
     
-    <script type="text/javascript" src="//use.typekit.net/qzl8aqw.js"></script>
-    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    // Typekit
+    %script{type: 'text/javascript', src: '//use.typekit.net/qzl8aqw.js'}
+    :javascript
+      try{Typekit.load();}catch(e){}
     
     = yield :head
 
@@ -66,6 +71,17 @@
   %body{class: @layouts}
     #fb-root
     #Intercom
+    
+    .modal#buy-credits-modal{tabindex: -1, role: 'dialog', aria: {hidden: true}}
+      .modal-header
+        %button.close{type: 'button', data: {dismiss: 'modal'}} ×
+        %h3#myModalLabel Choose a credit pack to buy
+      
+      .modal-body
+      
+      .modal-footer
+        %button.btn{data: {dismiss: 'modal'}, disabled: true} Cancel
+        %button.btn.btn-primary{disabled: true} Pay
 
     #page-background-block
 
@@ -100,37 +116,9 @@
                       %li= link_to 'Sign out', destroy_user_session_path, method: :delete
                   %li.credits.dropdown
                     %a.dropdown-toggle{href: '#', data: {toggle: 'dropdown'}}
-                      = format_credits current_user.credits
+                      = credits_with_image current_user.credits
                     .dropdown-menu.pull-right
-                      %a.buy-credits.btn.btn-success{href: '#'} Buy more credits
-      
-      - content_for :tail do
-        :javascript
-          $('.credit-refresh .bar').animate({width: '100%'}, 72000, function() {
-            var cr = parseInt($('.cr').text(), 10);
-            $('.cr').text(cr + 1);
-          });
-        
-          // var date = new Date("December 25, 2012"),
-          //     msPerSec = 1000,
-          //     msPerMinute = msPerSec * 60,
-          //     msPerHour = msPerMinute * 60
-          //     msPerDay = msPerHour * 24;
-          // 
-          // every(1000, function() {
-          //   var diff = date.getTime() - (new Date().getTime()),
-          //     days = Math.floor(diff / msPerDay),
-          //     hours = Math.floor(diff / msPerHour) - (days * 24),
-          //     minutes = Math.floor(diff / msPerMinute) - ((days * 24) + (hours * 60 * 24)),
-          //     secs = Math.floor(diff / msPerSec) - (minutes * 60);
-          //                   
-          //   $('.credit-refresh time').text(
-          //     days + "d " +
-          //     hours + "h " +
-          //     minutes + "m " +
-          //     secs + "s"
-          //   );
-          // });
+                      %a.buy-credits.btn.btn-success{href: '/orders/new', data: {toggle: 'modal', target: '#buy-credits-modal'}} Buy more credits
               
       .container
         - flash.select {|_,msg| msg.is_a?(String) }.each do |name, msg|
@@ -141,6 +129,7 @@
       .container
         #app= yield
 
+    
     %footer
       .container
         %ul.unstyled
@@ -219,8 +208,8 @@
 
     = yield :tail
 
-    / Facebook
 
+    // Facebook
     :javascript
       (function(d){
          var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
@@ -230,8 +219,8 @@
          ref.parentNode.insertBefore(js, ref);
        }(document));
 
-    / Intercom
 
+    // Intercom
     - if signed_in?
       = intercom_script_tag
 
@@ -251,7 +240,9 @@
             window.addEventListener('load', async_load, false);
           }
         })();
-
+    
+    
+    // Gauges
     - if Rails.env.production?
       :javascript
         var _gauges = _gauges || [];
