@@ -29,19 +29,26 @@
   
   .games-list {
     .game {
+      font-weight: 600;
+      
       a {
         display: block;
         line-height: lines(4);
       }
       
       i {
+        display: block;
+        font-weight: normal;
         color: rgba(black, 0.6);
       }
     }
     
-    .coming-soon {
-      font-weight: 600;
-      color: rgba(black, 0.2);
+    .game.coming-soon {
+      color: rgba($blue, 0.5);
+      
+      i {
+        color: rgba(black, 0.3);
+      }
     }
   }
   

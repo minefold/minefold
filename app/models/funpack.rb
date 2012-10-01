@@ -5,6 +5,8 @@ class Funpack < ActiveRecord::Base
 
   belongs_to :creator, class_name: 'User'
   belongs_to :game
+  
+  has_many :servers
 
 
   # Struct.new(:id, :name, :description, :settings)

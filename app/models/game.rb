@@ -21,5 +21,9 @@ class Game < ActiveRecord::Base
   def minecraft?
     self.name == 'Minecraft'
   end
+  
+  def self.servers_count
+    joins(:funpacks => :servers).count
+  end
 
 end

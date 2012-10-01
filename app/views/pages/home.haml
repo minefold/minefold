@@ -12,25 +12,17 @@
   .row
     .span2
       %h3 Games
-  
-    .game.span2
-      = link_to 'Minecraft', '/games/minecraft'
-      %i 50,000 servers
+      
+    - @featured_games.each do |game, servers_count|
+      .game.span2
+        = link_to game.name, game
+        %i= pluralize servers_count, 'server', 'servers'
     
-    .game.span2
-      = link_to 'Team Fortress 2', '/games/team-fortress-2'
-      %i 26,000 servers
-  
-    .game.span2
-      = link_to 'Counter-Strike: GO', '/games/counter-strike-go'
-      %i 10,000 servers
-  
-    .game.span2
-      = link_to 'DayZ', '/games/day-z'
-      %i 5,000 servers
-  
-    .coming-soon.span2 More coming soon!
-
+    - @coming_soon_games.each do |game|
+      .game.coming-soon.span2
+        = game
+        %i Coming soon!
+    
 
 %section.feature-gallery
   %ul.nav.nav-tabs.row
