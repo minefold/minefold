@@ -118,7 +118,7 @@
                     %a.dropdown-toggle{href: '#', data: {toggle: 'dropdown'}}
                       = credits_with_image current_user.credits
                     .dropdown-menu.pull-right
-                      %a.buy-credits.btn.btn-success{href: '/orders/new', data: {toggle: 'modal', target: '#buy-credits-modal'}} Buy more credits
+                      = link_to_buy_credits
               
       .container
         - flash.select {|_,msg| msg.is_a?(String) }.each do |name, msg|

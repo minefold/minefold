@@ -67,22 +67,13 @@
 
         a {
           color: $blue;
+          padding-left: $gw-gutter / 2;
+          padding-right: $gw-gutter / 2;
+          
           &:hover {
             background-color: $blue;
           }
         }
-      }
-      
-      &.credits .dropdown-menu {
-        padding: lines(2) $gw-gutter;
-        
-        .buy-credits {
-          margin-top: 0;
-          color: white;
-          font-size: 14px;
-          font-weight: 600;
-        }
-        
       }
     }
   }
