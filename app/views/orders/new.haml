@@ -53,6 +53,86 @@
       = image_tag 'stripe.png', width: 72, height: 31
 
 :javascript
+  var aside, form, creditPacks, timePacksData;
+
+  timePacks = $('.time-packs a');
+
+  form = $('form#new-order');
+
+  aside = form.find('aside');
+
+  timePacksData = #{CreditPack.all.to_json};
+
+  timePacks.click(function(e) {
+    e.preventDefault();
+
+    var months, pack, price;
+    pack = $(this);
+    timePacks.removeClass('active');
+    pack.addClass('active');
+    price = pack.data('amount') / 100;
+    months = pack.data('months');
+    form.find('.dollar-amount').text("$" + price);
+    form.find('.months').text(months);
+    form.find('input[name=months]').val(months);
+    return form.show();
+  });
+
+  form.find('button[type=reset]').click(function() {
+    timePacks.removeClass('active');
+    return form.hide();
+  });
+
+  form.submit(function(e) {
+    var amount, card, months, pack, selectedPack, submitButton;
+    e.preventDefault();
+    submitButton = form.find('input[type=submit]').attr({
+      disabled: true
+    });
+    card = {
+      number: form.find('#card-number').val(),
+      cvc: form.find('#card-cvc').val(),
+      exp_month: form.find('#card-exp-month').val(),
+      exp_year: form.find('#card-exp-year').val()
+    };
+    selectedPack = timePacks.filter('.active');
+    months = parseInt(selectedPack.data('months'), 10);
+    pack = _(timePacksData).find(function(pack) {
+      return pack.months === months;
+    });
+    amount = pack.cents;
+    if (amount == null) {
+      return alert('Nice try buddy');
+    }
+    return Stripe.createToken(card, amount, function(status, response) {
+      var token;
+      if (status !== 200) {
+        submitButton.attr({
+          disabled: false
+        });
+
+        var errorMsg = $('<p></p>').addClass('help-block').text(response.error.message);
+
+        $('.control-group.'+response.error.param)
+          .addClass('error')
+          .find('.controls').append(errorMsg)
+
+      } else {
+        token = response.id;
+        $('<input></input>').attr({
+          type: 'hidden',
+          name: 'stripe_token'
+        }).val(token).appendTo(form);
+        $('<input></input>').attr({
+          type: 'hidden',
+          name: 'pack_id'
+        }).val(pack.id).appendTo(form);
+        return form.get(0).submit();
+      }
+    });
+  });
+
+:javascript
   form = $('form.edit_user')
 
   form.submit (e) ->

@@ -1,4 +1,4 @@
-# Hash rocket stylee please
+# Hash rocket stylee please. Routes typically have lots of symbol to symbol hashes so keeping the same style throughout it prettier.
 
 Minefold::Application.routes.draw do
   admin_only = lambda {|req| (u = req.env['warden'].user) and u.admin? }
@@ -14,8 +14,7 @@ Minefold::Application.routes.draw do
     '/jobs'     => :jobs,
     '/pricing'  => :pricing,
     '/privacy'  => :privacy,
-    '/terms'    => :terms,
-    '/welcome'  => :welcome
+    '/terms'    => :terms
   }.each do |url, name|
     get url, :controller => 'pages',:action => name, :as => "#{name}_page"
   end
@@ -26,7 +25,8 @@ Minefold::Application.routes.draw do
 
 
   devise_for :user,
-    :controllers => { :omniauth_callbacks => 'omniauth_callbacks' }
+    :controllers => { :omniauth_callbacks => 'omniauth_callbacks',
+                      :registrations => 'registrations' }
 
   # Authentication
   devise_scope :user do
@@ -53,37 +53,11 @@ Minefold::Application.routes.draw do
     end
 
     resources :users, :path => '/',
-                      :only => [:show, :update]
+                      :only => [:show, :update] do
+       get :onboard, :on => :collection, :path => 'welcome'
+    end
   end
 
   root :to => 'pages#home'
-
-
-  # resources(:players,
-  #           :path => '/',
-  #           :only => [:show]) do
-  #
-  #   resources(:worlds,
-  #             :path => '/',
-  #             :except => [:index, :new, :create],
-  #             :path_names => {:edit => 'settings'}) do
-  #
-  #     member do
-  #       put :clone
-  #       get :invite
-  #     end
-  #
-  #     scope :module => :worlds do
-  #       resources :players, :controller => :memberships, :only => [:index, :create, :destroy]
-  #
-  #       resources :membership_requests, :only => [:create, :destroy] do
-  #         put :approve, :on => :member
-  #       end
-  #
-  #       resources :comments, :only => [:create]
-  #     end
-  #   end
-  #
-  # end
 
 end

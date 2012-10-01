@@ -8,7 +8,21 @@ class UsersControllerTest < ActionController::TestCase
     get :show, id: user.slug
     assert_response :success
   end
-
+  
+  test "GET #onboard" do
+    user = User.make!
+    sign_in(user)
+    
+    get :onboard
+    assert_response :success
+  end
+  
+  test "GET #onboard unauthorized" do
+    get :onboard
+    assert_unauthenticated_response
+  end
+  
+  
   test "PUT #update" do
     user = User.make!
     put :update, id: user.id
