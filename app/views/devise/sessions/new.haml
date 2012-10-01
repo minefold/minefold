@@ -32,7 +32,8 @@
         .form-actions
           .pull-left
             = f.submit 'Sign in', tabindex: 4, class: %w(btn)
-          .control-group.pull-left
+            
+          .control-group.pull-left.remember-me
             .controls
               = f.label :remember_me, class: 'checkbox' do
                 = f.check_box :remember_me, tabindex: 3
