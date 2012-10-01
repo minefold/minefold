@@ -1,4 +1,4 @@
-class WorldMailer < ActionMailer::Base
+class LegacyWorldMailer < ActionMailer::Base
   include Resque::Mailer
   include WorldHelper
 

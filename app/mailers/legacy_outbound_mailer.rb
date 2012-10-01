@@ -1,4 +1,4 @@
-class OutboundMailer < ActionMailer::Base
+class LegacyOutboundMailer < ActionMailer::Base
   include Resque::Mailer
 
   def invite(player_id, world_id, invitee_email, message = nil)

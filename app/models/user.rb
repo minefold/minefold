@@ -15,11 +15,12 @@ class User < ActiveRecord::Base
 
   # NOTE: there arn't any User emails here. They can't be turned off for the
   # moment.
-  store :email_prefs, accessors: [
-    :server_emails,
-    :membership_emails,
-    :membership_request_emails,
-    :session_emails
+  store :mail_prefs, accessors: [
+    :membership_mailer,
+    :membership_request_mailer,
+    :newsletter_mailer,
+    :server_mailer,
+    :session_mailer
   ]
 
   friendly_id :username, :use => :slugged
@@ -87,17 +88,17 @@ class User < ActiveRecord::Base
     self.customer_id = c.id
   end
   
-  # Stub
-  # def credits
-  #   cr * 60
-  # end
-  
   # Atomically increment credits
   # Warning: doesn't update the model's internal representation.
   def increment_credits!(n)
     self.class.update_counters(self.id, credits: n) == 1
   end
-
+  
+  
+  def wants_mail_for?(klass)
+    key = klass.name.underscore.to_sym
+    mail_prefs[key] == true || mail_prefs[key] == '1'
+  end
 
   def channel_key
     [self.class.name.downcase, id.to_s].join('-')

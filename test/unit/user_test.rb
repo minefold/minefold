@@ -1,5 +1,7 @@
 require 'test_helper'
 
+class RandomMailer; end
+
 class UserTest < ActiveSupport::TestCase
 
   test "#name" do
@@ -92,6 +94,16 @@ class UserTest < ActiveSupport::TestCase
 
     user.reload
     assert_equal 2, user.credits
+  end
+  
+  test "#wants_mail_for?" do
+    user = User.new
+
+    assert_equal false, user.wants_mail_for?(RandomMailer)
+
+    user.mail_prefs[:random_mailer] = true
+
+    assert_equal true, user.wants_mail_for?(RandomMailer)
   end
 
 end

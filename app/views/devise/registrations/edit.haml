@@ -39,6 +39,15 @@
 
 .account-form-section.row
   .section-label.span3
+    %h3 Billing
+  .span9
+    = credits_with_image current_user.credits
+    &middot;
+    = link_to_buy_credits
+
+
+.account-form-section.row
+  .section-label.span3
     %h3 Notifications
 
   .span9
@@ -46,33 +55,29 @@
 
       .control-group
         .controls
-          = f.label :server_emails, class: %w(checkbox) do
-            = f.check_box :server_emails
-            Server emails
-
-          = f.label :membership_emails, class: %w(checkbox) do
-            = f.check_box :membership_emails
+          = f.label :membership_mailer, class: %w(checkbox) do
+            = f.check_box :membership_mailer
             Membership emails
 
-          = f.label :membership_request_emails, class: %w(checkbox) do
-            = f.check_box :membership_request_emails
+          = f.label :membership_request_mailer, class: %w(checkbox) do
+            = f.check_box :membership_request_mailer
             Membership Request emails
 
-          = f.label :session_emails, class: %w(checkbox) do
-            = f.check_box :session_emails
+          = f.label :newsletter_mailer, class: %w(checkbox) do
+            = f.check_box :newsletter_mailer
+            Minefold newsletters
+
+          = f.label :server_mailer, class: %w(checkbox) do
+            = f.check_box :server_mailer
+            Server emails
+
+          = f.label :session_mailer, class: %w(checkbox) do
+            = f.check_box :session_mailer
             Session emails
 
       .form-actions
         = f.submit 'Save', class: %w(btn btn-mini)
 
-
-.account-form-section.row
-  .section-label.span3
-    %h3 Billing
-  .span9
-    = credits_with_image current_user.credits
-    &middot;
-    = link_to_buy_credits
 
 .account-form-section.row
   .section-label.span3
