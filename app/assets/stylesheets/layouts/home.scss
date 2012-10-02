@@ -20,7 +20,7 @@
   section {
     padding-top: lines(4);
     padding-bottom: lines(4) - 1px;
-    border-bottom: 1px solid darken(white, 5%);
+    border-bottom: 1px solid $bg;
     
     h3 {
       font-family: $futura;

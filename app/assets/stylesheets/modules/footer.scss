@@ -1,8 +1,7 @@
 @import 'vars';
 
 footer {
-  @include linear-gradient(top, rgba($bg, 0.2), white 50%);
-//  background-color: $bg;
+  background-color: $bg;
   margin-top: lines(16);
   padding-top: lines(8);
   padding-bottom: lines(32);

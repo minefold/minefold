@@ -20,9 +20,6 @@ class PagesController < ApplicationController
     @coming_soon_games = ['Team Fortress 2', 'Counter-Strike: Go', 'Call of Duty', 'DayZ']
   end
 
-  def jobs
-  end
-
   def pricing
     @packs = CreditPack.active.all
   end

@@ -1,8 +1,7 @@
 @import 'vars';
 
 .navbar {
-  padding-bottom: lines(4);
-  border-bottom: 2px solid rgba(black, 0.05);
+  padding: lines(4) 0;
 
   > .navbar-inner {
     background: transparent;
@@ -15,63 +14,90 @@
   }
 
   .brand {
-    color: $black;
+    color: white;
     font-weight: 800;
     font-family: $futura;
+    text-shadow: none;
   }
 
   .brand:before {
     content: "";
-    width: 40px;
-    height: 40px;
-    margin: -10px 0;
-    margin-right: 10px;
     @include inline-block;
     float: left;
-    background: lighten($blue, 0%) asset-data-url('logo-small.png') no-repeat 50% 50%;
-    border-radius: $radius;
-  }
+    
+    width: 40px;
+    height: lines(8);
+    padding: 0 5px;
+    margin: -10px 0;
+    margin-right: $gw-gutter;
 
+    background: $blue asset-data-url('logo-small.png') no-repeat 50% 50%;
+  }
+  
+  .pull-right .nav {
+    margin-right: 0;
+  }
+  
   .nav {
     
-    &.pull-right {
-      margin-right: 0;
-    }
-    
     li {
+      color: white;
+        
       a {
         font-size: 16px;
         text-shadow: none;
-        color: $black;
+        color: white;
+        outline: none;
       }
 
-      a:hover {
-        color: $green;
+      a:hover,
+      a:focus,
+      a:active {
+        color: white;
+        background-color: darken($blue, 5%);
       }
-
-      &.upgrade a {
-        color: $red;
-      }
-      
+            
       &.sign-up a {
-        color: $green;
+        background-color: $green;
+        &:hover {
+          background-color: lighten($green, 10%);
+        }
       }
       
-      &.sign-in a, &.user a {
-        color: $blue;
+      &.dropdown {
+        &.open > .dropdown-toggle {
+          background-color: lighten($blue, 5%);
+          color: white;
+          
+        }
+
+        > .dropdown-toggle .caret,
+        &.open > .dropdown-toggle .caret {
+          border-top-color: rgba(white, 0.5);
+          border-bottom-color: rgba(white, 0.5);
+        }
       }
       
       .dropdown-menu {
         @include box-shadow(none);
         @include border-radius($radius);
+        background-color: $blue;
+        border: none;
+        
+        &:before {
+          border-bottom-color: transparent;
+        }
+        
+        &:after {
+          border-bottom-color: $blue;
+        }
 
         a {
-          color: $blue;
           padding-left: $gw-gutter / 2;
           padding-right: $gw-gutter / 2;
           
           &:hover {
-            background-color: $blue;
+            background-color: lighten($blue, 5%);
           }
         }
       }

@@ -4,7 +4,7 @@
     
   .credit-pack {
     text-align: center;
-    border: 2px solid darken(white, 40%);
+    border: 2px solid darken(white, 10%);
       
     padding: lines(8) ($gw-gutter / 2);
 
@@ -43,7 +43,7 @@
     border-color: $blue;
       
     .note {
-      color: darken($yellow, 20%);
+      color: darken($yellow, 10%);
     }
   }
   

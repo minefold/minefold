@@ -14,7 +14,7 @@ $white: #FFF;
 $black: #000;
 
 
-$bg: desaturate(lighten($blue, 45%), 40%);
+$bg: rgba(desaturate(lighten($blue, 45%), 40%), 0.2);
 
 // Grid
 

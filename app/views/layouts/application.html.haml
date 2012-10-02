@@ -76,8 +76,8 @@
 
     #page-background-block
 
-      %header.container
-        .navbar.navbar-static-top
+      %header
+        .navbar.navbar-static-top.container
           .navbar-inner
             .pull-left
               = link_to 'Minefold', root_path, class: 'brand'
@@ -96,20 +96,20 @@
                   %li.sign-in= link_to 'Sign In', new_user_session_path
 
                 - else
-
+                  
+                  %li.credits
+                    %a{href: new_orders_path, data: { toggle: 'modal', target: '#buy-credits-modal' }}
+                      = credits_with_image(current_user.credits)
+                  
                   %li.user.dropdown
                     %a.dropdown-toggle{href: '#', data: {toggle: 'dropdown'}}
                       = current_user.username
-
-                      %b.caret
+                      %b.caret.white
+                      
                     %ul.dropdown-menu.pull-right
                       %li= link_to 'Settings', edit_user_registration_path
                       %li= link_to 'Sign out', destroy_user_session_path, method: :delete
-                  %li.credits.dropdown
-                    %a.dropdown-toggle{href: '#', data: {toggle: 'dropdown'}}
-                      = credits_with_image current_user.credits
-                    .dropdown-menu.pull-right
-                      = link_to_buy_credits
+
               
       .container
         - flash.select {|_,msg| msg.is_a?(String) }.each do |name, msg|
@@ -127,7 +127,6 @@
           %li= link_to 'Pricing', pricing_page_path
           %li= link_to 'Support', support_page_path
           %li= link_to 'About', about_page_path
-          %li= link_to 'Jobs', jobs_page_path
           %li= link_to 'Developers', 'http://partycloud.com'
           %li= link_to 'Blog', 'http://blog.minefold.com'
 

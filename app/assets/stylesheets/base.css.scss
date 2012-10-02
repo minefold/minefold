@@ -2,6 +2,12 @@
 
 html {
   background-color: $bg;
+  padding: 0;
+}
+
+header {
+  margin: 0;
+  background-color: desaturate(darken($blue, 10%), 0%);
 }
 
 #page-background-block {
@@ -10,6 +16,10 @@ html {
 
 .container {
   width: grid-width(8);
+}
+
+#Intercom {
+  display: none;
 }
 
 a {

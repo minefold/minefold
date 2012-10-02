@@ -1,21 +1,14 @@
 @import 'vars';
 
-#Intercom {
-  display: inline-block;
-  text-decoration: underline;
-  padding: 0;
-}
-
-
 .l-support {
-  
+    
   .container {
     width: grid-width(12);
   }
   
   h2 {
     font-size: 28px;
-    color: $green;
+    color: darken($blue, 10%);
   }
   
   h3 {

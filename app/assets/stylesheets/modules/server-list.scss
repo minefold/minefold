@@ -1,0 +1,72 @@
+@import 'vars';
+
+.server-list {
+  .divider {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: rgba(black, 0.2);
+    padding: 0 10px;
+    line-height: lines(6);
+    border-bottom: 1px solid rgba(black, 0.1);
+  }
+  
+  .new {
+    text-align: center;
+    padding: lines(8) 0;
+  }
+  
+  .item {
+    display: block;
+    overflow: auto;
+    border-bottom: 1px solid darken(white, 5%);
+    padding: lines(1) 10px;
+
+    .primary-action {
+      display: block;
+      float: left;
+      color: $blue;
+
+      .name {
+        font-size: 18px;
+        line-height: 24px;
+        font-weight: normal;
+      }
+
+      &:hover {
+        color: $blue;
+        text-decoration: none;
+      }
+    }
+
+    .nav {
+      display: none;
+      margin: lines(2) 0;
+    }
+
+    &:hover {  
+      background: $bg;
+    }
+
+    &:hover .nav {
+      display: block;
+    }
+
+    .nav-pills-images a {
+      height: 24px;
+      padding: 0 10px;
+      margin: 0;
+
+      img {
+        opacity: 0.2;
+      }
+
+      &:hover {
+        background-color: transparent;
+      }
+      &:hover img {
+        opacity: 1;
+      }
+    }
+
+  }
+}

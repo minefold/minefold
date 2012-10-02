@@ -1,10 +1,7 @@
 - title 'Servers'
 - layout :server
 
-.page-header.page-header-server
-  - if can? :create, Server
-    = link_to 'Start a new server', new_server_path, class: %w(btn btn-success pull-right)
-
+.page-header
   %h1 Servers
 
 %ul.server-list.unstyled
@@ -21,7 +18,10 @@
               = link_to image_tag('101.png', width: 24, height: 24), map_server_path(server)
 
           %li
-            %a{href: '#'}= image_tag '243.png', width: 24, height: 24
+            %a{href: server_memberships_path(server)}= image_tag '243.png', width: 24, height: 24
           %li
             %a{href: edit_server_path(server)}
               = image_tag '265.png', width: 24, height: 24
+
+  - if can? :create, Server
+    %li.new= link_to 'Create a new server', new_server_path, class: %w(btn btn-success)
