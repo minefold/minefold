@@ -5,14 +5,7 @@
     .credit-pack
       %h4.credits= format_credits pack.credits
       .price= number_to_currency(pack.cents / 100)
-      
-      %p.rate #{number_to_currency(pack.cents_per_credit)} per 100 credits
-
-/ - head do
-/   %script{src: 'https://js.stripe.com/v1'}
-/   :coffeescript
-/     Stripe.setPublishableKey #{ENV['STRIPE_PUBLISHABLE'].to_json}
-
+      %p.rate #{(pack.cents_per_credit * 100).ceil}¢ for 100 credits
 
 / :javascript
 /   $('input.stripe.number').keyup (e) ->
@@ -27,13 +20,17 @@
 /       .filter(-> $(@).hasClass(cardType))
 /       .addClass('active')
 
-%form{hidden}
+%form.credit-card-form{hidden}
+  
+  .control-group
+    %label.control-label{for: 'asdf'} Full name
+    .controls
+      %input{type: 'text', name: nil, autocomplete: false}
+  
   .control-group
     %label.control-label{for: 'asdf'} Card Number
     .controls
       %input{type: 'text', name: nil, autocomplete: false}
-      .help-block
-        We accept <span class="visa">Visa</span>, <span class="mastercard">MasterCard</span>, <span class="american-express">American Express</span>, <span class="discover">Discover</span>, <span class="jcb">JCB</span> and <span class="diners-club">Diners Club</span>.
     
   .control-group
     %label.control-label{for: 'asdf'} CVC
@@ -47,10 +44,41 @@
       %span /
       %input{type: 'number', name: nil, size: 4, min: 0}
   
-  %p
-    %a#secured-by{href: 'https://stripe.com', target: '_blank'}
-      Secured by
-      = image_tag 'stripe.png', width: 72, height: 31
+  .form-actions
+    .pull-left
+      %a.btn.btn-cancel Cancel
+    
+    .pull-right
+      %a.btn.btn-primary
+        Pay
+        %span.price
+  
+  .security
+    %i.icon-lock
+    %a{href: 'https://stripe.com', target: '_blank'}
+      Secured by Stripe
+
+:javascript
+  var $modal = $('#buy-credits-modal'),
+    $form = $modal.find('form');
+  
+  $(document).ready(function() {
+    $modal.find('.credit-pack').click(function() {
+      var $this = $(this);
+      
+      $form.find('.form-actions .btn-primary .price').text($this.find('.price').text());
+      $form.slideDown();
+      $modal.find('.modal-header h3').text('Checkout');
+      $this.siblings().removeClass('active');
+      $this.addClass('active');
+    });
+    
+    $form.find('.form-actions .btn.btn-cancel').click(function(){
+      $form.slideUp();
+      $modal.find('.credit-pack').removeClass('active');
+    });
+  });
+
 
 :javascript
   var aside, form, creditPacks, timePacksData;

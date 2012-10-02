@@ -6,10 +6,12 @@ form {
     border: none;
     @include box-shadow(0 0 0 2px rgba(black, 0.1) inset);
     @include border-radius(0);
-    padding: 10px 10px;
+    padding: 5px 10px;
     font-size: 16px;
     line-height: 30px;
     color: black;
+    @include box-sizing(border-box);
+    height: 40px;
 
     &:focus {
       @include box-shadow(0 0 0 2px rgba($blue, 0.4) inset);
@@ -23,5 +25,38 @@ form {
   .form-actions {
     background-color: transparent;
     padding: 0;
+  }
+}
+
+
+form.credit-card-form {
+  background: rgba(black, 0.05);
+  padding-top: lines(4);
+  margin-bottom: 0;
+  
+  .control-group, .form-actions {
+    width: 210px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .form-actions .pull-right {
+    padding-right: 0;
+  }
+  
+  .security {
+    border-top: 1px solid rgba(black, 0.05);
+    text-align: center;
+    padding: lines(2) 0;
+    font-size: 11px;
+    line-height: 20px;
+    
+    i {
+      opacity: 0.4;
+    }
+    
+    a {
+      color: rgba(black, 0.4);
+    }
   }
 }

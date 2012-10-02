@@ -72,14 +72,14 @@
     #fb-root
     #Intercom
     
-    .modal#buy-credits-modal{tabindex: -1, role: 'dialog', aria: {hidden: true}}
+    .modal#buy-credits-modal.l-order{tabindex: -1}
       .modal-header
         %button.close{type: 'button', data: {dismiss: 'modal'}} ×
-        %h3#myModalLabel Choose a credit pack to buy
+        %h3 Choose how many credits you want
       
       .modal-body
       
-      .modal-footer
+      .modal-footer{hidden}
         %button.btn{data: {dismiss: 'modal'}, disabled: true} Cancel
         %button.btn.btn-primary{disabled: true} Pay
 

@@ -1,4 +1,19 @@
 @import 'vars';
 
 .l-order {
+  margin-top: -(700px / 2);
+  
+  .modal-header {
+    border-bottom: none;
+    text-align: center;
+    h3 {
+      font-size: 16px;
+    }
+  }
+  
+  .modal-body {
+    padding: 0;
+    max-height: 700px;
+  }
+  
 }

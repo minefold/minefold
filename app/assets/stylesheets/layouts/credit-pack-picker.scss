@@ -9,26 +9,41 @@
     padding-top: lines(2);
     padding-bottom: lines(2);
     text-align: center;
-    border-right: 1px solid rgba(black, 0.1);
-    
-    @include box-sizing(border-box);
     
     .credits {
       font-size: 24px;
     }
     
     .price {
+      color: rgba(black, 0.5);
       font-size: 18px;
       line-height: lines(6);
     }
     
     .rate {
-      color: rgba(black, 0.6);
+      color: rgba(black, 0.5);
       font-size: 11px;
     }
     
     &:last-child {
       border-right: none;
+    }
+    
+    &:hover {
+      cursor: pointer;
+      background-color: lighten($blue, 40%);
+      color: darken($blue, 10%);
+    }
+    
+    &:active, &.active {
+      background-color: lighten($green, 45%);
+      color: darken($green, 10%);
+    }
+    
+    &.active {
+      background-color: lighten($green, 00%);
+      color: white;
+      .price, .rate { color: rgba(white, 0.5); }
     }
   }
 }
