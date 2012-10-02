@@ -3,7 +3,7 @@
 module CreditsHelper
   
   def link_to_buy_credits
-    content_tag :a, 'Buy more credits',
+    content_tag :a, 'Buy credits',
       href: new_orders_path,
       data: { toggle: 'modal', target: '#buy-credits-modal' }
   end

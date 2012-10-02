@@ -32,16 +32,42 @@ form {
 form.credit-card-form {
   background: rgba(black, 0.05);
   padding-top: lines(4);
-  margin-bottom: 0;
+margin-bottom: 0;
   
   .control-group, .form-actions {
-    width: 210px;
+    width: grid-width(3);
     margin-left: auto;
     margin-right: auto;
   }
   
   .form-actions .pull-right {
     padding-right: 0;
+  }
+  
+  .number {
+    background-image: url('https://button.stripe.com/assets/cards/placeholder.png');
+    background-position: (grid-width(3) - 10px - 34px) center;
+    background-repeat: no-repeat;
+    
+    &.identified {
+      background-position: (grid-width(3) - 10px - 40px) center;
+    }
+    
+    &.visa {
+      background-image: url('https://button.stripe.com/assets/cards/visa.png');
+    }
+    
+    &.amex {
+      background-image: url('https://button.stripe.com/assets/cards/amex.png');
+    }
+    
+    &.mastercard {
+      background-image: url('https://button.stripe.com/assets/cards/mastercard.png');
+    }
+    
+    &.discover {
+      background-image: url('https://button.stripe.com/assets/cards/discover.png');
+    }
   }
   
   .security {

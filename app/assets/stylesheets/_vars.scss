@@ -14,7 +14,7 @@ $white: #FFF;
 $black: #000;
 
 
-$bg: $blue;
+$bg: lighten($blue, 20%);
 
 // Grid
 

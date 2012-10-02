@@ -23,33 +23,36 @@
 %form.credit-card-form{hidden}
   
   .control-group
-    %label.control-label{for: 'asdf'} Full name
+    %label.control-label{for: 'card_name'} Full name
     .controls
-      %input{type: 'text', name: nil, autocomplete: false}
+      %input#card_name{type: 'text', name: nil, autocomplete: false}
   
   .control-group
-    %label.control-label{for: 'asdf'} Card Number
+    %label.control-label{for: 'card_number'} Card number
     .controls
-      %input{type: 'text', name: nil, autocomplete: false}
+      %input#card_number.number.unknown{type: 'text', name: nil, autocomplete: false}
+  
+  .row
+    .span2
+      .control-group
+        %label.control-label{for: 'card_exp_month'} Expires
+        .controls
+          %input#card_exp_month.card_exp_month.span1{type: 'text', name: nil, size: 2, min: 0, placeholder: 'MM'}
+          %span /
+          %input#card_exp_year.card_exp_month.span1{type: 'text', name: nil, size: 2, min: 0, placeholder: 'YY'}
     
-  .control-group
-    %label.control-label{for: 'asdf'} CVC
-    .controls
-      %input{type: 'number', name: nil, size: 4, autocomplete: false, min: 0}
-  
-  .control-group
-    %label.control-label{for: 'asdf'} Expiration (MM/YYYY)
-    .controls
-      %input{type: 'number', name: nil, size: 2, min: 0}
-      %span /
-      %input{type: 'number', name: nil, size: 4, min: 0}
+    .span1
+      .control-group
+        %label.control-label{for: 'card_cvc'} Security code
+        .controls
+          %input#card_cvc{type: 'text', name: nil, size: 4, autocomplete: false, min: 0}
   
   .form-actions
     .pull-left
       %a.btn.btn-cancel Cancel
     
     .pull-right
-      %a.btn.btn-primary
+      %a.btn.btn-success
         Pay
         %span.price
   
@@ -66,18 +69,70 @@
     $modal.find('.credit-pack').click(function() {
       var $this = $(this);
       
-      $form.find('.form-actions .btn-primary .price').text($this.find('.price').text());
+      $form.find('.form-actions .btn-success .price').text($this.find('.price').text());
       $form.slideDown();
-      $modal.find('.modal-header h3').text('Checkout');
+      
+      $modal.removeClass('is-choosing').addClass('is-checking-out');
+      
       $this.siblings().removeClass('active');
       $this.addClass('active');
     });
     
     $form.find('.form-actions .btn.btn-cancel').click(function(){
       $form.slideUp();
+      $modal.removeClass('is-checking-out').addClass('is-choosing');
       $modal.find('.credit-pack').removeClass('active');
     });
   });
+  
+  // Not so shamelessly stolen from Stripe's own buttons.
+  
+  var $number = $form.find('.number');
+  
+  var formatNumber = function(e) {
+    var digit, lastDigits, value;
+    digit = String.fromCharCode(e.which);
+    if (!/^\d+$/.test(digit)) {
+      return;
+    }
+    value = $number.val();
+    if (Stripe.cardType(value) === 'American Express') {
+      lastDigits = value.match(/^(\d{4}|\d{4}\s\d{6})$/);
+    } else {
+      lastDigits = value.match(/(?:^|\s)(\d{4})$/);
+    }
+    if (lastDigits) {
+      return $number.val(value + ' ');
+    }
+  };
+  
+  var cardTypes = {
+    'Visa': 'visa',
+    'American Express': 'amex',
+    'MasterCard': 'mastercard',
+    'Discover': 'discover',
+    'Unknown': 'unknown'
+  };
+
+  var changeCardType = function(e) {
+    var $el, map, name, type, _ref;
+    type = Stripe.cardType($number.val());
+    type = cardTypes[type];
+    $el = $number;
+    if (!$el.hasClass(type)) {
+      _ref = cardTypes;
+      for (name in _ref) {
+        map = _ref[name];
+        $el.removeClass(map);
+      }
+      $el.addClass(type);
+      return $el.toggleClass('identified', type !== 'unknown');
+    }
+  };
+  
+  $number.keydown(formatNumber);
+  $number.keyup(changeCardType);
+
 
 
 :javascript
@@ -159,6 +214,63 @@
       }
     });
   });
+
+/ Payment.prototype.validate = function() {
+/   var expiry, valid,
+/     _this = this;
+/   valid = true;
+/   this.$('input').removeClass('invalid');
+/   this.$message.hide().empty();
+/   this.$('input[required]').each(function(i, input) {
+/     input = $(input);
+/     if (!input.val()) {
+/       valid = false;
+/       return _this.handleError({
+/         code: 'required',
+/         input: input
+/       });
+/     }
+/   });
+/   if (!Stripe.validateCardNumber(this.$number.val())) {
+/     valid = false;
+/     this.handleError({
+/       code: 'invalid_number'
+/     });
+/   }
+/   expiry = this.expiryVal();
+/   if (!Stripe.validateExpiry(expiry.month, expiry.year)) {
+/     valid = false;
+/     this.handleError({
+/       code: 'expired_card'
+/     });
+/   }
+/   if (this.options.cvc && !Stripe.validateCVC(this.$cvc.val())) {
+/     valid = false;
+/     this.handleError({
+/       code: 'invalid_cvc'
+/     });
+/   }
+/   if (!valid) {
+/     this.$('.invalid:input:first').select();
+/   }
+/   return valid;
+/ };
+
+
+/ case 'required':
+/   return this.invalidInput(err.input);
+/ case 'card_declined':
+/   return this.invalidInput(this.$number);
+/ case 'invalid_number':
+/ case 'incorrect_number':
+/   return this.invalidInput(this.$number);
+/ case 'invalid_expiry_month':
+/   return this.invalidInput(this.$expiryMonth);
+/ case 'invalid_expiry_year':
+/ case 'expired_card':
+/   return this.invalidInput(this.$expiryYear);
+/ case 'invalid_cvc':
+/   return this.invalidInput(this.$cvc);
 
 :javascript
   form = $('form.edit_user')
