@@ -65,31 +65,37 @@
   var $modal = $('#buy-credits-modal'),
     $form = $modal.find('form');
   
-  $(document).ready(function() {
-    $modal.find('.credit-pack').click(function() {
-      var $this = $(this);
-      
-      $form.find('.form-actions .btn-success .price').text($this.find('.price').text());
-      $form.slideDown();
-      
-      $modal.removeClass('is-choosing').addClass('is-checking-out');
-      
-      $this.siblings().removeClass('active');
-      $this.addClass('active');
-    });
+  // Select a credit pack
     
-    $form.find('.form-actions .btn.btn-cancel').click(function(){
-      $form.slideUp();
-      $modal.removeClass('is-checking-out').addClass('is-choosing');
-      $modal.find('.credit-pack').removeClass('active');
-    });
+  $modal.find('.credit-pack').click(function() {
+    var $this = $(this);
+    
+    $modal.removeClass('is-choosing').addClass('is-checking-out');
+    
+    // Adds the price of the active pack to the pay button so it's *very* clear.
+    $form.find('.form-actions .btn-success .price').text($this.find('.price').text());
+    
+    $form.slideDown();
+    
+    $this.addClass('active').siblings().removeClass('active');
   });
+    
+  // Clicking the cancel button at the bottom of the checkout form
+    
+  $form.find('.form-actions .btn.btn-cancel').click(function(){
+    $modal.find('.credit-pack').removeClass('active');
+    $modal.removeClass('is-checking-out').addClass('is-choosing');
+    $form.slideUp();
+  });
+
+:javascript
+  // Not so shamelessly stolen from Stripe's buttons: https://button.stripe.com/assets/inner/index.js
   
-  // Not so shamelessly stolen from Stripe's own buttons.
+  var $number, formatNumber, cardTypes, changeCardType;
   
-  var $number = $form.find('.number');
+  $number = $('#buy-credits-modal form .number');
   
-  var formatNumber = function(e) {
+  formatNumber = function(e) {
     var digit, lastDigits, value;
     digit = String.fromCharCode(e.which);
     if (!/^\d+$/.test(digit)) {
@@ -106,7 +112,7 @@
     }
   };
   
-  var cardTypes = {
+  cardTypes = {
     'Visa': 'visa',
     'American Express': 'amex',
     'MasterCard': 'mastercard',
@@ -114,7 +120,7 @@
     'Unknown': 'unknown'
   };
 
-  var changeCardType = function(e) {
+  changeCardType = function(e) {
     var $el, map, name, type, _ref;
     type = Stripe.cardType($number.val());
     type = cardTypes[type];

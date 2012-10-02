@@ -1,5 +1,0 @@
-module LayoutHelper
-
-
-
-end

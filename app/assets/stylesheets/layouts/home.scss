@@ -2,6 +2,10 @@
 
 .l-home {
   
+  .container {
+    width: grid-width(12);
+  }
+  
   #movie {
     width: 640px;
     height: 360px;

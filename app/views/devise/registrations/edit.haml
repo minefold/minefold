@@ -4,7 +4,7 @@
   %h1 Settings
 
 .account-form-section.row
-  .section-label.span3
+  .section-label.span2
     %h3 Profile
     / %ul.nav.nav-tabs.nav-stacked
     /   %li.active= link_to 'Profile', '#profile', data: {toggle: 'tab'}
@@ -15,7 +15,7 @@
     / %p You can change your avatar at #{link_to 'Minecraft.net', 'http://minecraft.net/profile', target: '_blank'}. If you do, it may take up to 24 hours to update.
 
 
-  .span9
+  .span6
     = form_for resource, method: :put do |f|
       .control-group
         .controls
@@ -31,26 +31,26 @@
 
 
 .account-form-section.row
-  .section-label.span3
+  .section-label.span2
     %h3 Accounts
 
-  .span9
+  .span6
 
 
 .account-form-section.row
-  .section-label.span3
+  .section-label.span2
     %h3 Billing
-  .span9
+  .span6
     = credits_with_image current_user.credits
     &middot;
     = link_to_buy_credits
 
 
 .account-form-section.row
-  .section-label.span3
+  .section-label.span2
     %h3 Notifications
 
-  .span9
+  .span6
     = form_for resource, method: :put do |f|
 
       .control-group
@@ -80,10 +80,10 @@
 
 
 .account-form-section.row
-  .section-label.span3
+  .section-label.span2
     %h3 Password
 
-  .span9
+  .span6
     = form_for resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }, class: %w(form-horizontal) do |f|
 
       .control-group

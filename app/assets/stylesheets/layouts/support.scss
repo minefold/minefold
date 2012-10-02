@@ -9,6 +9,10 @@
 
 .l-support {
   
+  .container {
+    width: grid-width(12);
+  }
+  
   h2 {
     font-size: 28px;
     color: $green;
@@ -25,6 +29,7 @@
       @include box-sizing(border-box);
       background-color: lighten($yellow, 30%);
       @include border-radius($radius);
+      padding: lines(1) ($gw-gutter / 2);
       
       &.affix {
         top: 40px;
