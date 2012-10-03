@@ -1,38 +1,44 @@
 @import 'vars';
 
 @keyframes pulse {
-  from { opacity: 1; }
-  10%   { opacity: 1; }
-  50%  { opacity: 0.4; }
-  90%  { opacity: 1; }
-  to   { opacity: 1; }
-}
-
-@-moz-keyframes pulse {
-  from { opacity: 1; }
-  10%   { opacity: 1; }
-  50%  { opacity: 0.4; }
-  90%  { opacity: 1; }
-  to   { opacity: 1; }
+  from { background-color: $green; }
+  10%  { background-color: $green; }
+  50%  { background-color: lighten($green, 30%); }
+  90%  { background-color: $green; }
+  to   { background-color: $green; }
 }
 
 @-webkit-keyframes pulse {
-  from { opacity: 1; }
-  5%   { opacity: 1; }
-  50%  { opacity: 0.4; }
-  95%  { opacity: 1; }
-  to   { opacity: 1; }
+  from { background-color: $green; }
+  10%  { background-color: $green; }
+  50%  { background-color: lighten($green, 30%); }
+  90%  { background-color: $green; }
+  to   { background-color: $green; }
+}
 
+@-moz-keyframes pulse {
+  from { background-color: $green; }
+  10%  { background-color: $green; }
+  50%  { background-color: lighten($green, 30%); }
+  90%  { background-color: $green; }
+  to   { background-color: $green; }
+}
+
+@-ie-keyframes pulse {
+  from { background-color: $green; }
+  10%  { background-color: $green; }
+  50%  { background-color: lighten($green, 30%); }
+  90%  { background-color: $green; }
+  to   { background-color: $green; }
 }
 
 @-o-keyframes pulse {
-  from { opacity: 1; }
-  5%   { opacity: 1; }
-  50%  { opacity: 0.4; }
-  95%  { opacity: 1; }
-  to   { opacity: 1; }
+  from { background-color: $green; }
+  10%  { background-color: $green; }
+  50%  { background-color: lighten($green, 30%); }
+  90%  { background-color: $green; }
+  to   { background-color: $green; }
 }
-
 
 .server-status {
   @include inline-block;
@@ -41,11 +47,10 @@
   width: 12px;
   height: 12px;
   
-  border: 2px solid rgba(black, 0.1);
-  @include border-radius(lines(3));
+  @include border-radius(18px);
   
   &.running {
-    background: lighten($green, 10%);
+    background-color: lighten($green, 10%);
     
     @include animation-name(pulse);
     @include animation-duration(4.5s);
@@ -56,6 +61,5 @@
   &.server-status-large {
     width: 18px;
     height: 18px;
-    border-width: 4px;
   }
 }
