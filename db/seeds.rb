@@ -19,12 +19,13 @@ end
 
 minecraft = Game.create(
   name: 'Minecraft',
-  individual: true
+  super_servers: true,
+  persistant_data: true
 )
 
-tf2 = Game.create(
-  name: 'Team Fortress 2'
-)
+# tf2 = Game.create(
+#   name: 'Team Fortress 2'
+# )
 
 
 # Users
@@ -62,13 +63,19 @@ dave.save!
 # Funpacks
 
 Funpack.create(
-  name: 'Minecraft Official',
+  name: 'Official',
   game: minecraft,
   creator: chris
 )
 
 Funpack.create(
-  name: 'Team Fortress 2 Official',
-  game: tf2,
+  name: 'Bukkit',
+  game: minecraft,
+  creator: chris
+)
+
+Funpack.create(
+  name: 'Tekkit',
+  game: minecraft,
   creator: chris
 )

@@ -1,0 +1,9 @@
+.page-header.page-header-server
+  %p
+    %span.game-name= server.funpack.game.name
+    &middot;
+    %span.funpack-name= server.funpack.name
+  
+  %h1
+    %span.server-status.server-status-large{class: ('running' if server.running?)}
+    = server.name

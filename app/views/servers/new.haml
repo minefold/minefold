@@ -101,21 +101,21 @@
           %li.active
             %a{href: '#settings', data: {toggle: 'tab'}} Billing
       
-        = f.control_group :individual do
+        = f.control_group :super_server do
           .controls
             %label.radio
-              = f.radio_button :individual, false
+              = f.radio_button :super_server, false
               %strong Normal Server
               %p It costs you (the owner) <strong>5 cr</strong> an hour to run the server. Any member can play on the server without costing them any credits. You choose when to start and stop the server.
               %p Reccomended for families and schools.
 
-            %label.radio{class: ('muted' if !@funpack.game.individual?)}
-              = f.radio_button :individual, true, disabled: !@funpack.game.individual?
+            %label.radio{class: ('muted' if !@funpack.game.super_servers?)}
+              = f.radio_button :super_server, true, disabled: !@funpack.game.super_servers?
               %strong Super Server
               %p It costs each person <strong>1cr</strong> an hour to play on the server. The server is always running.
               %p Reccomended for groups of friends.
 
-              - if !@funpack.game.individual?
+              - if !@funpack.game.super_servers?
                 .alert
                   #{@funpack.game.name} doesn't support individual billing.
 

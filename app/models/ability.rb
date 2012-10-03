@@ -21,7 +21,7 @@ class Ability
     # User abilities
     can [:create], Server
 
-    can [:update, :destroy], Server, creator: user
+    can [:update, :destroy], Server, creator_id: user.id
 
     # can :operate, Server do |server|
     #   server.user_opped?(user)

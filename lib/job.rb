@@ -7,7 +7,7 @@ class Job
   def self.perform(*args)
     logger.tagged(name.underscore) do
       begin
-        logger.info "starting [#{args.map(&:inspect).join(',')}]"
+        logger.info "starting with #{args.inspect}"
         job = new(*args)
 
         if job.perform?
@@ -32,6 +32,10 @@ class Job
   end
 
 # private
+
+  def self.logger=(logger)
+    @logger = logger
+  end
 
   def self.logger
     @logger ||= Rails.logger

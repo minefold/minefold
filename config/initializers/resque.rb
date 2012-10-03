@@ -1,5 +1,6 @@
 require 'resque/failure/multiple'
 require 'resque/failure/redis'
+require 'resque/scheduler'
 
 Resque::Failure::Multiple.classes = [
     Resque::Failure::Redis,

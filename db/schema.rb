@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121001192017) do
+ActiveRecord::Schema.define(:version => 20121003070310) do
 
   create_table "credit_packs", :force => true do |t|
     t.integer  "cents",      :default => 0, :null => false
@@ -30,10 +30,11 @@ ActiveRecord::Schema.define(:version => 20121001192017) do
 
   create_table "games", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
-    t.boolean  "individual", :default => false, :null => false
-    t.string   "slug",       :default => ""
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.boolean  "super_servers",   :default => false, :null => false
+    t.string   "slug",            :default => ""
+    t.boolean  "persistant_data", :default => false, :null => false
   end
 
   create_table "memberships", :force => true do |t|
@@ -62,7 +63,6 @@ ActiveRecord::Schema.define(:version => 20121001192017) do
     t.string   "name",                 :default => ""
     t.integer  "creator_id"
     t.integer  "funpack_id"
-    t.string   "funpack",              :default => "minecraft-vanilla"
     t.integer  "upload_id"
     t.string   "ip"
     t.string   "host"
@@ -73,9 +73,9 @@ ActiveRecord::Schema.define(:version => 20121001192017) do
     t.integer  "minutes_played",       :default => 0
     t.integer  "world_minutes_played", :default => 0
     t.integer  "pageviews",            :default => 0
-    t.datetime "created_at",                                            :null => false
-    t.datetime "updated_at",                                            :null => false
-    t.boolean  "individual",           :default => false,               :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
+    t.boolean  "super_server",         :default => false, :null => false
   end
 
   add_index "servers", ["host"], :name => "index_servers_on_host", :unique => true

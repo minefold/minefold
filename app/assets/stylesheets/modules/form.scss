@@ -11,11 +11,16 @@ form {
     line-height: 30px;
     color: black;
     @include box-sizing(border-box);
-    height: 40px;
+    min-height: 40px;
 
     &:focus {
       @include box-shadow(0 0 0 2px rgba($blue, 0.4) inset);
     }
+  }
+  
+  textarea {
+    font-size: 14px;
+    line-height: 20px;
   }
   
   .control-label {
@@ -26,6 +31,7 @@ form {
     background-color: transparent;
     padding: 0;
   }
+  
 }
 
 

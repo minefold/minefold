@@ -27,9 +27,9 @@
     
     width: 40px;
     height: lines(8);
-    padding: 0 5px;
+    padding: 0;
     margin: -10px 0;
-    margin-right: $gw-gutter;
+    margin-right: $gw-gutter /2;
 
     background: $blue asset-data-url('logo-small.png') no-repeat 50% 50%;
   }

@@ -2,9 +2,7 @@ require 'test_helper'
 
 class MailPrefsObserverTest < ActiveSupport::TestCase
   
-  [MembershipMailer,
-   MembershipRequestMailer,
-   NewsletterMailer,
+  [NewsletterMailer,
    ServerMailer,
    SessionMailer].each do |mailer|
   

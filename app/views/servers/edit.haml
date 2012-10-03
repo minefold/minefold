@@ -1,0 +1,34 @@
+- title server.name
+- layout :server
+= render partial: 'page_header', locals: {server: server}
+
+%ul.nav.nav-horizontal.nav-server
+  %li= link_to 'Activity', server
+  - if server.funpack.game.minecraft?
+    %li= link_to 'Map', [:map, server]
+  - if can? :update, server
+    %li.active= link_to 'Settings', [:edit, server]
+
+
+/ --
+
+- if server.running?
+  .alert
+    %strong This server is running.
+    If you change these settings the server will restart. To change settings <i>without</i> restarting the server, please do so in the game.
+
+
+= form_for server do |f|
+  %fieldset
+    %legend Gameplay
+
+    = f.fields_for :settings do |s|
+      = render partial: server.funpack.game.settings_partial, locals: {f: s}
+  
+  .form-actions
+    = f.submit 'Change settings', class: %w(btn btn-primary)
+
+- if can? :destroy, server
+  %p Destroying the server <strong>permanently shuts it down</strong> and <strong>erases all its data</strong>. Please be cautious.
+
+  = button_to 'Destroy server', server_path(server), method: :delete, class: %w(btn btn-danger)

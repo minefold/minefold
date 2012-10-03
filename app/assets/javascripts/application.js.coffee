@@ -16,6 +16,8 @@
 #= require jquery.elastic
 #= require jquery.autoGrowInput
 
+#= require particle_system
+
 #= require_self
 #= require ./helpers
 #= require_tree .

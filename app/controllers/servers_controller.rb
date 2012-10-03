@@ -13,21 +13,24 @@ class ServersController < ApplicationController
   end
 
   def new
+    authorize! :create, server
+    
     @games = Game.all
     # TODO replace with actual data in Javascript
     @funpack = Funpack.first
   end
   
-  # TODO This method is a bit of a hack, but I can't think of any better way to do it without re-implementing the entire thing in Javascript and shipping it all down to the client.
   def new_funpack_settings
+    authorize! :create, server
+    
     @funpack = Funpack.find(params[:funpack_id])
     
     render layout: false
-    # = f.fields_for :settings do |s|
-    #       = render partial: @funpack.game.settings_partial, locals: {f: s}
   end
 
   def create
+    authorize! :create, server
+    
     server.creator = current_user
     server.users << current_user
 
@@ -43,12 +46,19 @@ class ServersController < ApplicationController
   end
 
   def edit
+    authorize! :update, server
   end
 
   def update
+    authorize! :update, server
   end
 
   def destroy
+    authorize! :destroy, server
+    
+    server.destroy
+    
+    redirect_to(servers_path, notice: "Server \"#{server.name}\" was destroyed.")
   end
 
 end

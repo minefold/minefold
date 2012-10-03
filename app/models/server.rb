@@ -1,5 +1,5 @@
 class Server < ActiveRecord::Base
-  attr_accessible :name, :funpack_id, :individual, :settings
+  attr_accessible :name, :funpack_id, :super_server, :settings
 
   belongs_to :creator, class_name: 'User'
 
@@ -20,7 +20,25 @@ class Server < ActiveRecord::Base
   # Minecraft Specific Server stuff
 
   store :settings
-
+  
+  
+  def running?
+    super_server? or false # TODO check redis
+  end
+  
+  def uptime
+    10.minutes
+  end
+  
+  def address
+    "#{id}.pluto.minefold.com"
+  end
+  
+  def start!(duration)
+    resp = RestClient.post("http://api.partycloud.com/v1/worlds/#{id}/start")
+    
+    resp.ok?
+  end
 
   # def user_whitelisted?(username)
   # end

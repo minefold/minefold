@@ -1,17 +1,18 @@
 - title 'Map'
-
-.page-header.page-header-server
-  %h1= server.name
-
+- layout :server
+= render partial: 'page_header', locals: {server: server}
 
 %ul.nav.nav-horizontal.nav-server
-  %li= link_to 'Overview', server
+  %li= link_to 'Activity', server
   - if server.funpack.game.minecraft?
     %li.active= link_to 'Map', [:map, server]
-  %li= link_to 'Players', [server, :memberships]
-  - if can? :edit, server
+  - if can? :update, server
     %li= link_to 'Settings', [:edit, server]
 
+
+/ --
+
+.map
 
 - content_for :tail do
   = javascript_include_tag '//maps.google.com/maps/api/js?sensor=false'
@@ -23,5 +24,3 @@
       $('.map').append(worldMapView.el);
       worldMapView.render();
     });
-
-.map

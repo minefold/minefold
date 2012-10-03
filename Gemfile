@@ -20,6 +20,7 @@ gem 'rdiscount'
 gem 'mini_magick'
 gem 'resque', require: ['resque', 'resque/server']
 gem 'resque_mailer'
+gem 'resque-scheduler', require: ['resque_scheduler', 'resque_scheduler/server']
 gem 'intercom'
 gem 'mailgun-rails'
 gem 'jbuilder'

@@ -28,5 +28,30 @@ class ServersControllerTest < ActionController::TestCase
     get :map, id: server.id
     assert_response :success
   end
+  
+  test "GET #edit unauthenticated" do
+    server = Server.make!
+    
+    get :edit, id: server.id
+    assert_unauthenticated_response
+  end
+  
+  test "GET #edit unauthorized" do
+    user = User.make!
+    server = Server.make!
+    sign_in(user)
+    
+    get :edit, id: server.id
+    assert_unauthorized_response
+  end
+  
+  test "POST #start" do
+    server = Server.make!
+    
+    mock(server).start! { true }
+    
+    post :start, id: server.id
+    assert_response :success
+  end
 
 end

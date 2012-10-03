@@ -16,8 +16,6 @@ class User < ActiveRecord::Base
   # NOTE: there arn't any User emails here. They can't be turned off for the
   # moment.
   store :mail_prefs, accessors: [
-    :membership_mailer,
-    :membership_request_mailer,
     :newsletter_mailer,
     :server_mailer,
     :session_mailer

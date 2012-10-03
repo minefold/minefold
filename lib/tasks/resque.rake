@@ -1,3 +1,6 @@
+require 'resque/tasks'
+require 'resque_scheduler/tasks'
+
 task "resque:setup" => :environment do
-  Bundler.require :worker
+  Bundler.require(:worker)
 end

@@ -4,24 +4,24 @@
   border: none;
   text-shadow: none;
   font-weight: 400;
-  border-radius: $radius;
+  @include border-radius(0);
 
-  color: darken($yellow, 30%);
+  color: darken($yellow, 20%);
   background-color: lighten($yellow, 30%);
 
   &.alert-success, &.alert-notice {
-    color: $white;
-    background-color: $green;
+    color: $green;
+    background-color: lighten($green, 50%);
   }
 
   &.alert-error {
-    color: $white;
-    background-color: $red;
+    color: $red;
+    background-color: lighten($red, 50%);
   }
 
   &.alert-info {
-    color: $white;
-    background-color: $blue;
+    color: $blue;
+    background-color: lighten($blue, 50%);
   }
 
 }

@@ -4,7 +4,7 @@ class CreditPack < ActiveRecord::Base
   NORMAL_CREDITS_PER_HOUR = 300
   
   # Stub for when we start experimenting with CreditPack pricing.
-  scope :active
+  scope :active, limit(4).order("created_at DESC")
   
   def amount
     cents

@@ -1,31 +1,50 @@
 - title server.name
 - layout :server
-
-.page-header.page-header-server
-  %h1= server.name
-
+= render partial: 'page_header', locals: {server: server}
 
 %ul.nav.nav-horizontal.nav-server
-  %li.active= link_to 'Overview', server
+  %li.active= link_to 'Activity', server
   - if server.funpack.game.minecraft?
     %li= link_to 'Map', [:map, server]
-  %li= link_to 'Players', [server, :memberships]
-  - if can? :edit, server
+  - if can? :update, server
     %li= link_to 'Settings', [:edit, server]
-    
 
-- if server.individual?
-  Server is running!
-- else
-  Server <strong>isn't</strong> running.
+/ --
 
-  %p
-    Run the server for
-    %select
-      - (1..24).each do |hour|
-        %option= pluralize hour, 'hour', 'hours'
-  %p
-    This will cost <strong>10 credits</strong>. (You have #{current_user.credits} cr)
-    It will stop running at #{5.hours.from_now}
-  %p
-    %a.btn.btn-primary{href: '#'} Start
+.server-controls
+  .row
+    .status.span2{class: ('running' if server.running?)}
+      - if server.running?
+        Running
+        .address #{server.id}.pluto.minefold.com
+        .uptime= time_ago_in_words server.created_at
+      
+      - else
+        Stopped
+
+    .controls.span6
+      %h3 Server controls
+      Run the server for
+      %select
+        - (1..24).each do |hour|
+          %option= pluralize hour, 'hour', 'hours'
+        
+      %p
+        This will cost <strong>10 credits</strong>. (You have #{current_user.credits} cr)
+        It will stop running at #{5.hours.from_now}
+      %p
+        %a.btn.btn-primary{href: '#'} Start
+
+.comments.row{style: 'padding: 20px 0'}
+  %form
+    .span1{style: 'text-align: right'}
+      %img.img-circle{src: 'https://en.gravatar.com/userimage/4203821/772c964ac6675f36362a54751bc1a00a.png', width: 60, height: 60}
+    .span7
+      %p
+        %strong Chris Lloyd
+        says…
+      .row
+        .span5
+          %textarea.span5{height: 4}
+        .span2
+          %button.btn Comment

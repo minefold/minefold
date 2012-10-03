@@ -11,7 +11,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     # TODO Unstub path
     if user.new_record?
-      session['user_return_to'] = '/new_facebook_user_path'
+      session['user_return_to'] = onboard_users_path
     end
 
     sign_in_and_redirect user, :event => :authentication

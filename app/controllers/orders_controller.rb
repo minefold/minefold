@@ -3,7 +3,7 @@ class OrdersController < ApplicationController
   layout false
   
   def new
-    @credit_packs = CreditPack.active.all
+    @credit_packs = CreditPack.active.all.sort_by {|p| p.cents }
   end
   
   def create

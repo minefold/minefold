@@ -55,25 +55,17 @@
 
       .control-group
         .controls
-          = f.label :membership_mailer, class: %w(checkbox) do
-            = f.check_box :membership_mailer
-            Membership emails
-
-          = f.label :membership_request_mailer, class: %w(checkbox) do
-            = f.check_box :membership_request_mailer
-            Membership Request emails
-
           = f.label :newsletter_mailer, class: %w(checkbox) do
             = f.check_box :newsletter_mailer
             Minefold newsletters
 
           = f.label :server_mailer, class: %w(checkbox) do
             = f.check_box :server_mailer
-            Server emails
+            Comments on servers
 
           = f.label :session_mailer, class: %w(checkbox) do
             = f.check_box :session_mailer
-            Session emails
+            Servers starting & stopping
 
       .form-actions
         = f.submit 'Save', class: %w(btn btn-mini)
