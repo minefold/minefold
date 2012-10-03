@@ -9,7 +9,7 @@ class PagesControllerTest < ActionController::TestCase
     assert_response :success
   end
   
-  %w(about support pricing jobs privacy terms).each do |page|
+  %w(about support pricing privacy terms).each do |page|
     test "GET ##{page}" do
       get page
       assert_response :success
