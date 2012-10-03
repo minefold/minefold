@@ -5,7 +5,7 @@
   %h1 Servers
 
 %ul.server-list.unstyled
-  - current_user.servers.group_by {|s| s.funpack.game }.each do |game, servers|
+  - @servers.each do |game, servers|
     %li.divider= game.name
     - servers.each do |server|
       %li.item

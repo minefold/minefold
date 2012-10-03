@@ -10,6 +10,7 @@ class ServersController < ApplicationController
 # --
 
   def index
+    @servers = current_user.servers.all.group_by {|s| s.funpack.game }
   end
 
   def new
