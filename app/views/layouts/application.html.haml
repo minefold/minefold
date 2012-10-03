@@ -100,6 +100,12 @@
                   %li.credits
                     %a{href: new_orders_path, data: { toggle: 'modal', target: '#buy-credits-modal' }}
                       = credits_with_image(current_user.credits)
+                  - content_for :tail do
+                    :javascript
+                      app.creditsView = new Application.CreditsView({
+                        model: app.currentUser,
+                        el: $('header .credits .cr')
+                      });
                   
                   %li.user.dropdown
                     %a.dropdown-toggle{href: '#', data: {toggle: 'dropdown'}}
@@ -155,21 +161,25 @@
     = javascript_include_tag '//d3dy5gmtp8yhk7.cloudfront.net/1.12/pusher.min.js'
     = javascript_include_tag 'https://js.stripe.com/v1'
     = javascript_include_tag 'application'
-
+    
+    :javascript
+      window.pusher = new Pusher(#{Pusher.key.to_json});
+    
+    :javascript
+      Stripe.setPublishableKey(#{ENV['STRIPE_PUBLISHABLE'].to_json});
+    
     :javascript
       window.app = new Application();
 
+    - if signed_in?
+      :javascript
+        window.app.currentUser = new Application.User(#{current_user.to_json});
+
+    :javascript
       $(function() {
         Backbone.history.start();
       });
 
-    :javascript
-      app.pusher = new Pusher(#{Pusher.key.to_json});
-
-    :javascript
-      Stripe.setPublishableKey(#{ENV['STRIPE_PUBLISHABLE'].to_json});
-
-    :javascript
       window.fbAsyncInit = function() {
         FB.init({
           appId: #{ENV['FACEBOOK_KEY'].to_json},

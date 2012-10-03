@@ -13,7 +13,7 @@
         %a.primary-action{href: server_path(server)}
           
           %h2.name
-            .server-status{class: ('running' if server.running?)}
+            = server_state_bulb(server)
             = server.name
 
         %ul.nav.nav-pills.nav-pills-images.pull-right

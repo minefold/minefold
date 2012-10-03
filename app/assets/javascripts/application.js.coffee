@@ -27,5 +27,4 @@ class window.Application extends Backbone.Router
     '': 'home'
 
   initialize: ->
-
   home: ->

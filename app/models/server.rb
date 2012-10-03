@@ -11,19 +11,21 @@ class Server < ActiveRecord::Base
   has_many :memberships
   has_many :users, through: :memberships
 
-
   validates_presence_of :name
-
-  # mount_uploader :pic, PictureUploader
-
-
-  # Minecraft Specific Server stuff
 
   store :settings
   
+  def state
+    if super_server?
+      :super
+    else
+      # TODO Check the PartyCloud
+      @tmp_state ||= rand(2).zero? ? :up : :stopped
+    end
+  end
   
   def running?
-    super_server? or false # TODO check redis
+    state == :super or state == :up
   end
   
   def uptime
@@ -40,33 +42,7 @@ class Server < ActiveRecord::Base
     resp.ok?
   end
 
-  # def user_whitelisted?(username)
-  # end
-  #
-  # def user_baned?(username)
-  # end
-  #
-  # def user_opped?(username)
-  # end
-  #
-  # def whitelist_user(username)
-  # end
-  #
-  # def ban_user(username)
-  # end
-  #
-  # def pardon_user(username)
-  # end
-  #
-  # def op_user(username)
-  # end
-  #
-  # def deop_user(username)
-  # end
-  #
-  #
   # store :map_markers
-  #
   #
   # # Does a map exist *at all*
   # def map?

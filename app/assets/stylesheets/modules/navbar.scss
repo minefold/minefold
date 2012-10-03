@@ -97,7 +97,7 @@
           padding-right: $gw-gutter / 2;
           
           &:hover {
-            background-color: lighten($blue, 5%);
+            background: lighten($blue, 5%);
           }
         }
       }

@@ -5,5 +5,5 @@
     %span.funpack-name= server.funpack.name
   
   %h1
-    %span.server-status.server-status-large{class: ('running' if server.running?)}
+    = large_server_state_bulb(server)
     = server.name

@@ -11,40 +11,76 @@
 
 / --
 
-.server-controls
-  .row
-    .status.span2{class: ('running' if server.running?)}
+- if can?(:update, server) and not server.super_server?
+  .server-controls
+    .controls
       - if server.running?
-        Running
-        .address #{server.id}.pluto.minefold.com
-        .uptime= time_ago_in_words server.created_at
-      
+        Extend running the server for another
       - else
-        Stopped
-
-    .controls.span6
-      %h3 Server controls
-      Run the server for
-      %select
-        - (1..24).each do |hour|
-          %option= pluralize hour, 'hour', 'hours'
+        Run the server for
+      %br
+      %select#poop
+        - (1..24).each do |n|
+          %option{value: n.hours}= pluralize n, 'hour', 'hours'
         
-      %p
-        This will cost <strong>10 credits</strong>. (You have #{current_user.credits} cr)
-        It will stop running at #{5.hours.from_now}
+      #plop
+        This will cost
+        = credits_with_image nil
+      
+      %div
+        You have
+        = credits_with_image current_user.credits
+    
+      %div
+        It will stop running at
+        %strong#baz
+    
       %p
         %a.btn.btn-primary{href: '#'} Start
 
-.comments.row{style: 'padding: 20px 0'}
-  %form
-    .span1{style: 'text-align: right'}
+- content_for :tail do
+  :javascript
+    $('#poop').change(function() {
+      var seconds = parseInt($(this).val(), 10),
+          mins = seconds / 60,
+          rate = 5;
+      
+      $('#plop .cr').text(mins * rate);
+      
+      var end = new Date();
+      
+      end.setSeconds(end.getSeconds() + seconds);
+      
+      $('#baz').text(end.toString())
+      
+      console.log(seconds);
+    });
+    
+    $('#poop').change()
+
+
+
+.comments
+  - if signed_in?
+    %form.new-comment-form.row
+      .span1
+        %img.img-circle{src: 'https://en.gravatar.com/userimage/4203821/772c964ac6675f36362a54751bc1a00a.png', width: 60, height: 60}
+      .span7
+        .comment-meta
+          %span.comment-author= current_user.username
+          
+        .row
+          .span5
+            %textarea.span5{height: 4}
+          .span2
+            %button.btn Comment
+  
+  .comment.row
+    .span1
       %img.img-circle{src: 'https://en.gravatar.com/userimage/4203821/772c964ac6675f36362a54751bc1a00a.png', width: 60, height: 60}
     .span7
-      %p
-        %strong Chris Lloyd
-        says…
-      .row
-        .span5
-          %textarea.span5{height: 4}
-        .span2
-          %button.btn Comment
+      .comment-meta
+        %span.comment-author chrislloyd
+        %span.comment-date at 6:22pm on 11/12/2012
+      .comment-body
+        %p Hey can you pleeease whitelist me on this server? My username is <i>chrislloyd</i>.

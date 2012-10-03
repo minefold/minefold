@@ -1,0 +1,80 @@
+@import 'vars';
+
+@keyframes pulse {
+  from { opacity: 1; }
+  10%  { opacity: 1; }
+  50%  { opacity: 0.4; }
+  90%  { opacity: 1; }
+  to   { opacity: 1; }
+}
+
+@-webkit-keyframes pulse {
+  from { opacity: 1; }
+  10%  { opacity: 1; }
+  50%  { opacity: 0.4; }
+  90%  { opacity: 1; }
+  to   { opacity: 1; }
+}
+
+@-moz-keyframes pulse {
+  from { opacity: 1; }
+  10%  { opacity: 1; }
+  50%  { opacity: 0.4; }
+  90%  { opacity: 1; }
+  to   { opacity: 1; }
+}
+
+@-ie-keyframes pulse {
+  from { opacity: 1; }
+  10%  { opacity: 1; }
+  50%  { opacity: 0.4; }
+  90%  { opacity: 1; }
+  to   { opacity: 1; }
+}
+
+@-o-keyframes pulse {
+  from { opacity: 1; }
+  10%  { opacity: 1; }
+  50%  { opacity: 0.4; }
+  90%  { opacity: 1; }
+  to   { opacity: 1; }
+}
+
+.server-state-bulb {
+  @include inline-block;
+  @include box-sizing(border-box);
+  
+  width: 12px;
+  height: 12px;
+  
+  @include border-radius(18px);
+  
+  background-color: darken(white, 10%);
+  
+  &.is-super {
+    background-color: $blue;
+  }
+  
+  &.is-up {
+    background-color: lighten($green, 10%);
+    
+    @include animation-name(pulse);
+    @include animation-duration(4.5s);
+    @include animation-timing-function(ease-in-out);
+    @include animation-iteration-count(infinite);
+  }
+  
+  &.server-state-bulb-large {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.server-state {
+  margin: lines(8) 0;
+  background: $bg;
+  @include clearfix;
+}
+
+
+
