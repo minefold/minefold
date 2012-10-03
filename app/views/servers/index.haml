@@ -9,8 +9,12 @@
     %li.divider= game.name
     - servers.each do |server|
       %li.item
+        
         %a.primary-action{href: server_path(server)}
-          %h2.name= server.name
+          
+          %h2.name
+            .server-status.running
+            = server.name
 
         %ul.nav.nav-pills.nav-pills-images.pull-right
           - if server.funpack.game.name == 'Minecraft'

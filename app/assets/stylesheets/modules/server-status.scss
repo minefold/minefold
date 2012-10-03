@@ -1,0 +1,46 @@
+@import 'vars';
+
+@keyframes pulse {
+  from { opacity: 1; }
+  50%  { opacity: 0.3; }
+  to   { opacity: 1; }
+}
+
+@-moz-keyframes pulse {
+  from { opacity: 1; }
+  50%  { opacity: 0.3; }
+  to   { opacity: 1; }
+}
+
+@-webkit-keyframes pulse {
+  from { opacity: 1; }
+  50%  { opacity: 0.3; }
+  to   { opacity: 1; }
+}
+
+@-o-keyframes pulse {
+  from { opacity: 1; }
+  50%  { opacity: 0.3; }
+  to   { opacity: 1; }
+}
+
+
+.server-status {
+  @include inline-block;
+  @include box-sizing(border-box);
+  
+  width: lines(3) - 4px;
+  height: lines(3) - 4px;
+  
+  border: 2px solid rgba(black, 0.1);
+  @include border-radius(lines(3));
+  
+  &.running {
+    background: lighten($green, 10%);
+    
+    @include animation-name(pulse);
+    @include animation-duration(3s);
+    @include animation-timing-function(ease-in-out);
+    @include animation-iteration-count(infinite);
+  }
+}
