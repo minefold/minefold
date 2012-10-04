@@ -62,25 +62,27 @@
 
 .comments
   - if signed_in?
-    %form.new-comment-form.row
+    = form_for [server, Comment.new], method: 'POST', html: {class: %w(new-comment-form row)} do |f|
       .span1
         %img.img-circle{src: 'https://en.gravatar.com/userimage/4203821/772c964ac6675f36362a54751bc1a00a.png', width: 60, height: 60}
+        
       .span7
         .comment-meta
           %span.comment-author= current_user.username
           
         .row
-          .span5
-            %textarea.span5{height: 4}
-          .span2
-            %button.btn Comment
+          .span5= f.text_area :body, height: 4, class: %w(span5)
+          .span2= f.submit 'Comment', class: %w(btn)
   
-  .comment.row
-    .span1
-      %img.img-circle{src: 'https://en.gravatar.com/userimage/4203821/772c964ac6675f36362a54751bc1a00a.png', width: 60, height: 60}
-    .span7
-      .comment-meta
-        %span.comment-author chrislloyd
-        %span.comment-date at 6:22pm on 11/12/2012
-      .comment-body
-        %p Hey can you pleeease whitelist me on this server? My username is <i>chrislloyd</i>.
+  - server.comments.each do |comment|
+    .comment.row
+      .span1
+        %img.img-circle{src: 'https://en.gravatar.com/userimage/4203821/772c964ac6675f36362a54751bc1a00a.png', width: 60, height: 60}
+      .span7
+        .comment-meta
+          %span.comment-author= comment.author.username
+          %span.comment-date
+            at
+            = comment.created_at.strftime('%l:%M%P on %-d/%-m/%Y')
+        .comment-body
+          = markdown comment.body

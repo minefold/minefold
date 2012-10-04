@@ -3,36 +3,22 @@ class Ability
 
   def initialize(user)
     # Public abilities
-    can :read, [Server, User]
+    can :read, [Server, Comment, User]
 
     return false unless user
 
     # Users can only edit themselves
-    can [:edit, :update, :destroy], User, id: user.id
-
-
-
+    can [:update, :destroy], User, id: user.id
 
     # Admin abilities
-    if user.admin?
-      can [:update, :destroy, :operate, :play], Server
-    end
+    # if user.admin?
+    #   can [:update, :destroy, :operate, :play], Server
+    # end
 
-    # User abilities
+    # Server abilities
     can [:create], Server
-
     can [:update, :destroy], Server, creator_id: user.id
 
-    # can :operate, Server do |server|
-    #   server.user_opped?(user)
-    # end
-
-    # can :play, Server do |world|
-    #   not world.player_blacklisted?(user.minecraft_player) and
-    #   (
-    #     world.player_opped?(user.minecraft_player) or
-    #     world.player_whitelisted?(user.minecraft_player)
-    #   )
-    # end
+    can [:create], Comment
   end
 end

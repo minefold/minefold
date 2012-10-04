@@ -45,13 +45,4 @@ class ServersControllerTest < ActionController::TestCase
     assert_unauthorized_response
   end
   
-  test "POST #start" do
-    server = Server.make!
-    
-    mock(server).start! { true }
-    
-    post :start, id: server.id
-    assert_response :success
-  end
-
 end

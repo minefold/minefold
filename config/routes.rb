@@ -39,6 +39,8 @@ Minefold::Application.routes.draw do
       get :map, :on => :member
       get :new_funpack_settings, :on => :collection
       
+      resources :comments, :only => [:create], :module => 'servers'
+      
       get 'policy.xml',
         :controller => 'servers/uploads',
         :action => :policy,

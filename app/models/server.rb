@@ -15,6 +15,8 @@ class Server < ActiveRecord::Base
 
   store :settings
   
+  has_many :comments, :order => 'created_at DESC'
+  
   def state
     if super_server?
       :super
