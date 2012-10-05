@@ -12,6 +12,10 @@ class User < ActiveRecord::Base
   has_many :memberships
   has_many :servers, through: :memberships
   has_many :created_servers, class_name: 'Server', foreign_key: :creator_id
+  
+  has_many :reward_claims
+  has_many :rewards, :through => :reward_claims
+  
 
   validates_presence_of :username
   validates_uniqueness_of :username
@@ -80,19 +84,18 @@ class User < ActiveRecord::Base
     where(facebook_uid: facebook_uid).first
   end
 
-  def self.initialize_from_facebook(access_token)
-    new(extract_facebook_attributes(access_token.extra.raw_info)).tap do |u|
-      u.password, u.password_confirmation = Devise.friendly_token[0,20]
-      u.skip_confirmation!
-    end
-  end
+  # def self.initialize_from_facebook(access_token)
+  #   new(extract_facebook_attributes(access_token.extra.raw_info)).tap do |u|
+  #     u.password, u.password_confirmation = Devise.friendly_token[0,20]
+  #     u.skip_confirmation!
+  #   end
+  # end
   
   def update_facebook_attributes(full_attrs)
     self.class.extract_facebook_attributes(full_attrs).each do |attr, val|
       self[attr] ||= val
     end
   end
-    
 
 
   def customer

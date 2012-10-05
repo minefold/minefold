@@ -1,18 +1,15 @@
 # Credit Packs
 
-# three_months = CreditPack.create(cents: 1_500, cr: 7_500)
-# six_months   = CreditPack.create(cents: 3_000, cr: 15_000)
-# one_year     = CreditPack.create(cents: 4_500, cr: 22_500)
+CreditPack.create(cents: 1_500, credits: 7_500)
+CreditPack.create(cents: 3_000, credits: 18_000)
+CreditPack.create(cents: 6_000, credits: 45_000)
+CreditPack.create(cents: 12_000, credits: 120_000)
 
-{
-# $      => credits
-  1_500  => 7_500,
-  3_000  => 18_000,
-  6_000  => 45_000,
-  12_000 => 120_000
-}.each do |cents, credits|
-  CreditPack.create(cents: cents, credits: credits)
-end
+
+# Freebies
+
+Reward.create(name: 'facebook linked', credits: 200)
+Reward.create(name: 'minecraft linked', credits: 400)
 
 
 # Games
@@ -23,10 +20,6 @@ minecraft = Game.create(
   persistant_data: true
 )
 
-# tf2 = Game.create(
-#   name: 'Team Fortress 2'
-# )
-
 
 # Users
 
@@ -35,45 +28,28 @@ chris = User.new(
   email: 'christopher.lloyd@gmail.com'
 )
 
-chris.skip_confirmation!
 chris.password, chris.password_confirmation = 'password'
 chris.admin = true
-
 chris.players.new(game: minecraft, uid: 'chrislloyd')
+chris.skip_confirmation!
 
-chris.save
-
+chris.save!
 
 dave = User.new(
   username: 'whatupdave',
   email: 'dave@snappyco.de'
 )
 
-dave.skip_confirmation!
 dave.password, dave.password_confirmation = 'password'
 dave.admin = true
-
 dave.players.new(game: minecraft, uid: 'whatupdave')
+dave.skip_confirmation!
 
 dave.save!
 
 
 # Funpacks
 
-Funpack.create(
-  name: 'Official',
-  game: minecraft,
-  creator: chris
-)
-
-Funpack.create(
-  name: 'Bukkit',
-  game: minecraft,
-  creator: chris
-)
-
-Funpack.create(
-  name: 'Tekkit',
-  game: minecraft,
-  creator: chris
-)
+Funpack.create(name: 'Official', game: minecraft, creator: chris)
+Funpack.create(name: 'Bukkit', game: minecraft, creator: chris)
+Funpack.create(name: 'Tekkit', game: minecraft, creator: chris)

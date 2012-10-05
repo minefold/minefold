@@ -10,7 +10,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     current_user.update_facebook_attributes(raw_facebook_attrs)
     current_user.save
     
-    # TODO Add credits for linking Facebook
+    Reward.claim('facebook_linked', current_user)
     
     flash[:notice] = 'Facebook account linked.'
     redirect_to edit_user_registration_path

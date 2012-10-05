@@ -32,13 +32,17 @@ Funpack.blueprint do
   game
 end
 
-
-
 Server.blueprint do
   name { Faker::Company.name }
   funpack
 end
 
+Reward.blueprint do
+  name { 'facebook linked' }
+  credits { rand(1000) }
+end
+
+# --
 
 Game.blueprint(:minecraft) do
   name { 'Minecraft' }

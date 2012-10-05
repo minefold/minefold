@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121003230916) do
+ActiveRecord::Schema.define(:version => 20121005002242) do
 
   create_table "comments", :force => true do |t|
     t.integer  "server_id"
@@ -69,6 +69,22 @@ ActiveRecord::Schema.define(:version => 20121003230916) do
 
   add_index "players", ["game_id"], :name => "index_players_on_game_id"
   add_index "players", ["user_id"], :name => "index_players_on_user_id"
+
+  create_table "reward_claims", :force => true do |t|
+    t.integer  "reward_id",  :null => false
+    t.integer  "user_id",    :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "reward_claims", ["reward_id", "user_id"], :name => "index_reward_claims_on_reward_id_and_user_id", :unique => true
+
+  create_table "rewards", :force => true do |t|
+    t.string   "name"
+    t.integer  "credits"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "servers", :force => true do |t|
     t.string   "name",                 :default => ""

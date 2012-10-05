@@ -5,7 +5,7 @@ require File.expand_path('../blueprints', __FILE__)
 
 Turn.config.ansi = ENV['ansi'] || true
 Turn.config.format = ENV['rpt'] || 'pretty'
-Turn.config.trace = ENV['backtrace'] || 5
+# Turn.config.trace = ENV['backtrace'] || 5
 
 OmniAuth.config.test_mode = true
 
