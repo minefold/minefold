@@ -6,6 +6,12 @@ Minefold::Application.routes.draw do
   constraints(admin_only) do
     mount Resque::Server, :at => '/admin/resque'
   end
+  
+  if Rails.env.development?
+    get '/tumblr' => 'tumblr#index'
+  end
+
+# --
 
   # Static Pages
 

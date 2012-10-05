@@ -1,0 +1,15 @@
+//= require bootstrap
+//= require ./base
+//= require ./modules/footer
+//= require ./modules/hero-unit
+//= require ./modules/nav
+//= require ./modules/navbar
+//= require ./modules/page-header
+//= require ./modules/well
+//= require_self
+
+// Instructions:
+//   1. Compile this file with `rake assets:precompile`.
+//   2. Find public/assets/tumblr.css
+//   3. Upload it to http://www.tumblr.com/themes/upload_static_file
+//   4. Change the template's CSS location

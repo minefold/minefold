@@ -21,7 +21,7 @@
     .well {
       @include box-sizing(border-box);
       background-color: lighten($yellow, 30%);
-      @include border-radius($radius);
+      border-radius: $radius;
       padding: lines(1) ($gw-gutter / 2);
       
       &.affix {

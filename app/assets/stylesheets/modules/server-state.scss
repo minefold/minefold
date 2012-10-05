@@ -47,7 +47,7 @@
   width: 12px;
   height: 12px;
   
-  @include border-radius(18px);
+  border-radius: 18px;
   
   background-color: darken(white, 10%);
   

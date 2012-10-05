@@ -80,7 +80,7 @@
       
       .dropdown-menu {
         @include box-shadow(none);
-        @include border-radius($radius);
+        border-radius: $radius;
         background-color: $blue;
         border: none;
         

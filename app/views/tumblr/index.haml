@@ -1,0 +1,227 @@
+!!!
+%html{lang: 'en', dir: 'ltr'}
+  %head
+    %meta{charset: 'utf-8'}
+    = stylesheet_link_tag 'http://static.tumblr.com/p71ulni/5M5mbfsgm/tumblr.css', media: 'all'
+    - # = stylesheet_link_tag 'tumblr.css', media: 'all'
+
+    %title
+      {Title}{block:SearchPage} ({lang:Search results for SearchQuery}){/block:SearchPage}{block:PostSummary} ({PostSummary}){/block:PostSummary}
+
+    %meta{name: 'author', content: 'Mütli Corp <http://mutlicorp.com>'}
+    %meta{name: 'description', content: '{block:IndexPage}{block:Description}{MetaDescription}{/block:Description}{/block:IndexPage}{block:PermalinkPage}{PostSummary}{/block:PermalinkPage}'}
+
+    = favicon_link_tag '{Favicon}'
+    %link{rel: 'alternate', type: 'application/rss+xml', title: 'RSS', href: '{RSS}'}
+    
+    /[if lt IE 9]
+      %script{src: '//html5shim.googlecode.com/svn/trunk/html5.js'}
+    %meta{'http-equiv' => 'X-UA-Compatible', :content => 'IE=edge,chrome=1'}
+    
+    // Typekit
+    %script{type: 'text/javascript', src: '//use.typekit.net/qzl8aqw.js'}
+    :javascript
+      try{Typekit.load();}catch(e){}
+    
+    :css
+      .container {
+        width: 500px;
+      }
+        
+      .posts {
+        margin-top: 40px;
+      }
+        
+      .post {
+        margin-bottom: 80px;
+      }
+        
+      .posts .post h2 {
+        font-size: 28px;
+        margin-bottom: 20px;
+      }
+        
+      .posts .post h2 a {
+        color: #0D6BAE;
+      }
+        
+      .posts .post .post-caption,
+      .posts .post .post-body {
+        font-size: 16px;
+        line-height: 25px;
+      }
+        
+      .posts .post .post-body h1 {
+        font-size: 22px;
+      }
+        
+      .posts .post .post-body h2 {
+        font-size: 18px;
+        text-align: left;
+      }
+        
+      .posts .post .meta {
+        font-size: 14px;    
+      }
+        
+      .posts .post .meta a {
+        color: #CCC;
+      }
+        
+      .pagination .pagination-guide {
+        font-size: 12px;
+        color: #CCC;
+      }
+        
+    
+  %body.l-tumblr    
+    #page-background-block
+
+      %header
+        .navbar.navbar-static-top.container
+          .navbar-inner
+            .pull-left
+              = link_to 'Mütli Corp Blog', root_path, class: 'brand'
+
+            .pull-right
+              %ul.nav
+                %li= link_to 'Minefold', 'https://minefold.com'
+                %li= link_to '{lang:Archive}', '/archive'
+              
+      .container
+        .posts
+          {block:Posts}
+          .post
+          
+            // Photo
+            
+            {block:Photo}
+            .photo-post
+              {LinkOpenTag}
+              %img{src: '{PhotoURL-500}', alt: '{PhotoAlt}'}
+              {LinkCloseTag}
+                        
+              {block:Caption}
+              %p.post-caption {Caption}
+              {/block:Caption}
+            {/block:Photo}
+
+
+            // Photoset
+            
+            {block:Photoset}
+            .photoset-post
+              {Photoset-500}
+              {block:Caption}
+              %p.post-caption {Caption}
+              {/block:Caption}
+            {/block:Photoset}
+          
+          
+            // Video
+          
+            {block:Video}
+            .video-post
+              {Video-500}
+              {block:Caption}
+              %p.post-caption {Caption}
+              {/block:Caption}
+            {/block:Video}
+            
+            // Link
+
+            {block:Link}
+            .link-post
+              %h2
+                %a{href: '{URL}'} {Name}
+              {block:Description}
+              %p.post-body {Description}
+              {/block:Description}
+            {/block:Link}
+
+            
+            // Text
+
+            {block:Text}
+            .text-post
+              {block:Title}
+              %h2
+                %a{href: '{Permalink}'} {Title}
+              {/block:Title}
+              .post-body {Body}
+              {block:More}
+              %p.post-read-more
+                %a{href: '{Permalink}'} {lang:Read more}
+              {/block:More}
+            {/block:Text}
+            
+            .meta
+              %a{href: '{Permalink}'}
+                {TimeAgo}
+                {block:IfShowNotes}
+                {block:NoteCount} ({NoteCountWithLabel}) {/block:NoteCount}
+                {/block:IfShowNotes}
+                
+            {block:PermalinkPage}
+            .notes {PostNotes}
+            {/block:PermalinkPage}
+            
+          {/block:Posts}
+
+
+          {block:Pagination}
+          .pagination
+            %ul
+              {block:NextPage}
+              %li
+                %a{href: '{NextPage}'} {lang:Next page}
+              {/block:NextPage}
+                     
+              {block:PreviousPage}
+              %li
+                %a{href: '{PreviousPage}'} {lang:Previous}
+              {/block:PreviousPage}
+            %p.pagination-guide {lang:CurrentPage of TotalPages}
+          {/block:Pagination}
+        
+
+    %footer
+      .container
+        %ul.unstyled
+          %li= link_to 'Pricing', pricing_page_path
+          %li= link_to 'Support', support_page_path
+          %li= link_to 'About', about_page_path
+          %li= link_to 'Developers', 'http://partycloud.com'
+          %li= link_to 'Blog', 'http://blog.mutlicorp.com'
+
+        %p.copyright
+          &copy; 2012
+          %a{href: 'http://mutlicorp.com'} Mütli Corp.
+          
+          // Default text is replaced onready in the case the user doesn't have Javascript enabled.
+          %span#funnie Made
+          in San Francisco.
+          
+          - content_for :tail do
+            :javascript
+              var funnies = #{Funnies.to_json};
+              $(document).ready(function() {
+                $('#funnie').text(funnies[rand(funnies.length)]);
+              });
+            
+          = link_to 'Privacy', privacy_page_path
+          = link_to 'Terms', terms_page_path
+    
+    // Gauges
+    :javascript
+      var _gauges = _gauges || [];
+      (function() {
+        var t   = document.createElement('script');
+        t.type  = 'text/javascript';
+        t.async = true;
+        t.id    = 'gauges-tracker';
+        t.setAttribute('data-site-id', '4ef95acaf5a1f528f100000b');
+        t.src = '//secure.gaug.es/track.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(t, s);
+      })();

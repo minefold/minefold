@@ -29,11 +29,11 @@
     .img {
       margin-bottom: lines(2);
       border: 5px solid $green;
-      @include border-radius(32px);
+      border-radius: 32px;
       padding: 10px;
       @include inline-block;
       img {
-        @include border-radius(32px);
+        border-radius: 32px;
       }
     }
   }
