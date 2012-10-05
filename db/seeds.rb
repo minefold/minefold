@@ -32,30 +32,28 @@ minecraft = Game.create(
 
 chris = User.new(
   username: 'chrislloyd',
-  email: 'christopher.lloyd@gmail.com',
-  facebook_uid: '219000855'
+  email: 'christopher.lloyd@gmail.com'
 )
 
 chris.skip_confirmation!
 chris.password, chris.password_confirmation = 'password'
 chris.admin = true
 
-chris.players.new(game: minecraft, uid: 'christopher.lloyd@gmail.com')
+chris.players.new(game: minecraft, uid: 'chrislloyd')
 
 chris.save
 
 
 dave = User.new(
   username: 'whatupdave',
-  email: 'dave@snappyco.de',
-  facebook_uid: '709100496'
+  email: 'dave@snappyco.de'
 )
 
 dave.skip_confirmation!
 dave.password, dave.password_confirmation = 'password'
 dave.admin = true
 
-dave.players.new(game: minecraft, uid: 'dave@snappyco.de')
+dave.players.new(game: minecraft, uid: 'whatupdave')
 
 dave.save!
 

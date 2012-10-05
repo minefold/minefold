@@ -47,6 +47,11 @@ Minefold::Application.routes.draw do
         :format => :xml,
         :on => :collection
     end
+    
+    scope '/users/accounts', :controller => 'accounts', :as => :accounts do
+      put :unlink_minecraft
+      put :unlink_facebook
+    end
 
     authenticated do
       root :to => 'servers#index', :as => :user_root

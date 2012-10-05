@@ -13,8 +13,12 @@ form {
     @include box-sizing(border-box);
     min-height: 40px;
 
-    &:focus {
+    &:focus, &.focus {
       @include box-shadow(0 0 0 2px rgba($blue, 0.4) inset);
+    }
+    
+    &:disabled, &.disabled {
+      color: rgba(black, 0.2);
     }
   }
   

@@ -19,6 +19,13 @@ class UserTest < ActiveSupport::TestCase
 
     assert user.minecraft_linked?, 'minecraft account is not linked'
   end
+  
+  test "#facebook_linked?" do
+    user = User.new
+    assert !user.facebook_linked?, 'facebook account is linked'
+    user.facebook_uid = 'chrsllyd'
+    assert user.facebook_linked?, 'facebook account is not linked'
+  end
 
   test "#find_for_database_authentication" do
     user = User.make!

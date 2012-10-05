@@ -13,7 +13,7 @@ module CreditsHelper
   end
 
   def credits_with_image(credits, opts={})
-    content_tag(:div, format_credits(credits), {class: 'cr'}.merge(opts))
+    content_tag(:span, format_credits(credits), {class: 'cr'}.merge(opts))
   end
   
 end

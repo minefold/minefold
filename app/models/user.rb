@@ -1,7 +1,14 @@
 class User < ActiveRecord::Base
   extend FriendlyId
 
-  has_many :players
+  has_many :players do
+    
+    def minecraft
+      includes(:game).where('games.name' => 'Minecraft')
+    end
+    
+  end
+  
   has_many :memberships
   has_many :servers, through: :memberships
   has_many :created_servers, class_name: 'Server', foreign_key: :creator_id
@@ -40,12 +47,23 @@ class User < ActiveRecord::Base
     [first_name, last_name].join(' ')
   end
 
-  def pro?
+  def facebook_linked?
+    facebook_uid?
+  end
+  
+  def facebook_avatar_url
+    "https://graph.facebook.com/#{facebook_uid}/picture?return_ssl_resources=1&type=square"
   end
 
   def minecraft_linked?
     players.includes(:game).where('games.name' => 'Minecraft').exists?
   end
+  
+  def minecraft_avatar_url
+    "https://minotar.net/helm/#{players.minecraft.first.uid}/50.png"
+  end
+  
+  
 
   def self.find_for_database_authentication(conditions)
     email_or_username = conditions.delete(:email_or_username)
@@ -58,9 +76,8 @@ class User < ActiveRecord::Base
     find_from_facebook(access_token) || initialize_from_facebook(access_token)
   end
 
-  def self.find_from_facebook(access_token)
-    where(arel_table[:facebook_uid].eq(access_token.uid).or(
-      arel_table[:email].eq(access_token.info.email))).first
+  def self.find_from_facebook(facebook_uid)
+    where(facebook_uid: facebook_uid).first
   end
 
   def self.initialize_from_facebook(access_token)
@@ -69,6 +86,13 @@ class User < ActiveRecord::Base
       u.skip_confirmation!
     end
   end
+  
+  def update_facebook_attributes(full_attrs)
+    self.class.extract_facebook_attributes(full_attrs).each do |attr, val|
+      self[attr] ||= val
+    end
+  end
+    
 
 
   def customer
@@ -109,10 +133,9 @@ class User < ActiveRecord::Base
 private
 
   def self.extract_facebook_attributes(info)
-    { username: info.username,
-      email: info.email,
-      first_name: info.first_name,
+    { first_name: info.first_name,
       last_name:  info.last_name,
+      name: info.name,
       locale: info.locale,
       timezone: info.timezone,
       gender: info.gender
