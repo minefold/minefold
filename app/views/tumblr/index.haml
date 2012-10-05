@@ -2,8 +2,8 @@
 %html{lang: 'en', dir: 'ltr'}
   %head
     %meta{charset: 'utf-8'}
-    = stylesheet_link_tag 'http://static.tumblr.com/p71ulni/5M5mbfsgm/tumblr.css', media: 'all'
-    - # = stylesheet_link_tag 'tumblr.css', media: 'all'
+    = stylesheet_link_tag 'http://static.tumblr.com/p71ulni/254mbfyii/tumblr.css', media: 'all'
+    - #= stylesheet_link_tag 'tumblr.css', media: 'all'
 
     %title
       {Title}{block:SearchPage} ({lang:Search results for SearchQuery}){/block:SearchPage}{block:PostSummary} ({PostSummary}){/block:PostSummary}
@@ -23,58 +23,7 @@
     :javascript
       try{Typekit.load();}catch(e){}
     
-    :css
-      .container {
-        width: 500px;
-      }
-        
-      .posts {
-        margin-top: 40px;
-      }
-        
-      .post {
-        margin-bottom: 80px;
-      }
-        
-      .posts .post h2 {
-        font-size: 28px;
-        margin-bottom: 20px;
-      }
-        
-      .posts .post h2 a {
-        color: #0D6BAE;
-      }
-        
-      .posts .post .post-caption,
-      .posts .post .post-body {
-        font-size: 16px;
-        line-height: 25px;
-      }
-        
-      .posts .post .post-body h1 {
-        font-size: 22px;
-      }
-        
-      .posts .post .post-body h2 {
-        font-size: 18px;
-        text-align: left;
-      }
-        
-      .posts .post .meta {
-        font-size: 14px;    
-      }
-        
-      .posts .post .meta a {
-        color: #CCC;
-      }
-        
-      .pagination .pagination-guide {
-        font-size: 12px;
-        color: #CCC;
-      }
-        
-    
-  %body.l-tumblr    
+  %body.l-tumblr{class: '{block:PermalinkPage}is-permalink{/block:PermalinkPage}'}
     #page-background-block
 
       %header
@@ -84,11 +33,13 @@
               = link_to 'Mütli Corp Blog', root_path, class: 'brand'
 
             .pull-right
-              %ul.nav
-                %li= link_to 'Minefold', 'https://minefold.com'
-                %li= link_to '{lang:Archive}', '/archive'
+              .motto {Description}
               
       .container
+        {block:IndexPage}
+        .hero-unit.hero-unit-tumblr
+          = image_tag '//d14qmynh5k2z0g.cloudfront.net/assets/logo80.png', width: 80, height: 80
+        {/block:IndexPage}
         .posts
           {block:Posts}
           .post
@@ -156,15 +107,15 @@
             {/block:Text}
             
             .meta
-              %a{href: '{Permalink}'}
-                {TimeAgo}
+              .pull-left
+                %a{href: '{Permalink}'}
+                  {block:Date}
+                  {DayOfMonth} {Month}, {Year}
+                  {/block:Date}
+              .pull-right
                 {block:IfShowNotes}
                 {block:NoteCount} ({NoteCountWithLabel}) {/block:NoteCount}
                 {/block:IfShowNotes}
-                
-            {block:PermalinkPage}
-            .notes {PostNotes}
-            {/block:PermalinkPage}
             
           {/block:Posts}
 
@@ -187,31 +138,18 @@
 
     %footer
       .container
-        %ul.unstyled
-          %li= link_to 'Pricing', pricing_page_path
-          %li= link_to 'Support', support_page_path
-          %li= link_to 'About', about_page_path
-          %li= link_to 'Developers', 'http://partycloud.com'
-          %li= link_to 'Blog', 'http://blog.mutlicorp.com'
+        %ul.unstyled.pull-left
+          %li= link_to 'Minefold', 'http://minefold.com'
+          %li= link_to 'Archive', '/archive'
 
-        %p.copyright
+        %p.copyright.pull-right
           &copy; 2012
           %a{href: 'http://mutlicorp.com'} Mütli Corp.
           
           // Default text is replaced onready in the case the user doesn't have Javascript enabled.
           %span#funnie Made
           in San Francisco.
-          
-          - content_for :tail do
-            :javascript
-              var funnies = #{Funnies.to_json};
-              $(document).ready(function() {
-                $('#funnie').text(funnies[rand(funnies.length)]);
-              });
-            
-          = link_to 'Privacy', privacy_page_path
-          = link_to 'Terms', terms_page_path
-    
+
     // Gauges
     :javascript
       var _gauges = _gauges || [];
