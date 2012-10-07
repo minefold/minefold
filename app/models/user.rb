@@ -1,6 +1,9 @@
 class User < ActiveRecord::Base
   extend FriendlyId
-
+  
+  attr_accessible :username, :first_name, :last_name, :avatar, :remove_avatar,
+                  :avatar_cache
+  
   has_many :players do
     
     def minecraft
@@ -42,9 +45,16 @@ class User < ActiveRecord::Base
   # Lets users login with both their email or their username
   attr_accessor :email_or_username
 
-  # Everybody gets an authentication token
+  # Everybody gets an authentication token for quick access from emails
   before_save :ensure_authentication_token
-
+  
+  
+  mount_uploader :avatar, AvatarUploader do
+    def store_dir
+      File.join(model.class.name.downcase.pluralize, mounted_as.to_s, model.id.to_s)
+    end
+  end
+  
 
 
   def name

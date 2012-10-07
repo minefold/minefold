@@ -18,7 +18,9 @@ private
   end
   
   def track(event_name, properties={})
-    Resque.enqueue(MixpanelJob, event_name, properties)
+    if not Rails.env.test?
+      Resque.enqueue(MixpanelJob, event_name, properties)
+    end
   end
 
 end

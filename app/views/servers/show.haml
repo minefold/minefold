@@ -64,7 +64,7 @@
   - if signed_in?
     = form_for [server, Comment.new], method: 'POST', html: {class: %w(new-comment-form row)} do |f|
       .span1
-        %img.img-circle{src: 'https://en.gravatar.com/userimage/4203821/772c964ac6675f36362a54751bc1a00a.png', width: 60, height: 60}
+        = image_tag current_user.avatar.large.url, width: 60, height: 60, class: 'img-circle'
         
       .span7
         .comment-meta
@@ -77,7 +77,7 @@
   - server.comments.each do |comment|
     .comment.row
       .span1
-        %img.img-circle{src: 'https://en.gravatar.com/userimage/4203821/772c964ac6675f36362a54751bc1a00a.png', width: 60, height: 60}
+        = image_tag comment.author.avatar.large.url, width: 60, height: 60, class: 'img-circle'
       .span7
         .comment-meta
           %span.comment-author= comment.author.username

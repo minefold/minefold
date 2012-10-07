@@ -30,7 +30,7 @@ CarrierWave.configure do |config|
     config.storage = :file
     config.root = File.join(Rails.public_path, 'uploads')
     config.base_path = '/uploads'
-
+    
   end
 
 end

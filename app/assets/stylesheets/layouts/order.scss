@@ -2,7 +2,7 @@
 
 // TODO Don't make this a layout…
 .l-order {
-  margin-top: -(700px / 2);
+  margin-top: -(550px / 2);
   
   .modal-header {
     border-bottom: none;
@@ -19,7 +19,7 @@
   
   .modal-body {
     padding: 0;
-    max-height: 700px;
+    max-height: 550px;
   }
   
   &.is-choosing .modal-header h3.choosing,

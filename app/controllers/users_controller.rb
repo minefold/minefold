@@ -21,15 +21,10 @@ class UsersController < Devise::RegistrationsController
 
   def update
     authorize! :update, user
-
-    respond_to do |format|
-      if user.update_attributes(params[:user])
-        format.html { redirect_to user_root_path, notice: 'Updated settings' }
-      else
-        format.html { render controller: 'devise::registrations', action: 'edit' }
-      end
-    end
-
+    
+    user.update_attributes!(params[:user])
+    
+    respond_with(user, location: edit_user_registration_path)
   end
 
 end

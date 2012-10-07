@@ -34,7 +34,6 @@ gem 'mongoid', '3.0.0.rc'
 gem 'uuid'
 
 gem 'carrierwave', git: 'https://github.com/jnicklas/carrierwave.git'
-gem 'carrierwave-mongoid', require: 'carrierwave/mongoid'
 
 group :development do
   gem 'heroku'
