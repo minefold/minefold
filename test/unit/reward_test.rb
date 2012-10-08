@@ -6,21 +6,15 @@ class RewardTest < ActiveSupport::TestCase
     user = User.make!
     reward = Reward.make!(name: 'tests passed')
     
-    mock(user).claim_reward!(reward)
+    mock(user).increment_credits!(reward.credits)
     
-    Reward.claim('tests passed', user)
-  end
-  
-  test "#claim_reward!" do
-    user = User.make!
-    reward = Reward.make!
+    assert_difference ->{ reward.users.size }, 1 do
+      Reward.claim('tests passed', user)
+    end
     
-    mock(user).increment_credits!(reward.credits) { true }
-    
-    assert_difference ->{ user.reward_claims.size }, 1 do
-      user.claim_reward!(reward)
+    assert_difference ->{ reward.users.size }, 0 do
+      Reward.claim('tests passed', user)
     end
   end
-  
   
 end

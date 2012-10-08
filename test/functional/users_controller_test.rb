@@ -46,7 +46,7 @@ class UsersControllerTest < ActionController::TestCase
     assert user.username != 'test', 'username precondition failed'
 
     put :update, id: user.id, user: { username: 'test' }
-    assert_redirected_to user_root_path
+    assert_redirected_to edit_user_registration_path
 
     user.reload
     assert_equal user.username, 'test'
