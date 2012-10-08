@@ -17,6 +17,10 @@ class AccountsController < ApplicationController
   def use_minecraft_photo
   end
   
+  def link_minecraft
+    render layout: false
+  end
+  
   def unlink_minecraft
     @players = current_user.players.minecraft.each do |player|
       player.user = nil

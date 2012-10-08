@@ -1,5 +1,7 @@
 @import 'vars';
 
+@include font-face(minecraft, font-path('minecraft'));
+
 html {
   background-color: $bg;
   padding: 0;

@@ -1,0 +1,118 @@
+.minecraft-link-state.pull-left.is-unlinked
+  .state-icon
+  %p.unlinked Waiting
+  %p.linked Linked
+  %p.already-linked
+    %strong.username chrislloyd
+    %br
+    is already linked
+  
+.minecraft-link-instructions
+  %p To play on Super Servers you need to link your Minecraft account. Open Minecraft, choose Multiplayer, Direct Connect and enter <code>#{current_user.minecraft_link_host}</code>.
+  
+.link-host-instructions
+  = image_tag 'verify.png', width: 530, height: 280
+  .host= current_user.minecraft_link_host
+
+:css
+  .minecraft-link-state {
+    width: 140px;
+    margin-right: 20px;
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+  }
+  
+  .minecraft-link-state .state-icon {
+    background-image: url('/assets/spinner-big.gif');
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    width: 32px;
+    height: 32px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+  }
+  
+  .minecraft-link-state .unlinked,
+  .minecraft-link-state .linked,
+  .minecraft-link-state .already-linked {
+    display: none;
+  }
+  
+  .minecraft-link-state.is-unlinked .unlinked {
+    display: block;
+  }
+  
+  .minecraft-link-state.is-linked .linked {
+    display: block;
+    color: #2a4;
+  }
+  
+  .minecraft-link-state.is-already-linked .already-linked {
+    display: block;
+    color: #d31;
+  }
+  
+  .minecraft-link-state.is-linked .state-icon {
+    background-color: #2a4;
+    background-image: url('/assets/icons/tick.png');
+  }
+  
+  .minecraft-link-state.is-already-linked .state-icon {
+    background-color: #d31;
+    background-image: url('/assets/icons/warning.png');
+  }
+  
+  .link-host-instructions {
+    position: relative;
+    margin-bottom: -15px;
+    margin-top: 40px;
+  }
+  .host {
+    position: absolute;
+    font-family: minecraft;
+    -webkit-font-smoothing: none;
+    top: 140px;
+    left: 165px;
+    display: block;
+    
+    padding: 0 5px;
+    
+    color: white;
+    
+    font-size: 8px;
+    
+    width: 200px;
+    height: 20px;
+    line-height: 20px;
+  }
+  
+  code.host {
+    font-family: minecraft !important;
+    -webkit-font-smoothing: none;
+  }
+
+:javascript
+  var onLinked = function(data) {
+    $('.minecraft-link-state')
+      .removeClass('is-unlinked')
+      .addClass('is-linked');
+
+    setTimeout(function(){
+      window.location.reload();
+    }, 4000);
+  };
+
+  var onAlreadyLinked = function(data) {
+    $('.minecraft-link-state')
+      .removeClass('is-unlinked')
+      .addClass('is-already-linked')
+      .find('.username').text(data.username);
+  }
+
+  $(document).ready(function() {
+    var channel = app.currentUser.chan;
+    channel.bind('linked', onLinked);
+    channel.bind('alreadyLinked', onAlreadyLinked);
+  });
+    

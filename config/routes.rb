@@ -55,8 +55,10 @@ Minefold::Application.routes.draw do
     end
     
     scope '/users/accounts', :controller => 'accounts', :as => :accounts do
-      put :unlink_minecraft
       put :unlink_facebook
+      
+      get :link_minecraft
+      put :unlink_minecraft
     end
 
     authenticated do

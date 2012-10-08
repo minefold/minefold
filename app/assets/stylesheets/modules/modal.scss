@@ -1,14 +1,25 @@
 @import 'vars';
 
 .modal {
-  display: none;
-  
   box-shadow: 0 2px 6px rgba(black, 0.4);
   border: none;
   
   &:focus {
     outline: none;
   }
+  
+  .modal-header {
+    border-bottom: none;
+    text-align: center;
+    overflow: hidden;
+    padding-top: 10px;
+    height: 30px;
+    
+    h3 {
+      font-size: 16px;
+    }
+  }
+  
 }
 
 .modal-backdrop {
@@ -16,5 +27,9 @@
   filter: alpha(opacity=100);
   
   background-color: transparent;
-  @include radial-gradient(50% 50%, ellipse closest-corner, rgba(black, 0.375) 1%, rgba(black, 0.8) 100%);
+  @include radial-gradient(
+    50% 50%, ellipse closest-corner,
+    rgba(black, 0.4),
+    rgba(black, 0.8)
+  );
 }

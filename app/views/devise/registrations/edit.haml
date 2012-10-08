@@ -17,6 +17,7 @@
           = f.file_field :avatar, style: 'display:none'
           = f.label :avatar, 'Change'
           
+          // TODO Hack
           :css
             label[for=user_avatar] {
               margin-top: 5px;
@@ -78,9 +79,18 @@
           
           - else
             = link_to user_omniauth_authorize_path(:facebook) do
-              Link your Facebook account for
-              = credits_with_image(200)
+              Link your Facebook account
+              - render_reward_for('facebook linked', current_user) do |reward|
+                for
+                = credits_with_image(reward.credits)
     
+    #link-minecraft-modal.modal.hide.fade
+      .modal-header
+        %button.close{type: 'button', data: {dismiss: 'modal'}} &times;
+        %h3 Link Minecraft Account
+
+      .modal-body
+        
     
     .account.account-minecraft{class: ('is-linked' if resource.minecraft_linked?)}
       .profile-image.pull-left
@@ -96,9 +106,11 @@
             = link_to 'Unlink account', accounts_unlink_minecraft_path, :method => :put, class: 'unlink-account'
           
           - else
-            %a{href: '#'}
-              Link your Minecraft account for
-              = credits_with_image(200)
+            %a{href: accounts_link_minecraft_path, data: {toggle: 'modal', target: '#link-minecraft-modal'}}
+              Link your Minecraft account
+              - render_reward_for('minecraft linked', current_user) do |reward|
+                for
+                = credits_with_image(reward.credits)
 
 
 .account-form-section.row

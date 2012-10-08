@@ -1,8 +1,8 @@
 class User < ActiveRecord::Base
   extend FriendlyId
   
-  attr_accessible :username, :first_name, :last_name, :avatar, :remove_avatar,
-                  :avatar_cache
+  attr_accessible :username, :email, :first_name, :last_name, :avatar,
+                  :remove_avatar, :avatar_cache
   
   has_many :players do
     
@@ -71,6 +71,10 @@ class User < ActiveRecord::Base
 
   def minecraft_linked?
     players.includes(:game).where('games.name' => 'Minecraft').exists?
+  end
+  
+  def minecraft_link_host
+    "foo.verify.minefold.com"
   end
   
   def minecraft_avatar_url
