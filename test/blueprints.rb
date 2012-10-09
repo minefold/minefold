@@ -38,9 +38,9 @@ Server.blueprint do
 end
 
 Reward.blueprint do
-  name { 'facebook linked' }
   credits { rand(1000) }
 end
+
 
 # --
 
@@ -54,4 +54,8 @@ end
 
 Server.blueprint(:minecraft) do
   funpack(:minecraft)
+end
+
+Reward.blueprint(:facebook) do
+  name { 'facebook linked' }
 end

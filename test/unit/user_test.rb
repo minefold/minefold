@@ -39,9 +39,6 @@ class UserTest < ActiveSupport::TestCase
     assert !User.find_for_database_authentication(email_or_username: 'blerg@example.com')
   end
 
-  test "#find_or_create_for_facebook" do
-  end
-
   test "#channel_key" do
     user = User.new
     mock(user).id { 'foo' }
@@ -111,6 +108,36 @@ class UserTest < ActiveSupport::TestCase
     user.mail_prefs[:random_mailer] = true
 
     assert_equal true, user.wants_mail_for?(RandomMailer)
+  end
+  
+  
+  test ".find_for_facebook_oauth" do
+    Reward.make!(:facebook)
+    
+    user = User.make!(facebook_uid: '1234')
+    auth = Object.new
+    stub(auth).uid { '1234' }
+    
+    assert_equal user, User.find_for_facebook_oauth(auth)
+  end
+  
+  test ".new_with_session" do
+    user = User.new_with_session({}, {})
+    
+    # TODO Test the nil case
+    
+    user = User.new_with_session({username: 'chrislloyd'}, {
+      'devise.facebook_data' => {'extra' => {'raw_info' => {
+        'username'   => 'chrsllyd',
+        'first_name' => 'Chris',
+        'last_name'  => 'Lloyd'
+      }}}
+    })
+    
+    assert_equal 'Chris', user.first_name
+    
+    # Tests that it doesn't override previously set values
+    assert_equal 'chrislloyd', user.username
   end
 
 end

@@ -2,7 +2,8 @@ class User < ActiveRecord::Base
   extend FriendlyId
   
   attr_accessible :username, :email, :first_name, :last_name, :avatar,
-                  :remove_avatar, :avatar_cache
+                  :password, :password_confirmation, :remove_avatar,
+                  :avatar_cache
   
   has_many :players do
     
@@ -105,11 +106,7 @@ class User < ActiveRecord::Base
   #   end
   # end
   
-  def update_facebook_attributes(full_attrs)
-    self.class.extract_facebook_attributes(full_attrs).each do |attr, val|
-      self[attr] ||= val
-    end
-  end
+
 
 
   def customer
@@ -146,16 +143,45 @@ class User < ActiveRecord::Base
   def private_channel_key
     "private-#{channel_key}"
   end
+  
+  
+  def self.find_for_facebook_oauth(auth)
+    find_or_initialize_by_facebook_uid(auth.uid)
+  end
+  
+  
+  def self.new_with_session(params, session)
+    super.tap do |user|
+      data = session['devise.facebook_data']
+
+      if data and data['extra'] and data['extra']['raw_info']
+        user.update_facebook_auth(data)
+      end
+    end
+  end
+  
+  def update_facebook_auth(auth)
+    raw_attrs = auth['extra']['raw_info']
+    
+    self.class.extract_facebook_attrs(raw_attrs).each do |attr, val|
+      # This is horrible and ugly and makes babies cry, but I'm not sure of a better way of doing it with ActiveRecord.
+      previous_val = self.send(attr)
+      (previous_val && previous_val.present?) || self.send("#{attr}=", val)
+    end
+  end
 
 private
 
-  def self.extract_facebook_attributes(info)
-    { first_name: info.first_name,
-      last_name:  info.last_name,
-      name: info.name,
-      locale: info.locale,
-      timezone: info.timezone,
-      gender: info.gender
+  def self.extract_facebook_attrs(attrs)
+    { facebook_uid: attrs['id'],
+      username: attrs['username'],
+      email: attrs['email'],
+      first_name: attrs['first_name'],
+      last_name:  attrs['last_name'],
+      name: attrs['name'],
+      locale: attrs['locale'],
+      timezone: attrs['timezone'],
+      gender: attrs['gender']
     }
   end
 

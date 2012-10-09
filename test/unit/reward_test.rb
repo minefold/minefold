@@ -17,4 +17,13 @@ class RewardTest < ActiveSupport::TestCase
     end
   end
   
+  test ".claim fails silently if no reward" do
+    user = User.make!
+    dont_allow(user).increment_credits!(anything)
+    
+    assert_nothing_raised ActiveRecord::RecordNotFound do
+      Reward.claim('bogus reward', user)
+    end
+  end
+  
 end

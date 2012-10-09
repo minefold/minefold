@@ -5,7 +5,11 @@ class Reward < ActiveRecord::Base
   has_many :users, :through => :reward_claims
   
   def self.claim(name, user)
-    reward = where(name: name).first!
+    reward = where(name: name).first
+    
+    if not reward
+      return Rails.logger.warn("missing reward #{name.inspect}")
+    end
     
     if not reward.users.include?(user)
       user.increment_credits!(reward.credits)

@@ -4,6 +4,7 @@
   %h1 Sign up for Minefold
 
 = form_for resource, as: resource_name, url: registration_path(resource_name) do |f|
+
   %fieldset
     = f.control_group :username do
       = f.label :username, class: 'control-label'

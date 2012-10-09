@@ -4,16 +4,28 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   prepend_before_filter :authenticate_user!
   
   def facebook
-    raw_facebook_attrs = request.env['omniauth.auth'].extra.raw_info
+    @user = current_user or User.find_for_facebook_oauth(request.env['omniauth.auth'])
+
+    # Signed out, signing in
+    if not signed_in? and @user and @user.facebook_linked?
+      @user.update_facebook_auth(request.env['omniauth.auth'])
+      @user.save
+      
+      sign_in_and_redirect(@user)
     
-    current_user.facebook_uid = request.env['omniauth.auth'].uid
-    current_user.update_facebook_attributes(raw_facebook_attrs)
-    current_user.save
+    # Signed in, linking Facebook account
+    elsif signed_in? and not @user.facebook_linked?
+      Reward.claim('facebook linked', @user)
+      
+      flash[:notice] = 'Facebook account linked.'
+      redirect_to edit_user_registration_path
     
-    Reward.claim('facebook linked', current_user)
-    
-    flash[:notice] = 'Facebook account linked.'
-    redirect_to edit_user_registration_path
+    # Signed out, signing up
+    else
+      session['devise.facebook_data'] = request.env['omniauth.auth']
+      redirect_to new_user_registration_path
+      
+    end
   end
 
 end
