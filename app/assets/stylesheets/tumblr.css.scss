@@ -17,65 +17,77 @@
 @import 'vars';
 
 .container {
-  width: 500px;
+  width: grid-width(8);
 }
         
 .posts {
   margin-top: 40px;
-}
-        
-.post {
-  @include clearfix;
-  margin-bottom: 80px;
-  color: rgba(black, 0.6);
-}
-        
-.posts .post h2 {
-  font-size: 36px;
-  line-height: 60px;
-  margin-bottom: 20px;
-  font-family: $futura;
-  font-weight: 400;
-}
-        
-.posts .post h2 a {
-  color: black;
-}
-        
-.posts .post .post-caption,
-.posts .post .post-body {
-  font-size: 16px;
-  line-height: 28px;
-}
-        
-.posts .post .post-body h1 {
-  font-size: 22px;
-}
-        
-.posts .post .post-body h2 {
-  font-size: 18px;
-  text-align: left;
+  
+  .post {
+    @include clearfix;
+    margin-bottom: 80px;
+    color: rgba(black, 0.8);
+    
+    h2 {
+      font-size: 36px;
+      line-height: 60px;
+      margin-bottom: 20px;
+      font-family: $futura;
+      font-weight: 400;
+      
+      a {
+        color: black;
+      }
+    }
+    
+    .post-caption,
+    .post-body {
+      font-size: 16px;
+      line-height: 28px;
+    }
+    
+    .post-body {
+      text-align: justify;
+      
+      h1 {
+        font-size: 22px;
+      }
+      
+      h2 {
+        font-size: 18px;
+        text-align: left;
+      }
+    }
+    
+    .meta {
+      @include clearfix;
+    }
+    
+    .meta, .meta a {
+      font-size: 14px;
+      color: rgba(black, 0.2);
+    }
+  }
 }
 
-.posts .post .meta {
-  @include clearfix;
-}
-
-.posts .post .meta, .posts .post .meta a {
-  font-size: 14px;
-  color: rgba(black, 0.2);
-}
-
-
-.pagination .pagination-guide {
-  font-size: 12px;
-  color: #CCC;
+.pagination {
+  a, span {
+    border-color: darken(white, 10%);
+    
+    &:hover {
+      background-color: white;
+      border-color: black;
+    }
+  }
+  
+  .pagination-guide {
+    font-size: 12px;
+    color: #CCC;
+  }
 }
 
 header {
-
   background: transparent;
-  border-bottom: 1px solid rgba(black, 0.1);
 }
 
 .navbar {
@@ -85,8 +97,8 @@ header {
   
   .brand {
     line-height: 20px;
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 18px;
+    font-weight: 600;
     padding: 0;
     margin-left: 0;
     margin-bottom: 0;
@@ -114,11 +126,21 @@ header {
 }
 
 html, footer {
-  background-color: $blue;
+  background-color: darken($blue, 10%);
 }
 
 footer {
   padding-bottom: 40px;
+  
+  a {
+    color: white;
+    
+    &:hover {
+      color: white;
+      border-bottom-color: white;
+    }
+  }
+  
   .copyright, .copyright a {
     color: rgba(white, 0.4);
     font-size: 14px;
@@ -128,8 +150,8 @@ footer {
 .is-permalink #page-background-block {
   background-color: darken($blue, 30%);
   
-  header {
-    border-bottom-color: darken($blue, 20%);
+  header .brand {
+    color: white;
   }
   
   .posts .post {

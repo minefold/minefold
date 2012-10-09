@@ -2,8 +2,8 @@
 %html{lang: 'en', dir: 'ltr'}
   %head
     %meta{charset: 'utf-8'}
-    = stylesheet_link_tag 'http://static.tumblr.com/p71ulni/254mbfyii/tumblr.css', media: 'all'
-    - #= stylesheet_link_tag 'tumblr.css', media: 'all'
+    - #= stylesheet_link_tag 'http://static.tumblr.com/p71ulni/254mbfyii/tumblr.css', media: 'all'
+    = stylesheet_link_tag 'tumblr.css', media: 'all'
 
     %title
       {Title}{block:SearchPage} ({lang:Search results for SearchQuery}){/block:SearchPage}{block:PostSummary} ({PostSummary}){/block:PostSummary}
@@ -36,10 +36,6 @@
               .motto {Description}
               
       .container
-        {block:IndexPage}
-        .hero-unit.hero-unit-tumblr
-          = image_tag '//d14qmynh5k2z0g.cloudfront.net/assets/logo80.png', width: 80, height: 80
-        {/block:IndexPage}
         .posts
           {block:Posts}
           .post
@@ -132,6 +128,7 @@
               %li
                 %a{href: '{PreviousPage}'} {lang:Previous}
               {/block:PreviousPage}
+              
             %p.pagination-guide {lang:CurrentPage of TotalPages}
           {/block:Pagination}
         
@@ -145,10 +142,6 @@
         %p.copyright.pull-right
           &copy; 2012
           %a{href: 'http://mutlicorp.com'} Mütli Corp.
-          
-          // Default text is replaced onready in the case the user doesn't have Javascript enabled.
-          %span#funnie Made
-          in San Francisco.
 
     // Gauges
     :javascript
