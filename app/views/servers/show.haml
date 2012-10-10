@@ -19,9 +19,12 @@
       - else
         Run the server for
       %br
-      %select#poop
-        - (1..24).each do |n|
-          %option{value: n.hours}= pluralize n, 'hour', 'hours'
+      
+      %input#poop{type: 'text', data: {slider: true, 'slider-range' => '0,24', 'slider-snap' => true, 'slider-step' => 1}}
+      
+      / %select#poop
+      /   - (1..24).each do |n|
+      /     %option{value: n.hours}= pluralize n, 'hour', 'hours'
         
       #plop
         This will cost
@@ -40,9 +43,10 @@
 
 - content_for :tail do
   :javascript
-    $('#poop').change(function() {
-      var seconds = parseInt($(this).val(), 10),
-          mins = seconds / 60,
+    $('#poop').bind('slider:changed', function(e, data) {
+      var hrs = data.value,
+          mins = hrs * 60,
+          seconds = mins * 60,
           rate = 5;
       
       $('#plop .cr').text(mins * rate);
@@ -51,9 +55,7 @@
       
       end.setSeconds(end.getSeconds() + seconds);
       
-      $('#baz').text(end.toString())
-      
-      console.log(seconds);
+      $('#baz').text(end.toString());
     });
     
     $('#poop').change()

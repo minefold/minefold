@@ -15,6 +15,7 @@
 #= require jquery.cookie
 #= require jquery.elastic
 #= require jquery.autoGrowInput
+#= require jquery.simple-slider
 
 #= require particle_system
 
