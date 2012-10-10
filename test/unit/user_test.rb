@@ -111,33 +111,50 @@ class UserTest < ActiveSupport::TestCase
   end
   
   
+  test ".find_for_facebook_oauth with current user" do
+    # TODO Figure out a better way of abstracting this
+    Reward.make!(:facebook)
+    
+    current_user = User.make!(facebook_uid: '1234')
+    good_auth = { 'uid' => '1234' }
+    
+    assert_nil User.find_for_facebook_oauth({'uid' => 'bad_auth'}, current_user)
+    
+    assert_equal current_user,
+                 User.find_for_facebook_oauth({'uid' => '1234'}, current_user)
+  end
+  
   test ".find_for_facebook_oauth" do
     Reward.make!(:facebook)
     
     user = User.make!(facebook_uid: '1234')
-    auth = Object.new
-    stub(auth).uid { '1234' }
+    auth = { 'uid' => '1234' }
     
-    assert_equal user, User.find_for_facebook_oauth(auth)
+    assert_nil User.find_for_facebook_oauth({'uid' => 'bad_auth'})
+    assert_equal user, User.find_for_facebook_oauth({'uid' => '1234'})
   end
   
   test ".new_with_session" do
-    user = User.new_with_session({}, {})
-    
-    # TODO Test the nil case
-    
-    user = User.new_with_session({username: 'chrislloyd'}, {
+    user = User.new_with_session({}, {
       'devise.facebook_data' => {'extra' => {'raw_info' => {
-        'username'   => 'chrsllyd',
-        'first_name' => 'Chris',
-        'last_name'  => 'Lloyd'
+        'first_name' => 'Chris'
       }}}
     })
     
     assert_equal 'Chris', user.first_name
+  end
+  
+  test ".new_with_session doesn't override existing data" do
+    user = User.new_with_session({email: 'chris@example.com'}, {
+      'devise.facebook_data' => {'extra' => {'raw_info' => {
+        'username' => 'chrsllyd',
+        'email' => 'blah@facebook.com'
+      }}}
+    })
     
-    # Tests that it doesn't override previously set values
-    assert_equal 'chrislloyd', user.username
+    # Tests that it overrides blank values
+    assert_equal 'chrsllyd', user.username
+    assert_equal 'chris@example.com', user.email
   end
 
 end

@@ -144,9 +144,13 @@ class User < ActiveRecord::Base
     "private-#{channel_key}"
   end
   
-  
-  def self.find_for_facebook_oauth(auth)
-    find_or_initialize_by_facebook_uid(auth.uid)
+  # Finds any user that matches the auth details supplied by Facebook. The current_user is passed in as an optimisation so a second query doesn't have to be made.
+  def self.find_for_facebook_oauth(auth, current_user=nil)
+    if current_user && current_user.facebook_uid == auth['uid']
+      current_user
+    else
+      where(facebook_uid: auth['uid']).first
+    end
   end
   
   
@@ -168,13 +172,17 @@ class User < ActiveRecord::Base
       previous_val = self.send(attr)
       (previous_val && previous_val.present?) || self.send("#{attr}=", val)
     end
+    
+    # TODO Possibly be smart with this
+    # if self.email == raw_attrs['email'] and raw_attrs['verified']
+    #   self.skip_confirmation!
+    # end
   end
 
 private
 
   def self.extract_facebook_attrs(attrs)
-    { facebook_uid: attrs['id'],
-      username: attrs['username'],
+    { username: attrs['username'],
       email: attrs['email'],
       first_name: attrs['first_name'],
       last_name:  attrs['last_name'],
