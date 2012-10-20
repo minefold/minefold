@@ -4,3 +4,6 @@
 [submodule "vendor/assets/jquery-simple-slider"]
 	path = vendor/assets/jquery-simple-slider
 	url = https://github.com/loopj/jquery-simple-slider.git
+[submodule "vendor/assets/moment"]
+	path = vendor/assets/moment
+	url = https://github.com/timrwood/moment.git

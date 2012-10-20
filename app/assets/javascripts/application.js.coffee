@@ -16,6 +16,7 @@
 #= require jquery.elastic
 #= require jquery.autoGrowInput
 #= require jquery.simple-slider
+#= require moment
 
 #= require particle_system
 
