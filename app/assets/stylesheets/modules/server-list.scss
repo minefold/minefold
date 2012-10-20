@@ -4,10 +4,10 @@
   .divider {
     font-size: 11px;
     text-transform: uppercase;
-    color: rgba(black, 0.2);
+    color: rgba(black, 0.4);
     padding: 0 10px;
     line-height: lines(6);
-    border-bottom: 1px solid rgba(black, 0.1);
+    border-bottom: 1px solid rgba(black, 0.2);
   }
   
   .new {
@@ -18,7 +18,7 @@
   .item {
     display: block;
     overflow: auto;
-    border-bottom: 1px solid darken(white, 5%);
+    border-bottom: 1px solid darken(white, 10%);
     padding: lines(1) 10px;
 
     .primary-action {

@@ -25,12 +25,12 @@ footer {
   }
 
   .copyright {
-    color: rgba($blue, 0.4);
+    color: rgba($blue, 0.6);
     font-weight: normal;
     font-size: 12px;
     
     a {
-      color: rgba($blue, 0.6);
+      color: $blue;
       
       &:hover {
         border-bottom-color: rgba($blue, 0.4);
