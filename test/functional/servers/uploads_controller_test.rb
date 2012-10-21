@@ -4,13 +4,13 @@ class Servers::UploadsControllerTest < ActionController::TestCase
   setup_devise_mapping(:user)
 
   setup do
-    ENV['S3_KEY'] = 'S3_KEY'
-    ENV['S3_SECRET'] = 'S3_SECRET'
+    ENV['AWS_ACCESS_KEY'] = 'AWS_ACCESS_KEY'
+    ENV['AWS_SECRET_KEY'] = 'AWS_SECRET_KEY'
     ENV['UPLOADS_BUCKET'] = 'uploads.localhost'
   end
 
   teardown do
-    ENV['S3_KEY'], ENV['S3_SECRET'], ENV['UPLOADS_BUCKET'] = nil
+    ENV['AWS_ACCESS_KEY'], ENV['AWS_SECRET_KEY'], ENV['UPLOADS_BUCKET'] = nil
   end
 
 

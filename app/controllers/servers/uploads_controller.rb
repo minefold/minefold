@@ -18,9 +18,9 @@ class Servers::UploadsController < ApplicationController
   end
 
   def policy
-    @policy = S3UploadPolicy.new ENV['S3_KEY'],
-                                 ENV['S3_SECRET'],
-                                 ENV['UPLOADS_BUCKET']
+    @policy = S3UploadPolicy.new ENV['AWS_ACCESS_KEY'],
+                                 ENV['AWS_SECRET_KEY'],
+                                 ENV['S3_BUCKET']
 
     @policy.key = params[:key]
     @policy.content_type = params[:contentType]

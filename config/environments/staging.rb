@@ -1,20 +1,21 @@
 Minefold::Application.configure do
+  # Settings specified here will take precedence over those in config/application.rb
+
+  # Log to stdout
+  config.logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
 
   config.action_mailer.default_url_options = {
-    host: 'staging.minefold.com',
+    host: 'minefold-staging.herokuapp.com',
     protocol: 'https'
   }
 
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    authentication: :plain,
-    address:        ENV['MAILGUN_SMTP_SERVER'],
-    port:           ENV['MAILGUN_SMTP_PORT'],
-    user_name:      ENV['MAILGUN_SMTP_LOGIN'],
-    password:       ENV['MAILGUN_SMTP_PASSWORD'],
-    domain:         ENV['MAILGUN_DOMAIN']
+  config.action_mailer.delivery_method = :mailgun
+  config.action_mailer.mailgun_settings = {
+      :api_key  => ENV['MAILGUN_API_KEY'],
+      :api_host => ENV['MAILGUN_DOMAIN']
   }
-  ActionMailer::Base.default :from => 'Minefold <team@staging.minefold.com>'
+
+  ActionMailer::Base.default from: 'Minefold <team@minefold-staging.herokuapp.com>'
 
   # Code is not reloaded between requests
   config.cache_classes = true
@@ -29,8 +30,9 @@ Minefold::Application.configure do
   # Compress JavaScripts and CSS
   config.assets.compress = true
 
-  # Fix for Devise
-  config.assets.initialize_on_precompile = false
+  config.assets.digest = true
+  
+  config.assets.precompile += %w( tumblr.css )
 
   # Compress both stylesheets and JavaScripts
   # config.assets.js_compressor  = :uglifier
@@ -60,7 +62,8 @@ Minefold::Application.configure do
   #       verbose: true
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
-  # config.action_controller.asset_host = "http://assets.example.com"
+  config.action_controller.asset_host = ENV['ASSET_HOST']
+  config.action_mailer.asset_host = ENV['ASSET_HOST']
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
@@ -77,6 +80,10 @@ Minefold::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+
+  # Log the query plan for queries taking more than this (works
+  # with SQLite, MySQL, and PostgreSQL)
+  # config.active_record.auto_explain_threshold_in_seconds = 0.5
 end
 
 
