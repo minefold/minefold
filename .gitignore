@@ -7,3 +7,5 @@ tmp
 public/assets
 public/uploads
 dump
+
+app/views/pages/playground.haml
