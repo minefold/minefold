@@ -34,6 +34,10 @@ class Server < ActiveRecord::Base
     10.minutes
   end
   
+  def normal?
+    not super_server?
+  end
+  
   def address
     "#{id}.pluto.minefold.com"
   end

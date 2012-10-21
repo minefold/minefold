@@ -52,6 +52,8 @@ class ServersController < ApplicationController
 
   def update
     authorize! :update, server
+    server.update_attributes(params[:server])
+    respond_with(server)
   end
 
   def destroy

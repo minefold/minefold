@@ -17,18 +17,39 @@
     %strong This server is running.
     If you change these settings the server will restart. To change settings <i>without</i> restarting the server, please do so in the game.
 
+%hr.large
 
-= form_for server do |f|
-  %fieldset
-    %legend Gameplay
+.account-form-section.row
+  .section-label.span2
+    %h3 General
 
-    = f.fields_for :settings do |s|
-      = render partial: server.funpack.game.settings_partial, locals: {f: s}
+  .span6
+    = form_for server do |f|
+      = f.control_group :name do
+        .control-label Name
+        .controls
+          = f.text_field :name, class: %w(span6)
+      
+      .form-actions
+        = f.submit 'Save', class: %w(btn)
+
+
+.account-form-section.row
+  .section-label.span2
+    %h3 Gameplay
+  .span6
+    = form_for server do |f|
+      = f.fields_for :settings do |s|
+        = render partial: server.funpack.game.settings_partial, locals: {f: s}
   
-  .form-actions
-    = f.submit 'Change settings', class: %w(btn btn-primary)
+      .form-actions
+        = f.submit 'Save', class: %w(btn)
 
 - if can? :destroy, server
-  %p Destroying the server <strong>permanently shuts it down</strong> and <strong>erases all its data</strong>. Please be cautious.
+  .account-form-section.row
+    .section-label.span2
+      %h3 Danger Zone
+    .span6
+      %p Destroying a server <strong>immediately halts it</strong> and <strong>destroys all its data</strong>. You <i>will not be credited</i> for any remaining time. There is no way to recover a server once it has been destroyed. <span class="highlight">With great power comes great responsibility.</span>
 
-  = button_to 'Destroy server', server_path(server), method: :delete, class: %w(btn btn-danger)
+      = button_to 'Destroy server', server_path(server), method: :delete, class: %w(btn btn-danger)
