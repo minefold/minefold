@@ -48,10 +48,9 @@
 .page-header.page-header-server {
    .game-name, .funpack-name {
     font-size: 12px;
-    color: darken(white, 20%);
-    text-transform: uppercase;
+    font-weight: 600;
+    color: lighten(black, 60%);
     margin-top: - lines(2);
     margin-bottom: - lines(2);
-    letter-spacing: 0.2em;
   }
 }

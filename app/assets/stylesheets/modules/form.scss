@@ -4,7 +4,7 @@ form {
 
   textarea, #{$all-text-inputs} {
     border: none;
-    @include box-shadow(0 0 0 2px rgba(black, 0.1) inset);
+    @include box-shadow(0 0 0 2px rgba(black, 0.2) inset);
     border-radius: $radius;
     padding: 5px 10px;
     font-size: 16px;
@@ -14,7 +14,7 @@ form {
     min-height: 40px;
 
     &:focus, &.focus {
-      @include box-shadow(0 0 0 2px rgba($blue, 0.4) inset);
+      @include box-shadow(0 0 0 2px rgba($blue, 1) inset);
     }
     
     &:disabled, &.disabled {
