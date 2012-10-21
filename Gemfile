@@ -36,7 +36,6 @@ gem 'uuid'
 gem 'carrierwave', git: 'https://github.com/jnicklas/carrierwave.git'
 
 group :development do
-  gem 'heroku'
   gem 'foreman'
 end
 
