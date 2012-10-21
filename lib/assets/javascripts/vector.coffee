@@ -1,6 +1,11 @@
 # Stolen from: https://github.com/jsoverson/JavaScript-Particle-System/blob/master/js/particleSystem/Util.js
 
 class window.Vector
+  
+  @fromAngle = (angle, magnitude) ->
+    new @(magnitude * Math.cos(angle), magnitude * Math.sin(angle))
+  
+  
   constructor: (@x=0, @y=0) ->
 
   magnitude: ->
@@ -48,3 +53,6 @@ class window.Vector
       @x + @y * n * Math.random(),
       @y + @y * n * Math.random()
     )
+  
+  clone: ->
+    new @constructor(@x, @y)

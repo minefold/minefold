@@ -9,7 +9,9 @@ Minefold::Application.routes.draw do
   
   if Rails.env.development?
     get '/tumblr' => 'tumblr#index'
+    get '/playground' => 'pages#playground'
   end
+
 
 # --
 

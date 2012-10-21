@@ -13,15 +13,12 @@
 #= require bootstrap
 
 #= require jquery.cookie
-#= require jquery.elastic
-#= require jquery.autoGrowInput
-#= require jquery.simple-slider
-#= require moment
+
+#= require ./helpers
 
 #= require particle_system
 
 #= require_self
-#= require ./helpers
 #= require_tree .
 
 class window.Application extends Backbone.Router
