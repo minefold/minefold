@@ -16,7 +16,7 @@
       
     - @featured_games.each do |game, servers_count|
       .game.span2
-        = link_to game.name, game
+        = game.name
         %i= pluralize servers_count, 'server', 'servers'
     
     - @coming_soon_games.each do |game|
