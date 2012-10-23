@@ -11,22 +11,19 @@
   text-shadow: none;
   border: none;
   outline: none;
+  @include anti-aliasing();
 
   // Colors
 
   color: white;
-  background: darken(white, 80%);
+  background: darken(white, 60%);
   
   &:hover, .hover {
     color: white;
-    background-color: black;
+    background-color: darken(white, 80%);
     text-shadow: none;
   }
-
-  &:active, .active {
-//    @include box-shadow(0 0 0 2px $blue inset);
-  }
-
+  
   &.btn-primary,
   &.btn-primary,
   &.btn-info,
@@ -38,9 +35,9 @@
     @include box-shadow(none);
   }
 
-  &.btn-primary,
-  &.btn-primary:hover {
+  &.btn-primary {
     background: $blue;
+    &:hover { background: darken($blue, 20%); }
   }
 
   &.btn-info,
