@@ -7,11 +7,6 @@
   
 .row
   .span4.offset2
-    %center
-      = link_to "Sign in using Facebook", user_omniauth_authorize_path(:facebook), class: %w(btn btn-large btn-primary)
-    
-    %hr
-    
     = form_for :user, as: :user, url: session_path(:user), class: %w(form-horizontal) do |f|
 
       %fieldset
@@ -31,10 +26,16 @@
 
         .form-actions
           .pull-left
-            = f.submit 'Sign in', tabindex: 4, class: %w(btn)
+            = f.submit 'Sign in', tabindex: 4, class: %w(btn btn-primary)
             
           .control-group.pull-left.remember-me
             .controls
               = f.label :remember_me, class: 'checkbox' do
                 = f.check_box :remember_me, tabindex: 3
                 Remember me
+    
+    %hr.large
+    
+    
+    = link_to "Sign in using Facebook", user_omniauth_authorize_path(:facebook), class: %w(btn)
+    
