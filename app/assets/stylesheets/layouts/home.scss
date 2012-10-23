@@ -19,8 +19,7 @@
   
   section {
     padding-top: lines(4);
-    padding-bottom: lines(4) - 1px;
-    border-bottom: 1px solid $bg;
+    padding-bottom: lines(16);
     
     h3 {
       font-family: $futura;
@@ -56,49 +55,16 @@
     }
   }
   
-  .feature-gallery {
-    
-    .nav {
-      border: none;
-      margin-left: -$gw-gutter;
-      
-      li {
-        border: none;
-        padding: 0; margin-bottom: 0;
-        -webkit-font-smoothing: antialiased;
-      
-        h4 {
-          font-family: $futura;
-          font-weight: 600;
-          font-style: italic;
-        }
-        
-        a {
-          border: none;
-          padding: 0;
-          color: #CCC;
-          display: block;
-        }
-        
-        &:hover {
-          border: none;
-        }
-      
-        &:hover a {
-          background-color: transparent;
-          color: rgba(black, 0.3);
-        }
-        
-
-        &.active a {
-          color: black;
-          border: none;
-          @include box-shadow(none);
-//          border-bottom: 1px solid black;
-//          padding-bottom: lines(4);
-//          margin-bottom: -lines(8);
-        }
-      } 
+  .feature-list {
+    .feature {
+      h4 {
+        font-size: 28px;
+        font-family: $futura;
+        font-weight: 600;
+        font-style: italic;
+        margin-bottom: lines(4);
+        line-height: lines(8);
+      }
     }
   }
 }
