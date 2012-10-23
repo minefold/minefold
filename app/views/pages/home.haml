@@ -29,7 +29,7 @@
   .row
     .feature.span4
       %h4 Setup
-      %p It takes seconds to start a game server for you and your friends. No technical mumbo-jumbo needed: just choose the settings you want and you're ready to play.
+      %p It takes seconds to start a game server for you and your friends. No technical mumbo-jumbo needed: just choose your settings and it's ready to go. If you want more control you can upload your own custom configuration.
       
       %br
       
@@ -37,9 +37,8 @@
         
     .feature.span4
       %h4 Play
-      %p Our servers are super fast. Using Minefold's proprietry networking software you'll never experience lag again.
+      %p Our servers are custom built to deliver the smoothest gaming experience possible. Minefold seamlessly geolocates your server and dynamically manage it's resources. No more RAM, no more lag.
       
-      %br
       %br
       
       #map_canvas{style: 'width:300px;height:200px;'}
@@ -79,33 +78,26 @@
     
     .feature.span4
       %h4 Show off
-      %p Once you've finished playing, you get maps, leaderboards and stats about your game.
+      %p Every one of your servers gets it's own community page. Chat with your friends, organize parties & discuss builds. For supported games you can browse georgous interactive maps, leaderboards and other stats.
       
-      %br
-      %br
       %br
       
       = image_tag 'show-off.jpg'
 
 %section.press
+  %center
+    %h3 As featured in
+    %br
+    
   .row
-    .span2
-      %h3 Featured in
+    %a.span2.offset3{href: 'http://techcrunch.com/2012/03/12/minefold-launch', title: 'Y Combinator-Backed Minefold Launches Affordable, On-Demand Platform For Game Hosting'}
+      = image_tag 'techcrunch.png'
   
     %a.span2{href: 'http://kotaku.com/5846894/minefold-offers-hosted-minecraft-servers-for-you-and-your-friends', title: 'Minefold Offers Hosted Minecraft Servers for You and Your Friends'}
       = image_tag 'kotaku.png'
   
-    .span2
-      = image_tag 'ign.png'
-  
-    .span2
+    %a.span2{href: 'http://www.gamasutra.com/view/news/165765/Minefold_launches_with_accessible_Minecraft_server_hosting.php', title: 'Minefold launches with accessible Minecraft server hosting'}
       = image_tag 'gamasutra.png'
-  
-    .span2
-      = image_tag 'rps.png'
-  
-    .span2
-      = image_tag 'techcrunch.png'
 
 
 %section
