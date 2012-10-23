@@ -5,6 +5,7 @@
 html {
   background-color: $bg;
   padding: 0;
+  @include anti-aliasing;
 }
 
 header {

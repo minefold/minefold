@@ -15,8 +15,8 @@
   // Colors
 
   color: white;
-  background: darken(white, 40%);
-
+  background: darken(white, 80%);
+  
   &:hover, .hover {
     color: white;
     background-color: black;
@@ -24,7 +24,7 @@
   }
 
   &:active, .active {
-    @include box-shadow(0 0 0 2px $blue inset);
+//    @include box-shadow(0 0 0 2px $blue inset);
   }
 
   &.btn-primary,
