@@ -17,7 +17,7 @@ class OrdersController < ApplicationController
       track 'paid', total: order.total,
                     cr: order.credits
 
-      # TODO Send Receipt
+      CreditsMailer.receipt(order.user, order.charge_id).deliver
 
       redirect_to user_root_path,
         notice: "Thank you for buying #{order.credits} credits on Minefold"

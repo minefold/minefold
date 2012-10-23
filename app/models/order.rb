@@ -1,4 +1,4 @@
-class Order < Struct.new(:credit_pack_id, :user, :card_token)
+class Order < Struct.new(:credit_pack_id, :user, :card_token, :charge_id)
 
   def credit_pack
     @credit_pack ||= if credit_pack_id.is_a?(CreditPack)
@@ -52,12 +52,15 @@ class Order < Struct.new(:credit_pack_id, :user, :card_token)
   end
 
   def create_charge
-    Stripe::Charge.create(
+    charge = Stripe::Charge.create(
       amount: credit_pack.cents,
       currency: 'usd',
       customer: user.customer_id,
       description: credit_pack.id.to_s
     )
+    
+    @charge_id = charge.id
+    charge
   end
 
   def credit_user
