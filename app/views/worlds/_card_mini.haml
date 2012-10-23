@@ -1,9 +1,0 @@
-- if world.creator.minecraft_player
-  %a.world-card.world-card-mini{href: player_world_path(world.creator.minecraft_player, world)}
-
-    .world-fullname
-      %span.creator= world.creator.username
-      %span.slash> /
-      %strong.name= world.name
-
-    = render partial: 'worlds/meta', locals: {world: world}

@@ -1,3 +1,0 @@
-r.list_of :events, world.events.order_by([:created_at, :desc]).limit(100) do |event|
-  render partial: event.class.name.downcase, object: event
-end

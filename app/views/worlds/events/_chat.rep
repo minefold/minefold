@@ -1,2 +1,0 @@
-render partial: 'event', object: chat
-r.element :text
