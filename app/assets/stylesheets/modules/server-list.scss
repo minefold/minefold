@@ -1,6 +1,11 @@
 @import 'vars';
 
 .server-list {
+  
+  .empty {
+    color: #CCC;
+  }
+  
   .divider {
     font-size: 11px;
     text-transform: uppercase;
@@ -11,7 +16,6 @@
   }
   
   .new {
-    text-align: center;
     padding: lines(8) 0;
   }
   

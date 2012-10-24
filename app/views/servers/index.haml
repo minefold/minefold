@@ -4,27 +4,33 @@
 .page-header
   %h1 Servers
 
-%ul.server-list.unstyled
-  - @servers.each do |game, servers|
-    %li.divider= game.name
-    - servers.each do |server|
-      %li.item
+.server-list
+  - if @servers.empty?
+    .empty
+      %h2 You don't have any servers. Create a new server to start having fun.
+      
+  - else
+  
+    - @servers.each do |game, servers|
+      .divider= game.name
+      - servers.each do |server|
+        .item
         
-        %a.primary-action{href: server_path(server)}
+          %a.primary-action{href: server_path(server)}
           
-          %h2.name
-            = server_state_bulb(server)
-            = server.name
+            %h2.name
+              = server_state_bulb(server)
+              = server.name
 
-        %ul.nav.nav-pills.nav-pills-images.pull-right
-          - if server.funpack.game.name == 'Minecraft'
-            %li
-              = link_to image_tag('101.png', width: 24, height: 24), map_server_path(server)
+          %ul.nav.nav-pills.nav-pills-images.pull-right
+            - if server.funpack.game.name == 'Minecraft'
+              %li
+                = link_to image_tag('101.png', width: 24, height: 24), map_server_path(server)
           
-          - if can? :update, server
-            %li
-              %a{href: edit_server_path(server)}
-                = image_tag '265.png', width: 24, height: 24
+            - if can? :update, server
+              %li
+                %a{href: edit_server_path(server)}
+                  = image_tag '265.png', width: 24, height: 24
 
   - if can? :create, Server
-    %li.new= link_to 'Create a new server', new_server_path, class: %w(btn btn-success)
+    .new= link_to 'Create a new server', new_server_path, class: %w(btn btn-success)
