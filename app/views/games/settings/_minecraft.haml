@@ -1,8 +1,4 @@
-:javascript
-  var seed = $('input#server_settings_seed');
-  if (seed.val() === '') {
-    seed.val(new Date().getTime());
-  }
+.well UPLOAD YOUR WORLD HERE.
 
 = f.control_group :game_mode do
   .control-label Mode
@@ -20,10 +16,27 @@
       %p.help-block
         Unlimited resources, free flying and destroy blocks instantly
 
+  .controls
+    = f.label :game_mode_2, class: 'radio' do
+      = f.radio_button :game_mode, 2, tabindex: 4
+      Adventure
+      %p.help-block
+        Intended for adventuring, cannot place or destroy blocks.
+
+%hr
+
 = f.control_group :seed do
   .control-label Map Seed
   .controls
     = f.text_field :seed, tabindex: 2
+
+:javascript
+  var seed = $('input#server_settings_seed');
+  if (seed.val() === '') {
+    seed.val(new Date().getTime());
+  }
+
+%hr
 
 .row
   .span2
@@ -35,8 +48,9 @@
             = f.radio_button :difficulty, i, tabindex: 4, checked: (level == 'normal')
             = level.to_s.titlecase
 
-  .span2
-    = f.control_group :pvp, :spawn_monsters, :spawn_animals do
+  
+  = f.control_group :pvp, :spawn_monsters, :spawn_animals do
+    .span2
       .control-label Gameplay
 
       .controls
@@ -47,9 +61,42 @@
       .controls
         = f.label :spawn_monsters, class: 'checkbox' do
           = f.check_box :spawn_monsters, tabindex: 6, checked: true
-          Spawn Monsters
+          Spawn monsters
 
       .controls
         = f.label :spawn_animals, class: 'checkbox' do
           = f.check_box :spawn_animals, tabindex: 7, checked: true
           Spawn animals
+
+      .controls
+        = f.label :spawn_npcs, class: 'checkbox' do
+          = f.check_box :spawn_npcs, tabindex: 8, checked: true
+          Spawn animals
+    
+    .span2
+      %br
+      .controls
+        = f.label :allow_nether, class: 'checkbox' do
+          = f.check_box :allow_nether, tabindex: 9, checked: true
+          Nether
+
+%hr.large
+
+- players = current_user.players.minecraft.collect(&:uid).join("\n")
+
+= f.control_group :whitelist do
+  %span.pull-right.help-inline One username per line
+  .control-label
+    Whitelist
+  .controls
+    = f.text_area :whitelist, value: (f.parent_builder.object.settings['whitelist'] || players), rows: 4, style: 'width:100%', class: %w(span6)
+
+= f.control_group :blacklist do
+  .control-label Blacklist
+  .controls
+    = f.text_area :blacklist, rows: 4, style: 'width:100%', class: %w(span6)
+
+= f.control_group :ops do
+  .control-label Ops
+  .controls
+    = f.text_area :ops, value: (f.parent_builder.object.settings['ops'] || players), rows: 4, style: 'width:100%', class: %w(span6)

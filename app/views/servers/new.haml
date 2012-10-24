@@ -32,7 +32,7 @@
                   %input{type: 'radio', name: 'server[funpack_id]', value: funpack.id.to_s, id: "server_funpack_id_#{funpack.id.to_s}"}
         
         .form-actions
-          %a.btn.btn-primary.pull-right#game-next-button{href: '#settings', disabled: true} Select the settings
+          %a.btn.btn-primary.pull-right#game-next-button{href: '#settings', disabled: true} Settings &rarr;
       
       - content_for :tail do
         :javascript
@@ -75,16 +75,20 @@
             %a{href: '#settings', data: {toggle: 'tab'}} Settings
         
           %li Billing
-      
+        
+        %hr
+        
         = f.control_group :name do
           .controls
-            = f.text_field :name, placeholder: 'Name', class: %w(span6)
+            = f.text_field :name, placeholder: 'Name', style: 'width:100%'
+        
+        %hr.large
         
         #new_funpack_settings
         
         .form-actions
-          %a.btn.pull-left{href: '#game', data: {toggle: 'tab'}} &larr; Change game
-          %a.btn.btn-primary.pull-right{href: '#billing', data: {toggle: 'tab'}} Choose billing style
+          %a.btn.pull-left{href: '#game', data: {toggle: 'tab'}} &larr; Game
+          %a.btn.btn-primary.pull-right{href: '#billing', data: {toggle: 'tab'}} Billing &rarr;
       
       
       / Billing
@@ -121,5 +125,5 @@
 
 
         .form-actions
-          %a.btn.pull-left &larr; Change settings
-          = f.submit 'Create server', class: %w(btn btn-primary pull-right)
+          %a.btn.pull-left{href: '#settings', data: {toggle: 'tab'}} &larr; Settings
+          = f.submit 'Create server', class: %w(btn btn-primary btn-large pull-right)
