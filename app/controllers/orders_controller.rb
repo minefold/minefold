@@ -15,7 +15,7 @@ class OrdersController < ApplicationController
 
     if order.valid? and order.fulfill
       CreditsMailer.receipt(
-        order.user,
+        order.user.id,
         order.charge_id,
         order.credit_pack_id
       ).deliver
