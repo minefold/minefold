@@ -36,6 +36,9 @@ class ServersController < ApplicationController
     server.users << current_user
 
     server.save
+    
+    track 'server created', distinct_id: current_user.id
+    
     respond_with(server)
   end
 

@@ -22,10 +22,9 @@ class OrdersController < ApplicationController
         order.charge_id,
         order.credit_pack_id
       ).deliver
-
+      
       redirect_to user_root_path,
-        notice: "Thank you for buying #{order.credits} credits on Minefold"
-
+        notice: "Thank you for buying Minefold credits"
     else
       render nothing: true, :status => :payment_required
     end

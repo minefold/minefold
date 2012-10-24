@@ -21,7 +21,6 @@ module MixpanelHelper
     haml_tag('script', code)
   end
 
-
   def mixpanel_person
     signed_in? and {
       '$created' => current_user.created_at,

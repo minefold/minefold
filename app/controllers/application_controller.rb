@@ -17,10 +17,8 @@ private
     raise ActionController::RoutingError.new('Not Found')
   end
   
-  def track(event_name, properties={})
-    if not Rails.env.test?
-      Resque.enqueue(MixpanelJob, event_name, properties)
-    end
+  def track(event, properties={})
+    Mixpanel.track_async(event, properties)
   end
 
 end
