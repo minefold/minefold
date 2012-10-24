@@ -10,3 +10,5 @@ Resque::Failure::Multiple.classes = [
 Resque::Failure.backend = Resque::Failure::Multiple
 
 Resque.redis = $redis
+
+Resque::Mailer.excluded_environments = [:test]

@@ -29,13 +29,17 @@ class OrderTest < ActiveSupport::TestCase
   test "#create_charge" do
     credit_pack = CreditPack.make!(id: 10, cents: 100)
     user = User.make!(customer_id: 'cus_1')
-
+    
     mock(Stripe::Charge).create(
       amount: 100,
       currency: 'usd',
       customer: 'cus_1',
       description: '10'
-    )
+    ) do
+      charge = Object.new
+      stub(charge).id { 'ch_0bV6FV0MNgTzlg' }
+      charge
+    end
 
     order = Order.new(credit_pack, user)
     order.create_charge
