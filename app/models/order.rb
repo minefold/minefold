@@ -21,7 +21,12 @@ class Order < Struct.new(:credit_pack_id, :user, :card_token)
     create_or_update_customer and
     create_charge and
     credit_user
-
+    
+    Mixpanel.track_async 'paid', distinct_id: user.id,
+                                 'credit pack' => credit_pack_id
+    
+    true
+    
   rescue Stripe::StripeError
     false
   end

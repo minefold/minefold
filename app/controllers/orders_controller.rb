@@ -14,9 +14,6 @@ class OrdersController < ApplicationController
     )
 
     if order.valid? and order.fulfill
-      track 'paid', total: order.total,
-                    cr: order.credits
-
       CreditsMailer.receipt(
         order.user,
         order.charge_id,

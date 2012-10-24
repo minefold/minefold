@@ -5,7 +5,7 @@ class MixpanelJob < Job
   end
 
   def perform?
-    Rails.env.production? or Rails.env.development?
+    Rails.env.production? or Rails.env.development? or Rails.env.staging?
   end
 
   def perform!

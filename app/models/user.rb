@@ -178,6 +178,10 @@ class User < ActiveRecord::Base
     #   self.skip_confirmation!
     # end
   end
+  
+  after_create do |user|
+    Mixpanel.track_async '$signup', distinct_id: user.id
+  end
 
 private
 
