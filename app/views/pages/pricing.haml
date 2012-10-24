@@ -8,7 +8,7 @@
 
 .credit-pack-display.row
   - @packs.each_with_index do |pack, i|
-    .credit-pack.span3{class: ('highlight' if i == 3)}
+    .credit-pack.span3{class: ('best-value' if i == 3)}
       - case i
       - when 1
         .note Most popular
@@ -32,48 +32,67 @@
 
 %hr
 
+
 .row
   - 4.times do |i|
     %center.span3
-      - if i != 3
-        %a.btn Sign up now
+      - if signed_in?
+        - if i != 3
+          %a.btn{href: new_orders_path, data: { toggle: 'modal', target: '#buy-credits-modal' }} Buy Credits
+        - else
+          %a.btn.btn-primary{href: new_orders_path, data: { toggle: 'modal', target: '#buy-credits-modal' }} Buy Credits
+
       - else
-        %a.btn.btn-primary Sign up now
+        - if i != 3
+          = link_to 'Sign up now', new_user_registration_path, class: %w(btn)
+        - else
+          = link_to 'Sign up now', new_user_registration_path, class: %w(btn btn-primary)
+
 
 %hr.x-large
 
+
 .row
-  .span6
-    %h3 Quick Questions
-    %h4 How much RAM does my server have?
-    %p Unlimited. Your server will run on Minefold's custom build hosting platform.
-    
-    %h4 What are super servers?
-    %p Super servers are servers that are supported by everybody who play on it
-  
-  .testimonials.span6
+  .testimonials.span6.offset3
     %h3 Happy Campers
 
     .testimonial
       %q{cite: 'https://twitter.com/technoweenie/status/139955603111018496'}
-        Really impressed with how easy
+        “Really impressed with how easy
         = link_to '@minefold', 'https://twitter.com/minefold'
-        is to play Minecraft with my son.
+        is to play Minecraft with my son.”
       %cite
         %a{href: 'https://twitter.com/technoweenie/status/139955603111018496'} Rick Olsen
   
     .testimonial
       %q{cite: 'https://twitter.com/qrush/status/117244523083595776'}
-        Wow, pay by the hour Minecraft with chat, live maps, and more.
+        “Wow, pay by the hour Minecraft with chat, live maps, and more.”
       %cite
         %a{href: 'https://twitter.com/qrush/status/117244523083595776'} Nick Quaranto
 
     .testimonial
       %q
-        I have only been playing for about 30 minutes, but I am loving it so far.
+        “I have only been playing for about 30 minutes, but I am loving it so far.”
       %cite Joshua Antonishen
 
     .testimonial
       %q
-        Thank you so much guys, you are so boss.
+        “Thank you so much guys, you are so boss.”
       %cite Chris Elliott
+
+
+%hr.x-large
+
+
+%center.q-and-a.row
+  .span6.offset3
+    %h2 Questions you might have
+  
+    %h3 How many slots do your servers have?
+    %p Unlimited. Your server will run on Minefold's custom build hosting platform. It dynamically allocates resources to servers depending on how much they require. If lots of people are playing or lag gets too high the platform will magically rebalance processess across our grid.
+    
+    %h3 What are super servers?
+    %p Super servers are paid for by everybody who plays on them. Everybody who plays on a super server covers the cost of the server. They are great for small groups of friends and they are always up. At the moment only Minecraft supports super servers.
+
+    %h3 What are normal servers?
+    %p Normal servers are similar to what you're used to with traditional hosting providers. One person pays for them and anybody can play. To help save the owner money, normal servers need to be started and stopped.

@@ -4,11 +4,10 @@
     
   .credit-pack {
     text-align: center;
-    border: 2px solid darken(white, 10%);
-      
     padding: lines(8) ($gw-gutter / 2);
-
     @include box-sizing(border-box);
+    border: 2px solid darken(white, 10%);
+//    background-color: darken(white, 5%);
       
     .note {
       text-transform: uppercase;
@@ -26,12 +25,12 @@
       
     .rate {
       font-size: 10px;
-      color: #999;
+      color: rgba(black, 0.4);
     }
       
     .equiv {
       font-size: 11px;
-      color: #666;
+      color: rgba(black, 0.6);
         
       & + .equiv {
         margin-top: - lines(2);
@@ -39,11 +38,23 @@
     }
   }
     
-  .credit-pack.highlight {
-    border-color: $blue;
+  .credit-pack.best-value {
+    border-color: darken($blue, 10%);
+    background-color: $blue;
+    color: white;
       
     .note {
-      color: darken($yellow, 10%);
+      color: $yellow;
+    }
+    
+    .rate {
+      color: rgba(white, 0.6);
+      font-weight: 600;
+    }
+    
+    .equiv {
+      color: rgba(white, 0.8);
+      font-weight: 600;
     }
   }
   

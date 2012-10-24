@@ -40,11 +40,13 @@ hr {
   border: none;
   margin: lines(4) 0;
   height: 0;
-
+ 
   &.light {
     border-top: 1px solid white;
   }
+}
 
+hr, br {
   &.small {
     margin: lines(2) 0;
   }

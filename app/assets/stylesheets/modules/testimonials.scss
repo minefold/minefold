@@ -3,6 +3,13 @@
 .testimonials {
   text-align: center;
 
+  h3 {
+    font-size: 28px;
+    line-height: lines(12);
+    margin-bottom: lines(4);
+    color: darken($blue, 20%);
+  }
+
   .testimonial {
     margin-bottom: lines(2);
 
@@ -10,10 +17,6 @@
       display: block;
       margin-bottom: lines();
       font-size: 16px;
-    }
-
-    q, cite {
-//      margin-left: 20px;
     }
 
     cite, cite a {
