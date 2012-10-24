@@ -4,6 +4,7 @@ class Reward < ActiveRecord::Base
   has_many :reward_claims
   has_many :users, :through => :reward_claims
   
+  # TODO Refactor this method into instance methods
   def self.claim(name, user)
     reward = where(name: name).first
     
@@ -16,7 +17,9 @@ class Reward < ActiveRecord::Base
       reward.reward_claims.create!(user: user)
       
       Mixpanel.track_async 'claimed reward', distinct_id: user.distinct_id,
-                                             reward: reward.name
+                                             reward_id: reward.id,
+                                             reward: reward.name,
+                                             time: Time.now.to_i
     end
   end
   

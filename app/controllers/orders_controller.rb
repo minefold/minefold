@@ -14,6 +14,13 @@ class OrdersController < ApplicationController
     )
 
     if order.valid? and order.fulfill
+      track 'paid', amount: order.total
+      
+      engage order.user.id, '$add' => {
+        'cents spent' => order.total,
+        'credits'     => order.credits
+      }
+      
       CreditsMailer.receipt(
         order.user.id,
         order.charge_id,
