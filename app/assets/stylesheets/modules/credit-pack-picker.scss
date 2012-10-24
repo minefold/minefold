@@ -45,5 +45,13 @@
       color: white;
       .price, .rate { color: rgba(white, 0.5); }
     }
+    
+    .is-choosing &:first-child {
+      border-radius: 0 0 0 6px;
+    }
+    
+    .is-choosing &:last-child {
+      border-radius: 0 0 6px 0;
+    }
   }
 }
