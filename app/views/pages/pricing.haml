@@ -4,7 +4,7 @@
 .hero-unit
   %h1 Pricing
   %h2
-    Buy credits to #{link_to 'run your own server', new_server_path} or to play on #{link_to 'Super Servers', '#'}.
+    Buy credits to #{link_to 'run your own server', '#normal-servers'} or to play on #{link_to 'Super Servers', '#super-servers'}.
 
 .credit-pack-display.row
   - @packs.each_with_index do |pack, i|
@@ -88,11 +88,11 @@
   .span6.offset3
     %h2 Questions you might have
   
-    %h3 How many slots do your servers have?
+    %h3#slots How many slots do your servers have?
     %p Unlimited. Your server will run on Minefold's custom build hosting platform. It dynamically allocates resources to servers depending on how much they require. If lots of people are playing or lag gets too high the platform will magically rebalance processess across our grid.
     
-    %h3 What are super servers?
+    %h3#super-servers What are super servers?
     %p Super servers are paid for by everybody who plays on them. Everybody who plays on a super server covers the cost of the server. They are great for small groups of friends and they are always up. At the moment only Minecraft supports super servers.
 
-    %h3 What are normal servers?
+    %h3#normal-servers What are normal servers?
     %p Normal servers are similar to what you're used to with traditional hosting providers. One person pays for them and anybody can play. To help save the owner money, normal servers need to be started and stopped.
