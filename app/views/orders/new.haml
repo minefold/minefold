@@ -1,26 +1,14 @@
-- title 'Billing Details'
-
 .credit-pack-picker
   - @credit_packs.each do |pack|
-    .credit-pack
+    .credit-pack{data: {id: pack.id, cents: pack.cents, credits: pack.credits}}
       %h4.credits= format_credits pack.credits
       .price= number_to_currency(pack.cents / 100)
       %p.rate #{(pack.cents_per_credit * 100).ceil}¢ for 100 credits
 
-/ :javascript
-/   $('input.stripe.number').keyup (e) ->
-/     target = $(e.target)
-/     cardType = Stripe.cardType(target.val())
-/       .toLowerCase()
-/       .replace(/\s/,'-')
-/ 
-/     $('.card-types span')
-/       .toggleClass('unknown', cardType isnt 'unknown')
-/       .removeClass('active')
-/       .filter(-> $(@).hasClass(cardType))
-/       .addClass('active')
-
-%form.credit-card-form{hidden}
+= form_tag orders_path, method: 'POST', class: 'credit-card-form' do |f|
+  %input#credit_pack_id{type: 'hidden', name: 'credit_pack_id'}
+  %input#stripe_token{type: 'hidden', name: 'stripe_token'}
+  
   .container
   
     .control-group
@@ -46,14 +34,14 @@
         .control-group
           %label.control-label{for: 'card_cvc'} Security code
           .controls
-            %input#card_cvc.cvc{type: 'text', name: nil, size: 4, autocomplete: false, min: 0}
+            %input#card_cvc.cvc{type: 'text', name: nil, autocomplete: false, min: 0}
   
     .form-actions
       .pull-left
         %a.btn.btn-cancel Cancel
     
       .pull-right
-        %a.btn.btn-success
+        %button.btn.btn-success
           Pay
           %span.price
   
@@ -66,6 +54,9 @@
   var $modal = $('#buy-credits-modal'),
     $form = $modal.find('form');
   
+  var orderFormView = new Application.OrderFormView();
+  orderFormView.setElement($form);
+  
   // Select a credit pack
     
   $modal.find('.credit-pack').click(function() {
@@ -74,243 +65,17 @@
     $modal.removeClass('is-choosing').addClass('is-checking-out');
     
     // Adds the price of the active pack to the pay button so it's *very* clear.
-    $form.find('.form-actions .btn-success .price').text($this.find('.price').text());
     
-    $form.slideDown();
-    
+    orderFormView.selectCreditPack($this);
+    orderFormView.show();
+
     $this.addClass('active').siblings().removeClass('active');
   });
-    
+  
   // Clicking the cancel button at the bottom of the checkout form
-    
   $form.find('.form-actions .btn.btn-cancel').click(function(){
     $modal.find('.credit-pack').removeClass('active');
     $modal.removeClass('is-checking-out').addClass('is-choosing');
-    $form.slideUp();
+    orderFormView.hide();
   });
 
-:javascript
-  // Not so shamelessly stolen from Stripe's buttons: https://button.stripe.com/assets/inner/index.js
-  
-  var $number, formatNumber, cardTypes, changeCardType;
-  
-  $number = $('#buy-credits-modal form .number');
-  
-  formatNumber = function(e) {
-    var digit, lastDigits, value;
-    digit = String.fromCharCode(e.which);
-    if (!/^\d+$/.test(digit)) {
-      return;
-    }
-    value = $number.val();
-    if (Stripe.cardType(value) === 'American Express') {
-      lastDigits = value.match(/^(\d{4}|\d{4}\s\d{6})$/);
-    } else {
-      lastDigits = value.match(/(?:^|\s)(\d{4})$/);
-    }
-    if (lastDigits) {
-      return $number.val(value + ' ');
-    }
-  };
-  
-  cardTypes = {
-    'Visa': 'visa',
-    'American Express': 'amex',
-    'MasterCard': 'mastercard',
-    'Discover': 'discover',
-    'Unknown': 'unknown'
-  };
-
-  changeCardType = function(e) {
-    var $el, map, name, type, _ref;
-    type = Stripe.cardType($number.val());
-    type = cardTypes[type];
-    $el = $number;
-    if (!$el.hasClass(type)) {
-      _ref = cardTypes;
-      for (name in _ref) {
-        map = _ref[name];
-        $el.removeClass(map);
-      }
-      $el.addClass(type);
-      return $el.toggleClass('identified', type !== 'unknown');
-    }
-  };
-  
-  $number.keydown(formatNumber);
-  $number.keyup(changeCardType);
-
-
-
-:javascript
-  var aside, form, creditPacks, timePacksData;
-
-  timePacks = $('.time-packs a');
-
-  form = $('form#new-order');
-
-  aside = form.find('aside');
-
-  timePacksData = #{CreditPack.all.to_json};
-
-  timePacks.click(function(e) {
-    e.preventDefault();
-
-    var months, pack, price;
-    pack = $(this);
-    timePacks.removeClass('active');
-    pack.addClass('active');
-    price = pack.data('amount') / 100;
-    months = pack.data('months');
-    form.find('.dollar-amount').text("$" + price);
-    form.find('.months').text(months);
-    form.find('input[name=months]').val(months);
-    return form.show();
-  });
-
-  form.find('button[type=reset]').click(function() {
-    timePacks.removeClass('active');
-    return form.hide();
-  });
-
-  form.submit(function(e) {
-    var amount, card, months, pack, selectedPack, submitButton;
-    e.preventDefault();
-    submitButton = form.find('input[type=submit]').attr({
-      disabled: true
-    });
-    card = {
-      number: form.find('#card-number').val(),
-      cvc: form.find('#card-cvc').val(),
-      exp_month: form.find('#card-exp-month').val(),
-      exp_year: form.find('#card-exp-year').val()
-    };
-    selectedPack = timePacks.filter('.active');
-    months = parseInt(selectedPack.data('months'), 10);
-    pack = _(timePacksData).find(function(pack) {
-      return pack.months === months;
-    });
-    amount = pack.cents;
-    if (amount == null) {
-      return alert('Nice try buddy');
-    }
-    return Stripe.createToken(card, amount, function(status, response) {
-      var token;
-      if (status !== 200) {
-        submitButton.attr({
-          disabled: false
-        });
-
-        var errorMsg = $('<p></p>').addClass('help-block').text(response.error.message);
-
-        $('.control-group.'+response.error.param)
-          .addClass('error')
-          .find('.controls').append(errorMsg)
-
-      } else {
-        token = response.id;
-        $('<input></input>').attr({
-          type: 'hidden',
-          name: 'stripe_token'
-        }).val(token).appendTo(form);
-        $('<input></input>').attr({
-          type: 'hidden',
-          name: 'pack_id'
-        }).val(pack.id).appendTo(form);
-        return form.get(0).submit();
-      }
-    });
-  });
-
-/ Payment.prototype.validate = function() {
-/   var expiry, valid,
-/     _this = this;
-/   valid = true;
-/   this.$('input').removeClass('invalid');
-/   this.$message.hide().empty();
-/   this.$('input[required]').each(function(i, input) {
-/     input = $(input);
-/     if (!input.val()) {
-/       valid = false;
-/       return _this.handleError({
-/         code: 'required',
-/         input: input
-/       });
-/     }
-/   });
-/   if (!Stripe.validateCardNumber(this.$number.val())) {
-/     valid = false;
-/     this.handleError({
-/       code: 'invalid_number'
-/     });
-/   }
-/   expiry = this.expiryVal();
-/   if (!Stripe.validateExpiry(expiry.month, expiry.year)) {
-/     valid = false;
-/     this.handleError({
-/       code: 'expired_card'
-/     });
-/   }
-/   if (this.options.cvc && !Stripe.validateCVC(this.$cvc.val())) {
-/     valid = false;
-/     this.handleError({
-/       code: 'invalid_cvc'
-/     });
-/   }
-/   if (!valid) {
-/     this.$('.invalid:input:first').select();
-/   }
-/   return valid;
-/ };
-
-
-/ case 'required':
-/   return this.invalidInput(err.input);
-/ case 'card_declined':
-/   return this.invalidInput(this.$number);
-/ case 'invalid_number':
-/ case 'incorrect_number':
-/   return this.invalidInput(this.$number);
-/ case 'invalid_expiry_month':
-/   return this.invalidInput(this.$expiryMonth);
-/ case 'invalid_expiry_year':
-/ case 'expired_card':
-/   return this.invalidInput(this.$expiryYear);
-/ case 'invalid_cvc':
-/   return this.invalidInput(this.$cvc);
-
-:javascript
-  form = $('form.edit_user')
-
-  form.submit (e) ->
-    e.preventDefault()
-
-    button = form.find('input[type=submit]')
-
-    button.attr(disabled: true)
-    form.find('.spinner').show()
-
-    card =
-      number:    $('#stripe-number').val()
-      cvc:       $('#stripe-cvc').val()
-      exp_month: $('#stripe-exp-month').val()
-      exp_year:  $('#stripe-exp-year').val()
-
-
-    Stripe.createToken card, #{@amount.to_i.to_json}, (status, response) ->
-      if status isnt 200
-        button.attr(disabled: false)
-
-        $('<p></p>')
-          .addClass('stripe')
-          .text(response.error.message)
-          .appendTo form.find('.errors').empty()
-
-      else
-        token = response.id
-        $('<input></input>')
-          .attr(type: 'hidden', name: 'user[stripe_token]')
-          .val(token)
-          .appendTo(form)
-
-        form.get(0).submit()

@@ -1,5 +1,7 @@
-class Order < Struct.new(:credit_pack_id, :user, :card_token, :charge_id)
-
+class Order < Struct.new(:credit_pack_id, :user, :card_token)
+  
+  attr_reader :charge_id
+  
   def credit_pack
     @credit_pack ||= if credit_pack_id.is_a?(CreditPack)
       credit_pack_id

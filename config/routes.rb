@@ -36,7 +36,7 @@ Minefold::Application.routes.draw do
     :controllers => { :omniauth_callbacks => 'omniauth_callbacks',
                       :registrations => 'registrations' }
 
-  # Authentication
+  # Authenticated routes
   devise_scope :user do
 
     resource :orders, :only => [:new, :create]

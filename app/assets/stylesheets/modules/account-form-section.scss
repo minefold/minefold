@@ -1,10 +1,9 @@
 @import 'vars';
 
 .account-form-section {
-  padding-top: lines(2) - 1px;
+  padding-top: lines(2);
   padding-bottom: lines(2);
   margin-left: 0;
-  border-top: 1px solid $bg;
 
   .section-label {
     margin-left: 0;

@@ -43,6 +43,8 @@ class OrderTest < ActiveSupport::TestCase
 
     order = Order.new(credit_pack, user)
     order.create_charge
+    
+    assert_equal 'ch_0bV6FV0MNgTzlg', order.charge_id
   end
 
   test "#create_or_update_customer creates a customer" do

@@ -10,6 +10,10 @@ window.pluralize = (num, singular, plural) ->
 window.rand = (n) ->
   Math.floor(Math.random() * n)
 
+window.centsToCurrency = (n) ->
+  "$#{n / 100}.00"
+
+
 do ->
   lastTime = 0
   vendors = ['ms', 'moz', 'webkit', 'o']

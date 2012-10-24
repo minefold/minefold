@@ -43,6 +43,7 @@ form.credit-card-form {
   background: rgba(black, 0.05);
   padding-top: lines(4);
   margin-bottom: 0;
+  display: none;
   
   > .container {
     width: grid-width(4);
