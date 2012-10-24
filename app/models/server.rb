@@ -71,7 +71,7 @@ class Server < ActiveRecord::Base
   # end
   
   after_create do |server|
-    Mixpanel.engage_async user.id, '$add' => {
+    Mixpanel.engage_async server.creator.id, '$add' => {
       'servers' => 1
     }
   end
