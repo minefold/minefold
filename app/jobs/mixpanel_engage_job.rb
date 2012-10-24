@@ -1,7 +1,7 @@
 class MixpanelEngageJob < Job
 
   def initialize(distinct_id, options)
-    @distinct_id, @options = event, options
+    @distinct_id, @options = distinct_id, options
   end
 
   def perform?
