@@ -22,8 +22,10 @@ class Order < Struct.new(:credit_pack_id, :user, :card_token)
     create_charge and
     credit_user
     
-    Mixpanel.track_async 'paid', distinct_id: user.id,
-                                 'credit pack' => credit_pack_id
+    Mixpanel.engage_async user.id, '$add' => {
+      'cents spent' => total,
+      'credits'     => credits
+    }
     
     true
     

@@ -18,6 +18,8 @@ private
   end
   
   def track(event, properties={})
+    # TODO Add actual IP
+    # TODO Be smarter about adding in the distinct_id
     Mixpanel.track_async(event, properties)
   end
 

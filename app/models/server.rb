@@ -69,5 +69,11 @@ class Server < ActiveRecord::Base
   #   #   parent.map_assets_url
   #   end
   # end
+  
+  after_create do |server|
+    Mixpanel.engage_async user.id, '$add' => {
+      'servers' => 1
+    }
+  end
 
 end
