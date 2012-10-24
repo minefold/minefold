@@ -19,7 +19,8 @@ Player.blueprint do
 end
 
 CreditPack.blueprint do
-  cents { rand(1000) }
+  # Stripe requires that charges be at least 50¢. It leads to random test failures otherwise.
+  cents { 50 + rand(950) }
   credits { rand(1000) }
 end
 
