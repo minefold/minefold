@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   
   attr_accessible :username, :email, :first_name, :last_name, :avatar,
                   :password, :password_confirmation, :remove_avatar,
-                  :avatar_cache
+                  :avatar_cache, :distinct_id
   
   has_many :players do
     
@@ -180,7 +180,7 @@ class User < ActiveRecord::Base
   end
   
   after_create do |user|
-    Mixpanel.track_async '$signup', distinct_id: user.id
+    Mixpanel.track_async '$signup', distinct_id: user.distinct_id
   end
 
 private

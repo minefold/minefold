@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121009174914) do
+ActiveRecord::Schema.define(:version => 20121024140357) do
 
   create_table "comments", :force => true do |t|
     t.integer  "server_id"
@@ -141,6 +141,7 @@ ActiveRecord::Schema.define(:version => 20121009174914) do
     t.text     "mail_prefs"
     t.string   "avatar"
     t.string   "name",                   :default => ""
+    t.string   "distinct_id"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

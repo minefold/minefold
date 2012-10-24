@@ -15,7 +15,7 @@ class Reward < ActiveRecord::Base
       user.increment_credits!(reward.credits)
       reward.reward_claims.create!(user: user)
       
-      Mixpanel.track_async 'claimed reward', distinct_id: user.id,
+      Mixpanel.track_async 'claimed reward', distinct_id: user.distinct_id,
                                              reward: reward.name
     end
   end

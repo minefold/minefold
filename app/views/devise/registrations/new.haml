@@ -39,3 +39,14 @@
     .form-actions
       = f.submit 'Create account', class: %w(btn btn-large btn-primary)
       = link_to 'Cancel', root_path, class: %w(btn btn-large)
+
+- # This little piece of magic sets the distinct_id from Mixpanel's js so we can track people from when they are just surfing around on the web to when they're an actual user.
+- content_for :tail do
+  :javascript
+    var form = $('form#new_user');
+    form.submit(function(e) {
+      $('<input></input>').attr({
+          type: 'hidden',
+          name: 'user[distinct_id]'
+        }).val(mixpanel.get_property('distinct_id')).appendTo(form);
+    });
