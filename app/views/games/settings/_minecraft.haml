@@ -1,3 +1,9 @@
+:javascript
+  var seed = $('input#server_settings_seed');
+  if (seed.val() === '') {
+    seed.val(new Date().getTime());
+  }
+
 = f.control_group :game_mode do
   .control-label Mode
   .controls
