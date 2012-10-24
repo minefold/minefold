@@ -11,4 +11,4 @@ before_script:
   - bundle exec rake db:test:prepare
 
 env:
-  - ansi=true rpt=pretty backtrace=99
+  - ansi=true rpt=pretty backtrace=99 STRIPE_PUBLISHABLE=pk_zpPW1A05d5zpNjFcafVXdFhqFsQpX STRIPE_SECRET=hbppjx2CB6XAebJNDVWEE6j7xBtTZy5k
