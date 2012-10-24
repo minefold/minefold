@@ -25,9 +25,9 @@ module Mixpanel
   
   def self.engage(distinct_id, properties={})
     params = {
-      distinct_id: distinct_id:,
+      distinct_id: distinct_id,
       token: ENV['MIXPANEL']
-      }.merge(properties)
+    }.merge(properties)
 
     payload = Base64.strict_encode64(params.to_json)
 
