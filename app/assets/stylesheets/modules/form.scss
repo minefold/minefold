@@ -42,25 +42,27 @@ form {
 form.credit-card-form {
   background: rgba(black, 0.05);
   padding-top: lines(4);
-margin-bottom: 0;
+  margin-bottom: 0;
   
-  .control-group, .form-actions {
-    width: grid-width(3);
-    margin-left: auto;
-    margin-right: auto;
+  > .container {
+    width: grid-width(4);
   }
   
   .form-actions .pull-right {
     padding-right: 0;
   }
   
+  #card_name, #card_number {
+    width: 100%;
+  }
+  
   .number {
     background-image: url('https://button.stripe.com/assets/cards/placeholder.png');
-    background-position: (grid-width(3) - 10px - 34px) center;
+    background-position: (grid-width(4) - 34px) center;
     background-repeat: no-repeat;
     
     &.identified {
-      background-position: (grid-width(3) - 10px - 40px) center;
+      background-position: (grid-width(4) - 40px) center;
     }
     
     &.visa {
@@ -78,6 +80,16 @@ margin-bottom: 0;
     &.discover {
       background-image: url('https://button.stripe.com/assets/cards/discover.png');
     }
+  }
+  
+  .card_exp_slash {
+    font-size: 24px;
+    width: 10px;
+    color: rgba(black, 0.2);
+  }
+  
+  .cvc {
+    width: grid-width(2);
   }
   
   .security {

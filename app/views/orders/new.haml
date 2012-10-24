@@ -21,40 +21,41 @@
 /       .addClass('active')
 
 %form.credit-card-form{hidden}
+  .container
   
-  .control-group
-    %label.control-label{for: 'card_name'} Full name
-    .controls
-      %input#card_name{type: 'text', name: nil, autocomplete: false}
+    .control-group
+      %label.control-label{for: 'card_name'} Full name
+      .controls
+        %input#card_name{type: 'text', name: nil, autocomplete: false}
   
-  .control-group
-    %label.control-label{for: 'card_number'} Card number
-    .controls
-      %input#card_number.number.unknown{type: 'text', name: nil, autocomplete: false}
+    .control-group
+      %label.control-label{for: 'card_number'} Card number
+      .controls
+        %input#card_number.number.unknown{type: 'text', name: nil, autocomplete: false}
   
-  .row
-    .span2
-      .control-group
-        %label.control-label{for: 'card_exp_month'} Expires
-        .controls
-          %input#card_exp_month.card_exp_month.span1{type: 'text', name: nil, size: 2, min: 0, placeholder: 'MM'}
-          %span /
-          %input#card_exp_year.card_exp_month.span1{type: 'text', name: nil, size: 2, min: 0, placeholder: 'YY'}
+    .row
+      .span2
+        .control-group
+          %label.control-label{for: 'card_exp_month'} Expires
+          .controls
+            %input#card_exp_month.card_exp_month.span1{type: 'text', name: nil, size: 2, min: 0, placeholder: 'MM'}
+            %span.card_exp_slash /
+            %input#card_exp_year.card_exp_month.span1{type: 'text', name: nil, size: 2, min: 0, placeholder: 'YY'}
     
-    .span1
-      .control-group
-        %label.control-label{for: 'card_cvc'} Security code
-        .controls
-          %input#card_cvc{type: 'text', name: nil, size: 4, autocomplete: false, min: 0}
+      .span2
+        .control-group
+          %label.control-label{for: 'card_cvc'} Security code
+          .controls
+            %input#card_cvc.cvc{type: 'text', name: nil, size: 4, autocomplete: false, min: 0}
   
-  .form-actions
-    .pull-left
-      %a.btn.btn-cancel Cancel
+    .form-actions
+      .pull-left
+        %a.btn.btn-cancel Cancel
     
-    .pull-right
-      %a.btn.btn-success
-        Pay
-        %span.price
+      .pull-right
+        %a.btn.btn-success
+          Pay
+          %span.price
   
   .security
     %i.icon-lock
