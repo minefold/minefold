@@ -28,7 +28,7 @@ gem 'fog'
 gem 'rest-client'
 gem 'bugsnag'
 gem 'friendly_id'
-gem 'librato-rails'
+gem 'librato-rails', git: 'https://github.com/librato/librato-rails.git'
 
 # TODO KILL KILL KILL
 gem 'mongoid', '3.0.0.rc'
