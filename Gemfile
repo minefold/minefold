@@ -36,10 +36,6 @@ gem 'uuid'
 
 gem 'carrierwave', git: 'https://github.com/jnicklas/carrierwave.git'
 
-group :development do
-  gem 'foreman'
-end
-
 group :test do
   gem 'autotest-rails'
   gem 'turn'
