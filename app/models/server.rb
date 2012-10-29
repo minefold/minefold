@@ -48,26 +48,15 @@ class Server < ActiveRecord::Base
     resp.ok?
   end
 
-  # store :map_markers
-  #
-  # # Does a map exist *at all*
-  # def map?
-  #   mapped? # or (clone? and parent.map?)
-  # end
-  #
-  # # Has the world been mapped personally
-  # def mapped?
-  #   not last_mapped_at.nil?
-  # end
-  #
-  # # The base location of the map data
-  # def map_assets_url
-  #   case
-  #   when mapped?
-  #     File.join ENV['WORLD_MAPS_URL'], id.to_s
-  #   # when clone?
-  #   #   parent.map_assets_url
-  #   end
-  # end
+  
+  # This is in the absense of having an actual World model. We stuff everything into the Server model and then pull it out when nessecary.
+  def world_data
+    {
+      server_id: id,
+      last_mapped_at: last_mapped_at,
+      map_markers: [],
+      partycloud_id:  partycloud_id
+    }
+  end
 
 end

@@ -1,6 +1,7 @@
+#= require store
+#= require moment
 #= require models/world
 #= require views/world/map_control_view
-
 
 class MapProjection
   constructor: (@tileSize) ->
@@ -17,11 +18,13 @@ class MapProjection
     new google.maps.LatLng(lat, lng)
 
 
+# --
+
+# Class renders an interactive Google Map for Worlds hosted on the Party Cloud. The map is only shown if there is a `last_mapped_at` property of the World as some worlds will be unable to be mapped. In that case it shows a waiting screen.
 class Application.WorldMapView extends Backbone.View
   model: Application.World
-  className: 'world-map-view'
 
-  defaults:
+  @defaults =
     zoom: 5
     scaleControl: false
     mapTypeControl: false
@@ -32,69 +35,73 @@ class Application.WorldMapView extends Backbone.View
     zoomLevels: 7
     backgroundColor: '#F2F2F2'
     northDirection: 'upper-right'
-    markers: []
-
+  
+  noMapTemplate: _.template """
+    <div class="coming-soon">
+      The map for this world hasn't been rendered yet. Maps are rendered periodically as you play. It may take a few days for the map to render depending on the size of your world.
+    </div>
+  """
+  
+  mapTemplate: _.template """
+    <div class="map"></div>
+    <div class="map-meta">
+      Rendered on
+      <strong><%= moment(get('last_mapped_at')).format('dddd MMMM Do YYYY') %></strong>
+      at
+      <strong><%= moment(get('last_mapped_at')).format('h:mma') %></strong>.
+    </div>
+  """
+  
+  
   initialize: (options) ->
-    # @controls = new Application.WorldMapControlView(mapView: @)
-
-    @options = _.extend @defaults, options.map
-    @options = _.extend @options, @model.get('map_data') or {}
-
+    @options = _.extend(@constructor.defaults, options)
+    
   render: ->
-    @map = new google.maps.Map(@el, @options)
+    templateFn = if @model.hasMap() then @mapTemplate else @noMapTemplate
+    @$el.html templateFn(@model)
+    
+    @renderMap()
 
-    @overlay = new google.maps.OverlayView()
-    @overlay.draw = ->
-    @overlay.setMap(@map)
-
+  mapKey = ->
+    window.location.pathname
+  
+  renderMap: =>
+    @map = new google.maps.Map(@$('.map').get(0), @options)
+    @loadViewport()
+    
     mapType = new google.maps.ImageMapType(
       getTileUrl: @tileUrl
       tileSize: new google.maps.Size(@options.tileSize, @options.tileSize)
       maxZoom: @options.zoomLevels
       minZoom: 0
     )
-
-    historyPayload = window.localStorage?.getItem(@model.id)
-    if historyPayload?
-      data = JSON.parse(historyPayload)
-      @map.setZoom(data.zoom)
-
-      center = new google.maps.LatLng(data.lat, data.lng)
-      @map.setCenter(center)
-
-    else if spawn?
-      {x: spawnX, y: spawnY, z: spawnZ} = @model.spawn()
-      @map.setCenter @worldToLatLng(spawnX, spawnY, spawnZ)
-
-    else
-      @map.setCenter @worldToLatLng(0, 68, 0)
-
+    
     # Can't add the projection in the constructor
     mapType.projection = new MapProjection(@options.tileSize)
     @map.mapTypes.set 'map', mapType
-
-    # Adds the control view to the top right
-    # @controls.el.index = 1
-    # @map.controls[google.maps.ControlPosition.TOP_RIGHT].push @controls.el
-    # @controls.render()
-
-    spawn = @model.spawn()
-    if spawn?
-      @addMarker spawn, 'Spawn', '//google-maps-icons.googlecode.com/files/home.png'
-
-    if window.localStorage?
-      google.maps.event.addListener @map, 'center_changed', @persistViewport
-      google.maps.event.addListener @map, 'zoom_changed', @persistViewport
-
-  persistViewport: =>
+    
+    google.maps.event.addListener @map, 'center_changed', @storeViewport
+    google.maps.event.addListener @map, 'zoom_changed', @storeViewport
+    
+  storeViewport: =>
     center = @map.getCenter()
-    data =
+    
+    payload =
       zoom: @map.getZoom()
       lat: center.lat()
       lng: center.lng()
-
-    localStorage.setItem @model.id, JSON.stringify(data)
-
+    
+    if store.enabled?
+      store.set mapKey(), payload
+  
+  loadViewport: =>
+    if store.enabled? and viewport = store.get(mapKey())
+      @map.setZoom viewport.zoom
+      @map.setCenter new google.maps.LatLng(viewport.lat, viewport.lng)
+      
+    else
+      @map.setCenter @worldToLatLng(0, 68, 0)
+      
 
   tilePath = (tile, zoom) ->
     path = ''
@@ -114,8 +121,7 @@ class Application.WorldMapView extends Backbone.View
 
   tileUrl: (tile, zoom) =>
     timestamp = new Date(@model.get('last_mapped_at')).getTime()
-
-    window.location.protocol + @model.get('map_assets_url') + tilePath(tile, zoom) + '?' + timestamp
+    "#{@model.mapAssetsUrl()}#{tilePath(tile, zoom)}?#{timestamp}"
 
   addMarker: (marker, title, icon) =>
     new google.maps.Marker
@@ -172,42 +178,5 @@ class Application.WorldMapView extends Backbone.View
     lng += 12 * perPixel
 
     point = new google.maps.LatLng(lat, lng)
-
-  # enterFullscreen: ->
-  #   $(document.body).addClass('is-fullscreen')
-  #
-  #   # w = @$el.outerWidth()
-  #   # h = @$el.outerHeight()
-  #   #
-  #   # @parent = @$el.parent()
-  #   #
-  #   # @$el.appendTo(document.body)
-  #   #
-  #   # c = new google.maps.Point(10, 10)
-  #   # pt = @overlay.getProjection().fromContainerPixelToLatLng(c)
-  #
-  #   # @map.setCenter(pt)
-  #
-  #   c = @map.getCenter()
-  #
-  #   google.maps.event.trigger @map, 'resize'
-  #
-  #   @map.setCenter(c)
-  #
-  #   @map.setOptions(scrollwheel: true)
-  #
-  #   $(document).on 'keydown', @shortcutExitFullscreen
-  #
-  # exitFullscreen: =>
-  #   $(document.body).removeClass('is-fullscreen')
-  #
-  #   @$el.appendTo(@parent)
-  #   google.maps.event.trigger @map, 'resize'
-  #   @map.setOptions(scrollwheel: false)
-  #   @parent = null
-  #
-  # shortcutExitFullscreen: (e) =>
-  #   if e.keyCode is 27
-  #     @exitFullscreen()
-  #     $(document).off 'keydown', @shortcutExitFullscreen
-
+    
+    

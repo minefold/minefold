@@ -1,7 +1,8 @@
 class Application.World extends Backbone.Model
-  url: -> @get('url')
-
-  isMapped: -> @get('map_assets_url')?
-
-  spawn: ->
-    _.find @get('map_data').markers, (marker) -> marker.type == 'spawn'
+  MapAssetsHost = "//d14m45jej91i3z.cloudfront.net"
+  
+  hasMap: ->
+    @get('last_mapped_at')?
+  
+  mapAssetsUrl: ->
+    "#{MapAssetsHost}/#{@get('partycloud_id')}"

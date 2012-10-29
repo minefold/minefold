@@ -1,0 +1,24 @@
+@import 'vars';
+
+.world-map-view {
+  
+  > .map {
+    height: grid-width(8) / (16/9);
+    width: grid-width(8);
+  }
+  
+  > .map-meta, > .coming-soon {
+    color: lighten(black, 60%);
+    text-align: center;
+  }
+  
+  > .map-meta {
+    padding: lines() ($gw-gutter / 2);
+  }
+  
+  > .coming-soon {
+    padding: lines(6) $gw-gutter;
+    font-size: 16px;
+    line-height: lines(6);
+  }
+}

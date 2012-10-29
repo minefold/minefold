@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121024140357) do
+ActiveRecord::Schema.define(:version => 20121025010452) do
 
   create_table "comments", :force => true do |t|
     t.integer  "server_id"
@@ -103,6 +103,8 @@ ActiveRecord::Schema.define(:version => 20121024140357) do
     t.datetime "created_at",                              :null => false
     t.datetime "updated_at",                              :null => false
     t.boolean  "super_server",         :default => false, :null => false
+    t.string   "partycloud_id"
+    t.string   "legacy_world_url"
   end
 
   add_index "servers", ["host"], :name => "index_servers_on_host", :unique => true
