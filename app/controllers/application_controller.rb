@@ -17,6 +17,8 @@ private
     raise ActionController::RoutingError.new('Not Found')
   end
   
+  # --
+  
   def track(event, properties={})
     properties[:time]        ||= Time.now.to_i
     properties[:ip]          ||= request.ip

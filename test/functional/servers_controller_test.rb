@@ -45,4 +45,18 @@ class ServersControllerTest < ActionController::TestCase
     assert_unauthorized_response
   end
   
+  test "PUT #extend unauthenticated" do
+    server = Server.make!
+    
+    put :extend, id: server.id, mins: 60
+    assert_unauthenticated_response
+  end
+  
+  test "PUT #extend unauthorized" do
+    server = Server.make!
+    
+    put :extend, id: server.id, mins: 60
+    assert_unauthenticated_response
+  end
+  
 end

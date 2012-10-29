@@ -38,6 +38,7 @@
   &.btn-primary {
     background: $blue;
     &:hover { background: darken($blue, 20%); }
+    &:disabled:hover { background: $blue; }
   }
 
   &.btn-info,

@@ -11,54 +11,85 @@
 
 / --
 
-- if can?(:update, server) and not server.super_server?
-  .server-controls
-    .controls
-      - if server.running?
-        Extend running the server for another
-      - else
-        Run the server for
-      %br
+.server-state{class: "is-#{server.state}"}
+  - case server.state
+  - when :super
+    .row
+      .span2 Address
+      .span6= server.address
       
-      %input#poop{type: 'text', data: {slider: true, 'slider-range' => '0,24', 'slider-snap' => true, 'slider-step' => 1}}
+  - when :up
+    .row
+      .span2 State
+      .span6= server.state
       
-      / %select#poop
-      /   - (1..24).each do |n|
-      /     %option{value: n.hours}= pluralize n, 'hour', 'hours'
+      .span2 Address
+      .span6= server.address
+      
+    .row
+      .span2 Time left
+      .span6= pluralize 4.hours / 1.minute, 'min', 'mins'
+      
+  - when :stopped
+    .row
+      .span2 State
+      .span6= server.state
+    
+  
+- if can?(:update, server) and server.normal?
+  = form_tag extend_server_path(server), method: 'put', class: 'server-controls' do
+    %input#mins{type: 'hidden', name: 'mins'}
+    .row
+      .span2
+        %h4
+          - if server.running?
+            Extend by
+          - else
+            Start for
+            
+      .span4
+        %select#extend-server-time-select{name: 'mins'}
+          - 1.upto(24) do |h|
+            %option{value: (h.hours / 1.minute)}
+              = pluralize h, 'hour', 'hours'
         
-      #plop
-        This will cost
-        = credits_with_image nil
-      
-      %div
-        You have
-        = credits_with_image current_user.credits
-    
-      %div
-        It will stop running at
-        %strong#baz
-    
-      %p
-        %a.btn.btn-primary{href: '#'} Start
+        .extension-info
+          %span.planned This will cost #{credits_with_image(5 * 60)},
+          %span.current you have #{credits_with_image(current_user.credits)}.
+          %a.buy-credits{href: new_orders_path, data: {toggle: 'modal', target: '#buy-credits-modal'}} Buy more credits.
 
-- content_for :tail do
-  :javascript
-    $('#poop').bind('slider:changed', function(e, data) {
-      var hrs = data.value,
-          mins = hrs * 60,
-          seconds = mins * 60,
-          rate = 5;
-      
-      $('#plop .cr').text(mins * rate);
-      
-      var end = new Date();
-      
-      end.setSeconds(end.getSeconds() + seconds);
-      
-      $('#baz').text(end.toString());
-    });
+
+      .span2
+        %input.btn.btn-primary{type: 'submit', value: (server.running? ? 'Extend time' : 'Start server')}
     
-    $('#poop').change()
+  - content_for :tail do
+    :javascript
+      var timeSelect = $('#extend-server-time-select');
+      timeSelect.find('option').each(function(el) {
+        var $this = $(this),
+            t = moment().add('minutes', parseInt($this.val(), 10));
+        
+        $this.text($this.text() + " (" + t.calendar() + ")");
+      });
+  
+  
+      timeSelect.change(function(e) {
+        var $el = $(e.target),
+            mins = parseInt($el.val(), 10),
+            rate = 5,
+            cost = mins * rate;
+        
+        $('.extension-info .planned .cr').text(cost);
+        
+        var tooExpensive = cost > app.currentUser.get('credits');
+        
+        $('.server-controls').toggleClass('is-too-expensive', tooExpensive);
+        
+        $el.parents('form').find('input[type=submit]').attr('disabled', tooExpensive);
+        
+      });
+    
+      timeSelect.change();
 
 
 

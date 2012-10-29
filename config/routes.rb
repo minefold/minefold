@@ -44,8 +44,10 @@ Minefold::Application.routes.draw do
     resources :games
 
     resources :servers, :path_names => {:edit => 'settings'} do
-      get :map, :on => :member
       get :new_funpack_settings, :on => :collection
+      
+      get :map, :on => :member
+      put :extend, :on => :member
       
       resources :comments, :only => [:create], :module => 'servers'
       

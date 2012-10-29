@@ -1,45 +1,5 @@
 @import 'vars';
 
-@keyframes pulse {
-  from { opacity: 1; }
-  10%  { opacity: 1; }
-  50%  { opacity: 0.4; }
-  90%  { opacity: 1; }
-  to   { opacity: 1; }
-}
-
-@-webkit-keyframes pulse {
-  from { opacity: 1; }
-  10%  { opacity: 1; }
-  50%  { opacity: 0.4; }
-  90%  { opacity: 1; }
-  to   { opacity: 1; }
-}
-
-@-moz-keyframes pulse {
-  from { opacity: 1; }
-  10%  { opacity: 1; }
-  50%  { opacity: 0.4; }
-  90%  { opacity: 1; }
-  to   { opacity: 1; }
-}
-
-@-ie-keyframes pulse {
-  from { opacity: 1; }
-  10%  { opacity: 1; }
-  50%  { opacity: 0.4; }
-  90%  { opacity: 1; }
-  to   { opacity: 1; }
-}
-
-@-o-keyframes pulse {
-  from { opacity: 1; }
-  10%  { opacity: 1; }
-  50%  { opacity: 0.4; }
-  90%  { opacity: 1; }
-  to   { opacity: 1; }
-}
-
 .server-state-bulb {
   @include inline-block;
   @include box-sizing(border-box);
@@ -56,12 +16,7 @@
   }
   
   &.is-up {
-    background-color: lighten($green, 10%);
-    
-    @include animation-name(pulse);
-    @include animation-duration(4.5s);
-    @include animation-timing-function(ease-in-out);
-    @include animation-iteration-count(infinite);
+    background-color: $green;
   }
   
   &.server-state-bulb-large {
@@ -70,11 +25,53 @@
   }
 }
 
-.server-state {
-  margin: lines(8) 0;
-  background: $bg;
-  @include clearfix;
+.server-state, .server-controls {
+  padding-top: lines(2);
+  padding-bottom: lines(2);
 }
 
+.server-state {
+  margin-bottom: lines(2);
 
+  background-color: darken(white, 5%);
+  
+  // TODO Hack
+  .row .span2 {
+    padding-left: $gw-gutter;
+    width: grid-width(2) - $gw-gutter;
+    font-weight: 600;
+  }
+  
+  &.is-up {
+  }
+  
+  &.is-stopped {
+    background-color: darken(white, 5%);
+  }
+}
+
+.server-controls {
+  margin-top: - lines(2);
+
+  h4 {
+    line-height: lines(5);
+    margin: 0;
+    padding-left: $gw-gutter;
+    font-size: 14px;
+  }
+  
+  .extension-info .buy-credits {
+    display: none;
+  }
+  
+  &.is-too-expensive {
+    .extension-info {
+      color: $red;
+    }
+    
+    .buy-credits {
+      display: block;
+    }
+  }
+}
 

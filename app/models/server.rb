@@ -23,6 +23,7 @@ class Server < ActiveRecord::Base
     else
       # TODO Check the PartyCloud
       @tmp_state ||= rand(2).zero? ? :up : :stopped
+      
     end
   end
   

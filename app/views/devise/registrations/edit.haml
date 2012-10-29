@@ -17,7 +17,7 @@
           = f.file_field :avatar, style: 'display:none'
           = f.label :avatar, 'Change'
           
-          // TODO Hack
+          // TODO Hack!
           :css
             label[for=user_avatar] {
               margin-top: 5px;
@@ -47,7 +47,7 @@
             .controls
               = f.text_field :first_name, placeholder: 'First name', class: %w(span2)
               = f.text_field :last_name, placeholder: 'Last name', class: %w(span2)
-          
+
           .control-group
             .controls
               = f.email_field :email, placeholder: 'Email', disabled: true, class: %w(span4)
@@ -117,9 +117,10 @@
   .section-label.span2
     %h3 Billing
   .span6
-    = credits_with_image current_user.credits
-    &middot;
-    = link_to_buy_credits
+    %p
+      = credits_with_image current_user.credits
+      &middot;
+      %a.buy-credits{href: new_orders_path, data: {toggle: 'modal', target: '#buy-credits-modal'}} Buy credits.
 
 
 .account-form-section.row
