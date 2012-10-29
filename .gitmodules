@@ -7,3 +7,6 @@
 [submodule "vendor/assets/moment"]
 	path = vendor/assets/moment
 	url = https://github.com/timrwood/moment.git
+[submodule "vendor/assets/store.js"]
+	path = vendor/assets/store.js
+	url = https://github.com/marcuswestin/store.js.git
