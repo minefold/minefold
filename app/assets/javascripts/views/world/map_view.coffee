@@ -36,13 +36,7 @@ class Application.WorldMapView extends Backbone.View
     backgroundColor: '#F2F2F2'
     northDirection: 'upper-right'
   
-  noMapTemplate: _.template """
-    <div class="coming-soon">
-      The map for this world hasn't been rendered yet. Maps are rendered periodically as you play. It may take a few days for the map to render depending on the size of your world.
-    </div>
-  """
-  
-  mapTemplate: _.template """
+  template: _.template """
     <div class="map"></div>
     <div class="map-meta">
       Rendered on
@@ -57,9 +51,7 @@ class Application.WorldMapView extends Backbone.View
     @options = _.extend(@constructor.defaults, options)
     
   render: ->
-    templateFn = if @model.hasMap() then @mapTemplate else @noMapTemplate
-    @$el.html templateFn(@model)
-    
+    @$el.html @template(@model)
     @renderMap()
 
   mapKey = ->

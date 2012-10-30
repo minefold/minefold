@@ -15,7 +15,9 @@ class Server < ActiveRecord::Base
 
   store :settings
   
-  has_many :comments, :order => 'created_at DESC'
+  has_many :comments, order: 'created_at DESC'
+  
+  has_one :world, order: 'updated_at ASC'
   
   def state
     if super_server?
@@ -43,21 +45,15 @@ class Server < ActiveRecord::Base
     "#{id}.pluto.minefold.com"
   end
   
-  def start!(duration)
-    resp = RestClient.post("http://api.partycloud.com/v1/worlds/#{id}/start")
+  def start!(ttl = nil)
+    # args = {
+    #   server_id: self.party_cloud_id,
+    #   ttl: ttl,
+    #   force: false
+    # }
     
-    resp.ok?
-  end
-
-  
-  # This is in the absense of having an actual World model. We stuff everything into the Server model and then pull it out when nessecary.
-  def world_data
-    {
-      server_id: id,
-      last_mapped_at: last_mapped_at,
-      map_markers: [],
-      partycloud_id:  partycloud_id
-    }
+    # PartyCloud.start_world 
+    # $partycloud.lpush 'StartWorldJob', [funpack.party_cloud_id, settings, args]
   end
 
 end

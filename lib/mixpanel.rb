@@ -1,5 +1,8 @@
 module Mixpanel
-
+  
+  # Tracking API:
+  # https://mixpanel.com/docs/api-documentation/http-specification-insert-data
+  
   def self.track(event, properties={})
     params = {
       event: event,
@@ -15,12 +18,12 @@ module Mixpanel
   
   def self.track_async(event, properties={})
     if not Rails.env.test?
-      Resque.enqueue(MixpanelTrackJob, event, properties)
+      Resque.enqueue(MixpanelTrackedJob, event, properties)
     end
   end
   
   
-  # People Analytics 
+  # People Analytics:
   # https://mixpanel.com/docs/people-analytics/people-http-specification-insert-data
   
   def self.engage(distinct_id, properties={})
@@ -36,7 +39,7 @@ module Mixpanel
   
   def self.engage_async(distinct_id, properties={})
     if not Rails.env.test?
-      Resque.enqueue(MixpanelEngageJob, distinct_id, properties)
+      Resque.enqueue(MixpanelEngagedJob, distinct_id, properties)
     end
   end
 

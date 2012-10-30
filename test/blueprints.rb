@@ -42,6 +42,9 @@ Reward.blueprint do
   credits { rand(1000) }
 end
 
+World.blueprint do
+end
+
 
 # --
 
@@ -59,4 +62,8 @@ end
 
 Reward.blueprint(:facebook) do
   name { 'facebook linked' }
+end
+
+World.blueprint(:played) do
+  party_cloud_id { SecureRandom.hex }
 end

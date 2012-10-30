@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121025010452) do
+ActiveRecord::Schema.define(:version => 20121029221608) do
 
   create_table "comments", :force => true do |t|
     t.integer  "server_id"
@@ -35,9 +35,11 @@ ActiveRecord::Schema.define(:version => 20121025010452) do
     t.string  "name"
     t.integer "game_id"
     t.integer "creator_id"
+    t.string  "party_cloud_id"
   end
 
   add_index "funpacks", ["game_id"], :name => "index_funpacks_on_game_id"
+  add_index "funpacks", ["party_cloud_id"], :name => "index_funpacks_on_party_cloud_id", :unique => true
 
   create_table "games", :force => true do |t|
     t.string   "name"
@@ -46,7 +48,10 @@ ActiveRecord::Schema.define(:version => 20121025010452) do
     t.boolean  "super_servers",   :default => false, :null => false
     t.string   "slug",            :default => ""
     t.boolean  "persistant_data", :default => false, :null => false
+    t.string   "party_cloud_id"
   end
+
+  add_index "games", ["party_cloud_id"], :name => "index_games_on_party_cloud_id", :unique => true
 
   create_table "memberships", :force => true do |t|
     t.integer  "user_id"
@@ -90,25 +95,20 @@ ActiveRecord::Schema.define(:version => 20121025010452) do
     t.string   "name",                 :default => ""
     t.integer  "creator_id"
     t.integer  "funpack_id"
-    t.integer  "upload_id"
-    t.string   "ip"
     t.string   "host"
     t.integer  "port"
     t.text     "settings"
-    t.text     "map_markers"
-    t.datetime "last_mapped_at"
     t.integer  "minutes_played",       :default => 0
     t.integer  "world_minutes_played", :default => 0
     t.integer  "pageviews",            :default => 0
     t.datetime "created_at",                              :null => false
     t.datetime "updated_at",                              :null => false
     t.boolean  "super_server",         :default => false, :null => false
-    t.string   "partycloud_id"
-    t.string   "legacy_world_url"
+    t.string   "party_cloud_id"
   end
 
   add_index "servers", ["host"], :name => "index_servers_on_host", :unique => true
-  add_index "servers", ["upload_id"], :name => "index_servers_on_upload_id"
+  add_index "servers", ["party_cloud_id"], :name => "index_servers_on_party_cloud_id", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "username",               :default => ""
@@ -153,5 +153,17 @@ ActiveRecord::Schema.define(:version => 20121025010452) do
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["slug"], :name => "index_users_on_slug", :unique => true
   add_index "users", ["username"], :name => "index_users_on_username", :unique => true
+
+  create_table "worlds", :force => true do |t|
+    t.integer  "server_id"
+    t.string   "party_cloud_id"
+    t.string   "legacy_url"
+    t.datetime "last_mapped_at"
+    t.text     "map_data"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "worlds", ["party_cloud_id"], :name => "index_worlds_on_party_cloud_id", :unique => true
 
 end
