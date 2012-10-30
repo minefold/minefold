@@ -1,5 +1,4 @@
 class WorldMappedJob < Job
-  @queue = :low
 
   def initialize(id, timestamp, map_data)
     @world = World.find_by_party_cloud_id(id)
