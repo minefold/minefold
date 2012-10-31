@@ -5,5 +5,9 @@
     %span.funpack-name= server.funpack.name
   
   %h1
-    = large_server_state_bulb(server)
     = server.name
+  
+  - if server.up?
+    %h2{style: 'color:#2a4'} Is up at #{server.address}
+  - else
+    %h2{style: 'color:#CCC'} Isn't running.

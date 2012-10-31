@@ -1,14 +1,18 @@
 @import 'vars';
 
 form {
-
+  
+  textarea, #{$all-text-inputs}, label {
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
   textarea, #{$all-text-inputs} {
     border: none;
     @include box-shadow(0 0 0 2px rgba(black, 0.2) inset);
     border-radius: $radius;
     padding: 5px 10px;
-    font-size: 16px;
-    line-height: 30px;
+    line-height: lines(6);
     color: black;
     @include box-sizing(border-box);
     min-height: 40px;

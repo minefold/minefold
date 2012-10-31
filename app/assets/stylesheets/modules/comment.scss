@@ -5,6 +5,8 @@
   padding-bottom: lines(4);
   
   .new-comment-form {
+    margin-bottom: lines(8);
+    
     textarea {
       width: 100%;
       height: lines(12);
@@ -30,8 +32,8 @@
     }
     
     > .comment-date {
-      font-size: 12px;
-      color: darken(white, 20%);
+      font-size: 14px;
+      color: darken(white, 40%);
       margin-top: - lines(2);
       opacity: 0;
     }

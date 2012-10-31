@@ -78,7 +78,7 @@
     #page-background-block
 
       %header
-        .navbar.navbar-static-top.container
+        .navbar.navbar-static-top
           .navbar-inner
             .pull-left
               = link_to 'Minefold', root_path, class: 'brand'
@@ -130,9 +130,6 @@
     
     %footer
       .container
-        .pull-right
-          %a{href: 'https://twitter.com/minefold', title: 'Minefold on Twitter'}= image_tag 'twitter-xs.png'
-          %a{href: 'https://facebook.com/minefold', title: 'Minefold on Facebook'}= image_tag 'facebook-xs.png'
         
         %ul.unstyled
           %li= link_to 'Pricing', pricing_page_path
@@ -145,17 +142,7 @@
           &copy; 2012
           %a{href: 'http://mutlicorp.com'} Mütli Corp.
           
-          // Default text is replaced onready in the case the user doesn't have Javascript enabled.
-          %span#funnie Made
-          in San Francisco.
-          
-          - content_for :tail do
-            :javascript
-              var funnies = #{Funnies.to_json};
-              $(document).ready(function() {
-                $('#funnie').text(funnies[rand(funnies.length)]);
-              });
-            
+          Made for fun in San Francisco.
           
           = link_to 'Privacy', privacy_page_path
           = link_to 'Terms', terms_page_path

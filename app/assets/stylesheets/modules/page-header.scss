@@ -11,9 +11,8 @@
   }
 
   > h2 {
-    color: lighten($black, 60%);
-    font-size: 18px;
-    font-weight: 200;
+    color: lighten(black, 60%);
+    font-size: 24px;
     margin-top: - lines(2);
   }
 
@@ -46,10 +45,12 @@
 }
 
 .page-header.page-header-server {
-   .game-name, .funpack-name {
-    font-size: 12px;
+  text-align: center;
+  
+  .game-name, .funpack-name {
+    font-size: 14px;
     font-weight: 600;
-    color: lighten(black, 60%);
+    color: rgba(black, 0.4);
     margin-top: - lines(2);
     margin-bottom: - lines(2);
   }

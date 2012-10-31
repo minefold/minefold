@@ -14,10 +14,13 @@
   }
 
   .brand {
-    color: white;
+    font-size: 28px;
+    color: black;
     font-weight: 800;
-    font-family: $futura;
     text-shadow: none;
+    line-height: lines(8);
+    padding-top: 0;
+    padding-bottom: 0;
   }
 
   .brand:before {
@@ -25,28 +28,26 @@
     @include inline-block;
     float: left;
     
-    width: 40px;
-    height: lines(8);
+    width: lines(12);
+    height: lines(12);
     padding: 0;
-    margin: -10px 0;
-    margin-right: $gw-gutter /2;
+    margin-top: - lines(2);
+    margin-left: $gw-gutter;
+    margin-right: $gw-gutter;
 
-    background: $blue asset-data-url('logo-small.png') no-repeat 50% 50%;
-  }
-  
-  .pull-right .nav {
-    margin-right: 0;
+    background: $red asset-data-url('logo-small.png') no-repeat 50% 50%;
   }
   
   .nav {
     
     li {
-      color: white;
+      color: black;
+      font-weight: 600;
+      font-size: 18px;
 
       a {
-        font-size: 16px;
         text-shadow: none;
-        color: white;
+        color: black;
         outline: none;
       }
 
@@ -54,27 +55,30 @@
       a:focus,
       a:active {
         color: white;
-        background-color: darken($blue, 5%);
+        background-color: $blue;
       }
             
       &.sign-up a {
         background-color: $green;
+        color: white;
+        
         &:hover {
           background-color: lighten($green, 10%);
         }
       }
       
       &.dropdown {
+        
         &.open > .dropdown-toggle {
-          background-color: lighten($blue, 5%);
+          background-color: black;
           color: white;
           
         }
 
         > .dropdown-toggle .caret,
         &.open > .dropdown-toggle .caret {
-          border-top-color: rgba(white, 0.5);
-          border-bottom-color: rgba(white, 0.5);
+          border-top-color: rgba(black, 0.4);
+          border-bottom-color: rgba(black, 0.4);
         }
       }
       
@@ -95,6 +99,9 @@
         a {
           padding-left: $gw-gutter / 2;
           padding-right: $gw-gutter / 2;
+          
+          color: white;
+          font-weight: 600;
           
           &:hover {
             background: lighten($blue, 5%);

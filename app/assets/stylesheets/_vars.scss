@@ -5,8 +5,8 @@ $futura: "futura-pt-1","futura-pt-2", $helvetica;
 // Colors
 
 $purple: #549;
-$blue:   #18d;
-$red:    #d31;
+$blue:   #19d;
+$red:    #e31;
 $green:  #2a4;
 $yellow: #ed4;
 
@@ -14,7 +14,7 @@ $white: #FFF;
 $black: #000;
 
 
-$bg: rgba(desaturate(lighten($blue, 45%), 40%), 0.2);
+$bg: darken($blue, 30%);
 
 // Grid
 

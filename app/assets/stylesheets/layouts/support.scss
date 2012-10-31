@@ -1,41 +1,10 @@
 @import 'vars';
 
 .l-support {
-    
-  .container {
-    width: grid-width(12);
-  }
-  
-  aside {
-    
-    .well {
-      @include box-sizing(border-box);
-      background-color: lighten($yellow, 30%);
-      border-radius: $radius;
-      padding: lines(1) ($gw-gutter / 2);
-      
-      &.affix {
-        top: 40px;
-        min-height: 1px;
-      }
 
-      &.affix,
-      &.affix-top {
-        margin-left: 0;
-      }
-    }
-    
-    h4 {
-      font-style: italic;
-      margin-bottom: lines(4);
-    }
-    
-    h3 {
-      padding: lines(1) 0;
-      line-height: lines(4);
-      font-weight: normal;
-      color: rgba(lighten($black, 0%), 0.4);
-    }
+  .well {
+    background-color: lighten($yellow, 30%);
+    border-radius: $radius;
+    text-align: center;
   }
-  
 }

@@ -17,7 +17,7 @@ class PagesController < ApplicationController
       servers[scope.first] = scope.servers_count
     end
     
-    @coming_soon_games = ['Team Fortress 2', 'Counter-Strike: Go', 'Call of Duty', 'DayZ']
+    @coming_soon_games = ['Team Fortress 2', 'Counter-Strike: Global Offensive', 'Call of Duty', 'DayZ', 'Battlefield 3']
   end
 
   def pricing

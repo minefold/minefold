@@ -31,32 +31,44 @@
   }
   
   .games-list {
+    margin-left: - $gw-gutter;
+    @include clearfix;
+    
     .game {
       font-weight: 600;
+      width: grid-width(2);
+      float: left;
+      @include box-sizing(border-box);
+      background: $blue;
+      padding: lines(4) $gw-gutter;
+      min-height: grid-width(2);
+      margin-left: $gw-gutter;
+      color: white;
       
-      a {
+      h3 {
         display: block;
+        font-size: 16px;
+        color: white;
         line-height: lines(4);
       }
       
-      i {
-        display: block;
-        font-weight: normal;
+      p {
         color: rgba(black, 0.6);
+        margin: 0;
       }
     }
     
     .game.coming-soon {
-      color: rgba(#333, 0.5);
-      
-      i {
-        color: rgba(black, 0.3);
-      }
+      opacity: 0.6;
     }
   }
   
   .feature-list {
     .feature {
+      font-size: 16px;
+      line-height: lines(5);
+      font-weight: 500;
+      
       h4 {
         font-size: 28px;
         font-family: $futura;

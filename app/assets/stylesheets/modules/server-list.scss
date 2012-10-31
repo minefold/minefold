@@ -7,12 +7,10 @@
   }
   
   .divider {
-    font-size: 11px;
+    font-size: 14px;
     text-transform: uppercase;
     color: rgba(black, 0.4);
-    padding: 0 10px;
     line-height: lines(6);
-    border-bottom: 1px solid rgba(black, 0.2);
   }
   
   .new {
@@ -22,24 +20,29 @@
   .item {
     display: block;
     overflow: auto;
-    border-bottom: 1px solid darken(white, 10%);
-    padding: lines(1) 10px;
-
+    padding: lines(1) ($gw-gutter / 2);
+    
+    &.is-up, &.is-super {
+      background-color: $green;
+      color: white;
+      .primary-action {color: white;}
+    }
+    
+    &.is-stopped {
+      background-color: darken(white, 10%);
+      color: black;
+      .primary-action {color: black;}
+    }
+    
     .primary-action {
       display: block;
       float: left;
-      color: $blue;
+//      color: white;
       width: grid-width(6);
 
       .name {
         font-size: 18px;
         line-height: 24px;
-        font-weight: normal;
-      }
-
-      &:hover {
-        color: $blue;
-        text-decoration: none;
       }
     }
 
@@ -48,8 +51,9 @@
       margin: lines(2) 0;
     }
 
-    &:hover {  
-      background: $bg;
+    &:hover, &:hover .primary-action  {
+      background: $blue;
+      color: white;
     }
 
     &:hover .nav {

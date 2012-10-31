@@ -6,8 +6,6 @@
     text-align: center;
     padding: lines(8) ($gw-gutter / 2);
     @include box-sizing(border-box);
-    border: 2px solid darken(white, 10%);
-//    background-color: darken(white, 5%);
       
     .note {
       text-transform: uppercase;
@@ -24,12 +22,12 @@
     }
       
     .rate {
-      font-size: 10px;
+      font-size: 12px;
       color: rgba(black, 0.4);
     }
       
     .equiv {
-      font-size: 11px;
+      font-size: 14px;
       color: rgba(black, 0.6);
         
       & + .equiv {
@@ -39,7 +37,6 @@
   }
     
   .credit-pack.best-value {
-    border-color: darken($blue, 10%);
     background-color: $blue;
     color: white;
       
@@ -48,13 +45,11 @@
     }
     
     .rate {
-      color: rgba(white, 0.6);
-      font-weight: 600;
+      color: rgba(black, 0.2);
     }
     
     .equiv {
-      color: rgba(white, 0.8);
-      font-weight: 600;
+      color: rgba(black, 0.4);
     }
   }
   

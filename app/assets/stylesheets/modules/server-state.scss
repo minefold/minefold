@@ -4,10 +4,11 @@
   @include inline-block;
   @include box-sizing(border-box);
   
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   
   border-radius: 18px;
+  border: 2px solid white;
   
   background-color: darken(white, 10%);
   
@@ -33,7 +34,9 @@
 .server-state {
   margin-bottom: lines(2);
 
-  background-color: darken(white, 5%);
+//  background-color: darken(white, 5%);
+background-color: $blue;
+color: white;
   
   // TODO Hack
   .row .span2 {
@@ -46,7 +49,7 @@
   }
   
   &.is-stopped {
-    background-color: darken(white, 5%);
+    background-color: darken($blue, 5%);
   }
 }
 

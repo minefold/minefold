@@ -66,9 +66,11 @@ class OrdersControllerTest < ActionController::TestCase
     end
 
     sign_in(user)
+    @request.env['HTTP_REFERER'] = user_root_url
+    
     post :create, credit_pack_id: @credit_pack.id, stripe_token: @card.id
-
-    assert_redirected_to user_root_path
+    
+    assert_redirected_to :back
   end
 
   test "POST #create with existing customer" do
@@ -81,8 +83,10 @@ class OrdersControllerTest < ActionController::TestCase
     end
 
     sign_in(user)
+    @request.env['HTTP_REFERER'] = user_root_url
+    
     post :create, credit_pack_id: @credit_pack.id
-    assert_redirected_to user_root_path
+    assert_redirected_to :back
   end
 
   test "POST #create with existing customer and new card" do
@@ -95,8 +99,10 @@ class OrdersControllerTest < ActionController::TestCase
     end
 
     sign_in(user)
+    @request.env['HTTP_REFERER'] = user_root_url
+    
     post :create, credit_pack_id: @credit_pack.id, stripe_token: @card.id
-    assert_redirected_to user_root_path
+    assert_redirected_to :back
   end
 
 end

@@ -7,8 +7,8 @@
   %h1 Support Center
   %h2 Fast answers. What can we help you with?
 
-.q-and-a.row
-  .span7
+%article.q-and-a
+  %section#support-getting-started
     %h2 Getting Started
 
     %h3 Do you have to have Minecraft?
@@ -21,7 +21,7 @@
     %p There are a lots of causes of “end of stream” errors like running a modified client or a pre-release version of Minecraft. A good test is to see if you can connect to another (non-Minefold) server like <code>mc-lc.com</code>. If you can't then the problem is likely with your client. If you can connect to other servers please contact support.
     
     
-    %hr#help-servers
+  %section#support-servers
     %h2 Servers
     
     %h3 Do we run cracked servers?
@@ -40,7 +40,7 @@
     %p Please contact support. We hate lag and want to get rid of it.
 
 
-    %hr#help-billing
+  %section#support-billing
     %h2 Billing
     
     %h3 Your child sole your credit card
@@ -56,7 +56,7 @@
     %p We reset your time ever 30 days from when you signed up, not on the first of the month.
     
     
-    %hr#help-minecraft
+  %section#support-minecraft
     %h2 Minecraft
     
     %h3 You've started playing, what happens now?
@@ -75,7 +75,7 @@
     %p Vanilla Minecraft lets you change the spawn point individually by crafting a bed and sleeping in it.
     
     
-    %hr#help-website
+  %section#support-website
     %h2 Website
     
     %h3 Uploads are failing / taking too long
@@ -86,26 +86,25 @@
     
     %h3 Changing your avatar
     %p You can change it at #{link_to 'http://minecraft.net/profile', 'http://minecraft.net/profile'}. It can take up to 24 hours to reflect on Minefold.
-    
-  %aside.span4.offset1
-    .well.span4{data: {spy: 'affix', 'offset-top' => 308}}
-      %h4 Need help with something that isn't here?
 
-      %hr.light.small
-      
-      %h3 You can…
-      %a.pull-right{href: 'https://twitter.com/minefold', title: 'Minefold on Twitter'}
-        = image_tag 'twitter-small.png', width: 40, height: 40
+%hr.x-large
 
-      %p
-        %strong Get fast answers on Twitter.
-        %br
-        For fast answers, tweet quick questions to <a href="https://twitter.com/minefold" title="Minefold on Twitter">@minefold</a>.
+.well
+  %h4 Need help with something that isn't here? You can…
+  
+  %hr
+  
+  %a{href: 'https://twitter.com/minefold', title: 'Minefold on Twitter'}
+    = image_tag 'twitter-small.png', width: 40, height: 40
 
-      - if signed_in?
+  %p
+    %strong Get fast answers on Twitter.
+    %br
+    For fast answers, tweet quick questions to <a href="https://twitter.com/minefold" title="Minefold on Twitter">@minefold</a>.
 
-        %h3 Or…      
-        %p
-          %strong Contact support.
-          %br
-          For in-depth questions, <a class="ActivateIntercom" href="#">file a support ticket</a>. One of our friendly support folks will get in touch.
+  - if signed_in?
+
+    %p
+      %strong Contact support.
+      %br
+      For in-depth questions, <a class="ActivateIntercom" href="#">file a support ticket</a>. One of our friendly support folks will get in touch.

@@ -27,7 +27,7 @@ class OrdersController < ApplicationController
         order.credit_pack_id
       ).deliver
       
-      redirect_to user_root_path,
+      redirect_to :back,
         notice: "Thank you for buying Minefold credits"
     else
       render nothing: true, :status => :payment_required

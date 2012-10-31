@@ -6,34 +6,50 @@ footer {
   padding-bottom: lines(32);
   font-weight: 800;
   
+  .ad {
+    padding: lines(4) $gw-gutter;
+    font-size: 16px;
+    margin-bottom: 40px;
+    height: grid-width(2);
+    
+    &:hover {
+
+    }
+  }
+  
+  .ad-twitter {
+    background: $blue;
+  }
+  
   ul {
     @include clearfix;
+    
     li {
       float: left;
       margin-right: $gw-gutter;
+      font-size: 18px;
     }
   }
   
   a {
-    color: darken($blue, 10%);
+    color: white;
   }
 
   a:hover {
-    color: black;
+    color: $blue;
     text-decoration: none;
-    border-bottom: 2px solid black;
   }
 
   .copyright {
-    color: rgba($blue, 0.6);
-    font-weight: normal;
+    color: rgba(white, 0.4);
     font-size: 12px;
     
     a {
-      color: $blue;
+      color: rgba(white, 0.6);
+      border: none;
       
       &:hover {
-        border-bottom-color: rgba($blue, 0.4);
+        color: rgba(white, 0.8);
       }
     }
   }

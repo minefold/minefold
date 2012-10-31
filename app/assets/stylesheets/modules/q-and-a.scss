@@ -1,18 +1,24 @@
 @import 'vars';
 
 .q-and-a {
-  font-size: 16px;
+  font-size: 18px;
+  line-height: lines(6);
+  text-align: center;
+  color: lighten(black, 40%);
+  
+  section {
+    margin-bottom: lines(8);
+  }
   
   h2 {
     font-size: 28px;
-    line-height: lines(12);
-    color: darken($blue, 20%);
+    color: $green;
   }
   
   h3 {
+    color: black;
     font-size: 18px;
     line-height: lines(6);
-    margin-top: lines(5);
-    margin-bottom: lines(1);
+    margin-top: lines(4);
   }
 }

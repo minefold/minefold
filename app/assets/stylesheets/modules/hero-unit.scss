@@ -16,23 +16,7 @@
   h2 {
     font-size: 24px;
     margin-bottom: lines(0);
-    font-weight: 400;
-    color: lighten(black, 40%);
-  }
-  
-  p {
-    font-weight: normal;
-    font-size: 14px;
-  }
-}
-
-.hero-unit.hero-unit-support {
-  h1 {
-    color: $green;
-  }
-
-  h2 {
-    color: lighten($green, 20%);
+    color: lighten(black, 60%);
   }
 }
 

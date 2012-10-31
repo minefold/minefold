@@ -24,7 +24,7 @@ class Server < ActiveRecord::Base
       :super
     else
       # TODO Check the PartyCloud
-      @tmp_state ||= rand(2).zero? ? :up : :stopped
+      @tmp_state ||= :up # rrand(2).zero? ? :up : :stopped
       
     end
   end
@@ -33,8 +33,22 @@ class Server < ActiveRecord::Base
     state == :super or state == :up
   end
   
+  alias_method :up?, :running?
+  
+  def started_at
+    1.hour.ago
+  end
+  
+  def stops_at
+    2.hours.from_now
+  end
+  
   def uptime
-    10.minutes
+    (Time.now - started_at).ceil
+  end
+  
+  def ttl
+    (stops_at - Time.now).ceil
   end
   
   def normal?

@@ -14,13 +14,11 @@
     - @servers.each do |game, servers|
       .divider= game.name
       - servers.each do |server|
-        .item
+        .item{class: "is-#{server.state}"}
         
           %a.primary-action{href: server_path(server)}
           
-            %h2.name
-              = server_state_bulb(server)
-              = server.name
+            %h2.name= server.name
 
           %ul.nav.nav-pills.nav-pills-images.pull-right
             - if server.funpack.game.name == 'Minecraft'

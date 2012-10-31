@@ -8,9 +8,16 @@ html {
   @include anti-aliasing;
 }
 
+body {
+  font-family: $futura;
+  font-size: 16px;
+  line-height: lines(5);
+  font-weight: 500;
+}
+
 header {
   margin: 0;
-  background-color: desaturate(darken($blue, 10%), 0%);
+  @include clearfix;
 }
 
 #page-background-block {

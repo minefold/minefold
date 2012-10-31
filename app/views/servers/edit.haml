@@ -33,6 +33,14 @@
       .form-actions
         = f.submit 'Save', class: %w(btn)
 
+- if server.world
+  .account-form-section.row
+    .section-label.span2
+      %h3 Download
+
+    .span6
+      %a{href: party_cloud_world_download_url(server.world) }
+        Download an archive of this server
 
 .account-form-section.row
   .section-label.span2

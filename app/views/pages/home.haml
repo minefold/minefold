@@ -10,19 +10,15 @@
 / #movie{width: 640, height: 360}
 
 %section.games-list
-  .row
-    .span2
-      %h3 Games
-      
-    - @featured_games.each do |game, servers_count|
-      .game.span2
-        = game.name
-        %i= pluralize servers_count, 'server', 'servers'
+  - @featured_games.each do |game, servers_count|
+    .game
+      %h3= game.name
+      %p= pluralize servers_count, 'server', 'servers'
     
-    - @coming_soon_games.each do |game|
-      .game.coming-soon.span2
-        = game
-        %i Coming soon!
+  - @coming_soon_games.each do |game|
+    .game.coming-soon
+      %h3= game
+      %p Coming soon!
 
 
 %section.feature-list

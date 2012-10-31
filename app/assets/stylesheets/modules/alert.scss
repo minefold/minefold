@@ -3,10 +3,9 @@
 .alert {
   border: none;
   text-shadow: none;
-  font-weight: 400;
   border-radius: $radius;
 
-  color: darken($yellow, 20%);
+  color: rgba(black, 0.4);
   background-color: lighten($yellow, 30%);
 
   &.alert-success, &.alert-notice {

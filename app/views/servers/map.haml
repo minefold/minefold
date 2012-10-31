@@ -27,4 +27,11 @@
   
   - else
     .coming-soon
-      The map for this world hasn't been rendered yet. Maps are rendered periodically as you play. It may take a few days for the map to render depending on the size of your world.
+      The map for this world hasn't been rendered yet.
+      
+      - if server.super_server?
+        Maps are rendered once a day when nobody is playing.
+      - else
+        Maps are rendered once a day when the server is stopped.
+
+      Render times depend on the size of your world.

@@ -18,6 +18,24 @@
   color: white;
   background: darken(white, 60%);
   
+  font-family: $futura;
+  
+  &.btn-mini {
+    font-size: 14px;
+    padding: lines(1) ($gw-gutter / 2);
+  }
+  
+  & {
+    font-size: 18px;
+    padding: lines(2) ($gw-gutter);
+  }
+  
+  &.btn-large {
+    font-size: 24px;
+    padding: lines(3) $gw-gutter;
+  }
+  
+  
   &:hover, .hover {
     color: white;
     background-color: darken(white, 80%);

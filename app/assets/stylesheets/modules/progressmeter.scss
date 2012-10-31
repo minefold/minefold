@@ -36,13 +36,9 @@
         
       border-radius: 20px;
     }
-      
-    &.previous:after, &.active:after {
-      border-style: solid;
-    }
     
     &.previous a {
-      color: darken($green, 20%);
+      color: black; // darken($blue, 0%);
     }
     
     &.active a {
@@ -50,7 +46,7 @@
     }
       
     &.previous:before {
-      background-color: darken($green, 20%);
+      background-color: black; //darken($blue, 0%);
     }
       
     &.active:before {
@@ -58,7 +54,7 @@
     }
     
     &.previous:after {
-      border-color: darken($green, 20%);
+      border-color: black; //darken($blue, 0%);
     }
       
     &.active:after {
@@ -74,7 +70,7 @@
       
     // Line
     &:after {
-      border-top: 4px dashed darken(white, 10%);
+      border-top: 2px solid darken(white, 10%);
       width: 100%;
       display: block;
       content: "";

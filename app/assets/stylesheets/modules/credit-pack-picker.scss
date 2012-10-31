@@ -43,7 +43,7 @@
     &.active {
       background-color: lighten($green, 00%);
       color: white;
-      .price, .rate { color: rgba(white, 0.5); }
+      .price, .rate { color: rgba(black, 0.5); }
     }
     
     .is-choosing &:first-child {

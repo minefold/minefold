@@ -13,29 +13,16 @@
 
 .server-state{class: "is-#{server.state}"}
   - case server.state
-  - when :super
-    .row
-      .span2 Address
-      .span6= server.address
-      
   - when :up
     .row
-      .span2 State
-      .span6= server.state
-      
-      .span2 Address
-      .span6= server.address
+      .span2 Started at
+      .span6= server.started_at
       
     .row
       .span2 Time left
-      .span6= pluralize 4.hours / 1.minute, 'min', 'mins'
-      
-  - when :stopped
-    .row
-      .span2 State
-      .span6= server.state
-    
-  
+      .span6= pluralize server.ttl / 1.minute, 'min', 'mins'
+
+
 - if can?(:update, server) and server.normal?
   = form_tag extend_server_path(server), method: 'put', class: 'server-controls' do
     %input#mins{type: 'hidden', name: 'mins'}
@@ -47,7 +34,7 @@
           - else
             Start for
             
-      .span4
+      .span6
         %select#extend-server-time-select{name: 'mins'}
           - 1.upto(24) do |h|
             %option{value: (h.hours / 1.minute)}
@@ -58,9 +45,7 @@
           %span.current you have #{credits_with_image(current_user.credits)}.
           %a.buy-credits{href: new_orders_path, data: {toggle: 'modal', target: '#buy-credits-modal'}} Buy more credits.
 
-
-      .span2
-        %input.btn.btn-primary{type: 'submit', value: (server.running? ? 'Extend time' : 'Start server')}
+        %input.btn.btn-primary.btn-mini.btn-success{type: 'submit', value: (server.running? ? 'Extend time' : 'Start server')}
     
   - content_for :tail do
     :javascript
@@ -102,10 +87,8 @@
       .span7
         .comment-meta
           %span.comment-author= current_user.username
-          
-        .row
-          .span5= f.text_area :body, height: 4, class: %w(span5)
-          .span2= f.submit 'Comment', class: %w(btn)
+        = f.text_area :body, height: 4, class: %w(span5)
+        = f.submit 'Comment', class: %w(btn)
   
   - server.comments.each do |comment|
     .comment.row
