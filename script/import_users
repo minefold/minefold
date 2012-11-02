@@ -1,0 +1,132 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+require 'mongo'
+require 'colored'
+require 'pp'
+
+# Boot the application
+require File.expand_path('../../config/boot',  __FILE__)
+require File.expand_path('../../config/environment',  __FILE__)
+
+
+$db = Mongo::Connection.new('localhost', 27017, :safe => true)['minefold']
+
+minecraft = Game.where(name: 'Minecraft').first
+vanilla = minecraft.funpacks.where(name: 'Official').first
+bukkit = minecraft.funpacks.where(name: 'Bukkit').first
+
+# Clean out prevous data
+User.delete_all
+Player.delete_all
+
+# Hacks!
+class User
+  # Don't need a password.
+  def password_required?; false; end
+
+  # Don't send confirmation emails
+  def confirmation_required?; false; end
+end
+
+
+$db[:users].find({}, timeout: false) do |cursor|
+  cursor.each do |raw|
+
+    begin
+      u = User.new
+
+      # Legacy
+      u.legacy_id = raw['_id'].to_s
+
+      # Timestamps
+      u.created_at = raw['created_at']
+      u.updated_at = raw['updated_at']
+      u.deleted_at = raw['deleted_at']
+
+      u.admin = raw['admin'] || false
+
+
+      # Devise authenticatable
+      u.email = raw['email']
+      u.encrypted_password = raw['encrypted_password']
+
+      # Devise recoverable
+      u.reset_password_sent_at = raw["reset_password_sent_at"]
+      u.reset_password_token = raw["reset_password_token"]
+
+      # Devise trackable
+      u.sign_in_count = raw['sign_in_count'] || 0
+      u.current_sign_in_at = raw['current_sign_in_at']
+      u.last_sign_in_at = raw['last_sign_in_at']
+      u.current_sign_in_ip = raw['current_sign_in_ip']
+      u.last_sign_in_ip = raw['last_sign_in_ip']
+
+      # Devise confirmable
+      u.confirmation_token = raw['confirmation_token']
+      u.confirmation_sent_at = raw['confirmation_sent_at']
+      u.confirmed_at = raw['confirmed_at']
+
+      # Devise Token authenticatable
+      u.authentication_token = raw['authentication_token']
+
+      # Notifications
+      if raw['notifications']
+        u.campaign_mailer = (raw['notifications']['campaign'] == '1')
+        u.server_mailer = (raw['notifications']['world_comment_added'] == '1')
+        u.session_mailer = (raw['notifications']['world_started'] == '1')
+      end
+
+      # Facebook
+      u.facebook_uid = raw['facebook_uid']
+      u.first_name = raw['first_name']
+      u.last_name = raw['last_name']
+      u.name = raw['name']
+
+      # Username
+      player = $db[:minecraft_players].find({'user_id' => raw['_id']}).first
+
+      if player and player['username'].present?
+        u.username = player['username']
+
+        p = u.players.new(
+          game: minecraft,
+          uid: player['username']
+        )
+
+        p.created_at = player['created_at']
+        p.updated_at = player['updated_at']
+
+      else
+        u.username = raw['email']
+      end
+
+      # Credits
+      u.credits = raw['credits']
+
+      # Credit 3 hours for every day of Pro left
+      if raw['plan_expires_at']
+        days_left_of_pro = (raw['plan_expires_at'] - Time.now) / 1.day
+        rate = 3 * 60
+        cr = (days_left_of_pro * rate).ceil
+
+        if raw['plan_expires_at'].future?
+          u.credits += cr
+        end
+      end
+
+      # Mixpanel
+      if not (raw['mpid'] =~ /undefined/)
+        u.distinct_id = raw['mpid']
+      end
+
+      u.save!
+
+    rescue Exception => e
+      puts ('*'*80).yellow
+      pp raw
+      puts ('*'*80).yellow
+      raise e
+    end
+
+  end
+end

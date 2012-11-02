@@ -6,10 +6,13 @@
     %strong.username chrislloyd
     %br
     is already linked
-  
+
 .minecraft-link-instructions
-  %p To play on Super Servers you need to link your Minecraft account. Open Minecraft, choose Multiplayer, Direct Connect and enter <code>#{current_user.minecraft_link_host}</code>.
-  
+  %p
+    Open Minecraft, choose "Multiplayer" then "Direct Connect" and enter
+    %br
+    %code= current_user.minecraft_link_host
+
 .link-host-instructions
   = image_tag 'verify.png', width: 530, height: 280
   .host= current_user.minecraft_link_host
@@ -22,7 +25,7 @@
     color: #999;
     text-align: center;
   }
-  
+
   .minecraft-link-state .state-icon {
     background-image: url('/assets/spinner-big.gif');
     background-repeat: no-repeat;
@@ -32,37 +35,37 @@
     margin: 0 auto;
     margin-bottom: 10px;
   }
-  
+
   .minecraft-link-state .unlinked,
   .minecraft-link-state .linked,
   .minecraft-link-state .already-linked {
     display: none;
   }
-  
+
   .minecraft-link-state.is-unlinked .unlinked {
     display: block;
   }
-  
+
   .minecraft-link-state.is-linked .linked {
     display: block;
     color: #2a4;
   }
-  
+
   .minecraft-link-state.is-already-linked .already-linked {
     display: block;
     color: #d31;
   }
-  
+
   .minecraft-link-state.is-linked .state-icon {
     background-color: #2a4;
     background-image: url('/assets/icons/tick.png');
   }
-  
+
   .minecraft-link-state.is-already-linked .state-icon {
     background-color: #d31;
     background-image: url('/assets/icons/warning.png');
   }
-  
+
   .link-host-instructions {
     position: relative;
     margin-bottom: -15px;
@@ -75,18 +78,18 @@
     top: 140px;
     left: 165px;
     display: block;
-    
+
     padding: 0 5px;
-    
+
     color: white;
-    
+
     font-size: 8px;
-    
+
     width: 200px;
     height: 20px;
     line-height: 20px;
   }
-  
+
   code.host {
     font-family: minecraft !important;
     -webkit-font-smoothing: none;
@@ -115,4 +118,4 @@
     channel.bind('linked', onLinked);
     channel.bind('alreadyLinked', onAlreadyLinked);
   });
-    
+

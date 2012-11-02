@@ -1,37 +1,43 @@
 class User < ActiveRecord::Base
   extend FriendlyId
-  
+
   attr_accessible :username, :email, :first_name, :last_name, :avatar,
                   :password, :password_confirmation, :remove_avatar,
                   :avatar_cache, :distinct_id
-  
-  has_many :players do
-    
+
+
+  acts_as_paranoid
+
+  has_many :players, :autosave => true do
+
     def minecraft
       includes(:game).where('games.name' => 'Minecraft')
     end
-    
+
   end
-  
+
   has_many :memberships
   has_many :servers, through: :memberships
   has_many :created_servers, class_name: 'Server', foreign_key: :creator_id
-  
+
   has_many :reward_claims
   has_many :rewards, :through => :reward_claims
-  
+
 
   validates_presence_of :username
-  validates_uniqueness_of :username
+  validates_uniqueness_of :username, :allow_nil => false, :allow_blank => false
 
 
   validates_presence_of :credits
   validates_numericality_of :credits
 
+  validates_uniqueness_of :facebook_uid, :allow_nil => true
+
+
   # NOTE: there arn't any User emails here. They can't be turned off for the
   # moment.
-  store :mail_prefs, accessors: [
-    :newsletter_mailer,
+  store :notifications, accessors: [
+    :campaign_mailer,
     :server_mailer,
     :session_mailer
   ]
@@ -41,22 +47,20 @@ class User < ActiveRecord::Base
 
   devise :database_authenticatable, :token_authenticatable, :omniauthable,
     :confirmable, :recoverable, :registerable, :rememberable, :trackable,
-    :validatable
+    :validatable, reconfirmable: true
 
   # Lets users login with both their email or their username
   attr_accessor :email_or_username
 
   # Everybody gets an authentication token for quick access from emails
   before_save :ensure_authentication_token
-  
-  
+
+
   mount_uploader :avatar, AvatarUploader do
     def store_dir
       File.join(model.class.name.downcase.pluralize, mounted_as.to_s, model.id.to_s)
     end
   end
-  
-
 
   def name
     [first_name, last_name].join(' ')
@@ -65,7 +69,7 @@ class User < ActiveRecord::Base
   def facebook_linked?
     facebook_uid?
   end
-  
+
   def facebook_avatar_url
     "https://graph.facebook.com/#{facebook_uid}/picture?return_ssl_resources=1&type=square"
   end
@@ -73,16 +77,16 @@ class User < ActiveRecord::Base
   def minecraft_linked?
     players.includes(:game).where('games.name' => 'Minecraft').exists?
   end
-  
+
   def minecraft_link_host
-    "foo.verify.minefold.com"
+    "#{authentication_token}.verify.minefold.com"
   end
-  
+
   def minecraft_avatar_url
     "https://minotar.net/helm/#{players.minecraft.first.uid}/50.png"
   end
-  
-  
+
+
 
   def self.find_for_database_authentication(conditions)
     email_or_username = conditions.delete(:email_or_username)
@@ -105,7 +109,7 @@ class User < ActiveRecord::Base
   #     u.skip_confirmation!
   #   end
   # end
-  
+
 
 
 
@@ -123,15 +127,15 @@ class User < ActiveRecord::Base
     )
     self.customer_id = c.id
   end
-  
+
   # Atomically increment credits
   # Warning: doesn't update the model's internal representation.
   def increment_credits!(n)
     self.class.update_counters(self.id, credits: n) == 1
   end
-  
-  
-  def wants_mail_for?(klass)
+
+
+  def send_notification_for?(klass)
     key = klass.name.underscore.to_sym
     mail_prefs[key] == true || mail_prefs[key] == '1'
   end
@@ -143,7 +147,7 @@ class User < ActiveRecord::Base
   def private_channel_key
     "private-#{channel_key}"
   end
-  
+
   # Finds any user that matches the auth details supplied by Facebook. The current_user is passed in as an optimisation so a second query doesn't have to be made.
   def self.find_for_facebook_oauth(auth, current_user=nil)
     if current_user && current_user.facebook_uid == auth['uid']
@@ -152,8 +156,8 @@ class User < ActiveRecord::Base
       where(facebook_uid: auth['uid']).first
     end
   end
-  
-  
+
+
   def self.new_with_session(params, session)
     super.tap do |user|
       data = session['devise.facebook_data']
@@ -163,16 +167,16 @@ class User < ActiveRecord::Base
       end
     end
   end
-  
+
   def update_facebook_auth(auth)
     raw_attrs = auth['extra']['raw_info']
-    
+
     self.class.extract_facebook_attrs(raw_attrs).each do |attr, val|
       # This is horrible and ugly and makes babies cry, but I'm not sure of a better way of doing it with ActiveRecord.
       previous_val = self.send(attr)
       (previous_val && previous_val.present?) || self.send("#{attr}=", val)
     end
-    
+
     # TODO Possibly be smart with this
     # if self.email == raw_attrs['email'] and raw_attrs['verified']
     #   self.skip_confirmation!

@@ -34,13 +34,12 @@
 .server-state {
   margin-bottom: lines(2);
 
-//  background-color: darken(white, 5%);
-background-color: $blue;
-color: white;
+  background-color: $blue;
+  color: white;
   
   // TODO Hack
   .row .span2 {
-    padding-left: $gw-gutter;
+    padding-left: $gw-gutter / 2;
     width: grid-width(2) - $gw-gutter;
     font-weight: 600;
   }

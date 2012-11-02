@@ -29,18 +29,25 @@
         .control-label Name
         .controls
           = f.text_field :name, class: %w(span6)
-      
-      .form-actions
-        = f.submit 'Save', class: %w(btn)
 
-- if server.world
+      .form-actions
+        = f.submit 'Save', class: %w(btn btn-mini btn-primary)
+
+- if server.game.persistant? and server.world
   .account-form-section.row
     .section-label.span2
-      %h3 Download
+      %h3 World
 
     .span6
-      %a{href: party_cloud_world_download_url(server.world) }
-        Download an archive of this server
+      %p
+        Last backup at #{l server.world.created_at}
+        &middot;
+        = link_to 'Download archive', party_cloud_world_download_url(server.world)
+
+      / %hr
+
+      .well
+        UPLOAD NEW WORLD
 
 .account-form-section.row
   .section-label.span2
@@ -49,9 +56,9 @@
     = form_for server do |f|
       = f.fields_for :settings do |s|
         = render partial: server.funpack.game.settings_partial, locals: {f: s}
-  
+
       .form-actions
-        = f.submit 'Save', class: %w(btn)
+        = f.submit 'Save', class: %w(btn btn-mini btn-primary)
 
 - if can? :destroy, server
   .account-form-section.row
@@ -60,4 +67,4 @@
     .span6
       %p Destroying a server <strong>immediately halts it</strong> and <strong>destroys all its data</strong>. You <i>will not be credited</i> for any remaining time. There is no way to recover a server once it has been destroyed. <span class="highlight">With great power comes great responsibility.</span>
 
-      = button_to 'Destroy server', server_path(server), method: :delete, class: %w(btn btn-danger)
+      = button_to 'Destroy server', server_path(server), method: :delete, class: %w(btn btn-mini btn-danger)

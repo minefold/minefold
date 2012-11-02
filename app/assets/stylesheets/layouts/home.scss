@@ -47,19 +47,21 @@
       
       h3 {
         display: block;
-        font-size: 16px;
+        font-size: 18px;
         color: white;
         line-height: lines(4);
+        margin-bottom: lines(2);
       }
       
       p {
-        color: rgba(black, 0.6);
+        color: rgba(black, 0.4);
+        font-size: 12px;
         margin: 0;
       }
     }
     
     .game.coming-soon {
-      opacity: 0.6;
+      opacity: 0.4;
     }
   }
   

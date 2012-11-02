@@ -3,40 +3,54 @@
 .page-header
   %h1 Sign up for Minefold
 
-= form_for resource, as: resource_name, url: registration_path(resource_name) do |f|
-  = f.hidden_field :distinct_id, value: @distinct_id
+.row
+  .span4
+    = form_for resource, as: resource_name, url: registration_path(resource_name) do |f|
+      = f.hidden_field :distinct_id, value: @distinct_id
 
-  %fieldset
-    = f.control_group :username do
-      = f.label :username, class: 'control-label'
-      .controls
-        = f.text_field :username, autocomplete: 'off', autofocus: true, class: %w(span4)
-      = error_message_for(f.object, :username)
+      %fieldset
+        = f.control_group :username do
+          = f.label :username, class: 'control-label'
+          .controls
+            = f.text_field :username, autocomplete: 'off', autofocus: true, class: %w(span4)
+          = error_message_for(f.object, :username)
 
-    = f.control_group :email do
-      = f.label :email, class: 'control-label'
+        = f.control_group :email do
+          = f.label :email, class: 'control-label'
 
-      .controls
-        = f.email_field :email, autocomplete: 'off', class: %w(span4)
-      = error_message_for(f.object, :email)
+          .controls
+            = f.email_field :email, autocomplete: 'off', class: %w(span4)
+          = error_message_for(f.object, :email)
 
-    = f.control_group :password do
-      = f.label :password, class: 'control-label'
+        = f.control_group :password do
+          = f.label :password, class: 'control-label'
 
-      .controls
-        = f.password_field :password, autocomplete: 'off', class: %w(span4)
+          .controls
+            = f.password_field :password, autocomplete: 'off', class: %w(span4)
 
-      = error_message_for(f.object, :password)
+          = error_message_for(f.object, :password)
 
 
-    = f.control_group :password_confirmation do
-      = f.label :password_confirmation, class: 'control-label'
+        = f.control_group :password_confirmation do
+          = f.label :password_confirmation, class: 'control-label'
 
-      .controls
-        = f.password_field :password_confirmation, autocomplete: 'off', class: %w(span4)
+          .controls
+            = f.password_field :password_confirmation, autocomplete: 'off', class: %w(span4)
 
-      = error_message_for(f.object, :password_confirmation)
+          = error_message_for(f.object, :password_confirmation)
 
-    .form-actions
-      = f.submit 'Create your account', class: %w(btn btn-primary)
-      # = link_to 'Cancel', root_path, class: %w(btn)
+        .form-actions
+          = f.submit 'Create your account', class: %w(btn btn-primary)
+  .span4
+    .well
+      %p We're super excited to have you join us. We built Minefold to be an amazing experience for you. We've worked day and night, lost relationships etc. to make this amazing.
+    
+      %p We can't wait for you to join and become a member of the community. People on Minefold
+      %ul
+        %li Respect others. Don't tease friends or grief servers.
+        %li Have fun.
+    
+      %p Lots of love,
+    
+      %p Chris & Dave
+  

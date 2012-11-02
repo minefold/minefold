@@ -7,20 +7,17 @@
 
   color: rgba(black, 0.4);
   background-color: lighten($yellow, 30%);
+  
+  .close {
+    margin-top: lines(1);
+  }
 
-  &.alert-success, &.alert-notice {
-    color: $green;
-    background-color: lighten($green, 50%);
+  &.alert-success {
+    background-color: lighten($green, 40%);
   }
 
   &.alert-error {
-    color: $red;
-    background-color: lighten($red, 50%);
-  }
-
-  &.alert-info {
-    color: $blue;
-    background-color: lighten($blue, 50%);
+    background-color: lighten($red, 40%);
   }
 
 }

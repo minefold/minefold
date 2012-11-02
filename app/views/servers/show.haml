@@ -15,13 +15,20 @@
   - case server.state
   - when :up
     .row
-      .span2 Started at
-      .span6= server.started_at
+      .span2 Started
+      .span6
+        = server.start_at.strftime("%l:%M%P")
+        on
+        = server.start_at.strftime("%a %b %-m, %Y")
       
     .row
-      .span2 Time left
-      .span6= pluralize server.ttl / 1.minute, 'min', 'mins'
-
+      .span2 Stopping
+      .span6
+        = server.stop_at.strftime("%l:%M%P")
+        on
+        = server.stop_at.strftime("%a %b %-m, %Y")
+        (#{pluralize server.ttl / 1.minute, 'min', 'mins'} from now)
+        
 
 - if can?(:update, server) and server.normal?
   = form_tag extend_server_path(server), method: 'put', class: 'server-controls' do

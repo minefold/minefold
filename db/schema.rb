@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121029221608) do
+ActiveRecord::Schema.define(:version => 20121102003333) do
 
   create_table "comments", :force => true do |t|
     t.integer  "server_id"
@@ -43,11 +43,11 @@ ActiveRecord::Schema.define(:version => 20121029221608) do
 
   create_table "games", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
-    t.boolean  "super_servers",   :default => false, :null => false
-    t.string   "slug",            :default => ""
-    t.boolean  "persistant_data", :default => false, :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.boolean  "super_servers",  :default => false, :null => false
+    t.string   "slug",           :default => ""
+    t.boolean  "persistant",     :default => false, :null => false
     t.string   "party_cloud_id"
   end
 
@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(:version => 20121029221608) do
     t.datetime "updated_at",                              :null => false
     t.boolean  "super_server",         :default => false, :null => false
     t.string   "party_cloud_id"
+    t.datetime "deleted_at"
   end
 
   add_index "servers", ["host"], :name => "index_servers_on_host", :unique => true
@@ -117,7 +118,6 @@ ActiveRecord::Schema.define(:version => 20121029221608) do
     t.string   "encrypted_password",     :default => "",    :null => false
     t.string   "facebook_uid"
     t.boolean  "admin",                  :default => false, :null => false
-    t.boolean  "unlimited",              :default => false, :null => false
     t.string   "first_name"
     t.string   "last_name"
     t.string   "locale"
@@ -140,10 +140,12 @@ ActiveRecord::Schema.define(:version => 20121029221608) do
     t.string   "authentication_token"
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
-    t.text     "mail_prefs"
+    t.text     "notifications"
     t.string   "avatar"
     t.string   "name",                   :default => ""
     t.string   "distinct_id"
+    t.string   "legacy_id"
+    t.datetime "deleted_at"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

@@ -1,0 +1,130 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+require 'mongo'
+require 'colored'
+require 'pp'
+
+# Boot the application
+require File.expand_path('../../config/boot',  __FILE__)
+require File.expand_path('../../config/environment',  __FILE__)
+
+
+$db = Mongo::Connection.new('localhost', 27017, :safe => true)['minefold']
+
+minecraft = Game.where(name: 'Minecraft').first
+vanilla = minecraft.funpacks.where(name: 'Official').first
+bukkit = minecraft.funpacks.where(name: 'Bukkit').first
+
+# Clean
+Server.delete_all
+World.delete_all
+
+$db[:worlds].find({}, timeout: false) do |cursor|
+  cursor.each do |raw|
+    begin
+      s = Server.new
+      
+      # Creator
+      s.creator = User.find_by_legacy_id(raw['creator_id'].to_s)
+      next unless s.creator
+      
+      s.users << s.creator
+      
+      # Legacy
+      s.party_cloud_id = raw['_id'].to_s
+      
+      # Timestamps
+      s.created_at = raw['created_at']
+      s.updated_at = raw['updated_at']
+      s.deleted_at = raw['deleted_at']
+      
+      s.name = raw['name']
+      s.super_server = true
+    
+      # Stats
+      s.pageviews = raw['pageviews']
+      s.minutes_played = raw['minutes_played']
+      s.world_minutes_played = raw['wolrd_minutes_played']
+      
+      # Settings
+      s.settings = {
+        'difficulty_level' => raw['difficulty_level'] || raw['difficulty'],
+        'game_mode' => raw['game_mode'],
+        'generate_structures' => raw['generate_structures'],
+        'level_type' => raw['level_type'],
+        'pvp' => raw['pvp'],
+        'seed' => raw['seed'],
+        'spawn_animals' => raw['spawn_animals'] || true,
+        'spawn_monsters' => raw['spawn_monsters'] || true,
+        'spawn_npcs' => raw['spawn_npcs'] || true
+      }
+      
+      # Funpacks
+      if raw['funpack'] == 'minecraft-bukkit'
+        s.funpack = bukkit
+        s.settings[:new_player_can_build] = raw['new_player_can_build']
+      else
+        s.funpack = vanilla
+      end
+      
+      
+      # Whitelisted players
+      if raw['whitelisted_player_ids']
+        s.settings['whitelist'] = raw['whitelisted_player_ids'].map do |id|
+          p = $db[:minecraft_players].find('_id' => id).first
+          p ? p['username'] : nil
+        end.compact.join("\n")
+      end
+      
+      # Blacklisted players
+      if raw['blacklisted_player_ids']
+        s.settings['blacklist'] = raw['blacklisted_player_ids'].map do |id|
+          p = $db[:minecraft_players].find('_id' => id).first
+          p ? p['username'] : nil
+        end.compact.join("\n")
+      end
+      
+      # Opped players
+      if raw['opped_player_ids']
+        s.settings['ops'] = raw['opped_player_ids'].map do |id|
+          p = $db[:minecraft_players].find('_id' => id).first
+          p ? p['username'] : nil
+        end.compact.join("\n")
+      end
+      
+      # Comments
+      raw['comments'] && raw['comments'].each do |cm|
+        author = User.find_by_legacy_id(cm['author_id'].to_s)
+        next unless author
+        
+        c = Comment.new
+        c.body = cm['text']
+        c.updated_at = cm['updated_at']
+        c.created_at = cm['created_at']
+        c.author = author
+        
+        s.comments << c
+      end
+      
+      s.world = World.new(
+        party_cloud_id: raw['_id'].to_s,
+        legacy_url: raw['world_data_file'],
+        last_mapped_at: raw['last_mapped_at'],
+        map_data: raw['map_data'] && {
+          zoom_levels: raw['map_data']['zoomLevels'],
+          tile_size:   raw['map_data']['tileSize'],
+          spawn:      raw['map_data']['markers'].find {|m| m['type'] == 'spawn'}
+        }
+      )
+      
+      s.save!
+    
+    rescue Exception => e
+      puts ('*'*80).yellow
+      pp raw
+      puts ('*'*80).yellow
+      raise e
+    end
+  
+  end
+end

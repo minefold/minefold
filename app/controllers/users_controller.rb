@@ -12,7 +12,7 @@ class UsersController < Devise::RegistrationsController
 
   def new
   end
-  
+
   def onboard
   end
 
@@ -21,9 +21,9 @@ class UsersController < Devise::RegistrationsController
 
   def update
     authorize! :update, user
-    
+
     user.update_attributes!(params[:user])
-    
+
     respond_with(user, location: edit_user_registration_path)
   end
 

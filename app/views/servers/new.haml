@@ -1,6 +1,6 @@
 - title 'Create a new server'
 
-- @games = Game.all
+- # TODO Hack!
 - @funpack = Funpack.first
 
 :css
@@ -11,17 +11,17 @@
 .row
   .span6.offset1
     = form_for server, html: {class: 'tab-content'} do |f|
-      
+
       / Game
       / --
-    
-      %fieldset.tab-pane.active#game        
+
+      %fieldset.tab-pane.active#game
         %ol.progressmeter.progressmeter-3
           %li.active
             %a{href: '#game', data: {toggle: 'tab'}} Game
           %li Settings
           %li Billing
-      
+
         - @games.each do |game|
           .control-group
             .control-label= game.name
@@ -30,22 +30,22 @@
                 %label.radio{for: "server_funpack_id_#{funpack.id.to_s}"}
                   = funpack.name
                   %input{type: 'radio', name: 'server[funpack_id]', value: funpack.id.to_s, id: "server_funpack_id_#{funpack.id.to_s}"}
-        
+
         .form-actions
           %a.btn.btn-primary.pull-right#game-next-button{href: '#settings', disabled: true} Settings &rarr;
-      
+
       - content_for :tail do
         :javascript
           $('input[name="server[funpack_id]"]').change(function() {
             var $this = $(this),
                 funpackId = $this.val(),
                 url = #{new_funpack_settings_servers_path.to_json};
-                
+
             $.ajax(url, {
               accepts: 'text/html',
               data: { funpack_id: funpackId },
               dataType: 'html',
-              type: 'GET'  
+              type: 'GET'
             })
             .error(function() {
               console.log('error');
@@ -59,52 +59,52 @@
                 })
                 .attr('disabled', false);
             });
-            
+
           });
 
-      
+
       / Settings
       / --
-      
+
       %fieldset.tab-pane#settings
         %ol.progressmeter.progressmeter-3
           %li.previous
             %a{href: '#game', data: {toggle: 'tab'}} Game
-        
+
           %li.active
             %a{href: '#settings', data: {toggle: 'tab'}} Settings
-        
+
           %li Billing
-        
+
         %hr
-        
+
         = f.control_group :name do
           .controls
             = f.text_field :name, placeholder: 'Name', style: 'width:100%'
-        
+
         %hr.large
-        
+
         #new_funpack_settings
-        
+
         .form-actions
           %a.btn.pull-left{href: '#game', data: {toggle: 'tab'}} &larr; Game
           %a.btn.btn-primary.pull-right{href: '#billing', data: {toggle: 'tab'}} Billing &rarr;
-      
-      
+
+
       / Billing
       / --
-       
+
       %fieldset.tab-pane#billing
         %ol.progressmeter.progressmeter-3
           %li.previous
             %a{href: '#game', data: {toggle: 'tab'}} Game
-        
+
           %li.previous
             %a{href: '#settings', data: {toggle: 'tab'}} Settings
-        
+
           %li.active
             %a{href: '#settings', data: {toggle: 'tab'}} Billing
-      
+
         = f.control_group :super_server do
           .controls
             %label.radio

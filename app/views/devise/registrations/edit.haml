@@ -10,13 +10,13 @@
   .span6
     .row
       .span1
-        = form_for resource, :method => :put, :html => {:multipart => true} do |f| 
+        = form_for resource, :method => :put, :html => {:multipart => true} do |f|
           = f.hidden_field :avatar_cache
           = image_tag current_user.avatar.large.url, class: 'img-circle', width: 60, height: 60, id: 'avatar_preview'
-          
+
           = f.file_field :avatar, style: 'display:none'
           = f.label :avatar, 'Change'
-          
+
           // TODO Hack!
           :css
             label[for=user_avatar] {
@@ -25,24 +25,24 @@
               font-size: 12px;
               color: #CCC;
             }
-          
-          - content_for :tail do 
+
+          - content_for :tail do
             :javascript
               $('#user_avatar').change(function() {
                 $(this).parent('form').submit();
               });
-              
+
               $('#avatar_preview').click(function() {
                 $('#user_avatar').click();
               });
-        
-        
+
+
       .span5
         = form_for resource, :method => :put do |f|
           .control-group
             .controls
               = f.text_field :username, placeholder: 'Username', class: %w(span3)
-          
+
           .control-group
             .controls
               = f.text_field :first_name, placeholder: 'First name', class: %w(span2)
@@ -50,8 +50,20 @@
 
           .control-group
             .controls
-              = f.email_field :email, placeholder: 'Email', disabled: true, class: %w(span4)
-              %small.help-block If you'd like to change your email please contact support.
+              = f.email_field :email, placeholder: 'Email', class: %w(span4)
+              - if not f.object.confirmed?
+                %small.help-block
+                  %span.highlight #{f.object.email} is unconfirmed
+                  &middot;
+                  - # TODO This is a hack and not very nice
+                  = link_to 'Resend confirmation', user_confirmation_path(user: {email: f.object.email}), method: 'POST'
+
+              - if f.object.pending_reconfirmation?
+                %small.help-block
+                  %span.highlight  #{f.object.unconfirmed_email} is unconfirmed
+                  &middot;
+                  - # TODO This is a hack and not very nice
+                  = link_to 'Resend confirmation', user_confirmation_path(user: {email: f.object.unconfirmed_email}), method: 'POST'
 
           .form-actions
             = f.submit 'Save', class: %w(btn btn-mini)
@@ -76,22 +88,22 @@
             %a{href: "//facebook.com/#{resource.facebook_uid}"} Profile
             &middot;
             = link_to 'Unlink account', accounts_unlink_facebook_path, :method => :put, class: 'unlink-account'
-          
+
           - else
             = link_to user_omniauth_authorize_path(:facebook) do
               Link your Facebook account
               - render_reward_for('facebook linked', current_user) do |reward|
                 for
                 = credits_with_image(reward.credits)
-    
+
     #link-minecraft-modal.modal.hide.fade
       .modal-header
         %button.close{type: 'button', data: {dismiss: 'modal'}} &times;
         %h3 Link Minecraft Account
 
       .modal-body
-        
-    
+
+
     .account.account-minecraft{class: ('is-linked' if resource.minecraft_linked?)}
       .profile-image.pull-left
         - if resource.minecraft_linked?
@@ -104,7 +116,7 @@
         %p
           - if resource.minecraft_linked?
             = link_to 'Unlink account', accounts_unlink_minecraft_path, :method => :put, class: 'unlink-account'
-          
+
           - else
             %a{href: accounts_link_minecraft_path, data: {toggle: 'modal', target: '#link-minecraft-modal'}}
               Link your Minecraft account
@@ -132,8 +144,8 @@
 
       .control-group
         .controls
-          = f.label :newsletter_mailer, class: %w(checkbox) do
-            = f.check_box :newsletter_mailer
+          = f.label :campaign_mailer, class: %w(checkbox) do
+            = f.check_box :campaign_mailer
             Minefold newsletters
 
           = f.label :server_mailer, class: %w(checkbox) do

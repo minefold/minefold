@@ -47,7 +47,7 @@ hr {
   border: none;
   margin: lines(4) 0;
   height: 0;
- 
+
   &.light {
     border-top: 1px solid white;
   }
@@ -61,11 +61,11 @@ hr, br {
   &.large {
     margin: lines(8) 0;
   }
-  
+
   &.x-large {
     margin: lines(16) 0;
   }
-  
+
   &.xx-large {
     margin: lines(32) 0;
   }
@@ -74,6 +74,12 @@ hr, br {
 h3 {
   margin-top: lines(2);
   margin-bottom: lines(2);
+}
+
+code {
+  color: black;
+  border-color: rgba(black, 0.1);
+  background-color: transparent;
 }
 
 .highlight {

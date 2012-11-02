@@ -29,12 +29,12 @@ gem 'rest-client'
 gem 'bugsnag'
 gem 'friendly_id'
 gem 'librato-rails', git: 'https://github.com/librato/librato-rails.git'
-
-# TODO KILL KILL KILL
-gem 'mongoid', '3.0.0.rc'
-gem 'uuid'
+gem 'paranoia'
 
 gem 'carrierwave', git: 'https://github.com/jnicklas/carrierwave.git'
+
+gem 'sass-rails'
+gem 'bourbon'
 
 group :test do
   gem 'autotest-rails'
@@ -59,6 +59,3 @@ group :assets do
   gem 'backbone-rails'
   gem 'uglifier'
 end
-
-gem 'sass-rails'
-gem 'bourbon'

@@ -5,10 +5,10 @@
 
 .nav.nav-horizontal {
   @include clearfix;
-  
+
   > li {
     float: left;
-    
+
     > a {
       display: block;
     }
@@ -17,21 +17,21 @@
 
 .nav.nav-server {
   margin-bottom: 0;
-  background-color: desaturate(lighten($blue, 50%), 40%);
-  
+  background-color: desaturate(lighten($blue, 45%), 40%);
+
   > li > a {
     color: rgba(black, 0.4);
     line-height: lines(4);
     padding: lines(1) 10px;
-    
+
     font-weight: 600;
-    
+
     &:hover {
 //      color: white;
     background-color: rgba($blue, 0.4);
     }
   }
-  
+
   .active > a, .active > a:hover {
     color: white;
       background-color: $blue;

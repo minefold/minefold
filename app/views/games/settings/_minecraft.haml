@@ -1,6 +1,3 @@
-- if f.parent_builder.object.world
-  .well UPLOAD YOUR WORLD HERE.
-
 = f.control_group :game_mode do
   .control-label Mode
   .controls
@@ -22,7 +19,7 @@
       = f.radio_button :game_mode, 2, tabindex: 4
       Adventure
       %p.help-block
-        Intended for adventuring, cannot place or destroy blocks.
+        Explorers only, cannot place or destroy blocks.
 
 %hr
 
@@ -49,7 +46,7 @@
             = f.radio_button :difficulty, i, tabindex: 4, checked: (level == 'normal')
             = level.to_s.titlecase
 
-  
+
   = f.control_group :pvp, :spawn_monsters, :spawn_animals do
     .span2
       .control-label Gameplay
@@ -73,7 +70,7 @@
         = f.label :spawn_npcs, class: 'checkbox' do
           = f.check_box :spawn_npcs, tabindex: 8, checked: true
           Spawn animals
-    
+
     .span2
       %br
       .controls
@@ -91,11 +88,6 @@
     Whitelist
   .controls
     = f.text_area :whitelist, value: (f.parent_builder.object.settings['whitelist'] || players), rows: 4, style: 'width:100%', class: %w(span6)
-
-= f.control_group :blacklist do
-  .control-label Blacklist
-  .controls
-    = f.text_area :blacklist, rows: 4, style: 'width:100%', class: %w(span6)
 
 = f.control_group :ops do
   .control-label Ops

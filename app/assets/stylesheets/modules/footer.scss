@@ -6,6 +6,7 @@ footer {
   padding-bottom: lines(32);
   padding-left: $gw-gutter; padding-right: $gw-gutter;
   font-weight: 800;
+  text-align: center;
   
   .ad {
     padding: lines(4) $gw-gutter;
@@ -24,11 +25,17 @@ footer {
   
   ul {
     @include clearfix;
+    text-align: center;
+    margin-left: - $gw-gutter;
     
     li {
-      float: left;
-      margin-right: $gw-gutter;
+      @include inline-block;
+      margin-left: $gw-gutter;
       font-size: 18px;
+      
+      &:first-child {
+        margin-left: 0;
+      }
     }
   }
   

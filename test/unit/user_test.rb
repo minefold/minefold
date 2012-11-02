@@ -105,7 +105,7 @@ class UserTest < ActiveSupport::TestCase
 
     assert_equal false, user.wants_mail_for?(RandomMailer)
 
-    user.mail_prefs[:random_mailer] = true
+    user.notifications[:random_mailer] = true
 
     assert_equal true, user.wants_mail_for?(RandomMailer)
   end
