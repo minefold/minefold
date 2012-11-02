@@ -42,6 +42,8 @@ class User < ActiveRecord::Base
     :session_mailer
   ]
 
+  attr_accessible :campaign_mailer, :server_mailer, :session_mailer
+
   friendly_id :username, :use => :slugged
 
 
@@ -183,14 +185,14 @@ class User < ActiveRecord::Base
     # end
   end
 
-  CREDIT_GIFT_PERIOD = 30.days
+  MIN_CREDITS = 600
 
-  def last_credit_gift_at
-    Time.now - (created_at.to_i % CREDIT_GIFT_PERIOD)
-  end
+  scope :low_credits, where(self.arel_table[:credits].lt(MIN_CREDITS))
 
-  def next_credit_gift_at
-    last_credit_gift_at + CREDIT_GIFT_PERIOD
+  def gift_credits
+    if credits < MIN_CREDITS
+      self.credits = MIN_CREDITS
+    end
   end
 
 private

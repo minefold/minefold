@@ -20,14 +20,7 @@ Minefold::Application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_deliveries = false
   config.action_mailer.default_url_options = {
-    host: 'localhost.minefold.com'
-  }
-
-  # Don't care if the mailer can't send
-  config.action_mailer.raise_delivery_errors = false
-
-  config.action_mailer.default_url_options = {
-    host: 'localhost.minefold.com'
+    host: "localhost.minefold.com:#{ENV['PORT']}"
   }
 
   # Print deprecation notices to the Rails logger

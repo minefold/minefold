@@ -12,3 +12,6 @@ Resque::Failure.backend = Resque::Failure::Multiple
 Resque.redis = $redis
 
 Resque::Mailer.excluded_environments = [:test]
+
+schedule_path = Rails.root.join('config', 'scheduler.yml')
+Resque.schedule = YAML.load_file(schedule_path)

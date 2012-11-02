@@ -6,7 +6,7 @@ Minefold::Application.routes.draw do
   constraints(admin_only) do
     mount Resque::Server, :at => '/admin/resque'
   end
-  
+
   if Rails.env.development?
     get '/tumblr' => 'tumblr#index'
     get '/playground' => 'pages#playground'
@@ -32,35 +32,36 @@ Minefold::Application.routes.draw do
   get '/channel.html' => 'facebook#channel', :as => :facebook_channel
 
 
-  devise_for :user,
-    :controllers => { :omniauth_callbacks => 'omniauth_callbacks',
-                      :registrations => 'registrations' }
+  devise_for :user, :controllers => {
+                      :omniauth_callbacks => 'omniauth_callbacks',
+                      :registrations => 'registrations'
+                    }
 
   # Authenticated routes
-  devise_scope :user do
+  as :user do
+
+    get '/settings' => 'devise/registrations#edit', :as => :edit_user_registration
 
     resource :orders, :only => [:new, :create]
 
-    resources :games
-
     resources :servers, :path_names => {:edit => 'settings'} do
       get :new_funpack_settings, :on => :collection
-      
+
       get :map, :on => :member
       put :extend, :on => :member
-      
+
       resources :comments, :only => [:create], :module => 'servers'
-      
+
       get 'policy.xml',
         :controller => 'servers/uploads',
         :action => :policy,
         :format => :xml,
         :on => :collection
     end
-    
+
     scope '/users/accounts', :controller => 'accounts', :as => :accounts do
       put :unlink_facebook
-      
+
       get :link_minecraft
       put :unlink_minecraft
     end

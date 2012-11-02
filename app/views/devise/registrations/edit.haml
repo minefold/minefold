@@ -134,7 +134,8 @@
       &middot;
       %a.buy-credits{href: new_orders_path, data: {toggle: 'modal', target: '#buy-credits-modal'}} Buy credits.
 
-    %p Next <i>free</i> credit top up on <strong>#{l current_user.last_credit_gift_at, :format => :date}</strong>.
+    %p= l current_user.created_at
+    %p Your next <i>free</i> credit top up will be on <strong>#{l current_user.last_credit_gift_at, :format => :date}</strong>.
 
 
 .account-form-section.row
