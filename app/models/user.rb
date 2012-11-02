@@ -183,6 +183,16 @@ class User < ActiveRecord::Base
     # end
   end
 
+  CREDIT_GIFT_PERIOD = 30.days
+
+  def last_credit_gift_at
+    Time.now - (created_at.to_i % CREDIT_GIFT_PERIOD)
+  end
+
+  def next_credit_gift_at
+    last_credit_gift_at + CREDIT_GIFT_PERIOD
+  end
+
 private
 
   def self.extract_facebook_attrs(attrs)
