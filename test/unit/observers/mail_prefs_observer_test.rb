@@ -8,9 +8,9 @@ class NotificationsObserverTest < ActiveSupport::TestCase
 
     test "#before_create subscribes user to #{mailer.name}" do
       user = User.make!
-      assert user.wants_mail_for?(mailer)
+      assert user.send_notification_for?(mailer)
     end
 
   end
-
+?
 end

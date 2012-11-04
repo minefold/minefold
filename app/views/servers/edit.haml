@@ -44,7 +44,9 @@
         &middot;
         = link_to 'Download archive', party_cloud_world_download_url(server.world)
 
-      / %hr
+      - if server.world.legacy_parent_id?
+        - parent = server.world.legacy_parent.server
+        %p Forked from #{parent.name} by #{parent.creator.username}.
 
       .well
         UPLOAD NEW WORLD

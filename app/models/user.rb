@@ -186,14 +186,31 @@ class User < ActiveRecord::Base
   end
 
   MIN_CREDITS = 600
+  CREDIT_FAIRY_PERIOD = 30.days # Ewww
 
-  scope :low_credits, where(self.arel_table[:credits].lt(MIN_CREDITS))
+  scope :low_credit, where(
+    arel_table[:credits].lt(MIN_CREDITS))
+
+  scope :needs_magic_fairy_dust, low_credit.where(
+    arel_table[:last_credit_fairy_visit_at].eq(nil).or(
+      arel_table[:last_credit_fairy_visit_at].lt(CREDIT_FAIRY_PERIOD.ago)))
 
   def gift_credits
     if credits < MIN_CREDITS
       self.credits = MIN_CREDITS
+      self.last_credit_fairy_visit_at = Time.now
     end
   end
+
+  def next_credit_fairy_visit_at
+    if last_credit_fairy_visit_at?
+      last_credit_fairy_visit_at
+    else
+      created_at
+    end + CREDIT_FAIRY_PERIOD
+  end
+
+
 
 private
 

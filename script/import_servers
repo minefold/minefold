@@ -23,29 +23,29 @@ $db[:worlds].find({}, timeout: false) do |cursor|
   cursor.each do |raw|
     begin
       s = Server.new
-      
+
       # Creator
       s.creator = User.find_by_legacy_id(raw['creator_id'].to_s)
       next unless s.creator
-      
+
       s.users << s.creator
-      
+
       # Legacy
       s.party_cloud_id = raw['_id'].to_s
-      
+
       # Timestamps
       s.created_at = raw['created_at']
       s.updated_at = raw['updated_at']
       s.deleted_at = raw['deleted_at']
-      
+
       s.name = raw['name']
       s.super_server = true
-    
+
       # Stats
       s.pageviews = raw['pageviews']
       s.minutes_played = raw['minutes_played']
       s.world_minutes_played = raw['wolrd_minutes_played']
-      
+
       # Settings
       s.settings = {
         'difficulty_level' => raw['difficulty_level'] || raw['difficulty'],
@@ -58,7 +58,7 @@ $db[:worlds].find({}, timeout: false) do |cursor|
         'spawn_monsters' => raw['spawn_monsters'] || true,
         'spawn_npcs' => raw['spawn_npcs'] || true
       }
-      
+
       # Funpacks
       if raw['funpack'] == 'minecraft-bukkit'
         s.funpack = bukkit
@@ -66,8 +66,8 @@ $db[:worlds].find({}, timeout: false) do |cursor|
       else
         s.funpack = vanilla
       end
-      
-      
+
+
       # Whitelisted players
       if raw['whitelisted_player_ids']
         s.settings['whitelist'] = raw['whitelisted_player_ids'].map do |id|
@@ -75,7 +75,7 @@ $db[:worlds].find({}, timeout: false) do |cursor|
           p ? p['username'] : nil
         end.compact.join("\n")
       end
-      
+
       # Blacklisted players
       if raw['blacklisted_player_ids']
         s.settings['blacklist'] = raw['blacklisted_player_ids'].map do |id|
@@ -83,7 +83,7 @@ $db[:worlds].find({}, timeout: false) do |cursor|
           p ? p['username'] : nil
         end.compact.join("\n")
       end
-      
+
       # Opped players
       if raw['opped_player_ids']
         s.settings['ops'] = raw['opped_player_ids'].map do |id|
@@ -91,21 +91,21 @@ $db[:worlds].find({}, timeout: false) do |cursor|
           p ? p['username'] : nil
         end.compact.join("\n")
       end
-      
+
       # Comments
       raw['comments'] && raw['comments'].each do |cm|
         author = User.find_by_legacy_id(cm['author_id'].to_s)
         next unless author
-        
+
         c = Comment.new
         c.body = cm['text']
         c.updated_at = cm['updated_at']
         c.created_at = cm['created_at']
         c.author = author
-        
+
         s.comments << c
       end
-      
+
       s.world = World.new(
         party_cloud_id: raw['_id'].to_s,
         legacy_url: raw['world_data_file'],
@@ -116,15 +116,29 @@ $db[:worlds].find({}, timeout: false) do |cursor|
           spawn:      raw['map_data']['markers'].find {|m| m['type'] == 'spawn'}
         }
       )
-      
+
       s.save!
-    
+
     rescue Exception => e
       puts ('*'*80).yellow
       pp raw
       puts ('*'*80).yellow
       raise e
     end
-  
+
+  end
+end
+
+
+$db[:worlds].find({'parent_id' => {'$exists' => true}}, timeout: false) do |cursor|
+  cursor.each do |raw|
+
+    node = World.find_by_party_cloud_id(raw['_id'].to_s)
+    parent = World.find_by_party_cloud_id(raw['parent_id'].to_s)
+
+    if node and parent
+      node.legacy_parent = parent
+      node.save!
+    end
   end
 end

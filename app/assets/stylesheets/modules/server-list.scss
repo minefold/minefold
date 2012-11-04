@@ -1,44 +1,36 @@
 @import 'vars';
 
 .server-list {
-  
+
   .empty {
     color: #CCC;
   }
-  
+
   .divider {
     font-size: 14px;
     text-transform: uppercase;
     color: rgba(black, 0.4);
     line-height: lines(6);
+    border-bottom: 2px solid rgba(black, 0.2);
+    padding: 0 ($gw-gutter / 2);
   }
-  
+
   .new {
     padding: lines(8) 0;
   }
-  
+
   .item {
     display: block;
     overflow: auto;
-    padding: lines(1) ($gw-gutter / 2);
-    
-    &.is-up, &.is-super {
-      background-color: $green;
-      color: white;
-      .primary-action {color: white;}
-    }
-    
-    &.is-stopped {
-      background-color: darken(white, 10%);
-      color: black;
-      .primary-action {color: black;}
-    }
-    
+
+    border: 2px solid rgba(black, 0.05);
+    border-top: none;
+
     .primary-action {
       display: block;
       float: left;
-//      color: white;
       width: grid-width(6);
+      padding: lines(1) ($gw-gutter / 2);
 
       .name {
         font-size: 18px;
@@ -51,19 +43,9 @@
       margin: lines(2) 0;
     }
 
-    &:hover, &:hover .primary-action  {
-      background: $blue;
-      color: white;
-    }
-
-    &:hover .nav {
-      display: block;
-    }
-
     .nav-pills-images a {
-      height: 24px;
-      padding: 0 10px;
       margin: 0;
+      padding: lines(1) ($gw-gutter / 2);
 
       img {
         opacity: 0.2;
@@ -71,11 +53,20 @@
 
       &:hover {
         background-color: transparent;
-      }
-      &:hover img {
-        opacity: 1;
+        img {
+          opacity: 1;
+        }
       }
     }
 
+    &:hover, &:hover {
+      .primary-action  {
+        border-color: #CCC;
+      }
+
+      .nav {
+        display: block;
+      }
+    }
   }
 }

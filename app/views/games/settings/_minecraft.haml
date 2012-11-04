@@ -87,9 +87,11 @@
   .control-label
     Whitelist
   .controls
-    = f.text_area :whitelist, value: (f.parent_builder.object.settings['whitelist'] || players), rows: 4, style: 'width:100%', class: %w(span6)
+    - whitelist = f.parent_builder.object.settings['whitelist'] || players
+    = f.text_area :whitelist, value: whitelist, rows: (whitelist.lines.to_a.length + 1), style: 'width:100%', class: %w(span6)
 
 = f.control_group :ops do
   .control-label Ops
   .controls
-    = f.text_area :ops, value: (f.parent_builder.object.settings['ops'] || players), rows: 4, style: 'width:100%', class: %w(span6)
+    - ops = f.parent_builder.object.settings['ops'] || players
+    = f.text_area :ops, value: ops, rows: (ops.lines.to_a.length + 1), style: 'width:100%', class: %w(span6)

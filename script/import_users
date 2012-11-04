@@ -69,6 +69,9 @@ $db[:users].find({}, timeout: false) do |cursor|
       # Devise Token authenticatable
       u.authentication_token = raw['authentication_token']
 
+      # Credit Fairy
+      u.last_credit_fairy_visit_at = raw['last_credit_reset']
+
       # Notifications
       if raw['notifications']
         u.campaign_mailer = (raw['notifications']['campaign'] == '1')

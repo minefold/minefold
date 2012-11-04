@@ -35,7 +35,7 @@ class Application.WorldMapView extends Backbone.View
     zoomLevels: 7
     backgroundColor: '#F2F2F2'
     northDirection: 'upper-right'
-  
+
   template: _.template """
     <div class="map"></div>
     <div class="map-meta">
@@ -45,55 +45,57 @@ class Application.WorldMapView extends Backbone.View
       <strong><%= moment(get('last_mapped_at')).format('h:mma') %></strong>.
     </div>
   """
-  
-  
+
+
   initialize: (options) ->
     @options = _.extend(@constructor.defaults, options)
-    
+
   render: ->
     @$el.html @template(@model)
     @renderMap()
 
   mapKey = ->
     window.location.pathname
-  
+
   renderMap: =>
     @map = new google.maps.Map(@$('.map').get(0), @options)
     @loadViewport()
-    
+
+    console.log @options
+
     mapType = new google.maps.ImageMapType(
       getTileUrl: @tileUrl
       tileSize: new google.maps.Size(@options.tileSize, @options.tileSize)
       maxZoom: @options.zoomLevels
       minZoom: 0
     )
-    
+
     # Can't add the projection in the constructor
     mapType.projection = new MapProjection(@options.tileSize)
     @map.mapTypes.set 'map', mapType
-    
+
     google.maps.event.addListener @map, 'center_changed', @storeViewport
     google.maps.event.addListener @map, 'zoom_changed', @storeViewport
-    
+
   storeViewport: =>
     center = @map.getCenter()
-    
+
     payload =
       zoom: @map.getZoom()
       lat: center.lat()
       lng: center.lng()
-    
+
     if store.enabled?
       store.set mapKey(), payload
-  
+
   loadViewport: =>
     if store.enabled? and viewport = store.get(mapKey())
       @map.setZoom viewport.zoom
       @map.setCenter new google.maps.LatLng(viewport.lat, viewport.lng)
-      
+
     else
       @map.setCenter @worldToLatLng(0, 68, 0)
-      
+
 
   tilePath = (tile, zoom) ->
     path = ''
@@ -170,5 +172,5 @@ class Application.WorldMapView extends Backbone.View
     lng += 12 * perPixel
 
     point = new google.maps.LatLng(lat, lng)
-    
-    
+
+

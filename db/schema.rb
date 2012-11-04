@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121102003333) do
+ActiveRecord::Schema.define(:version => 20121104212229) do
 
   create_table "comments", :force => true do |t|
     t.integer  "server_id"
@@ -112,23 +112,23 @@ ActiveRecord::Schema.define(:version => 20121102003333) do
   add_index "servers", ["party_cloud_id"], :name => "index_servers_on_party_cloud_id", :unique => true
 
   create_table "users", :force => true do |t|
-    t.string   "username",               :default => ""
-    t.string   "slug",                   :default => ""
+    t.string   "username",                   :default => ""
+    t.string   "slug",                       :default => ""
     t.string   "email"
-    t.string   "encrypted_password",     :default => "",    :null => false
+    t.string   "encrypted_password",         :default => "",    :null => false
     t.string   "facebook_uid"
-    t.boolean  "admin",                  :default => false, :null => false
+    t.boolean  "admin",                      :default => false, :null => false
     t.string   "first_name"
     t.string   "last_name"
     t.string   "locale"
-    t.integer  "timezone",               :default => 0
+    t.integer  "timezone",                   :default => 0
     t.string   "gender"
-    t.integer  "credits",                :default => 0,     :null => false
+    t.integer  "credits",                    :default => 0,     :null => false
     t.string   "customer_id"
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          :default => 0
+    t.integer  "sign_in_count",              :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -138,14 +138,15 @@ ActiveRecord::Schema.define(:version => 20121102003333) do
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
     t.string   "authentication_token"
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
+    t.datetime "created_at",                                    :null => false
+    t.datetime "updated_at",                                    :null => false
     t.text     "notifications"
     t.string   "avatar"
-    t.string   "name",                   :default => ""
+    t.string   "name",                       :default => ""
     t.string   "distinct_id"
     t.string   "legacy_id"
     t.datetime "deleted_at"
+    t.datetime "last_credit_fairy_visit_at"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
@@ -162,8 +163,9 @@ ActiveRecord::Schema.define(:version => 20121102003333) do
     t.string   "legacy_url"
     t.datetime "last_mapped_at"
     t.text     "map_data"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.integer  "legacy_parent_id"
   end
 
   add_index "worlds", ["party_cloud_id"], :name => "index_worlds_on_party_cloud_id", :unique => true
