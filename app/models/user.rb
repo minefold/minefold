@@ -105,13 +105,6 @@ class User < ActiveRecord::Base
     where(facebook_uid: facebook_uid).first
   end
 
-  # def self.initialize_from_facebook(access_token)
-  #   new(extract_facebook_attributes(access_token.extra.raw_info)).tap do |u|
-  #     u.password, u.password_confirmation = Devise.friendly_token[0,20]
-  #     u.skip_confirmation!
-  #   end
-  # end
-
 
 
 

@@ -34,7 +34,15 @@
 
       .name {
         font-size: 18px;
-        line-height: 24px;
+        line-height: lines(3);
+      }
+
+      .state {
+        font-family: monospace;
+        font-size: 12px;
+        line-height: lines(3);
+        margin-top: - lines(1);
+        margin-bottom: lines(1);
       }
     }
 
@@ -67,6 +75,19 @@
       .nav {
         display: block;
       }
+    }
+
+    &.is-super, &.is-up {
+      border-left-width: 4px;
+      border-left-color: $green;
+
+      .primary-action {
+        padding-left: ($gw-gutter / 2) - 2px;
+      }
+    }
+
+    &.is-stopped .state {
+      color: rgba(black, 0.2);
     }
   }
 }

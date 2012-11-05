@@ -17,8 +17,13 @@
         .item{class: "is-#{server.state}"}
 
           %a.primary-action{href: server_path(server)}
-
             %h2.name= server.name
+            .state
+              - case server.state
+              - when :up, :super
+                = server.address
+              - else
+                Not running
 
           %ul.nav.nav-pills.nav-pills-images.pull-right
             - if server.world and server.world.mapped?
