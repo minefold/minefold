@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121105015732) do
+ActiveRecord::Schema.define(:version => 20121105185652) do
 
   create_table "comments", :force => true do |t|
     t.integer  "server_id"
@@ -110,6 +110,7 @@ ActiveRecord::Schema.define(:version => 20121105015732) do
     t.datetime "stop_at"
   end
 
+  add_index "servers", ["deleted_at", "creator_id"], :name => "index_servers_on_deleted_at_and_creator_id"
   add_index "servers", ["host"], :name => "index_servers_on_host", :unique => true
   add_index "servers", ["party_cloud_id"], :name => "index_servers_on_party_cloud_id", :unique => true
 
@@ -171,5 +172,6 @@ ActiveRecord::Schema.define(:version => 20121105015732) do
   end
 
   add_index "worlds", ["party_cloud_id"], :name => "index_worlds_on_party_cloud_id", :unique => true
+  add_index "worlds", ["server_id"], :name => "index_worlds_on_server_id"
 
 end
