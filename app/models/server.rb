@@ -27,10 +27,14 @@ class Server < ActiveRecord::Base
     funpack.game
   end
 
+  def run?
+    start_at? and stop_at?
+  end
+
   def state
     if super_server?
       :super
-    elsif start_at.past? and stop_at.future?
+    elsif run? and start_at.past? and stop_at.future?
       :up
     else
       :stopped
