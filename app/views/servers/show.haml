@@ -20,7 +20,7 @@
         = server.start_at.strftime("%l:%M%P")
         on
         = server.start_at.strftime("%a %b %-m, %Y")
-      
+
     .row
       .span2 Stopping
       .span6
@@ -28,7 +28,7 @@
         on
         = server.stop_at.strftime("%a %b %-m, %Y")
         (#{pluralize server.ttl / 1.minute, 'min', 'mins'} from now)
-        
+
 
 - if can?(:update, server) and server.normal?
   = form_tag extend_server_path(server), method: 'put', class: 'server-controls' do
@@ -40,47 +40,47 @@
             Extend by
           - else
             Start for
-            
+
       .span6
         %select#extend-server-time-select{name: 'mins'}
           - 1.upto(24) do |h|
             %option{value: (h.hours / 1.minute)}
               = pluralize h, 'hour', 'hours'
-        
+
         .extension-info
           %span.planned This will cost #{credits_with_image(5 * 60)},
           %span.current you have #{credits_with_image(current_user.credits)}.
           %a.buy-credits{href: new_orders_path, data: {toggle: 'modal', target: '#buy-credits-modal'}} Buy more credits.
 
         %input.btn.btn-primary.btn-mini.btn-success{type: 'submit', value: (server.running? ? 'Extend time' : 'Start server')}
-    
+
   - content_for :tail do
     :javascript
       var timeSelect = $('#extend-server-time-select');
       timeSelect.find('option').each(function(el) {
         var $this = $(this),
             t = moment().add('minutes', parseInt($this.val(), 10));
-        
+
         $this.text($this.text() + " (" + t.calendar() + ")");
       });
-  
-  
+
+
       timeSelect.change(function(e) {
         var $el = $(e.target),
             mins = parseInt($el.val(), 10),
             rate = 5,
             cost = mins * rate;
-        
+
         $('.extension-info .planned .cr').text(cost);
-        
+
         var tooExpensive = cost > app.currentUser.get('credits');
-        
+
         $('.server-controls').toggleClass('is-too-expensive', tooExpensive);
-        
+
         $el.parents('form').find('input[type=submit]').attr('disabled', tooExpensive);
-        
+
       });
-    
+
       timeSelect.change();
 
 
@@ -90,13 +90,13 @@
     = form_for [server, Comment.new], method: 'POST', html: {class: %w(new-comment-form row)} do |f|
       .span1
         = image_tag current_user.avatar.large.url, width: 60, height: 60, class: 'img-circle'
-        
+
       .span7
         .comment-meta
           %span.comment-author= current_user.username
         = f.text_area :body, height: 4, class: %w(span5)
         = f.submit 'Comment', class: %w(btn)
-  
+
   - server.comments.each do |comment|
     .comment.row
       .span1
