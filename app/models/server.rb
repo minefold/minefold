@@ -3,7 +3,7 @@ class Server < ActiveRecord::Base
 
   acts_as_paranoid
 
-  belongs_to :creator, class_name: 'User'
+  belongs_to :creator, class_name: 'User', :inverse_of => :created_servers
 
   belongs_to :funpack
   validates_presence_of :funpack

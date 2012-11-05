@@ -10,7 +10,7 @@ class ServersController < ApplicationController
 # --
 
   def index
-    @servers = Server.where(:creator_id => current_user.id).all.group_by {|s| s.funpack.game }
+    @servers = current_user.created_servers.group_by {|s| s.funpack.game }
   end
 
   def new
