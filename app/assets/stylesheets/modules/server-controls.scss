@@ -1,0 +1,29 @@
+@import 'vars';
+
+.server-controls {
+  margin-top: - lines(2);
+  padding-top: lines(2);
+  padding-bottom: lines(2);
+  background-color: darken(white, 2%);
+
+  h4 {
+    line-height: lines(5);
+    margin: 0;
+    padding-left: $gw-gutter;
+    font-size: 14px;
+  }
+
+  .extension-info .buy-credits {
+    display: none;
+  }
+
+  &.is-too-expensive {
+    .extension-info {
+      color: $red;
+    }
+
+    .buy-credits {
+      display: block;
+    }
+  }
+}

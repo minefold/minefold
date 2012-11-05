@@ -1,0 +1,17 @@
+@import 'vars';
+
+.server-meta {
+  margin-bottom: lines(2);
+  border: 2px solid rgba(black, 0.05);
+  border-top: none;
+
+  padding-top: lines(2);
+  padding-bottom: lines(2);
+
+  .key {
+    padding-left: $gw-gutter / 2; padding-right: $gw-gutter / 2;
+    font-weight: 600;
+    @include box-sizing(border-box);
+  }
+
+}

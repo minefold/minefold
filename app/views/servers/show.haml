@@ -11,31 +11,58 @@
 
 / --
 
-.server-state{class: "is-#{server.state}"}
+.server-meta
   - case server.state
+  - when :super
+    .row
+      .span2.key Address
+      .span5
+        %span.server-address= server.address
+
+    .row
+      .span2.key Up since
+      .span5= l server.created_at
+
   - when :up
     .row
-      .span2 Started
-      .span6
+      .span2.key Address
+      .span5
+        %span.server-address= server.address
+
+    .row
+      .span2.key Up since
+      .span5
         = server.start_at.strftime("%l:%M%P")
         on
         = server.start_at.strftime("%a %b %-m, %Y")
 
     .row
-      .span2 Stopping
-      .span6
+      .span2.key Stopping
+      .span5
         = server.stop_at.strftime("%l:%M%P")
         on
         = server.stop_at.strftime("%a %b %-m, %Y")
         (#{pluralize server.ttl / 1.minute, 'min', 'mins'} from now)
 
+  - when :stopped
+    .row
+      .span2.key State
+      .span5 Stopped
+
+  - # TODO: Hack for Minecraft!
+  .row
+    .span2.key Players
+    .span5{style: 'overflow:auto'}
+      - server.settings['whitelist'].lines.map(&:strip).each do |username|
+        .pull-left{style: 'margin-right:5px;margin-bottom:10px'}
+          = image_tag "https://minotar.net/helm/#{username}/20.png", class: 'image-circle', alt: username
 
 - if can?(:update, server) and server.normal?
   = form_tag extend_server_path(server), method: 'put', class: 'server-controls' do
     %input#mins{type: 'hidden', name: 'mins'}
     .row
       .span2
-        %h4
+        %h4.align-right
           - if server.running?
             Extend by
           - else
