@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 
 ruby '1.9.3'
 
-gem 'thin'
+gem 'unicorn'
 gem 'rails', '3.2.8'
 gem 'rake'
 gem 'pg'

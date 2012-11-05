@@ -1,4 +1,2 @@
-require 'redis'
-
-worker_processes 1
+worker_processes 2
 timeout 30
