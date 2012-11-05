@@ -78,11 +78,8 @@
     }
 
     &.is-super, &.is-up {
-      border-left-width: 4px;
-      border-left-color: $green;
-
-      .primary-action {
-        padding-left: ($gw-gutter / 2) - 2px;
+      .server-address {
+        color: $green;
       }
     }
 
