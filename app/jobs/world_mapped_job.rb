@@ -4,14 +4,19 @@ class WorldMappedJob < Job
     @world = World.find_by_party_cloud_id(id)
     @timestamp, @map_data = timestamp, map_data
   end
-  
+
   def perform?
     not @world.nil?
   end
 
   def perform!
     @world.last_mapped_at = Time.at(@timestamp)
-    @world.map_data = @map_data
+    # TODO Actualy sent the nice data from the mapping job.
+    @world.map_data = {
+      zoom_levels: @map_data['zoomLevels'],
+      tile_size:   @map_data['tileSize'],
+      spawn:       @map_data['markers'].find {|m| m['type'] == 'spawn'}
+    }
     @world.save!
   end
 
