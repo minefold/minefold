@@ -5,7 +5,9 @@ module BootstrapFormHelpers
   def control_group(*fields, &blk)
     group_class = ['control-group']
 
-    if object.errors.any? and fields.any? {|field| self.object.errors[field].any? }
+    obj = object or (parent_builder and parent_builder.object)
+
+    if obj and obj.errors.any? and fields.any? {|field| obj.errors[field].any? }
       group_class << 'error'
     end
 
