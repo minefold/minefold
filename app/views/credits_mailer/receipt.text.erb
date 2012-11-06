@@ -1,5 +1,3 @@
-Hi <%= @user.username %>,
-
 Thanks for using Minefold! This is a receipt for your recently purchased Minefold Credits.
 
 Credit Card Receipt
@@ -21,12 +19,3 @@ Total Charged: <%= number_to_currency(@charge.amount / 100) %> <%= @charge.curre
 Credits: <%= @credit_pack.credits %>
 
 If this charge was made in error, or you need a refund, please email: support+<%= @charge.id %>@minefold.com
-
-
-Lots of love,
-
-The Minefold Team
-
---
-Simple game servers: https://minefold.com
-@minefold

@@ -15,7 +15,7 @@ Minefold::Application.configure do
       :api_host => ENV['MAILGUN_DOMAIN']
   }
 
-  ActionMailer::Base.default from: 'Minefold <team@minefold.com>'
+  ActionMailer::Base.default from: 'Minefold <support@minefold.com>'
 
   config.middleware.use Rack::WWW, www: false
 
@@ -33,7 +33,7 @@ Minefold::Application.configure do
   config.assets.compress = true
 
   config.assets.digest = true
-  
+
   config.assets.precompile += %w( tumblr.css )
 
   # Compress both stylesheets and JavaScripts

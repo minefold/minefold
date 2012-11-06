@@ -15,7 +15,7 @@ Minefold::Application.configure do
       :api_host => ENV['MAILGUN_DOMAIN']
   }
 
-  ActionMailer::Base.default from: 'Minefold <team@minefold-staging.herokuapp.com>'
+  ActionMailer::Base.default from: 'Minefold <support@minefold-staging.herokuapp.com>'
 
   # Code is not reloaded between requests
   config.cache_classes = true
@@ -31,7 +31,7 @@ Minefold::Application.configure do
   config.assets.compress = true
 
   config.assets.digest = true
-  
+
   config.assets.precompile += %w( tumblr.css )
 
   # Compress both stylesheets and JavaScripts

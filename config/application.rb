@@ -50,7 +50,7 @@ module Minefold
     # Fix for Devise on Heroku
     #   https://github.com/plataformatec/devise#heroku
     config.assets.initialize_on_precompile = false
-    
+
     config.generators do |g|
       g.orm :active_record
       g.template_engine :haml
@@ -63,6 +63,10 @@ module Minefold
 
     # Neutralize field_with_errors
     config.action_view.field_error_proc = ->(html_tag, instance){ html_tag.html_safe }
+
+    config.to_prepare do
+      Devise::Mailer.layout 'email'
+    end
 
   end
 end
