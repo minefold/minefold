@@ -29,9 +29,9 @@
     = f.text_field :seed, tabindex: 2
 
 :javascript
-  var seed = $('input#server_settings_seed');
-  if (seed.val() === '') {
-    seed.val(new Date().getTime());
+  var seed = document.getElementById('server_settings_seed');
+  if (seed.value === '') {
+    seed.value = new Date().getTime();
   }
 
 %hr
