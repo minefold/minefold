@@ -24,12 +24,16 @@
 
         - @games.each do |game|
           .control-group
-            .control-label= game.name
+            %h3.control-label= game.name
             .controls
               - game.funpacks.each do |funpack|
-                %label.radio{for: "server_funpack_id_#{funpack.id.to_s}"}
-                  = funpack.name
+                %label.radio{for: "server_funpack_id_#{funpack.id.to_s}", style: 'margin-bottom:20px'}
                   %input{type: 'radio', name: 'server[funpack_id]', value: funpack.id.to_s, id: "server_funpack_id_#{funpack.id.to_s}"}
+
+                  %strong.name{style: 'margin-right:10px'}
+                    = funpack.name
+                  %small= link_to "Official Site", funpack.info_url
+                  .description= markdown(funpack.description)
 
 
         %center.alert

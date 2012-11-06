@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121105185652) do
+ActiveRecord::Schema.define(:version => 20121106011358) do
 
   create_table "comments", :force => true do |t|
     t.integer  "server_id"
@@ -36,6 +36,8 @@ ActiveRecord::Schema.define(:version => 20121105185652) do
     t.integer "game_id"
     t.integer "creator_id"
     t.string  "party_cloud_id"
+    t.text    "description"
+    t.string  "info_url"
   end
 
   add_index "funpacks", ["game_id"], :name => "index_funpacks_on_game_id"
