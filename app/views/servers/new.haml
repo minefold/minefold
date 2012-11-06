@@ -31,6 +31,12 @@
                   = funpack.name
                   %input{type: 'radio', name: 'server[funpack_id]', value: funpack.id.to_s, id: "server_funpack_id_#{funpack.id.to_s}"}
 
+
+        %center.alert
+          Want other mods?
+          %a{href: "http://partycloud.com/?email=#{u(current_user.email)}"} Sign up at the Party Cloud
+          to get first access to Minefold's developer platform.
+
         .form-actions
           %a.btn.btn-primary.pull-right#game-next-button{href: '#settings', disabled: true} Settings &rarr;
 
