@@ -78,6 +78,11 @@
           = f.check_box :allow_nether, tabindex: 9, checked: true
           Nether
 
+      .controls
+        = f.label :control_blocks, class: 'checkbox' do
+          = f.check_box :control_blocks, tabindex: 9, checked: true
+          Control blocks
+
 %hr.large
 
 - players = current_user.players.minecraft.collect(&:uid).join("\n")
