@@ -48,31 +48,31 @@
           e.src = '//db2uk9yp28y61.cloudfront.net/';
           (d.head || d.getElementsByTagName('head')[0]).appendChild(e);
         })(window, document, window._crashmat, window.onerror);
-    
+
     // Mixpanel
     :javascript
       (function(c,a){window.mixpanel=a;var b,d,h,e;b=c.createElement("script");b.type="text/javascript";b.async=!0;b.src=("https:"===c.location.protocol?"https:":"http:")+'//api.mixpanel.com/site_media/js/api/mixpanel.2.js';d=c.getElementsByTagName("script")[0];d.parentNode.insertBefore(b,d);a._i=[];a.init=function(b,c,f){function d(a,b){var c=b.split(".");2==c.length&&(a=a[c[0]],b=c[1]);a[b]=function(){a.push([b].concat(Array.prototype.slice.call(arguments,0)))}}var g=a;"undefined"!== typeof f?g=a[f]=[]:f="mixpanel";g.people=g.people||[];h="disable track track_pageview track_links track_forms register register_once unregister identify name_tag set_config people.set people.increment".split(" ");for(e=0;e<h.length;e++)d(g,h[e]);a._i.push([b,c,f])};a.__SV=1.1})(document,window.mixpanel||[]);
       mixpanel.init(#{ENV['MIXPANEL'].to_json}, {cookie_name: 'mixpanel'});
       mixpanel.register_once({'landing page': window.location.href});
-    
+
     // Mixpanel
     - if signed_in?
       :javascript
         mixpanel.identify(#{current_user.distinct_id.to_json});
         mixpanel.people.set(#{mixpanel_person.to_json});
-    
+
     // Typekit
     %script{type: 'text/javascript', src: '//use.typekit.net/qzl8aqw.js'}
     :javascript
       try{Typekit.load();}catch(e){}
-    
+
     = yield :head
 
 
   %body{class: @layouts}
     #fb-root
     #Intercom
-    
+
     = render partial: 'orders/buy_credits_modal'
 
     #page-background-block
@@ -97,7 +97,7 @@
                   %li.sign-in= link_to 'Sign In', new_user_session_path
 
                 - else
-                  
+
                   %li.credits
                     %a{href: new_orders_path, data: { toggle: 'modal', target: '#buy-credits-modal' }}
                       = credits_with_image(current_user.credits)
@@ -107,17 +107,17 @@
                         model: app.currentUser,
                         el: $('header .credits .cr')
                       });
-                  
+
                   %li.user.dropdown
                     %a.dropdown-toggle{href: '#', data: {toggle: 'dropdown'}}
                       = current_user.username
                       %b.caret.white
-                      
+
                     %ul.dropdown-menu.pull-right
                       %li= link_to 'Settings', edit_user_registration_path
                       %li= link_to 'Sign out', destroy_user_session_path, method: :delete
 
-              
+
       .container
         - flash.select {|_,msg| msg.is_a?(String) }.each do |name, msg|
           %div.alert.alert-block{class: "alert-#{name}"}
@@ -127,8 +127,12 @@
       .container
         #app= yield
 
-    
+
     %footer
+      %ul.unstyled.social
+        %li.twitter= link_to 'Follow @minefold on Twitter', 'https://twitter.com/minefold'
+        %li.facebook= link_to 'Like Minefold on Facebook', 'https://facebook.com/minefold'
+
       %ul.unstyled
         %li= link_to 'Pricing', pricing_page_path
         %li= link_to 'Support', support_page_path
@@ -139,9 +143,9 @@
       %p.copyright
         &copy;
         %a{href: 'http://mutlicorp.com'} Mütli Corp.
-          
+
         Made for fun in San Francisco.
-          
+
         = link_to 'Privacy', privacy_page_path
         = link_to 'Terms', terms_page_path
 
@@ -151,13 +155,13 @@
     = javascript_include_tag '//d3dy5gmtp8yhk7.cloudfront.net/1.12/pusher.min.js'
     = javascript_include_tag 'https://js.stripe.com/v1'
     = javascript_include_tag 'application'
-    
+
     :javascript
       window.pusher = new Pusher(#{Pusher.key.to_json});
-    
+
     :javascript
       Stripe.setPublishableKey(#{ENV['STRIPE_PUBLISHABLE'].to_json});
-    
+
     :javascript
       window.app = new Application();
 
@@ -230,8 +234,8 @@
             window.addEventListener('load', async_load, false);
           }
         })();
-    
-    
+
+
     // Gauges
     - if Rails.env.production?
       :javascript

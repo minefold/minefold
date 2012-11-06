@@ -7,38 +7,35 @@ footer {
   padding-left: $gw-gutter; padding-right: $gw-gutter;
   font-weight: 800;
   text-align: center;
-  
-  .ad {
-    padding: lines(4) $gw-gutter;
-    font-size: 16px;
-    margin-bottom: 40px;
-    height: grid-width(2);
-    
-    &:hover {
 
-    }
-  }
-  
-  .ad-twitter {
-    background: $blue;
-  }
-  
   ul {
     @include clearfix;
     text-align: center;
     margin-left: - $gw-gutter;
-    
+    font-size: 18px;
+
     li {
       @include inline-block;
       margin-left: $gw-gutter;
-      font-size: 18px;
-      
+
       &:first-child {
         margin-left: 0;
       }
     }
   }
-  
+
+  ul.social {
+    font-size: 14px;
+    margin-bottom: lines(4);
+    > .twitter a {
+      color: lighten($blue, 20%);
+    }
+
+    > .facebook a {
+      color: $blue;
+    }
+  }
+
   a {
     color: white;
   }
@@ -51,11 +48,11 @@ footer {
   .copyright {
     color: rgba(white, 0.4);
     font-size: 12px;
-    
+
     a {
       color: rgba(white, 0.6);
       border: none;
-      
+
       &:hover {
         color: rgba(white, 0.8);
       }
