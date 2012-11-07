@@ -126,12 +126,19 @@
 
 
         = f.control_group :shared do
-          %table.table.server-types-table.is-normal{class: ('is-shared-disabled' unless can_create_shared_servers?(current_user, @funpack))}
+          %table.table.server-types-table{class: ('is-shared-disabled' unless can_create_shared_servers?(current_user, @funpack))}
             %thead
               %tr
                 %th
-                %th.normal Normal Server
-                %th.shared Shared Server
+                %th.normal
+                  Normal Server
+                  %br
+                  %small You pay the cost
+                %th.shared
+                  Shared Server
+                  %br
+                  %small Split cost with friends
+
 
             %tbody
               %tr.availability-row
