@@ -10,18 +10,20 @@ class Server < ActiveRecord::Base
 
   default_scope includes(:funpack => :game)
 
-  has_many :memberships
+  has_many :memberships, :dependent => :destroy
   has_many :users, :through => :memberships
 
   validates_presence_of :name
 
   store :settings
 
-  has_many :comments, order: 'created_at DESC'
+  has_many :comments, order: 'created_at DESC', :dependent => :destroy
 
   has_one :world, order: 'updated_at ASC'
 
-  validates_uniqueness_of :host
+  # TODO Actually do this validation
+  # validates_presence_of :host, :if => :shared?
+  validates_uniqueness_of :host, allow_nil: true
 
   # Using a method instead of `has_one :game, :through => :funpack`. This field should be read only.
   def game
@@ -73,6 +75,15 @@ class Server < ActiveRecord::Base
 
     # PartyCloud.start_world
     # $partycloud.lpush 'StartWorldJob', [funpack.party_cloud_id, settings, args]
+  end
+
+  after_create :allocate_shared_host!
+
+  def allocate_shared_host!
+    if shared?
+      self.host = [self.id.to_s, 'foldserver', 'com'].join('.')
+      save!
+    end
   end
 
 end
