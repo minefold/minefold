@@ -21,6 +21,7 @@ class Server < ActiveRecord::Base
 
   has_one :world, order: 'updated_at ASC'
 
+  validates_uniqueness_of :host
 
   # Using a method instead of `has_one :game, :through => :funpack`. This field should be read only.
   def game
@@ -60,11 +61,7 @@ class Server < ActiveRecord::Base
   end
 
   def address
-    if super_server?
-      "#{id}.pluto.minefold.com"
-    else
-      "#{host}:#{port}"
-    end
+    [host, port].compact.join(':')
   end
 
   def start!(ttl = nil)

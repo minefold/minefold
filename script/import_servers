@@ -8,7 +8,6 @@ require 'pp'
 require File.expand_path('../../config/boot',  __FILE__)
 require File.expand_path('../../config/environment',  __FILE__)
 
-
 $db = Mongo::Connection.new('localhost', 27017, :safe => true)['minefold']
 
 minecraft = Game.where(name: 'Minecraft').first
@@ -16,17 +15,19 @@ vanilla = minecraft.funpacks.where(name: 'Official').first
 bukkit = minecraft.funpacks.where(name: 'Bukkit').first
 
 # Clean
-Server.delete_all
-World.delete_all
+Server.unscoped.delete_all
+World.unscoped.delete_all
 
-$db[:worlds].find({}, timeout: false) do |cursor|
+$db[:worlds].find({'deleted_at' => nil}, timeout: false) do |cursor|
   cursor.each do |raw|
     begin
       s = Server.new
 
       # Creator
-      s.creator = User.find_by_legacy_id(raw['creator_id'].to_s)
-      next unless s.creator
+      s.creator = User.unscoped.find_by_legacy_id(raw['creator_id'].to_s)
+      raw_player = $db[:minecraft_players].find({'user_id' => raw['creator_id']}).first
+
+      next unless s.creator and raw_player and raw_player['slug'].present?
 
       s.users << s.creator
 
@@ -40,6 +41,8 @@ $db[:worlds].find({}, timeout: false) do |cursor|
 
       s.name = raw['name']
       s.super_server = true
+
+      s.host = [raw['slug'], raw_player['slug'], 'minefold','com'].join('.')
 
       # Stats
       s.pageviews = raw['pageviews']
