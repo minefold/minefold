@@ -1,0 +1,67 @@
+@import 'vars';
+
+.table.server-types-table {
+  margin-top: lines(8);
+  margin-bottom: lines(8);
+
+  thead th {
+   border-bottom: 2px solid rgba(black, 0.05);
+   padding: lines(2) 0;
+   font-size: 18px;
+  }
+
+  .normal, .shared {
+    text-align: center;
+    cursor: pointer;
+
+    &:hover, &.hover {
+      background: lighten($blue, 50%);
+      color: darken($blue, 20%);
+    }
+  }
+
+  small {
+    color: rgba(black, 0.4);
+  }
+
+  .how-much-row td {
+    line-height: lines(8);
+
+    .normal, .shared {
+      font-size: 18px;
+      line-height: lines(4);
+      color: rgba(black, 0.4);
+    }
+
+    .num {
+      display: block;
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: - lines(4);
+    }
+
+  }
+
+  .normal.is-active, .shared.is-active {
+    background-color: $green;
+    color: white;
+    small {
+      color: rgba(white, 0.6);
+    }
+  }
+
+  thead th.normal.is-active, thead th.shared.is-active {
+    color: white;
+  }
+
+  tbody td.normal.is-active, tbody td.shared.is-active {
+    border-top-color: darken($green, 5%);
+  }
+
+  &.is-shared-disabled {
+    .shared {
+      color: rgba(black, 0.4);
+    }
+  }
+
+}

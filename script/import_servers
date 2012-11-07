@@ -40,7 +40,7 @@ $db[:worlds].find({'deleted_at' => nil}, timeout: false) do |cursor|
       s.deleted_at = raw['deleted_at']
 
       s.name = raw['name']
-      s.super_server = true
+      s.shared = true
 
       s.host = [raw['slug'], raw_player['slug'], 'minefold','com'].join('.')
 

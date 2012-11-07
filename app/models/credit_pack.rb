@@ -1,7 +1,7 @@
 class CreditPack < ActiveRecord::Base
 
-  SUPER_CREDITS_PER_HOUR = 60
   NORMAL_CREDITS_PER_HOUR = 300
+  SHARED_CREDITS_PER_HOUR = 60
 
   # Stub for when we start experimenting with CreditPack pricing.
   scope :active, limit(4).order("cents ASC")
@@ -18,12 +18,12 @@ class CreditPack < ActiveRecord::Base
     cents / credits.to_f
   end
 
-  def super_hours
-    credits / SUPER_CREDITS_PER_HOUR
-  end
-
   def normal_hours
     credits / NORMAL_CREDITS_PER_HOUR
+  end
+
+  def shared_hours
+    credits / SHARED_CREDITS_PER_HOUR
   end
 
 end

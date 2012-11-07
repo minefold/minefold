@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121106202934) do
+ActiveRecord::Schema.define(:version => 20121107011737) do
 
   create_table "comments", :force => true do |t|
     t.integer  "server_id"
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(:version => 20121106202934) do
     t.string   "name"
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
-    t.boolean  "super_servers",  :default => false, :null => false
+    t.boolean  "shared_servers", :default => false, :null => false
     t.string   "slug",           :default => ""
     t.boolean  "persistant",     :default => false, :null => false
     t.string   "party_cloud_id"
@@ -105,7 +105,7 @@ ActiveRecord::Schema.define(:version => 20121106202934) do
     t.integer  "pageviews",            :default => 0
     t.datetime "created_at",                              :null => false
     t.datetime "updated_at",                              :null => false
-    t.boolean  "super_server",         :default => false, :null => false
+    t.boolean  "shared",               :default => false, :null => false
     t.string   "party_cloud_id"
     t.datetime "deleted_at"
     t.datetime "start_at"

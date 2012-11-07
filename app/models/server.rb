@@ -1,5 +1,5 @@
 class Server < ActiveRecord::Base
-  attr_accessible :name, :funpack_id, :super_server, :settings
+  attr_accessible :name, :funpack_id, :shared, :settings
 
   acts_as_paranoid
 
@@ -33,8 +33,8 @@ class Server < ActiveRecord::Base
   end
 
   def state
-    if super_server?
-      :super
+    if shared?
+      :shared
     elsif run? and start_at.past? and stop_at.future?
       :up
     else
@@ -43,7 +43,7 @@ class Server < ActiveRecord::Base
   end
 
   def up?
-    state == :super or state == :up
+    state == :shared or state == :up
   end
 
   alias_method :running?, :up?
@@ -57,7 +57,7 @@ class Server < ActiveRecord::Base
   end
 
   def normal?
-    not super_server?
+    not shared?
   end
 
   def address

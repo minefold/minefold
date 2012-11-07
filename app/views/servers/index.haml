@@ -20,7 +20,7 @@
             %h2.name= server.name
             .state
               - case server.state
-              - when :up, :super
+              - when :up, :shared
                 %span.server-address= server.address
               - else
                 (not running)

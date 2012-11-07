@@ -16,7 +16,7 @@ Reward.create(name: 'minecraft linked', credits: 400)
 
 minecraft = Game.create(
   name: 'Minecraft',
-  super_servers: true,
+  shared_servers: true,
   persistant: true
 )
 

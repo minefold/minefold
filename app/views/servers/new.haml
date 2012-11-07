@@ -15,7 +15,7 @@
       / Game
       / --
 
-      %fieldset.tab-pane.active#game
+      %fieldset.tab-pane#game
         %ol.progressmeter.progressmeter-3
           %li.active
             %a{href: '#game', data: {toggle: 'tab'}} Game
@@ -56,18 +56,18 @@
               data: { funpack_id: funpackId },
               dataType: 'html',
               type: 'GET'
-            })
-            .error(function() {
-              console.log('error');
-            })
-            .done(function(html) {
+            }).
+            error(function() {
+              // console.log('error');
+            }).
+            done(function(html) {
               $('#new_funpack_settings').html(html);
-              $('#game-next-button')
-                .click(function(e) {
+              $('#game-next-button').
+              click(function(e) {
                   e.preventDefault();
                   $(this).tab('show');
-                })
-                .attr('disabled', false);
+                }).
+              attr('disabled', false);
             });
 
           });
@@ -104,7 +104,7 @@
       / Billing
       / --
 
-      %fieldset.tab-pane#billing
+      %fieldset.tab-pane.active#billing
         %ol.progressmeter.progressmeter-3
           %li.previous
             %a{href: '#game', data: {toggle: 'tab'}} Game
@@ -115,25 +115,97 @@
           %li.active
             %a{href: '#settings', data: {toggle: 'tab'}} Billing
 
-        = f.control_group :super_server do
-          .controls
-            %label.radio
-              = f.radio_button :super_server, false
-              %strong Normal Server
-              %p It costs you (the owner) <strong>5 cr</strong> an hour to run the server. Any member can play on the server without costing them any credits. You choose when to start and stop the server.
-              %p Reccomended for families and schools.
+        - if not can_create_shared_servers?(current_user, @funpack)
+          - if not current_user.minecraft_linked?
+            .alert
+              You need to
+              = link_to 'link your Minecraft account', edit_user_registration_path
+              before you can create or play on shared servers.
 
-            %label.radio{class: ('muted' if !@funpack.game.super_servers?)}
-              = f.radio_button :super_server, true, disabled: !@funpack.game.super_servers?
-              %strong Super Server
-              %p It costs each person <strong>1cr</strong> an hour to play on the server. The server is always running.
-              %p Reccomended for groups of friends.
+          - # TODO Alert if the funpack doesn't support shared servers
 
-              - if !@funpack.game.super_servers?
-                .alert
-                  #{@funpack.game.name} doesn't support individual billing.
 
+        = f.control_group :shared do
+          %table.table.server-types-table.is-normal{class: ('is-shared-disabled' unless can_create_shared_servers?(current_user, @funpack))}
+            %thead
+              %tr
+                %th
+                %th.normal Normal Server
+                %th.shared Shared Server
+
+            %tbody
+              %tr.availability-row
+                %td Availability
+                %td.normal
+                  On-demand
+                  %br
+                  %small Manual start and stop.
+                %td.shared
+                  Always up
+                  %br
+                  %small The server is running 24/7.
+
+              %tr.who-pays-row
+                %td Who pays?
+                %td.normal
+                  You
+                  %br
+                  %small (only while it's running)
+                %td.shared
+                  Players
+                  %br
+                  %small (only while they're playing)
+
+              %tr.how-much-row
+                %td How much?
+                %td.normal
+                  %span.num 5
+                  %small cr/min
+                %td.shared
+                  %span.num 1
+                  %small cr/min each
+
+              %tr.checkbox-row
+                %td
+                %td.normal
+                  - # TODO %p is a hack
+                  %p= f.radio_button :shared, false, selected: false
+                %td.shared
+                  %p= f.radio_button :shared, true, selected: false, disabled: (!can_create_shared_servers?(current_user, @funpack))
 
         .form-actions
           %a.btn.pull-left{href: '#settings', data: {toggle: 'tab'}} &larr; Settings
-          = f.submit 'Create server', class: %w(btn btn-primary pull-right)
+          = f.submit 'Create server', class: %w(btn btn-primary pull-right), id: 'final-submit'
+
+        - content_for :tail do
+          :javascript
+            $(document).ready(function() {
+              var table = $('.server-types-table'),
+                  submit = $('#final-submit'),
+                  colHover = function(col) {
+                    return function() {
+                      table.find("."+col).toggleClass('hover', !$(this).hasClass('hover'));
+                    }
+                  },
+                  colSelect = function(col) {
+                    return function() {
+                      table.find('th,td').removeClass('is-active');
+                      table.find('.'+col).addClass('is-active');
+                      table.find('.'+col+' input[type=radio]').attr({checked: true});
+                    }
+                  };
+
+              table.find('.normal').
+                hover(colHover('normal')).
+                click(colSelect('normal')).click(function() {
+                  submit.val('Create a normal server');
+                });
+
+              table.find('.shared').
+                hover(colHover('shared')).
+                click(colSelect('shared')).click(function() {
+                  submit.val('Create a shared server');
+                });
+
+              table.find('.normal').click();
+            });
