@@ -2,12 +2,64 @@
 - layout :home
 - track_pageview
 
+- # A/B Testing with no B
+- if false
+  - content_for :pre do
+    #paper
+
+  - content_for :tail do
+    %script{src: 'https://raw.github.com/DmitryBaranovskiy/raphael/master/raphael.js'}
+
+    :javascript
+      var paper, colors, makeYouRandy, circle, rect, zigzag, triangle, shapes;
+
+      paper = Raphael($('#paper')[0]);
+
+      colors = ['#F34', '#5C2', '#06C', '#FD0', '#CCC'];
+
+      makeYouRandy = function(shape) {
+        shape.translate(rand(paper.width - 100), rand(paper.height - 400));
+        scale = Math.random();
+        shape.scale(scale, scale);
+        shape.rotate(rand(360));
+
+        shape.attr({
+          stroke: colors[rand(colors.length)],
+          'stroke-width': 5+rand(10),
+          opacity: Math.random() * 0.1
+        });
+      }
+
+
+      // Shapes
+
+      circle = function() {
+        return paper.circle(50, 50, 50);
+      }
+
+      rect = function() {
+        return paper.rect(0, 0, 50+rand(50), 100+rand(100));
+      }
+
+      zigzag = function() {
+        return paper.path("M0,0 L100,100 L0,200 L100,300 L0,400");
+      }
+
+      triangle = function() {
+        return paper.path("M0,0 L100,100 L0,200 Z");
+      }
+
+      shapes = [circle, rect, zigzag, triangle];
+
+      for(var i = 0; i<(20 + rand(30)); i++) {
+        var shape = shapes[rand(shapes.length)]();
+        makeYouRandy(shape);
+      }
+
+
 .hero-unit
   %h1 Simple game servers.
   %h2 Available instantly. Free to get started.
-
-/ Commenting this out makes me sad panda
-/ #movie{width: 640, height: 360}
 
 %section.games-list
   - @featured_games.each do |game, servers_count|
@@ -24,67 +76,40 @@
 %section.feature-list
   .row
     .feature.span4
-      %h4 Setup
-      %p It takes seconds to start a game server for you and your friends. No technical mumbo-jumbo needed: just choose your settings and it's ready to go. If you want more control you can upload your own custom configuration.
-
-      %br
-
-      = image_tag 'setup.png'
+      %h4 Fast setup
+      %p It takes seconds to start a playing with your friends. No tech mumbo-jumbo required: just pick your settings and go.
 
     .feature.span4
-      %h4 Play
-      %p Our servers are custom built to deliver the smoothest gaming experience possible. Minefold seamlessly geolocates your server and dynamically manage it's resources. No more RAM, no more lag.
-
-      %br
-
-      #map_canvas{style: 'width:300px;height:200px;'}
-      - content_for :tail do
-        = javascript_include_tag '//maps.google.com/maps/api/js?sensor=false'
-        :javascript
-          // EC2 location data from https://github.com/turnkeylinux/aws-datacenters/blob/master/input/datacenters
-          var usEast1 = new google.maps.LatLng(38.13, -78.45),
-              usWest1 = new google.maps.LatLng(41.48, -120.53),
-              usWest2 = new google.maps.LatLng(46.15, -123.88),
-              euWest1 = new google.maps.LatLng(53, -8),
-              saEast1 = new google.maps.LatLng(-23.34, -46.38),
-              apSoutheast1 = new google.maps.LatLng(1.37, 103.8),
-              apNortheast1 = new google.maps.LatLng(35.41, 139.42);
-
-          var datacentres = [usEast1, usWest1, usWest2, euWest1, saEast1, apSoutheast1, apNortheast1];
-
-          var mapOptions = {
-            center: new google.maps.LatLng(0,0),
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-            zoom: 0,
-            disableDefaultUi: true,
-            zoomControl: false,
-            scrollwheel: false,
-            mapTypeControl: false,
-            streetViewControl: false
-          };
-
-          $(document).ready(function() {
-            var map = new google.maps.Map(document.getElementById('map_canvas'),
-                        mapOptions);
-
-            for(var i=0, l=datacentres.length; i<l; ++i) {
-              new google.maps.Marker({position: datacentres[i], map: map});
-            }
-          });
-
+      %h4 Lag free
+      %p Minefold uses cutting-edge cloud technology to give you the smoothest gaming experience possible.
 
     .feature.span4
-      %h4 Show off
-      %p Every one of your servers gets it's own community page. Chat with your friends, organize parties & discuss builds. For supported games you can browse georgous interactive maps, leaderboards and other stats.
+      %h4 Instant community
+      %p Every server gets it's own site. Chat with your friends, browse interactive maps and even brag about your last win.
 
-      %br
+    .feature.span4
+      %h4 Split costs
+      %p Don't want to pay for a full server? Split the cost with shared servers: everybody pays as they play.
 
-      = image_tag 'show-off.jpg'
+    .feature.span4
+      %h4 Grief control
+      %p Secure your server so that only your friends can play. Mess up? Rollback your server to an earlier backup.
+
+    .feature.span4
+      %h4 Friendly support
+      %p We care deeply about your experience. Every employee at Minefold does support and we only hire lovely people!
+
+
+%section.call-to-action
+  .row
+    .span6.offset3
+      %p Sign up now and get <span class="cr">#{User::FREE_CREDITS}</span> for <strong>free</strong>!
+      %a.btn.btn-super.btn-block.btn-success{href: new_user_registration_path} Sign up now
+
 
 %section.press
-  %center
-    %h3 As featured in
-    %br
+  %p Everyone is talkin' 'bout us:
+  %hr
 
   .row
     %a.span2.offset3{href: 'http://techcrunch.com/2012/03/12/minefold-launch', title: 'Y Combinator-Backed Minefold Launches Affordable, On-Demand Platform For Game Hosting'}
@@ -96,9 +121,3 @@
     %a.span2{href: 'http://www.gamasutra.com/view/news/165765/Minefold_launches_with_accessible_Minecraft_server_hosting.php', title: 'Minefold launches with accessible Minecraft server hosting'}
       = image_tag 'gamasutra.png'
 
-
-%section
-  .row.call-to-action
-    %center.span4.offset4
-      %p Sign up for your free account now
-      %a.btn.btn-large.btn-block.btn-success Sign up now

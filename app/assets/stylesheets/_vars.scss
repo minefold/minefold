@@ -4,31 +4,30 @@ $futura: "futura-pt-1","futura-pt-2", $helvetica;
 
 // Colors
 
-$purple: #549;
-$blue:   #19d;
-$red:    #e31;
-$green:  #2a4;
-$yellow: #ed4;
+$red: #F34;
+$green: #5C2;
+$blue: #06C;
+$yellow: #FD0;
 
-$white: #FFF;
-$black: #000;
-
-
-$bg: darken($blue, 30%);
+$bg: black;
 
 // Grid
 
 $ncols:  12;
 
-$line: 5px;
+$line: 12px;
 $gw-column: 60px;
 $gw-gutter: 20px;
 
 $radius: 0px;
 
-@function lines($n: 1) {
+@function l($n: 1) {
   @return $n * $line;
 }
+
+// Font-sizes
+
+// {12, 14, 18, 20, 24, 36, 48, 64, 72, 96}px
 
 
 // Bootstrap mixins

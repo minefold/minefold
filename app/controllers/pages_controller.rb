@@ -16,8 +16,8 @@ class PagesController < ApplicationController
       scope = Game.where(name: name)
       servers[scope.first] = scope.servers_count
     end
-    
-    @coming_soon_games = ['Team Fortress 2', 'Counter-Strike', 'Call of Duty', 'DayZ', 'Battlefield 3']
+
+    @coming_soon_games = ['Team Fortress', 'Counter-Strike', 'Call of Duty', 'Battlefield', 'DayZ']
   end
 
   def pricing

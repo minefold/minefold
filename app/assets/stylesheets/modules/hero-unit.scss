@@ -5,22 +5,20 @@
   text-align: center;
   background-color: transparent;
 
-  padding-left: 0; padding-right: 0;
-  margin-bottom: 0;
-  
+  padding: l(6) 0;
+  margin-bottom: l(4);
+
   h1 {
     font-family: $futura;
-    margin-bottom: lines(4);
+    font-size: 64px;
+    margin-top: 0;
+    line-height: l(8);
   }
-  
+
   h2 {
-    font-size: 24px;
-    margin-bottom: lines(0);
+    font-size: 36px;
+    line-height: l(6);
+    margin-top: 0; margin-bottom: 0;
     color: lighten(black, 60%);
   }
-}
-
-.hero-unit.hero-unit-welcome-world {
-  text-align: center;
-  background-image: url(image-path('terrain.png'));
 }

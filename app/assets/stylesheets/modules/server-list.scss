@@ -10,13 +10,13 @@
     font-size: 14px;
     text-transform: uppercase;
     color: rgba(black, 0.4);
-    line-height: lines(6);
+    line-height: l(3);
     border-bottom: 2px solid rgba(black, 0.2);
     padding: 0 ($gw-gutter / 2);
   }
 
   .new {
-    padding: lines(8) 0;
+    padding: l(4) 0;
   }
 
   .item {
@@ -30,30 +30,29 @@
       display: block;
       float: left;
       width: grid-width(6);
-      padding: lines(1) ($gw-gutter / 2);
+      padding: l(1) ($gw-gutter / 2);
 
       .name {
         font-size: 18px;
-        line-height: lines(3);
+        line-height: l(2);
+        margin-top: 0; margin-bottom: 0;
       }
 
       .state {
         font-family: monospace;
         font-size: 12px;
-        line-height: lines(3);
-        margin-top: - lines(1);
-        margin-bottom: lines(1);
+        line-height: l(2);
       }
     }
 
     .nav {
       display: none;
-      margin: lines(2) 0;
+      margin: l(1) 0;
     }
 
     .nav-pills-images a {
       margin: 0;
-      padding: lines(1) ($gw-gutter / 2);
+      padding: l(1) ($gw-gutter / 2);
 
       img {
         opacity: 0.2;

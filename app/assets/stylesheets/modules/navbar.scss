@@ -1,97 +1,90 @@
 @import 'vars';
 
 .navbar {
-  padding: lines(4) 0;
+  padding: l(1) 0;
+  background-color: transparent;
 
   > .navbar-inner {
     background: transparent;
     filter: none; // For IE
     border: none;
-
+    min-height: auto;
     @include box-shadow(none);
-    padding-left: 0;
-    padding-right: 0;
+    @include clearfix;
   }
 
   .brand {
-    font-size: 28px;
-    color: black;
-    font-weight: 800;
+    font-size: 36px;
+    color: $red;
+    font-weight: 600;
     text-shadow: none;
-    line-height: lines(8);
-    padding-top: 0;
-    padding-bottom: 0;
-  }
+    line-height: l(4);
+    padding: 0 $gw-gutter;
+    margin: 0;
 
-  .brand:before {
-    content: "";
     @include inline-block;
-    float: left;
-    
-    width: lines(12);
-    height: lines(12);
-    padding: 0;
-    margin-top: - lines(2);
-    margin-left: $gw-gutter;
-    margin-right: $gw-gutter;
-
-    background: $red asset-data-url('logo-small.png') no-repeat 50% 50%;
   }
-  
+
   .nav {
-    
     li {
-      color: black;
       font-weight: 600;
       font-size: 18px;
+      padding: 0;
 
-      a {
+      a, a:hover {
         text-shadow: none;
         color: black;
         outline: none;
+        padding: 0 $gw-gutter;
+        line-height: l(4);
       }
 
-      a:hover,
-      a:focus,
-      a:active {
-        color: white;
-        background-color: $blue;
+      &.divider-vertical {
+        height: l(4);
       }
-            
+
+      &.support a {
+        color: $yellow;
+      }
+
       &.sign-up a {
-        background-color: $green;
-        color: white;
-        
-        &:hover {
-          background-color: lighten($green, 10%);
-        }
+        color: $green;
       }
-      
+
+      &.pricing a, &.servers a {
+        color: $blue;
+      }
+
+      // Navbar item for dropdown trigger
       &.dropdown {
-        
+
+        // Open state
         &.open > .dropdown-toggle {
           background-color: black;
           color: white;
-          
         }
 
-        > .dropdown-toggle .caret,
+        > .dropdown-toggle .caret {
+          border-top-color: black;
+          border-bottom-color: black;
+        }
+
         &.open > .dropdown-toggle .caret {
-          border-top-color: rgba(black, 0.4);
-          border-bottom-color: rgba(black, 0.4);
+          border-top-color: white;
+          border-bottom-color: white;
         }
       }
-      
+
       .dropdown-menu {
         @include box-shadow(none);
         border-radius: $radius;
         background-color: $blue;
         border: none;
-        
+
         &:before {
           border-bottom-color: transparent;
         }
-        
+
         &:after {
           border-bottom-color: $blue;
         }
@@ -99,10 +92,10 @@
         a {
           padding-left: $gw-gutter / 2;
           padding-right: $gw-gutter / 2;
-          
+
           color: white;
           font-weight: 600;
-          
+
           &:hover {
             background: lighten($blue, 5%);
           }

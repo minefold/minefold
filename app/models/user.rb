@@ -178,6 +178,8 @@ class User < ActiveRecord::Base
     # end
   end
 
+  FREE_CREDITS = 600
+
   MIN_CREDITS = 600
   CREDIT_FAIRY_PERIOD = 30.days # Ewww
 

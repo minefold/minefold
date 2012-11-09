@@ -5,7 +5,7 @@
 .time-packs {
   > * {
     text-align: center;
-    padding: lines(4) 0;
+    padding: l(4) 0;
     border: 2px solid darken(white, 5%);
     border-radius: $radius;
     @include box-sizing(border-box);
@@ -23,7 +23,7 @@
   .time {
     font-size: 28px;
     line-height: 60px;
-    color: $black;
+    color: black;
   }
 
   .price {

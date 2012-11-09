@@ -11,8 +11,8 @@ form {
     border: none;
     @include box-shadow(0 0 0 2px rgba(black, 0.2) inset);
     border-radius: $radius;
-    padding: 5px 10px;
-    line-height: lines(6);
+    padding: (l(1) / 2) 10px;
+    line-height: l(2);
     color: black;
     @include box-sizing(border-box);
     min-height: 40px;
@@ -38,6 +38,7 @@ form {
   .form-actions {
     background-color: transparent;
     padding: 0;
+    border: none;
   }
 
   .control-group.error {
@@ -56,7 +57,7 @@ form {
     .help-inline {
       color: darken($red, 10%);
       background-color: lighten($red, 30%);
-      margin-top: - lines(2);
+      margin-top: - l(2);
       font-weight: 600;
       padding: 0 5px;
       @include inline-block;
@@ -68,7 +69,7 @@ form {
 
 form.credit-card-form {
   background: rgba(black, 0.05);
-  padding-top: lines(4);
+  padding-top: l(4);
   margin-bottom: 0;
   display: none;
 
@@ -123,7 +124,7 @@ form.credit-card-form {
   .security {
     border-top: 1px solid rgba(black, 0.05);
     text-align: center;
-    padding: lines(2) 0;
+    padding: l(2) 0;
     font-size: 11px;
     line-height: 20px;
 

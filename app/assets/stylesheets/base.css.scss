@@ -11,8 +11,10 @@ html {
 body {
   font-family: $futura;
   font-size: 16px;
-  line-height: lines(5);
+  line-height: l(2);
   font-weight: 500;
+
+  text-rendering: optimizeLegibility;
 }
 
 header {
@@ -21,8 +23,9 @@ header {
 }
 
 #page-background-block {
-  background-color: $white;
-  padding-bottom: lines(16);
+  top: 0;
+  background-color: white;
+  padding-bottom: l(16);
 }
 
 .container {
@@ -33,19 +36,22 @@ header {
   display: none;
 }
 
-a {
+a, a:hover {
   color: $blue;
   text-decoration: none;
 }
 
-a:hover {
-  color: darken($blue, 20%);
-  text-decoration: none;
+ul li, ol li{
+  line-height: l(2);
+}
+
+p, ul, ol {
+  margin-bottom: l(2);
 }
 
 hr {
   border: none;
-  margin: lines(4) 0;
+  margin: l(4) 0;
   height: 0;
 
   &.light {
@@ -55,25 +61,25 @@ hr {
 
 hr, br {
   &.small {
-    margin: lines(2) 0;
+    margin: l(2) 0;
   }
 
   &.large {
-    margin: lines(8) 0;
+    margin: l(8) 0;
   }
 
   &.x-large {
-    margin: lines(16) 0;
+    margin: l(16) 0;
   }
 
   &.xx-large {
-    margin: lines(32) 0;
+    margin: l(32) 0;
   }
 }
 
 h3 {
-  margin-top: lines(2);
-  margin-bottom: lines(2);
+  margin-top: l(2);
+  margin-bottom: l(2);
 }
 
 code {

@@ -1,84 +1,124 @@
 @import 'vars';
 
 .l-home {
-  
+
+  .navbar, #app {
+    z-index: 100;
+  }
+
   .container {
     width: grid-width(12);
   }
-  
+
+  #paper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 800px;
+    z-index: 0;
+  }
+
+  #app {
+    position: relative;
+    z-index: 1;
+  }
+
   #movie {
     width: 640px;
     height: 360px;
     margin: 0 auto;
     background-color: black;
     border: 1px solid rgba(black, 0.1);
-    
-    margin-bottom: lines(16);
   }
-  
-  
+
+  #page-background-block {
+    position: relative;
+  }
+
   section {
-    padding-top: lines(4);
-    padding-bottom: lines(16);
-    
+    margin-bottom: l(8);
+
     h3 {
       font-family: $futura;
       margin: 0;
-      line-height: lines(4);
+      line-height: l(1);
       color: rgba(black, 0.2);
       font-size: 18px;
     }
   }
-  
+
   .games-list {
     margin-left: - $gw-gutter;
     @include clearfix;
-    
+
     .game {
-      font-weight: 600;
-      width: grid-width(2);
       float: left;
+      width: grid-width(2);
+      min-height: grid-width(2);
+
+
       @include box-sizing(border-box);
       background: $blue;
-      padding: lines(4) $gw-gutter;
-      min-height: grid-width(2);
+      padding: l(1) ($gw-gutter / 2);
+
       margin-left: $gw-gutter;
+      font-weight: 600;
       color: white;
-      
+
+      position: relative;
+
       h3 {
         display: block;
         font-size: 18px;
         color: white;
-        line-height: lines(4);
-        margin-bottom: lines(2);
+        line-height: l(2);
+              margin-bottom: 0;
       }
-      
+
       p {
         color: rgba(black, 0.4);
-        font-size: 12px;
+        font-size: 14px;
         margin: 0;
       }
+
+      &:hover {
+        top: -0.5 * l();
+      }
+
+      @include transition(all 0.15s cubic-bezier(0.25, 0.01, 0.25, 1));
     }
-    
+
     .game.coming-soon {
-      opacity: 0.4;
+      background-color: #CCC;
     }
   }
-  
+
   .feature-list {
+    margin-bottom: l(4);
+
     .feature {
-      font-size: 16px;
-      line-height: lines(5);
-      font-weight: 500;
-      
+      margin-bottom: l(4);
+
       h4 {
-        font-size: 28px;
-        font-family: $futura;
-        font-weight: 600;
-        font-style: italic;
-        margin-bottom: lines(4);
-        line-height: lines(8);
+        font: 600 24px $futura;
+        line-height: l(2);
+
+        margin-bottom: l(1);
+      }
+
+      p {
+        color: rgba(black, 0.4);
+        font-size: 18px;
+        line-height: l(2);
+        font-weight: 500;
+        margin-bottom: 0;
       }
     }
+  }
+
+  .call-to-action, .press {
+    text-align: center;
+    font-size: 18px;
   }
 }

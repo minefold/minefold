@@ -1,43 +1,43 @@
 @import 'vars';
 
 .comments {
-  padding-top: lines(4);
-  padding-bottom: lines(4);
-  
+  padding-top: l(4);
+  padding-bottom: l(4);
+
   .new-comment-form {
-    margin-bottom: lines(8);
-    
+    margin-bottom: l(8);
+
     textarea {
       width: 100%;
-      height: lines(12);
+      height: l(12);
       resize: vertical;
     }
   }
-  
+
   .comment {
-    margin-bottom: lines(4);
-    
+    margin-bottom: l(4);
+
     .comment-body {
       font-size: 16px;
-      line-height: lines(4);
+      line-height: l(4);
     }
   }
-  
+
   .new-comment-form .comment-meta,
   .comment .comment-meta {
-    margin-bottom: lines(1);
-    
+    margin-bottom: l(1);
+
     > .comment-author {
       font-weight: 600;
     }
-    
+
     > .comment-date {
       font-size: 14px;
       color: darken(white, 40%);
-      margin-top: - lines(2);
+      margin-top: - l(2);
       opacity: 0;
     }
-    
+
     &:hover > .comment-date {
       opacity: 1;
     }

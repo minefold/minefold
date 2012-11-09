@@ -1,56 +1,57 @@
 @import 'vars';
 
 .credit-pack-display {
-    
+
   .credit-pack {
     text-align: center;
-    padding: lines(8) ($gw-gutter / 2);
+    padding: l(4) ($gw-gutter / 2);
     @include box-sizing(border-box);
-      
+
     .note {
       text-transform: uppercase;
       color: lighten($green, 0%);
       font-weight: 600;
       letter-spacing: 0.2em;
-      margin-top: - lines(2);
-      margin-bottom: - lines(2);
+      margin-top: - l(1);
+      margin-bottom: - l(1);
     }
-      
+
     .price {
       font-size: 36px;
       line-height: 60px;
     }
-      
+
     .rate {
       font-size: 12px;
       color: rgba(black, 0.4);
     }
-      
+
     .equiv {
       font-size: 14px;
       color: rgba(black, 0.6);
-        
+      line-height: l(2);
+
       & + .equiv {
-        margin-top: - lines(2);
+        margin-top: - l(1);
       }
     }
   }
-    
+
   .credit-pack.best-value {
     background-color: $blue;
     color: white;
-      
+
     .note {
       color: $yellow;
     }
-    
+
     .rate {
-      color: rgba(black, 0.2);
+      color: rgba(white, 0.6);
     }
-    
+
     .equiv {
-      color: rgba(black, 0.4);
+      color: rgba(white, 0.8);
     }
   }
-  
+
 }

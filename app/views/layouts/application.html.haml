@@ -76,6 +76,7 @@
     = render partial: 'orders/buy_credits_modal'
 
     #page-background-block
+      = yield(:pre)
 
       %header
         .navbar.navbar-static-top
@@ -86,18 +87,18 @@
             .pull-right
               %ul.nav
                 - if signed_in?
-                  %li= link_to 'Servers', servers_path
+                  %li.servers= link_to 'Servers', servers_path
 
-                %li= link_to 'Support', support_page_path
+                %li.support= link_to 'Support', support_page_path
 
-                - case
-                - when !signed_in?
+                - if not signed_in?
+                  %li.pricing= link_to 'Pricing', pricing_page_path
                   %li.sign-up= link_to 'Sign Up', new_user_registration_path
-
+                  %li.divider-vertical
                   %li.sign-in= link_to 'Sign In', new_user_session_path
 
                 - else
-
+                  %li.divider-vertical
                   %li.credits
                     %a{href: new_orders_path, data: { toggle: 'modal', target: '#buy-credits-modal' }}
                       = credits_with_image(current_user.credits)
@@ -144,10 +145,7 @@
         &copy;
         %a{href: 'http://mutlicorp.com'} Mütli Corp.
 
-        Made for fun in San Francisco.
-
-        = link_to 'Privacy', privacy_page_path
-        = link_to 'Terms', terms_page_path
+        Made for fun in San Francisco. #{link_to 'Privacy', privacy_page_path} & #{link_to 'Terms', terms_page_path}.
 
 
     / ---

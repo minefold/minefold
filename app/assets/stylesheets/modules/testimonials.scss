@@ -5,17 +5,17 @@
 
   h3 {
     font-size: 28px;
-    line-height: lines(12);
-    margin-bottom: lines(4);
+    line-height: l(12);
+    margin-bottom: l(4);
     color: darken($blue, 20%);
   }
 
   .testimonial {
-    margin-bottom: lines(2);
+    margin-bottom: l(2);
 
     q {
       display: block;
-      margin-bottom: lines();
+      margin-bottom: l();
       font-size: 16px;
     }
 
