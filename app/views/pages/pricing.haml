@@ -4,42 +4,57 @@
 
 .hero-unit
   %h1 Pricing
-  %h2 Buy credits to spend on Minefold.
+  %h2 Buy credits to spend on stuff.
 
-/ .row
-/   .span3.offset2
-/     Normal Server
-/     %br
-/
-/
-/   .span3.offset2
+.stuff-to-buy.row
+  .a.span4.offset2
+    .bar It costs
+    .big
+      5 credits
+      .per per minute
+    .foo when running a #{link_to 'normal server', '#normal-servers'}.
 
+  .b.span4
+    .bar It costs
+    .big
+      1 credit
+      .per per minute
+    .foo when playing on #{link_to 'shared servers', '#shared-servers'}.
 
 
 - content_for :tail do
   = javascript_include_tag "https://button.stripe.com/v2/button.js"
   :javascript
-    $('.btn').click(function(){
-      var $this = $(this);
+    $('.btn-stripe').click(function(){
+      var $this = $(this),
+          $form = $this.parents('form');
+
+      mixpanel.track('clicked buy credits', {'credit pack': $this.data('id')});
 
       StripeButton.open({
         key: #{ENV["STRIPE_PUBLISHABLE"].to_json},
         amount: $this.data('amount'),
-        token: function(res){
-          console.log('Got token', res);
-        },
-        description: ($this.data('credits') + " credits"),
         name: 'Minefold',
-        panelLabel: 'Save',
-        label: 'Add Card'
+        description: (formatNumber($this.data('credits')) + " credits"),
+        image: $this.data('image'),
+        panelLabel: 'Pay',
+        token: function(res){
+          $form.find('input[name=stripe_token]').val(res.id);
+          $form.submit();
+        }
       });
 
       return false;
     });
 
+
 .credit-pack-display.row
-  - @packs.each do |pack|
-    .credit-pack.span3
+  - @packs.each_with_index do |pack, i|
+
+    = form_tag orders_path, method: 'POST', class: %w(credit-pack span3) do |f|
+      %input{type: 'hidden', name: 'credit_pack_id', value: pack.id}
+      %input{type: 'hidden', name: 'stripe_token'}
+
       .price= number_to_currency(pack.cents / 100, precision: 0)
 
       %p.selling-point
@@ -54,72 +69,109 @@
         %strong.main ~ #{pluralize pack.shared_hours, 'hr', 'hrs'}
         %small.sub playing on shared servers
 
-      %a.btn.btn-block.btn-large{href: '#'} Sign up now!
-
-
-%hr
-
-
-/ .row
-/   - @packs.each_with_index do |pack, i|
-/     %center.span3
-/       - if signed_in?
-/         - if i != 3
-/           %a#poop.btn{href: new_orders_path, data: {amount: pack.cents, credits: pack.credits}} Buy Credits
-/         - else
-/           %a#poop.btn.btn-primary{href: new_orders_path, data: { toggle: 'modal', target: '#buy-credits-modal' }} Buy Credits
-/
-/       - else
-/         - if i != 3
-/           = link_to 'Sign up now', new_user_registration_path, class: %w(btn)
-/         - else
-/           = link_to 'Sign up now', new_user_registration_path, class: %w(btn btn-primary)
+      - if signed_in?
+      %a.btn.btn-block.btn-large.btn-stripe{href: '#', data: {id: pack.id, amount: pack.cents, credits: pack.credits, image: image_path("credit_packs/#{i+1}.png")}} Buy credits!
+      - else
+        %a.btn.btn-block.btn-large{href: '#'} Sign up now!
 
 
 %hr.x-large
 
+%center
+  %h1 Still not convinced?
+
+%hr.x-large
 
 .row
-  .testimonials.span6.offset3
-    %h3 Happy Campers
+  .testimonials.span6
+    %h2 Everybody loves Minefold!
 
-    .testimonial
-      %q{cite: 'https://twitter.com/technoweenie/status/139955603111018496'}
-        “Really impressed with how easy
-        = link_to '@minefold', 'https://twitter.com/minefold'
-        is to play Minecraft with my son.”
-      %cite
-        %a{href: 'https://twitter.com/technoweenie/status/139955603111018496'} Rick Olsen
+    .testimonial.row
+      .span1
+        = image_tag 'twavatars/technoweenie.jpeg', width: 60
+      .span5
+        %q{cite: 'https://twitter.com/technoweenie/status/139955603111018496'}
+          “Really impressed with how easy
+          = link_to '@minefold', 'https://twitter.com/minefold'
+          is to play Minecraft with my son.”
+        %cite
+          %a{href: 'https://twitter.com/technoweenie'} Rick Olsen
 
-    .testimonial
-      %q{cite: 'https://twitter.com/qrush/status/117244523083595776'}
-        “Wow, pay by the hour Minecraft with chat, live maps, and more.”
-      %cite
-        %a{href: 'https://twitter.com/qrush/status/117244523083595776'} Nick Quaranto
+    .testimonial.row
+      .span1
+        = image_tag 'twavatars/EvilKimau.jpeg', width: 60
+      .span5
+        %q{cite: 'https://twitter.com/EvilKimau/status/264487886475370497'}
+          “The #{link_to '@minefold', 'https://twitter.com/minefold'} guys gave some AMAZING support. Sent them a tracert which helped them find the problem. Highly recommend them!”
+        %cite
+          %a{href: 'https://twitter.com/EvilKimau'} Claire Blackshaw
 
-    .testimonial
-      %q
-        “I have only been playing for about 30 minutes, but I am loving it so far.”
-      %cite Joshua Antonishen
+    .testimonial.row
+      .span1
+        = image_tag 'twavatars/iWaffles.jpeg', width: 60
+      .span5
+        %q{cite: 'https://twitter.com/iWaffles/status/255770776291115008'}
+          “#{link_to '@minefold', 'https://twitter.com/minefold'} Pretty neat service you guys have there. It's an awesome twist on server based gaming :)”
+        %cite
+          %a{href: 'https://twitter.com/iWaffles'} Matt Gardner
 
-    .testimonial
-      %q
-        “Thank you so much guys, you are so boss.”
-      %cite Chris Elliott
+    .testimonial.row
+      .span1
+        = image_tag 'twavatars/kevinelliott.jpeg', width: 60
+      .span5
+        %q{cite: 'https://twitter.com/kevinelliott/status/255585383906172928'}
+          “#{link_to '@minefold', 'https://twitter.com/minefold'} Awesome service! How are you spawning MC servers? Virtual machines for each world? Pretty wild.”
+        %cite
+          %a{href: 'https://twitter.com/kevinelliott.jpeg'} Kevin Elliott
 
+    .testimonial.row
+      .span1
+        = image_tag 'twavatars/abdelmaseh.png', width: 60
+      .span5
+        %q{cite: 'https://twitter.com/abdelmaseh/status/225323855806337024'}
+          “For the record: the guys at #{link_to '@minefold', 'https://twitter.com/minefold'} are awesome.”
+        %cite
+          %a{href: 'https://twitter.com/abdelmaseh'} Aaron Abdelmaseh
 
-%hr.x-large
+    .testimonial.row
+      .span1
+        = image_tag 'twavatars/marcocarag.png', width: 60
+      .span5
+        %q{cite: 'https://twitter.com/marcocarag/status/211268520451911681'}
+          “#{link_to '@minefold', 'https://twitter.com/minefold'} I really think your product is great. <a href="http://marcocarag.com/2012/06/08/minefold-for-casual-minecrafting">Thanks!</a>”
+        %cite
+          %a{href: 'https://twitter.com/marcocarag'} Marco Carag
 
+    .testimonial.row
+      .span1
+        = image_tag 'twavatars/qrush.jpeg', width: 60
+      .span5
+        %q{cite: 'https://twitter.com/qrush/status/117244523083595776'}
+          “Wow, pay by the hour Minecraft with chat, live maps, and more.”
+        %cite
+          %a{href: 'https://twitter.com/qrush/status/117244523083595776'} Nick Quaranto
 
-%center.q-and-a.row
-  .span6.offset3
-    %h2 Questions you might have
+    .testimonial.row
+      .span1
+        = image_tag 'twavatars/Looker268.jpeg', width: 60
+      .span5
+        %q{cite: 'https://twitter.com/Looker268/status/266406802869080064'}
+          “#{link_to '@minefold', 'https://twitter.com/minefold'} this an amazing online server thing... Easy to host too!”
+        %cite
+          %a{href: 'https://twitter.com/Looker268'} Looker268
 
-    %h3#slots How many slots do your servers have?
-    %p Unlimited. Your server will run on Minefold's custom build hosting platform. It dynamically allocates resources to servers depending on how much they require. If lots of people are playing or lag gets too high the platform will magically rebalance processess across our grid.
+    .row
+      .span5.offset1
+        %a.btn.btn-small.btn-primary{href: 'https://twitter.com/minefold'} Spread the warm & fuzzies on Twitter!
 
-    %h3#shared-servers What are shared servers?
-    %p Shared servers are paid for by everybody who plays on them. It costs everybody credits to play on a shared server. They are great for small groups of friends and they are always up. At the moment only Minecraft supports super servers.
+  .q-and-a.span6
+    %h2 Quick answers to common questions
+
+    %h3#slots How many slots do Minefold servers have?
+    %p Unlimited. Minefold's custom built hosting platform dynamically allocates resources to servers. This means that they're lag-free no matter how many of your friends are playing.
 
     %h3#normal-servers What are normal servers?
-    %p Normal servers are similar to what you're used to with traditional hosting providers. One person pays for them and anybody can play. To help save the owner money, normal servers need to be started and stopped.
+    %p Normal servers are… normal. The server owner covers the cost of running them and anybody can play.
+
+    %h3#shared-servers What are shared servers?
+    %p Shared are exclusive to Minefold. They are paid for by the people playing on them rather than the server owner.

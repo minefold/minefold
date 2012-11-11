@@ -17,18 +17,18 @@
 
 .nav.nav-server {
   margin-bottom: 0;
-  background-color: desaturate(lighten($blue, 45%), 40%);
+  background-color: rgba(black, 0.1);
 
   > li > a {
     color: rgba(black, 0.4);
-    line-height: l(4);
-    padding: l(1) 10px;
+    line-height: l(2);
+    padding: l(1) $gw-gutter;
 
     font-weight: 600;
 
     &:hover {
-//      color: white;
-    background-color: rgba($blue, 0.4);
+      color: white;
+      background-color: rgba(black, 0.4);
     }
   }
 

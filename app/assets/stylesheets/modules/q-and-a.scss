@@ -2,23 +2,26 @@
 
 .q-and-a {
   font-size: 18px;
-  line-height: l(6);
-  text-align: center;
-  color: lighten(black, 40%);
+  line-height: l(3);
+  color: rgba(black, 0.4);
 
   section {
-    margin-bottom: l(8);
+    margin-bottom: l(4);
   }
 
   h2 {
-    font-size: 28px;
+    margin: 0;
     color: $green;
+    font-size: 24px;
+    line-height: l(4);
+    margin-bottom: l(2);
   }
 
   h3 {
+    margin: 0;
     color: black;
-    font-size: 18px;
-    line-height: l(6);
-    margin-top: l(4);
+    font-size: 20px;
+    line-height: l(2);
+    margin-bottom: l(1);
   }
 }

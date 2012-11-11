@@ -46,9 +46,13 @@
 
   // Colors
 
-  &, &:hover, &.hove {
+  &, &:hover, &.hover {
     color: rgba(white, 0.9);
     background: darken(white, 50%);
+  }
+
+  &:active, &.active {
+    @include box-shadow(none);
   }
 
   &.btn-primary,

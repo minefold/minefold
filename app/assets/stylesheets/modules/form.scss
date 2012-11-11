@@ -11,7 +11,7 @@ form {
     border: none;
     @include box-shadow(0 0 0 2px rgba(black, 0.2) inset);
     border-radius: $radius;
-    padding: (l(1) / 2) 10px;
+    padding: (l(1) / 2) ($gw-gutter / 2);
     line-height: l(2);
     color: black;
     @include box-sizing(border-box);
@@ -27,8 +27,12 @@ form {
   }
 
   textarea {
-    font-size: 14px;
-    line-height: 20px;
+    font-size: 16px;
+    line-height: l(2);
+  }
+
+  .control-group {
+    margin-bottom: l(1);
   }
 
   .control-label {

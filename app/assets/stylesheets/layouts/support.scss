@@ -1,10 +1,20 @@
 @import 'vars';
 
 .l-support {
+  .support-icon {
+    color:white;
+    background-color: $red;
 
-  .well {
-    background-color: lighten($yellow, 30%);
-    border-radius: $radius;
-    text-align: center;
+    text-align:center;
+    width:60px; height: 60px;
+
+    line-height: 60px;
+    font-size: 36px;
+
+    vertical-align: middle;
+
+    &:before {
+      -webkit-font-smoothing: none;
+    }
   }
 }

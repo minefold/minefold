@@ -27,6 +27,8 @@
     - [144, 114, 72, 57].each do |size|
       = favicon_link_tag "apple-touch-icon-#{size}-precomposed.png", rel: 'apple-touch-icon-precomposed', sizes: "#{size}x#{size}", type: 'image/png'
 
+    = stylesheet_link_tag '//get.pictos.cc/fonts/3288/1'
+
     /[if lt IE 9]
       %script{src: '//html5shim.googlecode.com/svn/trunk/html5.js'}
     %meta{'http-equiv' => 'X-UA-Compatible', :content => 'IE=edge,chrome=1'}
@@ -73,11 +75,9 @@
     #fb-root
     #Intercom
 
-    = render partial: 'orders/buy_credits_modal'
+    -#= render partial: 'orders/buy_credits_modal'
 
     #page-background-block
-      = yield(:pre)
-
       %header
         .navbar.navbar-static-top
           .navbar-inner
@@ -100,7 +100,7 @@
                 - else
                   %li.divider-vertical
                   %li.credits
-                    %a{href: new_orders_path, data: { toggle: 'modal', target: '#buy-credits-modal' }}
+                    %a{href: edit_user_registration_path(anchor: 'billing')}
                       = credits_with_image(current_user.credits)
                   - content_for :tail do
                     :javascript

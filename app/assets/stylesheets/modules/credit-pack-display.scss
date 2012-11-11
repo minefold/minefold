@@ -31,8 +31,8 @@
     }
 
     > .btn {
-      color: white;
-      background-color: rgba(black, 0.5);
+//      color: rgba(black, 0.4);
+      background-color: rgba(white, 0.9);
     }
 
     position: relative;
@@ -46,18 +46,22 @@
 
     &:nth-child(1) {
       background-color: darken($yellow, 5%);
+      .btn { color: darken($yellow, 5%); }
     }
 
     &:nth-child(2) {
       background-color: $green;
+      .btn { color: $green; }
     }
 
     &:nth-child(3) {
       background-color: $blue;
+      .btn { color: $blue; }
     }
 
     &:nth-child(4) {
       background-color: $red;
+      .btn { color: $red; }
     }
   }
 }

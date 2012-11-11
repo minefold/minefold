@@ -21,8 +21,6 @@
       %p.help-block
         Explorers only, cannot place or destroy blocks.
 
-%hr
-
 = f.control_group :seed do
   .control-label Map Seed
   .controls
@@ -33,8 +31,6 @@
   if (seed.value === '') {
     seed.value = new Date().getTime();
   }
-
-%hr
 
 .row
   .span2
@@ -83,8 +79,6 @@
           = f.check_box :control_blocks, tabindex: 9, checked: true
           Control blocks
 
-%hr.large
-
 - players = current_user.players.minecraft.collect(&:uid).join("\n")
 
 = f.control_group :whitelist do
@@ -93,10 +87,10 @@
     Whitelist
   .controls
     - whitelist = f.parent_builder.object.settings['whitelist'] || players
-    = f.text_area :whitelist, value: whitelist, rows: (whitelist.lines.to_a.length + 1), style: 'width:100%', class: %w(span6)
+    = f.text_area :whitelist, value: whitelist, rows: (whitelist.lines.to_a.length + 3), style: 'width:100%', class: %w(span6)
 
 = f.control_group :ops do
   .control-label Ops
   .controls
     - ops = f.parent_builder.object.settings['ops'] || players
-    = f.text_area :ops, value: ops, rows: (ops.lines.to_a.length + 1), style: 'width:100%', class: %w(span6)
+    = f.text_area :ops, value: ops, rows: (ops.lines.to_a.length + 3), style: 'width:100%', class: %w(span6)

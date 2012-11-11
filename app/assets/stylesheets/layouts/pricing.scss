@@ -1,9 +1,38 @@
 @import 'vars';
 
 .l-pricing {
-  
+
   .container {
     width: grid-width(12);
   }
-  
+
+  .stuff-to-buy {
+    margin-bottom: l(8);
+
+    .a, .b {
+      @include box-sizing(border-box);
+      border: 5px solid rgba(black, 0.1);
+      padding: l(4) $gw-gutter;
+      text-align: center;
+
+      .bar, .foo {
+        color: rgba(black, 0.4);
+      }
+
+      .big {
+        font-size: 36px;
+        font-weight: 600;
+        line-height: l(3);
+
+        margin-top: l(3);
+        margin-bottom: l(3);
+
+        .per {
+          font-size: 18px;
+          line-height: l(3);
+        }
+      }
+    }
+  }
+
 }

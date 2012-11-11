@@ -3,7 +3,7 @@
 .progressmeter {
   list-style-type: none;
   @include clearfix;
-  margin: l(6) 0;
+  margin: l(4) 0;
 
   > li {
     float: left;
@@ -12,33 +12,32 @@
     // Default width
     width: 33%;
     position: relative;
-    padding-top: 50px;
+    padding-top: l(4);
 
     color: darken(white, 20%);
 
     // Ball
     &:before {
-      width: 40px;
-      height: 40px;
+      width: l(3);
+      height: l(3);
       background-color: darken(white, 10%);
       display: block;
       content: "";
       margin: 0 auto;
-      margin-bottom: l(4);
       color: white;
-      line-height: 40px;
-      font-weight: 800;
+      line-height: l(3);
+      font-weight: 600;
       z-index: 1;
       position: absolute;
       left: 50%;
       margin-left: -20px;
       top: 0;
 
-      border-radius: 20px;
+      border-radius: l(1.5);
     }
 
     &.previous a {
-      color: black; // darken($blue, 0%);
+      color: $blue;
     }
 
     &.active a {
@@ -46,7 +45,7 @@
     }
 
     &.previous:before {
-      background-color: black; //darken($blue, 0%);
+      background-color: $blue;
     }
 
     &.active:before {
@@ -54,7 +53,7 @@
     }
 
     &.previous:after {
-      border-color: black; //darken($blue, 0%);
+      border-color: $blue;
     }
 
     &.active:after {
@@ -65,6 +64,11 @@
     @for $i from 1 through 4 {
       &:nth-child(#{$i}):before {
         content: "#{$i}";
+      }
+
+      &.previous:nth-child(#{$i}):before {
+        content: "t";
+        font-family: $pictos;
       }
     }
 

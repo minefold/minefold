@@ -18,13 +18,16 @@
       %fieldset.tab-pane.active#game
         %ol.progressmeter.progressmeter-3
           %li.active
-            %a{href: '#game', data: {toggle: 'tab'}} Game
+            %a Game
           %li Settings
           %li Billing
 
+        %center
+          %h2 What game would you like?
+
         - @games.each do |game|
           .control-group
-            %h3.control-label= game.name
+            %h4.control-label= game.name
             .controls
               - game.funpacks.each do |funpack|
                 %label.radio{for: "server_funpack_id_#{funpack.id.to_s}", style: 'margin-bottom:20px'}
@@ -35,14 +38,15 @@
                   %small= link_to "Official Site", funpack.info_url, target: '_blank'
                   .description= markdown(funpack.description)
 
-
-        %center.alert
-          Want other mods?
-          %a{href: "http://partycloud.com/?email=#{u(current_user.email)}"} Sign up at the Party Cloud
-          to get first access to Minefold's developer platform.
-
         .form-actions
           %a.btn.btn-primary.pull-right#game-next-button{href: '#settings', disabled: true} Settings &rarr;
+
+        %hr
+
+        %center.muted
+          Do you have a custom server or want more different mods?
+          %a{href: "http://partycloud.com/?email=#{u(current_user.email)}"} Sign up at the Party Cloud
+          to get early access to Minefold's developer platform.
 
       - content_for :tail do
         :javascript
@@ -79,18 +83,33 @@
       %fieldset.tab-pane#settings
         %ol.progressmeter.progressmeter-3
           %li.previous
-            %a{href: '#game', data: {toggle: 'tab'}} Game
+            %a Game
 
           %li.active
-            %a{href: '#settings', data: {toggle: 'tab'}} Settings
+            %a Settings
 
           %li Billing
 
-        %hr
 
         = f.control_group :name do
           .controls
             = f.text_field :name, placeholder: 'Name', style: 'width:100%'
+
+        - content_for :tail do
+          :javascript
+            $(document).ready(function() {
+              var $name = $('#settings input#server_name'),
+                  $btn = $('#settings .btn.btn-primary'),
+                  fn = function() {
+                    if($name.val() !== '') {
+                      $btn.removeClass('disabled').attr('href', '#billing');
+                    } else {
+                      $btn.addClass('disabled').attr('href', null);
+                    }
+                  };
+
+              $name.keydown(fn).change(fn);
+            });
 
         %hr.large
 
@@ -98,7 +117,7 @@
 
         .form-actions
           %a.btn.pull-left{href: '#game', data: {toggle: 'tab'}} &larr; Game
-          %a.btn.btn-primary.pull-right{href: '#billing', data: {toggle: 'tab'}} Billing &rarr;
+          %a.btn.btn-primary.pull-right.disabled{data: {toggle: 'tab'}} Billing &rarr;
 
 
       / Billing
@@ -107,13 +126,16 @@
       %fieldset.tab-pane#billing
         %ol.progressmeter.progressmeter-3
           %li.previous
-            %a{href: '#game', data: {toggle: 'tab'}} Game
+            %a Game
 
           %li.previous
-            %a{href: '#settings', data: {toggle: 'tab'}} Settings
+            %a Settings
 
           %li.active
-            %a{href: '#settings', data: {toggle: 'tab'}} Billing
+            %a Billing
+
+        %center
+          %h2 How would you like to pay?
 
         - if not can_create_shared_servers?(current_user, @funpack)
           - if not current_user.minecraft_linked?
@@ -131,11 +153,11 @@
               %tr
                 %th
                 %th.normal
-                  Normal Server
+                  Normal
                   %br
                   %small You pay the cost
                 %th.shared
-                  Shared Server
+                  Shared
                   %br
                   %small Split cost with friends
 
@@ -146,11 +168,11 @@
                 %td.normal
                   On-demand
                   %br
-                  %small Manual start and stop.
+                  %small Manual start and stop
                 %td.shared
                   Always up
                   %br
-                  %small The server is running 24/7.
+                  %small The server is running 24/7
 
               %tr.who-pays-row
                 %td Who pays?
@@ -166,23 +188,23 @@
               %tr.how-much-row
                 %td How much?
                 %td.normal
-                  %span.num 5
-                  %small cr/min
+                  %span.num 5 credits
+                  %small per min
                 %td.shared
-                  %span.num 1
-                  %small cr/min each
+                  %span.num 1 credit
+                  %small per minute each
 
               %tr.checkbox-row
                 %td
                 %td.normal
                   - # TODO %p is a hack
-                  %p= f.radio_button :shared, false, selected: false
+                  %p= f.radio_button :shared, false, checked: false
                 %td.shared
-                  %p= f.radio_button :shared, true, selected: false, disabled: (!can_create_shared_servers?(current_user, @funpack))
+                  %p= f.radio_button :shared, true, checked: false, disabled: (!can_create_shared_servers?(current_user, @funpack))
 
         .form-actions
           %a.btn.pull-left{href: '#settings', data: {toggle: 'tab'}} &larr; Settings
-          = f.submit 'Create server', class: %w(btn btn-primary pull-right), id: 'final-submit'
+          = f.submit 'Create server', class: %w(btn btn-primary pull-right), id: 'final-submit', disabled: true
 
         - content_for :tail do
           :javascript
@@ -205,7 +227,7 @@
               table.find('.normal').
                 hover(colHover('normal')).
                 click(colSelect('normal')).click(function() {
-                  submit.val('Create a normal server');
+                  submit.attr('disabled', false).val('Create a normal server');
                 });
 
               table.find('.shared').
@@ -214,5 +236,5 @@
                   submit.val('Create a shared server');
                 });
 
-              table.find('.normal').click();
+              // table.find('.normal').click();
             });

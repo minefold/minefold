@@ -3,7 +3,7 @@
 .page-header
   %h1 Settings
 
-.account-form-section.row
+.account-form-section.row#profile
   .section-label.span2
     %h3 Profile
 
@@ -69,7 +69,7 @@
             = f.submit 'Save', class: %w(btn btn-mini)
 
 
-.account-form-section.row
+.account-form-section.row#accounts
   .section-label.span2
     %h3 Accounts
 
@@ -125,7 +125,7 @@
                 = credits_with_image(reward.credits)
 
 
-.account-form-section.row
+.account-form-section.row#billing
   .section-label.span2
     %h3 Billing
   .span6
@@ -138,7 +138,7 @@
       %p Your next <i>free</i> credit top up will be on <strong>#{l current_user.next_credit_fairy_visit_at, :format => :date}</strong>.
 
 
-.account-form-section.row
+.account-form-section.row#notifications
   .section-label.span2
     %h3 Notifications
 
@@ -163,7 +163,7 @@
         = f.submit 'Save', class: %w(btn btn-mini)
 
 
-.account-form-section.row
+.account-form-section.row#password
   .section-label.span2
     %h3 Password
 

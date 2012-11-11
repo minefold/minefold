@@ -1,13 +1,22 @@
 @import 'vars';
 
 .table.server-types-table {
-  margin-top: l(8);
-  margin-bottom: l(8);
+  margin-top: l(6);
+  margin-bottom: l(6);
 
   thead th {
    border-bottom: 2px solid rgba(black, 0.05);
    padding: l(2) 0;
-   font-size: 18px;
+   font-size: 20px;
+
+   small {
+     font-size: 14px;
+     font-weight: 500;
+   }
+  }
+
+  small {
+    color: rgba(black, 0.4);
   }
 
   .normal, .shared {
@@ -15,20 +24,16 @@
     cursor: pointer;
 
     &:hover, &.hover {
-      background: lighten($blue, 50%);
-      color: darken($blue, 20%);
+      background: lighten($blue, 55%);
+      color: darken($blue, 0%);
     }
   }
 
-  small {
-    color: rgba(black, 0.4);
-  }
-
   .how-much-row td {
-    line-height: l(8);
+    line-height: l(4);
 
     .normal, .shared {
-      font-size: 18px;
+      font-size: 24px;
       line-height: l(4);
       color: rgba(black, 0.4);
     }
@@ -37,9 +42,8 @@
       display: block;
       font-size: 24px;
       font-weight: 600;
-      margin-bottom: - l(4);
+      margin-bottom: - l(2);
     }
-
   }
 
   .normal.is-active, .shared.is-active {

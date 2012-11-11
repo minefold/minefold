@@ -50,7 +50,7 @@ p, ul, ol {
 }
 
 hr {
-  border: none;
+  border: 2px solid rgba(black, 0.1);
   margin: l(4) 0;
   height: 0;
 
@@ -61,19 +61,19 @@ hr {
 
 hr, br {
   &.small {
-    margin: l(2) 0;
+    margin: l(1) 0;
   }
 
   &.large {
-    margin: l(8) 0;
+    margin: l(4) 0;
   }
 
   &.x-large {
-    margin: l(16) 0;
+    margin: l(8) 0;
   }
 
   &.xx-large {
-    margin: l(32) 0;
+    margin: l(16) 0;
   }
 }
 
@@ -94,5 +94,15 @@ code {
 
 .align-right {
   text-align: right;
+}
+
+[data-icon]:before {
+  font-family: $pictos;
+  content: attr(data-icon);
+  -webkit-font-smoothing: antialiased;
+}
+
+.muted {
+  color: rgba(black, 0.4);
 }
 
