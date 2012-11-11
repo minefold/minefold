@@ -230,11 +230,13 @@
                   submit.attr('disabled', false).val('Create a normal server');
                 });
 
-              table.find('.shared').
-                hover(colHover('shared')).
-                click(colSelect('shared')).click(function() {
-                  submit.val('Create a shared server');
-                });
+              if(!table.hasClass('is-shared-disabled')) {
+                table.find('.shared').
+                  hover(colHover('shared')).
+                  click(colSelect('shared')).click(function() {
+                    submit.val('Create a shared server');
+                  });
+              }
 
               // table.find('.normal').click();
             });

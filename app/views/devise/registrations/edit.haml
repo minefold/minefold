@@ -12,7 +12,7 @@
       .span1
         = form_for resource, :method => :put, :html => {:multipart => true} do |f|
           = f.hidden_field :avatar_cache
-          = image_tag current_user.avatar.large.url, class: 'img-circle', width: 60, height: 60, id: 'avatar_preview'
+          = image_tag current_user.avatar.large.url, width: 60, height: 60, id: 'avatar_preview'
 
           = f.file_field :avatar, style: 'display:none'
           = f.label :avatar, 'Change'
@@ -66,7 +66,7 @@
                   = link_to 'Resend confirmation', user_confirmation_path(user: {email: f.object.unconfirmed_email}), method: 'POST'
 
           .form-actions
-            = f.submit 'Save', class: %w(btn btn-mini)
+            = f.submit 'Save', class: %w(btn btn-small btn-primary)
 
 
 .account-form-section.row#accounts
@@ -99,7 +99,7 @@
     #link-minecraft-modal.modal.hide.fade
       .modal-header
         %button.close{type: 'button', data: {dismiss: 'modal'}} &times;
-        %h3 Link Minecraft Account
+        %h3 Link a Minecraft Account
 
       .modal-body
 
@@ -131,8 +131,9 @@
   .span6
     %p
       = credits_with_image current_user.credits
-      &middot;
-      %a.buy-credits{href: new_orders_path, data: {toggle: 'modal', target: '#buy-credits-modal'}} Buy credits.
+
+    %p
+      %a.btn.btn-small.btn-primary.buy-credits{href: pricing_page_path} Buy credits
 
     - if current_user.credits < User::MIN_CREDITS
       %p Your next <i>free</i> credit top up will be on <strong>#{l current_user.next_credit_fairy_visit_at, :format => :date}</strong>.
@@ -160,7 +161,7 @@
             Servers starting & stopping
 
       .form-actions
-        = f.submit 'Save', class: %w(btn btn-mini)
+        = f.submit 'Save', class: %w(btn btn-small btn-primary)
 
 
 .account-form-section.row#password
@@ -183,4 +184,4 @@
           = f.password_field :password_confirmation, placeholder: 'Confirm new password'
 
       .form-actions
-        = f.submit 'Save', class: %w(btn btn-mini)
+        = f.submit 'Save', class: %w(btn btn-small btn-primary)

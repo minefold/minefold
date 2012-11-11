@@ -116,7 +116,7 @@
   - if signed_in?
     = form_for [server, Comment.new], method: 'POST', html: {class: %w(new-comment-form row)} do |f|
       .span1
-        = image_tag current_user.avatar.large.url, width: 60, height: 60, class: 'img-circle'
+        = image_tag current_user.avatar.large.url, width: 60, height: 60
 
       .span7
         .comment-meta
@@ -127,7 +127,7 @@
   - server.comments.each do |comment|
     .comment.row
       .span1
-        = image_tag comment.author.avatar.large.url, width: 60, height: 60, class: 'img-circle'
+        = image_tag comment.author.avatar.large.url, width: 60, height: 60
       .span7
         .comment-meta
           %span.comment-author= comment.author.username

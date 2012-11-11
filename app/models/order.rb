@@ -1,7 +1,7 @@
 class Order < Struct.new(:credit_pack_id, :user, :card_token)
-  
+
   attr_reader :charge_id
-  
+
   def credit_pack
     @credit_pack ||= if credit_pack_id.is_a?(CreditPack)
       credit_pack_id
@@ -21,7 +21,7 @@ class Order < Struct.new(:credit_pack_id, :user, :card_token)
     create_or_update_customer and
     create_charge and
     credit_user
-    
+
   rescue Stripe::StripeError
     false
   end
@@ -58,9 +58,9 @@ class Order < Struct.new(:credit_pack_id, :user, :card_token)
       amount: credit_pack.cents,
       currency: 'usd',
       customer: user.customer_id,
-      description: credit_pack.id.to_s
+      description: credit_pack.description
     )
-    
+
     @charge_id = charge.id
     charge
   end

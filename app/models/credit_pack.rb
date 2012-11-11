@@ -26,4 +26,8 @@ class CreditPack < ActiveRecord::Base
     credits / SHARED_CREDITS_PER_HOUR
   end
 
+  def description
+    "Credit Pack ##{id}"
+  end
+
 end

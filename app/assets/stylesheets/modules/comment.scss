@@ -1,40 +1,38 @@
 @import 'vars';
 
 .comments {
-  padding-top: l(4);
-  padding-bottom: l(4);
+  padding-top: l(2);
+  padding-bottom: l(2);
 
   .new-comment-form {
-    margin-bottom: l(8);
+    margin-bottom: l(4);
 
     textarea {
       width: 100%;
-      height: l(12);
+      height: l(6);
       resize: vertical;
     }
   }
 
   .comment {
-    margin-bottom: l(4);
+    margin-bottom: l(2);
 
     .comment-body {
       font-size: 16px;
-      line-height: l(4);
+      line-height: l(3);
     }
   }
 
   .new-comment-form .comment-meta,
   .comment .comment-meta {
-    margin-bottom: l(1);
+    margin-bottom: l(0.5);
 
     > .comment-author {
       font-weight: 600;
     }
 
     > .comment-date {
-      font-size: 14px;
       color: darken(white, 40%);
-      margin-top: - l(2);
       opacity: 0;
     }
 

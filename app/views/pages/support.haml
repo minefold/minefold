@@ -24,36 +24,36 @@
   %section#support-servers
     %h2 Servers
 
-    %h3 Do we run cracked servers?
+    %h3 Can I run a cracked server?
+    %p No. Please support Mojang by #{link_to 'buying the full copy of Minecraft', 'http://minecraft.net/store'}.
+
+    %h3 Can you make my server run in offline mode?
     %p No.
 
-    %h3 Can you install plugins or mods?
-    %p Soon. We're currently trialing Bukkit & Tekkit support with a select group of Pro members.
+    %h3 Can I get FTP access to my server?
+    %p No.
 
     %h3 Public servers?
     %p No. All servers are whitelisted to help prevent griefing. You have to individually approve anybody who wants to play.
 
     %h3 Where are our servers located?
-    %p Our servers are located in North Virginia. We've found this is the best location to provide the best service for the majority of our users.
+    %p Our servers are located in North Virginia. We've found this is the best location to provide the best service for the majority of our users. More locations are coming soon.
 
     %h3 Experiencing lag?
-    %p Please #{link_to 'contact support', '#contact'}. We hate lag and want to get rid of it.
+    %p Please #{link_to 'contact support', '#contact'}. We hate lag and want to kill it.
 
 
   %section#support-billing
     %h2 Billing
 
-    %h3 Your child sole your credit card
-    %p Please file a support ticket so we can assess your situation. You may be eligable for a refund.
+    %h3 My child stole my credit card to pay for credits
+    %p Please #{link_to 'contact support', '#contact'}. You may be eligable for a refund.
 
-    %h3 Do we accept PayPal?
+    %h3 Do you accept PayPal?
     %p No.
 
-    %h3 Friends need to pay too?
-    %p Yes. Minefold Pro is a subscription. It makes paying for servers cheaper for everybody as you only pay for what you <em>individually</em> play. If you rent a traditional server month to month you have to collect donations or shout all your friends. If you pay for your own time, you don't have to pay for when your friends play on your server.
-
-    %h3 Time hasn't reset after a month
-    %p We reset your time ever 30 days from when you signed up, not on the first of the month.
+    %h3 My credits haven't reset
+    %p We reset your credits every #{pluralize(User::CREDIT_FAIRY_PERIOD / 1.day, 'day', 'days')} from when you signed up.
 
 
   %section#support-minecraft
@@ -78,14 +78,12 @@
   %section#support-website
     %h2 Website
 
-    %h3 Uploads are failing / taking too long
-    %p There are a variety of reasons this can happen. Please contact support and include the progress message.
+    / TODO Add back in with uploads
+    / %h3 My upload is failing / taking too long
+    / %p Please #{link_to 'contact support', '#contact'} and include the progress message. There are lots of reasons why this can happen.
 
-    %h3 Map hasn't updated
+    %h3 My map hasn't updated
     %p The maps can take a while to render, especially on large worlds. We run tens of thousands of servers so sometimes rendering a map can take up to two days. If your map still hasn't updated after two days, please contact support and include the name of your server.
-
-    %h3 Changing your avatar
-    %p You can change it at #{link_to 'http://minecraft.net/profile', 'http://minecraft.net/profile'}. It can take up to 24 hours to reflect on Minefold.
 
 %hr.x-large
 

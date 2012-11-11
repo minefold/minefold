@@ -1,6 +1,6 @@
 .minecraft-link-state.pull-left.is-unlinked
   .state-icon
-  %p.unlinked Waiting
+  %p.unlinked Waiting for link
   %p.linked Linked
   %p.already-linked
     %strong.username chrislloyd
@@ -9,9 +9,9 @@
 
 .minecraft-link-instructions
   %p
-    Open Minecraft, choose "Multiplayer" then "Direct Connect" and enter
+    Open Minecraft, click “Multiplayer” then “Direct Connect” and enter the following server address:
     %br
-    %code= current_user.minecraft_link_host
+    %code.highlight= current_user.minecraft_link_host
 
 .link-host-instructions
   = image_tag 'verify.png', width: 530, height: 280

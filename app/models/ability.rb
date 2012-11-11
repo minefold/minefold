@@ -11,9 +11,9 @@ class Ability
     can [:update, :destroy], User, id: user.id
 
     # Admin abilities
-    # if user.admin?
-    #   can [:update, :destroy, :operate, :play], Server
-    # end
+    if user.admin?
+      can [:update, :destroy, :operate, :play], Server
+    end
 
     # Server abilities
     can [:create], Server

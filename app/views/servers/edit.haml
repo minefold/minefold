@@ -46,7 +46,10 @@
 
       - if server.world.legacy_parent_id?
         - parent = server.world.legacy_parent.server
-        %p Forked from #{parent.name} by #{parent.creator.username}.
+        %p
+          Forked from
+          = link_to parent.name, server_path(parent)
+          by #{parent.creator.username}.
 
       - # if world uploads gets done!
       - if false
