@@ -1,11 +1,12 @@
 class PagesController < ApplicationController
 
-  prepend_before_filter :authenticate_user!, :only => [:welcome]
+  prepend_before_filter :authenticate_user!, only: [:welcome, :getcredits]
 
   def about
   end
 
   def getcredits
+    @small_credit_pack = CreditPack.active.first
   end
 
   def support

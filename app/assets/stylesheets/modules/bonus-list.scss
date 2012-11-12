@@ -1,0 +1,61 @@
+@import 'vars';
+
+.bonus-list {
+
+  .bonus {
+    display: block;
+    margin-bottom: 24px;
+
+    & [data-icon] {
+      display: block;
+      vertical-align: bottom;
+      background-color: #EEE;
+      text-align: center;    font-size: 36px;
+      line-height: 60px;
+      color: white;
+    }
+
+    & > .description {
+      > .name {
+        font-size: 24px;
+        line-height: 36px;
+      }
+
+      > p {
+        font-size: 18px;
+        line-height: 24px;
+        color: rgba(black, 0.4);
+        margin-bottom: 0;
+      }
+    }
+
+    & > .reward {
+      & > .credits {
+        font-size: 24px;
+        line-height: 36px;
+        font-weight: 600;
+      }
+
+      > .conditions {
+        color: rgba(black, 0.4);
+        font-size: 14px;
+        line-height: 24px;
+      }
+    }
+
+    &.bonus-mini {
+      color: rgba($blue, 0.4);
+      margin-bottom: 12px;
+
+      > .description > .name {
+        font-size: 18px;
+        line-height: 36px;
+      }
+
+      > .reward > .credits {
+        font-size: 18px;
+        line-height: 36px;
+      }
+    }
+  }
+}

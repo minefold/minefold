@@ -22,6 +22,10 @@ header {
   @include clearfix;
 }
 
+body {
+  min-width: grid-width(12);
+}
+
 .container {
   width: grid-width(8);
 }
@@ -37,6 +41,10 @@ header, .container {
 a, a:hover {
   color: $blue;
   text-decoration: none;
+}
+
+ol, ul {
+  list-style-type: square;
 }
 
 ul li, ol li{
@@ -75,9 +83,8 @@ hr, br {
   }
 }
 
-h3 {
-  margin-top: l(2);
-  margin-bottom: l(2);
+h1, h2, h3, h4 {
+  margin-top: 0; margin-bottom: 0;
 }
 
 code {

@@ -3,8 +3,11 @@
 .l-page {
   color: rgba(black, 0.4);
   font-size: 18px;
-  line-height: l(3);
   font-weight: 500;
+
+  &, ol li, ul li {
+    line-height: l(3);
+  }
 
   h3 {
     color: black;
