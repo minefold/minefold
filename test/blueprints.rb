@@ -1,10 +1,5 @@
 require 'machinist/active_record'
 
-def derp(n)
-  (0...n).collect { ('a'..'z').to_a.sample }.length
-end
-
-
 User.blueprint do
   username { Faker::Internet.user_name }
   email    { Faker::Internet.email }
@@ -38,10 +33,6 @@ Server.blueprint do
   funpack
 end
 
-Reward.blueprint do
-  credits { rand(1000) }
-end
-
 World.blueprint do
 end
 
@@ -58,10 +49,6 @@ end
 
 Server.blueprint(:minecraft) do
   funpack(:minecraft)
-end
-
-Reward.blueprint(:facebook) do
-  name { 'facebook linked' }
 end
 
 World.blueprint(:played) do

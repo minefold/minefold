@@ -37,7 +37,6 @@ gem 'sass-rails'
 gem 'bourbon'
 
 group :test do
-  gem 'autotest-rails'
   gem 'turn'
   gem 'minitest'
   gem 'rr'

@@ -12,5 +12,5 @@ class NotificationsObserverTest < ActiveSupport::TestCase
     end
 
   end
-?
+
 end

@@ -112,9 +112,6 @@ class UserTest < ActiveSupport::TestCase
 
 
   test ".find_for_facebook_oauth with current user" do
-    # TODO Figure out a better way of abstracting this
-    Reward.make!(:facebook)
-
     current_user = User.make!(facebook_uid: '1234')
     good_auth = { 'uid' => '1234' }
 
@@ -125,8 +122,6 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test ".find_for_facebook_oauth" do
-    Reward.make!(:facebook)
-
     user = User.make!(facebook_uid: '1234')
     auth = { 'uid' => '1234' }
 

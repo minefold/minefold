@@ -18,6 +18,7 @@ Minefold::Application.routes.draw do
   # Static Pages
 
   { '/about'    => :about,
+    '/getcredits' => :getcredits,
     '/support'  => :support,
     '/jobs'     => :jobs,
     '/pricing'  => :pricing,

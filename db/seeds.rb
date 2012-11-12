@@ -5,13 +5,6 @@ CreditPack.create(cents: 3_000, credits: 18_000)
 CreditPack.create(cents: 6_000, credits: 45_000)
 CreditPack.create(cents: 12_000, credits: 120_000)
 
-
-# Freebies
-
-Reward.create(name: 'facebook linked', credits: 200)
-Reward.create(name: 'minecraft linked', credits: 400)
-
-
 # Games
 
 minecraft = Game.create(

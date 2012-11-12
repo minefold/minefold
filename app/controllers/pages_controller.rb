@@ -5,7 +5,7 @@ class PagesController < ApplicationController
   def about
   end
 
-  def freetime
+  def getcredits
   end
 
   def support

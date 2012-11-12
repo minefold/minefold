@@ -7,12 +7,12 @@ class RegistrationsControllerTest < ActionController::TestCase
     assert_equal Devise::RegistrationsController,
       RegistrationsController.superclass
   end
-  
+
   test "#after_sign_up_path_for" do
     user = User.make!
-    
-    assert_equal onboard_users_path,
+
+    assert_equal user_root_path,
       @controller.after_sign_up_path_for(user)
   end
-  
+
 end

@@ -20,9 +20,7 @@ class User < ActiveRecord::Base
   has_many :servers, through: :memberships
   has_many :created_servers, class_name: 'Server', foreign_key: :creator_id
 
-  has_many :reward_claims
-  has_many :rewards, :through => :reward_claims
-
+  has_many :bonus_claims
 
   validates_presence_of :username
   validates_uniqueness_of :username, :allow_nil => false, :allow_blank => false
@@ -126,13 +124,14 @@ class User < ActiveRecord::Base
   # Atomically increment credits
   # Warning: doesn't update the model's internal representation.
   def increment_credits!(n)
+    # TODO See if this could do with some refactoring
     self.class.update_counters(self.id, credits: n) == 1
   end
 
 
   def send_notification_for?(klass)
     key = klass.name.underscore.to_sym
-    mail_prefs[key] == true || mail_prefs[key] == '1'
+    notifications[key] == true || notifications[key] == '1'
   end
 
   def channel_key
@@ -177,8 +176,6 @@ class User < ActiveRecord::Base
     #   self.skip_confirmation!
     # end
   end
-
-  FREE_CREDITS = 600
 
   MIN_CREDITS = 600
   CREDIT_FAIRY_PERIOD = 30.days # Ewww

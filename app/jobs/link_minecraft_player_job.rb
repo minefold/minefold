@@ -7,6 +7,7 @@ class LinkMinecraftPlayerJob < Job
   end
 
   def perform!
+    Bonuses::LinkedMinecraft.claim!(@user)
   end
 
 end
