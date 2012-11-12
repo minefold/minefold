@@ -92,9 +92,9 @@
           - else
             = link_to user_omniauth_authorize_path(:facebook) do
               Link your Facebook account
-              - render_reward_for('facebook linked', current_user) do |reward|
+              - if Bonuses::LinkedFacebook.claimable_by?(current_user)
                 for
-                = credits_with_image(reward.credits)
+                = credits_with_image(Bonuses::LinkedFacebook.credits)
 
     #link-minecraft-modal.modal.hide.fade
       .modal-header
@@ -120,9 +120,9 @@
           - else
             %a{href: accounts_link_minecraft_path, data: {toggle: 'modal', target: '#link-minecraft-modal'}}
               Link your Minecraft account
-              - render_reward_for('minecraft linked', current_user) do |reward|
+              - if Bonuses::MinecraftLinked.claimable_by?(current_user)
                 for
-                = credits_with_image(reward.credits)
+                = credits_with_image(Bonuses::MinecraftLinked.credits)
 
 
 .account-form-section.row#billing

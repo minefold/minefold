@@ -1,7 +1,11 @@
 module WorldsHelper
 
   def party_cloud_world_download_url(world)
-    "http://dl.partycloud.com/worlds/#{world.party_cloud_id}.zip?name=#{world.server.name}.zip"
+    URI::HTTP.build(
+      host:  "dl.partycloud.com",
+      path:  "/worlds/#{world.party_cloud_id}.zip",
+      query: "name=#{URI.encode(world.server.name)}"
+    ).to_s
   end
 
 end

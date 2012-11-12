@@ -218,6 +218,7 @@
                   },
                   colSelect = function(col) {
                     return function() {
+                      submit.attr('disabled', false);
                       table.find('th,td').removeClass('is-active');
                       table.find('.'+col).addClass('is-active');
                       table.find('.'+col+' input[type=radio]').attr({checked: true});

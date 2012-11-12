@@ -1,39 +1,15 @@
 @import 'vars';
 
 .l-home {
-
-  .navbar, #app {
-    z-index: 100;
-  }
+  min-width: grid-width(12);
 
   .container {
     width: grid-width(12);
   }
 
-  #paper {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 800px;
-    z-index: 0;
-  }
-
-  #app {
-    position: relative;
-    z-index: 1;
-  }
-
-  #movie {
-    width: 640px;
-    height: 360px;
-    margin: 0 auto;
-    background-color: black;
-    border: 1px solid rgba(black, 0.1);
-  }
-
-  #page-background-block {
-    position: relative;
+  .hero-unit {
+    background-color: lighten($blue, 20%);
+    h1 { color: white; }
   }
 
   section {
@@ -56,7 +32,6 @@
       float: left;
       width: grid-width(2);
       min-height: grid-width(2);
-
 
       @include box-sizing(border-box);
       background: $blue;

@@ -2,7 +2,7 @@
 - layout :pricing
 - track_pageview
 
-.hero-unit
+- provide :hero_unit do
   %h1 Pricing
   %h2 Buy credits to spend on stuff.
 
@@ -72,7 +72,7 @@
       - if signed_in?
       %a.btn.btn-block.btn-large.btn-stripe{href: '#', data: {id: pack.id, amount: pack.cents, credits: pack.credits, image: image_path("credit_packs/#{i+1}.png")}} Buy credits!
       - else
-        %a.btn.btn-block.btn-large{href: '#'} Sign up now!
+        %a.btn.btn-block.btn-large{href: new_user_registration_path} Sign up now!
 
 
 %hr.x-large

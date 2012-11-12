@@ -14,12 +14,12 @@ class BonusTest < ActiveSupport::TestCase
     mock(user).increment_credits!(bonus.credits)
 
     # Tests wether it still assigns the bonus if the limit is reached
-    stub(bonus).claims_left?(user) { true }
+    stub(bonus).claimable_by?(user) { true }
     assert_difference ->{ user.bonus_claims.where(bonus_type: bonus.name).count }, 1 do
       bonus.claim!(user)
     end
 
-    stub(bonus).claims_left?(user) { false }
+    stub(bonus).claimable_by?(user) { false }
     assert_difference ->{ user.bonus_claims.where(bonus_type: bonus.name).count }, 0 do
       bonus.claim!(user)
     end

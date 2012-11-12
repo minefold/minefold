@@ -9,7 +9,7 @@ class Bonus
   end
 
   def self.claim!(user)
-    if claims_left?(user)
+    if claimable_by?(user)
       user.increment_credits!(credits)
       track_claim!(user)
     end
@@ -31,7 +31,7 @@ class Bonus
     BonusClaim.where(bonus_type: self.name)
   end
 
-  def self.claims_left?(user)
+  def self.claimable_by?(user)
     claims.where(user_id: user.id).count < self.claim_limit
   end
 

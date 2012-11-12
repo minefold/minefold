@@ -22,14 +22,12 @@ header {
   @include clearfix;
 }
 
-#page-background-block {
-  top: 0;
-  background-color: white;
-  padding-bottom: l(16);
-}
-
 .container {
   width: grid-width(8);
+}
+
+header, .container {
+  background-color: white;
 }
 
 #Intercom {
