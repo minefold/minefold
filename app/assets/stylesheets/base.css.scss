@@ -60,26 +60,20 @@ hr {
   margin: l(4) 0;
   height: 0;
 
-  &.light {
-    border-top: 1px solid white;
-  }
-}
-
-hr, br {
   &.small {
-    margin: l(1) 0;
+    margin: (l(1) - 1px) 0;
   }
 
   &.large {
-    margin: l(4) 0;
+    margin: (l(4) - 1px) 0;
   }
 
   &.x-large {
-    margin: l(8) 0;
+    margin: (l(8) - 1px) 0;
   }
 
   &.xx-large {
-    margin: l(16) 0;
+    margin: (l(16) - 1px) 0;
   }
 }
 

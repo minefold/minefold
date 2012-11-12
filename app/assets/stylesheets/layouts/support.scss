@@ -1,6 +1,11 @@
 @import 'vars';
 
 .l-support {
+
+  h3 {
+    margin-bottom: l(8);
+  }
+
   .support-icon {
     color:white;
     background-color: $red;
