@@ -1,4 +1,10 @@
 GIT
+  remote: git://github.com/chrislloyd/uniquify.git
+  revision: b33080d65e6bad2b936b5d4a4bf7c645a6f34500
+  specs:
+    uniquify (0.1.0)
+
+GIT
   remote: https://github.com/jnicklas/carrierwave.git
   revision: 0206f800dc6f88cc97f9dc54701482d7255cac95
   specs:
@@ -13,11 +19,6 @@ GIT
     librato-rails (0.6.0)
       librato-metrics (~> 0.7.3)
       rails (>= 3.0)
-
-PATH
-  remote: /Users/Chris/code/src/github.com/ryanb/uniquify
-  specs:
-    uniquify (0.1.0)
 
 GEM
   remote: https://code.stripe.com/
