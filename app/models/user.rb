@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
   has_many :created_servers, class_name: 'Server', foreign_key: :creator_id
 
   has_many :bonus_claims
+  belongs_to :invited_by, class_name: self.name
 
   validates_presence_of :username
   validates_uniqueness_of :username, :allow_nil => false, :allow_blank => false

@@ -23,8 +23,8 @@ class Bonus
     BonusClaim.create!(user: user, bonus_type: self.name, credits: credits)
 
     Mixpanel.track_async 'bonus claimed', distinct_id: user.distinct_id,
-                                          bonus:       bonus.name,
-                                          credits:     bonus.credits,
+                                          bonus:       self.name,
+                                          credits:     self.credits,
                                           time:        Time.now.to_i
   end
 
