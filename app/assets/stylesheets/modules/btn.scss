@@ -95,4 +95,18 @@
     background: black;
   }
 
+  &.btn-facebook {
+    background-color: #3B5998;
+  }
+
+  &.btn-twitter {
+    background-color: #129BE9;
+  }
+
+  &[data-icon]:before {
+    margin-right: 10px;
+    font-size: 150%;
+    vertical-align: middle;
+  }
+
 }

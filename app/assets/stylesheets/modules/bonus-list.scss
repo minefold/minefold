@@ -4,26 +4,29 @@
 
   .bonus {
     display: block;
-    margin-bottom: 24px;
+    margin-bottom: l(2);
 
     & [data-icon] {
       display: block;
       vertical-align: bottom;
-      background-color: #EEE;
-      text-align: center;    font-size: 36px;
+      background-color: rgba(black, 0.1);
+      text-align: center;
+      font-size: 60px;
       line-height: 60px;
+      overflow: hidden;
+      height: 60px;
       color: white;
     }
 
     & > .description {
       > .name {
         font-size: 24px;
-        line-height: 36px;
+        line-height: l(3);
       }
 
       > p {
         font-size: 18px;
-        line-height: 24px;
+        line-height: l(2);
         color: rgba(black, 0.4);
         margin-bottom: 0;
       }
@@ -32,29 +35,25 @@
     & > .reward {
       & > .credits {
         font-size: 24px;
-        line-height: 36px;
+        line-height: l(3);
         font-weight: 600;
       }
 
       > .conditions {
         color: rgba(black, 0.4);
         font-size: 14px;
-        line-height: 24px;
+        line-height: l(2);
       }
     }
 
     &.bonus-mini {
       color: rgba($blue, 0.4);
-      margin-bottom: 12px;
+      margin-bottom: l(1);
 
-      > .description > .name {
-        font-size: 18px;
-        line-height: 36px;
-      }
-
+      > .description > .name,
       > .reward > .credits {
         font-size: 18px;
-        line-height: 36px;
+        line-height: l(3);
       }
     }
   }

@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 
   attr_accessible :username, :email, :first_name, :last_name, :avatar,
                   :password, :password_confirmation, :remove_avatar,
-                  :avatar_cache, :distinct_id
+                  :avatar_cache, :distinct_id, :invited_by_id
 
 
   acts_as_paranoid
@@ -42,8 +42,9 @@ class User < ActiveRecord::Base
 
   attr_accessible :campaign_mailer, :server_mailer, :session_mailer
 
-  friendly_id :username, :use => :slugged
+  uniquify :invitation_token, length: 12
 
+  friendly_id :username, :use => :slugged
 
   devise :database_authenticatable, :token_authenticatable, :omniauthable,
     :confirmable, :recoverable, :registerable, :rememberable, :trackable,
@@ -64,6 +65,10 @@ class User < ActiveRecord::Base
 
   def name
     [first_name, last_name].join(' ')
+  end
+
+  def conversational_name
+    first_name || username
   end
 
   def facebook_linked?

@@ -1,4 +1,3 @@
 class Bonuses::Referred < Bonus
-  # TODO Adjust credits
-  credits 600
+  self.credits = 250
 end

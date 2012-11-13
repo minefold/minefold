@@ -1,4 +1,4 @@
 class Bonuses::ReferredFriend < Bonus
-  # TODO Adjust credits
-  credits 600
+  self.credits = 500
+  self.claim_limit = 16
 end

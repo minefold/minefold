@@ -1,10 +1,8 @@
-# Hash rocket stylee please. Routes typically have lots of symbol to symbol hashes so keeping the same style throughout it prettier.
-
 Minefold::Application.routes.draw do
   admin_only = lambda {|req| (u = req.env['warden'].user) and u.admin? }
 
   constraints(admin_only) do
-    mount Resque::Server, :at => '/admin/resque'
+    mount Resque::Server, at: '/admin/resque'
   end
 
   if Rails.env.development?
@@ -17,15 +15,15 @@ Minefold::Application.routes.draw do
 
   # Static Pages
 
-  { '/about'    => :about,
+  { '/about'      => :about,
     '/getcredits' => :getcredits,
-    '/support'  => :support,
-    '/jobs'     => :jobs,
-    '/pricing'  => :pricing,
-    '/privacy'  => :privacy,
-    '/terms'    => :terms
+    '/support'    => :support,
+    '/jobs'       => :jobs,
+    '/pricing'    => :pricing,
+    '/privacy'    => :privacy,
+    '/terms'      => :terms
   }.each do |url, name|
-    get url, :controller => 'pages',:action => name, :as => "#{name}_page"
+    get url, controller: 'pages', action: name, as: "#{name}_page"
   end
 
   post '/pusher/auth' => 'pusher#auth'
@@ -33,34 +31,34 @@ Minefold::Application.routes.draw do
   get '/channel.html' => 'facebook#channel', :as => :facebook_channel
 
 
-  devise_for :user, :controllers => {
-                      :omniauth_callbacks => 'omniauth_callbacks',
-                      :registrations => 'registrations'
+  devise_for :user, controllers: {
+                      omniauth_callbacks: 'omniauth_callbacks',
+                      registrations: 'registrations'
                     }
 
   # Authenticated routes
   as :user do
-
+    # Devise overrides
     get '/settings' => 'devise/registrations#edit', :as => :edit_user_registration
 
-    resource :orders, :only => [:new, :create]
+    resource :orders, only: [:create]
 
-    resources :servers, :path_names => {:edit => 'settings'} do
-      get :new_funpack_settings, :on => :collection
+    resources :invitations, path: 'i', only: [:show]
 
-      get :map, :on => :member
-      put :extend, :on => :member
+    resources :servers, path_names: {edit: 'settings'} do
+      collection do
+        get :new_funpack_settings
+      end
 
-      resources :comments, :only => [:create], :module => 'servers'
+      member do
+        get :map
+        put :extend
+      end
 
-      get 'policy.xml',
-        :controller => 'servers/uploads',
-        :action => :policy,
-        :format => :xml,
-        :on => :collection
+      resources :comments, only: [:create], module: 'servers'
     end
 
-    scope '/users/accounts', :controller => 'accounts', :as => :accounts do
+    scope '/users/accounts', controller: 'accounts', :as => :accounts do
       put :unlink_facebook
 
       get :link_minecraft
@@ -68,15 +66,15 @@ Minefold::Application.routes.draw do
     end
 
     authenticated do
-      root :to => 'servers#index', :as => :user_root
+      root to: 'servers#index', :as => :user_root
     end
 
-    resources :users, :path => '/',
-                      :only => [:show, :update] do
-       get :onboard, :on => :collection, :path => 'welcome'
+    resources :users, path: '/',
+                      only: [:show, :update] do
+       get :onboard, :on => :collection, path: 'welcome'
     end
   end
 
-  root :to => 'pages#home'
+  root to: 'pages#home'
 
 end

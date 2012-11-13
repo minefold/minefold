@@ -6,6 +6,10 @@ class RegistrationsController < Devise::RegistrationsController
       @distinct_id = JSON.parse(mixpanel_cookie)['distinct_id']
     end
 
+    if params[:i]
+      @invited_by = User.where(invitation_token: params[:i]).first
+    end
+
     super
   end
 

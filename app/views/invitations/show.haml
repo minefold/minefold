@@ -1,0 +1,47 @@
+- title 'Your invitation page'
+
+.hero-unit
+  %h1 Invite your friends!
+
+  %p For every friend who joins Minefold, we'll give you #{pluralize Bonuses::ReferredFriend.credits, 'credit', 'credits'} and your friend #{pluralize Bonuses::Referred.credits, 'credit', 'credits'} of bonus credits (up to a limit of #{pluralize Bonuses::ReferredFriend.credit_limit, 'credit', 'credits'})!
+
+%center
+
+  %p
+    %a.btn.btn-twitter{href: "https://twitter.com/share?url=#{URI.encode(url_for(only_path: false))}", target: '_blank', data: {icon: 'T'}} Tweet on Twitter
+    %a.btn.btn-facebook#share-on-facebook-btn{style: 'margin-left:10px', data: {icon: 'F'}} Share on Facebook
+
+  %p or share a link to this page with them:
+
+  %pre
+    %code= url_for(only_path: false)
+
+- content_for :tail do
+  :javascript
+    app.on('fb:init', function() {
+
+      var obj = {
+        method: 'feed',
+        // link: document.location.href,
+        link: 'http://facebook.com',
+
+        // picture: #{image_path('facebook_share.png').to_json},
+        picture: 'http://fbrell.com/f8.jpg',
+
+        name: 'Minefold',
+        caption: 'Simple Game Servers',
+        description: 'Available instantly, free to get started. Games include Minecraft, Team Fortress, Counter-Strike, Call of Duty, Battlefield and DayZ.'
+      };
+
+      function callback(response) {
+        mixpanel.track('shared', {
+          platform: 'facebook',
+          url: window.location.href,
+          'post id': response.post_id
+        });
+      }
+
+      $('#share-on-facebook-btn').click(function() {
+        FB.ui(obj, callback);
+      });
+    });

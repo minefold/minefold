@@ -3,10 +3,27 @@
 .page-header
   %h1 Sign up for Minefold
 
+- if @invited_by
+  .invitation-message.row
+    .avatar.span1
+      = image_tag @invited_by.avatar.large.url, width: 60
+    .message.span7
+      %p Hi! Thanks for joining me on Minefold. Minefold is a site for running simple game servers for games like Minecraft. When you sign up below you'll get an extra <strong>#{pluralize Bonuses::Referred.credits, 'credit', 'credits'}</strong> to play games with me.
+      %p
+        Thanks,
+        %strong= @invited_by.conversational_name
+
+  %hr
+
 .row
   .span4
     = form_for resource, as: resource_name, url: registration_path(resource_name) do |f|
-      = f.hidden_field :distinct_id, value: @distinct_id
+
+      - if @distinct_id
+        = f.hidden_field :distinct_id, value: @distinct_id
+
+      - if @invited_by
+        = f.hidden_field :invited_by_id, value: @invited_by.id
 
       %fieldset
         = f.control_group :username do

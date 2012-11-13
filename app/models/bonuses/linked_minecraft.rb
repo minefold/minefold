@@ -1,3 +1,3 @@
 class Bonuses::LinkedMinecraft < Bonus
-  credits 400
+  self.credits = 400
 end

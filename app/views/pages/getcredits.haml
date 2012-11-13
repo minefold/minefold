@@ -13,18 +13,16 @@
       %p The fastest way to get lots of credits.
     .reward.span2
       .credits= pluralize @small_credit_pack.credits, 'credit', 'credits'
-      .conditions credits or more
+      .conditions or more
 
-  - # False is an awesome feature flag
-  - if false
-    %a.bonus.row{href: '#'}
-      .span1{data: {icon: '♥'}}
-      .description.span5
-        %h2.name Refer friends to Minefold
-        %p Spread the love to your friends and family.
-      .reward.span2
-        .credits= pluralize Bonuses::ReferredFriend.credits, 'credit', 'credits'
-        .conditions 240 credits per friend
+  %a.bonus.row{href: url_for(:controller => :invitations, :action => :show, id: current_user.invitation_token)}
+    .span1{data: {icon: '♥'}}
+    .description.span5
+      %h2.name Refer friends to Minefold
+      %p Spread the love to your friends and family.
+    .reward.span2
+      .credits= pluralize Bonuses::ReferredFriend.credit_limit, 'credit', 'credits'
+      .conditions #{pluralize Bonuses::ReferredFriend.credits, 'credit', 'credits'} per friend
 
   %a.bonus.bonus-mini.row{href: edit_user_registration_path(anchor: 'accounts')}
     .description.span5.offset1
