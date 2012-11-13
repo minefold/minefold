@@ -8,7 +8,11 @@
 
   .hero-unit {
     background-color: lighten($blue, 20%);
-    h1 { color: white; }
+    margin-bottom: l(8);
+
+    h1 {
+      color: white;
+    }
   }
 
   section {
