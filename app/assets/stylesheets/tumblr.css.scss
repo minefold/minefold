@@ -16,155 +16,162 @@
 
 @import 'vars';
 
-.container {
-  width: grid-width(8);
+body {
+  color: rgba(black, 0.4);
+  font-size: 18px;
+  line-height: l(2.5);
 }
-        
+
+body, header {
+  min-width: 500px;
+}
+
+.container {
+  width: 500px;
+}
+
+header {
+  padding-top: l(4);
+  background-color: rgba(black, 0.4);
+  padding-bottom: l(4);
+  margin-bottom: l(4);
+
+  html.is-blue & { background-color: lighten($blue, 20%); }
+  html.is-red & { background-color: $red; }
+  html.is-green & { background-color: $green; }
+  html.is-yellow & { background-color: $yellow; }
+
+  .navbar .navbar-inner {
+    padding-left: 0; padding-right: 0;
+    text-align: center;
+
+    .brand {
+      width: 100%;
+      padding: 0;
+      color: rgba(black, 0.4);
+
+      h1 {
+        margin: 0;
+        font-size: 48px;
+        line-height: l(4);
+        a {
+          color: white;
+        }
+      }
+      h2 {
+        font-size: 24px;
+        line-height: l(4);
+        margin-bottom: l(2);
+
+        a {
+          color: rgba(black, 0.6);
+        }
+
+      }
+    }
+
+    p {
+      color: rgba(black, 0.4);
+      font-size: 18px;
+      line-height: l(2);
+    }
+  }
+}
+
 .posts {
-  margin-top: 40px;
-  
   .post {
     @include clearfix;
-    margin-bottom: 80px;
-    color: rgba(black, 0.8);
-    
+    margin-bottom: l(8);
+    color: rgba(black, 0.6);
+
     h2 {
       font-size: 36px;
-      line-height: 60px;
-      margin-bottom: 20px;
-      font-family: $futura;
-      font-weight: 400;
-      
+      line-height: l(4);
+      font-weight: 600;
+      margin-bottom: l(2);
+
       a {
         color: black;
       }
     }
-    
-    .post-caption,
-    .post-body {
-      font-size: 16px;
-      line-height: 28px;
+
+    .quote-post {
+      q {
+        color: black;
+        display: block;
+        font-size: 36px;
+        line-height: l(4);
+        margin-bottom: l(2);
+      }
+      cite {
+        display: block;
+        margin-bottom: l(2);
+      }
     }
-    
+
     .post-body {
-      text-align: justify;
-      
+      margin-bottom: l(1);
+
       h1 {
-        font-size: 22px;
+        color: rgba(black, 0.8);
+        font-size: 24px;
+        line-height: l(4);
       }
-      
+
       h2 {
-        font-size: 18px;
-        text-align: left;
+        color: rgba(black, 0.6);
+        font-size: 20px;
+        line-height: l(3);
+      }
+
+      ul, ol {
+        line-height: l(3);
       }
     }
-    
+
     .meta {
+      border-top: 2px solid rgba(black, 0.05);
+      padding-top: l(1) - 2px;
       @include clearfix;
-    }
-    
-    .meta, .meta a {
-      font-size: 14px;
-      color: rgba(black, 0.2);
+      font-size: 18px;
+      line-height: l(2);
+
+      .avatar {
+        float: left;
+        margin-right: $gw-gutter / 2;
+        img { margin: 0; display: block; }
+      }
+      .details {
+        float: left;
+        width: 500px - 36px - ($gw-gutter / 2);
+      }
     }
   }
 }
 
 .pagination {
-  a, span {
-    border-color: darken(white, 10%);
-    
-    &:hover {
-      background-color: white;
-      border-color: black;
+  text-align: center;
+  ul {
+    @include inline-block;
+
+    a, span {
+      border: none;
+      color: white;
+      background-color: $blue;
+
+      &:first-child, &:last-child {
+        border-radius: $radius;
+      }
+
+
+      &:hover {
+        background-color: $blue;
+      }
     }
   }
-  
+
   .pagination-guide {
-    font-size: 12px;
+    font-size: 14px;
     color: #CCC;
   }
 }
-
-header {
-  background: transparent;
-}
-
-.navbar {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  height: 20px;
-  
-  .brand {
-    line-height: 20px;
-    font-size: 18px;
-    font-weight: 600;
-    padding: 0;
-    margin-left: 0;
-    margin-bottom: 0;
-    color: darken($blue, 10%);
-    
-    &:before  {
-      display: none;
-    }
-  }
-  
-  .motto {
-    font-family: $futura;
-    font-size: 16px;
-    color: $blue;
-    line-height: 20px;
-    font-weight: 400;
-  }
-}
-
-.hero-unit-tumblr {
-  img {
-    background-color: rgba(black, 0.1);
-    padding: 20px;
-  }
-}
-
-html, footer {
-  background-color: darken($blue, 10%);
-}
-
-footer {
-  padding-bottom: 40px;
-  
-  a {
-    color: white;
-    
-    &:hover {
-      color: white;
-      border-bottom-color: white;
-    }
-  }
-  
-  .copyright, .copyright a {
-    color: rgba(white, 0.4);
-    font-size: 14px;
-  }
-}
-
-.is-permalink #page-background-block {
-  background-color: darken($blue, 30%);
-  
-  header .brand {
-    color: white;
-  }
-  
-  .posts .post {
-    color: rgba(white, 0.6);
-    
-    h2 a {
-      color: white;
-    }
-    
-    .meta, .meta a {
-      color: rgba(white, 0.2);
-    }
-  }
-}
-
-
