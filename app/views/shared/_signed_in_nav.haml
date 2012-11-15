@@ -1,0 +1,25 @@
+%li.servers= link_to 'Servers', servers_path
+%li.support= link_to 'Support', support_page_path
+
+%li.divider-vertical
+
+%li.credits
+  %a{href: edit_user_registration_path(anchor: 'billing')}
+    = credits_with_image(current_user.credits)
+
+%li.user.dropdown
+  %a.dropdown-toggle{href: '#', data: {toggle: 'dropdown'}}
+    = current_user.username
+    %b.caret
+
+  %ul.dropdown-menu.pull-right
+    %li= link_to 'Settings', edit_user_registration_path
+    %li= link_to 'Get more credits', getcredits_page_path
+    %li= link_to 'Sign out', destroy_user_session_path, method: :delete
+
+- content_for :tail do
+  :javascript
+    app.creditsView = new Application.CreditsView({
+      model: app.currentUser,
+      el: $('header .credits .cr')
+    });

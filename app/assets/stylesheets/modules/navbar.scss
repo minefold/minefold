@@ -4,6 +4,10 @@
   padding: l(1) 0;
   background-color: transparent;
 
+  .btn {
+    margin-top: 0;
+  }
+
   > .navbar-inner {
     background: transparent;
     filter: none; // For IE
@@ -56,53 +60,67 @@
         color: $blue;
       }
 
-      // Navbar item for dropdown trigger
       &.dropdown {
 
-        // Open state
+        > .dropdown-toggle > .caret {
+          margin-top: l(2) - (4px / 2);
+        }
+
         &.open > .dropdown-toggle {
           background-color: black;
           color: white;
-        }
 
-        > .dropdown-toggle .caret {
-          margin-top: l(2) - (4px / 2);
-          border-top-color: black;
-          border-bottom-color: black;
-        }
-
-        &.open > .dropdown-toggle .caret {
-          border-top-color: white;
-          border-bottom-color: white;
-        }
-      }
-
-      .dropdown-menu {
-        @include box-shadow(none);
-        border-radius: $radius;
-        background-color: $blue;
-        border: none;
-
-        &:before {
-          border-bottom-color: transparent;
-        }
-
-        &:after {
-          border-bottom-color: $blue;
-        }
-
-        a {
-          padding-left: $gw-gutter / 2;
-          padding-right: $gw-gutter / 2;
-
-          color: white;
-          font-weight: 600;
-
-          &:hover {
-            background: lighten($blue, 5%);
+          > .caret {
+            border-top-color: white;
+            border-bottom-color: white;
           }
         }
+
+        .dropdown-menu {
+          @include box-shadow(none);
+          border-radius: $radius;
+          background-color: $blue;
+          border: none;
+
+          &:before {
+            border-bottom-color: transparent;
+          }
+
+          &:after {
+            border-bottom-color: $blue;
+          }
+
+          a {
+            padding-left: $gw-gutter;
+            padding-right: $gw-gutter;
+
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            line-height: l(3);
+
+            &:hover {
+              background: lighten($blue, 5%);
+            }
+          }
+        }
+
+        .dropdown-menu.sign-in-dropdown-menu {
+          background-color: white;
+          border: 2px solid black;
+          padding: l(1) $gw-gutter;
+
+          &:after {
+            border-bottom-color: black;
+          }
+
+          form, form .form-actions {
+            margin: 0;
+          }
+        }
+
       }
+
     }
   }
 }

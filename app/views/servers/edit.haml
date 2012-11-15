@@ -17,11 +17,11 @@
     %strong This server is running.
     If you change these settings the server will restart. To change settings <i>without</i> restarting the server, please do so in the game.
 
+/ TODO This is a hack
 %hr.large
 
-.account-form-section.row
-  .section-label.span2
-    %h3 General
+.form-block.row
+  .form-title.span2 General
 
   .span6
     = form_for server do |f|
@@ -34,9 +34,8 @@
         = f.submit 'Save', class: %w(btn btn-small btn-primary)
 
 - if server.game.persistant? and server.world
-  .account-form-section.row
-    .section-label.span2
-      %h3 World
+  .form-block.row
+    .form-title.span2 World
 
     .span6
       %p
@@ -67,9 +66,9 @@
 
             %input{type: 'filepicker-dragdrop', data: {'fp-class' => 'filepicker filepicker-dragdrop', 'fp-button-class' => 'btn btn-mini', 'fp-button-text' => 'Choose world archive', 'fp-mimetype' => 'application/zip', 'fp-openTo' => 'COMPUTER'}}
 
-.account-form-section.row
-  .section-label.span2
-    %h3 Gameplay
+.form-block.row
+  .form-title.span2 Gameplay
+
   .span6
     = form_for server do |f|
       = f.fields_for :settings do |s|
@@ -79,9 +78,9 @@
         = f.submit 'Save', class: %w(btn btn-small btn-primary)
 
 - if can? :destroy, server
-  .account-form-section.row
-    .section-label.span2
-      %h3 Danger Zone
+  .form-block.row
+    .form-title.span2 Danger Zone
+
     .span6
       %p Destroying a server <strong>immediately halts it</strong> and <strong>destroys all its data</strong>. You <i>will not be credited</i> for any remaining time. There is no way to recover a server once it has been destroyed. <span class="highlight">With great power comes great responsibility.</span>
 

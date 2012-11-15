@@ -83,37 +83,9 @@
           .pull-right
             %ul.nav
               - if signed_in?
-                %li.servers= link_to 'Servers', servers_path
-
-              %li.support= link_to 'Support', support_page_path
-
-              - if not signed_in?
-                %li.pricing= link_to 'Pricing', pricing_page_path
-                %li.sign-up= link_to 'Sign Up', new_user_registration_path
-                %li.divider-vertical
-                %li.sign-in= link_to 'Sign In', new_user_session_path
-
+                = render partial: 'shared/signed_in_nav'
               - else
-                %li.divider-vertical
-                %li.credits
-                  %a{href: edit_user_registration_path(anchor: 'billing')}
-                    = credits_with_image(current_user.credits)
-                - content_for :tail do
-                  :javascript
-                    app.creditsView = new Application.CreditsView({
-                      model: app.currentUser,
-                      el: $('header .credits .cr')
-                    });
-
-                %li.user.dropdown
-                  %a.dropdown-toggle{href: '#', data: {toggle: 'dropdown'}}
-                    = current_user.username
-                    %b.caret.white
-
-                  %ul.dropdown-menu.pull-right
-                    %li= link_to 'Settings', edit_user_registration_path
-                    %li= link_to 'Get more credits', getcredits_page_path
-                    %li= link_to 'Sign out', destroy_user_session_path, method: :delete
+                = render partial: 'shared/public_nav'
 
     .container
       - flash.select {|_,msg| msg.is_a?(String) }.each do |name, msg|

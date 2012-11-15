@@ -56,7 +56,8 @@ p, ul, ol {
 }
 
 hr {
-  border: 2px solid rgba(black, 0.1);
+  border-top: 1px solid rgba(black, 0.1);
+  border-bottom: 1px solid rgba(black, 0.1);
   margin: l(4) 0;
   height: 0;
 

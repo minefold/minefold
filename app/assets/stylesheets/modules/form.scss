@@ -15,6 +15,7 @@ form {
     line-height: l(2);
     color: black;
     @include box-sizing(border-box);
+    margin: 0;
     min-height: 40px;
 
     &:focus, &.focus {
@@ -32,19 +33,28 @@ form {
   }
 
   .control-group {
-    margin-bottom: l(1);
+    margin-bottom: l(2);
+
+    > .controls {
+      margin-bottom: l(1);
+    }
   }
 
   .control-label {
     font-weight: 600;
+    line-height: l(2);
+    margin-bottom: l(1);
   }
 
   .form-actions {
+    margin-top: 0;
     background-color: transparent;
     padding: 0;
     border: none;
+    margin-bottom: l(2);
   }
 
+  // Errors
   .control-group.error {
     .control-label {
       color: black;
@@ -68,6 +78,17 @@ form {
     }
   }
 
+}
+
+.form-block {
+  margin-bottom: l(2);
+
+  > .form-title {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: l(2);
+    color: rgba(black, 0.4);
+  }
 }
 
 

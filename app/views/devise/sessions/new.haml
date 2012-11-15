@@ -12,7 +12,7 @@
       %fieldset
         .control-group
           .controls
-            = f.text_field :email_or_username, tabindex: 1, class: %w(span4), placeholder: 'Email or username'
+            = f.text_field :email_or_username, tabindex: 1, class: %w(span4), placeholder: 'Username or email'
 
         .control-group
           .controls
@@ -37,4 +37,3 @@
     %hr.large
 
     = link_to "Sign in using Facebook", user_omniauth_authorize_path(:facebook), class: %w(btn btn-small)
-
