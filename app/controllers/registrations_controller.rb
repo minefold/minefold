@@ -1,13 +1,8 @@
 class RegistrationsController < Devise::RegistrationsController
 
   def new
-    # TODO Move this hack into User.new_with_session(hash, session)
-    if mixpanel_cookie.present?
-      @distinct_id = JSON.parse(mixpanel_cookie)['distinct_id']
-    end
-
-    if params[:i]
-      @invited_by = User.where(invitation_token: params[:i]).first
+    if params[:i] and User.where(invitation_token: params[:i]).exists?
+      session[:invitation_token] = params[:i]
     end
 
     super
@@ -15,12 +10,6 @@ class RegistrationsController < Devise::RegistrationsController
 
   def after_sign_up_path_for(resource)
     user_root_path
-  end
-
-# --
-
-  def mixpanel_cookie
-    request.cookies['mp_mixpanel']
   end
 
 end

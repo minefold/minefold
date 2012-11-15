@@ -160,6 +160,20 @@ class User < ActiveRecord::Base
 
   def self.new_with_session(params, session)
     super.tap do |user|
+      # Extract stored Mixpanel distinct ids
+      if session['distinct_id'].present?
+        user.distinct_id = session['distinct_id']
+      end
+
+      if session['invitation_token'].present?
+        invited_by = User.find_by_invitation_token(session['invitation_token'])
+
+        if invited_by
+          user.invited_by = invited_by
+        end
+      end
+
+      # Extract stored Facebook data (if any)
       data = session['devise.facebook_data']
 
       if data and data['extra'] and data['extra']['raw_info']
