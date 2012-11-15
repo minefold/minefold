@@ -37,11 +37,15 @@ private
     properties[:ip]          ||= request.ip
     properties[:distinct_id] ||= current_user.distinct_id if signed_in?
 
-    Mixpanel.track_async(event, properties)
+    Mixpanel.async_track(event, properties)
   end
 
-  def engage(distinct_id, properties={})
-    Mixpanel.engage_async(distinct_id, properties)
+  def mixpanel_person_set(distinct_id, properties={})
+    Mixpanel.async_person_set(distinct_id, properties)
+  end
+
+  def mixpanel_person_add(distinct_id, properties={})
+    Mixpanel.async_person_add(distinct_id, properties)
   end
 
   def mixpanel_cookie

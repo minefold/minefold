@@ -1,11 +1,11 @@
 class OrdersController < ApplicationController
   prepend_before_filter :authenticate_user!
   layout false
-  
+
   def new
     @credit_packs = CreditPack.active.all.sort_by {|p| p.cents }
   end
-  
+
   def create
     order = Order.new(
       params[:credit_pack_id],
@@ -14,19 +14,21 @@ class OrdersController < ApplicationController
     )
 
     if order.valid? and order.fulfill
-      track 'paid', amount: order.total
-      
-      engage order.user.id, '$add' => {
-        'cents spent' => order.total,
-        'credits'     => order.credits
-      }
-      
+      # Do all our amazing tracking stuff
+      track 'paid', 'distinct_id' => order.user.distinct_id,
+                    'credit pack' => order.credit_pack_id,
+                    'amount'      => order.total
+
+      mixpanel_person_add order.user.distinct_id, 'cents spent' => order.total,
+                                                  'credits'     => order.credits
+
+      # Send a receipt
       CreditsMailer.receipt(
         order.user.id,
         order.charge_id,
         order.credit_pack_id
       ).deliver
-      
+
       redirect_to :back,
         notice: "Thank you for buying Minefold credits"
     else
