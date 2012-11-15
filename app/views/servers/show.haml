@@ -77,7 +77,7 @@
         .extension-info
           %span.planned This will cost #{credits_with_image(5 * 60)},
           %span.current you have #{credits_with_image(current_user.credits)}.
-          %a.buy-credits{href: new_orders_path, data: {toggle: 'modal', target: '#buy-credits-modal'}} Buy more credits.
+          %a.buy-credits{href: pricing_page_path} Buy more credits.
 
         %input.btn.btn-primary.btn-mini.btn-success{type: 'submit', value: (server.running? ? 'Extend time' : 'Start server')}
 
