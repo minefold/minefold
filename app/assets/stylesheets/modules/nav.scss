@@ -3,6 +3,22 @@
 .nav {
 }
 
+.nav.nav-pills {
+  margin-bottom: 0;
+  font-size: 14px;
+
+  li a {
+    margin: 0;
+    line-height: l(1);
+    padding: l(0.5) 0;
+
+    border-radius: $radius;
+
+    color: $blue;
+    background-color: transparent;
+  }
+}
+
 .nav.nav-horizontal {
   @include clearfix;
 

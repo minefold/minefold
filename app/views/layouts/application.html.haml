@@ -74,18 +74,20 @@
     #fb-root
     #Intercom
 
-    %header
-      .navbar.navbar-static-top
-        .navbar-inner
-          .pull-left
-            = link_to 'Minefold', root_path, class: 'brand'
 
-          .pull-right
-            %ul.nav
-              - if signed_in?
-                = render partial: 'shared/signed_in_nav'
-              - else
-                = render partial: 'shared/public_nav'
+    %header
+      .container
+        .navbar.navbar-static-top
+          .navbar-inner
+            .pull-left
+              = link_to 'Minefold', root_path, class: 'brand'
+
+            .pull-right
+              %ul.nav
+                - if signed_in?
+                  = render partial: 'shared/signed_in_nav'
+                - else
+                  = render partial: 'shared/public_nav'
 
     .container
       - flash.select {|_,msg| msg.is_a?(String) }.each do |name, msg|
@@ -100,22 +102,23 @@
       #app= yield
 
     %footer
-      %ul.unstyled.social
-        %li.twitter= link_to 'Follow @minefold on Twitter', 'https://twitter.com/minefold'
-        %li.facebook= link_to 'Like Minefold on Facebook', 'https://facebook.com/minefold'
+      .container
+        %ul.unstyled.pull-left
+          %li= link_to 'Pricing', pricing_page_path
+          %li= link_to 'Support', support_page_path
+          %li= link_to 'About', about_page_path
+          %li= link_to 'Developers', 'http://partycloud.com'
+          %li= link_to 'Blog', 'http://blog.mutlicorp.com'
 
-      %ul.unstyled
-        %li= link_to 'Pricing', pricing_page_path
-        %li= link_to 'Support', support_page_path
-        %li= link_to 'About', about_page_path
-        %li= link_to 'Developers', 'http://partycloud.com'
-        %li= link_to 'Blog', 'http://blog.mutlicorp.com'
+        %ul.social.unstyled.pull-right
+          %li.twitter= link_to 'Twitter', 'https://twitter.com/minefold'
+          %li.facebook= link_to 'Facebook', 'https://facebook.com/minefold'
 
-      %p.copyright
-        &copy;
-        %a{href: 'http://mutlicorp.com'} Mütli Corp.
+        %p.copyright
+          &copy;
+          %a{href: 'http://mutlicorp.com'} Mütli Corp.
 
-        Made for fun in San Francisco. #{link_to 'Privacy', privacy_page_path} & #{link_to 'Terms', terms_page_path}.
+          Made for fun in San Francisco. #{link_to 'Privacy', privacy_page_path} & #{link_to 'Terms', terms_page_path}.
 
 
     / ---

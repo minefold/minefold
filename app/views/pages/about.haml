@@ -2,15 +2,33 @@
 - layout :page
 
 .page-header
-  %h1 About Minefold
-  %h2 We make it easier to play games with your friends.
+  %h1 About Us
+  %h2 We're making it simple to play games.
 
 = image_tag 'about/office.jpg', width: 620, height: 134
 
 %hr
 
-%p We love games so much it hurts. Having fun with your friends should be quick and easy. We found that it's too difficult to setup servers so we nerded out and made our own game server platform. Now, running a game server has never been simpler.
+.row
+  .span5
+    %p Minefold is built by <a href="http://mutlicorp.com">Mütli Corp</a>, a small company in San Francisco, California. We care about making it simple for everybody to have fun with their friends. We believe that if we do an excellent job at helping gamers connect with their friends the world will be a better place.
 
-%p In December 2011, Minefold moved from Sydney to Mountain View to join the <a href="http://ycombinator.com">Y Combinator</a> Winter 2012 batch. We're supported by YC and other fantastic investors. We're currently having a blast growing Minefold in Hayes Valley, San Francisco.
+  .span3
+    %p
+      %img{src: 'http://maps.googleapis.com/maps/api/staticmap?center=270+Linden+St+San+Francisco&zoom=13&size=240x120&sensor=false'}
 
-%p For press enquiries please email #{mail_to 'chris@minefold.com'}.
+    %p
+      270 Linden St, Unit 101
+      %br
+      San Francisco, 94102
+      %br
+      California
+
+    %p
+      = mail_to 'team@minefold.com'
+
+    %p
+      %a.twitter{href: 'https://twitter.com/minefold'} Twitter
+      &middot;
+      %a.facebook{href: 'https://facebook.com/minefold'} Facebook
+

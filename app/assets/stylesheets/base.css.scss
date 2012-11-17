@@ -3,13 +3,11 @@
 @include font-face(minecraft, font-path('minecraft'));
 
 html {
-  background-color: $bg;
-  padding: 0;
+  background-color: white;
   @include anti-aliasing;
 }
 
 body {
-  font-family: $futura;
   font-size: 16px;
   line-height: l(2);
   font-weight: 500;
@@ -18,8 +16,8 @@ body {
 }
 
 header {
-  margin: 0;
   @include clearfix;
+  margin: 0;
 }
 
 body {
@@ -56,8 +54,8 @@ p, ul, ol {
 }
 
 hr {
-  border-top: 1px solid rgba(black, 0.1);
-  border-bottom: 1px solid rgba(black, 0.1);
+  border-top: 1px solid rgba(black, 0.05);
+  border-bottom: 1px solid rgba(black, 0.05);
   margin: l(4) 0;
   height: 0;
 
@@ -79,6 +77,7 @@ hr {
 }
 
 h1, h2, h3, h4 {
+  font-family: $futura;
   margin-top: 0; margin-bottom: 0;
 }
 

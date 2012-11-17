@@ -2,24 +2,55 @@
 
 .l-support {
 
-  h3 {
-    margin-bottom: l(8);
+  .container {
+    width: grid-width(10);
   }
 
-  .support-icon {
-    color:white;
-    background-color: $red;
-
-    text-align:center;
-    width:60px; height: 60px;
-
-    line-height: 60px;
-    font-size: 36px;
-
-    vertical-align: middle;
-
-    &:before {
-      -webkit-font-smoothing: none;
+  .support-faq {
+    > .name {
+      font-size: 20px;
+      color: $green;
     }
+
+    > .items {
+      > .item {
+        margin-bottom: l(1);
+
+        > .question {
+          font-size: 18px;
+          margin-bottom: 0;
+        }
+
+        > .answer {
+          color: rgba(black, 0.4);
+        }
+      }
+    }
+  }
+
+  .support-contact {
+    h2 {
+      padding-top: l(6);
+      padding-bottom: l(6);
+      text-align: center;
+    }
+
+    .support-icon {
+      color:white;
+      background-color: $red;
+
+      text-align:center;
+      width:60px; height: 60px;
+
+      line-height: 60px;
+      font-size: 36px;
+
+      vertical-align: middle;
+
+      &:before {
+        -webkit-font-smoothing: none;
+      }
+    }
+
   }
 }

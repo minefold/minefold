@@ -9,27 +9,32 @@
   }
 
   > .navbar-inner {
+    @include box-shadow(none);
+    @include clearfix;
     background: transparent;
     filter: none; // For IE
     border: none;
     min-height: auto;
-    @include box-shadow(none);
-    @include clearfix;
+    padding-left: 0; padding-right: 0;
   }
 
   .brand {
-    font-size: 36px;
     color: $red;
+
+    font-size: 24px;
+    font-family: $futura;
     font-weight: 600;
     text-shadow: none;
-    line-height: l(4);
-    padding: 0 $gw-gutter;
+    line-height: l(2);
+    padding: 0;
     margin: 0;
 
     @include inline-block;
   }
 
   .nav {
+    margin-right: 0;
+
     li {
       font-weight: 600;
       font-size: 18px;
@@ -39,31 +44,29 @@
         text-shadow: none;
         color: black;
         outline: none;
-        padding: 0 $gw-gutter;
-        line-height: l(4);
+        padding: 0 ($gw-gutter / 2);
+
+        font-size: 14px;
+        line-height: l(2);
       }
 
       &.divider-vertical {
-        height: l(4);
+        height: l(2);
         border-color: rgba(black, 0.1);
-      }
-
-      &.support a {
-        color: $yellow;
       }
 
       &.sign-up a {
         color: $green;
       }
 
-      &.pricing a, &.servers a {
+      &.pricing a {
         color: $blue;
       }
 
       &.dropdown {
 
         > .dropdown-toggle > .caret {
-          margin-top: l(2) - (4px / 2);
+          margin-top: (l(2) - 4px) / 2;
         }
 
         &.open > .dropdown-toggle {
@@ -79,7 +82,7 @@
         .dropdown-menu {
           @include box-shadow(none);
           border-radius: $radius;
-          background-color: $blue;
+          background-color: lighten($blue, 20%);
           border: none;
 
           &:before {
@@ -87,20 +90,15 @@
           }
 
           &:after {
-            border-bottom-color: $blue;
+            border-bottom-color: lighten($blue, 20%);
           }
 
           a {
-            padding-left: $gw-gutter;
-            padding-right: $gw-gutter;
-
             color: white;
-            font-size: 18px;
             font-weight: 600;
-            line-height: l(3);
 
             &:hover {
-              background: lighten($blue, 5%);
+              background: lighten($blue, 0%);
             }
           }
         }
@@ -108,7 +106,7 @@
         .dropdown-menu.sign-in-dropdown-menu {
           background-color: white;
           border: 2px solid black;
-          padding: l(1) $gw-gutter;
+          padding: l(2) $gw-gutter;
 
           &:after {
             border-bottom-color: black;

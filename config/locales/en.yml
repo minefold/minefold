@@ -6,4 +6,4 @@ en:
     formats:
       long: ! '%A %B %d, %Y %H:%M%P'
       default: ! '%a %b %d, %Y (%H:%M%P)'
-      date: ! '%d %b, %Y'
+      date: ! '%b %d, %Y'

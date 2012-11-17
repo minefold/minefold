@@ -1,4 +1,5 @@
 - title  'Create your account'
+- layout :auth
 
 .page-header
   %h1 Sign up for Minefold
@@ -8,10 +9,8 @@
     .avatar.span1
       = image_tag @invited_by.avatar.large.url, width: 60
     .message.span7
-      %p Hi! Thanks for joining me on Minefold. Minefold is a site for running simple game servers for games like Minecraft. When you sign up below you'll get an extra <strong>#{pluralize Bonuses::Referred.credits, 'credit', 'credits'}</strong> to play games with me.
-      %p
-        Thanks,
-        %strong= @invited_by.conversational_name
+      %p Hi! Thanks for joining me here on Minefold. I run servers for games like Minecraft here. When you sign up you'll get an extra <strong>#{pluralize Bonuses::Referred.credits, 'credit', 'credits'}</strong> because I referred you.
+      .sig= @invited_by.conversational_name
 
   %hr
 

@@ -7,4 +7,61 @@
     margin-left: $gw-gutter;
   }
 
+  .invitation-message {
+    margin-bottom: l(4);
+
+    > .message {
+      position: relative;
+
+      font-size: 18px;
+      line-height: l(2);
+
+      color: $blue;
+      background-color: lighten($blue, 58%);
+      padding: l(1) $gw-gutter;
+
+      @include box-sizing(border-box);
+
+      > .sig {
+        margin-bottom: 0;
+      }
+
+      &:before, &:after {
+        color: $blue;
+        font-size: 48px;
+        line-height: l(3);
+        position: absolute;
+      }
+
+      &:before {
+        content: "“";
+        top: l(1);
+        left: -0.25em;
+      }
+
+      &:after {
+        content: "”";
+        top: l(1);
+        right: -0.25em;
+      }
+    }
+  }
+
+  .letter {
+    padding: l(2) $gw-gutter;
+
+    color: rgba(black, 0.8);
+
+    background-color: lighten($yellow, 40%);
+    background-image: url(image-path('line.png'));
+
+    box-shadow: 0 l(.5) l(1) 0 rgba(black, 0.1),
+                0 0 1px rgba(black, 0.2);
+
+    border-radius: 4px;
+
+    > .sig {
+      margin-left: $gw-gutter / 2;
+    }
+  }
 }

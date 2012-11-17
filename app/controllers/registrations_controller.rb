@@ -1,7 +1,7 @@
 class RegistrationsController < Devise::RegistrationsController
 
   def new
-    if params[:i] and User.where(invitation_token: params[:i]).exists?
+    if params[:i] and @invited_by = User.find_by_invitation_token( params[:i])
       session[:invitation_token] = params[:i]
     end
 

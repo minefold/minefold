@@ -9,6 +9,16 @@ class UserTest < ActiveSupport::TestCase
     assert_equal 'Chris Lloyd', user.name
   end
 
+  test "#name?" do
+    assert !User.new.name?
+    assert User.new(first_name: 'Chris').name?
+    assert User.new(last_name: 'Lloyd').name?
+    assert User.new(name: 'Chris Lloyd').name?
+
+    assert User.new(first_name: 'Chris', last_name: 'Lloyd').name?
+    assert User.new(name: 'Chirs Lloyd', first_name: 'Chris', last_name: 'Lloyd').name?
+  end
+
   test "#minecraft_linked?" do
     user = User.make!
     minecraft = Game.make!(:minecraft)

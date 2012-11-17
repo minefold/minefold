@@ -1,38 +1,44 @@
 - title 'Servers'
 - layout :server
 
-.page-header
-  %h1 Servers
+.row
+  .span2.user-profile
+    .avatar
+      = image_tag current_user.avatar.large.url, class: 'avatar'
 
-.server-list
-  - if @servers.empty?
-    .empty
-      %h2 You don't have any servers. Create a new server to start the party!
+    .identity
+      - if current_user.name?
+        %h2.name= current_user.name
+        %h3.username= current_user.username
+      - else
+        %h2.username= current_user.username
 
-  - else
+    .info
+      %p
+        Joined on <strong>#{l current_user.created_at, :format => :date}</strong>
 
-    - @servers.each do |game, servers|
-      .divider= game.name
-      - servers.each do |server|
-        .item{class: "is-#{server.state}"}
 
-          %a.primary-action{href: server_path(server)}
-            %h2.name= server.name
-            .state
-              - case server.state
-              - when :up, :shared
-                %span.server-address= server.address
-              - else
-                (not running)
+  .span8
+    .server-list
+      - if @servers.empty?
+        .empty
+          %h2 You don't have any servers. Create a new server to start the party!
 
-          %ul.nav.nav-pills.nav-pills-images.pull-right
-            - if server.world and server.world.mapped?
-              %li
-                %a{href: map_server_path(server), title: 'Browse map', data: {icon: 'm'}}
+      - else
 
-            - if can? :update, server
-              %li
-                %a{href: edit_server_path(server), title: 'Edit settings', data: {icon: 's'}}
+        - @servers.each do |game, servers|
+          .divider
+            .game.pull-left= game.name
+            .count.pull-right= pluralize servers.size, 'server', 'servers'
 
-  - if can? :create, Server
-    .new= link_to 'Create a new server', new_server_path, class: %w(btn btn-success)
+          - servers.each do |server|
+            .item{class: "is-#{server.state}"}
+              %ul.nav.nav-pills.pull-right
+                %li= link_to 'Settings', edit_server_path(server)
+
+              .primary-action.pull-left
+                %a.name{href: server_path(server)}= server.name
+
+      .new
+        = link_to 'Create a new server', new_server_path, class: %w(btn btn-small btn-primary)
+

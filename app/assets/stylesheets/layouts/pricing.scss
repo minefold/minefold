@@ -6,12 +6,17 @@
     width: grid-width(12);
   }
 
+  .hero-unit {
+    color: $blue;
+  }
+
   .stuff-to-buy {
     margin-bottom: l(8);
 
     .a, .b {
       @include box-sizing(border-box);
-      border: 5px solid rgba(black, 0.1);
+
+      background-color: rgba(black, 0.05);
       padding: l(4) $gw-gutter;
       text-align: center;
 
@@ -35,4 +40,97 @@
     }
   }
 
+
+  .credit-pack-list {
+    .credit-pack {
+      position: relative;
+      text-align: center;
+      color: white;
+
+      @include transition(all 0.15s cubic-bezier(0.25, 0.01, 0.25, 1));
+
+      &:hover {
+        top: - l(.5);
+      }
+
+      > .price {
+        font-size: 36px;
+        font-family: $futura;
+        font-weight: 600;
+        line-height: l(6);
+        padding: l(2) 0;
+      }
+
+      > .selling-point {
+        border-top: 2px solid rgba(white, 0.2);
+        padding-top: l(1);
+        margin-bottom: l(1);
+
+        > .main {
+          display: block;
+          line-height: l(2);
+          margin: 0;
+        }
+
+        > .sub {
+          line-height: l(1);
+          color: rgba(white, 0.8);
+        }
+      }
+
+      > .btn {
+        background-color: rgba(white, 0.9);
+      }
+
+      // Colors
+
+      &:nth-child(1) {
+        background-color: darken($yellow, 5%);
+        .btn { color: darken($yellow, 5%); }
+      }
+
+      &:nth-child(2) {
+        background-color: $green;
+        .btn { color: $green; }
+      }
+
+      &:nth-child(3) {
+        background-color: $blue;
+        .btn { color: $blue; }
+      }
+
+      &:nth-child(4) {
+        background-color: $red;
+        .btn { color: $red; }
+      }
+    }
+  }
+
+
+  .testimonials {
+
+    h2 {
+      font-size: 24px;
+      line-height: l(4);
+      margin-top: 0;
+      margin-bottom: l(2);
+      color: $green;
+    }
+
+    .testimonial {
+      margin-bottom: l(2);
+      font-size: 16px;
+      line-height: l(2);
+
+      q {
+        display: block;
+      }
+
+      cite, cite a {
+        display: block;
+        font-size: 14px;
+        color: rgba(black, 0.4);
+      }
+    }
+  }
 }

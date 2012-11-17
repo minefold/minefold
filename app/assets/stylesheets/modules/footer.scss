@@ -3,57 +3,61 @@
 footer {
   margin-top: l(12);
 
-  background-color: $bg;
+  border-top: 2px solid rgba(black, 0.05);
+
   padding-top: l(2);
-  padding-bottom: l(2);
   padding-left: $gw-gutter; padding-right: $gw-gutter;
+
+  font-family: $futura;
   font-weight: 800;
-  text-align: center;
+  background-color: white;
+
+  padding-bottom: l(3);
 
   ul {
     @include clearfix;
-    text-align: center;
     margin-left: - $gw-gutter;
-    margin-bottom: l(1);
-    font-size: 18px;
+    margin-bottom: 0;
+    font-family: $futura;
 
     li {
-      @include inline-block;
+      float: left;
       margin-left: $gw-gutter;
-      line-height: l(3);
+      font-size: 14px;
+      line-height: l(2);
 
       &:first-child {
         margin-left: 0;
       }
-    }
-  }
 
-  ul.social {
-    font-size: 14px;
-
-    > .twitter a {
-      color: lighten($blue, 20%);
+      a, a:hover {
+        color: rgba(black, 0.4);
+      }
     }
 
-    > .facebook a {
-      color: $blue;
-    }
-  }
+    &.social {
+      > .twitter a {
+        color: lighten($blue, 20%);
+      }
 
-  a, a:hover {
-    color: white;
+      > .facebook a {
+        color: $blue;
+      }
+    }
   }
 
   .copyright {
-    color: rgba(white, 0.4);
-    font-size: 12px;
-    line-height: l(3);
+    font-family: $helvetica;
+    color: rgba(black, 0.2);
+    font-size: 11px;
+    line-height: l(2);
     margin-bottom: 0;
 
+    clear: both;
+
     a {
-      color: rgba(white, 0.6);
+      color: rgba(black, 0.3);
       border: none;
     }
   }
-
 }

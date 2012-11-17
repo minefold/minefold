@@ -6,98 +6,64 @@
     color: #CCC;
   }
 
-  .divider {
-    font-size: 14px;
-    text-transform: uppercase;
-    color: rgba(black, 0.4);
-    line-height: l(3);
-    border-bottom: 2px solid rgba(black, 0.2);
-    padding: 0 ($gw-gutter / 2);
-  }
-
   .new {
     padding: l(4) 0;
   }
 
-  .item {
-    display: block;
-    overflow: auto;
+  .divider {
+    padding: 0 ($gw-gutter / 2);
 
-    border: 2px solid rgba(black, 0.05);
-    border-top: none;
+    font-size: 14px;
+    line-height: l(3);
+    font-weight: 600;
 
-    .primary-action {
-      display: block;
-      float: left;
-      width: grid-width(6);
-      padding: l(1) ($gw-gutter / 2);
+    color: black;
 
-      .name {
-        font-size: 18px;
-        line-height: l(2);
-        margin-top: 0; margin-bottom: 0;
-      }
+    border-bottom: 2px solid rgba(black, 0.2);
 
-      .state {
-        font-family: monospace;
-        font-size: 12px;
-        line-height: l(2);
-      }
-    }
+    @include clearfix;
 
-    .nav {
-      display: none;
-      margin-bottom: 0;
-    }
-
-    .nav li {
-      margin-bottom: 0;
-    }
-
-    // TODO Refactor
-    .nav-pills-images a, .nav-pills-images a:hover {
-      background-color: transparent;
-
-      font-size: 36px;
-      line-height: l(4);
-      margin: 0;
-      padding: 0 ($gw-gutter / 2);
-      @include inline-block;
-      height: l(6);
-    }
-
-    .nav-pills-images [data-icon]:before {
+    .count {
       color: rgba(black, 0.4);
-      background-color: transparent;
-      line-height: l(2);
-      padding: l(1) 0;
-      margin: 0;
-
-      vertical-align: middle;
     }
+  }
 
-    .nav-pills-images a:hover:before {
-      color: $blue;
-    }
+  .item {
+    @include clearfix;
+    padding: l(1) ($gw-gutter / 2);
+    border-bottom: 2px solid rgba(black, 0.05);
 
-    &:hover, &:hover {
-      .primary-action  {
-        border-color: #CCC;
+    > .status {
+      .server-address {
+        font-size: 14px;
+        font-weight: bold;
       }
+    }
 
-      .nav {
+    > .picture {
+      height: 24px;
+      width: 24px;
+      margin-right: $gw-gutter / 2;
+
+      img {
         display: block;
       }
     }
 
-    &.is-shared, &.is-up {
-      .server-address {
-        color: rgba(black, 0.8);
+    > .primary-action {
+      > .name {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: l(2);
       }
-    }
 
-    &.is-stopped .state {
-      color: rgba(black, 0.2);
+      > .meta {
+        font-family: $helvetica;
+        font-size: 12px;
+        font-weight: 600;
+        color: rgba(black, 0.4);
+        line-height: l(2);
+      }
     }
   }
 }

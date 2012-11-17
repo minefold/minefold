@@ -3,8 +3,11 @@
 - track_pageview
 
 - provide :hero_unit do
-  %h1 Pricing
-  %h2 Buy credits to spend on stuff.
+  - if signed_in?
+    %h1 Buy Credits
+  - else
+    %h1 Your first #{pluralize Bonuses::GettingStarted.credits, 'credit', 'credits'} are free.
+  %h2 Spend credits on servers.
 
 .stuff-to-buy.row
   .a.span4.offset2
@@ -48,7 +51,7 @@
     });
 
 
-.credit-pack-display.row
+.credit-pack-list.row
   - @packs.each_with_index do |pack, i|
 
     = form_tag orders_path, method: 'POST', class: %w(credit-pack span3) do |f|
@@ -75,12 +78,8 @@
         %a.btn.btn-block.btn-large{href: new_user_registration_path} Sign up now!
 
 
-%hr.x-large
-
 %center
   %h1 Still not convinced?
-
-%hr.x-large
 
 .row
   .testimonials.span6

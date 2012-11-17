@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   extend FriendlyId
 
-  attr_accessible :username, :email, :first_name, :last_name, :avatar,
+  attr_accessible :username, :email, :first_name, :last_name, :name, :avatar,
                   :password, :password_confirmation, :remove_avatar,
                   :avatar_cache, :distinct_id, :invited_by_id
 
@@ -65,7 +65,15 @@ class User < ActiveRecord::Base
   end
 
   def name
-    [first_name, last_name].join(' ')
+    if super.present?
+      super
+    else
+      [first_name, last_name].compact.join(' ')
+    end
+  end
+
+  def name?
+    (super && name.present?) || (first_name? || last_name?)
   end
 
   def conversational_name

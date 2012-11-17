@@ -2,18 +2,20 @@
 
 .l-page {
   color: rgba(black, 0.4);
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 500;
-
-  &, ol li, ul li {
-    line-height: l(3);
-  }
 
   h3 {
     color: black;
+    margin-bottom: l(1);
   }
 
   h4 {
     color: rgba(black, 0.6);
+  }
+
+  p {
+  line-height: l(2);
+    font-family: $helvetica;
   }
 }
