@@ -1,15 +1,22 @@
 - title 'Your invitation page'
+- layout :invitations
 
 .hero-unit
   %h1 Invite your friends!
 
-  %p For every friend who joins Minefold, we'll give you #{pluralize Bonuses::ReferredFriend.credits, 'credit', 'credits'} and your friend #{pluralize Bonuses::Referred.credits, 'credit', 'credits'} of bonus credits (up to a limit of #{pluralize Bonuses::ReferredFriend.credit_limit, 'credit', 'credits'})!
+  %p For every friend who joins Minefold, we'll give you #{pluralize Bonuses::ReferredFriend.credits, 'credit', 'credits'} and your friend #{pluralize Bonuses::Referred.credits, 'credit', 'credits'} bonus credits (up to a limit of #{pluralize Bonuses::ReferredFriend.credit_limit, 'credit', 'credits'})!
 
 %center
 
   %p
     %a.btn.btn-twitter{href: "https://twitter.com/share?url=#{URI.encode(url_for(only_path: false))}", target: '_blank', data: {icon: 'T'}} Tweet on Twitter
     %a.btn.btn-facebook#share-on-facebook-btn{style: 'margin-left:10px', data: {icon: 'F'}} Share on Facebook
+
+  %p Emebed this code into your forum signature:
+
+  %pre
+    %code
+      [url=#{url_for(only_path: false)}]Minefold: Simple game servers. Sign up now and get an extra #{pluralize Bonuses::ReferredFriend.credit_limit, 'credit', 'credits'}![/url]
 
   %p or share a link to this page with them:
 
