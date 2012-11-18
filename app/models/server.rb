@@ -17,7 +17,13 @@ class Server < ActiveRecord::Base
 
   validates_presence_of :name
 
-  store :settings
+  def initialize(*args, &blk)
+    super
+    self.settings = {}
+  end
+
+
+  serialize :settings, JSON
 
   has_many :comments, order: 'created_at DESC', :dependent => :destroy
 
