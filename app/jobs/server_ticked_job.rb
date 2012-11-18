@@ -3,12 +3,23 @@ class ServerTickedJob < Job
 
   def initialize(id, timestamp, state)
     @server = Server.find_by_party_cloud_id(id)
-    @timestamp = timestamp
+    @timestamp = Time.at(timestamp)
     @state = state
   end
 
   def perform!
     # TODO Increment stats!
+
+    if @server.normal?
+      creator = @server.creator
+      credit_timeseries =
+        RedisTimeSeries.new("user:#{@server.creator.id}:credits", 3600, $redis)
+
+      creator.increment_credits!(5)
+      # Have to remember that increment_credits doesn't update the models internal credit count. We could reload it, but it's faster to just approximate.
+      creidt_ts.add(creator.credits - 5, timestamp)
+    end
+
 
     if @server.shared?
       players = state['players']
