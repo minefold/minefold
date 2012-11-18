@@ -53,6 +53,9 @@ Minefold::Application.routes.draw do
       member do
         get :map
         put :extend
+
+        post :watch
+        post :unwatch
       end
 
       resources :comments, only: [:create], module: 'servers'

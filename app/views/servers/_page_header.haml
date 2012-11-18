@@ -1,4 +1,11 @@
 .page-header.page-header-server
+  .actions.pull-right
+    - if signed_in? and current_user.watching?(server)
+      = button_to 'Unwatch Server', unwatch_server_path(server), class: %w(btn btn-small)
+
+    - else
+      = button_to 'Watch Server', watch_server_path(server), class: %w(btn btn-small btn-primary)
+
   %h1
     = server.name
 

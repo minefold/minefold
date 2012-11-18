@@ -205,6 +205,8 @@ class User < ActiveRecord::Base
     # end
   end
 
+
+  # TODO Extract this out to it's own class
   MIN_CREDITS = 600
   CREDIT_FAIRY_PERIOD = 30.days # Ewww
 
@@ -228,6 +230,25 @@ class User < ActiveRecord::Base
     else
       created_at
     end + CREDIT_FAIRY_PERIOD
+  end
+
+
+  def watch(server)
+    $redis.multi do
+      $redis.sadd("users:watching:#{id}", server.id)
+      $redis.sadd("servers:watchers:#{server.id}", id)
+    end
+  end
+
+  def unwatch(server)
+    $redis.multi do
+      $redis.srem("users:watching:#{id}", server.id)
+      $redis.srem("servers:watchers:#{server.id}", id)
+    end
+  end
+
+  def watching?(server)
+    $redis.sismember("users:watching:#{id}", server.id)
   end
 
 

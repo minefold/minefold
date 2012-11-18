@@ -162,4 +162,13 @@ class UserTest < ActiveSupport::TestCase
     assert_equal 'chris@example.com', user.email
   end
 
+  test "#watch" do
+  end
+
+  test "#unwatch" do
+  end
+
+  test "#watching?" do
+  end
+
 end
