@@ -72,13 +72,14 @@ class ServersController < ApplicationController
     authorize! :read, server
     current_user.watch(server)
 
+    track 'watched server'
+
     respond_with(server)
   end
 
   def unwatch
     authorize! :read, server
     current_user.unwatch(server)
-
     respond_with(server)
   end
 

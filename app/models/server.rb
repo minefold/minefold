@@ -1,4 +1,6 @@
 class Server < ActiveRecord::Base
+  include RedisIdentifiable
+
   attr_accessible :name, :funpack_id, :shared, :settings
 
   acts_as_paranoid
@@ -83,6 +85,19 @@ class Server < ActiveRecord::Base
     if shared?
       self.host = [self.id.to_s, 'foldserver', 'com'].join('.')
       save!
+    end
+  end
+
+
+  def redis_watchers_key
+    "#{typed_redis_key}:watchers"
+  end
+
+  before_destroy :clear_associated_watchers
+
+  def clear_associated_watchers
+    $redis.smembers(redis_watchers_key).each do |id|
+      $redis.srem "user:#{id}:watching", redis_key
     end
   end
 

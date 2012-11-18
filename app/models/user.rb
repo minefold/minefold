@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   extend FriendlyId
+  include RedisIdentifiable
 
   attr_accessible :username, :email, :first_name, :last_name, :name, :avatar,
                   :password, :password_confirmation, :remove_avatar,
@@ -233,24 +234,27 @@ class User < ActiveRecord::Base
   end
 
 
+  def redis_watching_key
+    "user:#{id}:watching"
+  end
+
   def watch(server)
     $redis.multi do
-      $redis.sadd("users:watching:#{id}", server.id)
-      $redis.sadd("servers:watchers:#{server.id}", id)
+      $redis.sadd(redis_watching_key, server.redis_key)
+      $redis.sadd(server.redis_watchers_key, redis_key)
     end
   end
 
   def unwatch(server)
     $redis.multi do
-      $redis.srem("users:watching:#{id}", server.id)
-      $redis.srem("servers:watchers:#{server.id}", id)
+      $redis.srem(redis_watching_key, server.redis_key)
+      $redis.srem(server.redis_watchers_key, redis_key)
     end
   end
 
   def watching?(server)
-    $redis.sismember("users:watching:#{id}", server.id)
+    $redis.sismember(redis_watching_key, server.redis_key)
   end
-
 
 
 private
