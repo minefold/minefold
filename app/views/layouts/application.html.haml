@@ -15,9 +15,9 @@
     %meta{name: 'description', content: 'Play Minecraft on demand with friends.'}
 
     - case Rails.env
-    - when :production
+    - when 'production'
       = favicon_link_tag 'favicon.ico'
-    - when :staging
+    - when 'staging'
       = favicon_link_tag 'favicon-staging.ico'
     - else
       = favicon_link_tag 'favicon-development.ico'
