@@ -74,12 +74,12 @@
             %option{value: (h.hours / 1.minute)}
               = pluralize h, 'hour', 'hours'
 
-        .extension-info
+        %p.extension-info
           %span.planned This will cost #{credits_with_image(5 * 60)},
           %span.current you have #{credits_with_image(current_user.credits)}.
           %a.buy-credits{href: pricing_page_path} Buy more credits.
 
-        %input.btn.btn-primary.btn-mini.btn-success{type: 'submit', value: (server.running? ? 'Extend time' : 'Start server')}
+        %input.btn.btn-primary.btn-small.btn-success{type: 'submit', value: (server.running? ? 'Extend time' : 'Start server')}
 
   - content_for :tail do
     :javascript

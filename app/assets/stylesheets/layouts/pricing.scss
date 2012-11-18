@@ -6,10 +6,6 @@
     width: grid-width(12);
   }
 
-  .hero-unit {
-    color: $blue;
-  }
-
   .stuff-to-buy {
     margin-bottom: l(8);
 
@@ -26,8 +22,9 @@
 
       .big {
         font-size: 36px;
-        font-weight: 600;
         line-height: l(3);
+        font-family: $futura;
+        font-weight: 600;
 
         margin-top: l(3);
         margin-bottom: l(3);
@@ -106,30 +103,50 @@
     }
   }
 
-
-  .testimonials {
-
-    h2 {
-      font-size: 24px;
-      line-height: l(4);
-      margin-top: 0;
-      margin-bottom: l(2);
-      color: $green;
+  .still-not-convinced {
+    > h2 {
+      padding-top: l(6);
+      padding-bottom: l(6);
+      text-align: center;
     }
 
-    .testimonial {
+    h3 {
+      color: $blue;
       margin-bottom: l(2);
-      font-size: 16px;
-      line-height: l(2);
+    }
 
-      q {
-        display: block;
+    .testimonials {
+      > h2 {
+        font-size: 24px;
+        line-height: l(4);
+        margin-top: 0;
+        margin-bottom: l(2);
+        color: $green;
       }
 
-      cite, cite a {
-        display: block;
-        font-size: 14px;
-        color: rgba(black, 0.4);
+      > .testimonial {
+        margin-bottom: l(2);
+        font-size: 16px;
+        line-height: l(2);
+
+        q {
+          display: block;
+        }
+
+        cite, cite a {
+          display: block;
+          font-size: 14px;
+          color: rgba(black, 0.4);
+        }
+      }
+    }
+
+    .q-and-a {
+      color: rgba(black, 0.4);
+      h4 {
+        color: black;
+        line-height: l(2);
+        margin-bottom: l(1);
       }
     }
   }

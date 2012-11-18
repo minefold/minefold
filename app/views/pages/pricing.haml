@@ -61,7 +61,7 @@
       .price= number_to_currency(pack.cents / 100, precision: 0)
 
       %p.selling-point
-        %strong.main= credits_with_image pack.credits
+        %strong.main= pluralize pack.credits, 'credit', 'credits'
         %small.sub #{number_to_currency(pack.cents_per_credit)} per 100 credits
 
       %p.selling-point
@@ -78,112 +78,112 @@
         %a.btn.btn-block.btn-large{href: new_user_registration_path} Sign up now!
 
 
-%center
-  %h1 Still not convinced?
+.still-not-convinced
+  %h2 Still not convinced?
 
-.row
-  .testimonials.span6
-    %h2 Everybody loves Minefold!
+  .row
+    .testimonials.span6
+      %h3 Other people love us
 
-    .testimonial.row
-      .span1
-        = image_tag 'twavatars/technoweenie.jpeg', width: 60
-      .span5
-        %q{cite: 'https://twitter.com/technoweenie/status/139955603111018496'}
-          “Really impressed with how easy
-          = link_to '@minefold', 'https://twitter.com/minefold'
-          is to play Minecraft with my son.”
-        %cite
-          %a{href: 'https://twitter.com/technoweenie'} Rick Olsen
+      .testimonial.row
+        .span1
+          = image_tag 'twavatars/technoweenie.jpeg', width: 60
+        .span5
+          %q{cite: 'https://twitter.com/technoweenie/status/139955603111018496'}
+            “Really impressed with how easy
+            = link_to '@minefold', 'https://twitter.com/minefold'
+            is to play Minecraft with my son.”
+          %cite
+            %a{href: 'https://twitter.com/technoweenie'} Rick Olsen
 
-    .testimonial.row
-      .span1
-        = image_tag 'twavatars/Tracy_Young.jpeg', width: 60
-      .span5
-        %q{cite: 'https://twitter.com/Tracy_Young/status/267420189262499840'}
-          “Thanks to the good folks at
-          = link_to '@minefold', 'https://twitter.com/minefold'
-          for making many Saturdays so deliciously pleasant with
-          = link_to '@ralphleon', 'https://twitter.com/ralphleon'
-          ”
-        %cite
-          %a{href: 'https://twitter.com/Tracy_Young'} Tracy Young
+      .testimonial.row
+        .span1
+          = image_tag 'twavatars/Tracy_Young.jpeg', width: 60
+        .span5
+          %q{cite: 'https://twitter.com/Tracy_Young/status/267420189262499840'}
+            “Thanks to the good folks at
+            = link_to '@minefold', 'https://twitter.com/minefold'
+            for making many Saturdays so deliciously pleasant with
+            = link_to '@ralphleon', 'https://twitter.com/ralphleon'
+            ”
+          %cite
+            %a{href: 'https://twitter.com/Tracy_Young'} Tracy Young
 
-    .testimonial.row
-      .span1
-        = image_tag 'twavatars/EvilKimau.jpeg', width: 60
-      .span5
-        %q{cite: 'https://twitter.com/EvilKimau/status/264487886475370497'}
-          “The #{link_to '@minefold', 'https://twitter.com/minefold'} guys gave some AMAZING support. Sent them a tracert which helped them find the problem. Highly recommend them!”
-        %cite
-          %a{href: 'https://twitter.com/EvilKimau'} Claire Blackshaw
+      .testimonial.row
+        .span1
+          = image_tag 'twavatars/EvilKimau.jpeg', width: 60
+        .span5
+          %q{cite: 'https://twitter.com/EvilKimau/status/264487886475370497'}
+            “The #{link_to '@minefold', 'https://twitter.com/minefold'} guys gave some AMAZING support. Sent them a tracert which helped them find the problem. Highly recommend them!”
+          %cite
+            %a{href: 'https://twitter.com/EvilKimau'} Claire Blackshaw
 
-    .testimonial.row
-      .span1
-        = image_tag 'twavatars/iWaffles.jpeg', width: 60
-      .span5
-        %q{cite: 'https://twitter.com/iWaffles/status/255770776291115008'}
-          “#{link_to '@minefold', 'https://twitter.com/minefold'} Pretty neat service you guys have there. It's an awesome twist on server based gaming :)”
-        %cite
-          %a{href: 'https://twitter.com/iWaffles'} Matt Gardner
+      .testimonial.row
+        .span1
+          = image_tag 'twavatars/iWaffles.jpeg', width: 60
+        .span5
+          %q{cite: 'https://twitter.com/iWaffles/status/255770776291115008'}
+            “#{link_to '@minefold', 'https://twitter.com/minefold'} Pretty neat service you guys have there. It's an awesome twist on server based gaming :)”
+          %cite
+            %a{href: 'https://twitter.com/iWaffles'} Matt Gardner
 
-    .testimonial.row
-      .span1
-        = image_tag 'twavatars/kevinelliott.jpeg', width: 60
-      .span5
-        %q{cite: 'https://twitter.com/kevinelliott/status/255585383906172928'}
-          “#{link_to '@minefold', 'https://twitter.com/minefold'} Awesome service! How are you spawning MC servers? Virtual machines for each world? Pretty wild.”
-        %cite
-          %a{href: 'https://twitter.com/kevinelliott.jpeg'} Kevin Elliott
+      .testimonial.row
+        .span1
+          = image_tag 'twavatars/kevinelliott.jpeg', width: 60
+        .span5
+          %q{cite: 'https://twitter.com/kevinelliott/status/255585383906172928'}
+            “#{link_to '@minefold', 'https://twitter.com/minefold'} Awesome service! How are you spawning MC servers? Virtual machines for each world? Pretty wild.”
+          %cite
+            %a{href: 'https://twitter.com/kevinelliott.jpeg'} Kevin Elliott
 
-    .testimonial.row
-      .span1
-        = image_tag 'twavatars/abdelmaseh.png', width: 60
-      .span5
-        %q{cite: 'https://twitter.com/abdelmaseh/status/225323855806337024'}
-          “For the record: the guys at #{link_to '@minefold', 'https://twitter.com/minefold'} are awesome.”
-        %cite
-          %a{href: 'https://twitter.com/abdelmaseh'} Aaron Abdelmaseh
+      .testimonial.row
+        .span1
+          = image_tag 'twavatars/abdelmaseh.png', width: 60
+        .span5
+          %q{cite: 'https://twitter.com/abdelmaseh/status/225323855806337024'}
+            “For the record: the guys at #{link_to '@minefold', 'https://twitter.com/minefold'} are awesome.”
+          %cite
+            %a{href: 'https://twitter.com/abdelmaseh'} Aaron Abdelmaseh
 
-    .testimonial.row
-      .span1
-        = image_tag 'twavatars/marcocarag.png', width: 60
-      .span5
-        %q{cite: 'https://twitter.com/marcocarag/status/211268520451911681'}
-          “#{link_to '@minefold', 'https://twitter.com/minefold'} I really think your product is great. <a href="http://marcocarag.com/2012/06/08/minefold-for-casual-minecrafting">Thanks!</a>”
-        %cite
-          %a{href: 'https://twitter.com/marcocarag'} Marco Carag
+      .testimonial.row
+        .span1
+          = image_tag 'twavatars/marcocarag.png', width: 60
+        .span5
+          %q{cite: 'https://twitter.com/marcocarag/status/211268520451911681'}
+            “#{link_to '@minefold', 'https://twitter.com/minefold'} I really think your product is great. <a href="http://marcocarag.com/2012/06/08/minefold-for-casual-minecrafting">Thanks!</a>”
+          %cite
+            %a{href: 'https://twitter.com/marcocarag'} Marco Carag
 
-    .testimonial.row
-      .span1
-        = image_tag 'twavatars/qrush.jpeg', width: 60
-      .span5
-        %q{cite: 'https://twitter.com/qrush/status/117244523083595776'}
-          “Wow, pay by the hour Minecraft with chat, live maps, and more.”
-        %cite
-          %a{href: 'https://twitter.com/qrush/status/117244523083595776'} Nick Quaranto
+      .testimonial.row
+        .span1
+          = image_tag 'twavatars/qrush.jpeg', width: 60
+        .span5
+          %q{cite: 'https://twitter.com/qrush/status/117244523083595776'}
+            “Wow, pay by the hour Minecraft with chat, live maps, and more.”
+          %cite
+            %a{href: 'https://twitter.com/qrush/status/117244523083595776'} Nick Quaranto
 
-    .testimonial.row
-      .span1
-        = image_tag 'twavatars/Looker268.jpeg', width: 60
-      .span5
-        %q{cite: 'https://twitter.com/Looker268/status/266406802869080064'}
-          “#{link_to '@minefold', 'https://twitter.com/minefold'} this an amazing online server thing... Easy to host too!”
-        %cite
-          %a{href: 'https://twitter.com/Looker268'} Looker268
+      .testimonial.row
+        .span1
+          = image_tag 'twavatars/Looker268.jpeg', width: 60
+        .span5
+          %q{cite: 'https://twitter.com/Looker268/status/266406802869080064'}
+            “#{link_to '@minefold', 'https://twitter.com/minefold'} this an amazing online server thing... Easy to host too!”
+          %cite
+            %a{href: 'https://twitter.com/Looker268'} Looker268
 
-    .row
-      .span5.offset1
-        %a.btn.btn-small.btn-primary{href: 'https://twitter.com/minefold'} Spread the warm & fuzzies on Twitter!
+      .row
+        .span5.offset1
+          %a.btn.btn-small.btn-primary{href: 'https://twitter.com/minefold'} Spread the warm & fuzzies on Twitter!
 
-  .q-and-a.span6
-    %h2 Quick answers to common questions
+    .q-and-a.span6
+      %h3 Quick answers to common questions
 
-    %h3#slots How many slots do Minefold servers have?
-    %p Unlimited. Minefold's custom built hosting platform dynamically allocates resources to servers. This means that they're lag-free no matter how many of your friends are playing.
+      %h4#slots How many slots do Minefold servers have?
+      %p Unlimited. Minefold's custom built hosting platform dynamically allocates resources to servers. This means that they're lag-free no matter how many of your friends are playing.
 
-    %h3#normal-servers What are normal servers?
-    %p Normal servers are… normal. The server owner covers the cost of running them and anybody can play.
+      %h4#normal-servers What are normal servers?
+      %p Normal servers are… normal. The server owner covers the cost of running them and anybody can play.
 
-    %h3#shared-servers What are shared servers?
-    %p Shared are exclusive to Minefold. They are paid for by the people playing on them rather than the server owner.
+      %h4#shared-servers What are shared servers?
+      %p Shared are exclusive to Minefold. They are paid for by the people playing on them rather than the server owner.

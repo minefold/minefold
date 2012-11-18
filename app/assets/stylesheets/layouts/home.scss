@@ -6,6 +6,10 @@
     width: grid-width(12);
   }
 
+  header {
+    margin-top: l(4);
+  }
+
   .hero-unit {
     background-color: lighten($blue, 20%);
     margin-bottom: l(8);

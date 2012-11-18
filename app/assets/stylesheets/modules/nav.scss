@@ -33,23 +33,23 @@
 
 .nav.nav-server {
   margin-bottom: 0;
-  background-color: rgba(black, 0.1);
+  background-color: rgba(black, 0.05);
 
   > li > a {
-    color: rgba(black, 0.4);
-    line-height: l(1);
-    padding: l(1) $gw-gutter;
+    color: rgba(black, 0.6);
+    padding: l(1) ($gw-gutter);
 
+    font-size: 14px;
+    line-height: l(1);
     font-weight: 600;
 
     &:hover {
-      color: white;
-      background-color: rgba(black, 0.4);
+      background-color: rgba(black, 0.05);
     }
   }
 
   .active > a, .active > a:hover {
     color: white;
-      background-color: $blue;
+    background: $blue;
   }
 }

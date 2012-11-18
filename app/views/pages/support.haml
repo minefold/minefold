@@ -121,22 +121,26 @@
   %h2 Need help with something else? You can…
 
   .row
-    .span1
-      %a{href: 'https://twitter.com/minefold', title: 'Minefold on Twitter'}
-        = image_tag 'https://twitter.com/images/resources/twitter-bird-white-on-blue.png', width: 60, height: 60
+    .twitter.span5
+      .row
+        .span1
+          %a{href: 'https://twitter.com/minefold', title: 'Minefold on Twitter'}
+            = image_tag 'https://twitter.com/images/resources/twitter-bird-white-on-blue.png', width: 60, height: 60
 
-    .span4
-      %p
-        %strong Get fast answers on Twitter.
-        For speedy answers, please tweet quick questions to <a href="https://twitter.com/minefold" title="Minefold on Twitter">@minefold</a> on Twitter.
+        .span4
+          %p
+            %strong Get fast answers on Twitter.
+            For speedy answers, please tweet quick questions to <a href="https://twitter.com/minefold" title="Minefold on Twitter">@minefold</a> on Twitter.
 
-      %a.btn.btn-primary.twitter-mention-button{href: 'https://twitter.com/intent/tweet?screen_name=minefold', data: {lang: 'en'}, target: '_blank'} Tweet @minefold
+          %a.btn.btn-primary.twitter-mention-button{href: 'https://twitter.com/intent/tweet?screen_name=minefold', data: {lang: 'en'}, target: '_blank'} Tweet @minefold
 
     - if signed_in?
-      .span1
-        .support-icon{data: {icon: 'h'}}
-      .span4
-        %p
-          %strong Contact support.
-          For in-depth questions, please file a support ticket. Our friendly support folks will get in touch.
-        %a.btn.btn-primary.ActivateIntercom File a support ticket
+      .intercom.span5
+        .row
+          .span1
+            .support-icon{data: {icon: 'h'}}
+          .span4
+            %p
+              %strong Contact support.
+              For in-depth questions, please file a support ticket. Our friendly support folks will get in touch.
+            %a.btn.btn-primary.ActivateIntercom File a support ticket

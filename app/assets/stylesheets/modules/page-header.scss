@@ -3,8 +3,9 @@
 .page-header {
   border-bottom: none;
 
-  margin-top: l(4); margin-bottom: l(4);
-  padding-top: 0; padding-bottom: 0;
+  margin: 0;
+  padding-top: l(4); padding-bottom: l(4);
+  margin-bottom: l(1);
 
   > h1 {
     color: black;
@@ -23,40 +24,18 @@
 
 }
 
+.page-header.page-header-server {
+  padding-top: l(2); padding-bottom: l(2);
 
-.page-header.page-header-progress {
-
-  ol {
-    list-style-type: none;
-
-    li {
-      width: 33%;
-      float: left;
-      text-align: center;
-      padding: 0;
-
-      text-transform: uppercase;
-      font-size: 12px;
-
-      color: rgba(black, 0.4);
-    }
-
-    li.active {
-      color: black;
-      font-weight: 600;
-    }
+  > h1 {
+    line-height: l(4);
   }
 
-}
-
-.page-header.page-header-server {
-  text-align: center;
-
-  .game-name, .funpack-name {
-    font-size: 14px;
+  .meta {
+    font-size: 12px;
+    line-height: l(2);
     font-weight: 600;
+
     color: rgba(black, 0.4);
-    margin-top: - l(2);
-    margin-bottom: - l(2);
   }
 }
