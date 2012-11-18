@@ -14,10 +14,13 @@
     %meta{name: 'author', content: 'Mütli Corp <http://mutlicorp.com>'}
     %meta{name: 'description', content: 'Play Minecraft on demand with friends.'}
 
-    - if Rails.env.production?
+    - case Rails.env
+    - when :production
       = favicon_link_tag 'favicon.ico'
+    - when :staging
+      = favicon_link_tag 'favicon-staging.ico'
     - else
-      = favicon_link_tag 'favicon-dev.ico'
+      = favicon_link_tag 'favicon-development.ico'
 
     %link{title: 'channel-url', href: facebook_channel_url(protocol: '//'), type: 'text/html'}
     %meta{property: 'fb:app_id', content: ENV['FACEBOOK_KEY']}
