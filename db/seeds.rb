@@ -46,12 +46,15 @@ dave.save!
 Funpack.create(
   name: 'Official', game: minecraft, creator: chris,
   info_url: 'http://minecraft.net',
-  description: "Vanilla Minecraft, the way Notch intended!")
+  description: "Vanilla Minecraft, the way Notch intended!",
+  party_cloud_id: '50a976ec7aae5741bb000001')
 
 Funpack.create(name: 'Bukkit Essentials', game: minecraft, creator: chris,
   info_url: "http://bukkit.org",
-  description: "Bukkit is a community-based project that works on Minecraft server implementation. This pack includes [Essentials](http://dev.bukkit.org/server-mods/essentials), [WorldEdit](http://dev.bukkit.org/server-mods/worldedit), [WorldGuard](http://dev.bukkit.org/server-mods/worldguard) and [LWC](http://dev.bukkit.org/server-mods/lwc).")
+  description: "Bukkit is a community-based project that works on Minecraft server implementation. This pack includes [Essentials](http://dev.bukkit.org/server-mods/essentials), [WorldEdit](http://dev.bukkit.org/server-mods/worldedit), [WorldGuard](http://dev.bukkit.org/server-mods/worldguard) and [LWC](http://dev.bukkit.org/server-mods/lwc).",
+  party_cloud_id: '50a976fb7aae5741bb000002')
 
 Funpack.create(name: 'Tekkit', game: minecraft, creator: chris,
   info_url: "http://www.technicpack.net/tekkit",
-  description: "Tekkit is the multiplayer version of the Technic mod pack. It lets players automate, industrialize and power their worlds.")
+  description: "Tekkit is the multiplayer version of the Technic mod pack. It lets players automate, industrialize and power their worlds.",
+  party_cloud_id: '50a977097aae5741bb000003')
