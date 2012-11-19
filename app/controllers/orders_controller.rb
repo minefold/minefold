@@ -8,8 +8,8 @@ class OrdersController < ApplicationController
 
   def create
     order = Order.new(
-      params[:credit_pack_id],
       current_user,
+      params[:credit_pack_id],
       params[:stripe_token]
     )
 
@@ -26,7 +26,7 @@ class OrdersController < ApplicationController
       CreditsMailer.receipt(
         order.user.id,
         order.charge_id,
-        order.credit_pack_id
+        order.credit_pack.id
       ).deliver
 
       redirect_to :back,

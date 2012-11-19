@@ -1,15 +1,19 @@
-class Order < Struct.new(:credit_pack_id, :user, :card_token)
+class Order
 
+  attr_reader :user
   attr_reader :charge_id
 
+  def initialize(user, credit_pack_id, card_token=nil)
+    @user = user
+    @credit_pack_id = credit_pack_id
+    @card_token = card_token
+  end
+
   def credit_pack
-    @credit_pack ||= if credit_pack_id.is_a?(CreditPack)
-      credit_pack_id
+    @credit_pack ||= if @credit_pack_id.is_a?(CreditPack)
+      @credit_pack_id
     else
-      begin
-        credit_pack_id and CreditPack.find(credit_pack_id)
-      rescue ActiveRecord::RecordNotFound
-      end
+      @credit_pack_id and CreditPack.where(id: @credit_pack_id).first
     end
   end
 
