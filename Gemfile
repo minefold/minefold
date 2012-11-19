@@ -29,9 +29,8 @@ gem 'fog'
 gem 'rest-client'
 gem 'bugsnag'
 gem 'friendly_id'
-gem 'librato-rails', git: 'https://github.com/librato/librato-rails.git'
+gem 'librato-rails'
 gem 'paranoia'
-
 gem 'carrierwave', git: 'https://github.com/jnicklas/carrierwave.git'
 
 gem 'sass-rails'
