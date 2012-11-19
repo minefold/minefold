@@ -19,6 +19,7 @@ module Concerns::Credits
       email: self.email,
       description: self.id.to_s
     )
+
     self.customer_id = c.id
   end
 
@@ -30,18 +31,16 @@ module Concerns::Credits
 
   # Atomically increment credits. Doesn't update the model's internal state.
   def increment_credits!(n)
-    self.class.update_counters(self.id, credits: n) == 1
-  end
-
-  # Slower, but does update the model's internal state.
-  def increment_credits(n)
-    transaction do
-      increment_credits!(n)
-      reload
+    if self.class.update_counters(self.id, credits: n) == 1
+      track_credits(n)
+      true
     end
   end
 
-  def purchase(product)
+# private
+
+  def track_credits(n)
+    Mixpanel.async_person_add(self.distinct_id, credits: n)
   end
 
 end

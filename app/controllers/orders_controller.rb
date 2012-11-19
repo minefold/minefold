@@ -16,11 +16,10 @@ class OrdersController < ApplicationController
     if order.valid? and order.fulfill
       # Do all our amazing tracking stuff
       track 'paid', 'distinct_id' => order.user.distinct_id,
-                    'credit pack' => order.credit_pack_id,
+                    'credit pack' => order.credit_pack.id,
                     'amount'      => order.total
 
-      mixpanel_person_add order.user.distinct_id, 'cents spent' => order.total,
-                                                  'credits'     => order.credits
+      mixpanel_person_add order.user.distinct_id, 'cents spent' => order.total
 
       # Send a receipt
       CreditsMailer.receipt(
@@ -29,6 +28,7 @@ class OrdersController < ApplicationController
         order.credit_pack.id
       ).deliver
 
+      # TODO Make this redirect to a thank you page.
       redirect_to :back,
         notice: "Thank you for buying Minefold credits"
     else

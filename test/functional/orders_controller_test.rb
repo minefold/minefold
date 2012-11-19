@@ -21,7 +21,7 @@ class OrdersControllerTest < ActionController::TestCase
   end
 
 
-  # --
+# --
 
 
   test "POST #create unauthenticated" do

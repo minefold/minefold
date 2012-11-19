@@ -18,12 +18,12 @@ class Order
   end
 
   def valid?
-    credit_pack and user and user.valid? and (user.customer_id? or card_token)
+    credit_pack && user && user.valid? && (user.customer_id? || @card_token)
   end
 
   def fulfill
-    create_or_update_customer and
-    create_charge and
+    create_or_update_customer &&
+    create_charge &&
     credit_user
 
   rescue Stripe::StripeError
@@ -43,12 +43,12 @@ class Order
   def create_or_update_customer
     # No customer in Stripe yet
     if not user.customer_id?
-      user.create_customer(card_token)
+      user.create_customer(@card_token)
       user.save
 
     # Customer has specified a new card
-    elsif card_token
-      user.customer.card = card_token
+    elsif @card_token
+      user.customer.card = @card_token
       user.customer.save
 
     # Customer is charging their card on file
