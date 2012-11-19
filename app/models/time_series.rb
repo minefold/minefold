@@ -1,7 +1,7 @@
-class RedisTimeSeries
+class TimeSeries
 
-  def initialize(prefix, period, redis)
-    @prefix = prefix
+  def initialize(obj, name, period, redis)
+    @obj = obj
     @period = period
     @redis = redis
   end
@@ -11,12 +11,12 @@ class RedisTimeSeries
     time - (time % @period)
   end
 
-  def getkey(time)
-    "#{@prefix}:#{normalize_time(time)}"
+  def tkey(time)
+    @obj.redis_key(normalize_time(time))
   end
 
   def add(data, timestamp = Time.now.to_f)
-    @redis.zadd(getkey(timestamp), timestamp, data)
+    @redis.zadd(tkey(timestamp), timestamp, data)
   end
 
   def fetch_range(start_time, end_time)
@@ -24,8 +24,8 @@ class RedisTimeSeries
     end_time = end_time.to_f
 
     result = (0..((end_time - start_time) / @period)).collect do |i|
-      key = getkey(start_time + (i * @period))
-      @redis.zrangebyscore(key, start_time.to_f, end_time.to_f)
+      key = key(start_time + (i * @period))
+      @redis.zrangebyscore(tkey, start_time.to_f, end_time.to_f)
     end
 
     result.flatten
@@ -33,7 +33,7 @@ class RedisTimeSeries
 
   def fetch_timestamp(time)
     time = time.to_f
-    @redis.zrangebyscore(getkey(time), time, time)
+    @redis.zrangebyscore(tkey(time), time, time)
   end
 
 end
