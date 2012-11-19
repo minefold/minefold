@@ -1,5 +1,5 @@
 class Server < ActiveRecord::Base
-  include RedisIdentifiable
+  include Concerns::Redis
 
   attr_accessible :name, :funpack_id, :shared, :settings
 
