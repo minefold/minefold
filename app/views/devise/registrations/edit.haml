@@ -68,20 +68,20 @@
   .form-title.span2 Accounts
 
   .accounts.span6
-    .account.account-facebook{class: ('is-linked' if resource.facebook_linked?)}
+    .account.facebook{class: ('is-linked' if resource.facebook_linked?)}
       .profile-image.pull-left
         - if resource.facebook_linked?
           = image_tag resource.facebook_avatar_url, width: 40, height: 40
-      .account-details
-        %h4
+      .details
+        .name
           Facebook
           - if resource.facebook_linked?
             (#{resource.name})
-        %p
+        .meta
           - if resource.facebook_linked?
             %a{href: "//facebook.com/#{resource.facebook_uid}"} Profile
             &middot;
-            = link_to 'Unlink account', accounts_unlink_facebook_path, :method => :put, class: 'unlink-account'
+            = link_to 'Unlink account', accounts_unlink_facebook_path, :method => :put, class: 'unlink'
 
           - else
             = link_to user_omniauth_authorize_path(:facebook) do
@@ -94,22 +94,21 @@
       .modal-header
         %button.close{type: 'button', data: {dismiss: 'modal'}} &times;
         %h3 Link a Minecraft Account
-
       .modal-body
 
 
-    .account.account-minecraft{class: ('is-linked' if resource.minecraft_linked?)}
+    .account.minecraft{class: ('is-linked' if resource.minecraft_linked?)}
       .profile-image.pull-left
         - if resource.minecraft_linked?
           = image_tag resource.minecraft_avatar_url, width: 40, height: 40
-      .account-details
-        %h4
+      .details
+        .name
           Minecraft
           - if resource.minecraft_linked?
             (#{resource.players.minecraft.map(&:uid).to_sentence})
-        %p
+        .meta
           - if resource.minecraft_linked?
-            = link_to 'Unlink account', accounts_unlink_minecraft_path, :method => :put, class: 'unlink-account'
+          = link_to 'Unlink account', accounts_unlink_minecraft_path, :method => :put, class: 'unlink'
 
           - else
             %a{href: accounts_link_minecraft_path, data: {toggle: 'modal', target: '#link-minecraft-modal'}}

@@ -3,52 +3,43 @@
 .accounts {
   margin-bottom: - l(2);
 
-  .account {
+  > .account {
     margin-bottom: l(2);
 
-    .profile-image {
+    > .profile-image {
       width: $gw-gutter * 2; height: $gw-gutter * 2;
       background-color: rgba(black, 0.1);
       background-repeat: no-repeat;
       margin-right: $gw-gutter / 2;
     }
 
-    .account-details {
+    > .details {
       font-size: 14px;
       line-height: l(2);
 
-      h4 {
+      > .name {
         color: lighten(black, 80%);
-        font-size: 18px;
         margin-bottom: -0.5 * l();
-        font-weight: 500;
-
-        line-height: l(2);
       }
 
-      .unlink-account {
+      > .meta > .unlink {
         color: $red;
 
         &:hover {
           color: darken($red, 10%);
         }
       }
-
     }
 
-    &.account-facebook .profile-image {
+    &.facebook > .profile-image {
       background-image: url(image-path('accounts/facebook.png'));
     }
 
-    &.account-minecraft .profile-image {
+    &.minecraft > .profile-image {
       background-image: url(image-path('accounts/mojang.png'));
     }
-  }
-}
 
-.accounts .account.is-linked {
-  .account-details {
-    h4 {
+    &.is-linked > .details > .name {
       color: black;
     }
   }
