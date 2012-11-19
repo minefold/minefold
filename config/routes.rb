@@ -1,11 +1,18 @@
 Minefold::Application.routes.draw do
-  admin_only = lambda {|req| (u = req.env['warden'].user) and u.admin? }
 
-  constraints(admin_only) do
+# Constraints
+
+  @admins = ->(req) { u = req.env['warden'].user && u.admin? }
+  @development = -> { Rails.env.development? }
+  @feature = ->(feature) { ->(req) { u = req.env['warden'].user && false } }
+
+# --
+
+  constraints(@admins) do
     mount Resque::Server, at: '/admin/resque'
   end
 
-  if Rails.env.development?
+  constraints(@development) do
     get '/tumblr' => 'tumblr#index'
     get '/playground' => 'pages#playground'
   end
