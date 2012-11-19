@@ -1,9 +1,8 @@
 class CreditFairyJob < Job
 
   def perform!
-    User.needs_magic_fairy_dust.find_each do |user|
-      user.gift_credits
-      user.save
+    User.where(Bonuses::CreditFairy.eligable_user_query).find_each do |user|
+      Bonuses::CreditFairy.claim!(user)
     end
   end
 

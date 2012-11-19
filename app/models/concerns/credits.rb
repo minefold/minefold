@@ -4,13 +4,6 @@ module Concerns::Credits
   included do
     validates_presence_of :credits
     validates_numericality_of :credits
-
-    scope :low_credit, where(
-      arel_table[:credits].lt(Bonuses::CreditFairy.credits))
-
-    scope :needs_credit_fairy, low_credit.where(
-      arel_table[:last_credit_fairy_visit_at].eq(nil).or(
-        arel_table[:last_credit_fairy_visit_at].lt(Bonuses::CreditFairy.period.ago)))
   end
 
   def create_customer(card_token)

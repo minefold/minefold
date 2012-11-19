@@ -1,4 +1,8 @@
 class Bonuses::ReferredFriend < Bonus
   self.credits = 500
-  self.claim_limit = 16
+
+  def claimable?
+    user.bonuses.where(type: self.class).count < 16
+  end
+
 end

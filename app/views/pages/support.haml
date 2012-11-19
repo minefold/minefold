@@ -78,7 +78,7 @@
     .item
       %h3.question My credits haven't reset
       .answer
-        %p We reset your credits every #{pluralize(User::CREDIT_FAIRY_PERIOD / 1.day, 'day', 'days')} from when you signed up.
+        %p We reset your credits every #{pluralize(Bonuses::CreditFairy.period / 1.day, 'day', 'days')} from when you signed up.
 
 
 .support-faq.row#support-minecraft

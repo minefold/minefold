@@ -124,14 +124,12 @@
 
   .span6
     %p
-      = credits_with_image current_user.credits
+      You have #{credits_with_image current_user.credits}
+
+    %p The credit fairy will visit you on <strong>#{l Bonuses::CreditFairy.next_visit_for(current_user), :format => :date}</strong>. If you have less than #{Bonuses::CreditFairy.credits} credits they'll be topped up for <strong>free</strong>.
 
     %p
       %a.btn.btn-small.btn-primary.buy-credits{href: pricing_page_path} Buy credits
-
-    - if current_user.credits < User::MIN_CREDITS
-      %p Your next <i>free</i> credit top up will be on <strong>#{l current_user.next_credit_fairy_visit_at, :format => :date}</strong>.
-
 
 .form-block.row#notifications
   .form-title.span2 Notifications

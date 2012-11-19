@@ -11,18 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121112215838) do
+ActiveRecord::Schema.define(:version => 20121119204849) do
 
-  create_table "bonus_claims", :force => true do |t|
-    t.integer  "bonus_type", :null => false
+  create_table "bonuses", :force => true do |t|
+    t.integer  "type",       :null => false
     t.integer  "user_id",    :null => false
     t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
     t.integer  "credits"
   end
 
-  add_index "bonus_claims", ["bonus_type", "user_id"], :name => "index_bonus_claims_on_bonus_type_and_user_id"
-  add_index "bonus_claims", ["bonus_type"], :name => "index_bonus_claims_on_bonus_type"
+  add_index "bonuses", ["type", "user_id"], :name => "index_bonus_claims_on_bonus_type_and_user_id"
+  add_index "bonuses", ["type"], :name => "index_bonus_claims_on_bonus_type"
 
   create_table "comments", :force => true do |t|
     t.integer  "server_id"
