@@ -13,6 +13,11 @@ class Bonus < ActiveRecord::Base
     create(user: user)
   end
 
+  def self.pretty_name
+    name.demodulize.underscore.humanize
+  end
+
+
   def validate_claimable?
     errors.add(:base, 'Not claimable') unless claimable?
   end
@@ -34,8 +39,8 @@ class Bonus < ActiveRecord::Base
 # private
 
   def track!
-    Mixpanel.async_track 'bonus claimed', distinct_id: user.distinct_id,
-                                          bonus:       self.class.name,
+    Mixpanel.async_track 'Bonus claimed', distinct_id: user.distinct_id,
+                                          bonus:       self.class.pretty_name,
                                           credits:     credits,
                                           time:        Time.now.to_i
   end
