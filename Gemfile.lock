@@ -4,14 +4,6 @@ GIT
   specs:
     uniquify (0.1.0)
 
-GIT
-  remote: https://github.com/jnicklas/carrierwave.git
-  revision: 745db6e26f47adca3a28c93170b22216b5480f9a
-  specs:
-    carrierwave (0.7.1)
-      activemodel (>= 3.2.0)
-      activesupport (>= 3.2.0)
-
 GEM
   remote: https://code.stripe.com/
   remote: https://rubygems.org/
@@ -57,6 +49,9 @@ GEM
       multi_json (~> 1.0)
     builder (3.0.4)
     cancan (1.6.8)
+    carrierwave (0.7.1)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -82,6 +77,9 @@ GEM
     fakeweb (1.3.0)
     faraday (0.8.4)
       multipart-post (~> 1.1)
+    flipper (0.2.1)
+    flipper-redis (0.2.0)
+      flipper (~> 0.2.0)
     fog (1.7.0)
       builder
       excon (~> 0.14)
@@ -264,12 +262,14 @@ DEPENDENCIES
   bourbon
   bugsnag
   cancan
-  carrierwave!
+  carrierwave
   coffee-rails
   decent_exposure (= 2.0.0.rc1)
   devise
   faker
   fakeweb
+  flipper
+  flipper-redis
   fog
   friendly_id
   haml

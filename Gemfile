@@ -33,8 +33,9 @@ gem 'bugsnag'
 gem 'friendly_id'
 gem 'librato-rails'
 gem 'paranoia'
-gem 'carrierwave', git: 'https://github.com/jnicklas/carrierwave.git'
-
+gem 'carrierwave'
+gem 'flipper'
+gem 'flipper-redis'
 gem 'sass-rails'
 gem 'bourbon'
 

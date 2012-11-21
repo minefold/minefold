@@ -31,6 +31,8 @@ module ApplicationHelper
       default
     end
 
+  def flip
+    $flipper
   end
 
 end
