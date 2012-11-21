@@ -38,7 +38,12 @@ class ServersController < ApplicationController
     server.users << current_user
     server.save
 
-    track 'server created'
+    track 'Created server',
+      name: server.name,
+      url: server_url(server),
+      shared: server.shared?,
+      funpack: server.funpack.name,
+      game: server.game.name
 
     respond_with(server)
   end
@@ -60,10 +65,26 @@ class ServersController < ApplicationController
     respond_with(server)
   end
 
+  def start
+    authorize! :update, server
+
+    # TODO Stub
+
+    track 'Started server',
+      name: server.name,
+      url: server_url(server)
+
+    respond_with(server)
+  end
+
   def extend
     authorize! :update, server
 
     # TODO Stub
+
+    track 'Extended server',
+      name: server.name,
+      url: server_url(server)
 
     respond_with(server)
   end
@@ -72,7 +93,9 @@ class ServersController < ApplicationController
     authorize! :read, server
     current_user.watch(server)
 
-    track 'watched server'
+    track 'Watched server',
+      name: server.name,
+      url: server_url(server)
 
     respond_with(server)
   end

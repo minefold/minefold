@@ -28,7 +28,16 @@ private
     if mixpanel_cookie.present?
       begin
         distinct_id = JSON.parse(mixpanel_cookie)['distinct_id']
-        session['distinct_id'] = distinct_id
+
+        # TODO Investigate wether this edge case is needed
+        # if signed_in? and current_user.distinct_id.nil?
+        #   current_user.update_attribute :distinct_id, distinct_id
+        # else
+        #   session['distinct_id'] ||= distinct_id
+        # end
+
+        session['distinct_id'] ||= distinct_id
+
       rescue JSON::ParserError => e
         logger.warn("Exception parsing Mixpanel cookie")
       end

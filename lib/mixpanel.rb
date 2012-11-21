@@ -16,13 +16,6 @@ module Mixpanel
     RestClient.post('http://api.mixpanel.com/track', data: payload)
   end
 
-  def self.async_track(event, properties={})
-    if not Rails.env.test?
-      Resque.enqueue(MixpanelTrackedJob, event, properties)
-    end
-  end
-
-
   # People Analytics:
   # https://mixpanel.com/docs/people-analytics/people-http-specification-insert-data
 
@@ -36,6 +29,17 @@ module Mixpanel
 
     RestClient.post('http://api.mixpanel.com/engage', data: payload)
   end
+
+
+# --
+
+
+  def self.async_track(event, properties={})
+    if not Rails.env.test?
+      Resque.enqueue(MixpanelTrackedJob, event, properties)
+    end
+  end
+
 
   def self.async_person(distinct_id, properties={})
     if not Rails.env.test?
