@@ -1,7 +1,7 @@
 class ServerStoppedJob < Job
 
-  def initialize(id)
-    @server = Server.find_by_party_cloud_id(id)
+  def initialize(pc_server_id)
+    @server = Server.find_by_party_cloud_id(pc_server_id)
   end
 
   def perform!
@@ -9,6 +9,8 @@ class ServerStoppedJob < Job
     if @server.persistant? and not @server.world.last_mapped_at.today?
       Resque.push 'maps', class: 'MapWorldJob', args: [@server.world.id]
     end
+    
+    @server.stopped!
   end
 
 end

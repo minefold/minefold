@@ -80,7 +80,11 @@ class ServersController < ApplicationController
   def extend
     authorize! :update, server
 
-    # TODO Stub
+    if server.shared?
+      server.start!
+    else
+      server.start!(Time.now + params[:mins].to_i.minutes)
+    end
 
     track 'Extended server',
       name: server.name,

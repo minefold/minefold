@@ -1,10 +1,12 @@
 development:
+  host: localhost
   adapter: postgresql
   database: minefold_development
   pool: 5
   timeout: 5000
 
 test:
+  host: localhost
   adapter: postgresql
   database: minefold_test
   username: postgres
