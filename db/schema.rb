@@ -156,6 +156,7 @@ ActiveRecord::Schema.define(:version => 20121127005850) do
     t.datetime "last_coin_fairy_visit_at"
     t.string   "invitation_token",         :limit => 12
     t.integer  "invited_by_id"
+    t.boolean  "beta",                                   :default => false
     t.string   "verification_token",       :limit => 12
   end
 
