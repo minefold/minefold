@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121119204849) do
+ActiveRecord::Schema.define(:version => 20121121203052) do
 
   create_table "bonuses", :force => true do |t|
     t.integer  "type",       :null => false
@@ -107,7 +107,7 @@ ActiveRecord::Schema.define(:version => 20121119204849) do
   end
 
   add_index "servers", ["deleted_at", "creator_id"], :name => "index_servers_on_deleted_at_and_creator_id"
-  add_index "servers", ["deleted_at", "host"], :name => "index_servers_on_deleted_at_and_host", :unique => true
+  add_index "servers", ["deleted_at", "host", "port"], :name => "index_servers_on_deleted_at_and_host_and_port"
   add_index "servers", ["party_cloud_id"], :name => "index_servers_on_party_cloud_id", :unique => true
 
   create_table "users", :force => true do |t|
