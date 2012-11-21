@@ -119,7 +119,7 @@
   - if signed_in?
     = form_for [server, Comment.new], method: 'POST', html: {class: %w(new-comment-form row)} do |f|
       .span1
-        = image_tag current_user.avatar.large.url, width: 60, height: 60
+        = image_tag current_user.avatar.medium.url, width: 60, height: 60
 
       .span7
         .comment-meta

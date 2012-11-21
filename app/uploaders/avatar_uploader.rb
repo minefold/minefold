@@ -21,14 +21,9 @@ class AvatarUploader < CarrierWave::Uploader::Base
 
   # Returns the digest path of the default image so that it can be served out from CloudFront like the other static assets.
   def default_url
-    filename = if model.gender == 'female'
-      'default_female.png'
-    else
-      'default.png'
-    end
-
-    path = File.join 'avatar', [version_name, filename].compact.join('_')
-    image_path(path)
+    base = ['default', model.gender, version_name].compact.join('_')
+    filename = "#{base}.png"
+    image_path File.join('avatars', filename)
   end
 
 end

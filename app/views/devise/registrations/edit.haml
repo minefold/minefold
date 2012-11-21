@@ -11,7 +11,7 @@
       .span1
         = form_for resource, :method => :put, :html => {:multipart => true} do |f|
           = f.hidden_field :avatar_cache
-          = image_tag current_user.avatar.large.url, width: 60, height: 60, id: 'avatar_preview'
+          = image_tag current_user.avatar.medium.url, width: 60, height: 60, id: 'avatar_preview'
 
           = f.file_field :avatar, style: 'display:none'
           = f.label :avatar, 'Change'
