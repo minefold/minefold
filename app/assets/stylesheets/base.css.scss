@@ -59,6 +59,10 @@ hr {
   margin: l(4) 0;
   height: 0;
 
+  &.hidden {
+    border-color: transparent;
+  }
+
   &.small {
     margin: (l(1) - 1px) 0;
   }
