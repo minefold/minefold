@@ -1,19 +1,13 @@
 class ServerStartedJob < Job
   @queue = :high
 
-  def initialize(id, state, party_cloud_id, world_id)
-    @server = Server.find(id)
-    @state, @party_cloud_id, @world_id = state, party_cloud_id, world_id
+  def initialize(pc_server_id, host, port)
+    @server = Server.find_by_party_cloud_id(pc_server_id)
+    @host, @port = host, port
   end
-  
+
   def perform!
-    @server.party_cloud_id = @party_cloud_id
-    @server.world.build(
-      party_cloud_id: @world_id
-    )
-    
-    # TODO Do stuff with the server state
-    raise 'TODO'
+    @server.started!(@host, @port)
   end
 
 end

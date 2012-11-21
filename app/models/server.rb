@@ -74,24 +74,40 @@ class Server < ActiveRecord::Base
     [host, port].compact.join(':')
   end
 
-  def start!(ttl = nil)
-    # args = {
-    #   server_id: self.party_cloud_id,
-    #   ttl: ttl,
-    #   force: false
-    # }
+  def start!(schedule_stop_at)
+    if schedule_stop_at
+      self.stop_at = schedule_stop_at
+      save!
+    end
 
-    # PartyCloud.start_world
-    # $partycloud.lpush 'StartWorldJob', [funpack.party_cloud_id, settings, args]
+    PartyCloud.start_server party_cloud_id, funpack.party_cloud_id, settings
+    # TODO stop the server
   end
 
-  after_create :allocate_shared_host!
+  def started!(host, port)
+    self.start_at = Time.now
+    self.host = host
+    self.port = port
+    save!
+  end
+  
+  def stopped!
+    self.start_at = nil
+    self.stop_at = nil
+    save!
+  end
+
+  after_create :allocate_shared_host!, :create_party_cloud_server
 
   def allocate_shared_host!
     if shared?
       self.host = [self.id.to_s, 'foldserver', 'com'].join('.')
       save!
     end
+  end
+
+  def create_party_cloud_server
+    PartyCloud.create_server id
   end
 
 
