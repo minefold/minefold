@@ -68,7 +68,12 @@ class ServersController < ApplicationController
   def start
     authorize! :update, server
 
-    # TODO Stub
+    # TODO duplicated in extend
+    if server.shared?
+      server.start!
+    else
+      server.start!(Time.now + params[:mins].to_i.minutes)
+    end
 
     track 'Started server',
       name: server.name,
