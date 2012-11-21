@@ -291,6 +291,8 @@ DEPENDENCIES
   rails (= 3.2.9)
   rake
   rdiscount
+  redis
+  redis-namespace
   resque
   resque-scheduler
   resque_mailer

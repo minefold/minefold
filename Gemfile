@@ -19,6 +19,8 @@ gem 'decent_exposure', '2.0.0.rc1'
 gem 'kaminari'
 gem 'rdiscount'
 gem 'mini_magick'
+gem 'redis'
+gem 'redis-namespace'
 gem 'resque', require: ['resque', 'resque/server']
 gem 'resque_mailer'
 gem 'resque-scheduler', require: ['resque_scheduler', 'resque_scheduler/server']
