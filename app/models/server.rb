@@ -90,7 +90,7 @@ class Server < ActiveRecord::Base
     self.port = port
     save!
   end
-  
+
   def stopped!
     self.start_at = nil
     self.stop_at = nil
