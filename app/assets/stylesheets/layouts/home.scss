@@ -114,7 +114,7 @@
         font-size: 14px;
         margin: 0;
 
-        @include transition(color 0.15s cubic-bezier(0.25, 0.01, 0.25, 1));
+        @include transition(opacity 0.15s cubic-bezier(0.25, 0.01, 0.25, 1));
       }
 
       &:hover {
@@ -138,16 +138,7 @@
         }
 
         p {
-          color: rgba(white, 0.4);
-        }
-
-        &.light {
-          h3 {
-            color: rgba(black, 0.6);
-          }
-          p {
-            color: rgba(black, 0.4);
-          }
+          opacity: 0;
         }
       }
 

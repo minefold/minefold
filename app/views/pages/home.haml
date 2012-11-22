@@ -11,47 +11,57 @@
   %h2 Available instantly. Free to get started.
 
 - content_for :tail do
-  = javascript_include_tag 'raphael.js'
-  :javascript
-    var drawPipe, grid, gridScaleX, gridScaleY, h, i, paper, start, w, _i, _ref;
+  /
+    :javascript
+      var drawPipe, grid, gridScaleX, gridScaleY, h, paper, start, w;
 
-    paper = Raphael('canvas');
+      paper = Raphael('canvas');
 
-    gridScaleX = 20;
+      gridScaleX = 20;
+      gridScaleY = 12;
 
-    gridScaleY = 12;
+      drawPipe = function(pipe) {
+        var path, pt;
+        path = [];
 
-    drawPipe = function(pipe) {
-      var path, pt, _i, _len, _ref;
-      path = [];
-      _ref = pipe.pts;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        pt = _ref[_i];
-        path.push('L');
-        path.push(pt.x * gridScaleX);
-        path.push(pt.y * gridScaleY);
-      }
-      path[0] = 'M';
-      return paper.path(path).attr({
-        stroke: 'white',
-        'stroke-width': 6,
-        opacity: 0.1
-      });
-    };
+        for (var i = 0; i < pipe.pts.length; i++) {
+          pt = pipe.pts[i];
+          path.push('L');
+          path.push(pt.x * gridScaleX);
+          path.push(pt.y * gridScaleY);
+        }
 
-    w = Math.ceil(paper.width / gridScaleX);
+        path[0] = 'M';
 
-    h = Math.ceil(paper.height / gridScaleY);
+        paper.path(path).attr({
+          stroke: 'white',
+          'stroke-width': 6,
+          opacity: 0.1
+        });
+      };
 
-    grid = new PipesView.Grid(w, h);
+      w = Math.ceil(paper.width / gridScaleX);
 
-    for (i = _i = 0, _ref = grid.width; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
-      start = new PipesView.Pt(i, 0);
-      window.pipe = new PipesView.Pipe(grid);
+      h = Math.ceil(paper.height / gridScaleY);
+
+      grid = new PipesView.Grid(w, h);
+
+      start = new PipesView.Pt(10, 0);
+      pipe = new PipesView.Pipe(grid);
       pipe.add(start);
+
       pipe.build();
+
       drawPipe(pipe);
-    }
+
+
+      // for (var i = 0; i < grid.width; i++) {
+      //   start = new PipesView.Pt(i, 0);
+      //   window.pipe = new PipesView.Pipe(grid);
+      //   pipe.add(start);
+      //   pipe.build();
+      //   drawPipe(pipe);
+      // }
 
 
 
