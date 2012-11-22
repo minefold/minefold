@@ -10,3 +10,6 @@
 [submodule "vendor/assets/store.js"]
 	path = vendor/assets/store.js
 	url = https://github.com/marcuswestin/store.js.git
+[submodule "vendor/assets/raphael"]
+	path = vendor/assets/raphael
+	url = https://github.com/DmitryBaranovskiy/raphael.git
