@@ -13,26 +13,27 @@
 - content_for :tail do
   = javascript_include_tag 'raphael.js'
   :javascript
-    var drawPipe, grid, gridScaleX, gridScaleY, h, i, paper, start, w, _i, _ref;
+    var drawPipe, grid, gridScaleX, gridScaleY, h, paper, start, w;
 
     paper = Raphael('canvas');
 
     gridScaleX = 20;
-
     gridScaleY = 12;
 
     drawPipe = function(pipe) {
-      var path, pt, _i, _len, _ref;
+      var path, pt;
       path = [];
-      _ref = pipe.pts;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        pt = _ref[_i];
+
+      for (var i = 0; i < pipe.pts.length; i++) {
+        pt = pipe.pts[i];
         path.push('L');
         path.push(pt.x * gridScaleX);
         path.push(pt.y * gridScaleY);
       }
+
       path[0] = 'M';
-      return paper.path(path).attr({
+
+      paper.path(path).attr({
         stroke: 'white',
         'stroke-width': 6,
         opacity: 0.1
@@ -45,7 +46,7 @@
 
     grid = new PipesView.Grid(w, h);
 
-    for (i = _i = 0, _ref = grid.width; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+    for (var i = 0; i < grid.width; i++) {
       start = new PipesView.Pt(i, 0);
       window.pipe = new PipesView.Pipe(grid);
       pipe.add(start);
