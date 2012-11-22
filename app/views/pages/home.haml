@@ -11,48 +11,57 @@
   %h2 Available instantly. Free to get started.
 
 - content_for :tail do
-  = javascript_include_tag 'raphael.js'
-  :javascript
-    var drawPipe, grid, gridScaleX, gridScaleY, h, paper, start, w;
+  /
+    :javascript
+      var drawPipe, grid, gridScaleX, gridScaleY, h, paper, start, w;
 
-    paper = Raphael('canvas');
+      paper = Raphael('canvas');
 
-    gridScaleX = 20;
-    gridScaleY = 12;
+      gridScaleX = 20;
+      gridScaleY = 12;
 
-    drawPipe = function(pipe) {
-      var path, pt;
-      path = [];
+      drawPipe = function(pipe) {
+        var path, pt;
+        path = [];
 
-      for (var i = 0; i < pipe.pts.length; i++) {
-        pt = pipe.pts[i];
-        path.push('L');
-        path.push(pt.x * gridScaleX);
-        path.push(pt.y * gridScaleY);
-      }
+        for (var i = 0; i < pipe.pts.length; i++) {
+          pt = pipe.pts[i];
+          path.push('L');
+          path.push(pt.x * gridScaleX);
+          path.push(pt.y * gridScaleY);
+        }
 
-      path[0] = 'M';
+        path[0] = 'M';
 
-      paper.path(path).attr({
-        stroke: 'white',
-        'stroke-width': 6,
-        opacity: 0.1
-      });
-    };
+        paper.path(path).attr({
+          stroke: 'white',
+          'stroke-width': 6,
+          opacity: 0.1
+        });
+      };
 
-    w = Math.ceil(paper.width / gridScaleX);
+      w = Math.ceil(paper.width / gridScaleX);
 
-    h = Math.ceil(paper.height / gridScaleY);
+      h = Math.ceil(paper.height / gridScaleY);
 
-    grid = new PipesView.Grid(w, h);
+      grid = new PipesView.Grid(w, h);
 
-    for (var i = 0; i < grid.width; i++) {
-      start = new PipesView.Pt(i, 0);
-      window.pipe = new PipesView.Pipe(grid);
+      start = new PipesView.Pt(10, 0);
+      pipe = new PipesView.Pipe(grid);
       pipe.add(start);
+
       pipe.build();
+
       drawPipe(pipe);
-    }
+
+
+      // for (var i = 0; i < grid.width; i++) {
+      //   start = new PipesView.Pt(i, 0);
+      //   window.pipe = new PipesView.Pipe(grid);
+      //   pipe.add(start);
+      //   pipe.build();
+      //   drawPipe(pipe);
+      // }
 
 
 
