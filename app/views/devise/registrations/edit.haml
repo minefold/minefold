@@ -86,7 +86,7 @@
           - else
             = link_to user_omniauth_authorize_path(:facebook) do
               Link your Facebook account
-              - if Bonuses::LinkedFacebook.claimable_by?(current_user)
+              - if Bonuses::LinkedFacebook.new(user: current_user).claimable?
                 for
                 = credits_with_image(Bonuses::LinkedFacebook.credits)
 

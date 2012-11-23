@@ -11,10 +11,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121121203052) do
+ActiveRecord::Schema.define(:version => 20121123234253) do
 
   create_table "bonuses", :force => true do |t|
-    t.integer  "type",       :null => false
+    t.string   "type",       :null => false
     t.integer  "user_id",    :null => false
     t.datetime "created_at", :null => false
     t.integer  "credits"

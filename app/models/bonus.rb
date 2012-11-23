@@ -23,7 +23,7 @@ class Bonus < ActiveRecord::Base
   end
 
   def claimable?
-    user.bonuses.where(type: self.class).count < 1
+    self.class.where(user_id: user.id).count < 1
   end
 
   def credits
