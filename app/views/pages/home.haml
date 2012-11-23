@@ -11,59 +11,30 @@
   %h2 Available instantly. Free to get started.
 
 - content_for :tail do
-  /
-    :javascript
-      var drawPipe, grid, gridScaleX, gridScaleY, h, paper, start, w;
+  :javascript
+    var paper, scaleX, scaleY, w, h, grid;
 
-      paper = Raphael('canvas');
+    paper = Raphael('canvas');
 
-      gridScaleX = 20;
-      gridScaleY = 12;
+    scaleX = 20;
+    scaleY = 12;
 
-      drawPipe = function(pipe) {
-        var path, pt;
-        path = [];
+    w = Math.ceil(paper.width / scaleX);
+    h = Math.ceil(paper.height / scaleY);
 
-        for (var i = 0; i < pipe.pts.length; i++) {
-          pt = pipe.pts[i];
-          path.push('L');
-          path.push(pt.x * gridScaleX);
-          path.push(pt.y * gridScaleY);
-        }
+    grid = new Application.PipesView.Grid(w, h + 1, scaleX, scaleY);
 
-        path[0] = 'M';
+    every(500, function() {
+      var pt, pipe;
 
-        paper.path(path).attr({
-          stroke: 'white',
-          'stroke-width': 6,
-          opacity: 0.1
-        });
-      };
+      pt = new Application.PipesView.Pt(rand(w), 0);
 
-      w = Math.ceil(paper.width / gridScaleX);
-
-      h = Math.ceil(paper.height / gridScaleY);
-
-      grid = new PipesView.Grid(w, h);
-
-      start = new PipesView.Pt(10, 0);
-      pipe = new PipesView.Pipe(grid);
-      pipe.add(start);
-
-      pipe.build();
-
-      drawPipe(pipe);
-
-
-      // for (var i = 0; i < grid.width; i++) {
-      //   start = new PipesView.Pt(i, 0);
-      //   window.pipe = new PipesView.Pipe(grid);
-      //   pipe.add(start);
-      //   pipe.build();
-      //   drawPipe(pipe);
-      // }
-
-
+      if(grid.isFree(pt)) {
+        pipe = new Application.PipesView.Pipe(grid, pt);
+        pipe.draw(paper);
+        pipe.grow();
+      }
+    });
 
 %section.games-list
   - @featured_games.each do |game, servers_count|

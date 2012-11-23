@@ -121,29 +121,8 @@ class Pipe
 # --
 
 
-window.PipesView =
+Application.PipesView =
   Pt: Pt
   Grid: Grid
   Pipe: Pipe
-
-
-# --
-
-
-paper = Raphael('canvas')
-
-scaleX = 20
-scaleY = 12
-
-w = Math.ceil(paper.width / scaleX)
-h = Math.ceil(paper.height / scaleY)
-
-grid = new PipesView.Grid(w, h + 1, scaleX, scaleY)
-
-every 500, ->
-  pt = new Pt(rand(w), 0)
-  if grid.isFree(pt)
-    pipe = new PipesView.Pipe(grid, pt)
-    pipe.draw(paper)
-    pipe.grow()
 
