@@ -130,7 +130,7 @@
   - server.comments.each do |comment|
     .comment.row
       .span1
-        = image_tag comment.author.avatar.large.url, width: 60, height: 60
+        = image_tag comment.author.avatar.medium.url, width: 60, height: 60
       .span7
         .comment-meta
           %span.comment-author= comment.author.username
