@@ -44,50 +44,66 @@
 
 
   .server-meta {
+    font-size: 14px;
+    line-height: l(2);
     margin-bottom: l(2);
     border: 2px solid rgba(black, 0.05);
     border-top: none;
 
-    padding-top: l(1);
-    padding-bottom: l(1);
+    .tidbits {
+      @include clearfix;
+      margin-left: -2px;
+      margin-right: -2px - 2px;
 
-    .key {
-      padding-left: $gw-gutter / 2; padding-right: $gw-gutter / 2;
-      font-weight: 600;
-      @include box-sizing(border-box);
+      .tidbit {
+        padding: l(.5) ($gw-gutter / 2);
+        float: left;
+
+        &:first-child {
+          border-left: 0;
+        }
+
+        .key {
+          color: rgba(black, 0.4);
+          margin-right: 0.25em;
+        }
+        .val {
+          font-weight: 600;
+        }
+
+        &.state {
+          &.is-shared {
+            color: $blue;
+          }
+          &.is-starting, &.is-up {
+            color: $green;
+          }
+          &.is-stopped {
+            color: $red;
+          }
+        }
+      }
     }
+
+    .player-list {
+      padding-top: l(.5);
+      padding-right: ($gw-gutter / 2) - (2 * 2px);
+      padding-left: 0;
+      border-top: 2px solid rgba(black, 0.05);
+
+      .player {
+        margin-left: l(0.5);
+        margin-bottom: l(.5);
+      }
+    }
+
   }
 
 
   .server-controls {
-    padding-top: l(2);
-    padding-bottom: l(2);
-    margin-bottom: l(2);
-    background-color: darken(white, 10%);
-
-    @include box-shadow(0 0 0 2px rgba(black, 0.1) inset);
-
-    font-size: 14px;
-
-    h4 {
-      line-height: l(2);
-      margin: 0;
-      padding-left: $gw-gutter;
+    .server-controls-ttl-display {
       font-size: 14px;
-    }
-
-    .extension-info .buy-credits {
-      display: none;
-    }
-
-    &.is-too-expensive {
-      .extension-info {
-        color: $red;
-      }
-
-      .buy-credits {
-        display: block;
-      }
+      color: rgba(black, 0.4);
     }
   }
 

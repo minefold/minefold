@@ -5,7 +5,7 @@
 
 %li.credits
   %a{href: edit_user_registration_path(anchor: 'billing')}
-    = credits_with_image(current_user.credits)
+    = pluralize current_user.credits, 'credit', 'credits'
 
 %li.user.dropdown
   %a.dropdown-toggle{href: '#', data: {toggle: 'dropdown'}}

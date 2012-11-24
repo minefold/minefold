@@ -6,13 +6,21 @@ class World < ActiveRecord::Base
 
   belongs_to :legacy_parent, class_name: self.name
 
+  serialize :map_data, JSON
+
   def map?
     last_mapped_at?
   end
 
   alias_method :mapped?, :map?
 
-  serialize :map_data, JSON
+  def skip_map?
+    last_mapped_at? and last_mapped_at.today?
+  end
+
+  def needs_map?
+    not skip_map?
+  end
 
   def to_h
     { last_mapped_at: last_mapped_at,

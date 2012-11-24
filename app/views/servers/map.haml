@@ -2,12 +2,12 @@
 - layout :server
 = render partial: 'page_header', locals: {server: server}
 
-%ul.nav.nav-horizontal.nav-server
+%ul.nav.nav-server
   %li= link_to 'Activity', server
   - if server.funpack.game.minecraft?
     %li.active= link_to 'Map', [:map, server]
   - if can? :update, server
-    %li= link_to 'Settings', [:edit, server]
+    %li.pull-right= link_to 'Settings', [:edit, server]
 
 
 / --

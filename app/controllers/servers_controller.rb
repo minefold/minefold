@@ -1,3 +1,5 @@
+# TODO Move most of this logic into the Server model
+
 class ServersController < ApplicationController
   respond_to :html
 
@@ -68,32 +70,23 @@ class ServersController < ApplicationController
   def start
     authorize! :update, server
 
-    # TODO duplicated in extend
-    if server.shared?
-      server.start!
-    else
-      server.start!(Time.now + params[:mins].to_i.minutes)
+    session = server.sessions.create
+
+    PartyCloud.start_server(
+      server.party_cloud_id,
+      server.funpack.party_cloud_id,
+      server.settings
+    )
+
+    if server.normal?
+      Resque.enqueue_in(params[:ttl].to_i.minutes, StopServerJob, server.id)
     end
 
     track 'Started server',
       name: server.name,
-      url: server_url(server)
-
-    respond_with(server)
-  end
-
-  def extend
-    authorize! :update, server
-
-    if server.shared?
-      server.start!
-    else
-      server.start!(Time.now + params[:mins].to_i.minutes)
-    end
-
-    track 'Extended server',
-      name: server.name,
-      url: server_url(server)
+      url: server_url(server),
+      shared: server.shared?,
+      ttl: params[:ttl]
 
     respond_with(server)
   end
@@ -118,6 +111,10 @@ class ServersController < ApplicationController
 
   def destroy
     authorize! :destroy, server
+
+    if server.up?
+      Resque.enqueue(StopServerJob, server.id)
+    end
 
     server.destroy
 

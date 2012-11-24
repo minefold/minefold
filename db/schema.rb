@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121123234253) do
+ActiveRecord::Schema.define(:version => 20121124000153) do
 
   create_table "bonuses", :force => true do |t|
     t.string   "type",       :null => false
@@ -102,13 +102,21 @@ ActiveRecord::Schema.define(:version => 20121123234253) do
     t.boolean  "shared",               :default => false, :null => false
     t.string   "party_cloud_id"
     t.datetime "deleted_at"
-    t.datetime "start_at"
-    t.datetime "stop_at"
   end
 
   add_index "servers", ["deleted_at", "creator_id"], :name => "index_servers_on_deleted_at_and_creator_id"
   add_index "servers", ["deleted_at", "host", "port"], :name => "index_servers_on_deleted_at_and_host_and_port"
   add_index "servers", ["party_cloud_id"], :name => "index_servers_on_party_cloud_id", :unique => true
+
+  create_table "sessions", :force => true do |t|
+    t.integer  "server_id"
+    t.datetime "started_at"
+    t.datetime "ended_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "sessions", ["server_id"], :name => "index_sessions_on_server_id"
 
   create_table "users", :force => true do |t|
     t.string   "username",                                 :default => ""

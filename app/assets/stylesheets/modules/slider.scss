@@ -1,0 +1,21 @@
+@import 'vars';
+
+.slider {
+
+  > .dragger {
+    background-color: $blue;
+    width: 24px;
+    height: 24px;
+
+    border-radius: 12px;
+    &:hover {
+      background-color: darken($blue, 20%);
+    }
+  }
+
+  > .track {
+    background-color: rgba(black, 0.2);
+    height: 2px;
+  }
+
+}

@@ -29,23 +29,29 @@ class Server < ActiveRecord::Base
 
   has_one :world, order: 'updated_at ASC'
 
-  # TODO Actually do this validation
-  # validates_presence_of :host, :if => :shared?
-  validates_uniqueness_of :host, allow_nil: true
+  has_many :sessions do
+
+    def current
+      active.first
+    end
+
+    def current?
+      active.exists?
+    end
+
+  end
 
   # Using a method instead of `has_one :game, :through => :funpack`. This field should be read only.
   def game
     funpack.game
   end
 
-  def run?
-    start_at? and stop_at?
-  end
-
   def state
     if shared?
       :shared
-    elsif run? and start_at.past? and stop_at.future?
+    elsif sessions.current? and sessions.current.started_at.nil?
+      :starting
+    elsif sessions.current? and sessions.current.started_at?
       :up
     else
       :stopped
@@ -53,18 +59,15 @@ class Server < ActiveRecord::Base
   end
 
   def up?
-    state == :shared or state == :up
+    shared? or state == :up
   end
 
-  alias_method :running?, :up?
-
-  def uptime
-    (Time.now - start_at).ceil
+  [:starting, :stopped].each do |s|
+    define_method("#{s}?") do
+      self.state == s
+    end
   end
 
-  def ttl
-    (stop_at - Time.now).ceil
-  end
 
   def normal?
     not shared?
@@ -74,40 +77,19 @@ class Server < ActiveRecord::Base
     [host, port].compact.join(':')
   end
 
-  def start!(schedule_stop_at)
-    if schedule_stop_at
-      self.stop_at = schedule_stop_at
-      save!
-    end
+  after_create :create_party_cloud_server
 
-    PartyCloud.start_server party_cloud_id, funpack.party_cloud_id, settings
-    # TODO stop the server
-  end
-
-  def started!(host, port)
-    self.start_at = Time.now
-    self.host = host
-    self.port = port
-    save!
-  end
-
-  def stopped!
-    self.start_at = nil
-    self.stop_at = nil
-    save!
+  def create_party_cloud_server
+    PartyCloud.create_server(id)
   end
 
   after_create :allocate_shared_host!, :create_party_cloud_server
 
   def allocate_shared_host!
-    if shared?
+    if shared? and not host?
       self.host = [self.id.to_s, 'foldserver', 'com'].join('.')
       save!
     end
-  end
-
-  def create_party_cloud_server
-    PartyCloud.create_server id
   end
 
 

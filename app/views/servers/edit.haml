@@ -2,26 +2,27 @@
 - layout :server
 = render partial: 'page_header', locals: {server: server}
 
-%ul.nav.nav-horizontal.nav-server
+%ul.nav.nav-server
   %li= link_to 'Activity', server
   - if server.funpack.game.minecraft?
     %li= link_to 'Map', [:map, server]
   - if can? :update, server
-    %li.active= link_to 'Settings', [:edit, server]
+    %li.pull-right.active= link_to 'Settings', [:edit, server]
 
 
 / --
 
-- if server.running?
+
+- if server.up?
   .alert
     %strong This server is running.
     If you change these settings the server will restart. To change settings <i>without</i> restarting the server, please do so in the game.
 
 / TODO This is a hack
-%hr.large
+%hr.hidden
 
 .form-block.row
-  .form-title.span2 General
+  .form-title.span2.offset1 General
 
   .span6
     = form_for server do |f|
@@ -33,9 +34,73 @@
       .form-actions
         = f.submit 'Save', class: %w(btn btn-small btn-primary)
 
-- if server.game.persistant? and server.world
+
+/ --
+
+
+.form-block.row
+  .form-title.span2.offset1 Controls
+  .span6
+    - case server.state
+    - when :shared
+      %p Server is shared. Its address is
+      %pre
+        %span.server-address= server.address
+
+    - when :stopped
+      = form_tag start_server_path(server), method: 'put', class: 'server-controls' do
+        %p Drag the number of hours you want to run this server for
+
+        .row.control-group
+          .control-label.server-controls-ttl-display.span1#server_ttl_display &nbsp;
+          .span5
+            .controls
+              %input#server_ttl{type: 'text', name: 'ttl', data: {slider: 'true', 'slider-range' => '1,24', 'slider-step' => 1, 'slider-snap' => 'true'}}
+
+        %p
+          This will cost
+          %span#server_session_cost
+          credits.
+          You have #{pluralize current_user.credits, 'credit', 'credits'}.
+
+        .form-actions
+          %input.btn.btn-primary.btn-small{type: 'submit', value: 'Start server'}
+
+      - content_for :tail do
+        :javascript
+          var ttl = $('#server_ttl');
+
+          ttl.bind('slider:changed', function(e, data) {
+            console.log(data.value);
+
+            var hrs = data.value,
+                mins = data.value * 60,
+                rate = 5,
+                cost = mins * rate;
+
+            // Number of hours
+            $('#server_ttl_display').text(pluralize(hrs, 'hour', 'hours'));
+
+            // Cost
+            $('#server_session_cost').text(cost);
+          });
+
+    - when :starting
+      %p Server is starting. Please be patient.
+
+    - when :up
+      %p Server is running. Its address is
+      %pre
+        %span.server-address= server.address
+
+
+
+/ --
+
+
+- if server.world
   .form-block.row
-    .form-title.span2 World
+    .form-title.span2.offset1 World
 
     .span6
       %p
@@ -66,8 +131,12 @@
 
             %input{type: 'filepicker-dragdrop', data: {'fp-class' => 'filepicker filepicker-dragdrop', 'fp-button-class' => 'btn btn-mini', 'fp-button-text' => 'Choose world archive', 'fp-mimetype' => 'application/zip', 'fp-openTo' => 'COMPUTER'}}
 
+
+/ --
+
+
 .form-block.row
-  .form-title.span2 Gameplay
+  .form-title.span2.offset1 Gameplay
 
   .span6
     = form_for server do |f|
@@ -79,9 +148,9 @@
 
 - if can? :destroy, server
   .form-block.row
-    .form-title.span2 Danger Zone
+    .form-title.span2.offset1 Danger Zone
 
     .span6
-      %p Destroying a server <strong>immediately halts it</strong> and <strong>destroys all its data</strong>. You <i>will not be credited</i> for any remaining time. There is no way to recover a server once it has been destroyed. <span class="highlight">With great power comes great responsibility.</span>
+      %p Destroying a server <strong>immediately stops it</strong> and <strong>destroys all its data</strong>. There is no way to recover a server once it has been destroyed. <span class="highlight">With great power comes great responsibility.</span>
 
       = button_to 'Destroy server', server_path(server), method: :delete, class: %w(btn btn-small btn-danger)

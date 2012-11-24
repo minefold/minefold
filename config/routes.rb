@@ -59,7 +59,8 @@ Minefold::Application.routes.draw do
 
       member do
         get :map
-        put :extend
+
+        put :start
 
         post :watch
         post :unwatch

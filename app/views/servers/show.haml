@@ -5,114 +5,51 @@
 
 = render partial: 'page_header', locals: {server: server}
 
-%ul.nav.nav-horizontal.nav-server
+%ul.nav.nav-server
   %li.active= link_to 'Activity', server
   - if server.funpack.game.minecraft?
     %li= link_to 'Map', [:map, server]
   - if can? :update, server
-    %li= link_to 'Settings', [:edit, server]
+    %li.pull-right= link_to 'Settings', [:edit, server]
 
 / --
 
 .server-meta
-  - case server.state
-  - when :shared
-    .row
-      .span2.key Address
-      .span5
-        %span.server-address= server.address
+  .tidbits
+    .tidbit.state{class: "is-#{server.state}"}
+      %span.val= server.state.to_s.humanize
 
-    .row
-      .span2.key Up since
-      .span5= l server.created_at
+    .tidbit
+      %span.key Owner
+      %span.val= server.creator.username
 
-  - when :up
-    .row
-      .span2.key Address
-      .span5
-        %span.server-address= server.address
+    .tidbit
+      %span.key Game
+      %span.val= server.funpack.game.name
 
-    .row
-      .span2.key Up since
-      .span5
-        = server.start_at.strftime("%l:%M%P")
-        on
-        = server.start_at.strftime("%a %b %-m, %Y")
+    .tidbit
+      %span.key Funpack
+      %span.val= server.funpack.name
 
-    .row
-      .span2.key Stopping
-      .span5
-        = server.stop_at.strftime("%l:%M%P")
-        on
-        = server.stop_at.strftime("%a %b %-m, %Y")
-        (#{pluralize server.ttl / 1.minute, 'min', 'mins'} from now)
+    .tidbit
+      %span.key Created
+      %span.val= l server.created_at, :format => :date
 
-  - when :stopped
-    .row
-      .span2.key State
-      .span5 Stopped
+    - if server.normal? and server.up?
+      .tidbit
+        %span.key Up since
+        %span.val= l server.created_at, :format => :date
+
+    - if server.up?
+      .tidbit
+        %span.key Address
+        %span.val.server-address= server.address
 
   - # TODO: Hack for Minecraft!
-  .row
-    .span2.key Players
-    .span5{style: 'overflow:auto'}
-      - server.settings['whitelist'].lines.map(&:strip).each do |username|
-        .pull-left{style: 'margin-right:5px;margin-bottom:10px'}
-          = image_tag "https://minotar.net/helm/#{username}/20.png", class: 'image-circle', alt: username
-
-- if can?(:update, server) and server.normal?
-  = form_tag extend_server_path(server), method: 'put', class: 'server-controls' do
-    %input#mins{type: 'hidden', name: 'mins'}
-    .row
-      .span2
-        %h4.align-right
-          - if server.running?
-            Extend by
-          - else
-            Start for
-
-      .span6
-        %select#extend-server-time-select{name: 'mins'}
-          - 1.upto(24) do |h|
-            %option{value: (h.hours / 1.minute)}
-              = pluralize h, 'hour', 'hours'
-
-        %p.extension-info
-          %span.planned This will cost #{credits_with_image(5 * 60)},
-          %span.current you have #{credits_with_image(current_user.credits)}.
-          %a.buy-credits{href: pricing_page_path} Buy more credits.
-
-        %input.btn.btn-primary.btn-small.btn-success{type: 'submit', value: (server.running? ? 'Extend time' : 'Start server')}
-
-  - content_for :tail do
-    :javascript
-      var timeSelect = $('#extend-server-time-select');
-      timeSelect.find('option').each(function(el) {
-        var $this = $(this),
-            t = moment().add('minutes', parseInt($this.val(), 10));
-
-        $this.text($this.text() + " (" + t.calendar() + ")");
-      });
-
-
-      timeSelect.change(function(e) {
-        var $el = $(e.target),
-            mins = parseInt($el.val(), 10),
-            rate = 5,
-            cost = mins * rate;
-
-        $('.extension-info .planned .cr').text(cost);
-
-        var tooExpensive = cost > app.currentUser.get('credits');
-
-        $('.server-controls').toggleClass('is-too-expensive', tooExpensive);
-
-        $el.parents('form').find('input[type=submit]').attr('disabled', tooExpensive);
-
-      });
-
-      timeSelect.change();
-
+  .player-list
+    - server.settings['whitelist'].lines.map(&:strip).each do |username|
+      .player
+        = image_tag "https://minotar.net/helm/#{username}/24.png", class: 'image-circle', alt: username
 
 
 .comments
@@ -124,8 +61,12 @@
       .span7
         .comment-meta
           %span.comment-author= current_user.username
-        = f.text_area :body, height: 4, class: %w(span5)
-        = f.submit 'Comment', class: %w(btn)
+        .control-group
+          .controls
+            = f.text_area :body, height: 4, class: %w(span5)
+
+        .form-actions
+          = f.submit 'Post comment', class: %w(btn)
 
   - server.comments.each do |comment|
     .comment.row

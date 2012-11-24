@@ -31,20 +31,25 @@
   }
 }
 
-.nav.nav-server {
+.nav-server {
+  @include clearfix;
   margin-bottom: 0;
   background-color: rgba(black, 0.05);
 
-  > li > a {
-    color: rgba(black, 0.6);
-    padding: l(1) ($gw-gutter);
+  > li {
+    float: left;
 
-    font-size: 14px;
-    line-height: l(1);
-    font-weight: 600;
+    > a {
+      color: rgba(black, 0.6);
+      padding: l(1) ($gw-gutter);
 
-    &:hover {
-      background-color: rgba(black, 0.05);
+      font-size: 14px;
+      line-height: l(1);
+      font-weight: 600;
+
+      &:hover {
+        background-color: rgba(black, 0.05);
+      }
     }
   }
 

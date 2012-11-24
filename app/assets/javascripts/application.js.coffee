@@ -13,6 +13,7 @@
 #= require bootstrap
 
 #= require jquery.cookie
+#= require jquery.simple-slider
 
 #= require ./helpers
 
