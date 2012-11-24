@@ -32,7 +32,7 @@
       var $this = $(this),
           $form = $this.parents('form');
 
-      mixpanel.track('clicked buy credits', {'credit pack': $this.data('id')});
+      mixpanel.track('Clicked Stripe button', {'credit pack': $this.data('id')});
 
       StripeButton.open({
         key: #{ENV["STRIPE_PUBLISHABLE"].to_json},
