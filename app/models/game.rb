@@ -10,6 +10,8 @@ class Game < ActiveRecord::Base
 
   has_many :funpacks
 
+  has_many :players
+
   def settings_partial
     partial_name = name.downcase.gsub(/\W/, '_')
 
