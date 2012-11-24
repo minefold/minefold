@@ -86,6 +86,7 @@
     }
 
     .player-list {
+      @include clearfix;
       padding-top: l(.5);
       padding-right: ($gw-gutter / 2) - (2 * 2px);
       padding-left: 0;
@@ -94,6 +95,7 @@
       .player {
         margin-left: l(0.5);
         margin-bottom: l(.5);
+        float: left;
       }
     }
 

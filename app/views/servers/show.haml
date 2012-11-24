@@ -49,7 +49,7 @@
   .player-list
     - server.settings['whitelist'].lines.map(&:strip).each do |username|
       .player
-        = image_tag "https://minotar.net/helm/#{username}/24.png", class: 'image-circle', alt: username
+        = image_tag "https://minotar.net/helm/#{username}/24.png", class: 'image-circle', alt: username, width: 24, height: 24
 
 
 .comments
