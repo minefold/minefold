@@ -80,6 +80,7 @@ class Pipe
 
   remove: =>
     @grid.release(pt) for pt in @pts
+    @elm.remove()
 
   seek: ->
     dir = @constructor.randomDir()
