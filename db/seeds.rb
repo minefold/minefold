@@ -23,7 +23,6 @@ chris = User.new(
 
 chris.password, chris.password_confirmation = 'password'
 chris.admin = true
-chris.players.new(game: minecraft, uid: 'chrislloyd')
 chris.skip_confirmation!
 
 chris.save!
@@ -35,7 +34,6 @@ dave = User.new(
 
 dave.password, dave.password_confirmation = 'password'
 dave.admin = true
-dave.players.new(game: minecraft, uid: 'whatupdave')
 dave.skip_confirmation!
 
 dave.save!
