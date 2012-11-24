@@ -58,10 +58,19 @@
               %input#server_ttl{type: 'text', name: 'ttl', data: {slider: 'true', 'slider-range' => '1,24', 'slider-step' => 1, 'slider-snap' => 'true'}}
 
         %p
-          This will cost
-          %span#server_session_cost
-          credits.
+          Starting the server for
+          %span#server_session_ttl.highlight
+          will cost
+          %span#server_session_cost.highlight
+          \.
           You have #{pluralize current_user.credits, 'credit', 'credits'}.
+          %span#server_session_valid{hidden}
+            It will shutdown at
+            %span#server_session_ends_at.highlight
+          %span#server_session_warning{hidden}
+            You don't have enough credits so the server will stop when you run out (at roughly
+            %span#server_killed_at.highlight
+            ).
 
         .form-actions
           %input.btn.btn-primary.btn-small{type: 'submit', value: 'Start server'}
@@ -71,8 +80,6 @@
           var ttl = $('#server_ttl');
 
           ttl.bind('slider:changed', function(e, data) {
-            console.log(data.value);
-
             var hrs = data.value,
                 mins = data.value * 60,
                 rate = 5,
@@ -80,10 +87,32 @@
 
             // Number of hours
             $('#server_ttl_display').text(pluralize(hrs, 'hour', 'hours'));
+            $('#server_session_ttl').text(pluralize(hrs, 'hour', 'hours'));
 
             // Cost
-            $('#server_session_cost').text(cost);
+            $('#server_session_cost').text(pluralize(cost, 'credit', 'credits'));
+
+            if (cost < app.currentUser.get('credits')) {
+              $('#server_session_valid').show();
+              $('#server_session_warning').hide();
+
+              $('#server_session_ends_at').text(moment().add('hours', hrs).format('h:mm a'));
+
+            } else {
+              $('#server_session_valid').hide();
+              $('#server_session_warning').show();
+
+              mins = app.currentUser.get('credits') / rate;
+
+              $('#server_killed_at').text(moment().add('minutes', mins).format('h:mm a'));
+            }
           });
+
+          $(document).ready(function() {
+            ttl.simpleSlider('setValue', 2);
+            ttl.simpleSlider('setValue', 1);
+          });
+
 
     - when :starting
       %p Server is starting. Please be patient.
