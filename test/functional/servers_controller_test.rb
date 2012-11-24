@@ -14,49 +14,49 @@ class ServersControllerTest < ActionController::TestCase
     get :index
     assert_response :success
   end
-  
+
   test "GET #map" do
     server = Server.make!
-    
+
     get :map, id: server.id
     assert_response :not_found
   end
-  
+
   test "GET #map for Minecraft server" do
     server = Server.make!(:minecraft)
-    
+
     get :map, id: server.id
     assert_response :success
   end
-  
+
   test "GET #edit unauthenticated" do
     server = Server.make!
-    
+
     get :edit, id: server.id
     assert_unauthenticated_response
   end
-  
+
   test "GET #edit unauthorized" do
     user = User.make!
     server = Server.make!
     sign_in(user)
-    
+
     get :edit, id: server.id
     assert_unauthorized_response
   end
-  
-  test "PUT #extend unauthenticated" do
+
+  test "PUT #start unauthenticated" do
     server = Server.make!
-    
-    put :extend, id: server.id, mins: 60
+
+    put :start, id: server.id, ttl: 60
     assert_unauthenticated_response
   end
-  
-  test "PUT #extend unauthorized" do
+
+  test "PUT #start unauthorized" do
     server = Server.make!
-    
-    put :extend, id: server.id, mins: 60
+
+    put :start, id: server.id, ttl: 60
     assert_unauthenticated_response
   end
-  
+
 end
