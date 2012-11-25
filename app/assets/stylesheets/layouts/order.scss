@@ -1,0 +1,38 @@
+@import 'vars';
+
+.l-order {
+
+  .coin {
+    width: 32px; height: 32px;
+    background: transparent url(image-path('thanks-sprite.png')) no-repeat 0 0;
+    position: absolute;
+    overflow: hidden;
+
+    &.is-heart {
+      background-position: (-1 * 32px) top;
+    }
+
+    &.is-creeper {
+      background-position: (-2 * 32px) top;
+    }
+
+    &.is-dave {
+      background-position: (-3 * 32px) top;
+    }
+  }
+
+  .hero-unit {
+    color: white;
+    background-color: darken($blue, 30%);
+    padding-bottom: l(6) * 4;
+    margin-bottom: 0;
+
+    p {
+      color: rgba(white, 0.4);
+    }
+  }
+
+  footer {
+    margin-top: -2px;
+  }
+}

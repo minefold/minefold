@@ -1,12 +1,34 @@
 class Order
+  extend ActiveModel::Naming
+
+  def to_model
+    self
+  end
+
+  def new_record?; true; end
+  def destroyed?; false; end
+
+
 
   attr_reader :user
   attr_reader :charge_id
+
+  def self.find_from_charge(id)
+    ch = Stripe::Charge.retrieve(id)
+    user = User.where(customer_id: ch.customer).first
+    credit_pack_id = ch.description.match(/\d+$/)[0].to_i
+    new(user, credit_pack_id)
+  end
+
 
   def initialize(user, credit_pack_id, card_token=nil)
     @user = user
     @credit_pack_id = credit_pack_id
     @card_token = card_token
+  end
+
+  def user_id
+    @user.id
   end
 
   def credit_pack
@@ -71,6 +93,10 @@ class Order
 
   def credit_user
     user.increment_credits!(credit_pack.credits)
+  end
+
+  def to_param
+    @charge_id
   end
 
 end

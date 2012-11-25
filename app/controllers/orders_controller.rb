@@ -1,10 +1,9 @@
 class OrdersController < ApplicationController
   prepend_before_filter :authenticate_user!
-  layout false
 
-  def new
-    @credit_packs = CreditPack.active.all.sort_by {|p| p.cents }
-  end
+  expose(:order) {
+    Order.find_from_charge(params[:id])
+  }
 
   def create
     order = Order.new(
@@ -28,12 +27,14 @@ class OrdersController < ApplicationController
         order.credit_pack.id
       ).deliver
 
-      # TODO Make this redirect to a thank you page.
-      redirect_to :back,
-        notice: "Thank you for buying Minefold credits"
+      redirect_to(order)
     else
       render nothing: true, :status => :payment_required
     end
+  end
+
+  def show
+    authorize! :read, order
   end
 
 end

@@ -15,10 +15,15 @@ class Ability
       can [:update, :destroy, :operate, :play], Server
     end
 
-    # Server abilities
+    # Servers
     can [:create], Server
     can [:update, :destroy], Server, creator_id: user.id
 
+    # Comments
     can [:create], Comment
+
+    # Orders
+    can [:create], Order
+    can [:read], Order, user_id: user.id
   end
 end

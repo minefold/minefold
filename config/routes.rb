@@ -48,7 +48,7 @@ Minefold::Application.routes.draw do
     # Devise overrides
     get '/settings' => 'devise/registrations#edit', :as => :edit_user_registration
 
-    resource :orders, only: [:create]
+    resources :orders, only: [:create, :show]
 
     resources :invitations, path: 'i', only: [:show]
 
