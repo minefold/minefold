@@ -3,7 +3,7 @@ Minefold::Application.routes.draw do
 # Constraints
 
   @admins = ->(req) { (u = req.env['warden'].user) && u.admin? }
-  @development = -> { Rails.env.development? }
+  @development = ->(req) { Rails.env.development? }
   @feature = ->(feature) { ->(req) { u = req.env['warden'].user && false } }
 
 # --
