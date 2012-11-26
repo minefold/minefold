@@ -96,7 +96,7 @@ class Order
   end
 
   def to_param
-    @charge_id
+    charge_id
   end
 
 end

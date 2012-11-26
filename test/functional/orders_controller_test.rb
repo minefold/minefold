@@ -57,7 +57,7 @@ class OrdersControllerTest < ActionController::TestCase
 
     post :create, coin_pack_id: @coin_pack.id, stripe_token: @card.id
 
-    assert_redirected_to :back
+    assert_redirected_to order_path(id: @charge.id)
   end
 
   test "POST #create with existing customer" do
@@ -73,7 +73,7 @@ class OrdersControllerTest < ActionController::TestCase
     @request.env['HTTP_REFERER'] = user_root_url
 
     post :create, coin_pack_id: @coin_pack.id
-    assert_redirected_to :back
+    assert_redirected_to order_path(id: @charge.id)
   end
 
   test "POST #create with existing customer and new card" do
@@ -89,7 +89,7 @@ class OrdersControllerTest < ActionController::TestCase
     @request.env['HTTP_REFERER'] = user_root_url
 
     post :create, coin_pack_id: @coin_pack.id, stripe_token: @card.id
-    assert_redirected_to :back
+    assert_redirected_to order_path(id: @charge.id)
   end
 
 end
