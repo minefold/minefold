@@ -3,7 +3,7 @@ require 'test_helper'
 class OrdersControllerTest < ActionController::TestCase
 
   setup do
-    @credit_pack = CreditPack.make!
+    @coin_pack = CoinPack.make!
 
     @card = Stripe::Token.create(card: {
         number: StripeCards[:default],
@@ -14,7 +14,7 @@ class OrdersControllerTest < ActionController::TestCase
       })
 
     @charge = Stripe::Charge.create(
-      amount: @credit_pack.cents,
+      amount: @coin_pack.cents,
       currency: 'usd',
       card: @card.id
     )
@@ -39,7 +39,7 @@ class OrdersControllerTest < ActionController::TestCase
     post :create, stripe_token: @card.id
     assert_response :payment_required
 
-    post :create, credit_pack_id: @credit_pack.id + 1
+    post :create, coin_pack_id: @coin_pack.id + 1
     assert_response :payment_required
   end
 
@@ -55,7 +55,7 @@ class OrdersControllerTest < ActionController::TestCase
     sign_in(user)
     @request.env['HTTP_REFERER'] = user_root_url
 
-    post :create, credit_pack_id: @credit_pack.id, stripe_token: @card.id
+    post :create, coin_pack_id: @coin_pack.id, stripe_token: @card.id
 
     assert_redirected_to :back
   end
@@ -72,7 +72,7 @@ class OrdersControllerTest < ActionController::TestCase
     sign_in(user)
     @request.env['HTTP_REFERER'] = user_root_url
 
-    post :create, credit_pack_id: @credit_pack.id
+    post :create, coin_pack_id: @coin_pack.id
     assert_redirected_to :back
   end
 
@@ -88,7 +88,7 @@ class OrdersControllerTest < ActionController::TestCase
     sign_in(user)
     @request.env['HTTP_REFERER'] = user_root_url
 
-    post :create, credit_pack_id: @credit_pack.id, stripe_token: @card.id
+    post :create, coin_pack_id: @coin_pack.id, stripe_token: @card.id
     assert_redirected_to :back
   end
 

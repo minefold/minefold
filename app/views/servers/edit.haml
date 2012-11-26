@@ -63,12 +63,12 @@
           will cost
           %span#server_session_cost.highlight
           \.
-          You have #{pluralize current_user.credits, 'credit', 'credits'}.
+          You have #{pluralize current_user.coins, 'coin', 'coins'}.
           %span#server_session_valid{hidden}
             It will shutdown at
             %span#server_session_ends_at.highlight
           %span#server_session_warning{hidden}
-            You don't have enough credits so the server will stop when you run out (at roughly
+            You don't have enough coins so the server will stop when you run out (at roughly
             %span#server_killed_at.highlight
             ).
 
@@ -90,9 +90,9 @@
             $('#server_session_ttl').text(pluralize(hrs, 'hour', 'hours'));
 
             // Cost
-            $('#server_session_cost').text(pluralize(cost, 'credit', 'credits'));
+            $('#server_session_cost').text(pluralize(cost, 'coin', 'coins'));
 
-            if (cost < app.currentUser.get('credits')) {
+            if (cost < app.currentUser.get('coins')) {
               $('#server_session_valid').show();
               $('#server_session_warning').hide();
 
@@ -102,7 +102,7 @@
               $('#server_session_valid').hide();
               $('#server_session_warning').show();
 
-              mins = app.currentUser.get('credits') / rate;
+              mins = app.currentUser.get('coins') / rate;
 
               $('#server_killed_at').text(moment().add('minutes', mins).format('h:mm a'));
             }

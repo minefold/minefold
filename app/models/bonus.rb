@@ -1,7 +1,7 @@
 class Bonus < ActiveRecord::Base
 
-  class_attribute :credits
-  self.credits = 0
+  class_attribute :coins
+  self.coins = 0
 
   belongs_to :user
 
@@ -26,12 +26,12 @@ class Bonus < ActiveRecord::Base
     self.class.where(user_id: user.id).count < 1
   end
 
-  def credits
-    self.class.credits
+  def coins
+    self.class.coins
   end
 
   def give!
-    user.increment_credits!(credits)
+    user.increment_coins!(coins)
     track!
   end
 
@@ -41,7 +41,7 @@ class Bonus < ActiveRecord::Base
   def track!
     Mixpanel.async_track 'Bonus claimed', distinct_id: user.distinct_id,
                                           bonus:       self.class.pretty_name,
-                                          credits:     credits,
+                                          coins:     coins,
                                           time:        Time.now.to_i
   end
 

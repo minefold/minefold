@@ -1,19 +1,19 @@
-- title 'Get more credits'
+- title 'Get more coins'
 - layout :referrals
 
 - provide :hero_unit do
-  %h1 Get more credits
-  %p You currently have #{pluralize current_user.credits, 'credit', 'credits'}.
+  %h1 Get more coins
+  %p You currently have #{pluralize current_user.coins, 'coin', 'coins'}.
 
 
 .bonus-list
   %a.bonus.row{href: pricing_page_path}
     .span1{data: {icon: 'c'}}
     .description.span5
-      %h2.name Buy credit
-      %p The fastest way to get lots of credits.
+      %h2.name Buy coin
+      %p The fastest way to get lots of coins.
     .reward.span2
-      .credits= pluralize @small_credit_pack.credits, 'credit', 'credits'
+      .coins= pluralize @small_coin_pack.coins, 'coin', 'coins'
       .conditions or more
 
   %a.bonus.row{href: url_for(:controller => :invitations, :action => :show, id: current_user.invitation_token)}
@@ -22,17 +22,17 @@
       %h2.name Refer friends to Minefold
       %p Spread the love to your friends and family.
     .reward.span2
-      .credits= pluralize Bonuses::ReferredFriend.credit_limit, 'credit', 'credits'
-      .conditions #{pluralize Bonuses::ReferredFriend.credits, 'credit', 'credits'} per friend
+      .coins= pluralize Bonuses::ReferredFriend.coin_limit, 'coin', 'coins'
+      .conditions #{pluralize Bonuses::ReferredFriend.coins, 'coin', 'coins'} per friend
 
   %a.bonus.bonus-mini.row{href: edit_user_registration_path(anchor: 'accounts')}
     .description.span5.offset1
       %h2.name Linking with Facebook
     .reward.span2
-      .credits= pluralize Bonuses::LinkedFacebook.credits, 'credit', 'credits'
+      .coins= pluralize Bonuses::LinkedFacebook.coins, 'coin', 'coins'
 
   %a.bonus.bonus-mini.row{href: edit_user_registration_path(anchor: 'accounts')}
     .description.span5.offset1
       %h2.name Linking with Minecraft
     .reward.span2
-      .credits= pluralize Bonuses::LinkedMinecraft.credits, 'credit', 'credits'
+      .coins= pluralize Bonuses::LinkedMinecraft.coins, 'coin', 'coins'

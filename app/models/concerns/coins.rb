@@ -1,9 +1,9 @@
-module Concerns::Credits
+module Concerns::Coins
   extend ActiveSupport::Concern
 
   included do
-    validates_presence_of :credits
-    validates_numericality_of :credits
+    validates_presence_of :coins
+    validates_numericality_of :coins
   end
 
   def create_customer(card_token)
@@ -22,18 +22,18 @@ module Concerns::Credits
     end
   end
 
-  # Atomically increment credits. Doesn't update the model's internal state.
-  def increment_credits!(n)
-    if self.class.update_counters(self.id, credits: n) == 1
-      track_credits(n)
+  # Atomically increment coins. Doesn't update the model's internal state.
+  def increment_coins!(n)
+    if self.class.update_counters(self.id, coins: n) == 1
+      track_coins(n)
       true
     end
   end
 
 # private
 
-  def track_credits(n)
-    Mixpanel.async_person_add(self.distinct_id, credits: n)
+  def track_coins(n)
+    Mixpanel.async_person_add(self.distinct_id, coins: n)
   end
 
 end

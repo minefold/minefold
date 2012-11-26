@@ -1,12 +1,12 @@
 class PagesController < ApplicationController
 
-  prepend_before_filter :authenticate_user!, only: [:welcome, :getcredits]
+  prepend_before_filter :authenticate_user!, only: [:welcome, :getcoins]
 
   def about
   end
 
-  def getcredits
-    @small_credit_pack = CreditPack.active.first
+  def getcoins
+    @small_coin_pack = CoinPack.active.first
   end
 
   def support
@@ -22,7 +22,7 @@ class PagesController < ApplicationController
   end
 
   def pricing
-    @packs = CreditPack.active.all
+    @packs = CoinPack.active.all
   end
 
   def privacy

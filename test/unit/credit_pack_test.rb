@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CreditPackTest < ActiveSupport::TestCase
+class CoinPackTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

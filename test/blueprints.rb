@@ -13,10 +13,10 @@ Player.blueprint do
   uid { Faker::Internet.user_name }
 end
 
-CreditPack.blueprint do
+CoinPack.blueprint do
   # Stripe requires that charges be at least 50¢. It leads to random test failures otherwise.
   cents { 50 + rand(950) }
-  credits { rand(1000) }
+  coins { rand(1000) }
 end
 
 Game.blueprint do

@@ -1,10 +1,10 @@
 require 'test_helper'
 
-class CreditsMailerTest < ActionMailer::TestCase
+class CoinsMailerTest < ActionMailer::TestCase
 
   test "receipt email" do
     user = User.make!
-    credit_pack = CreditPack.make!
+    coin_pack = CoinPack.make!
 
     # TODO Stripe should be stubbed out because its a Unit test
     card = Stripe::Token.create(card: {
@@ -16,13 +16,13 @@ class CreditsMailerTest < ActionMailer::TestCase
       })
 
     charge = Stripe::Charge.create(
-      amount: credit_pack.cents,
+      amount: coin_pack.cents,
       currency: 'usd',
       card: card.id
     )
 
     # Send the email, then test that it got queued
-    email = CreditsMailer.receipt(user.id, charge.id, credit_pack.id).deliver
+    email = CoinsMailer.receipt(user.id, charge.id, coin_pack.id).deliver
 
     assert !ActionMailer::Base.deliveries.empty?
 

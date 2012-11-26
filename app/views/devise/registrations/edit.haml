@@ -88,7 +88,7 @@
               Link your Facebook account
               - if Bonuses::LinkedFacebook.new(user: current_user).claimable?
                 for
-                = credits_with_image(Bonuses::LinkedFacebook.credits)
+                = coins_with_image(Bonuses::LinkedFacebook.coins)
 
     #link-minecraft-modal.modal.hide.fade
       .modal-header
@@ -115,7 +115,7 @@
               Link your Minecraft account
               - if Bonuses::MinecraftLinked.claimable_by?(current_user)
                 for
-                = credits_with_image(Bonuses::MinecraftLinked.credits)
+                = coins_with_image(Bonuses::MinecraftLinked.coins)
 
 
 .form-block.row#billing
@@ -123,12 +123,12 @@
 
   .span6
     %p
-      You have #{credits_with_image current_user.credits}
+      You have #{pluralize current_user.coins, 'coin', 'coins'}
 
-    %p The credit fairy will visit you on <strong>#{l Bonuses::CreditFairy.next_visit_for(current_user), :format => :date}</strong>. If you have less than #{Bonuses::CreditFairy.credits} credits they'll be topped up for <strong>free</strong>.
+    %p The coin fairy will visit you on <strong>#{l Bonuses::CoinFairy.next_visit_for(current_user), :format => :date}</strong>. If you have less than #{Bonuses::CoinFairy.coins} coins they'll be topped up for <strong>free</strong>.
 
     %p
-      %a.btn.btn-small.btn-primary.buy-credits{href: pricing_page_path} Buy credits
+      %a.btn.btn-small.btn-primary.buy-coins{href: pricing_page_path} Buy coins
 
 .form-block.row#notifications
   .form-title.span2 Notifications

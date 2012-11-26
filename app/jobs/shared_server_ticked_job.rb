@@ -10,10 +10,10 @@ class SharedServerTickedJob < Job
 
   def perform!
     @players.each do |player|
-      if player.user.credits <= 0
+      if player.user.coins <= 0
         PartyCloud.kick_player(@server.party_cloud_id, player.uid)
       else
-        player.user.increment_credits!(-1)
+        player.user.increment_coins!(-1)
       end
     end
   end

@@ -11,17 +11,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121124000153) do
+ActiveRecord::Schema.define(:version => 20121126203220) do
 
   create_table "bonuses", :force => true do |t|
     t.string   "type",       :null => false
     t.integer  "user_id",    :null => false
     t.datetime "created_at", :null => false
-    t.integer  "credits"
+    t.integer  "coins"
   end
 
   add_index "bonuses", ["type", "user_id"], :name => "index_bonus_claims_on_bonus_type_and_user_id"
   add_index "bonuses", ["type"], :name => "index_bonus_claims_on_bonus_type"
+
+  create_table "coin_packs", :force => true do |t|
+    t.integer  "cents",      :default => 0, :null => false
+    t.integer  "coins",      :default => 0, :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
 
   create_table "comments", :force => true do |t|
     t.integer  "server_id"
@@ -33,13 +40,6 @@ ActiveRecord::Schema.define(:version => 20121124000153) do
 
   add_index "comments", ["author_id"], :name => "index_comments_on_author_id"
   add_index "comments", ["server_id"], :name => "index_comments_on_server_id"
-
-  create_table "credit_packs", :force => true do |t|
-    t.integer  "cents",      :default => 0, :null => false
-    t.integer  "credits",    :default => 0, :null => false
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
-  end
 
   create_table "funpacks", :force => true do |t|
     t.string  "name"
@@ -119,23 +119,23 @@ ActiveRecord::Schema.define(:version => 20121124000153) do
   add_index "sessions", ["server_id"], :name => "index_sessions_on_server_id"
 
   create_table "users", :force => true do |t|
-    t.string   "username",                                 :default => ""
-    t.string   "slug",                                     :default => ""
+    t.string   "username",                               :default => ""
+    t.string   "slug",                                   :default => ""
     t.string   "email"
-    t.string   "encrypted_password",                       :default => "",    :null => false
+    t.string   "encrypted_password",                     :default => "",    :null => false
     t.string   "facebook_uid"
-    t.boolean  "admin",                                    :default => false, :null => false
+    t.boolean  "admin",                                  :default => false, :null => false
     t.string   "first_name"
     t.string   "last_name"
     t.string   "locale"
-    t.integer  "timezone",                                 :default => 0
+    t.integer  "timezone",                               :default => 0
     t.string   "gender"
-    t.integer  "credits",                                  :default => 0,     :null => false
+    t.integer  "coins",                                  :default => 0,     :null => false
     t.string   "customer_id"
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                            :default => 0
+    t.integer  "sign_in_count",                          :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -145,16 +145,16 @@ ActiveRecord::Schema.define(:version => 20121124000153) do
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
     t.string   "authentication_token"
-    t.datetime "created_at",                                                  :null => false
-    t.datetime "updated_at",                                                  :null => false
+    t.datetime "created_at",                                                :null => false
+    t.datetime "updated_at",                                                :null => false
     t.text     "notifications"
     t.string   "avatar"
-    t.string   "name",                                     :default => ""
+    t.string   "name",                                   :default => ""
     t.string   "distinct_id"
     t.string   "legacy_id"
     t.datetime "deleted_at"
-    t.datetime "last_credit_fairy_visit_at"
-    t.string   "invitation_token",           :limit => 12
+    t.datetime "last_coin_fairy_visit_at"
+    t.string   "invitation_token",         :limit => 12
     t.integer  "invited_by_id"
   end
 

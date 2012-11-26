@@ -3,9 +3,9 @@
 
 %li.divider-vertical
 
-%li.credits
+%li.coins
   %a{href: edit_user_registration_path(anchor: 'billing')}
-    = pluralize current_user.credits, 'credit', 'credits'
+    = pluralize current_user.coins, 'coin', 'coins'
 
 %li.user.dropdown
   %a.dropdown-toggle{href: '#', data: {toggle: 'dropdown'}}
@@ -14,12 +14,12 @@
 
   %ul.dropdown-menu.pull-right
     %li= link_to 'Settings', edit_user_registration_path
-    %li= link_to 'Get more credits', getcredits_page_path
+    %li= link_to 'Get more coins', getcoins_page_path
     %li= link_to 'Sign out', destroy_user_session_path, method: :delete
 
 - content_for :tail do
   :javascript
-    app.creditsView = new Application.CreditsView({
+    app.coinsView = new Application.CoinsView({
       model: app.currentUser,
-      el: $('header .credits .cr')
+      el: $('header .coins .cr')
     });

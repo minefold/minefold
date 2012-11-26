@@ -4,7 +4,7 @@
 .hero-unit
   %h1 Invite your friends!
 
-  %p For every friend who joins Minefold, we'll give you #{pluralize Bonuses::ReferredFriend.credits, 'credit', 'credits'} and your friend #{pluralize Bonuses::Referred.credits, 'credit', 'credits'} bonus credits (up to a limit of #{pluralize Bonuses::ReferredFriend.credit_limit, 'credit', 'credits'})!
+  %p For every friend who joins Minefold, we'll give you #{pluralize Bonuses::ReferredFriend.coins, 'coin', 'coins'} and your friend #{pluralize Bonuses::Referred.coins, 'coin', 'coins'} bonus coins (up to a limit of #{pluralize Bonuses::ReferredFriend.coin_limit, 'coin', 'coins'})!
 
 %center
 
@@ -16,7 +16,7 @@
 
   %pre
     %code
-      [url=#{url_for(only_path: false)}]Minefold: Simple game servers. Sign up now and get an extra #{pluralize Bonuses::Referred.credits, 'credit', 'credits'}![/url]
+      [url=#{url_for(only_path: false)}]Minefold: Simple game servers. Sign up now and get an extra #{pluralize Bonuses::Referred.coins, 'coin', 'coins'}![/url]
 
   %p or share a link to this page with them:
 

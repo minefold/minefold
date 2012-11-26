@@ -1,3 +1,3 @@
 class Bonuses::GettingStarted < Bonus
-  self.credits = 600
+  self.coins = 600
 end

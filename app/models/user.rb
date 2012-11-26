@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   extend FriendlyId
   include Concerns::Authentication
-  include Concerns::Credits
+  include Concerns::Coins
   include Concerns::Redis
 
 

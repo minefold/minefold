@@ -35,7 +35,7 @@
       }
 
       > .reward {
-        & > .credits {
+        & > .coins {
           font-size: 24px;
           line-height: l(3);
           font-family: $geometric;
@@ -54,7 +54,7 @@
         margin-bottom: l(1);
 
         > .description > .name,
-        > .reward > .credits {
+        > .reward > .coins {
           font-size: 18px;
           line-height: l(3);
         }

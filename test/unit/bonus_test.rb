@@ -11,7 +11,7 @@ class BonusTest < ActiveSupport::TestCase
   test "#claimable?" do
   end
 
-  test "#credits" do
+  test "#coins" do
   end
 
   test "#give!" do

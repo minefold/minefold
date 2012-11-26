@@ -1,28 +1,28 @@
 - track 'viewed new order'
 
-.credit-pack-picker
-  - @credit_packs.each do |pack|
-    .credit-pack{data: {id: pack.id, cents: pack.cents, credits: pack.credits}}
-      %h4.credits= format_credits pack.credits
+.coin-pack-picker
+  - @coin_packs.each do |pack|
+    .coin-pack{data: {id: pack.id, cents: pack.cents, coins: pack.coins}}
+      %h4.coins= format_coins pack.coins
       .price= number_to_currency(pack.cents / 100)
-      %p.rate #{(pack.cents_per_credit * 100).ceil}¢ for 100 credits
+      %p.rate #{(pack.cents_per_coin * 100).ceil}¢ for 100 coins
 
-= form_tag orders_path, method: 'POST', class: 'credit-card-form' do |f|
-  %input#credit_pack_id{type: 'hidden', name: 'credit_pack_id'}
+= form_tag orders_path, method: 'POST', class: 'coin-card-form' do |f|
+  %input#coin_pack_id{type: 'hidden', name: 'coin_pack_id'}
   %input#stripe_token{type: 'hidden', name: 'stripe_token'}
-  
+
   .container
-  
+
     .control-group
       %label.control-label{for: 'card_name'} Full name
       .controls
         %input#card_name{type: 'text', name: nil, autocomplete: false}
-  
+
     .control-group
       %label.control-label{for: 'card_number'} Card number
       .controls
         %input#card_number.number.unknown{type: 'text', name: nil, autocomplete: false}
-  
+
     .row
       .span2
         .control-group
@@ -31,52 +31,52 @@
             %input#card_exp_month.card_exp_month.span1{type: 'text', name: nil, size: 2, min: 0, placeholder: 'MM'}
             %span.card_exp_slash /
             %input#card_exp_year.card_exp_month.span1{type: 'text', name: nil, size: 2, min: 0, placeholder: 'YY'}
-    
+
       .span2
         .control-group
           %label.control-label{for: 'card_cvc'} Security code
           .controls
             %input#card_cvc.cvc{type: 'text', name: nil, autocomplete: false, min: 0}
-  
+
     .form-actions
       .pull-left
         %a.btn.btn-cancel Cancel
-    
+
       .pull-right
         %button.btn.btn-success
           Pay
           %span.price
-  
+
   .security
     %i.icon-lock
     %a{href: 'https://stripe.com', target: '_blank'}
       Secured by Stripe
 
 :javascript
-  var $modal = $('#buy-credits-modal'),
+  var $modal = $('#buy-coins-modal'),
     $form = $modal.find('form');
-  
+
   var orderFormView = new Application.OrderFormView();
   orderFormView.setElement($form);
-  
-  // Select a credit pack
-    
-  $modal.find('.credit-pack').click(function() {
+
+  // Select a coin pack
+
+  $modal.find('.coin-pack').click(function() {
     var $this = $(this);
-    
+
     $modal.removeClass('is-choosing').addClass('is-checking-out');
-    
+
     // Adds the price of the active pack to the pay button so it's *very* clear.
-    
-    orderFormView.selectCreditPack($this);
+
+    orderFormView.selectCoinPack($this);
     orderFormView.show();
 
     $this.addClass('active').siblings().removeClass('active');
   });
-  
+
   // Clicking the cancel button at the bottom of the checkout form
   $form.find('.form-actions .btn.btn-cancel').click(function(){
-    $modal.find('.credit-pack').removeClass('active');
+    $modal.find('.coin-pack').removeClass('active');
     $modal.removeClass('is-checking-out').addClass('is-choosing');
     orderFormView.hide();
   });

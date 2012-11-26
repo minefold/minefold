@@ -16,14 +16,14 @@ class Order
   def self.find_from_charge(id)
     ch = Stripe::Charge.retrieve(id)
     user = User.where(customer_id: ch.customer).first
-    credit_pack_id = ch.description.match(/\d+$/)[0].to_i
-    new(user, credit_pack_id)
+    coin_pack_id = ch.description.match(/\d+$/)[0].to_i
+    new(user, coin_pack_id)
   end
 
 
-  def initialize(user, credit_pack_id, card_token=nil)
+  def initialize(user, coin_pack_id, card_token=nil)
     @user = user
-    @credit_pack_id = credit_pack_id
+    @coin_pack_id = coin_pack_id
     @card_token = card_token
   end
 
@@ -31,33 +31,33 @@ class Order
     @user.id
   end
 
-  def credit_pack
-    @credit_pack ||= if @credit_pack_id.is_a?(CreditPack)
-      @credit_pack_id
+  def coin_pack
+    @coin_pack ||= if @coin_pack_id.is_a?(CoinPack)
+      @coin_pack_id
     else
-      @credit_pack_id and CreditPack.where(id: @credit_pack_id).first
+      @coin_pack_id and CoinPack.where(id: @coin_pack_id).first
     end
   end
 
   def valid?
-    credit_pack && user && user.valid? && (user.customer_id? || @card_token)
+    coin_pack && user && user.valid? && (user.customer_id? || @card_token)
   end
 
   def fulfill
     create_or_update_customer &&
     create_charge &&
-    credit_user
+    coin_user
 
   rescue Stripe::StripeError
     false
   end
 
   def total
-    credit_pack.cents
+    coin_pack.cents
   end
 
-  def credits
-    credit_pack.credits
+  def coins
+    coin_pack.coins
   end
 
 # protected
@@ -81,18 +81,18 @@ class Order
 
   def create_charge
     charge = Stripe::Charge.create(
-      amount: credit_pack.cents,
+      amount: coin_pack.cents,
       currency: 'usd',
       customer: user.customer_id,
-      description: credit_pack.description
+      description: coin_pack.description
     )
 
     @charge_id = charge.id
     charge
   end
 
-  def credit_user
-    user.increment_credits!(credit_pack.credits)
+  def coin_user
+    user.increment_coins!(coin_pack.coins)
   end
 
   def to_param

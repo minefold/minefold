@@ -1,16 +1,16 @@
 module IntercomHelper
-  
+
   def intercom_activator(selector)
     @intercom_activator = selector
   end
-  
+
   def intercom_settings
     settings = { app_id: ENV['INTERCOM'] }
-    
+
     if @intercom_activator
       settings[:widget] = { activator: @intercom_activator }
     end
-    
+
     if signed_in?
       settings[:email] = current_user.email
       settings[:name] = current_user.name || current_user.username
@@ -19,7 +19,7 @@ module IntercomHelper
 
       settings[:custom_data] = {
         'id' => current_user.id,
-        'credits' => current_user.credits,
+        'coins' => current_user.coins,
         'username' => current_user.username,
       }
     end

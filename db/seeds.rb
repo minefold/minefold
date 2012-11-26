@@ -1,9 +1,9 @@
-# Credit Packs
+# Coin Packs
 
-CreditPack.create(cents: 1_500, credits: 7_500)
-CreditPack.create(cents: 3_000, credits: 18_000)
-CreditPack.create(cents: 6_000, credits: 45_000)
-CreditPack.create(cents: 12_000, credits: 120_000)
+CoinPack.create(cents: 1_500, coins: 7_500)
+CoinPack.create(cents: 3_000, coins: 18_000)
+CoinPack.create(cents: 6_000, coins: 45_000)
+CoinPack.create(cents: 12_000, coins: 120_000)
 
 # Games
 

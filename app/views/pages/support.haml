@@ -66,7 +66,7 @@
 
   .items.span7
     .item
-      %h3.question My child stole my credit card to pay for credits
+      %h3.question My child stole my coin card to pay for coins
       .answer
         %p Please #{link_to 'contact support', '#contact'}. You may be eligable for a refund.
 
@@ -76,9 +76,9 @@
         %p No.
 
     .item
-      %h3.question My credits haven't reset
+      %h3.question My coins haven't reset
       .answer
-        %p We reset your credits every #{pluralize(Bonuses::CreditFairy.period / 1.day, 'day', 'days')} from when you signed up.
+        %p We reset your coins every #{pluralize(Bonuses::CoinFairy.period / 1.day, 'day', 'days')} from when you signed up.
 
 
 .support-faq.row#support-minecraft

@@ -1,10 +1,10 @@
 class Bonuses::ReferredFriend < Bonus
-  self.credits = 500
+  self.coins = 500
 
   LIMIT = 16
 
-  def self.credit_limit
-    credits * LIMIT
+  def self.coin_limit
+    coins * LIMIT
   end
 
   def claimable?

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CreditFairyJobTest < ActiveSupport::TestCase
+class CoinFairyJobTest < ActiveSupport::TestCase
 
   test "#perform!" do
     pending
