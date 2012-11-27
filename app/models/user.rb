@@ -43,6 +43,7 @@ class User < ActiveRecord::Base
   attr_accessible :campaign_mailer, :server_mailer, :session_mailer
 
   uniquify :invitation_token, length: 12
+  uniquify :verification_token, length: 12
 
   friendly_id :username, :use => :slugged
 
@@ -77,11 +78,11 @@ class User < ActiveRecord::Base
   end
 
   def minecraft_linked?
-    players.includes(:game).where('games.name' => 'Minecraft').exists?
+    players.minecraft.exists?
   end
 
   def minecraft_link_host
-    "#{authentication_token}.verify.minefold.com"
+    "#{verification_token}.verify.minefold.com"
   end
 
   def minecraft_avatar_url

@@ -79,7 +79,7 @@ class ServersController < ApplicationController
     )
 
     if server.normal?
-      Resque.enqueue_in(params[:ttl].to_i.minutes, StopServerJob, server.id)
+      Resque.enqueue_in(params[:ttl].to_i, StopServerJob, server.id)
     end
 
     track 'Started server',

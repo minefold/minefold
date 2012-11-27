@@ -88,7 +88,7 @@
               Link your Facebook account
               - if Bonuses::LinkedFacebook.new(user: current_user).claimable?
                 for
-                = coins_with_image(Bonuses::LinkedFacebook.coins)
+                = pluralize(Bonuses::LinkedFacebook.coins, "coin", "coins")
 
     #link-minecraft-modal.modal.hide.fade
       .modal-header
@@ -113,9 +113,9 @@
           - else
             %a{href: accounts_link_minecraft_path, data: {toggle: 'modal', target: '#link-minecraft-modal'}}
               Link your Minecraft account
-              - if Bonuses::MinecraftLinked.claimable_by?(current_user)
+              - if Bonuses::LinkedMinecraft.new(user: current_user).claimable?
                 for
-                = coins_with_image(Bonuses::MinecraftLinked.coins)
+                = pluralize(Bonuses::LinkedMinecraft.coins, "coin", "coins")
 
 
 .form-block.row#billing

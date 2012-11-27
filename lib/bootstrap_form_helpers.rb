@@ -1,7 +1,6 @@
 module BootstrapFormHelpers
   include TextHelper
 
-  # TODO Put show error messages on field
   def control_group(*fields, &blk)
     group_class = ['control-group']
 
