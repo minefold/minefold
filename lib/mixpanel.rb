@@ -1,6 +1,6 @@
 module Mixpanel
 
-  # Tracking API:
+  # Tracking:
   # https://mixpanel.com/docs/api-documentation/http-specification-insert-data
 
   def self.track(event, properties={})
@@ -16,7 +16,7 @@ module Mixpanel
     RestClient.post('http://api.mixpanel.com/track', data: payload)
   end
 
-  # People Analytics:
+  # People:
   # https://mixpanel.com/docs/people-analytics/people-http-specification-insert-data
 
   def self.person(distinct_id, properties={})
@@ -28,6 +28,22 @@ module Mixpanel
     payload = Base64.strict_encode64(params.to_json)
 
     RestClient.post('http://api.mixpanel.com/engage', data: payload)
+  end
+
+  # Import:
+  # https://mixpanel.com/docs/api-documentation/importing-events-older-than-31-days
+
+  def self.import(event, properties={})
+    params = {
+      event: event,
+      properties: properties.merge(
+        token: ENV['MIXPANEL']
+      )
+    }
+
+    payload = Base64.strict_encode64(params.to_json)
+
+    RestClient.post('http://api.mixpanel.com/import', data: payload, api_key: ENV['MIXPANEL_KEY'])
   end
 
 
