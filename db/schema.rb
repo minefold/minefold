@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121126203220) do
+ActiveRecord::Schema.define(:version => 20121127005850) do
 
   create_table "bonuses", :force => true do |t|
     t.string   "type",       :null => false
@@ -156,11 +156,13 @@ ActiveRecord::Schema.define(:version => 20121126203220) do
     t.datetime "last_coin_fairy_visit_at"
     t.string   "invitation_token",         :limit => 12
     t.integer  "invited_by_id"
+    t.string   "verification_token",       :limit => 12
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
   add_index "users", ["deleted_at", "invitation_token"], :name => "index_users_on_deleted_at_and_invitation_token", :unique => true
+  add_index "users", ["deleted_at", "verification_token"], :name => "index_users_on_deleted_at_and_verification_token", :unique => true
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["facebook_uid"], :name => "index_users_on_facebook_uid", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
