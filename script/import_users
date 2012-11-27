@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
 # encoding: utf-8
-require 'mongo'
-require 'colored'
 require 'pp'
 
 # Boot the application
@@ -9,11 +7,12 @@ require File.expand_path('../../config/boot',  __FILE__)
 require File.expand_path('../../config/environment',  __FILE__)
 
 
-$db = Mongo::Connection.new('localhost', 27017, :safe => true)['minefold']
+$db = Mongo::MongoClient.from_uri("mongodb://minefold:Aru06kAy8xE2@sun.member0.mongohq.com:10018,sun.member1.mongohq.com:10018/production", safe: true)['minefold']
 
 minecraft = Game.where(name: 'Minecraft').first
 vanilla = minecraft.funpacks.where(name: 'Official').first
-bukkit = minecraft.funpacks.where(name: 'Bukkit').first
+bukkit = minecraft.funpacks.where(name: 'Bukkit Essentials').first
+tekkit = minecraft.funpacks.where(name: 'Tekkit').first
 
 # Clean out prevous data
 User.delete_all
@@ -127,9 +126,11 @@ $db[:users].find({}, timeout: false) do |cursor|
       u.coins = total_coins
 
       # Mixpanel
-      if not (raw['mpid'] =~ /undefined/)
-        u.distinct_id = raw['mpid']
-      end
+      # if not (raw['mpid'] =~ /undefined/)
+      #   u.distinct_id = raw['mpid']
+      # end
+
+      u.distinct_id = SecureRandom.uuid
 
       u.save!
 
