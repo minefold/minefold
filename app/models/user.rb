@@ -126,4 +126,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  before_create :generate_distinct_id
+
+  def generate_distinct_id
+    self.distinct_id ||= SecureRandom.uuid
+  end
+
 end
