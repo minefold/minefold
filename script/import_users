@@ -27,8 +27,8 @@ class User
   def confirmation_required?; false; end
 end
 
-File.open('/Users/Chris/Desktop/credits-2h.csv', 'w') do |f|
-  f.puts %W(created plan_expires existing_credits bonus_credits credits).join(',')
+# File.open('/Users/Chris/Desktop/credits-2h.csv', 'w') do |f|
+#   f.puts %W(created plan_expires existing_credits bonus_credits credits).join(',')
 
 $db[:users].find({}, timeout: false) do |cursor|
   cursor.each do |raw|
@@ -144,4 +144,4 @@ $db[:users].find({}, timeout: false) do |cursor|
   end
 end
 
-end
+# end
