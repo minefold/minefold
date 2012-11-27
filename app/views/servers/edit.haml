@@ -169,7 +169,7 @@
 
   .span6
     = form_for server do |f|
-      = f.fields_for :settings do |s|
+      = f.fields_for :settings, OpenStruct.new(server.settings) do |s|
         = render partial: server.funpack.game.settings_partial, locals: {f: s}
 
       .form-actions

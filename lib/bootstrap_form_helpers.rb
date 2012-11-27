@@ -6,7 +6,7 @@ module BootstrapFormHelpers
 
     obj = object or (parent_builder and parent_builder.object)
 
-    if obj and obj.errors.any? and fields.any? {|field| obj.errors[field].any? }
+    if obj and obj.respond_to?(:errors) and obj.errors.any? and fields.any? {|field| obj.errors[field].any? }
       group_class << 'error'
     end
 

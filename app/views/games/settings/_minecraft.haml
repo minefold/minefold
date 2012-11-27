@@ -1,22 +1,22 @@
 = f.control_group :game_mode do
   .control-label Mode
   .controls
-    = gm.label :game_mode_0, class: 'radio' do
-      = gm.radio_button :game_mode, 0, tabindex: 3, checked: true
+    = f.label :game_mode_0, class: 'radio' do
+      = f.radio_button :game_mode, 0, tabindex: 3, checked: fuck_you_select_bitch(f, :game_mode, '0', true)
       Survival
       %p.help-block
         Search for resources, crafting, gain levels, health and hunger
 
   .controls
-    = gm.label :game_mode_1, class: 'radio' do
-      = gm.radio_button :game_mode, 1, tabindex: 3
+    = f.label :game_mode_1, class: 'radio' do
+      = f.radio_button :game_mode, 1, tabindex: 3, checked: fuck_you_select_bitch(f, :game_mode, '1', false)
       Creative
       %p.help-block
         Unlimited resources, free flying and destroy blocks instantly
 
   .controls
-    = gm.label :game_mode_2, class: 'radio' do
-      = gm.radio_button :game_mode, 2, tabindex: 4
+    = f.label :game_mode_2, class: 'radio' do
+      = f.radio_button :game_mode, 2, tabindex: 4, checked: fuck_you_select_bitch(f, :game_mode, '2', false)
       Adventure
       %p.help-block
         Explorers only, cannot place or destroy blocks.
@@ -39,7 +39,7 @@
       - %w(peaceful easy normal hard).each_with_index do |level, i|
         .controls
           = f.label "difficulty_#{i}", class: 'radio' do
-            = f.radio_button :difficulty, i, tabindex: 4, checked: (level == 'normal')
+            = f.radio_button :difficulty, i, tabindex: 4, checked: fuck_you_select_bitch(f, :difficulty, i.to_s, i == 1)
             = level.to_s.titlecase
 
 
@@ -49,34 +49,34 @@
 
       .controls
         = f.label :pvp, class: 'checkbox' do
-          = f.check_box :pvp, tabindex: 5, checked: true
+          = f.check_box :pvp, tabindex: 5, checked: fuck_you_checkbox_cunt(f, :pvp, true)
           Player vs. Player
 
       .controls
         = f.label :spawn_monsters, class: 'checkbox' do
-          = f.check_box :spawn_monsters, tabindex: 6, checked: true
+          = f.check_box :spawn_monsters, tabindex: 6, checked: fuck_you_checkbox_cunt(f, :spawn_monsters, true)
           Spawn monsters
 
       .controls
         = f.label :spawn_animals, class: 'checkbox' do
-          = f.check_box :spawn_animals, tabindex: 7, checked: true
+          = f.check_box :spawn_animals, tabindex: 7, checked: fuck_you_checkbox_cunt(f, :spawn_animals, true)
           Spawn animals
 
       .controls
         = f.label :spawn_npcs, class: 'checkbox' do
-          = f.check_box :spawn_npcs, tabindex: 8, checked: true
+          = f.check_box :spawn_npcs, tabindex: 8, checked: fuck_you_checkbox_cunt(f, :spawn_npcs, true)
           Spawn animals
 
     .span2
       %br
       .controls
         = f.label :allow_nether, class: 'checkbox' do
-          = f.check_box :allow_nether, tabindex: 9, checked: true
+          = f.check_box :allow_nether, tabindex: 9, checked: fuck_you_checkbox_cunt(f, :allow_nether, true)
           Nether
 
       .controls
         = f.label :control_blocks, class: 'checkbox' do
-          = f.check_box :control_blocks, tabindex: 9, checked: true
+          = f.check_box :control_blocks, tabindex: 9, checked: fuck_you_checkbox_cunt(f, :control_blocks, true)
           Control blocks
 
 - players = current_user.players.minecraft.collect(&:uid).join("\n")
@@ -86,11 +86,11 @@
   .control-label
     Whitelist
   .controls
-    - whitelist = f.parent_builder.object.settings['whitelist'] || players
+    - whitelist = f.object.whitelist || players
     = f.text_area :whitelist, value: whitelist, rows: (whitelist.lines.to_a.length + 3), style: 'width:100%', class: %w(span6)
 
 = f.control_group :ops do
   .control-label Ops
   .controls
-    - ops = f.parent_builder.object.settings['ops'] || players
+    - ops = f.object.ops || players
     = f.text_area :ops, value: ops, rows: (ops.lines.to_a.length + 3), style: 'width:100%', class: %w(span6)

@@ -28,6 +28,8 @@ class ServersController < ApplicationController
   def new_funpack_settings
     authorize! :create, server
 
+    # server.set_default_settings
+
     @funpack = Funpack.find(params[:funpack_id])
 
     render layout: false
