@@ -14,7 +14,8 @@ module MixpanelHelper
       '$last_name' => current_user.last_name,
       '$name' => current_user.name,
       '$username' => current_user.username,
-      'coins' => current_user.coins
+      'coins' => current_user.coins,
+      'gender' => current_user.gender
     }
   end
 
