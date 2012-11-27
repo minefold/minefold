@@ -82,7 +82,7 @@ class User < ActiveRecord::Base
   end
 
   def minecraft_link_host
-    "#{authentication_token}.verify.minefold.com"
+    "#{verification_token}.verify.minefold.com"
   end
 
   def minecraft_avatar_url

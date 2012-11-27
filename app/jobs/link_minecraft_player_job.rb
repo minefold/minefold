@@ -11,7 +11,7 @@ class LinkMinecraftPlayerJob < Job
     if @user.nil?
       reply 'Bad code. Please copy and paste the verify address'
 
-    elsif @player
+    elsif @player and @player.user
       if @user.players.minecraft.include?(@player)
         reply "#{@username} already linked to your account."
       elsif @user.players.minecraft.any?
@@ -21,17 +21,23 @@ class LinkMinecraftPlayerJob < Job
       end
 
     else
-      player = Player.create(
-        uid: @username,
-        game: Game.find_by_name('Minecraft')
-      )
+      player = Player.find_by_uid(@username)
+      if player.nil?
+        player = Player.create(
+          uid: @username,
+          game: Game.find_by_name('Minecraft')
+        )
+      end
+
       player.user = @user
       player.save!
 
       Bonuses::LinkedMinecraft.claim!(@user)
+      
+      reply "Linked. Visit minefold.com to play!"
     end
   end
-  
+
   def reply message
     logger.info message
     $redis.publish "players:verification_request:#{@verification_token}", message
