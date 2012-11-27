@@ -1,22 +1,22 @@
 = f.control_group :game_mode do
   .control-label Mode
   .controls
-    = f.label :game_mode_0, class: 'radio' do
-      = f.radio_button :game_mode, 0, tabindex: 3, checked: true
+    = gm.label :game_mode_0, class: 'radio' do
+      = gm.radio_button :game_mode, 0, tabindex: 3, checked: true
       Survival
       %p.help-block
         Search for resources, crafting, gain levels, health and hunger
 
   .controls
-    = f.label :game_mode_1, class: 'radio' do
-      = f.radio_button :game_mode, 1, tabindex: 3
+    = gm.label :game_mode_1, class: 'radio' do
+      = gm.radio_button :game_mode, 1, tabindex: 3
       Creative
       %p.help-block
         Unlimited resources, free flying and destroy blocks instantly
 
   .controls
-    = f.label :game_mode_2, class: 'radio' do
-      = f.radio_button :game_mode, 2, tabindex: 4
+    = gm.label :game_mode_2, class: 'radio' do
+      = gm.radio_button :game_mode, 2, tabindex: 4
       Adventure
       %p.help-block
         Explorers only, cannot place or destroy blocks.
