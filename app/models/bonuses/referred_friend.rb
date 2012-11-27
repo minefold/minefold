@@ -1,5 +1,5 @@
 class Bonuses::ReferredFriend < Bonus
-  self.coins = 500
+  self.coins = 600
 
   LIMIT = 16
 
