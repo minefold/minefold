@@ -112,8 +112,8 @@
 
   .world-map-view {
     > .map {
-      height: grid-width(8) / (16/9);
-      width: grid-width(8);
+      height: grid-width(10) / (16/9);
+      width: grid-width(10);
     }
 
     > .map-meta, > .coming-soon {
