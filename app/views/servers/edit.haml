@@ -137,7 +137,8 @@
         &middot;
         = link_to 'Download archive', party_cloud_world_download_url(server.world)
 
-      - if server.world.legacy_parent_id?
+      - # TODO Investigate why parent wouldn't have a server.
+      - if server.world.legacy_parent and server.world.legacy_parent.server
         - parent = server.world.legacy_parent.server
         %p
           Forked from
