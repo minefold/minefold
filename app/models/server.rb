@@ -97,13 +97,13 @@ class Server < ActiveRecord::Base
     "#{typed_redis_key}:watchers"
   end
 
-  before_destroy :clear_associated_watchers
-
-  def clear_associated_watchers
-    $redis.smembers(redis_watchers_key).each do |id|
-      $redis.srem "user:#{id}:watching", redis_key
-    end
-  end
+  # before_destroy :clear_associated_watchers
+  #
+  # def clear_associated_watchers
+  #   $redis.smembers(redis_watchers_key).each do |id|
+  #     $redis.srem "user:#{id}:watching", redis_key
+  #   end
+  # end
 
   # TODO HACK!
   # after_initialize :set_default_settings

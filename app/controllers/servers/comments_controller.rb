@@ -18,6 +18,7 @@ class Servers::CommentsController < ApplicationController
     comment.author = current_user
     comment.save
 
+    # TODO Add back in.
     # ServerMailer.comment(server.id, comment.id).deliver
 
     respond_with comment, location: server_path(server)
