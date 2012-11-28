@@ -2,7 +2,7 @@ class ServerSettingsChangedJob < Job
   @queue = :high
 
   def initialize(id, change)
-    @server = Server.find_by_party_cloud_id(id)
+    @server = Server.unscoped.find_by_party_cloud_id(id)
     @change = change
   end
 

@@ -2,7 +2,7 @@ class ServerStartedJob < Job
   @queue = :high
 
   def initialize(party_cloud_server_id, host, port)
-    @server = Server.find_by_party_cloud_id(party_cloud_server_id)
+    @server = Server.unscoped.find_by_party_cloud_id(party_cloud_server_id)
     @host, @port = host, port
   end
 
