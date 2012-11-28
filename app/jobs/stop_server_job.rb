@@ -1,7 +1,6 @@
 class StopServerJob < Job
-
   def initialize(id)
-    @server = Server.find(id)
+    @server = Server.unscoped.find(id)
   end
 
   def perform!
