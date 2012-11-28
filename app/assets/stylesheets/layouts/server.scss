@@ -6,10 +6,6 @@
     width: grid-width(10);
   }
 
-  #app {
-//    margin-top: l(2);
-  }
-
   .user-profile {
     > .avatar {
       margin-bottom: l(1);
@@ -101,7 +97,6 @@
 
   }
 
-
   .server-controls {
     .server-controls-ttl-display {
       font-size: 14px;
@@ -109,11 +104,14 @@
     }
   }
 
-
   .world-map-view {
+
     > .map {
-      height: grid-width(10) / (16/9);
+      height: grid-width(10);
       width: grid-width(10);
+
+      label { width: auto; display:inline; }
+      img { max-width: none; }
     }
 
     > .map-meta, > .coming-soon {
