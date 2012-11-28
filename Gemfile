@@ -35,9 +35,6 @@ gem 'librato-rails'
 gem 'paranoia'
 gem 'carrierwave', git: 'https://github.com/jnicklas/carrierwave.git'
 
-gem 'mongo', '1.7.1'
-gem 'bson_ext'
-
 gem 'sass-rails'
 gem 'bourbon'
 
