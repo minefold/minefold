@@ -7,11 +7,13 @@ class ServerBackedUpJob < Job
   end
 
   def perform!
-    @server.world = World.new(
-      party_cloud_id: @snapshot_id,
-      legacy_url: @url
-    )
-    @server.save!
+    if not @server.world
+      @server.world = World.new
+    end
+
+    @server.world.party_cloud_id = @snapshot_id
+    @server.world.legacy_url = @url
+    @server.world.save!
   end
 
 end
