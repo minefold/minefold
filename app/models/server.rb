@@ -32,7 +32,7 @@ class Server < ActiveRecord::Base
   has_many :sessions do
 
     def current
-      active.first
+      active.first_or_initialize
     end
 
     def current?
