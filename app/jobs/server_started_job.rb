@@ -7,15 +7,15 @@ class ServerStartedJob < Job
   end
 
   def perform!
-    if !@server.shared?
+    if not @server.shared?
       @server.host = @host
       @server.port = @port
       @server.save!
-
-      session = @server.sessions.current
-      session.started_at = Time.now
-      session.save!
     end
+
+    session = @server.sessions.current
+    session.started_at = Time.now
+    session.save!
   end
 
 end
