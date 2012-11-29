@@ -10,7 +10,7 @@ class NormalServerTickedJob < Job
     if @server.creator.coins <= 0
       PartyCloud.stop_server(@server.party_cloud_id)
     else
-      @server.creator.increment_coins!(-5)
+      @server.creator.spend_coins!(5)
     end
   end
 

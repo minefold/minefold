@@ -9,11 +9,11 @@ class ServerSettingsChangedJob < Job
   def perform!
     # hack for whitelist_add, whitelist_remove, blacklist_add, blacklist_remove, ops_add, ops_remove
     if @change['setting'] =~ /([a-z]+)_add/
-      set = @server.settings[$1].split("\n")
+      set = (@server.settings[$1] || "").split("\n")
       @server.settings[$1] = (set | [@change['value']]).uniq.join("\n")
 
     elsif @change['setting'] =~ /([a-z]+)_remove/
-      set = @server.settings[$1].split("\n")
+      set = (@server.settings[$1] || "").split("\n")
       @server.settings[$1] = (set - [@change['value']]).uniq.join("\n")
 
     else
