@@ -13,7 +13,7 @@ class SharedServerTickedJob < Job
       if player.user.coins <= 0
         PartyCloud.kick_player(@server.party_cloud_id, player.uid)
       else
-        player.user.increment_coins!(-1)
+        player.user.spend_coins!(1)
       end
     end
   end
