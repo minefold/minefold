@@ -30,8 +30,9 @@ module ApplicationHelper
     else
       default
     end
+  end
 
-  def flip
+  def feature
     $flipper
   end
 

@@ -1,5 +1,5 @@
 .page-header.page-header-server
-  - if signed_in? && flip['watching'].enabled?(current_user)
+  - if signed_in? && feature[:watching].enabled?(current_user)
     .actions.pull-right
       - if signed_in? and current_user.watching?(server)
         = button_to 'Unwatch Server', unwatch_server_path(server), class: %w(btn btn-small)
