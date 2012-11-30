@@ -16,8 +16,10 @@ form {
     margin: 0;
     min-height: 40px;
 
+    @include anti-aliasing;
+
     &:focus, &.focus {
-      @include box-shadow(0 0 0 2px $blue inset);
+      @include box-shadow(0 0 1px 1px $blue inset);
     }
 
     &:disabled, &.disabled {
@@ -26,8 +28,10 @@ form {
   }
 
   textarea {
-    font-size: 16px;
+    color: rgba(black, 0.8);
+    font-size: 14px;
     line-height: l(2);
+    @include box-shadow(0 0 0 1px rgba(black, 0.2) inset);
   }
 
   .control-group {

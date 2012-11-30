@@ -1,7 +1,4 @@
-.nav {
-}
-
-.nav.nav-pills {
+.nav-pills {
   margin-bottom: 0;
   font-size: 14px;
 
@@ -17,7 +14,7 @@
   }
 }
 
-.nav.nav-horizontal {
+.nav-horizontal {
   @include clearfix;
 
   > li {
@@ -29,30 +26,10 @@
   }
 }
 
-.nav-server {
-  @include clearfix;
-  margin-bottom: 0;
-  background-color: rgba(black, 0.05);
-
+.nav-table {
   > li {
-    float: left;
-
-    > a {
-      color: rgba(black, 0.6);
-      padding: l(1) ($gw-gutter);
-
-      font-size: 14px;
-      line-height: l(1);
-      font-weight: 600;
-
-      &:hover {
-        background-color: rgba(black, 0.05);
-      }
-    }
-  }
-
-  .active > a, .active > a:hover {
-    color: white;
-    background: $blue;
+    display: table-cell;
+    width: 1%;
+    text-align: center;
   }
 }

@@ -1,5 +1,5 @@
 .navbar {
-  padding: l(1) 0;
+  padding: l(.5) 0;
   background-color: transparent;
 
   .btn {
@@ -17,13 +17,17 @@
   }
 
   .brand {
-    color: $red;
+    color: rgba(black, 0.8);
 
-    font-size: 24px;
+    font-size: 20px;
     font-family: $geometric;
     font-weight: 600;
     text-shadow: none;
     line-height: l(2);
+    padding: 0;
+
+    letter-spacing: 0.05em;
+
     padding: 0;
     margin: 0;
 
@@ -58,7 +62,7 @@
       }
 
       &.pricing a {
-        color: $blue;
+        color: lighten($blue, 20%);
       }
 
       &.dropdown {
@@ -80,7 +84,7 @@
         .dropdown-menu {
           @include box-shadow(none);
           border-radius: $radius;
-          background-color: lighten($blue, 20%);
+          background-color: lighten(black, 20%);
           border: none;
 
           &:before {
@@ -88,7 +92,7 @@
           }
 
           &:after {
-            border-bottom-color: lighten($blue, 20%);
+            border-bottom-color: lighten(black, 20%);
           }
 
           a {
@@ -96,7 +100,7 @@
             font-weight: 600;
 
             &:hover {
-              background: lighten($blue, 0%);
+              background: lighten(black, 80%);
             }
           }
         }

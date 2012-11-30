@@ -68,6 +68,8 @@ module Minefold
 
     config.to_prepare do
       Devise::Mailer.layout 'email'
+
+      Jbuilder.key_format :camelize => :lower
     end
 
   end

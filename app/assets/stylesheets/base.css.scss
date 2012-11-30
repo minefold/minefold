@@ -4,7 +4,6 @@
 
 html {
   background-color: white;
-  @include anti-aliasing;
 }
 
 body {
@@ -26,10 +25,6 @@ body {
 
 .container {
   width: grid-width(8);
-}
-
-header, .container {
-  background-color: white;
 }
 
 #Intercom {

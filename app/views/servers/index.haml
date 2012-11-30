@@ -21,26 +21,29 @@
 
 
   .span8
-    .server-list
-      - if @servers.empty?
-        .empty
-          %h2 You don't have any servers. Create a new server to start the party!
+    .activity-stream
+      = render partial: current_user.activity_stream, :as => :activity, layout: 'activities/activity'
 
-      - else
-
-        - @servers.each do |game, servers|
-          .divider
-            .game.pull-left= game.name
-            .count.pull-right= pluralize servers.size, 'server', 'servers'
-
-          - servers.each do |server|
-            .item{class: "is-#{server.state}"}
-              %ul.nav.nav-pills.pull-right
-                %li= link_to 'Settings', edit_server_path(server)
-
-              .primary-action.pull-left
-                %a.name{href: server_path(server)}= server.name
-
-      .new
-        = link_to 'Create a new server', new_server_path, class: %w(btn btn-small btn-primary)
-
+    / .server-list
+    /   - if @servers.empty?
+    /     .empty
+    /       %h2 You don't have any servers. Create a new server to start the party!
+    /
+    /   - else
+    /
+    /     - @servers.each do |game, servers|
+    /       .divider
+    /         .game.pull-left= game.name
+    /         .count.pull-right= pluralize servers.size, 'server', 'servers'
+    /
+    /       - servers.each do |server|
+    /         .item{class: "is-#{server.state}"}
+    /           %ul.nav.nav-pills.pull-right
+    /             %li= link_to 'Settings', edit_server_path(server)
+    /
+    /           .primary-action.pull-left
+    /             %a.name{href: server_path(server)}= server.name
+    /
+    /   .new
+    /     = link_to 'Create a new server', new_server_path, class: %w(btn btn-small btn-primary)
+    /

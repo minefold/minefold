@@ -97,8 +97,8 @@
           %a.close{data: {dismiss: 'alert'}} &#215;
           %div{:id => "flash_#{name}"}= msg
 
-    - if content_for?(:hero_unit)
-      .hero-unit= yield :hero_unit
+    - if content_for?(:breakout)
+      = yield :breakout
 
     .container
       #app= yield

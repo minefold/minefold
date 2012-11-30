@@ -1,13 +1,13 @@
 .comments {
-  padding-bottom: l(2);
+  padding-bottom: l(0);
 
   .new-comment-form {
     margin-bottom: l(4);
 
     textarea {
       width: 100%;
-      height: l(6);
-      resize: vertical;
+      height: l(3);
+      resize: none;
     }
   }
 

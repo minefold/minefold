@@ -1,0 +1,119 @@
+[
+    {
+        "default": 0,
+        "label": "Mode",
+        "name": "gamemode",
+        "type": "int",
+        "values": [
+            {
+                "description": "Search for resources, crafting, gain levels, health and hunger",
+                "label": "Survival",
+                "value": 0
+            },
+            {
+                "description": "Unlimited resources, free flying and destroy blocks instantly",
+                "label": "Creative",
+                "value": 1
+            },
+            {
+                "description": "Explorers only, cannot place or destroy blocks",
+                "label": "Adventure",
+                "value": 2
+            }
+        ]
+    },
+    {
+        "label": "Map Seed",
+        "name": "level-seed",
+        "type": "text"
+    },
+    {
+        "default": "DEFAULT",
+        "label": "Level type",
+        "name": "level-type",
+        "type": "text",
+        "values": [
+            {
+                "description": "Standard world with hills, valleys, water etc.",
+                "label": "Default",
+                "value": "DEFAULT"
+            },
+            {
+                "description": "A flat world with no features, meant for building",
+                "label": "Flat",
+                "value": "FLAT"
+            },
+            {
+                "description": "Same as default but all biomes are larger",
+                "label": "Large Biomes",
+                "value": "LARGEBIOMES"
+            }
+        ]
+    },
+    {
+        "default": 1,
+        "label": "Difficulty",
+        "name": "difficulty",
+        "type": "int",
+        "values": [
+            {
+                "label": "Peaceful",
+                "value": 0
+            },
+            {
+                "label": "Easy",
+                "value": 1
+            },
+            {
+                "label": "Normal",
+                "value": 2
+            },
+            {
+                "label": "Hard",
+                "value": 3
+            }
+        ]
+    },
+    {
+        "default": false,
+        "label": "Allow flight",
+        "name": "allow-flight",
+        "type": "bool"
+    },
+    {
+        "default": true,
+        "label": "Allow nether",
+        "name": "allow-nether",
+        "type": "bool"
+    },
+    {
+        "default": false,
+        "label": "Enable command blocks",
+        "name": "enable-command-block",
+        "type": "bool"
+    },
+    {
+        "default": true,
+        "label": "Spawn NPCs",
+        "name": "pvp",
+        "type": "bool"
+    },
+    {
+        "default": true,
+        "label": "Spawn animals",
+        "name": "spawn-animals",
+        "type": "bool"
+    },
+    {
+        "default": true,
+        "label": "Spawn monsters",
+        "name": "spawn-monsers",
+        "type": "bool"
+    },
+    {
+        "default": true,
+        "label": "Spawn NPCs",
+        "name": "spawn-npcs",
+        "type": "bool"
+    }
+]
