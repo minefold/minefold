@@ -1,8 +1,9 @@
 class WorldMappedJob < Job
 
   def initialize(id, timestamp, map_data)
-    @world = World.find_by_party_cloud_id(id)
+    @server = Server.unscoped.find(id)
     @timestamp, @map_data = timestamp, map_data
+    @world = @server.world
   end
 
   def perform?
