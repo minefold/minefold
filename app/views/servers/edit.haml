@@ -135,7 +135,7 @@
       %p
         Last backup at #{l server.world.created_at}
         &middot;
-        = link_to 'Download archive', party_cloud_world_download_url(server.world)
+        = link_to 'Download archive', party_cloud_world_download_url(server)
 
       - # TODO Investigate why parent wouldn't have a server.
       - if server.world.legacy_parent and server.world.legacy_parent.server
