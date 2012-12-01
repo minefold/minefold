@@ -84,12 +84,6 @@ class ServersController < ApplicationController
       Resque.enqueue_in(params[:ttl].to_i, StopServerJob, server.id)
     end
 
-    track 'Started server',
-      name: server.name,
-      url: server_url(server),
-      shared: server.shared?,
-      ttl: params[:ttl]
-
     respond_with(server)
   end
 
