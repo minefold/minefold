@@ -14,11 +14,14 @@ class ServerBackedUpJob < Job
     @server.world.party_cloud_id = @snapshot_id
     @server.world.legacy_url = @url
     @server.world.save!
-    
+
     # Map persistant servers once a day
     if @server.world.needs_map?
+      @server.world.map_queued_at = Time.now
+      @server.world.save!
+
       Resque.push 'maps', class: 'MapWorldJob', args: [
-        @server.id, 
+        @server.id,
         @url,
         @server.settings['seed']
       ]
