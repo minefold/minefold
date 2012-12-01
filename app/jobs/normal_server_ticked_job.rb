@@ -10,7 +10,13 @@ class NormalServerTickedJob < Job
     if @server.creator.coins <= 0
       PartyCloud.stop_server(@server.party_cloud_id)
     else
-      @server.creator.spend_coins!(5)
+      if @server.up?
+        if @server.creator.coins > 5
+          @server.creator.spend_coins!(5)
+        end
+      else
+        raise "#{@server.id} ticked while in state:#{@server.state}"
+      end
     end
   end
 
