@@ -128,7 +128,7 @@
     %p The coin fairy will visit you on <strong>#{l Bonuses::CoinFairy.next_visit_for(current_user), :format => :date}</strong>. If you have less than #{Bonuses::CoinFairy.coins} coins they'll be topped up for <strong>free</strong>.
 
     %p
-      %a.btn.btn-small.btn-primary.buy-coins{href: pricing_page_path} Buy coins
+      %a.btn.btn-small.btn-primary.buy-coins{href: getcoins_page_path} Get more coins
 
 .form-block.row#notifications
   .form-title.span2 Notifications
