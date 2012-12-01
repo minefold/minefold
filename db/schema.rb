@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121127005850) do
+ActiveRecord::Schema.define(:version => 20121201070127) do
 
   create_table "bonuses", :force => true do |t|
     t.string   "type",       :null => false
@@ -156,8 +156,8 @@ ActiveRecord::Schema.define(:version => 20121127005850) do
     t.datetime "last_coin_fairy_visit_at"
     t.string   "invitation_token",         :limit => 12
     t.integer  "invited_by_id"
-    t.boolean  "beta",                                   :default => false
     t.string   "verification_token",       :limit => 12
+    t.boolean  "beta",                                   :default => false
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
@@ -179,6 +179,7 @@ ActiveRecord::Schema.define(:version => 20121127005850) do
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
     t.integer  "legacy_parent_id"
+    t.datetime "map_queued_at"
   end
 
   add_index "worlds", ["party_cloud_id"], :name => "index_worlds_on_party_cloud_id", :unique => true

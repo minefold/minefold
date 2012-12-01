@@ -15,7 +15,7 @@ class ServerBackedUpJob < Job
     @server.world.legacy_url = @url
     @server.world.save!
     
-    # Map persistant servers once a day. Limiting to once a day stops somebody connecting and disconnecting 50 times and queing up a bunch of mapping jobs.
+    # Map persistant servers once a day
     if @server.world.needs_map?
       Resque.push 'maps', class: 'MapWorldJob', args: [
         @server.id, 

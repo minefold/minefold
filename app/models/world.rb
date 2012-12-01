@@ -15,7 +15,7 @@ class World < ActiveRecord::Base
   alias_method :mapped?, :map?
 
   def skip_map?
-    last_mapped_at? and last_mapped_at.today?
+    map_queued_at and map_queued_at.today?
   end
 
   def needs_map?
