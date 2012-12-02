@@ -1,5 +1,3 @@
-@import 'vars';
-
 @include font-face(minecraft, font-path('minecraft'));
 
 html {
@@ -16,7 +14,10 @@ body {
 
 header {
   @include clearfix;
+  @include box-shadow(0 0 l(1) 0 rgba(black, 0.2));
+  position: relative;
   margin: 0;
+  z-index: 10;
 }
 
 body {

@@ -4,18 +4,24 @@ class Activity < ActiveRecord::Base
   belongs_to :subject, polymorphic: true
   belongs_to :target, polymorphic: true
 
+  before_save :cache_display_data
+
+  after_create :publish_to_watchers
+
   def score
     updated_at.to_i
   end
 
-  after_create :publish_to_watchers
+  def display_data
+    {}
+  end
+
+  def cache_display_data
+    self.data ||= display_data
+  end
 
   def publish_to_watchers
     Resque.enqueue(PublishActivityJob, self.class.name, self.id)
-  end
-
-  def to_partial_path
-    File.join('activities', self.class.name.demodulize.underscore)
   end
 
 end

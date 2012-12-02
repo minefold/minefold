@@ -7,7 +7,7 @@
   .page-header {
     padding-top: 0;
     padding-bottom: 0;
-    background-color: desaturate(lighten($blue, 50%), 10%);
+    background-color: desaturate(lighten($blue, 20%), 20%);
   }
 
   .title-bar {
@@ -20,7 +20,7 @@
     > .title > a {
       font-size: 24px;
       line-height: l(3);
-      color: rgba(black, 0.4);
+      color: white;
     }
   }
 
@@ -32,7 +32,7 @@
       a {
         display: block;
         padding: l(0);
-        color: rgba(black, 0.8);
+        color: rgba(white, 0.8);
         font-size: 14px;
         line-height: l(4);
         font-weight: 600;
@@ -40,17 +40,46 @@
         @include anti-aliasing;
 
         &:hover {
-          color: black;
-          background-color: rgba(white, 1);
+          background-color: rgba(black, .4);
         }
       }
 
       > .active > a {
         color: black;
         background-color: white;
-        border-top: 2px solid rgba(black, 0.4);
-        margin-top: -2px;
       }
+    }
+  }
+
+  .user-profile {
+    > .avatar {
+      margin-bottom: l(1);
+
+      img {
+        display: block;
+      }
+    }
+
+    > .identity {
+      margin-bottom: l(1);
+
+      > h2 {
+        font-size: 18px;
+        line-height: l(2);
+      }
+
+      > h3 {
+        font-size: 16px;
+        color: rgba(black, 0.4);
+        line-height: l(2);
+      }
+    }
+
+    > .info {
+      border-top: 2px solid rgba(black, 0.05);
+      padding: l(1) 0;
+
+      font-size: 12px;
     }
   }
 

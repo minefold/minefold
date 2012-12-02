@@ -124,20 +124,4 @@ class Server < ActiveRecord::Base
   #   end
   # end
 
-  # TODO HACK!
-  # after_initialize :set_default_settings
-  #
-  # def set_default_settings
-  #   self.settings ||= {
-  #     'game_mode' => '0',
-  #     'difficulty' => '1',
-  #     'pvp' => '1',
-  #     'spawn_monsters' => '1',
-  #     'spawn_animals' => '1',
-  #     'spawn_npcs' => '1',
-  #     'allow_nether' => '1',
-  #     'control_blocks' => '1'
-  #   }
-  # end
-
 end

@@ -19,7 +19,7 @@ form {
     @include anti-aliasing;
 
     &:focus, &.focus {
-      @include box-shadow(0 0 1px 1px $blue inset);
+      @include box-shadow(0 0 0 2px $blue inset);
     }
 
     &:disabled, &.disabled {

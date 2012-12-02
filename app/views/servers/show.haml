@@ -19,17 +19,69 @@
             %li= link_to 'Settings', [:edit, server]
 
 
-.row
-  .span7
-    .activity-stream
-      = render partial: server.activity_stream, :as => :activity, layout: 'activities/activity'
+.server-meta
+  .tidbits
+    .tidbit.state{class: "is-#{server.state}"}
+      %span.val= server.state.to_s.humanize
 
-  %aside.span3
-    .stats
-      %ul
-        %li.members
-          %strong 53
-          members
-        %li.watchers
-          %strong 180
-          watchers
+    .tidbit
+      %span.key Owner
+      %span.val= server.creator.username
+
+    .tidbit
+      %span.key Game
+      %span.val= server.funpack.game.name
+
+    .tidbit
+      %span.key Funpack
+      %span.val= server.funpack.name
+
+    .tidbit
+      %span.key Created
+      %span.val= l server.created_at, :format => :date
+
+    - if server.normal? and server.up?
+      .tidbit
+        %span.key Up since
+        %span.val= l server.created_at, :format => :date
+
+    - if server.up?
+      .tidbit
+        %span.key Address
+        %span.val.server-address= server.address
+
+  - # TODO: Hack for Minecraft!
+  .player-list
+    - server.settings['whitelist'].lines.map(&:strip).each do |username|
+      .player
+        = image_tag "https://minotar.net/helm/#{username}/24.png", class: 'image-circle', alt: username, width: 24, height: 24
+
+
+.comments
+  - if signed_in?
+    = form_for [server, Comment.new], method: 'POST', html: {class: %w(new-comment-form row)} do |f|
+      .span1
+        = image_tag current_user.avatar.medium.url, width: 60, height: 60
+
+      .span7
+        .comment-meta
+          %span.comment-author= current_user.username
+        .control-group
+          .controls
+            = f.text_area :body, height: 4, class: %w(span5)
+
+        .form-actions
+          = f.submit 'Post comment', class: %w(btn)
+
+  - server.comments.each do |comment|
+    .comment.row
+      .span1
+        = image_tag comment.author.avatar.medium.url, width: 60, height: 60
+      .span7
+        .comment-meta
+          %span.comment-author= comment.author.username
+          %span.comment-date
+            at
+            = comment.created_at.strftime('%l:%M%P on %-d/%-m/%Y')
+        .comment-body
+          = markdown comment.body

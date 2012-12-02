@@ -2,12 +2,21 @@
 - layout :server
 = render partial: 'page_header', locals: {server: server}
 
-%ul.nav.nav-server
-  %li= link_to 'Activity', server
-  - if server.funpack.game.minecraft?
-    %li= link_to 'Map', [:map, server]
-  - if can? :update, server
-    %li.pull-right.active= link_to 'Settings', [:edit, server]
+- provide :breakout do
+  .page-header
+    .container
+      .title-bar
+        .actions
+        %h1.title= link_to server.name, server_path(server)
+
+    .subnav
+      .container
+        %ul.nav.nav-table
+          %li= link_to 'Activity', server
+          - if server.funpack.game.minecraft?
+            %li= link_to 'Map', [:map, server]
+          - if can? :update, server
+            %li.active= link_to 'Settings', [:edit, server]
 
 
 / --
@@ -73,7 +82,7 @@
             ).
 
         .form-actions
-          %input.btn.btn-primary.btn-small{type: 'submit', value: 'Start server'}
+          %input.btn.btn-success.btn-small{type: 'submit', value: 'Start server'}
 
       - content_for :tail do
         :javascript

@@ -16,4 +16,20 @@ module ApplicationHelper
     {style: 'display:none'}
   end
 
+  def fuck_you_select_bitch(form, field, value, default)
+    if form.object.send(field) == value
+      true
+    else
+      default
+    end
+  end
+
+  def fuck_you_checkbox_cunt(form, field, default)
+    if form.object.send(field).present?
+      form.object.send(field) == '1'
+    else
+      default
+    end
+  end
+
 end

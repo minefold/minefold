@@ -5,6 +5,9 @@ class CreateActivities < ActiveRecord::Migration
       t.references :actor, polymorphic: true
       t.references :subject, polymorphic: true
       t.references :target, polymorphic: true
+
+      t.text :data
+
       t.timestamps
     end
   end
