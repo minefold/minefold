@@ -15,7 +15,7 @@ class LinkMinecraftPlayerJob < Job
       if @user.players.minecraft.include?(@player)
         reply "#{@username} already linked to your account."
       elsif @user.players.minecraft.any?
-        reply "Account is linked to #{@user.minecraft_player.uid}. Unlink at minefold.com"
+        reply "Account is linked to #{@user.players.minecraft.first.uid}. Unlink at minefold.com"
       else
         reply "#{@username} is linked to another account. Unlink account to change"
       end
