@@ -5,6 +5,8 @@
   %h1 Sign up for Minefold
 
 - if @invited_by
+  - track 'Viewed invitation'
+  
   .invitation-message.row
     .avatar.span1
       = image_tag @invited_by.avatar.medium.url, width: 60
