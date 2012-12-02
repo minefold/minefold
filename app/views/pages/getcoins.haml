@@ -16,7 +16,7 @@
       .coins= pluralize @small_coin_pack.coins, 'coin', 'coins'
       .conditions or more
 
-  %a.bonus.row{href: url_for(:controller => :invitations, :action => :show, id: current_user.invitation_token)}
+  %a.bonus.row{href: url_for(:controller => :invitations, :action => :show, invitation_token: current_user.invitation_token)}
     .span1{data: {icon: '♥'}}
     .description.span5
       %h2.name Refer friends to Minefold

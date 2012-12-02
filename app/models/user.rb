@@ -90,6 +90,10 @@ class User < ActiveRecord::Base
   end
 
 
+  def invited?
+    invited_by_id?
+  end
+
   def send_notification_for?(klass)
     key = klass.name.underscore.to_sym
     notifications[key] == true || notifications[key] == '1'

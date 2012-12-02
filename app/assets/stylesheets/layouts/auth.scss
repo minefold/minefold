@@ -1,3 +1,5 @@
+@charset 'UTF-8';
+
 .l-auth {
 
   .remember-me {
@@ -32,13 +34,13 @@
       }
 
       &:before {
-        content: "“";
+        content: "\201C";
         top: l(1);
         left: -0.25em;
       }
 
       &:after {
-        content: "”";
+        content: "\201D";
         top: l(1);
         right: -0.25em;
       }

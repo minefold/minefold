@@ -1,15 +1,26 @@
 class RegistrationsController < Devise::RegistrationsController
 
-  def new
-    if params[:i] and @invited_by = User.find_by_invitation_token( params[:i])
-      session[:invitation_token] = params[:i]
-    end
+  before_filter :find_invitation, :only => :new
+  after_filter :track_registration_in_mixpanel, :only => :create
 
-    super
-  end
+
+# --
 
   def after_sign_up_path_for(resource)
     user_root_path
+  end
+
+# --
+
+  def find_invitation
+    if session[:invitation_token]
+      @invited_by = User.find_by_invitation_token(session[:invitation_token])
+    end
+  end
+
+  def track_registration_in_mixpanel
+    track '$signup', distinct_id: resource.distinct_id,
+                     invited: resource.invited?
   end
 
 end

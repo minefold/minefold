@@ -26,7 +26,7 @@ module Minefold
 
     # Activate observers that should always be running.
     config.active_record.observers = [
-      :mixpanel_observer, :bonuses_observer, :notifications_observer
+      :bonuses_observer, :notifications_observer
     ]
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.

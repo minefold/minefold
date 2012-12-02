@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   end
 
   before_filter :set_mixpanel_distinct_id
+  before_filter :set_invitation_token
 
 private
 
@@ -22,7 +23,7 @@ private
     new_user_session_path
   end
 
-  # --
+# --
 
   def set_mixpanel_distinct_id
     if mixpanel_cookie.present?
@@ -41,6 +42,14 @@ private
       end
     end
   end
+
+  def set_invitation_token
+    if params[:invitation_token]
+      session[:invitation_token] = params[:invitation_token]
+    end
+  end
+
+# --
 
   def track(event, properties={})
     properties[:time]        ||= Time.now.to_i

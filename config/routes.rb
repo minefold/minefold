@@ -46,12 +46,14 @@ Minefold::Application.routes.draw do
 
   # Authenticated routes
   as :user do
+
     # Devise overrides
     get '/settings' => 'devise/registrations#edit', :as => :edit_user_registration
 
-    resources :orders, only: [:create, :show]
+    get '/i/:invitation_token' => 'invitations#show'
 
-    resources :invitations, path: 'i', only: [:show]
+
+    resources :orders, only: [:create, :show]
 
     resources :servers, path_names: {edit: 'settings'} do
       collection do
