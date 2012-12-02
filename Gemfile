@@ -49,6 +49,8 @@ group :test do
   gem 'faker'
   gem 'timecop'
   gem 'fakeweb'
+
+  gem 'simplecov', require: false
 end
 
 group :worker do

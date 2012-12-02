@@ -1,4 +1,9 @@
 ENV["RAILS_ENV"] = "test"
+require 'simplecov'
+SimpleCov.start 'rails' do
+  add_group 'Jobs', 'app/jobs'
+end
+
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require File.expand_path('../blueprints', __FILE__)
@@ -44,7 +49,7 @@ end
 
 StripeCards = {
   default: '4242424242424242',
-  
+
   # Successful transactions
   visa:             '4242424242424242',
   master_card:      '5555555555554444',
@@ -52,7 +57,7 @@ StripeCards = {
   discover:         '6011111111111117',
   diners_club:      '30569309025904',
   jcb:              '3530111333300000',
-  
+
   # Failure transactions
   address_fail:       '4000000000000010',
   address_line1_fail: '4000000000000028',

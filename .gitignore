@@ -7,5 +7,6 @@ tmp
 public/assets
 public/uploads
 dump
+coverage
 
 app/views/pages/playground.haml
