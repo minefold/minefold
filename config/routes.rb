@@ -37,6 +37,7 @@ Minefold::Application.routes.draw do
 
   get '/channel.html' => 'facebook#channel', :as => :facebook_channel
 
+  resources :funpacks
 
   devise_for :user, controllers: {
                       omniauth_callbacks: 'omniauth_callbacks',

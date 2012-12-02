@@ -103,6 +103,17 @@ class User < ActiveRecord::Base
     "private-#{channel_key}"
   end
 
+# --
+
+  def activity_stream(n=10, offset=0)
+    Activity.where(id: $redis.zrange("user:#{id}:stream", offset, n)).order(:created_at).reverse_order.all
+  end
+
+  def add_activity_to_stream(activity)
+    $redis.zadd("user:#{id}:stream", activity.score, activity.id)
+  end
+
+# --
 
   def watching
     Server.find($redis.smembers(redis_key(:watching)))

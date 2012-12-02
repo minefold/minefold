@@ -1,5 +1,3 @@
-@import 'vars';
-
 .l-home {
 
   .container {
@@ -92,7 +90,7 @@
         top: -0.5 * l();
 
         img {
-          opacity: 0.5;
+          opacity: 1;
 
           &.north-to-south {
             top: -100%;

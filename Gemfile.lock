@@ -147,6 +147,9 @@ GEM
     multi_xml (0.5.1)
     multipart-post (1.1.5)
     nbtfile (0.2.0)
+    neat (1.0.2)
+      bourbon (>= 2.1)
+      sass (>= 3.2)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-ssh (2.6.2)
@@ -293,6 +296,7 @@ DEPENDENCIES
   mini_magick
   minitest
   nbtfile
+  neat
   omniauth-facebook
   paranoia
   pg

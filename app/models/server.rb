@@ -97,28 +97,31 @@ class Server < ActiveRecord::Base
     "#{typed_redis_key}:watchers"
   end
 
+
+  after_create :trigger_created_activity
+
+  def trigger_created_activity
+    a = Activities::CreatedServer.new
+    a.actor = creator
+    a.target = self
+    a.save!
+  end
+
+  def activity_stream(n=10, offset=0)
+    Activity.where(id: $redis.zrange("server:#{id}:stream", offset, n)).order(:created_at).reverse_order.all
+  end
+
+  def add_activity_to_stream(activity)
+    $redis.zadd("server:#{id}:stream", activity.score, activity.id)
+  end
+
+
   # before_destroy :clear_associated_watchers
   #
   # def clear_associated_watchers
   #   $redis.smembers(redis_watchers_key).each do |id|
   #     $redis.srem "user:#{id}:watching", redis_key
   #   end
-  # end
-
-  # TODO HACK!
-  # after_initialize :set_default_settings
-  #
-  # def set_default_settings
-  #   self.settings ||= {
-  #     'game_mode' => '0',
-  #     'difficulty' => '1',
-  #     'pvp' => '1',
-  #     'spawn_monsters' => '1',
-  #     'spawn_animals' => '1',
-  #     'spawn_npcs' => '1',
-  #     'allow_nether' => '1',
-  #     'control_blocks' => '1'
-  #   }
   # end
 
 end

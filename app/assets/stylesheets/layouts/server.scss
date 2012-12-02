@@ -1,9 +1,54 @@
-@import 'vars';
-
 .l-server {
 
   .container {
     width: grid-width(10);
+  }
+
+  .page-header {
+    padding-top: 0;
+    padding-bottom: 0;
+    background-color: desaturate(lighten($blue, 20%), 20%);
+  }
+
+  .title-bar {
+    padding-top: l(1);
+    padding-bottom: l(1);
+
+    > .actions {
+      float: right;
+    }
+    > .title > a {
+      font-size: 24px;
+      line-height: l(3);
+      color: white;
+    }
+  }
+
+  .subnav {
+    background-color: rgba(black, 0.05);
+
+    .nav {
+      margin-bottom: 0;
+      a {
+        display: block;
+        padding: l(0);
+        color: rgba(white, 0.8);
+        font-size: 14px;
+        line-height: l(4);
+        font-weight: 600;
+
+        @include anti-aliasing;
+
+        &:hover {
+          background-color: rgba(black, .4);
+        }
+      }
+
+      > .active > a {
+        color: black;
+        background-color: white;
+      }
+    }
   }
 
   .user-profile {
@@ -37,7 +82,6 @@
       font-size: 12px;
     }
   }
-
 
   .server-meta {
     font-size: 14px;

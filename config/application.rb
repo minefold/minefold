@@ -26,7 +26,7 @@ module Minefold
 
     # Activate observers that should always be running.
     config.active_record.observers = [
-      :bonuses_observer, :notifications_observer, :mixpanel_observer
+      :mixpanel_observer, :bonuses_observer, :notifications_observer
     ]
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
@@ -68,6 +68,8 @@ module Minefold
 
     config.to_prepare do
       Devise::Mailer.layout 'email'
+
+      Jbuilder.key_format :camelize => :lower
     end
 
   end

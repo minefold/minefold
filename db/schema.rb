@@ -13,6 +13,19 @@
 
 ActiveRecord::Schema.define(:version => 20121201070127) do
 
+  create_table "activities", :force => true do |t|
+    t.string   "type",         :null => false
+    t.integer  "actor_id"
+    t.string   "actor_type"
+    t.integer  "subject_id"
+    t.string   "subject_type"
+    t.integer  "target_id"
+    t.string   "target_type"
+    t.text     "data"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
   create_table "bonuses", :force => true do |t|
     t.string   "type",       :null => false
     t.integer  "user_id",    :null => false
@@ -156,8 +169,8 @@ ActiveRecord::Schema.define(:version => 20121201070127) do
     t.datetime "last_coin_fairy_visit_at"
     t.string   "invitation_token",         :limit => 12
     t.integer  "invited_by_id"
-    t.string   "verification_token",       :limit => 12
     t.boolean  "beta",                                   :default => false
+    t.string   "verification_token",       :limit => 12
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

@@ -32,8 +32,4 @@ module ApplicationHelper
     end
   end
 
-  def feature
-    $flipper
-  end
-
 end

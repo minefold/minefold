@@ -38,6 +38,7 @@ gem 'flipper', git: 'https://github.com/chrislloyd/flipper.git'
 gem 'flipper-redis', git: 'https://github.com/chrislloyd/flipper-redis.git'
 gem 'sass-rails'
 gem 'bourbon'
+gem 'neat'
 
 group :test do
   gem 'turn'

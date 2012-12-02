@@ -2,7 +2,7 @@
 - layout :pricing
 - track 'Viewed pricing'
 
-- provide :hero_unit do
+.hero-unit
   - if signed_in?
     %h1 Buy Coins
   - else
@@ -94,7 +94,7 @@
             = link_to '@minefold', 'https://twitter.com/minefold'
             is to play Minecraft with my son.”
           %cite
-            %a{href: 'https://twitter.com/technoweenie'} Rick Olsen
+            %a{href: 'https://twitter.com/technoweenie'} Rick Olson
 
       .testimonial.row
         .span1

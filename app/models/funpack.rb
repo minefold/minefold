@@ -5,4 +5,10 @@ class Funpack < ActiveRecord::Base
   belongs_to :game
 
   has_many :servers
+
+  def settings
+    JSON.load(Rails.root.join('config', 'minecraft.json'))
+  end
+
+
 end

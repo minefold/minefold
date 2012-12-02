@@ -1,0 +1,8 @@
+.activity[activity]
+  .image
+    = image_tag activity.actor.avatar.medium.url
+
+  .body
+    .actor= link_to activity.actor.username, activity.actor
+    created server
+    .target= link_to activity.target.name, activity.target
