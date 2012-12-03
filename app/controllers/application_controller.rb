@@ -13,6 +13,8 @@ class ApplicationController < ActionController::Base
   before_filter :set_mixpanel_distinct_id
   before_filter :set_invitation_token
 
+  before_bugsnag_notify :add_user_info_to_bugsnag
+
 private
 
   def not_found
@@ -48,6 +50,13 @@ private
       session[:invitation_token] = params[:invitation_token]
     end
   end
+
+  def add_user_info_to_bugsnag(notifier)
+    notifier.add_tab :user, id: current_user.id,
+                            email: current_user.email,
+                            username: current_user.username
+  end
+
 
 # --
 
