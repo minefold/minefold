@@ -29,6 +29,7 @@ Funpack.blueprint do
 end
 
 Server.blueprint do
+  creator
   name { Faker::Company.name }
   funpack
 end
@@ -51,6 +52,7 @@ Server.blueprint(:minecraft) do
   funpack(:minecraft)
 end
 
-World.blueprint(:played) do
-  party_cloud_id { SecureRandom.hex }
+Server.blueprint(:played) do
+  party_cloud_id { SecureRandom.uuid }
+  world { World.make!(party_cloud_id: SecureRandom.uuid) }
 end
