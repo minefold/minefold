@@ -5,4 +5,4 @@ class Application.World extends Backbone.Model
     @get('last_mapped_at')?
 
   mapAssetsUrl: ->
-    "#{MapAssetsHost}/#{@get('party_cloud_id')}"
+    "#{MapAssetsHost}/#{@get('server_id')}"

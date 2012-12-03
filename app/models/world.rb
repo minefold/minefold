@@ -24,9 +24,8 @@ class World < ActiveRecord::Base
 
   def to_h
     { last_mapped_at: last_mapped_at,
-      legacy_url: legacy_url,
       map_data: map_data,
-      party_cloud_id: party_cloud_id
+      server_id: server.id
     }
   end
 
