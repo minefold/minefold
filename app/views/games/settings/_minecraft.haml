@@ -1,45 +1,45 @@
 = f.control_group :gamemode do
   .control-label Mode
   .controls
-    = f.label :gamemode_0, class: 'radio' do
-      = f.radio_button :gamemode, 0, tabindex: 3, checked: fuck_you_select_bitch(f, :game_mode, '0', true)
+    = f.label :game_mode_0, class: 'radio' do
+      = f.radio_button :game_mode, 0, tabindex: 3, checked: fuck_you_select_bitch(f, :game_mode, '0', true)
       Survival
       %p.help-block
         Search for resources, crafting, gain levels, health and hunger
 
   .controls
-    = f.label :gamemode_1, class: 'radio' do
-      = f.radio_button :gamemode, 1, tabindex: 3, checked: fuck_you_select_bitch(f, :gamemode, '1', false)
+    = f.label :game_mode_1, class: 'radio' do
+      = f.radio_button :game_mode, 1, tabindex: 3, checked: fuck_you_select_bitch(f, :game_mode, '1', false)
       Creative
       %p.help-block
         Unlimited resources, free flying and destroy blocks instantly
 
   .controls
-    = f.label :gamemode_2, class: 'radio' do
-      = f.radio_button :gamemode, 2, tabindex: 4, checked: fuck_you_select_bitch(f, :gamemode, '2', false)
+    = f.label :game_mode_2, class: 'radio' do
+      = f.radio_button :game_mode, 2, tabindex: 4, checked: fuck_you_select_bitch(f, :game_mode, '2', false)
       Adventure
       %p.help-block
         Explorers only, cannot place or destroy blocks.
 
-= f.control_group 'level-type' do
+= f.control_group 'level_type' do
   .control-label Level type
   .controls
-    = f.label 'level-type_default', class: 'radio' do
-      = f.radio_button 'level-type', 'DEFAULT', checked: fuck_you_select_bitch(f, 'level-type', 'DEFAULT', true)
+    = f.label 'level_type_default', class: 'radio' do
+      = f.radio_button 'level_type', 'DEFAULT', checked: fuck_you_select_bitch(f, 'level_type', 'DEFAULT', true)
       Default
       %p.help-block
         Standard world with hills, valleys, water etc.
 
   .controls
-    = f.label 'level-type_flat', class: 'radio' do
-      = f.radio_button 'level-type', 'FLAT', checked: fuck_you_select_bitch(f, 'level-type', 'FLAT', false)
+    = f.label 'level_type_flat', class: 'radio' do
+      = f.radio_button 'level_type', 'FLAT', checked: fuck_you_select_bitch(f, 'level-type', 'FLAT', false)
       Flat
       %p.help-block
         A flat world with no features, meant for building
 
   .controls
-    = f.label 'level-type_largebiomes', class: 'radio' do
-      = f.radio_button 'level-type', 'LARGEBIOMES', checked: fuck_you_select_bitch(f, 'level-type', 'LARGEBIOMES', false)
+    = f.label 'level_type_largebiomes', class: 'radio' do
+      = f.radio_button 'level_type', 'LARGEBIOMES', checked: fuck_you_select_bitch(f, 'level_type', 'LARGEBIOMES', false)
       Large biomes
       %p.help-block
         Same as default but all biomes are larger
@@ -70,27 +70,27 @@
       Player vs. Player
 
   .controls
-    = f.label 'spawn-monsters', class: 'checkbox' do
-      = f.check_box 'spawn-monsters', tabindex: 6, checked: fuck_you_checkbox_cunt(f, 'spawn-monsters', true)
+    = f.label 'spawn_monsters', class: 'checkbox' do
+      = f.check_box 'spawn_monsters', tabindex: 6, checked: fuck_you_checkbox_cunt(f, 'spawn_monsters', true)
       Spawn monsters
 
   .controls
-    = f.label 'spawn-animals', class: 'checkbox' do
-      = f.check_box 'spawn-animals', tabindex: 7, checked: fuck_you_checkbox_cunt(f, 'spawn-animals', true)
+    = f.label 'spawn_animals', class: 'checkbox' do
+      = f.check_box 'spawn_animals', tabindex: 7, checked: fuck_you_checkbox_cunt(f, 'spawn_animals', true)
       Spawn animals
 
   .controls
-    = f.label 'spawn-npcs', class: 'checkbox' do
-      = f.check_box 'spawn-npcs', tabindex: 8, checked: fuck_you_checkbox_cunt(f, 'spawn-npcs', true)
+    = f.label 'spawn_npcs', class: 'checkbox' do
+      = f.check_box 'spawn_npcs', tabindex: 8, checked: fuck_you_checkbox_cunt(f, 'spawn_npcs', true)
       Spawn npcs
 
   .controls
-    = f.label 'allow-nether', class: 'checkbox' do
-      = f.check_box 'allow-nether', tabindex: 9, checked: fuck_you_checkbox_cunt(f, 'allow-nether', true)
+    = f.label 'allow_nether', class: 'checkbox' do
+      = f.check_box 'allow_nether', tabindex: 9, checked: fuck_you_checkbox_cunt(f, 'allow_nether', true)
       Nether
 
   .controls
-    = f.label 'enable-command-blocks', class: 'checkbox' do
+    = f.label 'enable-command-block', class: 'checkbox' do
       = f.check_box 'enable-command-blocks', tabindex: 9, checked: fuck_you_checkbox_cunt(f, 'enable-command-blocks', true)
       Command blocks
 
