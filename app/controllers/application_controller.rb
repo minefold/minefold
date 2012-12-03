@@ -52,9 +52,11 @@ private
   end
 
   def add_user_info_to_bugsnag(notifier)
-    notifier.add_tab :user, id: current_user.id,
-                            email: current_user.email,
-                            username: current_user.username
+    if signed_in?
+      notifier.add_tab(:user, id: current_user.id,
+                              email: current_user.email,
+                              username: current_user.username)
+    end
   end
 
 
