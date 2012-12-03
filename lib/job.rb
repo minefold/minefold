@@ -14,6 +14,7 @@ class Job
           logger.info "performing"
           job.perform!
           logger.info "finished"
+          Librato::Rails.flush
         else
           logger.info "skipping"
         end
@@ -44,5 +45,4 @@ class Job
   def logger
     self.class.logger
   end
-
 end
