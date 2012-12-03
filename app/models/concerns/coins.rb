@@ -29,7 +29,7 @@ module Concerns::Coins
       true
     end
   end
-  
+
   def spend_coins!(n)
     increment_coins!(-n)
     track_spend(n)
@@ -40,9 +40,9 @@ module Concerns::Coins
   def track_coins(n)
     Mixpanel.async_person_add(self.distinct_id, coins: n)
   end
-  
+
   def track_spend(n)
-    Librato.increment 'user.coins.spent', source: self.id, sporadic: true
+    Librato.increment 'user.coins.spent', sporadic: true
   end
 
 end
