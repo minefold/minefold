@@ -61,8 +61,6 @@ class Application.WorldMapView extends Backbone.View
     @map = new google.maps.Map(@$('.map').get(0), @options)
     @loadViewport()
 
-    console.log @options
-
     mapType = new google.maps.ImageMapType(
       getTileUrl: @tileUrl
       tileSize: new google.maps.Size(@options.tileSize, @options.tileSize)
