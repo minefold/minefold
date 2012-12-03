@@ -42,7 +42,7 @@ module Concerns::Coins
   end
 
   def track_spend(n)
-    Librato.increment 'user.coins.spent', sporadic: true
+    Librato.increment 'user.coins.spent', by: n, sporadic: true
   end
 
 end
