@@ -5,13 +5,13 @@
   }
 
   .stuff-to-buy {
-    margin-bottom: l(8);
+    margin-bottom: l(2);
 
     .a, .b {
       @include box-sizing(border-box);
 
-      background-color: rgba(black, 0.05);
-      padding: l(4) $gw-gutter;
+//      background-color: rgba(black, 0.05);
+      padding: l() $gw-gutter;
       text-align: center;
 
       .bar, .foo {
@@ -24,8 +24,8 @@
         font-family: $geometric;
         font-weight: 600;
 
-        margin-top: l(3);
-        margin-bottom: l(3);
+        margin-top: l();
+        margin-bottom: l();
 
         .per {
           font-size: 18px;
@@ -40,13 +40,6 @@
     .coin-pack {
       position: relative;
       text-align: center;
-      color: white;
-
-      @include transition(all 0.15s cubic-bezier(0.25, 0.01, 0.25, 1));
-
-      &:hover {
-        top: - l(.5);
-      }
 
       > .price {
         font-size: 36px;
@@ -57,7 +50,7 @@
       }
 
       > .selling-point {
-        border-top: 2px solid rgba(white, 0.2);
+        border-top: 2px solid rgba(black, 0.1);
         padding-top: l(1);
         margin-bottom: l(1);
 
@@ -69,34 +62,30 @@
 
         > .sub {
           line-height: l(1);
-          color: rgba(white, 0.8);
+          color: rgba(black, 0.8);
         }
-      }
-
-      > .btn {
-        background-color: rgba(white, 0.9);
       }
 
       // Colors
 
       &:nth-child(1) {
-        background-color: darken($yellow, 5%);
-        .btn { color: darken($yellow, 5%); }
+        .price { color: darken($yellow, 10%); }
+        .btn { background-color: darken($yellow, 10%);  }
       }
 
       &:nth-child(2) {
-        background-color: $green;
-        .btn { color: $green; }
+        .btn { background-color: $green; }
+        .price { color: $green; }
       }
 
       &:nth-child(3) {
-        background-color: $blue;
-        .btn { color: $blue; }
+        .btn { background-color: $blue; }
+        .price { color: $blue; }
       }
 
       &:nth-child(4) {
-        background-color: $red;
-        .btn { color: $red; }
+        .btn { background-color: $red; }
+        .price { color: $red; }
       }
     }
   }
