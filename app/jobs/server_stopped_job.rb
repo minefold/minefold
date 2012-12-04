@@ -7,6 +7,12 @@ class ServerStoppedJob < Job
   def perform!
     session = @server.sessions.current
     session.ended_at = Time.now
+
+    if @server.normal? and @server.port?
+      @server.port = nil
+      @server.host = [@server.id.to_s, 'foldserver', 'com'].join('.')
+    end
+
     session.save!
 
     # Clears any stop server jobs that may be queued up. This is in the case that the server is prematurely stopped.

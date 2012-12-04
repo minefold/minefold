@@ -4,10 +4,10 @@
 
 %center.page-header
   - if signed_in?
-    %h1 Buy Coins
+    %h1 Pricing
   - else
     %h1 Your first #{pluralize Bonuses::GettingStarted.coins, 'coin', 'coins'} are free.
-  %h2 It's cheap to spend coins on servers with your friends.
+  %h2{style: 'color:black'} Playing on Minefold servers costs <span class="highlight">1 coin per minute</span>.
 
 
 .coin-pack-list.row
@@ -18,41 +18,30 @@
       %input{type: 'hidden', name: 'stripe_token'}
 
       .price= number_to_currency(pack.cents / 100, precision: 0)
+      .coins Play for #{number_with_delimiter(pack.shared_hours)} hours
 
-      %p.selling-point
-        %strong.main= pluralize pack.coins, 'coin', 'coins'
-        %small.sub #{number_to_currency(pack.cents_per_coin)} per 100 coins
+      .doobieloob
+        %strong.poopedoop.boo
+          #{number_with_precision(pack.coins / 1000.0, precision: 1, strip_insignificant_zeros: true)}k coins
 
-      %p.selling-point
-        %strong.main About #{pluralize pack.normal_hours / 25, 'month'}
-        %small.sub ~ #{pluralize pack.normal_hours, 'hr', 'hrs'}
-        %small.sub running a normal server
+        .poopedoop
+          \~ #{pack.shared_hours / 15 / 4} player months
 
-      %p.selling-point
-        %strong.main About #{pluralize pack.shared_hours / 50, 'month' }
-        %small.sub ~ #{pluralize pack.shared_hours, 'hr', 'hrs'}
-        %small.sub playing on shared servers
+        .herptastic
+          (based on average usage)
+
+      .nopa
+        - if i != 0
+          .savings
+            You save
+            - p = @packs.first
+            #{number_to_percentage(100 * (1 - (pack.cents / pack.coins.to_f) / (p.cents / p.coins.to_f)), precision: 0)}!
+
 
       - if signed_in?
-      %a.btn.btn-block.btn-large.btn-stripe{href: '#', data: {id: pack.id, amount: pack.cents, coins: pack.coins, image: image_path("coin_packs/#{i+1}.png")}} Buy coins!
+        %a.btn.btn-block.btn-large.btn-stripe{href: '#', data: {id: pack.id, amount: pack.cents, coins: pack.coins, image: image_path("coin_packs/#{i+1}.png")}} Buy #{number_with_precision(pack.coins / 1000.0, precision: 1, strip_insignificant_zeros: true)}k coins
       - else
         %a.btn.btn-block.btn-large{href: new_user_registration_path} Sign up now!
-
-
-.stuff-to-buy.row
-  .a.span6
-    .bar It costs server owners
-    .big
-      5 coins
-      .per per minute
-    .foo when running a #{link_to 'normal server', '#normal-servers'}.
-
-  .b.span6
-    .bar It costs players
-    .big
-      1 coin
-      .per per minute
-    .foo when playing on #{link_to 'shared servers', '#shared-servers'}.
 
 
 - content_for :tail do
@@ -80,14 +69,29 @@
       return false;
     });
 
+%hr.large
 
-.still-not-convinced
-  %h2 Still not convinced?
+.row
+  %center.q-and-a.span6.offset3
+    %h3 Quick answers to common questions
+
+    %h4#friends Can I pay for my friends?
+    %p Yes! You can choose: you pay for everybody or everybody pays for themselves.
+
+    %h4 Will that be expensive if 100 people play on my server?
+    %p No! When you pay for your friends, we cap the cost at <span class="highlight">10 coins per minute</span>. If you have 100 people playing on your server it costs you the same as 10 people.
+
+    %h4#slots How many people can play on my server?
+    %p Unlimited. Minefold's custom built hosting platform dynamically allocates resources to servers. This means that they're lag-free no matter how many of your friends are playing.
+
+%hr.large
+
+.testimonials
+  %center
+    %h3 Everybody loves us
 
   .row
-    .testimonials.span6
-      %h3 Other people love us
-
+    .span6
       .testimonial.row
         .span1
           = image_tag 'twavatars/technoweenie.jpeg', width: 60
@@ -130,6 +134,9 @@
           %cite
             %a{href: 'https://twitter.com/iWaffles'} Matt Gardner
 
+
+    .span6
+
       .testimonial.row
         .span1
           = image_tag 'twavatars/kevinelliott.jpeg', width: 60
@@ -166,27 +173,5 @@
           %cite
             %a{href: 'https://twitter.com/qrush/status/117244523083595776'} Nick Quaranto
 
-      .testimonial.row
-        .span1
-          = image_tag 'twavatars/Looker268.jpeg', width: 60
-        .span5
-          %q{cite: 'https://twitter.com/Looker268/status/266406802869080064'}
-            “#{link_to '@minefold', 'https://twitter.com/minefold'} this an amazing online server thing... Easy to host too!”
-          %cite
-            %a{href: 'https://twitter.com/Looker268'} Looker268
-
-      .row
-        .span5.offset1
-          %a.btn.btn-small.btn-primary{href: 'https://twitter.com/minefold'} Spread the warm & fuzzies on Twitter!
-
-    .q-and-a.span6
-      %h3 Quick answers to common questions
-
-      %h4#slots How many slots do Minefold servers have?
-      %p Unlimited. Minefold's custom built hosting platform dynamically allocates resources to servers. This means that they're lag-free no matter how many of your friends are playing.
-
-      %h4#normal-servers What are normal servers?
-      %p Normal servers are… normal. The server owner covers the cost of running them and anybody can play.
-
-      %h4#shared-servers What are shared servers?
-      %p Shared are exclusive to Minefold. They are paid for by the people playing on them rather than the server owner.
+%center
+  %a.btn.btn-small.btn-primary{href: 'https://twitter.com/minefold'} Spread the warm & fuzzies on Twitter too!

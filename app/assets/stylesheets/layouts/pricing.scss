@@ -45,62 +45,76 @@
         font-size: 36px;
         font-family: $geometric;
         font-weight: 600;
-        line-height: l(6);
-        padding: l(2) 0;
+        line-height: l(4);
+        padding: 0;
       }
 
-      > .selling-point {
-        border-top: 2px solid rgba(black, 0.1);
-        padding-top: l(1);
+      > .coins {
+        font-weight: 600;
+        font-size: 18px;
+        margin-bottom: l();
+      }
+
+      > .doobieloob {
         margin-bottom: l(1);
 
-        > .main {
-          display: block;
-          line-height: l(2);
-          margin: 0;
+        > .poopedoop {
+          font-size: 13px;
+          color: rgba(black, 0.8);
+
+          &.boo {
+            font-size: 16px;
+          }
         }
 
-        > .sub {
-          line-height: l(1);
-          color: rgba(black, 0.8);
+        > .herptastic {
+          font-size: 11px;
+          line-height: l();
+          color: rgba(black, 0.4);
+          margin-bottom: l(1);
         }
+
       }
 
-      // TODO Hack
-      > :nth-child(5) {
-        border-top: none;
+      > .nopa {
+        margin-bottom: l(3);
+        height: l(2);
+
+        .savings {
+          @include inline-block;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
       }
 
       // Colors
 
       &:nth-child(1) {
-        .price { color: darken($yellow, 10%); }
+        color: darken($yellow, 10%);
         .btn { background-color: darken($yellow, 10%);  }
+        .savings { background-color: lighten($yellow, 45%); }
       }
 
       &:nth-child(2) {
+        color: $green;
         .btn { background-color: $green; }
-        .price { color: $green; }
+        .savings { background-color: lighten($green, 45%); }
       }
 
       &:nth-child(3) {
+        color: $blue;
         .btn { background-color: $blue; }
-        .price { color: $blue; }
+        .savings { background-color: lighten($blue, 55%); }
       }
 
       &:nth-child(4) {
+        color: $red;
         .btn { background-color: $red; }
-        .price { color: $red; }
+        .savings { background-color: lighten($red, 35%); }
       }
     }
   }
 
-  .still-not-convinced {
-    > h2 {
-      padding-top: l(6);
-      padding-bottom: l(6);
-      text-align: center;
-    }
 
     h3 {
       color: $blue;
@@ -108,15 +122,15 @@
     }
 
     .testimonials {
-      > h2 {
+      h2 {
         font-size: 24px;
         line-height: l(4);
         margin-top: 0;
-        margin-bottom: l(2);
-        color: $green;
+        margin-bottom: l(4);
       }
 
-      > .testimonial {
+      .testimonial {
+        @include clearfix;
         margin-bottom: l(2);
         font-size: 16px;
         line-height: l(2);
@@ -134,12 +148,12 @@
     }
 
     .q-and-a {
-      color: rgba(black, 0.4);
+      color: rgba(black, 0.6);
       h4 {
         color: black;
         line-height: l(2);
         margin-bottom: l(1);
       }
     }
-  }
+//  }
 }

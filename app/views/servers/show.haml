@@ -13,7 +13,7 @@
       .container
         %ul.nav.nav-table
           %li.active= link_to 'Activity', server
-          - if server.funpack.game.minecraft?
+          - if server.game.maps?
             %li= link_to 'Map', [:map, server]
           - if can? :update, server
             %li= link_to 'Settings', [:edit, server]
@@ -21,8 +21,12 @@
 
 .server-meta
   .tidbits
-    .tidbit.state{class: "is-#{server.state}"}
-      %span.val= server.state.to_s.humanize
+    .tidbit
+      %strong.key.highlight{style: 'color:black'}
+        - if server.shared?
+          Minefold account needed to play
+        - else
+          #{server.creator.username} is paying for everybody
 
     .tidbit
       %span.key Owner
@@ -40,11 +44,6 @@
       %span.key Created
       %span.val= l server.created_at, :format => :date
 
-    - if server.normal? and server.up?
-      .tidbit
-        %span.key Up since
-        %span.val= l server.created_at, :format => :date
-
     - if server.up?
       .tidbit
         %span.key Address
@@ -52,7 +51,7 @@
 
   - # TODO: Hack for Minecraft!
   .player-list
-    - server.settings['whitelist'].lines.map(&:strip).each do |username|
+    - server.player_uids.each do |username|
       .player
         = image_tag "https://minotar.net/helm/#{username}/24.png", class: 'image-circle', alt: username, width: 24, height: 24
 

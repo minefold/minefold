@@ -9,13 +9,31 @@ class SharedServerTickedJob < Job
   end
 
   def perform!
-    @players.each do |player|
-      if player.user.coins <= 0
-        PartyCloud.kick_player(@server.party_cloud_id, player.uid)
-      else
-        player.user.spend_coins!(1)
+    if @server.shared?
+      # Players pay
+      @players.each do |player|
+        if player.user.coins <= 0
+          kick_the_cunt(player)
+        else
+          player.user.spend_coins! 1
+        end
       end
+
+    else
+      # Cretor pays
+      if server.creator.coins <= 0
+        @players.each do |player|
+          kick_the_cunt(player)
+        end
+      else
+        @server.creator.spend_coins! [@players.size, 10].min
+      end
+
     end
+  end
+
+  def kick_the_cunt(player)
+    PartyCloud.kick_player(@server.party_cloud_id, player.uid)
   end
 
 end

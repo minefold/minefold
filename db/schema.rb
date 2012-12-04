@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121201070127) do
+ActiveRecord::Schema.define(:version => 20121203232425) do
 
   create_table "activities", :force => true do |t|
     t.string   "type",         :null => false
@@ -70,10 +70,11 @@ ActiveRecord::Schema.define(:version => 20121201070127) do
     t.string   "name"
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
-    t.boolean  "shared_servers", :default => false, :null => false
     t.string   "slug",           :default => ""
-    t.boolean  "persistant",     :default => false, :null => false
     t.string   "party_cloud_id"
+    t.boolean  "auth",           :default => false, :null => false
+    t.boolean  "routing",        :default => false, :null => false
+    t.boolean  "maps",           :default => false, :null => false
   end
 
   add_index "games", ["party_cloud_id"], :name => "index_games_on_party_cloud_id", :unique => true
@@ -169,8 +170,8 @@ ActiveRecord::Schema.define(:version => 20121201070127) do
     t.datetime "last_coin_fairy_visit_at"
     t.string   "invitation_token",         :limit => 12
     t.integer  "invited_by_id"
-    t.boolean  "beta",                                   :default => false
     t.string   "verification_token",       :limit => 12
+    t.boolean  "beta",                                   :default => false
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

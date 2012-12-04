@@ -59,7 +59,7 @@ class Server < ActiveRecord::Base
   end
 
   def up?
-    shared? or state == :up
+    game.routing? or state == :up
   end
 
   [:starting, :stopped].each do |s|
@@ -83,15 +83,17 @@ class Server < ActiveRecord::Base
     PartyCloud.create_server(id)
   end
 
-  after_create :allocate_shared_host!, :create_party_cloud_server
+  before_create :allocate_shared_host!
 
   def allocate_shared_host!
-    if shared? and not host?
+    if not host?
       self.host = [self.id.to_s, 'foldserver', 'com'].join('.')
-      save!
     end
   end
 
+  def player_uids
+    (settings['whitelist'] || '').split | (settings['ops'] || '').split
+  end
 
   def redis_watchers_key
     "#{typed_redis_key}:watchers"

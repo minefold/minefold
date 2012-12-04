@@ -49,6 +49,10 @@ p, ul, ol {
   margin-bottom: l(2);
 }
 
+.hidden {
+  display: none;
+}
+
 hr {
   border-top: 1px solid rgba(black, 0.05);
   border-bottom: 1px solid rgba(black, 0.05);
@@ -57,6 +61,7 @@ hr {
 
   &.hidden {
     border-color: transparent;
+    display: block;
   }
 
   &.small {

@@ -9,8 +9,9 @@ CoinPack.create(cents: 12_000, coins: 120_000)
 
 minecraft = Game.create(
   name: 'Minecraft',
-  shared_servers: true,
-  persistant: true
+  auth: true,
+  routing: true,
+  maps: true
 )
 
 
