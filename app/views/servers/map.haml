@@ -18,29 +18,27 @@
             %li= link_to 'Settings', [:edit, server]
 
 
-/ --
 
+  #world-map-view-el.world-map-view
+    - if server.world and server.world.mapped?
+      - content_for :tail do
+        = javascript_include_tag '//maps.google.com/maps/api/js?sensor=false'
+        :javascript
+          $(document).ready(function() {
+            var world = new Application.World(#{server.world.to_h.to_json}),
+                worldMapView = new Application.WorldMapView({model: world});
 
-#world-map-view-el.world-map-view
-  - if server.world and server.world.mapped?
-    - content_for :tail do
-      = javascript_include_tag '//maps.google.com/maps/api/js?sensor=false'
-      :javascript
-        $(document).ready(function() {
-          var world = new Application.World(#{server.world.to_h.to_json}),
-              worldMapView = new Application.WorldMapView({model: world});
+            worldMapView.setElement($('#world-map-view-el'));
+            worldMapView.render();
+          });
 
-          worldMapView.setElement($('#world-map-view-el'));
-          worldMapView.render();
-        });
+    - else
+      .coming-soon
+        The map for this server hasn't been rendered yet.
 
-  - else
-    .coming-soon
-      The map for this server hasn't been rendered yet.
+        - if server.shared?
+          Maps are rendered once a day when nobody is playing.
+        - else
+          Maps are rendered once a day when the server is stopped.
 
-      - if server.shared?
-        Maps are rendered once a day when nobody is playing.
-      - else
-        Maps are rendered once a day when the server is stopped.
-
-      Render times depend on the size of your world.
+        Render times depend on the size of your world.

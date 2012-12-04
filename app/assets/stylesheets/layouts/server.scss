@@ -152,7 +152,7 @@
 
     > .map {
       height: grid-width(10);
-      width: grid-width(10);
+      width: 100%;
 
       label { width: auto; display:inline; }
       img { max-width: none; }
