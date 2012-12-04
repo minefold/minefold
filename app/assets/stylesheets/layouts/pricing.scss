@@ -66,6 +66,11 @@
         }
       }
 
+      // TODO Hack
+      > :nth-child(5) {
+        border-top: none;
+      }
+
       // Colors
 
       &:nth-child(1) {
