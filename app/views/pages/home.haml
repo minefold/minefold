@@ -102,9 +102,7 @@
   .row
     .span6.offset3
       %p
-        Sign up now and get
-        = pluralize Bonuses::GettingStarted.coins, 'coin', 'coins'
-        for <strong>free</strong>!
+        Sign up now and play for #{Bonuses::GettingStarted.coins} minutes <strong>free</strong>!
 
       %a.btn.btn-super.btn-block.btn-success{href: new_user_registration_path}
         Sign up now!
