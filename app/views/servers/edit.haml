@@ -193,4 +193,4 @@
     .span6
       %p Destroying a server <strong>immediately stops it</strong> and <strong>destroys all its data</strong>. There is no way to recover a server once it has been destroyed. <span class="highlight">With great power comes great responsibility.</span>
 
-      = button_to 'Destroy server', server_path(server), method: :delete, class: %w(btn btn-small btn-danger)
+      = button_to 'Destroy server', server_path(server), method: :delete, class: %w(btn btn-small btn-danger), confirm: 'Are you sure you want to destroy this server?'
