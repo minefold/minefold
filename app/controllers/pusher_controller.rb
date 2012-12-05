@@ -2,7 +2,7 @@ class PusherController < ApplicationController
   protect_from_forgery :except => :auth
 
   def auth
-    if signed_in?
+    if signed_in? and params[:channel_name] and params[:socket_id]
       channel = Pusher[params[:channel_name]]
 
       response = channel.authenticate(params[:socket_id],
