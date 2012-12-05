@@ -8,7 +8,7 @@ class ServerStoppedJob < Job
     session = @server.sessions.current
     session.ended_at = Time.now
 
-    if @server.normal? and @server.port?
+    if @server.port?
       @server.port = nil
       @server.host = [@server.id.to_s, 'foldserver', 'com'].join('.')
     end
