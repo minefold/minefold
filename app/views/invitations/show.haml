@@ -30,11 +30,11 @@
       var obj = {
         method: 'feed',
         link: #{invitation_url(utm_source: 'fb').to_json},
-        picture: #{image_path('facebook_share.png').to_json},
+        picture: "http:#{image_path('facebook_share.png')}",
 
         name: 'Minefold',
         caption: 'Simple Minecraft servers',
-        description: 'Available instantly, free to get started. Join me now and I\'ll give you #{Bonuses::Referred.coins} coins',
+        description: 'Available instantly, free to get started. Join me now and I\g'll give you #{Bonuses::Referred.coins} coins',
         ref: 'invitation'
       };
 
