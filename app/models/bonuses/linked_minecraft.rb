@@ -1,3 +1,3 @@
 class Bonuses::LinkedMinecraft < Bonus
-  self.coins = 400
+  self.coins = 100
 end

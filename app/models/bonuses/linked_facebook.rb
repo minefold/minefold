@@ -1,3 +1,3 @@
 class Bonuses::LinkedFacebook < Bonus
-  self.coins = 200
+  self.coins = 100
 end
