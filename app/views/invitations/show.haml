@@ -29,12 +29,13 @@
 
       var obj = {
         method: 'feed',
-        link: document.location.href,
+        link: #{invitation_url(utm_source: 'fb').to_json},
         picture: #{image_path('facebook_share.png').to_json},
 
         name: 'Minefold',
-        caption: 'Simple Game Servers',
-        description: 'Available instantly, free to get started. Games include Minecraft, Team Fortress, Counter-Strike, Call of Duty, Battlefield and DayZ.'
+        caption: 'Simple Minecraft servers',
+        description: 'Available instantly, free to get started. Join me now and I\'ll give you #{Bonuses::Referred.coins} coins',
+        ref: 'invitation'
       };
 
       function callback(response) {

@@ -50,7 +50,7 @@ Minefold::Application.routes.draw do
     # Devise overrides
     get '/settings' => 'devise/registrations#edit', :as => :edit_user_registration
 
-    get '/i/:invitation_token' => 'invitations#show'
+    get '/i/:invitation_token' => 'invitations#show', :as => :invitation
 
 
     resources :orders, only: [:create, :show]
