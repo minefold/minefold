@@ -83,11 +83,12 @@ class Server < ActiveRecord::Base
     PartyCloud.create_server(id)
   end
 
-  before_create :allocate_shared_host!
+  after_create :allocate_shared_host!
 
   def allocate_shared_host!
     if not host?
       self.host = [self.id.to_s, 'foldserver', 'com'].join('.')
+      self.save!
     end
   end
 
