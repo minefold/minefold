@@ -4,7 +4,7 @@ class CoinPack < ActiveRecord::Base
   SHARED_COINS_PER_HOUR = 60
 
   # Stub for when we start experimenting with CoinPack pricing.
-  scope :active, limit(4).order("cents ASC")
+  scope :active, limit(3).order("cents ASC")
 
   def amount
     cents

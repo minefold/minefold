@@ -37,9 +37,17 @@
 
 
   .coin-pack-list {
+    width: grid-width(9);
+    margin: 0 auto;
+    padding-left: -$gw-gutter;
+
     .coin-pack {
       position: relative;
       text-align: center;
+
+      &:first-child {
+        margin-left: 0;
+      }
 
       > .price {
         font-size: 36px;
@@ -90,24 +98,18 @@
       // Colors
 
       &:nth-child(1) {
-        color: darken($yellow, 10%);
-        .btn { background-color: darken($yellow, 10%);  }
-        .savings { background-color: lighten($yellow, 45%); }
-      }
-
-      &:nth-child(2) {
         color: $green;
         .btn { background-color: $green; }
         .savings { background-color: lighten($green, 45%); }
       }
 
-      &:nth-child(3) {
+      &:nth-child(2) {
         color: $blue;
         .btn { background-color: $blue; }
         .savings { background-color: lighten($blue, 55%); }
       }
 
-      &:nth-child(4) {
+      &:nth-child(3) {
         color: $red;
         .btn { background-color: $red; }
         .savings { background-color: lighten($red, 35%); }
