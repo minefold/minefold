@@ -21,7 +21,7 @@ class SharedServerTickedJob < Job
 
     else
       # Cretor pays
-      if server.creator.coins <= 0
+      if @server.creator.coins <= 0
         @players.each do |player|
           kick_the_cunt(player)
         end
