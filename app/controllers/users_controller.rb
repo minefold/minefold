@@ -11,12 +11,14 @@ class UsersController < Devise::RegistrationsController
 # --
 
   def new
+    resond_with(user)
   end
 
   def onboard
   end
 
   def show
+    resond_with(user)
   end
 
   def update
