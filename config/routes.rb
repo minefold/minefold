@@ -44,6 +44,12 @@ Minefold::Application.routes.draw do
                       registrations: 'registrations'
                     }
 
+  # Christmas Promotion
+  get '/xmas' => 'gifts#index', :as => :xmas_promo
+
+  resource :gifts
+
+
   # Authenticated routes
   as :user do
 

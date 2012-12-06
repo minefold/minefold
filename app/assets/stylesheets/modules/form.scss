@@ -6,9 +6,9 @@ form {
   }
 
   textarea, #{$all-text-inputs} {
-    border: none;
-    @include box-shadow(0 0 0 2px rgba(black, 0.2) inset);
-    border-radius: $radius;
+    border: normal;
+//    @include box-shadow(none);
+//    border-radius: $radius;
     padding: (l(1) / 2) ($gw-gutter / 2);
     line-height: l(2);
     color: black;
@@ -19,7 +19,7 @@ form {
     @include anti-aliasing;
 
     &:focus, &.focus {
-      @include box-shadow(0 0 0 2px $blue inset);
+//      @include box-shadow(0 0 0 2px $blue inset);
     }
 
     &:disabled, &.disabled {
@@ -31,7 +31,7 @@ form {
     color: rgba(black, 0.8);
     font-size: 14px;
     line-height: l(2);
-    @include box-shadow(0 0 0 1px rgba(black, 0.2) inset);
+//    @include box-shadow(0 0 0 1px rgba(black, 0.2) inset);
   }
 
   .control-group {
@@ -64,9 +64,9 @@ form {
 
     .checkbox, .radio, input, select, textarea {
       color: black;
-      @include box-shadow(0 0 0 2px $red inset);
+//      @include box-shadow(0 0 0 2px $red inset);
       &:focus {
-        @include box-shadow(0 0 0 2px $red inset);
+//        @include box-shadow(0 0 0 2px $red inset);
       }
     }
 

@@ -1,0 +1,169 @@
+- title 'Gift Minefold'
+- layout :gifts
+
+- provide :breakout do
+  .hero-unit
+    #viewport
+    %h1 For miners of any age
+    %h2 Minefold is the perfect Christmas gift
+
+.row
+  .span8.offset2{style: 'font-size:18px;line-height:24px;font-weight:400;'}
+    %p
+      %strong Minecraft is a <span class="highlight">bazillion times</span> more fun when you play with your friends.
+      However, you need a server to do this. Mine<em>fold</em> is the simplist, easiest and <span class="highlight">cheapest way</span> to run Mine<em>craft</em> servers. Christmas is a perfect opportunity to play with your children so why not buy them a Minefold gift certificate?
+
+%hr.small.hidden
+
+.row
+  .span4
+    %iframe{width: 300, height: 168, src: 'http://www.youtube.com/embed/iWhalJ14X-s', frameborder: 0, allowfullscreen: true}
+  .span4
+    %iframe{width: 300, height: 168, src: 'http://www.youtube.com/embed/4cJKCEeQqE0', frameborder: 0, allowfullscreen: true}
+  .span4
+    %iframe{width: 300, height: 168, src: 'http://www.youtube.com/embed/Km-z-12e6Yw', frameborder: 0, allowfullscreen: true}
+
+%hr.large
+
+%center
+  %h2 Choose how server time you want to give
+
+%hr.hidden
+
+.coin-gift-packs
+  - @packs.each_with_index do |pack, i|
+    %a.coin-pack{href: '#', data: {id: pack.id, cents: pack.cents, coins: pack.coins, image: image_path("coin_packs/#{i+1}.png")}}
+      .price= number_to_currency(pack.cents / 100, precision: 0)
+      .hours #{number_with_delimiter(pack.shared_hours)} hours
+      .coins (Lasts about #{pack.shared_hours / 15 / 4} months)
+      .coins #{number_with_precision(pack.coins / 1000.0, precision: 1, strip_insignificant_zeros: true)}k coins
+
+      .circle
+
+- content_for :tail do
+  :javascript
+    $('.coin-pack').click(function(e) {
+      e.preventDefault();
+
+      var $this = $(this);
+      $this.siblings().removeClass('active');
+      $this.addClass('active');
+      $('#gift_coin_pack_id').val($this.data('id'));
+
+      $('#new_gift input[type=submit]').attr('disabled', false);
+    });
+
+%hr.hidden
+
+= form_for gift do |f|
+  = f.hidden_field :card_token
+  = f.hidden_field :coin_pack_id
+
+  %center.row
+    .span8.offset2
+      .control-group
+        .control-label
+          = f.label :name do
+            Your email
+            %small{style: 'color:red'}
+              (required)
+
+        .controls
+          - if signed_in?
+            = f.email_field :email, value: current_user.email, class: %w(span6)
+          - else
+            = f.email_field :email, class: %w(span6)
+
+      %p.hint-block.muted
+        Leave these names blank if you want to hand write them after printing the certificate.
+
+      .row
+        .span4
+          .control-group
+            .control-label
+              = f.label :name, 'Your name'
+            .controls
+              = f.text_field :name, class: %w(span4)
+
+        .span4
+          .control-group
+            .control-label
+              = f.label :to, "The lucky person's name"
+            .controls
+              = f.text_field :to, class: %w(span4)
+
+      %hr.small.hidden
+      .form-actions
+        = f.submit 'Buy Gift', class: %w(btn btn-primary btn-large), disabled: true
+
+- content_for :tail do
+  = javascript_include_tag "https://checkout.stripe.com/v2/checkout.js"
+  :javascript
+    $('#new_gift').submit(function(e) {
+      e.preventDefault();
+
+      var email = $('#gift_email');
+
+      if(email.val() === '' || !email.val().match(/@/)) {
+        email.parents('.control-group').addClass('error').focus();
+
+        return;
+      }
+
+
+      var token = function(res) {
+        $('#gift_card_token').val(res.id);
+        $('#new_gift')[0].submit();
+      };
+
+      var pack = $('.coin-pack.active');
+
+      StripeCheckout.open({
+        key:         #{ENV['STRIPE_PUBLISHABLE'].to_json},
+        amount:      pack.data('cents'),
+        name:        'Minefold',
+        description: ('Gift '+pack.find('.coins').text()),
+        image:       pack.data('image'),
+        token:       token
+      });
+    });
+
+%hr.large
+
+.row
+  %center.span8.offset2
+    %h2 What you'll be giving
+    %hr.small.hidden
+    %p{style: 'color:rgba(0,0,0,0.4)'} We'll send you an email with a <span class="highlight">printable gift certificate</span>. This can then be redeemed for coins to run and play on Minefold servers. Just like an old-fashioned arcade.
+
+    %p{style: 'color:rgba(0,0,0,0.4)'}
+      - if not signed_in?
+        If you #{link_to 'sign in to your Minefold account', new_user_session_path} we'll also give you
+      - else
+        You, #{current_user.username}, also get
+      %strong.highlight 360 coins (6 hours) free
+      so you can play together on Boxing Day.
+
+%hr.hidden
+
+%center.row
+  .span3
+    %h6{style: 'line-height:12px;margin-bottom:0;color:rgba(0,0,0,.2)'} Minefold is
+    %h3 Educational
+    %p{style: 'color:rgba(0,0,0,0.4)'} Playing together teaches team-work and concepts like music and electronics.
+
+  .span3
+    %h6{style: 'line-height:12px;margin-bottom:0;color:rgba(0,0,0,.2)'} Minefold is
+    %h3 Safe
+    %p{style: 'color:rgba(0,0,0,0.4)'} Each server is locked down so internet strangers can't play with your child.
+
+  .span3
+    %h6{style: 'line-height:12px;margin-bottom:0;color:rgba(0,0,0,.2)'} Minefold is
+    %h3 Fun
+    %p{style: 'color:rgba(0,0,0,0.4)'} Playing Minecraft together is a great family activity. These holidays, bond over blocks.
+
+  .span3
+    %h6{style: 'line-height:12px;margin-bottom:0;color:rgba(0,0,0,.2)'} Minefold is
+    %h3 Simple
+    %p{style: 'color:rgba(0,0,0,0.4)'} Minefold is so simple even a child can use it. In fact, over <span class="highlight">80,000</span> already do!
+

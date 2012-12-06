@@ -110,3 +110,10 @@ code {
   color: rgba(black, 0.4);
 }
 
+.christmas-green {
+  color: desaturate($green, 20%);
+}
+
+.christmas-red {
+  color: desaturate($red, 20%);
+}

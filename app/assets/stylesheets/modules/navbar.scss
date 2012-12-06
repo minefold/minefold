@@ -65,6 +65,11 @@
         color: lighten($blue, 20%);
       }
 
+      &.gift a {
+        color: white;
+        background-color: desaturate($green, 10%);
+      }
+
       &.dropdown {
 
         > .dropdown-toggle > .caret {

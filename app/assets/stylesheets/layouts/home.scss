@@ -13,7 +13,7 @@
     }
   }
 
-  section {
+  section, .section {
     margin-bottom: l(4);
 
     h3 {
@@ -22,6 +22,21 @@
       line-height: l(1);
       color: rgba(black, 0.2);
       font-size: 18px;
+    }
+  }
+
+  .announcement {
+    display: block;
+    background-color: desaturate($green, 10%);
+    padding: l() $gw-gutter;
+    text-align: center;
+    color: rgba(white, 1);
+//    font-weight: 600;
+letter-spacing: 0.05em;
+font-family: $geometric;
+font-size: 20px;
+    strong {
+      color: $yellow;
     }
   }
 
