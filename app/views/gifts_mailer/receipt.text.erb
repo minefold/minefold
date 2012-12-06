@@ -1,0 +1,21 @@
+Thanks for using Minefold! This is a receipt for your recently purchased Minefold Gift.
+
+Credit Card Receipt
+===================
+
+Mütli Corp.
+270 Linden St, Suite 101
+San Francisco California 94102
+USA
+
+Phone: +1 (415) 562-7970
+Email: support@minefold.com
+
+Charge ID: <%= @charge.id %>
+Date: <%= Time.at(@charge.created) %>
+<% if @charge.card[:name] %>Cardholder Name: <%= @charge.card[:name] %><% end %>
+Payment method: <%= @charge.card.type %> XXXX-XXXX-XXXX-<%= @charge.card.last4 %>
+Total Charged: <%= number_to_currency(@charge.amount / 100) %> <%= @charge.currency %>
+Coins: <%= @coin_pack.coins %>
+
+If this charge was made in error, or you need a refund, please email: support+<%= @charge.id %>@minefold.com

@@ -1,4 +1,5 @@
 class GiftsController < ApplicationController
+  respond_to :html
 
   expose(:gift)
 
@@ -12,14 +13,14 @@ class GiftsController < ApplicationController
       gift.customer_id = current_user.customer_id
     end
 
-    if gift.valid? and gift.fulfill && gift.save
+    gift.valid? and gift.fulfill && gift.save
 
+    GiftsMailer.receipt(gift.id).deliver
 
-      render text: 'thanks!'
-
-    end
-
+    respond_with(gift, location: xmas_cheers_path(gift))
   end
 
+  def cheers
+  end
 
 end

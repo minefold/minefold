@@ -6,6 +6,8 @@ class GiftsMailer < ActionMailer::Base
 
   def receipt(gift_id)
     @gift = Gift.find(gift_id)
+    @charge = Stripe::Charge.retrieve(@gift.charge_id)
+    @coin_pack = CoinPack.find(@gift.coin_pack_id)
 
     mail to: @gift.email,
          subject: "Minefold Gift Receipt"

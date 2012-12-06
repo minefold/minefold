@@ -7,21 +7,6 @@
   .hero-unit {
     background-color: desaturate(lighten($green, 10%), 10%);
     color: white;
-
-    #viewport {
-
-      min-width: grid-width(12);
-    }
-
-    #viewport {
-      background: url(image-path('gifts.png')) no-repeat fixed center -440px;
-      -webkit-background-size: cover;
-      -moz-background-size: cover;
-      -o-background-size: cover;
-      background-size: cover;
-
-      opacity: 0;
-    }
   }
 
   .coin-gift-packs {
