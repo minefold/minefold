@@ -40,6 +40,8 @@
 
       .circle
 
+  = image_tag 'gifts/next-christmas.png', style: 'position:absolute;right:0;bottom:-40px'
+
 - content_for :tail do
   :javascript
     $('.coin-pack').click(function(e) {
@@ -55,12 +57,12 @@
 
 %hr.hidden
 
-= form_for gift do |f|
-  = f.hidden_field :card_token
-  = f.hidden_field :coin_pack_id
+.row
+  .span6
+    = form_for gift do |f|
+      = f.hidden_field :card_token
+      = f.hidden_field :coin_pack_id
 
-  %center.row
-    .span8.offset2
       .control-group
         .control-label
           = f.label :name do
@@ -78,23 +80,38 @@
         Leave these names blank if you want to hand write them after printing the certificate.
 
       .row
-        .span4
+        .span3
           .control-group
             .control-label
               = f.label :name, 'Your name'
             .controls
-              = f.text_field :name, class: %w(span4)
+              = f.text_field :name, class: %w(span3)
 
-        .span4
+        .span3
           .control-group
             .control-label
               = f.label :to, "The lucky person's name"
             .controls
-              = f.text_field :to, class: %w(span4)
+              = f.text_field :to, class: %w(span3)
 
       %hr.small.hidden
       .form-actions
         = f.submit 'Buy Gift', class: %w(btn btn-primary btn-large), disabled: true
+
+  .span6
+    .well
+      %h4 What you'll be giving
+      %hr.small.hidden
+      %p{style: 'color:rgba(0,0,0,0.4)'} We'll send you an email with a <span class="highlight">printable gift certificate</span>. This can then be redeemed for coins to run and play on Minefold servers. Just like an old-fashioned arcade.
+
+      %p{style: 'color:rgba(0,0,0,0.4)'}
+        - if not signed_in?
+          If you #{link_to 'sign in to your Minefold account', new_user_session_path} we'll also give you
+        - else
+          You, #{current_user.username}, also get
+        %strong.highlight 360 coins (6 hours) free
+        so you can play together on Boxing Day.
+
 
 - content_for :tail do
   = javascript_include_tag "https://checkout.stripe.com/v2/checkout.js"
@@ -129,22 +146,6 @@
     });
 
 %hr.large
-
-.row
-  %center.span8.offset2
-    %h2 What you'll be giving
-    %hr.small.hidden
-    %p{style: 'color:rgba(0,0,0,0.4)'} We'll send you an email with a <span class="highlight">printable gift certificate</span>. This can then be redeemed for coins to run and play on Minefold servers. Just like an old-fashioned arcade.
-
-    %p{style: 'color:rgba(0,0,0,0.4)'}
-      - if not signed_in?
-        If you #{link_to 'sign in to your Minefold account', new_user_session_path} we'll also give you
-      - else
-        You, #{current_user.username}, also get
-      %strong.highlight 360 coins (6 hours) free
-      so you can play together on Boxing Day.
-
-%hr.hidden
 
 %center.row
   .span3
