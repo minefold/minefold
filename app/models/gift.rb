@@ -16,7 +16,8 @@ class Gift < ActiveRecord::Base
 
 
   def fulfill
-    create_charge
+    create_charge &&
+    gift_coins_to_parent
 
   rescue Stripe::StripeError
     false
@@ -40,6 +41,10 @@ class Gift < ActiveRecord::Base
 
     self.charge_id = charge.id
     charge
+  end
+
+  def gift_coins_to_parent
+    parent && parent.increment_coins!(360)
   end
 
 end

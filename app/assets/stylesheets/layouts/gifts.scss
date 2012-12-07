@@ -9,6 +9,10 @@
     color: white;
   }
 
+  .navbar-inner .gift {
+    display: none;
+  }
+
   .coin-gift-packs {
     @include clearfix;
     @include box-sizing(border-box);
