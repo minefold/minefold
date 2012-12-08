@@ -1,5 +1,5 @@
 class Bonuses::CoinFairy < Bonus
-  self.coins = 600
+  self.coins = 20
 
   # Ewww
   def self.period

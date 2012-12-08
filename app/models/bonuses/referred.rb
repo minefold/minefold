@@ -1,3 +1,3 @@
 class Bonuses::Referred < Bonus
-  self.coins = 150
+  self.coins = 60
 end
