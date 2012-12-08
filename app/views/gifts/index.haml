@@ -41,7 +41,9 @@
 
       .circle
 
-  = image_tag 'gifts/next-christmas.png', style: 'position:absolute;right:0;bottom:-40px'
+  .next-xmas{style: 'position:absolute;right:45px;bottom:-35px;color:red;text-align:right'}
+    = image_tag 'gifts/next-christmas.png'
+    %p{style: 'font-weight:bold;font-size:20px'} Lasts until next Christmas!
 
 - content_for :tail do
   :javascript
@@ -94,6 +96,9 @@
               = f.label :to, "The lucky person's name"
             .controls
               = f.text_field :to, class: %w(span3)
+
+      %p#card-errors.help-block{style: 'color:red;display:none'}
+
 
       %hr.small.hidden
       .form-actions
