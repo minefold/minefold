@@ -37,7 +37,7 @@
       .price= number_to_currency(pack.cents / 100, precision: 0)
       .hours #{number_with_delimiter(pack.shared_hours)} hours
       .coins (Lasts about #{pack.shared_hours / 15 / 4} months)
-      .coins #{number_with_precision(pack.coins / 1000.0, precision: 1, strip_insignificant_zeros: true)}k coins
+      .coins.nurr #{number_with_precision(pack.coins / 1000.0, precision: 1, strip_insignificant_zeros: true)}k coins
 
       .circle
 
@@ -145,7 +145,7 @@
         key:         #{ENV['STRIPE_PUBLISHABLE'].to_json},
         amount:      pack.data('cents'),
         name:        'Minefold',
-        description: ('Gift '+pack.find('.coins').text()),
+        description: ('Gift '+pack.find('.coins.nurr').text()),
         image:       pack.data('image'),
         token:       token
       });
