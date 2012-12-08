@@ -54,9 +54,9 @@
       $this.siblings().removeClass('active');
       $this.addClass('active');
       $('#gift_coin_pack_id').val($this.data('id'));
-
-      $('#new_gift input[type=submit]').attr('disabled', false);
     });
+
+    $('.coin-pack:last').click();
 
 %hr.hidden
 
@@ -122,6 +122,14 @@
 - content_for :tail do
   = javascript_include_tag "https://checkout.stripe.com/v2/checkout.js"
   :javascript
+    var validateForm = function() {
+      var valid = $('#gift_email').val().match(/@/);
+      $('#new_gift input[type=submit]').attr('disabled', !valid);
+    }
+
+    $('#gift_email').change(validateForm).keyup(validateForm);
+    validateForm();
+
     $('#new_gift').submit(function(e) {
       e.preventDefault();
 
