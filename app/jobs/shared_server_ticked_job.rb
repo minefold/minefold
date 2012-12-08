@@ -15,7 +15,7 @@ class SharedServerTickedJob < Job
 
       @players.each do |player|
         if player.user.coins <= 0
-          kick_the_cunt(player.uid)
+          kick_player(player.uid, "Out of coins! Visit minefold.com to get more")
         else
           player.user.spend_coins! 1
         end
@@ -25,7 +25,7 @@ class SharedServerTickedJob < Job
       # Cretor pays
       if @server.creator.coins <= 0
         @uids.each do |uid|
-          kick_the_cunt(uid)
+          kick_player(uid, "Out of coins! Visit minefold.com to get more")
         end
       else
         @server.creator.spend_coins! [@uids.size, 10].min
@@ -34,8 +34,8 @@ class SharedServerTickedJob < Job
     end
   end
 
-  def kick_the_cunt(uid)
-    PartyCloud.kick_player(@server.party_cloud_id, uid)
+  def kick_player(uid, msg)
+    PartyCloud.kick_player(@server.party_cloud_id, uid, msg)
   end
 
 end

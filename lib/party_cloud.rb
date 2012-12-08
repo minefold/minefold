@@ -15,8 +15,8 @@ class PartyCloud
     enqueue 'FetchWorldJob', world_id, url
   end
 
-  def self.kick_player(server_id, player_uid)
-    enqueue 'KickPlayerJob', server_id, player_uid
+  def self.kick_player(server_id, player_uid, msg)
+    enqueue 'KickPlayerJob', server_id, player_uid, msg
   end
 
 # --
