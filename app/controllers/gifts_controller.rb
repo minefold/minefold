@@ -31,4 +31,8 @@ class GiftsController < ApplicationController
   def cheers
   end
 
+  def certificate
+    render layout: false
+  end
+
 end

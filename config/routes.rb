@@ -48,8 +48,9 @@ Minefold::Application.routes.draw do
   get '/xmas' => 'gifts#index', :as => :xmas_promo
   get '/xmas/:id/cheers' => 'gifts#cheers', :as => :xmas_cheers
 
-  resource :gifts do
+  resources :gifts do
     get :cheers, :on => :member
+    get :certificate, :on => :member
   end
 
 

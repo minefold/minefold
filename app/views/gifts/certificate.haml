@@ -1,0 +1,107 @@
+!!!
+%html
+  %head
+    :css
+        body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td {margin:0; padding:0;}
+        table {border-collapse:collapse; border-spacing:0;}
+        fieldset,img {border:0;}
+        address,caption,cite,code,dfn,em,strong,th,var {font-style:normal; font-weight:normal;}
+        ol,ul {list-style:none;}
+        caption,th {text-align:left;}
+        h1,h2,h3,h4,h5,h6 {font-size:100%; font-weight:normal;}
+        q:before,q:after {content:;}
+        abbr,acronym { border:0;}
+
+    :css
+      /* setup the page */
+      @page { margin: 30px; background: #ffffff; }
+      /* setup the footer */
+      @page { @bottom { content: flow(foot); } }
+      #footer { flow: static(foot); }
+
+      /* useful utility */
+      .clear { clear:both; }
+
+      /* layout */
+      .container {
+        font-family: "Futura LT", Futura, Geneva, Tahoma, Helvetica, Arial, san-serif;
+        font-size: 14pt;
+        line-height: 30px;
+        color: black;
+        position: relative;
+        width: 70%;
+        margin: 60px auto;
+      }
+
+      p {
+      margin-bottom: 3em;
+      }
+
+      /* colors */
+      .black { color: black }
+
+      #main { margin: 0 30px; }
+
+      #header { text-align: center; margin-top: 120px; }
+      #header img { background-color: #5C2; padding: 20px; margin-bottom: 60px }
+
+      h1 { color: #06C; font-weight: 600; font-size: 36px; }
+
+      a {
+        color: #06c;
+        text-decoration: none;
+      }
+
+      .poop {
+        font-size: 36px;
+        font-weight: bold;
+        text-align: center;
+        padding: 40px 0;
+        font-family: Consolas, "Bitstream Vera Sans Mono", "Andale Mono", Monaco, "DejaVu Sans Mono", "Lucida Console", monospace;
+      }
+
+      .blankfield {
+        width: 15em;
+        border-bottom: 2px solid #CCC;
+        display: inline-block;
+        margin-left: 5px;
+      }
+
+
+  %body
+    .container
+      #header
+        %h1 Minefold Gift Certificate
+
+    .container
+      %p
+        Dear
+        - if gift.to.blank?
+          %span.blankfield
+        - else
+          = gift.to
+        ,
+
+      %p
+        This is a certificate for <strong>#{number_with_delimiter gift.coin_pack.coins}</strong> Minefold coins. To redeem it please go to
+        %a{href: 'https://minefold.com/redeem'} https://minefold.com/redeem
+        and enter the code
+
+      %pre.poop
+        %code= gift.token
+      %p
+
+      %p Have a Merry Chistmas!
+
+      %p
+      %p
+      %p
+      %p
+        From
+      %p
+      %p
+        - if gift.name.blank?
+          %span.blankfield
+        - else
+          = gift.name
+
