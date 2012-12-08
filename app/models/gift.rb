@@ -45,6 +45,7 @@ class Gift < ActiveRecord::Base
 
   def gift_coins_to_parent
     parent && parent.increment_coins!(360)
+    true
   end
 
 end
