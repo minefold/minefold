@@ -40,8 +40,8 @@ gem 'sass-rails'
 gem 'bourbon'
 gem 'neat'
 
-if ENV['QUIET_ASSETS']
-  gem 'quiet_assets', :group => :development
+group :development do
+  gem 'quiet_assets'
 end
 
 group :test do
