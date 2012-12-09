@@ -10,7 +10,7 @@ class VotesController < ApplicationController
     vote.ip = request.remote_ip
 
     if signed_in?
-      vote.user = user
+      vote.user = current_user
     end
 
     vote.save!
