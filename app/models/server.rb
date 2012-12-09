@@ -35,7 +35,7 @@ class Server < ActiveRecord::Base
     vote.save!
   end
 
-  after_destroy do
+  before_destroy do
     $redis.zrem 'serverlist', id
   end
 
