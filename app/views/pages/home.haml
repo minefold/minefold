@@ -57,7 +57,7 @@
           = server.game.name
           %br
           = %w(Survival Creative Adventure)[server.settings['game_mode'].to_i]
-        %center.span1= server.online_players
+        %center.span1= server.count_online_players
         %center.span1= server.votes.count
         .span1
           - disabled = server.votes.where(ip: request.remote_ip).where('created_at > ?', 1.hour.ago).exists?
