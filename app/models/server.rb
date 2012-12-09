@@ -22,7 +22,7 @@ class Server < ActiveRecord::Base
     self.settings = {}
   end
 
-  has_many :votes
+  has_many :votes, dependant: destroy
 
   def count_online_players
     PartyCloud.count_players_online(party_cloud_id)
@@ -33,6 +33,10 @@ class Server < ActiveRecord::Base
     vote.server = self
     vote.user = self.creator
     vote.save!
+  end
+
+  after_destroy do
+    $redis.zrem 'serverlist', id
   end
 
 
