@@ -28,6 +28,15 @@ class Server < ActiveRecord::Base
     PartyCloud.count_players_online(party_cloud_id)
   end
 
+  after_create do
+    vote = Vote.new
+    vote.server = self
+    vote.user = server.creator
+    vote.save!
+
+    $redis.zincrby 'serverlist', vote.created_at.to_i, server.id
+  end
+
 
   serialize :settings, JSON
 
