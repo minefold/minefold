@@ -22,7 +22,7 @@ class Server < ActiveRecord::Base
     self.settings = {}
   end
 
-  has_many :votes, :dependant => :destroy
+  has_many :votes, :dependent => :destroy
 
   def count_online_players
     PartyCloud.count_players_online(party_cloud_id)
