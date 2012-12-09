@@ -40,6 +40,10 @@ gem 'sass-rails'
 gem 'bourbon'
 gem 'neat'
 
+if ENV['QUIET_ASSETS']
+  gem 'quiet_assets', :group => :development
+end
+
 group :test do
   gem 'turn'
   gem 'minitest'
@@ -64,3 +68,4 @@ group :assets do
   gem 'backbone-rails'
   gem 'uglifier'
 end
+
