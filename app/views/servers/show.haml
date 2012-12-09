@@ -7,6 +7,13 @@
     .container
       .title-bar
         .actions
+          - disabled = server.votes.where(ip: request.remote_ip).where('created_at > ?', 1.hour.ago).exists?
+          - if disabled
+            = button_to "[#{server.votes.count}] Voted!", server_votes_path(server), method: 'post', class: %w(btn btn-small btn-primary btn-vote), data: {toggle: 'button'}, disabled: disabled
+          - else
+            = button_to "[#{server.votes.count}] Vote for this server!", server_votes_path(server), method: 'post', class: %w(btn btn-small btn-primary btn-vote), data: {toggle: 'button'}, disabled: disabled
+
+
         %h1.title= link_to server.name, server_path(server)
 
     .subnav
@@ -18,6 +25,18 @@
           - if can? :update, server
             %li= link_to 'Settings', [:edit, server]
 
+- content_for :tail do
+  :javascript
+    $('.btn-vote').click(function(e) {
+      e.preventDefault();
+
+      $(this).val('Voted!').attr('disabled', true);
+
+      var form = $(this).parents('form');
+
+      $.post(form.attr('action'));
+
+    });
 
 .server-meta
   .tidbits

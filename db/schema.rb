@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121206083856) do
+ActiveRecord::Schema.define(:version => 20121209080752) do
 
   create_table "activities", :force => true do |t|
     t.string   "type",         :null => false
@@ -135,6 +135,7 @@ ActiveRecord::Schema.define(:version => 20121206083856) do
     t.boolean  "shared",               :default => true, :null => false
     t.string   "party_cloud_id"
     t.datetime "deleted_at"
+    t.float    "score",                :default => 0.0
   end
 
   add_index "servers", ["deleted_at", "creator_id"], :name => "index_servers_on_deleted_at_and_creator_id"
@@ -202,6 +203,14 @@ ActiveRecord::Schema.define(:version => 20121206083856) do
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["slug"], :name => "index_users_on_slug", :unique => true
   add_index "users", ["username"], :name => "index_users_on_username", :unique => true
+
+  create_table "votes", :force => true do |t|
+    t.integer  "server_id"
+    t.integer  "user_id"
+    t.string   "ip"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "worlds", :force => true do |t|
     t.integer  "server_id"

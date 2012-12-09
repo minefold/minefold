@@ -22,6 +22,12 @@ class Server < ActiveRecord::Base
     self.settings = {}
   end
 
+  has_many :votes
+
+  def online_players
+    rand(100)
+  end
+
 
   serialize :settings, JSON
 

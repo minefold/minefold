@@ -37,6 +37,46 @@
       }
     });
 
+#serverlist
+  %h1 Popular Servers
+  .pooter
+    .row
+      %center.span1 Rank
+      .span2.offset5 Game
+      %center.span1 Players
+      %center.span1 Votes
+
+  - @servers.each_with_index do |server, i|
+    %div[server]
+      .row
+        .score.span1= i + 1
+        %a.span5{href: server_path(server)}
+          %strong= server.name
+          %small.server-address= server.address
+        .span2{style: 'color:#999;font-size:14px;font-weight:400'}
+          = server.game.name
+          %br
+          = %w(Survival Creative Adventure)[server.settings['game_mode']]
+        %center.span1= server.online_players
+        %center.span1= server.votes.count
+        .span1
+          - disabled = server.votes.where(ip: request.remote_ip).where('created_at > ?', 1.hour.ago).exists?
+          = button_to 'Vote!', server_votes_path(server), method: 'post', class: %w(btn btn-small btn-primary btn-vote), data: {toggle: 'button'}, disabled: disabled
+
+- content_for :tail do
+  :javascript
+    $('.server .btn-vote').click(function(e) {
+      e.preventDefault();
+
+      $(this).val('Voted!').attr('disabled', true);
+
+      var form = $(this).parents('form');
+
+      $.post(form.attr('action'));
+
+    });
+
+
 %a.announcement.section.christmas-gift{href: xmas_promo_path}
   Give someone Minefold this Christmas and you'll get an extra <strong>360 coins</strong> for free!
 

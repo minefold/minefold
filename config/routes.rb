@@ -77,7 +77,10 @@ Minefold::Application.routes.draw do
 
         post :watch
         post :unwatch
+
       end
+
+      resources :votes, :only => [:create]
 
       resources :comments, only: [:create], module: 'servers'
     end
