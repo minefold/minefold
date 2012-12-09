@@ -31,10 +31,10 @@ class Server < ActiveRecord::Base
   after_create do
     vote = Vote.new
     vote.server = self
-    vote.user = server.creator
+    vote.user = self.creator
     vote.save!
 
-    $redis.zincrby 'serverlist', vote.created_at.to_i, server.id
+    $redis.zincrby 'serverlist', vote.created_at.to_i, self.id
   end
 
 
