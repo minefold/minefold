@@ -24,8 +24,8 @@ class Server < ActiveRecord::Base
 
   has_many :votes
 
-  def online_players
-    rand(100)
+  def count_online_players
+    PartyCloud.count_players_online(party_cloud_id)
   end
 
 
