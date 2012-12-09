@@ -19,6 +19,10 @@ class PartyCloud
     enqueue 'KickPlayerJob', server_id, player_uid, msg
   end
 
+  def self.tell_player(server_id, player_uid, msg)
+    enqueue 'TellPlayerJob', server_id, player_uid, msg
+  end
+
 # --
 
   def self.enqueue(job, *args)
