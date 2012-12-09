@@ -16,7 +16,11 @@ class ServerStartedJob < Job
     session = @server.sessions.current
     session.started_at = Time.now
     session.save!
-    
+
+    vote = Vote.new
+    vote.server = @server
+    vote.save!
+
     Mixpanel.track 'Started server',
       distinct_id: @server.creator.distinct_id,
       name: @server.name,

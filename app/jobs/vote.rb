@@ -5,7 +5,6 @@ class Vote < ActiveRecord::Base
   after_create :update_redis_vote
 
   def update_redis_vote
-
     s = server.votes.count
     order = Math.log([s.abs, 1].max, 10)
     sign = if s > 0
