@@ -15,8 +15,6 @@ class VotesController < ApplicationController
 
     vote.save!
 
-    $redis.zincrby 'serverlist', vote.created_at.to_i, server.id
-
     render text: 'ok'
   end
 

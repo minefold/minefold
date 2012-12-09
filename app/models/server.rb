@@ -33,8 +33,6 @@ class Server < ActiveRecord::Base
     vote.server = self
     vote.user = self.creator
     vote.save!
-
-    $redis.zincrby 'serverlist', vote.created_at.to_i, self.id
   end
 
 
