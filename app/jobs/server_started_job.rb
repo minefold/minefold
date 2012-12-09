@@ -19,6 +19,7 @@ class ServerStartedJob < Job
 
     vote = Vote.new
     vote.server = @server
+    vote.user = @server.creator
     vote.save!
 
     Mixpanel.track 'Started server',
