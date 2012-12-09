@@ -15,8 +15,20 @@ class PartyCloud
     enqueue 'FetchWorldJob', world_id, url
   end
 
-  def self.kick_player(server_id, player_uid, msg)
-    enqueue 'KickPlayerJob', server_id, player_uid, msg
+  def self.kick_player(pc_server_id, player_uid, msg)
+    enqueue 'KickPlayerJob', pc_server_id, player_uid, msg
+  end
+
+  def self.tell_player(pc_server_id, player_uid, msg)
+    enqueue 'TellPlayerJob', pc_server_id, player_uid, msg
+  end
+
+  def self.players_online(pc_server_id)
+    $redis.smembers("server:#{pc_server_id}:players")
+  end
+
+  def self.count_players_online(pc_server_id)
+    $redis.scard("server:#{pc_server_id}:players")
   end
 
 # --

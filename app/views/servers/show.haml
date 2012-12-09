@@ -70,8 +70,9 @@
 
   - # TODO: Hack for Minecraft!
   .player-list
+    - online = PartyCloud.players_online(server.party_cloud_id)
     - server.player_uids.each do |username|
-      .player
+      .player{class: online.include?(username) && "online"}
         = image_tag "https://minotar.net/helm/#{username}/24.png", class: 'image-circle', alt: username, width: 24, height: 24
 
 

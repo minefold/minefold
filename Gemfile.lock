@@ -176,6 +176,8 @@ GEM
     pusher (0.11.1)
       multi_json (~> 1.0)
       signature (~> 0.1.6)
+    quiet_assets (1.0.1)
+      railties (~> 3.1)
     rack (1.4.1)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -305,6 +307,7 @@ DEPENDENCIES
   paranoia
   pg
   pusher
+  quiet_assets
   rack-www
   rails (= 3.2.9)
   rake

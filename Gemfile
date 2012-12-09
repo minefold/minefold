@@ -40,6 +40,10 @@ gem 'sass-rails'
 gem 'bourbon'
 gem 'neat'
 
+group :development do
+  gem 'quiet_assets'
+end
+
 group :test do
   gem 'turn'
   gem 'minitest'
@@ -64,3 +68,4 @@ group :assets do
   gem 'backbone-rails'
   gem 'uglifier'
 end
+
