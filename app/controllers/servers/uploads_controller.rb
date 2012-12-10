@@ -28,4 +28,25 @@ class Servers::UploadsController < ApplicationController
     render layout: false
   end
 
+  def sign
+    objectName = params[:s3_object_name]
+    mimeType = params[:s3_object_type]
+    expires = Time.now.to_i + 100 # PUT request to S3 must start within 100 seconds
+
+    key = "minefold-development/#{objectName}"
+    s3_url = "http://s3.amazonaws.com/"
+    url = "#{s3_url}#{key}"
+
+    amzHeaders = "x-amz-acl:public-read" # set the public read permission on the uploaded file
+    stringToSign = "PUT\n\n#{mimeType}\n#{expires}\n#{amzHeaders}\n/#{key}";
+      sig = CGI::escape(
+        Base64.strict_encode64(
+          OpenSSL::HMAC.digest('sha1', ENV['AWS_SECRET_KEY'], stringToSign)))
+
+      {
+        signed_request: CGI::escape("#{url}?AWSAccessKeyId=#{ENV['AWS_ACCESS_KEY']}&Expires=#{expires}&Signature=#{sig}"),
+        url: url
+      }.to_json
+  end
+
 end

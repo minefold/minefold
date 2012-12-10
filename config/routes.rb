@@ -53,6 +53,8 @@ Minefold::Application.routes.draw do
     get :certificate, :on => :member
   end
 
+  # Uploads
+  get '/uploads/sign' => 'uploads#sign', :as => :sign_uploads
 
   # Authenticated routes
   as :user do

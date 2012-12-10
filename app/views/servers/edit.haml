@@ -119,22 +119,30 @@
           = link_to parent.name, server_path(parent)
           by #{parent.creator.username}.
 
-      - # if world uploads gets done!
-      - if false
-        .control-group
-          .control-label Upload a new world
-          .controls
-            - content_for :tail do
-              = javascript_include_tag 'https://api.filepicker.io/v1/filepicker.js'
-              :javascript
-                filepicker.setKey(#{ENV['FILEPICKER'].to_json});
+      .control-group
+        .control-label.form-title Upload a new world
+        .controls
+          %p Replaces the current world. Must be in Zip format.
 
-            %p Replaces the current world. Must be in Zip format.
-
-            %p.alert This is irreversible and <i>all existing data will be lost forever</i>.
-
-            %input{type: 'filepicker-dragdrop', data: {'fp-class' => 'filepicker filepicker-dragdrop', 'fp-button-class' => 'btn btn-mini', 'fp-button-text' => 'Choose world archive', 'fp-mimetype' => 'application/zip', 'fp-openTo' => 'COMPUTER'}}
-
+          %input#uploads{ type: 'file', name: 'uploads[]' }
+          - content_for :tail do
+            :javascript
+              $('#uploads').change(function(){
+                var s3upload = s3upload != null ? s3upload : new S3Upload({
+                  file_dom_selector: '#uploads',
+                  s3_sign_put_url: '/uploads/sign',
+                  onProgress: function(percent, message) { // Use this for live upload progress bars
+                    console.log('Upload progress: ', percent, message);
+                  },
+                  onFinishS3Put: function(public_url) { // Get the URL of the uploaded file
+                    console.log('Upload finished: ', public_url);
+                  },
+                  onError: function(status) {
+                    console.log('Upload error: ', status);
+                  }
+                });
+              })
+              
 
 / --
 

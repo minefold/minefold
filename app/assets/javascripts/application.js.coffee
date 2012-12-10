@@ -22,6 +22,9 @@
 #= require_self
 #= require_tree .
 
+#= require ./s3upload
+
+
 class window.Application extends Backbone.Router
   routes:
     '': 'home'
