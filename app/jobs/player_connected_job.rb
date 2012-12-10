@@ -11,7 +11,9 @@ class PlayerConnectedJob < Job
 
     vote = Vote.new
     vote.server = @server
-    vote.user = @player.user
+    if @player
+      vote.user = @player.user
+    end
     vote.save!
 
   end
