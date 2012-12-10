@@ -117,3 +117,24 @@ code {
 .christmas-red {
   color: desaturate($red, 20%);
 }
+
+#facebooklikebanner {
+  background: darken(desaturate($blue, 40%), 10%);
+  color: lighten($blue, 40%);
+  font-size: 16px;
+  font-weight: 400;
+  padding: l(1) 0;
+  line-height: l(2);
+
+  iframe {
+    @include inline-block;
+    height: 24px;
+    float: left;
+    margin-left: 20px;
+  }
+  p {
+    float: left;
+    margin-bottom: 0;
+  }
+}
+
