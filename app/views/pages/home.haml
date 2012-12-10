@@ -42,15 +42,14 @@
   .pooter
     .row
       %center.span1 Rank
-      .span2.offset5 Game
-      %center.span1 Players
-      %center.span1 Votes
+      .span2.offset6 Game
+      %center.span1 Online
 
   - @servers.each_with_index do |server, i|
     %div[server]
       .row
         .score.span1= i + 1
-        %a.span5{href: server_path(server)}
+        %a.span6{href: server_path(server)}
           %strong= server.name
           %small.server-address= server.address
         .span2{style: 'color:#999;font-size:14px;font-weight:400'}
@@ -58,7 +57,6 @@
           %br
           = %w(Survival Creative Adventure)[server.settings['game_mode'].to_i]
         %center.span1= server.count_online_players
-        %center.span1= server.votes.count
         .span1
           - disabled = server.votes.where(ip: request.remote_ip).where('created_at > ?', 1.hour.ago).exists?
           = button_to 'Vote!', server_votes_path(server), method: 'post', class: %w(btn btn-small btn-primary btn-vote), data: {toggle: 'button'}, disabled: disabled

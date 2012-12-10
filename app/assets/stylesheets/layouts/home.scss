@@ -6,7 +6,7 @@
 
   #serverlist {
     position: relative;
-    z-index: 11;
+    z-index: 1;
     padding: l(2) $gw-gutter;
     @include box-shadow(0 l(-.5) l(.5) 0 rgba(black, 0.1));
     margin-top: l(-7);
