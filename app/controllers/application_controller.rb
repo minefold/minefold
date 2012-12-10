@@ -46,8 +46,8 @@ private
   end
 
   def set_invitation_token
-    if params[:invitation_token]
-      session[:invitation_token] = params[:invitation_token]
+    if token = (params[:invitation_token] || params[:i])
+      session[:invitation_token] = token
     end
   end
 

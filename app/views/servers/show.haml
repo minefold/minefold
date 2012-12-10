@@ -75,6 +75,9 @@
       .player{class: online.include?(username) && "online"}
         = image_tag "https://minotar.net/helm/#{username}/24.png", class: 'image-circle', alt: username, width: 24, height: 24
 
+  - if signed_in?
+    .span7
+      %a{href: url_for(:controller => :invitations, :action => :show, invitation_token: current_user.invitation_token)}== Invite friends for an extra <strong>#{pluralize Bonuses::Referred.coins, 'coin', 'coins'}</strong>
 
 .comments
   - if signed_in?
