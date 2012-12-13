@@ -2,7 +2,6 @@
   %ul.nav
     %li.gift= link_to 'Give Minefold for Xmas', xmas_promo_path
     %li.servers= link_to 'Servers', servers_path
-    %li.support= link_to 'Support', support_page_path
 
     %li.divider-vertical
 
@@ -20,17 +19,9 @@
         %li= link_to 'Get more coins', getcoins_page_path
         %li= link_to 'Sign out', destroy_user_session_path, method: :delete
 
-    - content_for :tail do
-      :javascript
-        app.coinsView = new Application.CoinsView({
-          model: app.currentUser,
-          el: $('header .coins .cr')
-        });
-
 - else
   %ul.nav
     %li.gift= link_to 'Give Minefold for Xmas', xmas_promo_path
-    %li.support= link_to 'Support', support_page_path
     %li.pricing= link_to 'Pricing', pricing_page_path
     %li.sign-up= link_to 'Sign up', new_user_registration_path
 
