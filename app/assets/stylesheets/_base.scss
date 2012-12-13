@@ -1,6 +1,12 @@
 @include font-face(minecraft, font-path('minecraft'));
 
+body {
+  background-color: transparent;
+}
+
 header {
+  position: relative;
+  z-index: 100;
 
   .navbar {
     margin-top: l(1);
@@ -12,6 +18,7 @@ header {
 
       h1 {
         padding-top: 0; padding-bottom: 0;
+        margin-top: 0; margin-bottom: 0;
 
         a {
           display: block;
@@ -25,70 +32,9 @@ header {
   }
 }
 
-body {
-  min-width: grid-width(12);
-}
-
-.container {
-  width: grid-width(8);
-}
-
-#Intercom {
-  display: none;
-}
-
-a, a:hover {
-  color: $blue;
-  text-decoration: none;
-}
-
-ol, ul {
-  list-style-type: square;
-}
-
-ul li, ol li{
-  line-height: l(2);
-}
-
-p, ul, ol {
-  margin-bottom: l(2);
-}
-
-.hidden {
-  display: none;
-}
-
-hr {
-  border-top: 1px solid rgba(black, 0.05);
-  border-bottom: 1px solid rgba(black, 0.05);
-  margin: l(2) 0;
-  height: 0;
-
-  &.hidden {
-    border-color: transparent;
-    display: block;
-  }
-
-  &.small {
-    margin: (l(1) - 1px) 0;
-  }
-
-  &.large {
-    margin: (l(4) - 1px) 0;
-  }
-
-  &.x-large {
-    margin: (l(8) - 1px) 0;
-  }
-
-  &.xx-large {
-    margin: (l(16) - 1px) 0;
-  }
-}
-
 h1, h2, h3, h4 {
+  color: black;
   font-family: $geometric;
-  margin-top: 0; margin-bottom: 0;
 }
 
 code {
@@ -99,28 +45,6 @@ code {
 
 .highlight {
   background-color: lighten($yellow, 30%);
-}
-
-.align-right {
-  text-align: right;
-}
-
-[data-icon]:before {
-  font-family: $pictos;
-  content: attr(data-icon);
-  -webkit-font-smoothing: antialiased;
-}
-
-.muted {
-  color: rgba(black, 0.4);
-}
-
-.christmas-green {
-  color: desaturate($green, 20%);
-}
-
-.christmas-red {
-  color: desaturate($red, 20%);
 }
 
 #facebooklikebanner {
@@ -143,3 +67,6 @@ code {
   }
 }
 
+#Intercom {
+  display: none;
+}

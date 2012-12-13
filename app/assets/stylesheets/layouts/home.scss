@@ -1,25 +1,15 @@
 .l-home {
 
-  .container {
-    width: grid-width(12);
-  }
-
   .hero-unit {
     background-color: lighten($blue, 20%);
     margin-bottom: l(4);
 
-    padding-top: l(6);
-    padding-bottom: l(6);
-
     h1 {
-      font-size: 48px;
-      line-height: l(6);
       color: white;
     }
 
     h2 {
-      line-height: l(2);
-      font-size: 24px;
+      color: darken($blue, 10%);
     }
   }
 
