@@ -20,7 +20,7 @@ class PagesController < ApplicationController
 
     @coming_soon_games = ['Team Fortress', 'Counter-Strike', 'Call of Duty', 'Battlefield', 'DayZ']
 
-    @servers = Server.find($redis.zrevrange('serverlist', 0, 9))
+    @servers = Server.find($redis.zrevrange('serverlist', 0, 4))
 
     # @servers = Server.first(10)
   end
