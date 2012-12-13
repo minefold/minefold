@@ -1,23 +1,28 @@
 @include font-face(minecraft, font-path('minecraft'));
 
-html {
-  background-color: white;
-}
-
-body {
-  font-size: 16px;
-  line-height: l(2);
-  font-weight: 500;
-
-  text-rendering: optimizeLegibility;
-}
-
 header {
-  @include clearfix;
-  @include box-shadow(0 0 l(1) 0 rgba(black, 0.2));
-  position: relative;
-  margin: 0;
-  z-index: 10;
+
+  .navbar {
+    margin-top: l(1);
+    margin-bottom: l(1);
+
+    > .navbar-inner {
+      background: white;
+      border: none;
+
+      h1 {
+        padding-top: 0; padding-bottom: 0;
+
+        a {
+          display: block;
+          font-weight: 600;
+          color: $red;
+          font-size: 24px;
+          line-height: l(4);
+        }
+      }
+    }
+  }
 }
 
 body {

@@ -86,13 +86,10 @@
 
     %header
       .container
-        .navbar.navbar-static-top
+        .navbar
           .navbar-inner
-            .pull-left
-              = link_to 'Minefold', root_path, class: 'brand'
-
-            .pull-right
-              = render partial: 'shared/nav'
+            %h1.brand= link_to 'Minefold', root_path
+            .pull-right= render partial: 'shared/nav'
 
     .container
       - flash.select {|_,msg| msg.is_a?(String) }.each do |name, msg|
