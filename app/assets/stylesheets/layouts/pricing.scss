@@ -99,19 +99,16 @@
 
       &:nth-child(1) {
         color: $green;
-        .btn { background-color: $green; }
         .savings { background-color: lighten($green, 45%); }
       }
 
       &:nth-child(2) {
         color: $blue;
-        .btn { background-color: $blue; }
         .savings { background-color: lighten($blue, 55%); }
       }
 
       &:nth-child(3) {
         color: $red;
-        .btn { background-color: $red; }
         .savings { background-color: lighten($red, 35%); }
       }
     }
