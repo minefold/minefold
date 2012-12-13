@@ -7,7 +7,7 @@
 
 @import 'base';
 
-@import 'layouts/auth',
+@import 'layouts/devise',
         'layouts/error',
         'layouts/gifts',
         'layouts/home',
@@ -23,7 +23,6 @@
         'modules/alert',
         'modules/comment',
         'modules/footer',
-        'modules/form',
         'modules/hero-unit',
         'modules/nav',
         'modules/navbar',
@@ -32,5 +31,4 @@
         'modules/server-address',
         'modules/server-list',
         'modules/slider',
-        'modules/table',
-        'modules/well';
+        'modules/table';

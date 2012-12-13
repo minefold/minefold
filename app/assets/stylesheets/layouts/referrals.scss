@@ -1,5 +1,9 @@
 .l-referrals {
 
+  .container {
+    width: grid-width(8);
+  }
+
   .bonus-list {
     > .bonus {
       display: block;

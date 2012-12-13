@@ -1,11 +1,6 @@
 @charset 'UTF-8';
 
-.l-auth {
-
-  .remember-me {
-    padding: (l(0) / 2) 0;
-    margin-left: $gw-gutter;
-  }
+.l-devise {
 
   .invitation-message {
     margin-bottom: l(4);
@@ -47,7 +42,7 @@
     }
   }
 
-  .letter {
+  .well.letter {
     padding: l(2) $gw-gutter;
 
     color: rgba(black, 0.8);
