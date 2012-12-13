@@ -60,8 +60,7 @@
                   - # TODO This is a hack and not very nice
                   = link_to 'Resend confirmation', user_confirmation_path(user: {email: f.object.unconfirmed_email}), method: 'POST'
 
-          .form-actions
-            = f.submit 'Save', class: %w(btn btn-primary)
+          = f.submit 'Save', class: %w(btn btn-primary)
 
 
 .form-block.row#accounts
@@ -150,8 +149,7 @@
             = f.check_box :session_mailer
             Servers starting & stopping
 
-      .form-actions
-        = f.submit 'Save', class: %w(btn btn-primary)
+      = f.submit 'Save', class: %w(btn btn-primary)
 
 
 .form-block.row#password
@@ -170,5 +168,4 @@
         .controls
           = f.password_field :password_confirmation, placeholder: 'Confirm new password'
 
-      .form-actions
-        = f.submit 'Save', class: %w(btn btn-primary)
+      = f.submit 'Save', class: %w(btn btn-primary)
