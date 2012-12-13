@@ -4,64 +4,11 @@
     width: grid-width(12);
   }
 
-  #serverlist {
-    position: relative;
-    z-index: 1;
-    padding: l(2) $gw-gutter;
-    @include box-shadow(0 l(-.5) l(.5) 0 rgba(black, 0.1));
-    margin-top: l(-7);
-    margin-bottom: l(6);
-    background-color: white;
-
-    h1 {
-      text-align: center;
-      font-size: 24px;
-      margin-bottom: l(2);
-      color: rgba(black, 0.8);
-    }
-
-    .pooter {
-      font-size: 13px;
-      text-transform: uppercase;
-      color: rgba(black, 0.8);
-      font-weight: 600;
-      border-bottom: 1px solid #CCC;
-    }
-
-    .server {
-      display: block;
-      border-bottom: 1px solid rgba(black, 0.1);
-      padding: l(.5) 0;
-
-      &:last-child {
-        border-bottom: none;
-      }
-
-      .score {
-        text-align: center;
-      }
-
-      .server-address {
-       display: block;
-       font-size: 14px;
-       color: rgba(black, 0.6);
-      }
-
-      &:hover {
-        background-color: rgba($blue, 0.05);
-      }
-
-    }
-
-
-
-  }
-
   .hero-unit {
     background-color: lighten($blue, 20%);
     margin-bottom: l(4);
 
-    padding-top: l(2);
+    padding-top: l(6);
     padding-bottom: l(6);
 
     h1 {
