@@ -12,12 +12,6 @@ Minefold::Application.routes.draw do
     mount Resque::Server, at: '/admin/resque'
   end
 
-  constraints(@development) do
-    get '/tumblr' => 'tumblr#index'
-    get '/playground' => 'pages#playground'
-  end
-
-
 # --
 
   # Static Pages
