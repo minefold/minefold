@@ -36,7 +36,8 @@ class Server < ActiveRecord::Base
   end
 
   before_destroy do
-    $redis.zrem 'serverlist', id
+    $redis.zrem('serverlist', id)
+    true
   end
 
 
@@ -44,7 +45,7 @@ class Server < ActiveRecord::Base
 
   has_many :comments, order: 'created_at DESC', :dependent => :destroy
 
-  has_one :world, order: 'updated_at ASC'
+  has_one :world, order: 'updated_at ASC', :dependent => :destroy
 
   has_many :sessions do
 
