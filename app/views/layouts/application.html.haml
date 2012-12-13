@@ -92,11 +92,7 @@
               = link_to 'Minefold', root_path, class: 'brand'
 
             .pull-right
-              %ul.nav
-                - if signed_in?
-                  = render partial: 'shared/signed_in_nav'
-                - else
-                  = render partial: 'shared/public_nav'
+              = render partial: 'shared/nav'
 
     .container
       - flash.select {|_,msg| msg.is_a?(String) }.each do |name, msg|

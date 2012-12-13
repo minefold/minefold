@@ -1,0 +1,54 @@
+- if signed_in?
+  %ul.nav
+    %li.gift= link_to 'Give Minefold for Xmas', xmas_promo_path
+    %li.servers= link_to 'Servers', servers_path
+    %li.support= link_to 'Support', support_page_path
+
+    %li.divider-vertical
+
+    %li.coins
+      %a{href: getcoins_page_path}
+        = pluralize current_user.coins, 'coin', 'coins'
+
+    %li.user.dropdown
+      %a.dropdown-toggle{href: '#', data: {toggle: 'dropdown'}}
+        = current_user.username
+        %b.caret
+
+      %ul.dropdown-menu.pull-right
+        %li= link_to 'Settings', edit_user_registration_path
+        %li= link_to 'Get more coins', getcoins_page_path
+        %li= link_to 'Sign out', destroy_user_session_path, method: :delete
+
+    - content_for :tail do
+      :javascript
+        app.coinsView = new Application.CoinsView({
+          model: app.currentUser,
+          el: $('header .coins .cr')
+        });
+
+- else
+  %ul.nav
+    %li.gift= link_to 'Give Minefold for Xmas', xmas_promo_path
+    %li.support= link_to 'Support', support_page_path
+    %li.pricing= link_to 'Pricing', pricing_page_path
+    %li.sign-up= link_to 'Sign up', new_user_registration_path
+
+    %li.divider-vertical
+
+    %li.sign-in.dropdown
+      %a.dropdown-toggle{href: '#', data: {toggle: 'dropdown'}} Sign in
+      .dropdown-menu.sign-in-dropdown-menu.pull-right
+        = form_for :user, as: :user, url: session_path(:user) do |f|
+          = f.hidden_field :remember_me, value: true
+
+          .control-group
+            .controls
+              = f.text_field :email_or_username, placeholder: 'Email or username'
+
+          .control-group
+            .controls
+              = f.password_field :password, placeholder: 'Password'
+
+          .form-actions
+            = f.submit 'Sign in', tabindex: 4, class: %w(btn btn-primary)
