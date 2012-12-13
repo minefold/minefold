@@ -1,6 +1,8 @@
 - if signed_in?
   %ul.nav
-    %li.gift= link_to 'Give Minefold for Xmas', xmas_promo_path
+    %li.gifts
+      .random-div-to-appease-bootstrap
+        = link_to 'Gift Minefold', xmas_promo_path, class: %w(btn btn-success)
     %li.servers= link_to 'Servers', servers_path
 
     %li.divider-vertical
@@ -21,7 +23,9 @@
 
 - else
   %ul.nav
-    %li.gift= link_to 'Give Minefold for Xmas', xmas_promo_path
+    %li.gifts
+      .random-div-to-appease-bootstrap
+        = link_to 'Gift Minefold', xmas_promo_path, class: %w(btn btn-success)
     %li.pricing= link_to 'Pricing', pricing_page_path
     %li.sign-up= link_to 'Sign up', new_user_registration_path
     %li.divider-vertical
