@@ -1,14 +1,7 @@
 footer {
   margin-top: l(12);
-
-//  border-top: 2px solid rgba(black, 0.05);
-
   padding-top: l(2);
   padding-left: $gw-gutter; padding-right: $gw-gutter;
-
-  font-family: $geometric;
-  font-weight: 800;
-//  background-color: white;
 
   padding-bottom: l(3);
 
@@ -16,20 +9,15 @@ footer {
     @include clearfix;
     margin-left: - $gw-gutter;
     margin-bottom: 0;
-    font-family: $geometric;
+    font-weight: 600;
 
     li {
       float: left;
       margin-left: $gw-gutter;
-      font-size: 14px;
       line-height: l(2);
 
       &:first-child {
         margin-left: 0;
-      }
-
-      a, a:hover {
-        color: rgba(black, 0.4);
       }
     }
 
@@ -45,18 +33,12 @@ footer {
   }
 
   .copyright {
-    font-family: $helvetica;
-    color: rgba(black, 0.2);
-    font-size: 11px;
+    color: rgba(black, 0.4);
+    font-size: 12px;
     line-height: l(2);
     margin-bottom: 0;
 
     clear: both;
-
-    a {
-      color: rgba(black, 0.3);
-      border: none;
-    }
   }
 
   .mixpanel-badge {
