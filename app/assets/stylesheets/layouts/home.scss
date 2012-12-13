@@ -15,14 +15,6 @@
 
   section, .section {
     margin-bottom: l(4);
-
-    h3 {
-      font-family: $geometric;
-      margin: 0;
-      line-height: l(1);
-      color: rgba(black, 0.2);
-      font-size: 18px;
-    }
   }
 
   .announcement {
@@ -30,14 +22,8 @@
     background-color: desaturate($green, 10%);
     padding: l() $gw-gutter;
     text-align: center;
-    color: rgba(white, 1);
-//    font-weight: 600;
-letter-spacing: 0.05em;
-font-family: $geometric;
-font-size: 20px;
-    strong {
-      color: $yellow;
-    }
+    color: white;
+    font-size: 16px;
   }
 
   .games-list {
@@ -102,7 +88,7 @@ font-size: 20px;
       }
 
       &:hover {
-        top: -0.5 * l();
+        top: -1px;
 
         img {
           opacity: 1;
@@ -138,21 +124,6 @@ font-size: 20px;
 
     .feature {
       margin-bottom: l(4);
-
-      h4 {
-        font: 600 24px $geometric;
-        line-height: l(2);
-
-        margin-bottom: l(1);
-      }
-
-      p {
-        color: rgba(black, 0.4);
-        font-size: 16px;
-        line-height: l(2);
-        font-weight: 500;
-        margin-bottom: 0;
-      }
     }
   }
 
