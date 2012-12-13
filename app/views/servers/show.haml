@@ -86,14 +86,8 @@
         = image_tag current_user.avatar.medium.url, width: 60, height: 60
 
       .span7
-        .comment-meta
-          %span.comment-author= current_user.username
-        .control-group
-          .controls
-            = f.text_area :body, height: 4, class: %w(span5)
-
-        .form-actions
-          = f.submit 'Post comment', class: %w(btn)
+        = f.text_area :body, rows: 2
+        = f.submit 'Post comment', class: %w(btn)
 
   - server.comments.each do |comment|
     .comment.row
