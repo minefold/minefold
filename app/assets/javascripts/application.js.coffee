@@ -30,4 +30,6 @@ class window.Application extends Backbone.Router
     '': 'home'
 
   initialize: ->
+    $.cookie('time_zone', new Date().getTimezoneOffset())
+
   home: ->

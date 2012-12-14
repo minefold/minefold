@@ -67,7 +67,7 @@ class window.S3Upload
 	# parameter has been signed and is accessible for upload.
 	uploadToS3: (file, url, public_url) ->
 		this_s3upload = this
-
+		
 		xhr = @createCORSRequest 'PUT', url
 		if !xhr
 			@onError 'CORS not supported'

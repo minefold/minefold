@@ -3,64 +3,60 @@
 class Application.WorldUploadView extends Backbone.View
   @maxFileSize: 1 * 1024 * 1024 * 1024 # 1 Gb
 
+  initialize: ({@sign_url, @post_upload_url, @pusher_chan}) ->
+    channel = window.pusher.subscribe(@pusher_chan)
+    channel.bind 'update', (msg) =>
+      @$('.processing-help-block .step').text("(#{msg})")
+
+    channel.bind 'success', =>
+      @$('.help-block').hide()
+      @$('.progress').addClass('progress-success')
+      @$('.success-help-block').show()
+      window.location.reload()
+
+    channel.bind 'error', @error
+    
+
   events:
-    'a.retry': 'retry'
-
-  initialize: ({@btnText, @uploadPath, @uploadPrefix, @uploadPolicyPath}) ->
-
+    'change input.upload': 'change'
+    
   render: ->
-    @$('input[type=file]').s3upload
-      text: @btnText
-      prefix: @uploadPrefix
-      signature_url: @uploadPolicyPath
-      submit_on_all_complete: false
-      file_types: [['Archives', '*.zip']]
+    @$('.progress').hide()
 
-      onselect: @select
-      onstart: @start
-      onprogress: @progress
-      onerror: @error
-      oncomplete: @complete
-      onrollover: @rollOver
-      onrollout: @rollOut
-
-  rollOver: =>
-    @$('input[type=file]').addClass 'hover'
-
-  rollOut: =>
-    @$('input[type=file]').removeClass 'hover'
-
-  select: (info, swf) =>
-    if parseInt(info.size) < @constructor.maxFileSize
-      @$('.processing-help-block .filename').text(info.name)
-      swf.upload()
-      false
+  change: ->
+    filename = @$('input[type=file]').val()
+    
+    new S3Upload
+      s3_object_name: filename
+      file_dom_selector: 'input.upload'
+      s3_sign_put_url: @sign_url
+      onProgress: @progress
+      onFinishS3Put: @complete
+      onError: @error
+    
+    @start(filename)
 
   unloadMsg = -> 'Your upload will be lost.'
 
-  start: (a) =>
+  start: (filename) =>
     @$('.help-block').hide()
-    @$('filename').text(a.name)
+    @$('filename').text(filename)
     @$('input[type=file]').hide()
-    # @$('.progress').show()
-
-    # $('#s3upload_world_path object').hide()
-
+    @$('.progress').show().removeClass('progress-danger')
+    
     $(window).on 'beforeunload', unloadMsg
     @trigger 'start'
 
   progress: (progress, info) =>
-    percent = "#{Math.floor(progress * 100)}%"
-    @$('.progress .bar').css(width: percent)
+    @$('.progress .bar').css(width: "#{progress}%")
     false
 
   error: (msg) =>
+    @$('input[type=file]').show()
     @$('.help-block').hide()
-    @$('.help-block-error .reason').text(msg)
-    @$('.help-block-error').show()
+    @$('.error-help-block .reason').text(msg)
+    @$('.error-help-block').show()
     @$('.progress').addClass('progress-danger')
-
-    $('#s3upload_world_path').show()
 
     $(window).off 'beforeunload', unloadMsg
 
@@ -71,26 +67,12 @@ class Application.WorldUploadView extends Backbone.View
     @$('.progress').removeClass('progress-danger')
     @$('input[type=file]').show()
 
-  complete: (info) =>
+  complete: (url) =>
     @$('.help-block').hide()
     @$('.processing-help-block').show()
 
     $.ajax
       type: 'POST'
-      url: @uploadPath
-      data: info
-      dataType: 'json'
-      success: (data) =>
-        channel_name = 'WorldUpload-' + data.id
-        channel = app.pusher.subscribe(channel_name)
-
-        channel.bind 'update', (msg) =>
-          @$('.processing-help-block .step').text("(#{msg})")
-
-        channel.bind 'success', (data) =>
-          @$('.help-block').hide()
-          @$('.progress').addClass('progress-success')
-          # @$('.success-help-block').show()
-          @trigger 'success', data
-
-        channel.bind 'error', @error
+      url: @post_upload_url
+      data:
+        url: url

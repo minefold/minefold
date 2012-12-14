@@ -1,0 +1,48 @@
+.control-group#uploads
+  .control-label.form-title Upload a new world
+  .controls
+    %p Replaces the current world. Must be in Zip format.
+    %input.upload(type="file" name="uploads[]")
+
+    .progress
+      .bar{style: 'width:0%'}
+
+    %p.help-block.error-help-block{hidden}
+      There was a problem with the file.
+      %span.reason
+
+    %p.help-block.processing-help-block{hidden}
+      Processing
+      %strong.filename
+      %span.step
+
+    %p.help-block.success-help-block{hidden}
+      Successfully uploaded
+      %span.filename
+    
+  .help-block
+    - case os
+    - when :win
+      %ol
+        %li Open Explorer and navigate to <code>%APPDATA%\.minecraft\saves\</code>
+        %li You should see folders with all your Minecraft worlds here. Select the folder of the world you want to upload right mouse button click and select "Send To > Compressed Zip Folder". This will create a <code>.zip</code> file which you can upload to Minefold.
+
+    - when :mac
+      %ol
+        %li Open Finder and go to <code class="highlight">~/Library/Application Support/minecraft/saves</code>.
+        %li There should be folders with your existing Minecraft worlds. Select the folder of the world you want to upload and right mouse button click and select <span class="highlight">"Compress"</span>. This will create a file called <code class="highlight">{world name}.zip</code>.
+
+    - when :linux
+      %ol
+        %li Open up your terminal and navigate to your local world save folder: <code>cd ~/.minecraft/saves</code>
+        %li Zip up the world you want with something like <code>zip -r world.zip MyWorld</code>
+
+- content_for :tail do
+  :javascript
+    app.uploadsView = new Application.WorldUploadView({
+      el: $('#uploads'),
+      sign_url: '#{sign_server_uploads_path(server.id)}',
+      post_upload_url: '#{server_uploads_path(server.id)}',
+      pusher_chan: 'upload-#{server.id}'
+    });
+    app.uploadsView.render();

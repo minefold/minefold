@@ -9,12 +9,14 @@ class Servers::UploadsController < ApplicationController
 # --
 
   def create
-    upload = WorldUpload.create s3_key: params[:key],
-                                filename: params[:name],
-                                user: current_user
-
-    Resque.enqueue WorldUploadJob, upload.id
-    render json: { id: upload.id }
+    pusher_key = "upload-#{server.id}"
+    PartyCloud.import_world(
+      server.party_cloud_id,
+      server.funpack.party_cloud_id,
+      params[:url],
+      pusher_key
+    )
+    render nothing: true
   end
 
   def policy
@@ -29,11 +31,15 @@ class Servers::UploadsController < ApplicationController
   end
 
   def sign
-    objectName = params[:s3_object_name]
+    filename = params[:s3_object_name].
+      gsub("\\", "/").
+      gsub(/[() ]/, "").split('/').last
+
+    objectName = "#{Time.now.to_i}-#{filename}"
     mimeType = params[:s3_object_type]
     expires = Time.now.to_i + 100 # PUT request to S3 must start within 100 seconds
 
-    key = "minefold-development/#{objectName}"
+    key = "minefold-development/uploads/#{objectName}"
     s3_url = "http://s3.amazonaws.com/"
     url = "#{s3_url}#{key}"
 
@@ -43,10 +49,10 @@ class Servers::UploadsController < ApplicationController
         Base64.strict_encode64(
           OpenSSL::HMAC.digest('sha1', ENV['AWS_SECRET_KEY'], stringToSign)))
 
-      {
+      render json:({
         signed_request: CGI::escape("#{url}?AWSAccessKeyId=#{ENV['AWS_ACCESS_KEY']}&Expires=#{expires}&Signature=#{sig}"),
         url: url
-      }.to_json
+      })
   end
 
 end
