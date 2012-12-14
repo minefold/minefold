@@ -42,5 +42,10 @@ describe ActivityStream do
 
   end
 
+  describe "#each" do
+
+    it "iterates of each item"
+
+  end
 
 end

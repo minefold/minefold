@@ -1,0 +1,9 @@
+.activity[activity]
+  .avatar
+    = image_tag activity.actor.avatar.medium.url, width: 40, height: 40
+  .main
+    .info
+      .author= activity.actor.username
+      .date= l activity.created_at
+
+    .body= markdown activity.subject.body

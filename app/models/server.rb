@@ -145,4 +145,8 @@ class Server < ActiveRecord::Base
   #   end
   # end
 
+  def activity_stream
+    @activity_stream ||= ActivityStream.new(self, $redis)
+  end
+
 end

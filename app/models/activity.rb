@@ -6,12 +6,22 @@ class Activity < ActiveRecord::Base
 
   after_create :publish_async
 
+  def self.publish(*args)
+    a = self.for(*args)
+    a.save
+    a
+  end
+
   def score
     created_at.to_i
   end
 
+  def immediately_interested
+    [actor, target].compact
+  end
+
   def interested
-    [actor, subject, target].compact
+    []
   end
 
   def publish
@@ -22,7 +32,11 @@ class Activity < ActiveRecord::Base
   end
 
   def publish_async
-    Resque.enque(PublishActivityJob, self.class, id)
+    Resque.enqueue(PublishActivityJob, self.class.name, id)
+  end
+
+  def to_partial_path
+    File.join('activities', self.class.name.demodulize.underscore)
   end
 
 end

@@ -15,4 +15,11 @@ class ActivityStream
     redis.zadd(key, activity.score, activity.id)
   end
 
+  def page(n=0, limit=10)
+    offset = n * limit
+    Activity
+      .order(:created_at).reverse_order
+      .find(redis.zrevrange(key, offset, offset + limit))
+  end
+
 end

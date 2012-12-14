@@ -2,6 +2,24 @@ require 'spec_helper'
 
 describe Activity do
 
+  describe ".publish" do
+
+    it "creates an activity" do
+      mock(subject).save
+      stub(described_class).for('a', 'b', 'c') { subject }
+
+      described_class.publish('a', 'b', 'c')
+    end
+
+    it "passes any args to .for" do
+      stub(subject).save
+      mock(described_class).for('a', 'b', 'c') { subject }
+
+      described_class.publish('a', 'b', 'c')
+    end
+
+  end
+
   describe "#score" do
 
     it 'is 0 by default' do
@@ -24,11 +42,6 @@ describe Activity do
 
     it "returns a list with the actor" do
       subject.actor = model
-      expect(subject.interested).to include(model)
-    end
-
-    it "returns a list with the subject" do
-      subject.subject = model
       expect(subject.interested).to include(model)
     end
 

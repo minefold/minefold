@@ -32,16 +32,7 @@
       = f.submit 'Create post', class: %w(btn btn-small)
 
     .activity-stream
-      - server.posts.each do |post|
-        .activity
-          .avatar
-            = image_tag post.author.avatar.medium.url, width: 40, height: 40
-          .main
-            .info
-              .author= post.author.username
-              .date= l post.created_at
-
-            .body= markdown post.body
+      = render partial: server.activity_stream.page(0), :as => :activity
 
   .span4
     .player-list
