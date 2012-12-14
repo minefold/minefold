@@ -26,13 +26,14 @@
           %strong= pluralize Bonuses::Referred.coins, 'coin', 'coins'
           each.
 
-    = form_for [server, Post.new], :method => :post do |f|
-      .control-group
-        = f.text_area :body, rows: 2, placeholder: 'Write a post', class: 'span8'
-      = f.submit 'Create post', class: %w(btn btn-small)
+    - if signed_in?
+      = form_for [server, Post.new], :method => :post do |f|
+        .control-group
+          = f.text_area :body, rows: 2, placeholder: 'Write a post', class: 'span8'
+        = f.submit 'Create post', class: %w(btn btn-small)
 
-    .activity-stream
-      = render partial: server.activity_stream.page(0), :as => :activity
+      .activity-stream
+        = render partial: server.activity_stream.page(0), :as => :activity
 
   .span4
     .player-list
