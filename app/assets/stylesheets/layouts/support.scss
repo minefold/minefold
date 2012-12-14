@@ -1,8 +1,5 @@
 .l-support {
-
-  .container {
-    width: grid-width(10);
-  }
+  @include app-width(10);
 
   .support-faq {
     > .name {

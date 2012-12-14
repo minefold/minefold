@@ -1,4 +1,6 @@
 .l-page {
+  @include app-width(8);
+
   color: rgba(black, 0.4);
   font-size: 15px;
   font-weight: 500;
