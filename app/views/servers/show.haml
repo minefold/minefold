@@ -31,7 +31,7 @@
         = f.text_area :body, rows: 2, placeholder: 'Write a post', class: 'span8'
       = f.submit 'Create post', class: %w(btn btn-small)
 
-    .activity-list
+    .activity-stream
       - server.comments.each do |comment|
         .activity
           .avatar
