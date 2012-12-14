@@ -20,7 +20,7 @@ class Ability
     can [:update, :destroy], Server, creator_id: user.id
 
     # Comments
-    can [:create], Comment
+    can [:create], Post
 
     # Orders
     can [:create], Order

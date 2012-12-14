@@ -76,7 +76,7 @@ Minefold::Application.routes.draw do
 
       resources :votes, :only => [:create]
 
-      resources :comments, only: [:create], module: 'servers'
+      resources :posts, only: [:create], module: 'servers'
     end
 
     scope '/users/accounts', controller: 'accounts', :as => :accounts do

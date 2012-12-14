@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121209080752) do
+ActiveRecord::Schema.define(:version => 20121214044242) do
 
   create_table "activities", :force => true do |t|
     t.string   "type",         :null => false
@@ -44,15 +44,13 @@ ActiveRecord::Schema.define(:version => 20121209080752) do
   end
 
   create_table "comments", :force => true do |t|
-    t.integer  "server_id"
+    t.integer  "commentable_id"
+    t.string   "commentable_type"
     t.integer  "author_id"
     t.text     "body"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
-
-  add_index "comments", ["author_id"], :name => "index_comments_on_author_id"
-  add_index "comments", ["server_id"], :name => "index_comments_on_server_id"
 
   create_table "funpacks", :force => true do |t|
     t.string  "name"
@@ -119,6 +117,17 @@ ActiveRecord::Schema.define(:version => 20121209080752) do
 
   add_index "players", ["game_id"], :name => "index_players_on_game_id"
   add_index "players", ["user_id"], :name => "index_players_on_user_id"
+
+  create_table "posts", :force => true do |t|
+    t.integer  "server_id"
+    t.integer  "author_id"
+    t.text     "body"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "posts", ["author_id"], :name => "index_comments_on_author_id"
+  add_index "posts", ["server_id"], :name => "index_comments_on_server_id"
 
   create_table "servers", :force => true do |t|
     t.string   "name",                 :default => ""

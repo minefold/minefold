@@ -26,22 +26,22 @@
           %strong= pluralize Bonuses::Referred.coins, 'coin', 'coins'
           each.
 
-    = form_for [server, Comment.new], :method => :post do |f|
+    = form_for [server, Post.new], :method => :post do |f|
       .control-group
         = f.text_area :body, rows: 2, placeholder: 'Write a post', class: 'span8'
       = f.submit 'Create post', class: %w(btn btn-small)
 
     .activity-stream
-      - server.comments.each do |comment|
+      - server.posts.each do |post|
         .activity
           .avatar
-            = image_tag comment.author.avatar.medium.url, width: 40, height: 40
+            = image_tag post.author.avatar.medium.url, width: 40, height: 40
           .main
             .info
-              .author= comment.author.username
-              .date= l comment.created_at
+              .author= post.author.username
+              .date= l post.created_at
 
-            .body= markdown comment.body
+            .body= markdown post.body
 
   .span4
     .player-list

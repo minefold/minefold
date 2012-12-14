@@ -43,7 +43,7 @@ class Server < ActiveRecord::Base
 
   serialize :settings, JSON
 
-  has_many :comments, order: 'created_at DESC', :dependent => :destroy
+  has_many :posts, order: 'created_at DESC', :dependent => :destroy
 
   has_one :world, order: 'updated_at ASC', :dependent => :destroy
 

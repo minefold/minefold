@@ -1,5 +1,5 @@
 class Comment < ActiveRecord::Base
-  belongs_to :server
+  belongs_to :commentable, polymorphic: true
   belongs_to :author, class_name: 'User'
   attr_accessible :body
 end
