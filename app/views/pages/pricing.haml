@@ -2,12 +2,14 @@
 - layout :pricing
 - track 'Viewed pricing'
 
+:javascript
+  mixpanel.people.set({currency: 'minutes'});
+
 %center.page-header
   - if signed_in?
     %h1 Pricing
   - else
-    %h1 Your first #{pluralize Bonuses::GettingStarted.coins, 'coin', 'coins'} are free.
-  %h2{style: 'color:black'} Playing on Minefold servers costs <span class="highlight">1 coin per minute</span>.
+    %h1 Your first #{pluralize Bonuses::GettingStarted.coins, 'minute', 'minutes'} are free.
 
 
 .coin-pack-list.row
@@ -19,16 +21,6 @@
 
       .price= number_to_currency(pack.cents / 100, precision: 0)
       .coins Play for #{number_with_delimiter(pack.shared_hours)} hours
-
-      .doobieloob
-        %strong.poopedoop.boo
-          #{number_with_precision(pack.coins / 1000.0, precision: 1, strip_insignificant_zeros: true)}k coins
-
-        .poopedoop
-          \~ #{pack.shared_hours / 15 / 4} player months
-
-        .herptastic
-          (based on average usage)
 
       .nopa
         - if i != 0
@@ -46,7 +38,7 @@
 %hr.small.hidden
 
 %center.muted
-  %p Every #{Bonuses::CoinFairy.period / 1.day} days the coin fairy pays you a visit and gives you 600 coins for <strong>free</strong>!
+  %p Every #{Bonuses::CoinFairy.period / 1.day} days you get another #{Bonuses::CoinFairy.coins} minutes <strong>free</strong>!
 
 
 - content_for :tail do
@@ -84,7 +76,7 @@
     %p Yes! You can choose to pay for yourself or everybody who plays on your server.
 
     %h4 Will that be expensive if 100 people play on my server?
-    %p No! When you pay for your friends, we cap the cost at <span class="highlight">10 coins per minute</span>. If you have 100 people playing on your server it costs you the same as 10 people.
+    %p No! When you pay for your friends, we cap the cost at <span class="highlight">10 people per minute</span>. If you have 100 people playing on your server it costs you the same as 10 people.
 
     %h4#slots How many people can play on my server?
     %p Unlimited. Minefold's custom built hosting platform dynamically allocates resources to servers. This means that they're lag-free no matter how many of your friends are playing.

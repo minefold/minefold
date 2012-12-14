@@ -29,8 +29,6 @@
     - [144, 114, 72, 57].each do |size|
       = favicon_link_tag "apple-touch-icon-#{size}-precomposed.png", rel: 'apple-touch-icon-precomposed', sizes: "#{size}x#{size}", type: 'image/png'
 
-    = stylesheet_link_tag '//get.pictos.cc/fonts/3288/1'
-
     /[if lt IE 9]
       %script{src: '//html5shim.googlecode.com/svn/trunk/html5.js'}
     %meta{'http-equiv' => 'X-UA-Compatible', :content => 'IE=edge,chrome=1'}
