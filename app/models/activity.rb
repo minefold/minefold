@@ -4,34 +4,25 @@ class Activity < ActiveRecord::Base
   belongs_to :subject, polymorphic: true
   belongs_to :target, polymorphic: true
 
-  before_save :cache_display_data
-
-  after_create :publish_to_watchers
+  after_create :publish_async
 
   def score
-    updated_at.to_i
-  end
-
-  def display_data
-    {}
-  end
-
-  def cache_display_data
-    self.data ||= display_data
+    created_at.to_i
   end
 
   def interested
     [actor, subject, target].compact
   end
 
-  def self.perform!(id)
+  def publish
+    interested.each do |obj|
+      stream = ActivityStream.new(obj, $redis)
+      stream.add(self)
+    end
   end
 
-  def async_publish!
-  end
-
-  def publish_to_watchers
-    Resque.enqueue(PublishActivityJob, self.class.name, self.id)
+  def publish_async
+    Resque.enque(PublishActivityJob, self.class, id)
   end
 
 end
