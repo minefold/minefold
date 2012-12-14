@@ -7,6 +7,8 @@ tmp
 public/assets
 public/uploads
 dump
+
+.rspec
 coverage
 
 app/views/pages/playground.haml

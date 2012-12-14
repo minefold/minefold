@@ -5,11 +5,13 @@ class PublishActivityJob < Job
   end
 
   def perform!
-    # push the activity into the actor's stream
-    @activity.actor.add_activity_to_stream(@activity)
 
-    # push the activity into the target's stream
-    @activity.target.add_activity_to_stream(@activity)
+
+    # push the activity into the actor's stream
+    # @activity.actor.add_activity_to_stream(@activity)
+    #
+    # # push the activity into the target's stream
+    # @activity.target.add_activity_to_stream(@activity)
 
 
     # find entities connected to actor

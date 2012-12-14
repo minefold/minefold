@@ -9,16 +9,16 @@ module Concerns::Redis
       id.to_s
     end
 
-    def redis_key(id, *args)
-      [name.downcase, redis_id(id), *args].join(SEPARATOR)
+    def redis_key(id)
+      [name.downcase, redis_id(id)].join(SEPARATOR)
     end
 
   end
 
 # --
 
-  def redis_key(*args)
-    self.class.redis_key(id, *args)
+  def redis_key
+    self.class.redis_key(id)
   end
 
 end

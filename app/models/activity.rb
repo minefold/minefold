@@ -20,6 +20,16 @@ class Activity < ActiveRecord::Base
     self.data ||= display_data
   end
 
+  def interested
+    [actor, subject, target].compact
+  end
+
+  def self.perform!(id)
+  end
+
+  def async_publish!
+  end
+
   def publish_to_watchers
     Resque.enqueue(PublishActivityJob, self.class.name, self.id)
   end

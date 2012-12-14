@@ -56,7 +56,7 @@ module Minefold
     config.generators do |g|
       g.orm :active_record
       g.template_engine :haml
-      g.test_framework :test_unit, fixture: true
+      g.test_framework :rspec, fixture: false
       g.fixture_replacement :machinist
 
       g.stylesheets = false

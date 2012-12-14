@@ -87,24 +87,6 @@ class ServersController < ApplicationController
     respond_with(server)
   end
 
-  def watch
-    authorize! :read, server
-    current_user.watch(server)
-
-    track 'Watched server',
-      name: server.name,
-      url: server_url(server)
-
-    respond_with(server)
-  end
-
-  def unwatch
-    authorize! :read, server
-    current_user.unwatch(server)
-    respond_with(server)
-  end
-
-
   def destroy
     authorize! :destroy, server
 
