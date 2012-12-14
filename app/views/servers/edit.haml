@@ -2,21 +2,14 @@
 - layout :servers
 = render partial: 'page_header', locals: {server: server}
 
-- provide :breakout do
-  .page-header
-    .container
-      .title-bar
-        .actions
-        %h1.title= link_to server.name, server_path(server)
+.page-header
+  %h1= link_to server.name, server_path(server)
 
-    .subnav
-      .container
-        %ul.nav.nav-table
-          %li= link_to 'Activity', server
-          - if server.game.maps?
-            %li= link_to 'Map', [:map, server]
-          - if can? :update, server
-            %li.active= link_to 'Settings', [:edit, server]
+%ul.nav.nav-tabs
+  %li= link_to 'Activity', server
+  - if server.game.maps?
+    %li= link_to 'Map', [:map, server]
+  %li.active= link_to 'Settings', [:edit, server]
 
 
 / TODO This is a hack
