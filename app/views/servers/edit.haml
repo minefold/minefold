@@ -94,11 +94,15 @@
 / --
 
 
-- if server.world
-  .form-block.row
-    .form-title.span2 World
 
-    .span7
+
+.form-block.row
+  .form-title.span2 World
+  
+  .span7
+    = render partial: 'upload', locals: {server: server}
+    
+    - if server.world
       %p
         Last backup at #{I18n.l server.world.updated_at}
         &middot;
@@ -111,8 +115,6 @@
           Forked from
           = link_to parent.name, server_path(parent)
           by #{parent.creator.username}.
-
-      / = render partial: 'upload', locals: {server: server}
 
 / --
 
