@@ -100,7 +100,7 @@
 
     .span7
       %p
-        Last backup at #{l server.world.created_at}
+        Last backup at #{I18n.l server.world.updated_at}
         &middot;
         = link_to 'Download archive', party_cloud_world_download_url(server)
 
@@ -112,25 +112,9 @@
           = link_to parent.name, server_path(parent)
           by #{parent.creator.username}.
 
-      - # if world uploads gets done!
-      - if false
-        .control-group
-          .control-label Upload a new world
-          .controls
-            - content_for :tail do
-              = javascript_include_tag 'https://api.filepicker.io/v1/filepicker.js'
-              :javascript
-                filepicker.setKey(#{ENV['FILEPICKER'].to_json});
-
-            %p Replaces the current world. Must be in Zip format.
-
-            %p.alert This is irreversible and <i>all existing data will be lost forever</i>.
-
-            %input{type: 'filepicker-dragdrop', data: {'fp-class' => 'filepicker filepicker-dragdrop', 'fp-button-class' => 'btn btn-mini', 'fp-button-text' => 'Choose world archive', 'fp-mimetype' => 'application/zip', 'fp-openTo' => 'COMPUTER'}}
-
+      = render partial: 'upload', locals: {server: server}
 
 / --
-
 
 .form-block.row
   .form-title.span2 Gameplay

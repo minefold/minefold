@@ -11,8 +11,8 @@ class PartyCloud
     enqueue 'StopServerJob', pc_server_id
   end
 
-  def self.import_world(world_id, url)
-    enqueue 'FetchWorldJob', world_id, url
+  def self.import_world(pc_server_id, funpack_id, url, reply_key)
+    enqueue 'ImportWorldJob', pc_server_id, funpack_id, url, reply_key
   end
 
   def self.kick_player(pc_server_id, player_uid, msg)

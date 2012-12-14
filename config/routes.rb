@@ -47,7 +47,6 @@ Minefold::Application.routes.draw do
     get :certificate, :on => :member
   end
 
-
   # Authenticated routes
   as :user do
 
@@ -77,6 +76,12 @@ Minefold::Application.routes.draw do
       resources :votes, :only => [:create]
 
       resources :posts, only: [:create], module: 'servers'
+
+      resources :uploads, only: [:create], module: 'servers' do
+        collection do
+          get :sign
+        end
+      end
     end
 
     scope '/users/accounts', controller: 'accounts', :as => :accounts do

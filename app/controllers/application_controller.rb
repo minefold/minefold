@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :set_mixpanel_distinct_id
   before_filter :set_invitation_token
+  before_filter :set_timezone
 
   before_bugsnag_notify :add_user_info_to_bugsnag
 
@@ -57,6 +58,11 @@ private
                               email: current_user.email,
                               username: current_user.username)
     end
+  end
+
+  def set_timezone
+    min = (request.cookies["time_zone"] || 0).to_i
+    Time.zone = ActiveSupport::TimeZone[-min.minutes]
   end
 
 
