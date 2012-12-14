@@ -16,12 +16,8 @@ class Activity < ActiveRecord::Base
     created_at.to_i
   end
 
-  def immediately_interested
-    [actor, target].compact
-  end
-
   def interested
-    []
+    [actor, target].compact
   end
 
   def publish

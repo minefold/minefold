@@ -29,6 +29,12 @@ class GiftsController < ApplicationController
 
   end
 
+  def pooper
+  end
+
+  def redeem
+  end
+
   def cheers
   end
 

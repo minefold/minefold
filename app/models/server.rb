@@ -119,32 +119,6 @@ class Server < ActiveRecord::Base
   end
 
 
-  # after_create :trigger_created_activity
-  #
-  # def trigger_created_activity
-  #   a = Activities::CreatedServer.new
-  #   a.actor = creator
-  #   a.target = self
-  #   a.save!
-  # end
-  #
-  # def activity_stream(n=10, offset=0)
-  #   Activity.where(id: $redis.zrange("server:#{id}:stream", offset, n)).order(:created_at).reverse_order.all
-  # end
-  #
-  # def add_activity_to_stream(activity)
-  #   $redis.zadd("server:#{id}:stream", activity.score, activity.id)
-  # end
-
-
-  # before_destroy :clear_associated_watchers
-  #
-  # def clear_associated_watchers
-  #   $redis.smembers(redis_watchers_key).each do |id|
-  #     $redis.srem "user:#{id}:watching", redis_key
-  #   end
-  # end
-
   def activity_stream
     @activity_stream ||= ActivityStream.new(self, $redis)
   end
