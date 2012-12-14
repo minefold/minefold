@@ -1,40 +1,35 @@
-.comments {
-  padding-bottom: l(0);
+.activity-list {
 
-  .new-comment-form {
-    margin-bottom: l(4);
+  .activity {
+    @include clearfix;
 
-    textarea {
-      width: 100%;
-      height: l(3);
-      resize: none;
-    }
-  }
+    padding-bottom: l(1);
+    border-bottom: 1px solid rgba(black, 0.05);
+    margin-bottom: l(1);
 
-  .comment {
-    margin-bottom: l(2);
-
-    .comment-body {
-      font-size: 16px;
-      line-height: l(3);
-    }
-  }
-
-  .new-comment-form .comment-meta,
-  .comment .comment-meta {
-    margin-bottom: l(0.5);
-
-    > .comment-author {
-      font-weight: 600;
+    .avatar {
+      float: left;
+      margin-right: $gw-gutter;
     }
 
-    > .comment-date {
-      color: darken(white, 40%);
-      opacity: 0;
-    }
+    .main {
+      float: left;
+      width: grid-width(8) - 40px - $gw-gutter;
 
-    &:hover > .comment-date {
-      opacity: 1;
+      .info {
+        @include clearfix;
+
+        .author {
+          font-weight: 600;
+          float: left;
+        }
+
+        .date {
+          float: right;
+          font-size: 11px;
+          color: rgba(black, 0.4);
+        }
+      }
     }
   }
 }

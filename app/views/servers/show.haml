@@ -6,14 +6,6 @@
   .page-header
     .container
       .title-bar
-        .actions
-          - disabled = server.votes.where(ip: request.remote_ip).where('created_at > ?', 1.hour.ago).exists?
-          - if disabled
-            = button_to "[#{server.votes.count}] Voted!", server_votes_path(server), method: 'post', class: %w(btn btn-small btn-primary btn-vote), data: {toggle: 'button'}, disabled: disabled
-          - else
-            = button_to "[#{server.votes.count}] Vote for this server!", server_votes_path(server), method: 'post', class: %w(btn btn-small btn-primary btn-vote), data: {toggle: 'button'}, disabled: disabled
-
-
         %h1.title= link_to server.name, server_path(server)
 
     .subnav
@@ -25,79 +17,58 @@
           - if can? :update, server
             %li= link_to 'Settings', [:edit, server]
 
-- content_for :tail do
-  :javascript
-    $('.btn-vote').click(function(e) {
-      e.preventDefault();
+.row
+  .span8
+    - if signed_in?
+      .alert.alert-info
+        = link_to invitation_path(current_user.invitation_token) do
+          Invite a friend to play here an earn an extra
+          %strong= pluralize Bonuses::Referred.coins, 'coin', 'coins'
+          each.
 
-      $(this).val('Voted!').attr('disabled', true);
+    = form_for [server, Comment.new], :method => :post do |f|
+      .control-group
+        = f.text_area :body, rows: 2, placeholder: 'Write a post', class: 'span8'
+      = f.submit 'Create post', class: %w(btn btn-small)
 
-      var form = $(this).parents('form');
+    .activity-list
+      - server.comments.each do |comment|
+        .activity
+          .avatar
+            = image_tag comment.author.avatar.medium.url, width: 40, height: 40
+          .main
+            .info
+              .author= comment.author.username
+              .date= l comment.created_at
 
-      $.post(form.attr('action'));
+            .body= markdown comment.body
 
-    });
+  .span4
+    .player-list
+      - online = PartyCloud.players_online(server.party_cloud_id)
+      - server.player_uids.each do |username|
+        .player{class: online.include?(username) && "is-online"}
+          .avatar
+            = image_tag "https://minotar.net/helm/#{username}/30.png", alt: username, width: 30, height: 30
 
-.server-meta
-  .tidbits
-    .tidbit
-      %strong.key.highlight{style: 'color:black'}
-        - if server.shared?
-          Minefold account needed to play
-        - else
-          #{server.creator.username} is paying for everybody
+    %dl
+      %dt Owner
+      %dd= server.creator.username
 
-    .tidbit
-      %span.key Owner
-      %span.val= server.creator.username
+      %dt Game
+      %dd= server.funpack.game.name
 
-    .tidbit
-      %span.key Game
-      %span.val= server.funpack.game.name
+      %dt Funpack
+      %dd= server.funpack.name
 
-    .tidbit
-      %span.key Funpack
-      %span.val= server.funpack.name
+      %dt Created
+      %dd= l server.created_at, :format => :date
 
-    .tidbit
-      %span.key Created
-      %span.val= l server.created_at, :format => :date
+      - if server.up?
+        %dt Address
+        %dd.server-address= server.address
 
-    - if server.up?
-      .tidbit
-        %span.key Address
-        %span.val.server-address= server.address
-
-  - # TODO: Hack for Minecraft!
-  .player-list
-    - online = PartyCloud.players_online(server.party_cloud_id)
-    - server.player_uids.each do |username|
-      .player{class: online.include?(username) && "online"}
-        = image_tag "https://minotar.net/helm/#{username}/24.png", class: 'image-circle', alt: username, width: 24, height: 24
-
-  - if signed_in?
-    .span7
-      %a{href: url_for(:controller => :invitations, :action => :show, invitation_token: current_user.invitation_token)}== Invite friends for an extra <strong>#{pluralize Bonuses::Referred.coins, 'coin', 'coins'}</strong>
-
-.comments
-  - if signed_in?
-    = form_for [server, Comment.new], method: 'POST', html: {class: %w(new-comment-form row)} do |f|
-      .span1
-        = image_tag current_user.avatar.medium.url, width: 60, height: 60
-
-      .span7
-        = f.text_area :body, rows: 2
-        = f.submit 'Post comment', class: %w(btn)
-
-  - server.comments.each do |comment|
-    .comment.row
-      .span1
-        = image_tag comment.author.avatar.medium.url, width: 60, height: 60
-      .span7
-        .comment-meta
-          %span.comment-author= comment.author.username
-          %span.comment-date
-            at
-            = comment.created_at.strftime('%l:%M%P on %-d/%-m/%Y')
-        .comment-body
-          = markdown comment.body
+    - if not server.shared?
+      .alert.alert-success
+        %strong= server.creator.username
+        is sponsoring this server.
