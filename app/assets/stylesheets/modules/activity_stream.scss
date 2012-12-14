@@ -7,7 +7,7 @@
     border-bottom: 1px solid rgba(black, 0.05);
     margin-bottom: l(1);
 
-    .avatar {
+    .image {
       float: left;
       margin-right: $gw-gutter;
     }
@@ -19,16 +19,16 @@
       .info {
         @include clearfix;
 
-        .author {
-          font-weight: 600;
-          float: left;
-        }
-
         .date {
           float: right;
           font-size: 11px;
           color: rgba(black, 0.4);
         }
+
+        .actor {
+          font-weight: 600;
+        }
+
       }
     }
   }

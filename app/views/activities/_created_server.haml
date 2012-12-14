@@ -1,8 +1,10 @@
 .activity[activity]
-  .image
-    = image_tag activity.actor.avatar.medium.url
+  .image{style: "margin-left:20px"}
+    = image_tag activity.actor.avatar.small.url, width: 20, height: 20
 
-  .body
-    .actor= link_to activity.actor.username, activity.actor
-    created server
-    .target= link_to activity.target.name, activity.target
+  .main
+    .info
+      %span.actor= activity.actor.username
+      created the server
+      %span.target= link_to activity.target.name, activity.target
+      .date= l activity.created_at

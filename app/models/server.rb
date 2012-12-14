@@ -123,4 +123,10 @@ class Server < ActiveRecord::Base
     @activity_stream ||= ActivityStream.new(self, $redis)
   end
 
+  after_create :create_activity
+
+  def create_activity
+    Activities::CreatedServer.publish(self)
+  end
+
 end
