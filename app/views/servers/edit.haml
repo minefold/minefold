@@ -99,8 +99,9 @@
 .form-block.row
   .form-title.span2 World
   
-  .span7
-    / = render partial: 'upload', locals: {server: server}
+  .span8
+    .well
+      = render partial: 'upload', locals: {server: server}
     
     - if server.world
       %p

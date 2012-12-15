@@ -1,15 +1,16 @@
 .control-group#uploads
-  .control-label.form-title Upload a new world
   .controls
-    %p Replaces the current world. Must be in Zip format.
+    %p.help-block.intro-help-block Upload a new world
     %input.upload(type="file" name="uploads[]")
-
-    .progress
-      .bar{style: 'width:0%'}
 
     %p.help-block.error-help-block{hidden}
       There was a problem with the file.
       %span.reason
+
+    %p.help-block.uploading-help-block{hidden}
+      Uploading
+      %strong.filename
+      %span.step
 
     %p.help-block.processing-help-block{hidden}
       Processing
@@ -19,6 +20,9 @@
     %p.help-block.success-help-block{hidden}
       Successfully uploaded
       %span.filename
+
+    .progress
+      .bar{style: 'width:0%'}
     
   .help-block
     - case os
@@ -43,6 +47,7 @@
       el: $('#uploads'),
       sign_url: '#{sign_server_uploads_path(server.id)}',
       post_upload_url: '#{server_uploads_path(server.id)}',
-      pusher_chan: 'upload-#{server.id}'
+      pusher_chan: 'upload-#{server.id}',
+      progress_factor: 0.9
     });
     app.uploadsView.render();

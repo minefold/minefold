@@ -3,7 +3,7 @@
 class Application.WorldUploadView extends Backbone.View
   @maxFileSize: 1 * 1024 * 1024 * 1024 # 1 Gb
 
-  initialize: ({@sign_url, @post_upload_url, @pusher_chan}) ->
+  initialize: ({@sign_url, @post_upload_url, @pusher_chan, @progress_factor}) ->
     channel = window.pusher.subscribe(@pusher_chan)
     channel.bind 'update', (msg) =>
       @$('.processing-help-block .step').text("(#{msg})")
@@ -11,6 +11,7 @@ class Application.WorldUploadView extends Backbone.View
     channel.bind 'success', =>
       @$('.help-block').hide()
       @$('.progress').addClass('progress-success')
+      @$('.progress .bar').css(width: "100%")
       @$('.success-help-block').show()
       window.location.reload()
 
@@ -40,15 +41,15 @@ class Application.WorldUploadView extends Backbone.View
 
   start: (filename) =>
     @$('.help-block').hide()
-    @$('filename').text(filename)
     @$('input[type=file]').hide()
+    @$('.uploading-help-block').show()
     @$('.progress').show().removeClass('progress-danger')
     
     $(window).on 'beforeunload', unloadMsg
     @trigger 'start'
 
   progress: (progress, info) =>
-    @$('.progress .bar').css(width: "#{progress}%")
+    @$('.progress .bar').css(width: "#{progress * @progress_factor}%")
     false
 
   error: (msg) =>
@@ -57,15 +58,11 @@ class Application.WorldUploadView extends Backbone.View
     @$('.error-help-block .reason').text(msg)
     @$('.error-help-block').show()
     @$('.progress').addClass('progress-danger')
+    @$('.progress .bar').css(width: "100%")
 
     $(window).off 'beforeunload', unloadMsg
 
     @trigger 'error'
-
-  retry: (e) =>
-    e.preventDefault()
-    @$('.progress').removeClass('progress-danger')
-    @$('input[type=file]').show()
 
   complete: (url) =>
     @$('.help-block').hide()
