@@ -25,7 +25,7 @@
 
     grid = new Application.PipesView.Grid(w, h + 1, scaleX, scaleY);
 
-    every(500, function() {
+    every(100, function() {
       var pt, pipe;
 
       pt = new Application.PipesView.Pt(rand(w), 0);
@@ -37,24 +37,7 @@
       }
     });
 
-- content_for :tail do
-  :javascript
-    $('.server .btn-vote').click(function(e) {
-      e.preventDefault();
-
-      $(this).val('Voted!').attr('disabled', true);
-
-      var form = $(this).parents('form');
-
-      $.post(form.attr('action'));
-
-    });
-
-
-%a.announcement.section.christmas-gift{href: xmas_promo_path}
-  Give someone Minefold this Christmas and you'll get an extra <strong>360 coins</strong> for free!
-
-%section.games-list
+%section.game-list
   - @featured_games.each do |game, servers_count|
     .game
       = image_tag 'homepage_games/minecraft.png', class: 'north-west-to-south-east'

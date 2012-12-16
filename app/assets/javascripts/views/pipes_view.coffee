@@ -1,5 +1,25 @@
 #= require 'raphael'
 
+# Picks a random key from an object whose values are weights
+weightedRandom = (weights) ->
+  vals = _.keys(weights)
+
+  # console.log weights
+
+  limit = _.chain(weights).values().inject(((i, sum) -> sum + i), 0).value()
+
+  r = Math.random() * limit
+
+  sortedPairs = _.chain(weights).pairs().sortBy((p) -> p[1]).value()
+
+  mark = 0
+
+  for [val, weight] in sortedPairs
+    mark += weight
+    return val if r <= mark
+
+# --
+
 class Pt
   constructor: (@x, @y) ->
 
@@ -11,6 +31,8 @@ class Grid
     e: new Pt( 1,  0)
     s: new Pt( 0,  1)
     w: new Pt(-1,  0)
+
+  @Dirs = _.keys(@Compass)
 
   constructor: (@width, @height, @scaleX, @scaleY) ->
     @_grid = new Array(@height)
@@ -47,31 +69,29 @@ class Grid
 
 # --
 
+
 class Pipe
-  @Dirs = ['n', 'e', 's', 'w']
 
-  @randomDir = ->
-    r = Math.random()
-    return if r < 0.1
-      'n'
-    else if 0.1 <= r < 0.3
-      'w'
-    else if 0.3 <= r < 0.5
-      'e'
-    else
-      's'
+  @DirWeights = {
+    n: 0.1
+    e: 0.2
+    s: 0.5
+    w: 0.2
+  }
 
-  speed: 300
+  speed: 600
+
   attrs: ->
     {
       stroke: 'white'
       'stroke-width': 6
-      opacity: 0.1 + (Math.random() * 0.1)
+      opacity: 0.05 + (Math.random() * 0.2)
     }
 
   constructor: (@grid, start) ->
     @pts = []
     @add(start)
+    @lastDir = 's'
 
   add: (pt) ->
     @grid.acquire(pt)
@@ -82,17 +102,31 @@ class Pipe
     @grid.release(pt) for pt in @pts
     @elm.remove()
 
-  seek: ->
-    dir = @constructor.randomDir()
-    pt = @grid.peek(@head, dir)
-    [dir, pt]
+  move: (space) ->
+    space or= (
+      keys = _.keys(@constructor.DirWeights)
+      i = _.indexOf(keys, @lastDir)
+      keys.splice((i + 2) % keys.length, 1)
+      keys
+    )
 
-  move: ->
-    [dir, pt] = @seek()
+    # Pick a direction
+    dir = weightedRandom(_.pick(@constructor.DirWeights, space...))
+
+    pt = @grid.peek(@head, dir)
+
     if @grid.isFree(pt)
+      @lastDir = dir
       @add(pt)
+
     else if @grid.isUnbound(pt)
-      @move()
+      # Removes the pt from the search space
+      i = _.indexOf(space, dir)
+      space.splice(i, 1)
+
+      # Try again with the smaller search space
+      @move(space)
+
 
   isAlive: ->
     @grid.isUnbound(@head)
@@ -117,6 +151,8 @@ class Pipe
 
     else
       @elm.animate {opacity: 0}, @speed * 2, @remove
+
+
 
 
 # --
