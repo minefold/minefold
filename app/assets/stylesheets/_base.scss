@@ -22,15 +22,15 @@ header {
       background: white;
       border: none;
 
-      h1 {
+      .brand {
         padding-top: 0; padding-bottom: 0;
         margin-top: 0; margin-bottom: 0;
 
         a {
           display: block;
           font-weight: 600;
-          color: $red;
-          font-size: 24px;
+          color: black;
+          font-size: 20px;
           line-height: l(4);
         }
       }

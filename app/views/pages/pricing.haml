@@ -2,14 +2,10 @@
 - layout :pricing
 - track 'Viewed pricing'
 
-:javascript
-  mixpanel.people.set({currency: 'minutes'});
-
-%center.page-header
-  - if signed_in?
-    %h1 Pricing
-  - else
-    %h1 Your first #{pluralize Bonuses::GettingStarted.coins, 'minute', 'minutes'} are free.
+- provide :breakout do
+  .hero-unit.jumbo
+    %h1 Pay when you play
+    %h2 Your first #{pluralize Bonuses::GettingStarted.coins, 'minute', 'minutes'} are free.
 
 
 .coin-pack-list.row

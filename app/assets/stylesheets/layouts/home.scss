@@ -1,8 +1,15 @@
 .l-home {
 
-  .hero-unit {
-    background-color: lighten($blue, 0%);
+  .hero-unit,
+  .game-list,
+  .feature-list,
+  .call-to-action,
+  .press {
     margin-bottom: l(4);
+  }
+
+  .hero-unit {
+    background-color: desaturate($blue, 20%);
 
     h1 {
       color: white;
@@ -11,10 +18,6 @@
     h2 {
       color: darken($blue, 20%);
     }
-  }
-
-  section, .section {
-    margin-bottom: l(4);
   }
 
   .announcement {
@@ -26,7 +29,7 @@
     font-size: 16px;
   }
 
-  .games-list {
+  .game-list {
     margin-left: - $gw-gutter;
     @include clearfix;
 

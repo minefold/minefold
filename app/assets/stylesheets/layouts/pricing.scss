@@ -1,40 +1,12 @@
 .l-pricing {
 
-  .container {
-    width: grid-width(12);
-  }
+  .hero-unit {
+    background-color: desaturate(lighten($blue, 20%), 20%);
 
-  .stuff-to-buy {
-    margin-bottom: l(2);
-
-    .a, .b {
-      @include box-sizing(border-box);
-
-//      background-color: rgba(black, 0.05);
-      padding: l() $gw-gutter;
-      text-align: center;
-
-      .bar, .foo {
-        color: rgba(black, 0.4);
-      }
-
-      .big {
-        font-size: 36px;
-        line-height: l(3);
-        font-family: $geometric;
-        font-weight: 600;
-
-        margin-top: l();
-        margin-bottom: l();
-
-        .per {
-          font-size: 18px;
-          line-height: l(3);
-        }
-      }
+    h1 {
+      color: white;
     }
   }
-
 
   .coin-pack-list {
     width: grid-width(9);
