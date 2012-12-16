@@ -56,9 +56,11 @@ class User < ActiveRecord::Base
   friendly_id :username, :use => :slugged
 
   mount_uploader :avatar, AvatarUploader do
+
     def store_dir
       File.join(model.class.name.downcase.pluralize, mounted_as.to_s, model.id.to_s)
     end
+
   end
 
   def name
@@ -100,38 +102,6 @@ class User < ActiveRecord::Base
   end
 
 # --
-
-  def activity_stream(n=10, offset=0)
-    Activity.where(id: $redis.zrange("user:#{id}:stream", offset, n)).order(:created_at).reverse_order.all
-  end
-
-  def add_activity_to_stream(activity)
-    $redis.zadd("user:#{id}:stream", activity.score, activity.id)
-  end
-
-# --
-
-  def watching
-    Server.find($redis.smembers(redis_key(:watching)))
-  end
-
-  def watching?(server)
-    $redis.sismember(redis_key(:watching), server.id)
-  end
-
-  def watch(server)
-    $redis.multi do |transaction|
-      transaction.sadd(redis_key(:watching), server.id)
-      transaction.sadd(server.redis_key(:watchers), id)
-    end
-  end
-
-  def unwatch(server)
-    $redis.multi do |transaction|
-      transaction.srem(redis_key(:watching), server.id)
-      transaction.srem(server.redis_key(:watchers), id)
-    end
-  end
 
   before_create :generate_distinct_id
 
