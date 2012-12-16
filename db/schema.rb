@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121216145813) do
+ActiveRecord::Schema.define(:version => 20121216163246) do
 
   create_table "accounts", :force => true do |t|
     t.string   "type"
@@ -130,6 +130,16 @@ ActiveRecord::Schema.define(:version => 20121216145813) do
   add_index "posts", ["author_id"], :name => "index_comments_on_author_id"
   add_index "posts", ["server_id"], :name => "index_comments_on_server_id"
 
+  create_table "server_sessions", :force => true do |t|
+    t.integer  "server_id"
+    t.datetime "started_at"
+    t.datetime "ended_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "server_sessions", ["server_id"], :name => "index_sessions_on_server_id"
+
   create_table "servers", :force => true do |t|
     t.string   "name",                 :default => ""
     t.integer  "creator_id"
@@ -152,15 +162,15 @@ ActiveRecord::Schema.define(:version => 20121216145813) do
   add_index "servers", ["deleted_at", "host", "port"], :name => "index_servers_on_deleted_at_and_host_and_port"
   add_index "servers", ["party_cloud_id"], :name => "index_servers_on_party_cloud_id", :unique => true
 
-  create_table "sessions", :force => true do |t|
-    t.integer  "server_id"
+  create_table "user_sessions", :force => true do |t|
+    t.integer  "server_session_id"
+    t.string   "username"
+    t.integer  "user_id"
     t.datetime "started_at"
     t.datetime "ended_at"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
   end
-
-  add_index "sessions", ["server_id"], :name => "index_sessions_on_server_id"
 
   create_table "users", :force => true do |t|
     t.string   "username",                               :default => ""

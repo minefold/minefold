@@ -35,7 +35,7 @@ class Server < ActiveRecord::Base
 
   has_one :world, order: 'updated_at ASC', :dependent => :destroy
 
-  has_many :sessions do
+  has_many :sessions, :class_name => 'ServerSession' do
 
     def current
       active.first_or_initialize
