@@ -40,16 +40,6 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :username, :allow_nil => false, :allow_blank => false
 
 
-  # NOTE: there arn't any User emails here. They can't be turned off for the
-  # moment.
-  store :notifications, accessors: [
-    :campaign_mailer,
-    :server_mailer,
-    :session_mailer
-  ]
-
-  attr_accessible :campaign_mailer, :server_mailer, :session_mailer
-
   uniquify :invitation_token, length: 12
   uniquify :verification_token, length: 12
 

@@ -84,28 +84,6 @@
     %p
       %a.btn.btn-info.buy-coins{href: getcoins_page_path} Get more coins
 
-.form-block.row#notifications
-  .form-title.span2 Notifications
-
-  .span6
-    = form_for resource, method: :put do |f|
-
-      .control-group
-        .controls
-          = f.label :campaign_mailer, class: %w(checkbox) do
-            = f.check_box :campaign_mailer
-            Minefold newsletters
-
-          = f.label :server_mailer, class: %w(checkbox) do
-            = f.check_box :server_mailer
-            Comments on servers
-
-          = f.label :session_mailer, class: %w(checkbox) do
-            = f.check_box :session_mailer
-            Servers starting & stopping
-
-      = f.submit 'Save', class: %w(btn btn-primary)
-
 
 .form-block.row#password
   .form-title.span2 Password
