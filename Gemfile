@@ -58,6 +58,8 @@ group :test do
   gem 'faker'
   gem 'timecop'
   gem 'fakeweb'
+
+  gem 'ZenTest'
 end
 
 group :worker do
@@ -68,7 +70,7 @@ end
 group :assets do
   gem 'coffee-rails'
   gem 'jquery-rails'
-  gem 'backbone-rails'
+  gem 'rails-backbone'
   gem 'uglifier'
 end
 
