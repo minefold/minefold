@@ -43,23 +43,27 @@
 
           .span5
             = form_for resource, :method => :put do |f|
-              .control-group.tight
+              .control-group
+                = f.label :username, class: 'control-label'
                 .controls
-                  = f.text_field :username, placeholder: 'Username', class: %w(span3)
+                  = f.text_field :username, placeholder: 'Username'
+                = f.label :first_name, 'Name', class: 'control-label'
                 .controls
                   = f.text_field :first_name, placeholder: 'First name', class: %w(span2)
                   = f.text_field :last_name, placeholder: 'Last name', class: %w(span2)
+
+                = f.label :email, class: 'control-label'
                 .controls
                   = f.email_field :email, placeholder: 'Email', class: %w(span4)
                   - if not f.object.confirmed?
-                    %small.help-block
+                    %p.help-block
                       %span.highlight #{f.object.email} is unconfirmed
                       &middot;
                       - # TODO This is a hack and not very nice
                       = link_to 'Resend confirmation', user_confirmation_path(user: {email: f.object.email}), method: 'POST'
 
                   - if f.object.pending_reconfirmation?
-                    %small.help-block
+                    %p.help-block
                       %span.highlight  #{f.object.unconfirmed_email} is unconfirmed
                       &middot;
                       - # TODO This is a hack and not very nice
