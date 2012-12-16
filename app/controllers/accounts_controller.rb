@@ -3,32 +3,27 @@ class AccountsController < ApplicationController
 
   prepend_before_filter :authenticate_user!
 
-  def use_facebook_photo
-  end
+# --
 
-  def unlink_facebook
-    current_user.facebook_uid = nil
-    current_user.save
+  expose(:account)
 
-    flash[:notice] = 'Facebook account unlinked'
+# --
+
+  def destroy
+    authorize! :destroy, current_user
+
+    account.destroy
+
+    # TODO Check if the user is playing on a server that uses this account type and kick them if they are.
+
+    flash[:notice] = 'Account unlinked'
     redirect_to edit_user_registration_path
   end
 
-  def use_minecraft_photo
-  end
+# --
 
-  def link_minecraft
-    render layout: false
-  end
-
-  def unlink_minecraft
-    @players = current_user.players.minecraft.each do |player|
-      player.user = nil
-      player.save
-    end
-
-    flash[:notice] = 'Minecraft account unlinked'
-    redirect_to edit_user_registration_path
+  def link_mojang
+    render layout: nil
   end
 
 end

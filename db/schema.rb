@@ -11,7 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121214093258) do
+ActiveRecord::Schema.define(:version => 20121216092819) do
+
+  create_table "accounts", :force => true do |t|
+    t.string   "type"
+    t.integer  "user_id"
+    t.string   "uid"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "accounts", ["type"], :name => "index_players_on_game_id"
+  add_index "accounts", ["user_id"], :name => "index_players_on_user_id"
 
   create_table "activities", :force => true do |t|
     t.string   "type",         :null => false
@@ -106,17 +117,6 @@ ActiveRecord::Schema.define(:version => 20121214093258) do
   add_index "memberships", ["server_id"], :name => "index_memberships_on_server_id"
   add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
 
-  create_table "players", :force => true do |t|
-    t.integer  "game_id"
-    t.integer  "user_id"
-    t.string   "uid"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "players", ["game_id"], :name => "index_players_on_game_id"
-  add_index "players", ["user_id"], :name => "index_players_on_user_id"
-
   create_table "posts", :force => true do |t|
     t.integer  "server_id"
     t.integer  "author_id"
@@ -165,7 +165,6 @@ ActiveRecord::Schema.define(:version => 20121214093258) do
     t.string   "slug",                                   :default => ""
     t.string   "email"
     t.string   "encrypted_password",                     :default => "",    :null => false
-    t.string   "facebook_uid"
     t.boolean  "admin",                                  :default => false, :null => false
     t.string   "first_name"
     t.string   "last_name"
@@ -198,8 +197,8 @@ ActiveRecord::Schema.define(:version => 20121214093258) do
     t.datetime "last_coin_fairy_visit_at"
     t.string   "invitation_token",         :limit => 12
     t.integer  "invited_by_id"
-    t.string   "verification_token",       :limit => 12
     t.boolean  "beta",                                   :default => false
+    t.string   "verification_token",       :limit => 12
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
@@ -207,7 +206,6 @@ ActiveRecord::Schema.define(:version => 20121214093258) do
   add_index "users", ["deleted_at", "invitation_token"], :name => "index_users_on_deleted_at_and_invitation_token", :unique => true
   add_index "users", ["deleted_at", "verification_token"], :name => "index_users_on_deleted_at_and_verification_token", :unique => true
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
-  add_index "users", ["facebook_uid"], :name => "index_users_on_facebook_uid", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["slug"], :name => "index_users_on_slug", :unique => true
   add_index "users", ["username"], :name => "index_users_on_username", :unique => true

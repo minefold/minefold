@@ -29,10 +29,10 @@
     .description.span5.offset1
       %h2.name Linking with Facebook
     .reward.span2
-      .coins= pluralize Bonuses::LinkedFacebook.coins, 'coin', 'coins'
+      .coins= pluralize Bonuses::LinkedFacebookAccount.coins, 'coin', 'coins'
 
   %a.bonus.bonus-mini.row{href: edit_user_registration_path(anchor: 'accounts')}
     .description.span5.offset1
       %h2.name Linking with Minecraft
     .reward.span2
-      .coins= pluralize Bonuses::LinkedMinecraft.coins, 'coin', 'coins'
+      .coins= pluralize Bonuses::LinkedMojangAccount.coins, 'coin', 'coins'

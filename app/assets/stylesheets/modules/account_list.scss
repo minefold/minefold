@@ -1,0 +1,39 @@
+.account-list {
+
+  > .account {
+    margin-bottom: l(2);
+    color: darken(white, 20%);
+
+    > .profile-image {
+      float: left;
+
+      width: $gw-gutter * 2;
+      height: $gw-gutter * 2;
+
+      background-color: rgba(black, 0.1);
+      background-repeat: no-repeat;
+
+      margin-right: $gw-gutter / 2;
+    }
+
+    .account-list-unlink {
+      color: $red;
+
+      &:hover {
+        color: darken($red, 10%);
+      }
+    }
+
+    &.accounts_facebook > .profile-image {
+      background-image: url(image-path('accounts/facebook.png'));
+    }
+
+    &.accounts_mojang > .profile-image {
+      background-image: url(image-path('accounts/mojang.png'));
+    }
+
+    &.is-linked  {
+      color: black;
+    }
+  }
+}

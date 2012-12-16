@@ -12,10 +12,18 @@ class User < ActiveRecord::Base
 
   acts_as_paranoid
 
-  has_many :players, :autosave => true do
+  has_many(:accounts, :autosave => true) do
 
-    def minecraft
-      includes(:game).where('games.name' => 'Minecraft')
+    def mojang
+      where(type: Accounts::Mojang)
+    end
+
+    def facebook
+      where(type: Accounts::Facebook)
+    end
+
+    def linked?(type)
+      where(type: type).exists?
     end
 
   end
@@ -69,24 +77,8 @@ class User < ActiveRecord::Base
     first_name || username
   end
 
-  def facebook_linked?
-    facebook_uid?
-  end
-
-  def facebook_avatar_url
-    "https://graph.facebook.com/#{facebook_uid}/picture?return_ssl_resources=1&type=square"
-  end
-
-  def minecraft_linked?
-    players.minecraft.exists?
-  end
-
   def minecraft_link_host
     "#{verification_token}.verify.minefold.com"
-  end
-
-  def minecraft_avatar_url
-    "https://minotar.net/helm/#{players.minecraft.first.uid}/50.png"
   end
 
 

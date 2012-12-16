@@ -51,7 +51,9 @@ Minefold::Application.routes.draw do
 
     get '/i/:invitation_token' => 'invitations#show', :as => :invitation
 
-
+    resources :accounts do
+      get :link_mojang, :on => :collection
+    end
 
     resources :gifts do
       get :cheers, :on => :member

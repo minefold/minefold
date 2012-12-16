@@ -11,7 +11,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def facebook
     # Signed out, signing in
     if !signed_in? && user
-      user.update_facebook_auth(auth)
+      user.update_from_facebook_auth(auth)
       user.save
 
       sign_in_and_redirect(user)
@@ -23,10 +23,10 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     # Signed in, linking Facebook account
     elsif signed_in?
-      current_user.facebook_uid = auth.uid
-      current_user.update_facebook_auth(auth)
+      current_user.accounts << Accounts::Facebook.new(uid: auth.uid)
+      current_user.update_from_facebook_auth(auth)
 
-      Bonuses::LinkedFacebook.claim!(current_user)
+      Bonuses::LinkedFacebookAccount.claim!(current_user)
 
       current_user.save
 
