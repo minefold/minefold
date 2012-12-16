@@ -1,6 +1,8 @@
 # Set the host name for URL creation
 SitemapGenerator::Sitemap.default_host = "https://minefold.com"
-
+SitemapGenerator::Sitemap.public_path = 'tmp/'
+SitemapGenerator::Sitemap.sitemaps_path = 'sitemaps/'
+SitemapGenerator::Sitemap.adapter = SitemapGenerator::WaveAdapter.new
 SitemapGenerator::Sitemap.create do
   # Put links creation logic here.
   #
