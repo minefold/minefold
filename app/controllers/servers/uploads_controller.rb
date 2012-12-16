@@ -33,13 +33,13 @@ class Servers::UploadsController < ApplicationController
   def sign
     filename = params[:s3_object_name].
       gsub("\\", "/").
-      gsub(/[() ]/, "").split('/').last
+      gsub(/[() '"]/, "").split('/').last
 
     objectName = "#{Time.now.to_i}-#{filename}"
     mimeType = params[:s3_object_type]
     expires = Time.now.to_i + 100 # PUT request to S3 must start within 100 seconds
 
-    key = "minefold-development/uploads/#{objectName}"
+    key = "minefold-#{Rails.env}/uploads/#{objectName}"
     s3_url = "http://s3.amazonaws.com/"
     url = "#{s3_url}#{key}"
 
