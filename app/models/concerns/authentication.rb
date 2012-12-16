@@ -35,7 +35,7 @@ module Concerns::Authentication
       if current_user && current_user.accounts.facebook.where(uid: auth['uid']).exists?
         current_user
       else
-        joins(:accounts)
+        includes(:accounts)
           .where(accounts: {type: Accounts::Facebook, uid: auth['uid']})
           .first
       end
