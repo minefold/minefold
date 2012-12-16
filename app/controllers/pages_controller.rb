@@ -13,12 +13,10 @@ class PagesController < ApplicationController
   end
 
   def home
-    @featured_games = ['Minecraft'].each_with_object({}) do |name, servers|
+    @featured_games = ['Minecraft', 'Team Fortress 2'].each_with_object({}) do |name, servers|
       scope = Game.where(name: name)
       servers[scope.first] = scope.servers_count
     end
-
-    @coming_soon_games = ['Team Fortress', 'Counter-Strike', 'Call of Duty', 'Battlefield', 'DayZ']
   end
 
   def pricing

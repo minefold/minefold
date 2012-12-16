@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121216092819) do
+ActiveRecord::Schema.define(:version => 20121216145813) do
 
   create_table "accounts", :force => true do |t|
     t.string   "type"
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(:version => 20121216092819) do
     t.string  "party_cloud_id"
     t.text    "description"
     t.string  "info_url"
+    t.boolean "imports",        :default => false
   end
 
   add_index "funpacks", ["game_id"], :name => "index_funpacks_on_game_id"
@@ -76,13 +77,14 @@ ActiveRecord::Schema.define(:version => 20121216092819) do
 
   create_table "games", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
-    t.string   "slug",           :default => ""
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
+    t.string   "slug",               :default => ""
     t.string   "party_cloud_id"
-    t.boolean  "auth",           :default => false, :null => false
-    t.boolean  "routing",        :default => false, :null => false
-    t.boolean  "maps",           :default => false, :null => false
+    t.boolean  "auth",               :default => false, :null => false
+    t.boolean  "routing",            :default => false, :null => false
+    t.boolean  "maps",               :default => false, :null => false
+    t.integer  "default_funpack_id"
   end
 
   add_index "games", ["party_cloud_id"], :name => "index_games_on_party_cloud_id", :unique => true
@@ -138,9 +140,9 @@ ActiveRecord::Schema.define(:version => 20121216092819) do
     t.integer  "minutes_played",       :default => 0
     t.integer  "world_minutes_played", :default => 0
     t.integer  "pageviews",            :default => 0
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
-    t.boolean  "shared",               :default => true, :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
+    t.boolean  "shared",               :default => false, :null => false
     t.string   "party_cloud_id"
     t.datetime "deleted_at"
     t.float    "score",                :default => 0.0

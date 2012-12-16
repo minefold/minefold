@@ -28,18 +28,6 @@ class Server < ActiveRecord::Base
     PartyCloud.count_players_online(party_cloud_id)
   end
 
-  after_create do
-    vote = Vote.new
-    vote.server = self
-    vote.user = self.creator
-    vote.save!
-  end
-
-  before_destroy do
-    $redis.zrem('serverlist', id)
-    true
-  end
-
 
   serialize :settings, JSON
 

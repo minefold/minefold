@@ -94,7 +94,7 @@
       = f.check_box 'enable-command-block', checked: fuck_you_checkbox_cunt(f, 'enable-command-block', true)
       Command blocks
 
-- players = current_user.players.minecraft.collect(&:uid).join("\n")
+- players = current_user.accounts.mojang.collect(&:uid).join("\n")
 
 = f.control_group :whitelist do
   %span.pull-right.help-inline One username per line

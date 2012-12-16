@@ -1,182 +1,64 @@
 - title 'Create a new server'
 
-- # TODO Hack!
-- @funpack = Funpack.first
-
-:css
-  fieldset, .tab-pane, .tab-content {
-    overflow: visible;
-  }
-
 .row
-  .span6.offset1
-    = form_for server, html: {class: 'tab-content'} do |f|
+  .span8.offset2
+    .page-header
+      %h1 Create a new server
 
-      / Game
-      / --
+    = form_for server, html: { class: 'form-horizontal' } do |f|
+      = f.control_group :name do
+        = f.label :name, 'Server Name', class: 'control-label'
+        .controls
+          = f.text_field :name, class: 'input-block-level'
 
-      %fieldset.tab-pane#game.active
-        %ol.progressmeter.progressmeter-3
-          %li.active
-            %a Game
-          %li Settings
-          %li Billing
+      .control-group
+        .control-label Game
+        .controls
+          - @games.each do |game|
 
-        %center
-          %h2 What game would you like?
+            %label.radio{for: "server_funpack_id_#{game.default_funpack.id}", style: 'margin-bottom:20px'}
+              %input{type: 'radio', name: 'server[funpack_id]', value: game.default_funpack.id.to_s, id: "server_funpack_id_#{game.default_funpack.id}"}
 
-        - @games.each do |game|
-          .control-group
-            %h4.control-label= game.name
-            .controls
-              - game.funpacks.each do |funpack|
-                %label.radio{for: "server_funpack_id_#{funpack.id.to_s}", style: 'margin-bottom:20px'}
-                  %input{type: 'radio', name: 'server[funpack_id]', value: funpack.id.to_s, id: "server_funpack_id_#{funpack.id.to_s}"}
+              %strong.name{style: 'margin-right:10px'}
+                = game.default_funpack.name
 
-                  %strong.name{style: 'margin-right:10px'}
+            .funpacks{style: 'margin-left: 20px'}
+              - game.funpacks.reject {|fp| fp == game.default_funpack }.each do |funpack|
+                = f.label "funpack_id_#{funpack.id}", class: 'radio', style: 'margin-bottom:20px' do
+                  = f.radio_button :funpack_id, funpack.id
+
+                  %strong.name
                     = funpack.name
-                  %small= link_to "Official Site", funpack.info_url, target: '_blank'
-                  .description= markdown(funpack.description)
-
-        .form-actions
-          %a.btn.btn-primary.pull-right#game-next-button{href: '#settings', disabled: true} Settings &rarr;
-
-        %hr
-
-        %center.muted
-          Do you have a custom server or want other mods? Have your say by
-          %a{href: "https://docs.google.com/a/minefold.com/spreadsheet/viewform?formkey=dEhlY3dZU0hDaVpEbWI3ZFE3V3lYRVE6MQ#gid=0", target: '_blank'} filling out our quick poll.
-
-      - content_for :tail do
-        :javascript
-          $('input[name="server[funpack_id]"]').change(function() {
-            var $this = $(this),
-                funpackId = $this.val(),
-                url = #{new_funpack_settings_servers_path.to_json};
-
-            $.ajax(url, {
-              accepts: 'text/html',
-              data: { funpack_id: funpackId },
-              dataType: 'html',
-              type: 'GET'
-            }).
-            error(function() {
-              // console.log('error');
-            }).
-            done(function(html) {
-              $('#new_funpack_settings').html(html);
-              $('#game-next-button').
-              click(function(e) {
-                  e.preventDefault();
-                  $(this).tab('show');
-                }).
-              attr('disabled', false);
-            });
-
-          });
+                  .info
+                    = markdown(funpack.description)
+                    = link_to "More information", funpack.info_url, target: '_blank'
 
 
-      / Settings
-      / --
+          %p.muted
+            Do you have a custom server or want other mods? Have your say by
+            %a{href: "https://docs.google.com/a/minefold.com/spreadsheet/viewform?formkey=dEhlY3dZU0hDaVpEbWI3ZFE3V3lYRVE6MQ#gid=0", target: '_blank'} filling out our quick poll.
 
-      %fieldset.tab-pane#settings
-        %ol.progressmeter.progressmeter-3
-          %li.previous
-            %a Game
-
-          %li.active
-            %a Settings
-
-          %li Billing
-
-
-        = f.control_group :name do
-          .controls
-            = f.text_field :name, placeholder: 'Name', style: 'width:100%'
-
-        - content_for :tail do
-          :javascript
-            $(document).ready(function() {
-              var $name = $('#settings input#server_name'),
-                  $btn = $('#settings .btn.btn-primary'),
-                  fn = function() {
-                    if($name.val() !== '') {
-                      $btn.removeClass('disabled').attr('href', '#billing');
-                    } else {
-                      $btn.addClass('disabled').attr('href', null);
-                    }
-                  };
-
-              $name.keydown(fn).change(fn);
-            });
-
-        %hr.large
-
-        #new_funpack_settings
-
-        .form-actions
-          %a.btn.pull-left{href: '#game', data: {toggle: 'tab'}} &larr; Game
-          %a.btn.btn-primary.pull-right.disabled{data: {toggle: 'tab'}} Billing &rarr;
-
-
-      / Billing
-      / --
-
-      %fieldset.tab-pane#billing
-        %ol.progressmeter.progressmeter-3
-          %li.previous
-            %a Game
-
-          %li.previous
-            %a Settings
-
-          %li.active
-            %a Billing
-
-        %center
-          %h2 Who would you like to pay for?
 
         = f.control_group :shared do
-          %br
+          = f.label 'shared_false', class: 'control-label' do
+            Pay for?
 
-          .controls.radio
-            = f.label 'shared_false' do
+          .controls
+            = f.label 'shared_false', class: 'radio' do
               = f.radio_button :shared, false
               Everybody
 
-            .help-block.muted
-              You pay 1 coin every minute for each person who is playing. If there are 5 people playing, the server will cost you 5 coins per minute.
-              %span{style: 'color:#666'} No matter how many people are playing, the cost to you is capped at 10 coins per minute.
+              .help-block.muted
+                You pay 1 coin every minute for each person who is playing. If there are 5 people playing, the server will cost you 5 coins per minute.
+                %span{style: 'color:#666'} No matter how many people are playing, the cost to you is capped at 10 coins per minute.
 
-          %br
-
-          .contols.radio
-            = f.label 'shared_true' do
+            = f.label 'shared_true', class: 'radio' do
               = f.radio_button :shared, true
               Only me
 
-            .help-block.muted
-              It will cost you 1 coin per minute to play.
-              %span{style: 'color:#666'} Every player needs a Minefold account with a linked Minecraft account to play.
-
-          %br
-          %br
+              .help-block.muted
+                It will cost you 1 coin per minute to play.
+                %span{style: 'color:#666'} Every player needs a Minefold account with a linked Minecraft account to play.
 
         .form-actions
-          %a.btn.pull-left{href: '#settings', data: {toggle: 'tab'}} &larr; Settings
-          = f.submit 'Create server', class: %w(btn btn-primary pull-right)
-
-        - content_for :tail do
-          :javascript
-            $(document).ready(function() {
-              $('#server_shared_false').change(function() {
-                $('#pooperooni.shared_false').show();
-                $('#pooperooni.shared_true').hide();
-              });
-
-              $('#server_shared_true').change(function() {
-                $('#pooperooni.shared_true').show();
-                $('#pooperooni.shared_false').hide();
-              });
-
-            });
+          = f.submit 'Create server', class: %w(btn btn-primary)

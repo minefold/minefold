@@ -69,18 +69,10 @@ Minefold::Application.routes.draw do
     resources :orders, only: [:create, :show]
 
     resources :servers, path_names: {edit: 'settings'} do
-      collection do
-        get :new_funpack_settings
-      end
-
       member do
         get :map
-
-        put :start
-
-        post :watch
-        post :unwatch
-
+        post :start
+        post :stop
       end
 
       resources :votes, :only => [:create]

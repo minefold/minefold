@@ -1,7 +1,7 @@
 class Game < ActiveRecord::Base
   extend FriendlyId
 
-  attr_accessible :name, :shared_servers, :persistant, :auth, :routing, :maps
+  attr_accessible :name, :auth, :routing, :maps
 
   validates_uniqueness_of :name
   validates_presence_of :name
@@ -11,6 +11,9 @@ class Game < ActiveRecord::Base
   has_many :funpacks
 
   has_many :players
+
+  belongs_to :default_funpack, class_name: 'Funpack'
+  validates_presence_of :default_funpack
 
   def settings_partial
     partial_name = name.downcase.gsub(/\W/, '_')

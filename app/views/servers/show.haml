@@ -31,6 +31,14 @@
         = render partial: server.activity_stream.page(0), :as => :activity
 
   .span4
+    - case server.state
+    - when :stopped
+      = button_to 'Start Server', start_server_path(server), class: %w(btn btn-primary btn-block btn-large)
+    - when :starting
+      = button_to 'Starting Server…', start_server_path(server), class: %w(btn btn-primary btn-block btn-large), disabled: true
+    - when :up
+      = button_to 'Stop server', stop_server_path(server), class: %w(btn btn-danger btn-block)
+
     .player-list
       - online = PartyCloud.players_online(server.party_cloud_id)
       - server.player_uids.each do |username|

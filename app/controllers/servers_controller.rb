@@ -17,22 +17,7 @@ class ServersController < ApplicationController
 
   def new
     authorize! :create, server
-
     @games = Game.all
-
-    if params[:funpack].present?
-      @funpack = Funpack.find(params[:funpack])
-    end
-  end
-
-  def new_funpack_settings
-    authorize! :create, server
-
-    # server.set_default_settings
-
-    @funpack = Funpack.find(params[:funpack_id])
-
-    render layout: false
   end
 
   def create
@@ -65,7 +50,14 @@ class ServersController < ApplicationController
 
   def update
     authorize! :update, server
+
+    # TODO Actual error checking here!
     server.update_attributes(params[:server])
+
+    if params[:server][:force].present?
+      PartyCloud.stop_server(sever.party_cloud_id)
+    end
+
     respond_with(server)
   end
 
@@ -80,12 +72,15 @@ class ServersController < ApplicationController
       server.settings
     )
 
-    if server.normal?
-      Resque.enqueue_in(params[:ttl].to_i, StopServerJob, server.id)
-    end
-
     respond_with(server)
   end
+
+  def stop
+    authorize! :update, server
+    PartyCloud.stop_server(server.party_cloud_id)
+    respond_with(server)
+  end
+
 
   def destroy
     authorize! :destroy, server
