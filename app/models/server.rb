@@ -53,7 +53,7 @@ class Server < ActiveRecord::Base
   end
 
   def state
-    if shared?
+    if game.routing?
       :shared
     elsif sessions.current? and sessions.current.started_at.nil?
       :starting
