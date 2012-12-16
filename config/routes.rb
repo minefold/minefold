@@ -52,6 +52,7 @@ Minefold::Application.routes.draw do
     get '/i/:invitation_token' => 'invitations#show', :as => :invitation
 
 
+
     resources :gifts do
       get :cheers, :on => :member
       get :certificate, :on => :member
@@ -59,6 +60,9 @@ Minefold::Application.routes.draw do
       get :redeem, :on => :collection
       post :redeem, :action => :redeem_action, :on => :collection
     end
+
+    match '/redeem' => redirect('/gifts/redeem')
+
 
     resources :orders, only: [:create, :show]
 
