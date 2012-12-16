@@ -26,15 +26,17 @@ SitemapGenerator::Sitemap.create do
   #   Article.find_each do |article|
   #     add article_path(article), :lastmod => article.updated_at
   #   end
-  
+
   add '/xmas'
 
   PagesController.action_methods.reject{ |r| r=~/callback/ }.each do |route|
     add "/#{route}"
   end
 
-  Server.find_each do |server|
+  Server.find_each(:include => :world) do |server|
     add server_path(server), lastmod: server.updated_at
-    add map_server_path(server), lastmod: server.world.updated_at
+    if server.world.mapped?
+      add map_server_path(server), lastmod: server.world.last_mapped_at
+    end
   end
 end
