@@ -1,6 +1,8 @@
 class GiftsController < ApplicationController
   respond_to :html
 
+  prepend_before_filter :authenticate_user!, only: [:redeem, :redeem_action]
+
   expose(:gift)
 
   def index
@@ -33,6 +35,18 @@ class GiftsController < ApplicationController
   end
 
   def redeem
+  end
+
+  def redeem_action
+    @gift = Gift.find_by_token!(params[:token])
+
+    @gift.child = current_user
+    current_user.increment_coins! @gift.coin_pack.coins
+    @gift.save
+
+    flash[:notice] = "You've successfully redeemed your gift certificate!"
+
+    redirect_to user_root_path
   end
 
   def cheers
