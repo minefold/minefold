@@ -42,6 +42,7 @@ gem 'flipper-redis', git: 'https://github.com/chrislloyd/flipper-redis.git'
 gem 'sass-rails'
 gem 'bourbon'
 gem 'neat'
+gem 'sitemap_generator'
 
 group :test, :development do
   gem 'rspec-rails'
