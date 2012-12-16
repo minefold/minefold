@@ -35,7 +35,7 @@ SitemapGenerator::Sitemap.create do
 
   Server.find_each(:include => :world) do |server|
     add server_path(server), lastmod: server.updated_at
-    if server.world.mapped?
+    if server.world and server.world.mapped?
       add map_server_path(server), lastmod: server.world.last_mapped_at
     end
   end
