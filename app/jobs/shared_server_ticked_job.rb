@@ -11,7 +11,7 @@ class SharedServerTickedJob < Job
     if @server.shared?
       # Players pay
       # TODO look up game type
-      @players = @server.funpack.game.players.where(uid: @uids).all
+      @players = Account::Mojang.where(uid: @uids).all
 
       @players.each do |player|
         if player.user.nil?
