@@ -6,7 +6,7 @@ class PlayerConnectedJob < Job
   attr_accessor :account
 
   def initialize(timestamp, party_cloud_id, uid)
-    @time = timestamp
+    @time = Time.at(timestamp)
     @server = Server.unscoped.find_by_party_cloud_id(party_cloud_id)
     # TODO Find from game auth type
     @account = Accounts::Mojang.find_or_create_by_uid(uid)
