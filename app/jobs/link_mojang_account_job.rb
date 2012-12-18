@@ -19,8 +19,8 @@ class LinkMojangAccountJob < Job
       reply 'Bad code. Please copy and paste the verify address'
 
     # User already has a Minecraft account linked
-    elsif user.accounts.minecraft.any?
-      reply "Already linked to #{user.accounts.minecraft.first.uid}. Unlink at minefold.com"
+    elsif user.accounts.mojang.any?
+      reply "Already linked to #{user.accounts.mojang.first.uid}. Unlink at minefold.com"
 
     # Account is already linked to somebody else
     elsif account.user and account.user != user
