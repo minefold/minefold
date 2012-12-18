@@ -35,6 +35,10 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     # Signed out, signing up
     else
+      auth['extra']['raw_info'].keep_if do |key,_|
+        Accounts::Facebook::EXTRA_ATTRS.include?(key.to_sym)
+      end
+
       session['devise.facebook_data'] = auth
       redirect_to new_user_registration_path
 
