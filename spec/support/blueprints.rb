@@ -32,6 +32,7 @@ Server.blueprint do
   creator
   name { Faker::Company.name }
   funpack
+  party_cloud_id { SecureRandom.uuid }
 end
 
 World.blueprint do

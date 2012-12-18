@@ -1,4 +1,4 @@
-class PlayerConnectedJob < Job
+class PlayerDisconnectedJob < Job
   @queue = :high
 
   attr_accessor :time
@@ -6,20 +6,16 @@ class PlayerConnectedJob < Job
   attr_accessor :account
 
   def initialize(timestamp, party_cloud_id, uid)
-    @time = timestamp
+    @time = Time.at(timestamp)
     @server = Server.unscoped.find_by_party_cloud_id(server_pc_id)
     # TODO Find from game auth type
     @account = Accounts::Mojang.find_or_create_by_uid(uid)
   end
 
   def perform!
-    server_session = server.sessions.current
-
-    session = server_sessions.player_sessions.new
-    session.started_at = time
-    session.account = account
-
-    server_session.save!
+    session = account.sessions.current
+    session.finish(time)
+    session.save!
   end
 
 end
