@@ -1,13 +1,17 @@
 class ServerCreatedJob < Job
   @queue = :high
 
-  def initialize(server_id, party_cloud_id)
-    @server = Server.unscoped.find(server_id)
+  attr_reader :server
+  attr_reader :party_cloud_id
+
+  def initialize(id, party_cloud_id)
+    @server = Server.unscoped.find(id)
     @party_cloud_id = party_cloud_id
   end
 
   def perform!
-    @server.party_cloud_id = @party_cloud_id
-    @server.save!
+    server.party_cloud_id = party_cloud_id
+    server.save!
   end
+
 end
