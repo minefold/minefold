@@ -34,8 +34,8 @@
   }
 
   &.jumbo {
-    margin-top: - l(6);
-    padding-top: l(6) - l(1) + l(6);
+    margin-top: - (l(6) + 2px);
+    padding-top: (l(6) + 2px) - l(1) + l(6);
   }
 
   #viewport {
