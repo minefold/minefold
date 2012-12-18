@@ -4,7 +4,7 @@ class ServerStartedJob < Job
   attr_reader :server
   attr_reader :host
   attr_reader :port
-  attr_reader :start_at
+  attr_reader :started_at
 
   def initialize(party_cloud_id, host, port, timestamp=nil)
     @server = Server.unscoped.find_by_party_cloud_id(party_cloud_id)
