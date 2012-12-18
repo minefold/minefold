@@ -60,7 +60,7 @@ module Concerns::Authentication
         # Facebook
         data = session['devise.facebook_data']
         if data and data['extra'] and data['extra']['raw_info']
-          user.update_facebook_auth(data)
+          user.update_from_facebook_auth(data)
         end
       end
     end

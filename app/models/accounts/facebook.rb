@@ -1,5 +1,16 @@
 class Accounts::Facebook < Account
 
+  EXTRA_ATTRS = [
+    :username,
+    :email,
+    :first_name,
+    :last_name,
+    :name,
+    :locale,
+    :timezone,
+    :gender
+  ]
+
   def self.extract_attrs(attrs)
     { username: attrs['username'],
       email: attrs['email'],
