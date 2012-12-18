@@ -40,7 +40,7 @@
 %section.game-list
   - @featured_games.each do |game, servers_count|
     .game
-      = image_tag 'homepage_games/#{game.slug}.png', class: 'north-west-to-south-east'
+      = image_tag "homepage_games/#{game.slug}.png", class: 'north-west-to-south-east'
       %h3= game.name
       %p= pluralize servers_count, 'server', 'servers'
 
