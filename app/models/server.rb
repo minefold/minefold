@@ -33,7 +33,7 @@ class Server < ActiveRecord::Base
 
   has_many :posts, order: 'created_at DESC', :dependent => :destroy
 
-  has_one :world, order: 'updated_at ASC', :dependent => :destroy
+  has_many :snapshots, order: 'updated_at ASC', :dependent => :destroy
 
   has_many :sessions, :class_name => 'ServerSession' do
 

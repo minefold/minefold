@@ -15,15 +15,13 @@ class WorldImportedJob < Job
       @server.settings.merge!(@settings)
       @server.save!
 
-      if not @server.world
-        @server.world = World.new
-      end
-
-      @server.world.party_cloud_id = @snapshot_id
-      @server.world.legacy_url = @url
-      @server.world.save!
+      @server.snapshots.create(
+        party_cloud_id: @snapshot_id,
+        url: @url
+      )
 
       pusher.trigger('success', {})
+
     else
       pusher.trigger('error', @result)
       raise @result.inspect
@@ -35,4 +33,5 @@ private
   def pusher
     @pusher ||= Pusher[@pusher_key]
   end
+
 end

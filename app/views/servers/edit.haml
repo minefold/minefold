@@ -128,22 +128,27 @@
         %strong Snapshots
 
       .span8
-        - if server.world
-          %p
-            Last backup at #{I18n.l server.world.updated_at}
-            &middot;
-            = link_to 'Download archive', party_cloud_world_download_url(server)
+        %table.table.table-striped
+          %thead
+            %tr
+              %th Time
+              %th Map
+              %th
+          %tbody
+            - server.snapshots.limit(100).each do |snapshot|
+              %tr
+                %td= l snapshot.updated_at
+                %td
+                  - if snapshot.mapped?
+                    %span.label.label-success Mapped
+                  - elsif snapshot.map_queued?
+                    %span.label Queued
+                  - else
+                    %span.muted -
 
-          - # TODO Investigate why parent wouldn't have a server.
-          - if server.world.legacy_parent and server.world.legacy_parent.server
-            - parent = server.world.legacy_parent.server
-            %p
-              Forked from
-              = link_to parent.name, server_path(parent)
-              by #{parent.creator.username}.
+                %td
+                  %a.btn.btn-mini{href: snapshot.download_url} Download snapshot
 
-        - else
-          %p.muted Server doesn't have any snapshots.
 
     / --
 

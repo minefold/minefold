@@ -1,10 +1,8 @@
-class World < ActiveRecord::Base
-  attr_accessible :last_mapped_at, :legacy_url, :map_data,
+class Snapshot < ActiveRecord::Base
+  attr_accessible :last_mapped_at, :url, :map_data,
                   :party_cloud_id
 
   belongs_to :server
-
-  belongs_to :legacy_parent, class_name: self.name
 
   serialize :map_data, JSON
 
@@ -13,6 +11,10 @@ class World < ActiveRecord::Base
   end
 
   alias_method :mapped?, :map?
+
+  def map_queued?
+    map_queued_at?
+  end
 
   def skip_map?
     map_queued_at and map_queued_at.today?
@@ -27,6 +29,15 @@ class World < ActiveRecord::Base
       map_data: map_data,
       server_id: server.id
     }
+  end
+
+  def download_url
+    URI::HTTP.build(
+      host:  "dl.partycloud.com",
+      # TODO Change to snapshots
+      path:  "/worlds/#{server.party_cloud_id}.zip",
+      query: "name=#{URI.encode(server.name)}"
+    )
   end
 
 end
