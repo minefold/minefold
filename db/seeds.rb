@@ -51,7 +51,7 @@ minecraft_default_funpack = Funpack.create(
   name: 'Minecraft', game: minecraft, creator: chris,
   info_url: 'http://minecraft.net',
   party_cloud_id: '50a976ec7aae5741bb000001',
-  inports: true
+  imports: true
 )
 
 minecraft.default_funpack = minecraft_default_funpack
@@ -62,21 +62,21 @@ Funpack.create(name: 'Bukkit Essentials', game: minecraft, creator: chris,
   info_url: "http://bukkit.org",
   description: "Bukkit is a community-based project that works on Minecraft server implementation. This pack includes [Essentials](http://dev.bukkit.org/server-mods/essentials), [WorldEdit](http://dev.bukkit.org/server-mods/worldedit), [WorldGuard](http://dev.bukkit.org/server-mods/worldguard) and [LWC](http://dev.bukkit.org/server-mods/lwc).",
   party_cloud_id: '50a976fb7aae5741bb000002',
-  inputs: true
+  imports: true
 )
 
 Funpack.create(name: 'Tekkit', game: minecraft, creator: chris,
   info_url: "http://www.technicpack.net/tekkit",
   description: "Tekkit is the multiplayer version of the Technic mod pack. It lets players automate, industrialize and power their worlds.",
   party_cloud_id: '50a977097aae5741bb000003',
-  inports: true
+  imports: true
 )
 
 
 tf2_default_funpack = Funpack.create(
   name: 'Team Fortress 2', game: tf2, creator: chris,
   info_url: 'http://www.teamfortress.com',
-  inports: false
+  imports: false
 )
 
 tf2.default_funpack = tf2_default_funpack

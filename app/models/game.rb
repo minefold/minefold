@@ -13,7 +13,6 @@ class Game < ActiveRecord::Base
   has_many :players
 
   belongs_to :default_funpack, class_name: 'Funpack'
-  validates_presence_of :default_funpack
 
   def settings_partial
     partial_name = name.downcase.gsub(/\W/, '_')
