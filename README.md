@@ -1,5 +1,5 @@
 # Minefold
-[![Build Status](https://magnum.travis-ci.com/minefold/web.png?branch=master&token=yfARxv3oq7ZT3ZbmJWVN)](http://travis-ci.org/minefold/web)
+[![Build Status](https://next.travis-ci.com/minefold/minefold.png?token=yfARxv3oq7ZT3ZbmJWVN)](https://next.travis-ci.com/minefold/minefold)
 
 by [Chris Lloyd](http://github.com/chrislloyd) & [Dave Newman](http://github.com/whatupdave).
 
