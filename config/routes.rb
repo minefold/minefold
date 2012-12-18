@@ -42,6 +42,12 @@ Minefold::Application.routes.draw do
   get '/xmas' => 'gifts#index', :as => :xmas_promo
   get '/xmas/:id/cheers' => 'gifts#cheers', :as => :xmas_cheers
 
+  controller :explore, path: '/explore' do
+
+    get '/', :action => :index
+
+  end
+
 
   # Authenticated routes
   as :user do

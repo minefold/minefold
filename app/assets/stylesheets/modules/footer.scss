@@ -33,12 +33,9 @@ footer {
   }
 
   .copyright {
-    color: rgba(black, 0.4);
-    font-size: 12px;
-    line-height: l(2);
-    margin-bottom: 0;
-
     clear: both;
+    font-size: 11px;
+    opacity: 0.4;
   }
 
   .mixpanel-badge {
