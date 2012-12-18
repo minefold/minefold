@@ -15,7 +15,7 @@ class PlayerConnectedJob < Job
   def perform!
     server_session = server.sessions.current
 
-    session = server_sessions.player_sessions.new
+    session = server_session.player_sessions.new
     session.started_at = time
     session.account = account
 
