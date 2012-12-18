@@ -27,6 +27,11 @@ Minefold::Application.routes.draw do
     get url, controller: 'pages', action: name, as: "#{name}_page"
   end
 
+  # redirect sitemap requests to cloudfront
+  match "/sitemap*path" => redirect {|p, req|
+    "#{ENV['ASSET_HOST']}/sitemap#{p[:path]}.#{p[:format]}"
+  }
+
   post '/pusher/auth' => 'pusher#auth'
 
   get '/channel.html' => 'facebook#channel', :as => :facebook_channel

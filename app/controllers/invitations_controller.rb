@@ -1,4 +1,4 @@
-class InvitationsController < ApplicationController\
+class InvitationsController < ApplicationController
 
   expose(:user) do
     User.find_by_invitation_token(params[:invitation_token])
