@@ -21,7 +21,7 @@ class ServerStartedJob < Job
     session = server.sessions.current
 
     # In the case where either jobs have been lost or processed out of order, this just continues any open sessions and moves the started_at time *back* if needed. We don't have to be super precise with ServerSessions, they're just for displaying to users (not billing).
-    if session.started_at > started_at
+    if session.started_at? and session.started_at > started_at
       session.started_at = started_at
     end
 
