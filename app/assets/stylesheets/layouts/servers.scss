@@ -1,8 +1,5 @@
 .l-servers {
-
-  #app > .container {
-    width: grid-width(12);
-  }
+  @include app-width(12);
 
   .page-header {
     padding-top: 0;
@@ -151,9 +148,15 @@
   }
 
   .world-map-view {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
 
     > .map {
-      height: grid-width(10);
+      height: 100%;
       width: 100%;
 
       label { width: auto; display:inline; }
@@ -176,3 +179,21 @@
     }
   }
 }
+
+// This is a pretty special case. The maps just look so much better full screen.
+.l-map {
+
+  #app > .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 2;
+  }
+
+}
+

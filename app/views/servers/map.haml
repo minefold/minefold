@@ -1,37 +1,39 @@
 - title 'Map'
-- layout :servers
+- layout :servers, :map
 
 
 .page-header
   %h1= link_to server.name, server_path(server)
 
-%ul.nav.nav-tabs
+%ul.nav.nav-pills
   %li= link_to 'Activity', server
   %li.active= link_to 'Map', [:map, server]
   - if can? :update, server
     %li= link_to 'Settings', [:edit, server]
 
 
-#world-map-view-el.world-map-view
-  - if server.world and server.world.mapped?
-    - content_for :tail do
-      = javascript_include_tag '//maps.google.com/maps/api/js?sensor=false'
-      :javascript
-        $(document).ready(function() {
-          var world = new Application.World(#{server.world.to_h.to_json}),
-              worldMapView = new Application.WorldMapView({model: world});
+- if true # server.world and server.world.mapped?
+  - provide :breakout do
+    #world-map-view-el.world-map-view
+  - content_for :tail do
+    = javascript_include_tag '//maps.google.com/maps/api/js?sensor=false'
+    :javascript
+      $(document).ready(function() {
+        // var world = new Application.World(#server.world.to_h.to_json),
+        var world = new Application.World({"last_mapped_at":"2012-12-05T02:35:24-08:00","map_data":{"zoom_levels":7,"tile_size":384,"spawn":{"type":"spawn","x":0,"y":66,"z":0}},"server_id":12934}),
+            worldMapView = new Application.WorldMapView({model: world});
 
-          worldMapView.setElement($('#world-map-view-el'));
-          worldMapView.render();
-        });
+        worldMapView.setElement($('#world-map-view-el'));
+        worldMapView.render();
+      });
 
-  - else
-    .coming-soon
-      The map for this server hasn't been rendered yet.
+- else
+  %p.coming-soon.muted
+    The map for this server hasn't been rendered yet.
 
-      - if server.shared?
-        Maps are rendered once a day when nobody is playing.
-      - else
-        Maps are rendered once a day when the server is stopped.
+    - if server.shared?
+      Maps are rendered once a day when nobody is playing.
+    - else
+      Maps are rendered once a day when the server is stopped.
 
-      Render times depend on the size of your world.
+    Render times depend on the size of your world.
