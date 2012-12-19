@@ -39,7 +39,7 @@ class LinkMojangAccountJob < Job
 
   def reply(message)
     $redis.publish(
-      "players:verification_request:#{@verification_token}",
+      "players:verification_request:#{@token}",
       message
     )
   end
