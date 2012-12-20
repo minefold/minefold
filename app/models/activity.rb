@@ -4,7 +4,9 @@ class Activity < ActiveRecord::Base
   belongs_to :subject, polymorphic: true
   belongs_to :target, polymorphic: true
 
-  after_create :publish_async
+  after_create :publish_target
+
+  after_create :broadcast_async
 
   def self.publish(*args)
     a = self.for(*args)
@@ -17,18 +19,26 @@ class Activity < ActiveRecord::Base
   end
 
   def interested
-    [actor, target].compact
+    [actor].compact
   end
 
-  def publish
+  def publish(obj)
+    stream = ActivityStream.new(obj, $redis)
+    stream.add(self)
+  end
+
+  def publish_target
+    publish(self.target)
+  end
+
+  def broadcast
     interested.each do |obj|
-      stream = ActivityStream.new(obj, $redis)
-      stream.add(self)
+      publish(obj)
     end
   end
 
-  def publish_async
-    Resque.enqueue(PublishActivityJob, self.class.name, id)
+  def broadcast_async
+    Resque.enqueue(BroadcastActivityJob, self.class.name, id)
   end
 
   def to_partial_path
