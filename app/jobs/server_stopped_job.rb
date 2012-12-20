@@ -4,7 +4,7 @@ class ServerStoppedJob < Job
   attr_reader :time
   attr_reader :server
 
-  def initialize(timestamp=nil, party_cloud_id)
+  def initialize(timestamp, party_cloud_id)
     @time = Time.at(timestamp)
     @server = Server.unscoped.find_by_party_cloud_id(party_cloud_id)
   end

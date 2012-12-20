@@ -78,11 +78,6 @@ class User < ActiveRecord::Base
     invited_by_id?
   end
 
-  def send_notification_for?(klass)
-    key = klass.name.underscore.to_sym
-    notifications[key] == true || notifications[key] == '1'
-  end
-
   def channel_key
     [self.class.name.downcase, id.to_s].join('-')
   end

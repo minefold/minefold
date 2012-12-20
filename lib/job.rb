@@ -1,4 +1,5 @@
 class Job
+  extend Resque::Plugins::Heroku
 
   def self.queue
     :low

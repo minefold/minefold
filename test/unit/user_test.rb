@@ -19,26 +19,6 @@ class UserTest < ActiveSupport::TestCase
     assert User.new(name: 'Chirs Lloyd', first_name: 'Chris', last_name: 'Lloyd').name?
   end
 
-  test "#minecraft_linked?" do
-    user = User.make!
-    minecraft = Game.make!(:minecraft)
-
-    assert !user.minecraft_linked?, 'minecraft account is linked'
-
-    user.players.create(game: minecraft, uid: 'test')
-
-    assert user.minecraft_linked?, 'minecraft account is not linked'
-  end
-
-  test "#facebook_linked?" do
-    user = User.new
-    assert !user.facebook_linked?, 'facebook account is linked'
-    user.facebook_uid = 'chrsllyd'
-    assert user.facebook_linked?, 'facebook account is not linked'
-  end
-
-
-
   test "#channel_key" do
     user = User.new
     mock(user).id { 'foo' }
@@ -98,16 +78,6 @@ class UserTest < ActiveSupport::TestCase
 
     user.reload
     assert_equal 2, user.coins
-  end
-
-  test "#send_notification_for?" do
-    user = User.new
-
-    assert_equal false, user.send_notification_for?(RandomMailer)
-
-    user.notifications[:random_mailer] = true
-
-    assert_equal true, user.send_notification_for?(RandomMailer)
   end
 
   test "#watch" do

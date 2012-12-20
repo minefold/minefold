@@ -76,6 +76,7 @@ Funpack.create(name: 'Tekkit', game: minecraft, creator: chris,
 tf2_default_funpack = Funpack.create(
   name: 'Team Fortress 2', game: tf2, creator: chris,
   info_url: 'http://www.teamfortress.com',
+  party_cloud_id: '50bec3967aae5797c0000004',
   imports: false
 )
 

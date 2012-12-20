@@ -57,8 +57,3 @@ Server.blueprint(:played) do
   party_cloud_id { SecureRandom.uuid }
   world { World.make!(party_cloud_id: SecureRandom.uuid) }
 end
-
-
-UserSession.blueprint do
-  # Attributes here
-end

@@ -14,28 +14,6 @@ class AuthenticationTest < ActiveSupport::TestCase
     assert !User.find_for_database_authentication(email_or_username: 'blerg@example.com')
   end
 
-  test ".find_or_initialize_from_facebook" do
-    pending
-  end
-
-  test ".find_for_facebook_oauth with current user" do
-    current_user = User.make!(facebook_uid: '1234')
-    good_auth = { 'uid' => '1234' }
-
-    assert_nil User.find_for_facebook_oauth({'uid' => 'bad_auth'}, current_user)
-
-    assert_equal current_user,
-                 User.find_for_facebook_oauth({'uid' => '1234'}, current_user)
-  end
-
-  test ".find_for_facebook_oauth" do
-    user = User.make!(facebook_uid: '1234')
-    auth = { 'uid' => '1234' }
-
-    assert_nil User.find_for_facebook_oauth({'uid' => 'bad_auth'})
-    assert_equal user, User.find_for_facebook_oauth({'uid' => '1234'})
-  end
-
   test ".new_with_session" do
     user = User.new_with_session({}, {
       'devise.facebook_data' => {'extra' => {'raw_info' => {

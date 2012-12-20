@@ -46,6 +46,11 @@ gem 'sitemap_generator'
 
 group :test, :development do
   gem 'rspec-rails'
+  gem 'simplecov'
+
+  gem 'autotest-standalone'
+  # gem 'autotest-rails-pure'
+  gem 'autotest-fsevent'
 end
 
 group :development do
