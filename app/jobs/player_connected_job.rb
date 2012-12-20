@@ -20,6 +20,15 @@ class PlayerConnectedJob < Job
     session.account = account
 
     server_session.save!
+    
+    if account.user
+      Mixpanel.track 'Played',
+        distinct_id: account.user.distinct_id,
+        server: server.name,
+        funpack: server.funpack.name,
+        game: server.funpack.game.name,
+        shared: server.shared?
+    end
   end
 
 end
