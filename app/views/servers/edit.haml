@@ -21,9 +21,14 @@
       .span8
         = form_for server do |f|
           = f.control_group :name do
-            .control-label Name
+            = f.label :name, class: 'control-label'
             .controls
               = f.text_field :name, class: %w(span6)
+
+          = f.control_group :description do
+            = f.label :description, class: 'control-label'
+            .controls
+              = f.text_area :description, class: %w(span6), rows: 6
 
           - if server.game.routing?
             = f.control_group :address do |f|

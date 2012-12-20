@@ -1,7 +1,7 @@
 class Server < ActiveRecord::Base
   include Concerns::Redis
 
-  attr_accessible :name, :funpack_id, :shared, :settings
+  attr_accessible :name, :description, :funpack_id, :shared, :settings
 
   acts_as_paranoid
 

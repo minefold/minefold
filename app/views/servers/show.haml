@@ -28,6 +28,17 @@
       = render partial: server.activity_stream.page(0), :as => :activity
 
   .span4
+    .server-description
+      - if server.description?
+        = markdown(server.description)
+        - if can?(:update, server)
+          %a{href: edit_server_path(server)} Edit description
+
+      - else
+        .muted No description for this server.
+        - if can?(:update, server)
+          %a{href: edit_server_path(server)} Add a description
+
     - case server.state
     - when :stopped
       = button_to 'Start Server', start_server_path(server), class: %w(btn btn-primary btn-block btn-large)

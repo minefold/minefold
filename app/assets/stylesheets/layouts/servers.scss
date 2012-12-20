@@ -6,43 +6,18 @@
     padding-bottom: 0;
   }
 
-  .title-bar {
-    padding-bottom: l(1);
+  .server-description {
+    border: 1px solid rgba(black, 0.1);
+    border-bottom-color: rgba(black, 0.2);
+    padding: l() ($gw-gutter / 2);
+    @include box-shadow(0 1px 2px 0 rgba(black, 0.1));
+    border-radius: 3px;
+    margin-bottom: l(2);
 
-    > .actions {
-      float: right;
-    }
-    > .title > a {
-      font-size: 24px;
-      line-height: l(3);
-    }
-  }
-
-  .subnav {
     background-color: rgba(black, 0.05);
 
-    .nav {
+    *:last-child {
       margin-bottom: 0;
-      a {
-        display: block;
-        padding: l(0);
-        color: rgba(black, 0.4);
-        font-size: 14px;
-        line-height: l(4);
-        font-weight: 600;
-
-        @include anti-aliasing;
-
-        &:hover {
-          color: white;
-          background-color: rgba(black, .4);
-        }
-      }
-
-      > .active > a {
-        color: black;
-        background-color: white;
-      }
     }
   }
 
@@ -75,75 +50,6 @@
       padding: l(1) 0;
 
       font-size: 12px;
-    }
-  }
-
-  .server-meta {
-    font-size: 14px;
-    line-height: l(2);
-    margin-bottom: l(2);
-    border: 2px solid rgba(black, 0.05);
-    border-top: none;
-
-    .tidbits {
-      @include clearfix;
-      margin-left: -2px;
-      margin-right: -2px - 2px;
-
-      .tidbit {
-        padding: l(.5) ($gw-gutter / 2);
-        float: left;
-
-        &:first-child {
-          border-left: 0;
-        }
-
-        .key {
-          color: rgba(black, 0.4);
-          margin-right: 0.25em;
-        }
-        .val {
-          font-weight: 600;
-        }
-
-        &.state {
-          &.is-shared {
-            color: $blue;
-          }
-          &.is-starting, &.is-up {
-            color: $green;
-          }
-          &.is-stopped {
-            color: $red;
-          }
-        }
-      }
-    }
-
-    .player-list {
-      @include clearfix;
-      padding-top: l(.5);
-      padding-right: ($gw-gutter / 2) - (2 * 2px);
-      padding-left: 0;
-      border-top: 2px solid rgba(black, 0.05);
-
-      .player {
-        margin-left: l(0.5);
-        margin-bottom: l(.5);
-        float: left;
-      }
-
-      .online {
-        box-shadow: 0px 0px 6px $yellow;
-      }
-    }
-
-  }
-
-  .server-controls {
-    .server-controls-ttl-display {
-      font-size: 14px;
-      color: rgba(black, 0.4);
     }
   }
 

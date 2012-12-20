@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121218133900) do
+ActiveRecord::Schema.define(:version => 20121220174620) do
 
   create_table "accounts", :force => true do |t|
     t.string   "type"
@@ -165,6 +165,7 @@ ActiveRecord::Schema.define(:version => 20121218133900) do
     t.string   "party_cloud_id"
     t.datetime "deleted_at"
     t.float    "score",                :default => 0.0
+    t.text     "description"
   end
 
   add_index "servers", ["deleted_at", "creator_id"], :name => "index_servers_on_deleted_at_and_creator_id"
