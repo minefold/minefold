@@ -1,5 +1,4 @@
 module BootstrapFormHelpers
-  include TextHelper
 
   def control_group(*fields, &blk)
     group_class = ['control-group']

@@ -5,8 +5,7 @@
     %li.divider-vertical
 
     %li.coins
-      %a{href: getcoins_page_path}
-        = pluralize current_user.coins, 'coin', 'coins'
+      %a{href: getcoins_page_path} #{time_left(current_user.coins)} left
 
     %li.user.dropdown
       %a.dropdown-toggle{href: '#', data: {toggle: 'dropdown'}}
