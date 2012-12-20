@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
 
-  prepend_before_filter :authenticate_user!, only: [:welcome, :getcoins]
+  prepend_before_filter :authenticate_user!, only: [:welcome, :time]
 
   def about
   end
