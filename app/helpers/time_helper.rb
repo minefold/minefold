@@ -4,9 +4,9 @@ module TimeHelper
     d = coins.minutes
 
     case d
-    when (-Float::INFINITY)...0
-      raise ArgumentError
-    when 0...(1.hour)
+    when (-Float::INFINITY)..0
+      "No time"
+    when 1...(1.hour)
       pluralize(d / 1.minute, 'min', 'mins')
     when (1.hour)...(10.days)
       pluralize(d / 1.hour, 'hr', 'hrs')
