@@ -18,8 +18,6 @@
 
       .info {
         @include clearfix;
-        margin-bottom: l(.5);
-        font-size: 11px;
 
         .date {
           float: right;
@@ -31,6 +29,11 @@
           font-weight: 600;
         }
 
+        + .body {
+
+          margin-top: l(.5);
+
+        }
       }
     }
   }

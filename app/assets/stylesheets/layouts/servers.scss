@@ -4,20 +4,13 @@
   .page-header {
     padding-top: 0;
     padding-bottom: 0;
-  }
 
-  .server-description {
-    border: 1px solid rgba(black, 0.1);
-    border-bottom-color: rgba(black, 0.2);
-    padding: l() ($gw-gutter / 2);
-    @include box-shadow(0 1px 2px 0 rgba(black, 0.1));
-    border-radius: 3px;
-    margin-bottom: l(2);
-
-    background-color: rgba(black, 0.05);
-
-    *:last-child {
-      margin-bottom: 0;
+    h1 {
+      font-size: 28px;
+      font-family: $helvetica;
+      a {
+        color: black;
+      }
     }
   }
 
