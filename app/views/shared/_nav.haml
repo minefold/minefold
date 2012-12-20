@@ -5,7 +5,7 @@
     %li.divider-vertical
 
     %li.coins
-      %a{href: getcoins_page_path} #{time_left(current_user.coins)} left
+      %a{href: time_page_path} #{time_left(current_user.coins)} left
 
     %li.user.dropdown
       %a.dropdown-toggle{href: '#', data: {toggle: 'dropdown'}}
@@ -14,7 +14,7 @@
 
       %ul.dropdown-menu.pull-right
         %li= link_to 'Settings', edit_user_registration_path
-        %li= link_to 'Get more coins', getcoins_page_path
+        %li= link_to 'Get more coins', time_page_path
         %li= link_to 'Sign out', destroy_user_session_path, method: :delete
 
 - else

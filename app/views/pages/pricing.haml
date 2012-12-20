@@ -27,7 +27,7 @@
 
 
       - if signed_in?
-        %a.btn.btn-block.btn-large.btn-stripe{href: '#', data: {id: pack.id, amount: pack.cents, coins: pack.coins, image: image_path("coin_packs/#{i+1}.png")}} Buy #{number_with_precision(pack.coins / 1000.0, precision: 1, strip_insignificant_zeros: true)}k coins
+        %a.btn.btn-block.btn-large.btn-stripe{href: '#', data: {id: pack.id, amount: pack.cents, coins: pack.coins, image: image_path("coin_packs/#{i+1}.png")}} Buy #{time_left(pack.coins)}
       - else
         %a.btn.btn-block.btn-large{href: new_user_registration_path} Sign up now!
 

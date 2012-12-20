@@ -16,13 +16,13 @@ Minefold::Application.routes.draw do
 
   # Static Pages
 
-  { '/about'      => :about,
-    '/freetime'   => :getcoins,
-    '/home'       => :home,
-    '/pricing'    => :pricing,
-    '/privacy'    => :privacy,
-    '/help'       => :support,
-    '/terms'      => :terms
+  { '/about'   => :about,
+    '/time'    => :time,
+    '/home'    => :home,
+    '/pricing' => :pricing,
+    '/privacy' => :privacy,
+    '/help'    => :support,
+    '/terms'   => :terms
   }.each do |url, name|
     get url, controller: 'pages', action: name, as: "#{name}_page"
   end
