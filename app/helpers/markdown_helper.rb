@@ -1,7 +1,15 @@
 module MarkdownHelper
 
+  Pipeline = HTML::Pipeline.new([
+    HTML::Pipeline::MarkdownFilter,
+    HTML::Pipeline::SanitizationFilter,
+    HTML::Pipeline::EmojiFilter
+    ], {
+      asset_root: '/images'
+      })
+
   def markdown(text)
-    RDiscount.new(text).to_html.html_safe
+    Pipeline.call(text)[:output].to_s.html_safe
   end
 
 end

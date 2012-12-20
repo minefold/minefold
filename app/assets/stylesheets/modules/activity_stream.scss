@@ -18,11 +18,13 @@
 
       .info {
         @include clearfix;
+        margin-bottom: l(.5);
+        font-size: 11px;
 
         .date {
           float: right;
           font-size: 11px;
-          color: rgba(black, 0.4);
+          color: darken(white, 20%);
         }
 
         .actor {

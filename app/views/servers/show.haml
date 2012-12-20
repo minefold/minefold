@@ -15,20 +15,17 @@
 .row
   .span8
     - if signed_in?
-      .alert.alert-info
-        = link_to invitation_path(current_user.invitation_token) do
-          Invite a friend to play here an earn an extra
-          %strong= pluralize Bonuses::Referred.coins, 'coin', 'coins'
-          each.
+      .pull-left{style: 'margin-right: 20px'}
+        = image_tag current_user.avatar.medium.url, width: 40, height: 40
 
-    - if signed_in?
-      = form_for [server, Post.new], :method => :post do |f|
-        .control-group
-          = f.text_area :body, rows: 2, placeholder: 'Write a post', class: 'span8'
-        = f.submit 'Create post', class: %w(btn btn-small)
+      .pull-left{style: 'margin-bottom: 20px'}
+        = form_for [server, Post.new], :method => :post do |f|
+          .control-group
+            = f.text_area :body, rows: 2, placeholder: 'Write a post', class: 'span7'
+          = f.submit 'Write post', class: %w(btn btn-small btn-primary)
 
-      .activity-stream
-        = render partial: server.activity_stream.page(0), :as => :activity
+    .activity-stream
+      = render partial: server.activity_stream.page(0), :as => :activity
 
   .span4
     - case server.state
@@ -45,6 +42,13 @@
         .player{class: online.include?(username) && "is-online"}
           .avatar
             = image_tag "https://minotar.net/helm/#{username}/30.png", alt: username, width: 30, height: 30
+
+    - if signed_in?
+      .alert.alert-info
+        = link_to invitation_path(current_user.invitation_token) do
+          Invite a friend to play here an earn an extra
+          %strong= time_left Bonuses::Referred.coins
+          each.
 
     %dl
       %dt Owner

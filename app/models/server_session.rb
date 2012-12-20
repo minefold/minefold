@@ -17,4 +17,11 @@ class ServerSession < ActiveRecord::Base
     end
   end
 
+
+  after_create :create_activity
+
+  def create_activity
+    Activities::Played.publish(self)
+  end
+
 end
