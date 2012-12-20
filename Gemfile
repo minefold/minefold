@@ -41,16 +41,10 @@ gem 'flipper', git: 'https://github.com/chrislloyd/flipper.git'
 gem 'flipper-redis', git: 'https://github.com/chrislloyd/flipper-redis.git'
 gem 'sass-rails'
 gem 'bourbon'
-gem 'neat'
 gem 'sitemap_generator'
 
 group :test, :development do
   gem 'rspec-rails'
-  gem 'simplecov'
-
-  gem 'autotest-standalone'
-  # gem 'autotest-rails-pure'
-  gem 'autotest-fsevent'
 end
 
 group :development do
@@ -64,8 +58,9 @@ group :test do
   gem 'faker'
   gem 'timecop'
   gem 'fakeweb'
+  gem 'simplecov'
 
-  gem 'ZenTest'
+  gem 'autotest-standalone'
 end
 
 group :worker do
