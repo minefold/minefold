@@ -35,7 +35,7 @@ Server.blueprint do
   party_cloud_id { SecureRandom.uuid }
 end
 
-World.blueprint do
+Snapshot.blueprint do
 end
 
 
@@ -56,4 +56,10 @@ end
 Server.blueprint(:played) do
   party_cloud_id { SecureRandom.uuid }
   world { World.make!(party_cloud_id: SecureRandom.uuid) }
+end
+
+ServerSession.blueprint do
+end
+
+PlayerSession.blueprint do
 end

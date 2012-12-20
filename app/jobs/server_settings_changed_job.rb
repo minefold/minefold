@@ -1,25 +1,35 @@
 class ServerSettingsChangedJob < Job
   @queue = :high
 
-  def initialize(id, change)
-    @server = Server.unscoped.find_by_party_cloud_id(id)
-    @change = change
+  attr_reader :server
+  attr_reader :key, :value
+
+  def initialize(server_party_cloud_id, key, value=nil)
+    @server = Server.unscoped.find_by_party_cloud_id(server_party_cloud_id)
+
+    if value.nil?
+      change = key
+      @key, @value = change['setting'], change['value']
+    else
+      @key, @value = key, value
+    end
   end
 
   def perform!
     # hack for whitelist_add, whitelist_remove, blacklist_add, blacklist_remove, ops_add, ops_remove
-    if @change['setting'] =~ /([a-z]+)_add/
-      set = (@server.settings[$1] || "").split("\n")
-      @server.settings[$1] = (set | [@change['value']]).uniq.join("\n")
+    if key =~ /([a-z]+)_add/
+      set = (server.settings[$1] || "").split("\n")
+      server.settings[$1] = (set | [value]).uniq.join("\n")
 
-    elsif @change['setting'] =~ /([a-z]+)_remove/
-      set = (@server.settings[$1] || "").split("\n")
-      @server.settings[$1] = (set - [@change['value']]).uniq.join("\n")
+    elsif key =~ /([a-z]+)_remove/
+      set = (server.settings[$1] || "").split("\n")
+      server.settings[$1] = (set - [value]).uniq.join("\n")
 
     else
-      @server.settings[@change['setting']] = @change['value']
+      server.settings[key] = value
     end
-    @server.save!
+
+    server.save!
   end
 
 end
