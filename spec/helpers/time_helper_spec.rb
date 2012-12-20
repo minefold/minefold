@@ -17,11 +17,6 @@ describe TimeHelper do
     it 'pluralizes hours when less than 240 hrs' do
       expect(time_left(60)).to eq('1 hr')
       expect(time_left(120)).to eq('2 hrs')
-      expect(time_left(240 * 60 - 1)).to eq('239 hrs')
-    end
-
-    it 'pluralizes days when greater than 10 days' do
-      expect(time_left(240 * 60)).to eq('10 days')
     end
 
   end

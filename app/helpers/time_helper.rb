@@ -8,10 +8,8 @@ module TimeHelper
       "No time"
     when 1...(1.hour)
       pluralize(d / 1.minute, 'min', 'mins')
-    when (1.hour)...(10.days)
-      pluralize(d / 1.hour, 'hr', 'hrs')
     else
-      pluralize(d / 1.day, 'day', 'days')
+      pluralize(d / 1.hour, 'hr', 'hrs')
     end
   end
 
