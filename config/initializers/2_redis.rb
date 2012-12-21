@@ -1,8 +1,10 @@
-if ENV['REDIS_URL']
+$redis = if ENV['REDIS_URL']
   uri = URI.parse(ENV['REDIS_URL'])
-  $redis = Redis.new(
+  Redis.new(
     host: uri.host,
     port: uri.port,
     password: uri.password
   )
+else
+  Redis.new
 end
