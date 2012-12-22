@@ -35,21 +35,13 @@
 
     = csrf_meta_tags
 
-    // Crashm.at
-    - if Rails.env.production?
-      :javascript
-        var _crashmat = #{crashmat_config.to_json};
+    :javascript
+      var _errs=["50d507f21eebec26540000ec"];(function(a,b){a.onerror=function(){_errs.push(arguments)};
+      var d=function(){var a=b.createElement("script"),c=b.getElementsByTagName("script")[0];
+      a.src="//d15qhc0lu1ghnk.cloudfront.net/beacon.js";a.async=!0;
+      c.parentNode.insertBefore(a,c)};a.addEventListener?a.addEventListener("load",d,!1):
+      a.attachEvent("onload",d)})(window,document);
 
-        (function(w, d, cm, woe) {
-          w.onerror = function(e,f,l,c) {
-            cm.e = cm.e || []; cm.e.push([e,f,l,c]);
-            if (woe) woe(e,f,l,c);
-          };
-          var e = d.createElement('script');
-          e.async = true;
-          e.src = '//db2uk9yp28y61.cloudfront.net/';
-          (d.head || d.getElementsByTagName('head')[0]).appendChild(e);
-        })(window, document, window._crashmat, window.onerror);
 
     // Mixpanel
     :javascript
