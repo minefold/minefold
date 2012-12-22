@@ -4,7 +4,7 @@ class Activity < ActiveRecord::Base
   belongs_to :subject, polymorphic: true
   belongs_to :target, polymorphic: true
 
-  after_create :publish_target
+  after_create :publish_to_target
 
   after_create :broadcast_async
 
@@ -18,22 +18,23 @@ class Activity < ActiveRecord::Base
     created_at.to_i
   end
 
+  # Default noop to be overriden by subclasses
   def interested
-    [actor].compact
+    []
   end
 
-  def publish(obj)
+  def publish_to(obj)
     stream = ActivityStream.new(obj, $redis)
     stream.add(self)
   end
 
-  def publish_target
-    publish(self.target)
+  def publish_to_target
+    publish_to(self.target)
   end
 
   def broadcast
     interested.each do |obj|
-      publish(obj)
+      publish_to(obj)
     end
   end
 
