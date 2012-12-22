@@ -36,34 +36,44 @@ describe Activity do
   describe "#interested" do
     let(:model) { User.new }
 
-    it "returns a list" do
-      expect(subject.interested).to be_an(Array)
-    end
-
-    it "returns a list with the actor" do
-      subject.actor = model
-      expect(subject.interested).to include(model)
-    end
-
-    it "returns a list with the target" do
-      subject.target = model
-      expect(subject.interested).to include(model)
+    it "returns an empty list" do
+      expect(subject.interested).to eq([])
     end
 
   end
 
-  describe "#publish" do
+  describe "#publish_to" do
 
     it "adds itself to each interested ActivityStream" do
       any_instance_of(ActivityStream) do |as|
         mock(as).add(subject)
       end
 
-      stub(subject).interested { [User.new] }
-
-      subject.publish
+      subject.publish_to(User.new)
     end
 
+  end
+
+  describe "#publish_to_target" do
+    it "adds itself to the target's ActivityStream" do
+      any_instance_of(ActivityStream) do |as|
+        mock(as).add(subject)
+      end
+
+      stub(subject).target { User.new }
+
+      subject.publish_to(User.new)
+    end
+  end
+
+  describe "#broadcast" do
+    it "publishes itself to each interested object" do
+      user = User.new
+      mock(subject).publish_to(user)
+      stub(subject).interested { [user] }
+
+      subject.broadcast
+    end
   end
 
 end
