@@ -41,9 +41,7 @@ gem 'flipper-redis', git: 'https://github.com/chrislloyd/flipper-redis.git'
 gem 'sass-rails'
 gem 'bourbon'
 gem 'sitemap_generator'
-gem 'charlock_holmes',
-  git: 'https://github.com/brianmario/charlock_holmes.git',
-  branch: 'bundle-icu'
+gem 'charlock_holmes'
 gem 'html-pipeline'
 gem 'lograge'
 
