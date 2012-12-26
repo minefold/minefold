@@ -45,6 +45,7 @@ gem 'charlock_holmes',
   git: 'https://github.com/brianmario/charlock_holmes.git',
   branch: 'bundle-icu'
 gem 'html-pipeline'
+gem 'lograge'
 
 group :test, :development do
   gem 'rspec-rails'

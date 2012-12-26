@@ -3,6 +3,7 @@ Minefold::Application.configure do
 
   # Log to stdout
   config.logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
+  config.log_level = :warn
 
   config.action_mailer.default_url_options = {
     host: 'minefold.com',
@@ -33,8 +34,6 @@ Minefold::Application.configure do
   config.assets.compress = true
 
   config.assets.digest = true
-
-  config.assets.precompile += %w( tumblr.css )
 
   # Compress both stylesheets and JavaScripts
   # config.assets.js_compressor  = :uglifier

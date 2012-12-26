@@ -154,6 +154,9 @@ GEM
     librato-rails (0.8.0)
       librato-metrics (~> 0.7.4)
       rails (>= 3.0)
+    lograge (0.1.2)
+      actionpack
+      activesupport
     machinist (2.0)
     mail (2.4.4)
       i18n (>= 0.4.0)
@@ -342,6 +345,7 @@ DEPENDENCIES
   jquery-rails
   kaminari
   librato-rails
+  lograge
   machinist
   mailgun-rails
   mini_magick
