@@ -12,7 +12,8 @@ gem 'nokogiri'
 gem 'pg'
 gem 'rack-www'
 gem 'devise'
-gem 'uniquify', git: 'https://github.com/chrislloyd/uniquify.git'
+gem 'uniquify',
+  github: 'chrislloyd/uniquify'
 gem 'cancan'
 gem 'omniauth-facebook'
 gem 'stripe'
@@ -23,9 +24,11 @@ gem 'kaminari'
 gem 'mini_magick'
 gem 'redis'
 gem 'redis-namespace'
-gem 'resque', require: ['resque', 'resque/server']
+gem 'resque',
+  require: ['resque', 'resque/server']
 gem 'resque_mailer'
-gem 'resque-scheduler', require: ['resque_scheduler', 'resque_scheduler/server']
+gem 'resque-scheduler',
+  require: ['resque_scheduler', 'resque_scheduler/server']
 gem 'intercom'
 gem 'mailgun-rails'
 gem 'jbuilder'
@@ -36,12 +39,16 @@ gem 'friendly_id'
 gem 'librato-rails'
 gem 'paranoia'
 gem 'carrierwave'
-gem 'flipper', git: 'https://github.com/chrislloyd/flipper.git'
-gem 'flipper-redis', git: 'https://github.com/chrislloyd/flipper-redis.git'
+gem 'flipper',
+  github: 'chrislloyd/flipper'
+gem 'flipper-redis',
+  github: 'chrislloyd/flipper-redis'
 gem 'sass-rails'
 gem 'bourbon'
 gem 'sitemap_generator'
-gem 'charlock_holmes'
+gem 'charlock_holmes',
+  github: 'chrislloyd/charlock_holmes',
+  ref: 'HEAD'
 gem 'html-pipeline'
 gem 'lograge'
 

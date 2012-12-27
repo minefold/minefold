@@ -1,18 +1,25 @@
 GIT
-  remote: https://github.com/chrislloyd/flipper-redis.git
+  remote: git://github.com/chrislloyd/charlock_holmes.git
+  revision: 9c18560f59adf9665bd17a53965ac1dda1a79933
+  ref: HEAD
+  specs:
+    charlock_holmes (0.6.9)
+
+GIT
+  remote: git://github.com/chrislloyd/flipper-redis.git
   revision: 90523cf775f9bb8c6400ba306fcf1a2d873d3080
   specs:
     flipper-redis (0.2.0)
       flipper (~> 0.3.0)
 
 GIT
-  remote: https://github.com/chrislloyd/flipper.git
+  remote: git://github.com/chrislloyd/flipper.git
   revision: 31215b2dfdd794d7e72dd3d381dcf723f1a81d5d
   specs:
     flipper (0.3.0)
 
 GIT
-  remote: https://github.com/chrislloyd/uniquify.git
+  remote: git://github.com/chrislloyd/uniquify.git
   revision: b33080d65e6bad2b936b5d4a4bf7c645a6f34500
   specs:
     uniquify (0.1.0)
@@ -63,7 +70,6 @@ GEM
     carrierwave (0.7.1)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
-    charlock_holmes (0.6.9)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -322,7 +328,7 @@ DEPENDENCIES
   bugsnag
   cancan
   carrierwave
-  charlock_holmes
+  charlock_holmes!
   coffee-rails
   decent_exposure (= 2.0.0.rc1)
   devise
