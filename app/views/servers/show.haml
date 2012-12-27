@@ -3,7 +3,52 @@
 - track 'Viewed server', name: server.name, url: server_url(server)
 
 .page-header
+  .actions.pull-right
+    - if signed_in?
+      %ul.unstyled
+        %li.js-toggler-container.js-social-container.watching-container{class: ('is-on' if current_user.watching.include?(server))}
+          = link_to watch_server_path(server), :method => :post, remote: true, class: %w(btn btn-small ignoring js-toggler-target) do
+            %i.icon-eye-open
+            Watch
+          = link_to unwatch_server_path(server), :method => :post, remote: true, class: %w(btn btn-small js-toggler-target watching) do
+            %i.icon-eye-close
+            Unwatch
+
+          %span.label.js-social-count= server.watchers.count
+
   %h1= link_to server.name, server_path(server)
+
+:css
+  .watching-container:not(.is-on) .watching {
+    display: none;
+  }
+  .watching-container.is-on .ignoring {
+    display: none;
+  }
+
+- content_for :tail do
+  :javascript
+    var togglerContainer = $('.js-toggler-container'),
+        socialContainer = $('.js-social-container');
+
+    var togglerTarget = togglerContainer.find('.js-toggler-target');
+
+    togglerTarget.on('ajax:before', function() {
+      togglerTarget.addClass('disabled');
+    });
+
+    togglerTarget.on('ajax:complete', function() {
+      togglerTarget.removeClass('disabled');
+    });
+
+    togglerTarget.on('ajax:success', function(_, data) {
+      togglerContainer.toggleClass('is-on');
+    });
+
+    togglerTarget.on('ajax:success', function(_, data) {
+      socialContainer.find('.js-social-count').text(data.count);
+    })
+
 
 %ul.nav.nav-tabs
   %li.active= link_to 'Activity', server
@@ -22,7 +67,7 @@
         = form_for [server, Post.new], :method => :post do |f|
           .control-group
             = f.text_area :body, rows: 2, placeholder: 'Write a post', class: 'span7'
-          = f.submit 'Write post', class: %w(btn btn-small btn-primary)
+          = f.submit 'Write post', class: %w(btn btn-small)
 
     .activity-stream
       = render partial: server.activity_stream.page(0), :as => :activity

@@ -5,6 +5,8 @@ Minefold::Application.configure do
   config.logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
   config.log_level = :warn
 
+  config.lograge.enabled = true
+
   config.action_mailer.default_url_options = {
     host: 'minefold.com',
     protocol: 'https'

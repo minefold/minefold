@@ -84,6 +84,12 @@ Minefold::Application.routes.draw do
         get :map
         post :start
         post :stop
+
+        controller 'servers/watchers' do
+          post 'watch', :action => :create
+          post 'unwatch', :action => :destroy
+        end
+
       end
 
       resources :votes, :only => [:create]

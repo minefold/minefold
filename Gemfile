@@ -9,6 +9,8 @@ gem 'rake'
 # Explicitly requiring Nokogiri *before* pg stops the stupid dylib load errors on Mountain Lion: https://github.com/sparklemotion/nokogiri/issues/742
 # Can't question our commitment to Sparkle Motion!
 gem 'nokogiri', '~> 1.5'
+gem 'html-pipeline',
+  github: 'chrislloyd/html-pipeline'
 gem 'pg'
 gem 'rack-www'
 gem 'devise'
@@ -46,8 +48,6 @@ gem 'flipper-redis',
 gem 'sass-rails'
 gem 'bourbon'
 gem 'sitemap_generator'
-gem 'html-pipeline',
-  github: 'chrislloyd/html-pipeline'
 gem 'lograge'
 
 group :test, :development do

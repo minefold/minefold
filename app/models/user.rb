@@ -28,9 +28,13 @@ class User < ActiveRecord::Base
 
   end
 
+  has_many :created_servers, class_name: 'Server', foreign_key: :creator_id
+
+  has_and_belongs_to_many :watching, class_name: 'Server', uniq: true
+
   has_many :memberships
   has_many :servers, through: :memberships
-  has_many :created_servers, class_name: 'Server', foreign_key: :creator_id
+
 
   has_many :bonuses
 

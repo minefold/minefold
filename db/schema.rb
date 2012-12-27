@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121220174620) do
+ActiveRecord::Schema.define(:version => 20121227053727) do
 
   create_table "accounts", :force => true do |t|
     t.string   "type"
@@ -171,6 +171,11 @@ ActiveRecord::Schema.define(:version => 20121220174620) do
   add_index "servers", ["deleted_at", "creator_id"], :name => "index_servers_on_deleted_at_and_creator_id"
   add_index "servers", ["deleted_at", "host", "port"], :name => "index_servers_on_deleted_at_and_host_and_port"
   add_index "servers", ["party_cloud_id"], :name => "index_servers_on_party_cloud_id", :unique => true
+
+  create_table "servers_users", :id => false, :force => true do |t|
+    t.integer "user_id"
+    t.integer "server_id"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "username",                               :default => ""

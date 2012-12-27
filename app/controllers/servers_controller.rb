@@ -1,5 +1,3 @@
-# TODO Move most of this logic into the Server model
-
 class ServersController < ApplicationController
   respond_to :html
 

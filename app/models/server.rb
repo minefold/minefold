@@ -10,7 +10,7 @@ class Server < ActiveRecord::Base
   belongs_to :funpack
   validates_presence_of :funpack
 
-  default_scope includes(:funpack => :game)
+  has_and_belongs_to_many :watchers, class_name: 'User', uniq: true
 
   has_many :memberships, :dependent => :destroy
   has_many :users, :through => :memberships
