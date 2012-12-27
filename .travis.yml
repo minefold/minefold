@@ -6,7 +6,6 @@ services:
   - redis-server
 
 before_install:
-  - apt-get install libicu-dev
   - gem install bundler --pre
 
 before_script:
