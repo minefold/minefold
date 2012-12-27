@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/chrislloyd/charlock_holmes.git
-  revision: 4f36f6d12124e921214121454ddaf1dc37f57314
+  revision: f9d904fc8c487120a2a03b207dfc85cc31ef70b0
   ref: HEAD
   specs:
     charlock_holmes (0.6.9)
