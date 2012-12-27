@@ -10,11 +10,13 @@ class CreateWatchersTable < ActiveRecord::Migration
       whitelist = (server.settings['whitelist'] || "").split(/\r\n|\n/)
       ops = (server.settings['ops'] || "").split(/\r\n|\n/)
 
-      (whitelist | ops).each do |username|
+      users = [server.creator] + (whitelist | ops).map {|username|
         account = Accounts::Mojang.where(uid: username).first
-        if account && account.user and !account.user.watching.include?(server)
-          account.user.watching << server
-        end
+        account && account.user
+      }.compact.uniq
+
+      users.each do |user|
+        server.watchers << user
       end
     end
 

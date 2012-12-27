@@ -117,4 +117,10 @@ class Server < ActiveRecord::Base
     Activities::CreatedServer.publish(self)
   end
 
+  after_create :add_creator_to_watchers
+
+  def add_creator_to_watchers
+    self.watchers << creator
+  end
+
 end
