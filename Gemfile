@@ -46,10 +46,8 @@ gem 'flipper-redis',
 gem 'sass-rails'
 gem 'bourbon'
 gem 'sitemap_generator'
-gem 'charlock_holmes',
-  github: 'chrislloyd/charlock_holmes',
-  ref: 'HEAD'
-gem 'html-pipeline'
+gem 'html-pipeline',
+  github: 'chrislloyd/html-pipeline'
 gem 'lograge'
 
 group :test, :development do

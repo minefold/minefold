@@ -5,8 +5,8 @@ module MarkdownHelper
     HTML::Pipeline::SanitizationFilter,
     HTML::Pipeline::EmojiFilter
     ], {
-      asset_root: '/images'
-      })
+    asset_root: '/images'
+  })
 
   def markdown(text)
     Pipeline.call(text)[:output].to_s.html_safe
