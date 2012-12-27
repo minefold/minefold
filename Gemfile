@@ -8,7 +8,7 @@ gem 'rails', '3.2.9'
 gem 'rake'
 # Explicitly requiring Nokogiri *before* pg stops the stupid dylib load errors on Mountain Lion: https://github.com/sparklemotion/nokogiri/issues/742
 # Can't question our commitment to Sparkle Motion!
-gem 'nokogiri'
+gem 'nokogiri', '~> 1.5'
 gem 'pg'
 gem 'rack-www'
 gem 'devise'

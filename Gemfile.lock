@@ -336,7 +336,7 @@ DEPENDENCIES
   mailgun-rails
   mini_magick
   nbtfile
-  nokogiri
+  nokogiri (~> 1.5)
   omniauth-facebook
   paranoia
   pg
