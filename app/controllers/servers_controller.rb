@@ -36,6 +36,9 @@ class ServersController < ApplicationController
   end
 
   def show
+    if $flipper[:next].enabled?(current_user)
+      render :next, layout: 'next'
+    end
   end
 
   def map

@@ -13,4 +13,4 @@ end
 
 # --
 
-$flipper[:watching].enable $flipper.group(:admins)
+$flipper[:next].enable $flipper.group(:admins)
