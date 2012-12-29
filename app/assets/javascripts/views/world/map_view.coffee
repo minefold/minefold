@@ -49,7 +49,7 @@ class Application.WorldMapView extends Backbone.View
 
   initialize: (options) ->
     @options = _.extend(@constructor.defaults, options)
-    @options.zoomLevels = options.zoom_levels
+    @options.zoomLevels = @model.get('map_data').zoom_levels
 
   render: ->
     @$el.html @template(@model)
