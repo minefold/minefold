@@ -1,7 +1,7 @@
 class ServersController < ApplicationController
   respond_to :html
 
-  prepend_before_filter :authenticate_user!, :except => [:show, :map]
+  prepend_before_filter :authenticate_user!, :except => [:show, :map, :list]
   prepend_before_filter :set_funpack_params!, :only => [:new]
 
 # --

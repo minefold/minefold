@@ -1,0 +1,33 @@
+%h2 Browse Servers
+
+- count = Server.count
+
+- show_min = params[:min] ? params[:min].to_i : 0
+- show_max = params[:max] ? params[:max].to_i : count
+
+- tabs = 50
+- page_size = count
+- level = 0
+
+- while (show_max - show_min) <= page_size
+
+  - start_index = (show_min / page_size) * page_size + 1
+  - level_max = page_size + start_index
+
+  - count = page_size
+
+  - page_size = (count / tabs.to_f).ceil
+  - pages = tabs.times.map{|index| [index * page_size + start_index, index * page_size + page_size + start_index - 1] }
+  - pages.reject!{|min,max| max >= level_max }
+
+  .pagination.pagination-mini
+    %ul
+      - pages.each do |min, max|
+        - if page_size > 1
+          - label = "#{min}-#{max}"
+          - active = (show_min >= min && show_max <= max)
+          %li{class:(active ? "active" : "")}
+            %a{href: list_servers_path(min:min, max:max)}= label
+        - else
+          %li
+            %a{href: server_path(min)}= min

@@ -26,7 +26,6 @@ class WorldImportedJob < Job
       pusher.trigger('success', {})
     else
       pusher.trigger('error', @result)
-      raise @result.inspect
     end
   end
 

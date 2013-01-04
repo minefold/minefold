@@ -4,7 +4,6 @@ class GameConstraint
   end
 
   def matches?(req)
-    # raise request.inspect
     @game_slugs.include?(req.params['game_id'] || req.params['id'])
   end
 end
@@ -87,10 +86,13 @@ Minefold::Application.routes.draw do
 
     match '/redeem' => redirect('/gifts/redeem')
 
-
     resources :orders, only: [:create, :show]
 
     resources :servers, path_names: {edit: 'settings'} do
+      collection do
+        get :list
+      end
+
       member do
         get :map
         post :start
@@ -100,7 +102,6 @@ Minefold::Application.routes.draw do
           post 'watch', :action => :create
           post 'unwatch', :action => :destroy
         end
-
       end
 
       resources :votes, :only => [:create]
