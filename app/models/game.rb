@@ -1,7 +1,7 @@
 class Game < ActiveRecord::Base
   extend FriendlyId
 
-  attr_accessible :name, :auth, :routing, :maps
+  attr_accessible :name, :auth, :routing, :maps, :slug
 
   validates_uniqueness_of :name
   validates_presence_of :name

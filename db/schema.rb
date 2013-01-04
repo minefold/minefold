@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121227053727) do
+ActiveRecord::Schema.define(:version => 20130104011229) do
 
   create_table "accounts", :force => true do |t|
     t.string   "type"
@@ -70,10 +70,12 @@ ActiveRecord::Schema.define(:version => 20121227053727) do
     t.text    "description"
     t.string  "info_url"
     t.boolean "imports",        :default => false
+    t.string  "slug",           :default => ""
   end
 
   add_index "funpacks", ["game_id"], :name => "index_funpacks_on_game_id"
   add_index "funpacks", ["party_cloud_id"], :name => "index_funpacks_on_party_cloud_id", :unique => true
+  add_index "funpacks", ["slug"], :name => "index_funpacks_on_slug", :unique => true
 
   create_table "games", :force => true do |t|
     t.string   "name"
@@ -214,8 +216,8 @@ ActiveRecord::Schema.define(:version => 20121227053727) do
     t.datetime "last_coin_fairy_visit_at"
     t.string   "invitation_token",         :limit => 12
     t.integer  "invited_by_id"
-    t.boolean  "beta",                                   :default => false
     t.string   "verification_token",       :limit => 12
+    t.boolean  "beta",                                   :default => false
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

@@ -2,6 +2,7 @@ class ServersController < ApplicationController
   respond_to :html
 
   prepend_before_filter :authenticate_user!, :except => [:show, :map]
+  prepend_before_filter :set_funpack_params!, :only => [:new]
 
 # --
 
@@ -23,14 +24,18 @@ class ServersController < ApplicationController
 
     server.creator = current_user
     server.users << current_user
-    server.save
 
-    track 'Created server',
-      name: server.name,
-      url: server_url(server),
-      shared: server.shared?,
-      funpack: server.funpack.name,
-      game: server.game.name
+    if server.save
+      track 'Created server',
+        name: server.name,
+        url: server_url(server),
+        shared: server.shared?,
+        funpack: server.funpack.name,
+        game: server.game.name
+    else
+      @games = Game.all
+      # raise params.inspect
+    end
 
     respond_with(server)
   end
@@ -95,4 +100,16 @@ class ServersController < ApplicationController
     redirect_to(servers_path, notice: "Server \"#{server.name}\" was destroyed.")
   end
 
+  private
+
+  def set_funpack_params!
+    if params[:game] and (game = Game.find_by_slug(params[:game]))
+      params[:server] ||= {}
+      if params[:funpack] and (funpack = Funpack.find_by_slug(params[:funpack]))
+        params[:server][:funpack_id] = funpack.id
+      else
+        params[:server][:funpack_id] = game.default_funpack.id
+      end
+    end
+  end
 end

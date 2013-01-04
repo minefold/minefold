@@ -1,3 +1,3 @@
 class Bonuses::GettingStarted < Bonus
-  self.coins = 20
+  self.coins = 30
 end

@@ -1,3 +1,14 @@
+class GameConstraint
+  def initialize
+    @game_slugs = Game.all.map(&:slug)
+  end
+
+  def matches?(req)
+    # raise request.inspect
+    @game_slugs.include?(req.params['game_id'] || req.params['id'])
+  end
+end
+
 Minefold::Application.routes.draw do
 
 # Constraints
@@ -36,8 +47,6 @@ Minefold::Application.routes.draw do
 
   get '/channel.html' => 'facebook#channel', :as => :facebook_channel
 
-  resources :funpacks
-
   devise_for :user, controllers: {
                       omniauth_callbacks: 'omniauth_callbacks',
                       registrations: 'registrations'
@@ -50,9 +59,11 @@ Minefold::Application.routes.draw do
   controller :explore, path: '/explore' do
 
     get '/', :action => :index
-
   end
 
+  resources :games, path: '/', only: [:show], constraints: GameConstraint.new do
+    resources :funpacks, path: '/', only: [:show]
+  end
 
   # Authenticated routes
   as :user do
