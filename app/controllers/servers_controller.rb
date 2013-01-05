@@ -10,6 +10,8 @@ class ServersController < ApplicationController
 
 # --
 
+  caches_action :list
+
   def index
     @servers = current_user.created_servers.group_by {|s| s.funpack.game }
   end
@@ -98,6 +100,11 @@ class ServersController < ApplicationController
     server.destroy
 
     redirect_to(servers_path, notice: "Server \"#{server.name}\" was destroyed.")
+  end
+  
+  def list
+    @entries = []
+    Server.select('id').find_each{|s| @entries << s.id }
   end
 
   private

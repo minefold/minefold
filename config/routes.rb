@@ -90,7 +90,8 @@ Minefold::Application.routes.draw do
 
     resources :servers, path_names: {edit: 'settings'} do
       collection do
-        get :list
+        get 'list'
+        get 'list/*start_index' => 'servers#list'
       end
 
       member do

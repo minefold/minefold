@@ -49,6 +49,8 @@ gem 'sass-rails'
 gem 'bourbon'
 gem 'sitemap_generator'
 gem 'lograge'
+gem 'memcachier'
+gem 'dalli'
 
 group :test, :development do
   gem 'rspec-rails'

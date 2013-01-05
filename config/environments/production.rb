@@ -54,8 +54,8 @@ Minefold::Application.configure do
   # config.logger = SyslogLogger.new
 
   # Use a different cache store in production
-  # config.cache_store = :dalli_store
-  #
+  config.cache_store = :dalli_store
+  
   # memcached_uri = URI::Generic.build scheme: 'memcached',
   #                                      host: ENV['MEMCACHE_SERVERS']
   #
