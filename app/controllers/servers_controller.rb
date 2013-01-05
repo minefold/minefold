@@ -10,8 +10,6 @@ class ServersController < ApplicationController
 
 # --
 
-  caches_action :list
-
   def index
     @servers = current_user.created_servers.group_by {|s| s.funpack.game }
   end
@@ -101,10 +99,17 @@ class ServersController < ApplicationController
 
     redirect_to(servers_path, notice: "Server \"#{server.name}\" was destroyed.")
   end
-  
+
   def list
-    @entries = []
-    Server.select('id').find_each{|s| @entries << s.id }
+    cache_entry = Rails.cache.read('/servers/list')
+    if cache_entry
+      @entries = JSON.load(cache_entry)
+    else
+      @entries = []
+      Server.select('id').find_each{|s| @entries << s.id }
+
+      Rails.cache.write('/servers/list', JSON.dump(@entries), expires_in: 1.hour)
+    end
   end
 
   private
