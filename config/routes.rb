@@ -90,6 +90,11 @@ Minefold::Application.routes.draw do
           post 'unwatch', :action => :destroy
         end
 
+        controller 'servers/stars' do
+          post 'star', :action => :create
+          post 'unstar', :action => :destroy
+        end
+
       end
 
       resources :votes, :only => [:create]
