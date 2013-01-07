@@ -53,6 +53,8 @@ module Minefold
     #   https://github.com/plataformatec/devise#heroku
     config.assets.initialize_on_precompile = false
 
+    config.assets.paths << Rails.root.join('vendor', 'assets', 'flash')
+
     config.generators do |g|
       g.orm :active_record
       g.template_engine :haml

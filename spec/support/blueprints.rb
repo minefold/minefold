@@ -7,8 +7,12 @@ User.blueprint do
   password_confirmation { 'password' }
 end
 
-Player.blueprint do
-  game
+Account.blueprint do
+  user
+  uid { Faker::Internet.user_name }
+end
+
+Accounts::Mojang.blueprint do
   user
   uid { Faker::Internet.user_name }
 end
@@ -37,6 +41,8 @@ end
 
 
 # --
+
+
 
 Game.blueprint(:minecraft) do
   name { 'Minecraft' }

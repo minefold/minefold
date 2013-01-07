@@ -23,7 +23,7 @@
 
     .progress
       .bar{style: 'width:0%'}
-    
+
   .help-block
     - case os
     - when :win
@@ -43,7 +43,7 @@
 
 - content_for :tail do
   :javascript
-    app.uploadsView = new Application.WorldUploadView({
+    app.uploadsView = new Application.UploadView({
       el: $('#uploads'),
       sign_url: '#{sign_server_uploads_path(server.id)}',
       post_upload_url: '#{server_uploads_path(server.id)}',

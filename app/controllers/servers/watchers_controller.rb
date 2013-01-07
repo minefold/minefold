@@ -1,5 +1,5 @@
 class Servers::WatchersController < ApplicationController
-  respond_to :html, :js
+  respond_to :js
 
   prepend_before_filter :authenticate_user!
 

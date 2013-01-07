@@ -10,5 +10,8 @@ class Funpack < ActiveRecord::Base
     JSON.load(Rails.root.join('config', 'minecraft.json'))
   end
 
+  def default_settings
+    {}
+  end
 
 end
