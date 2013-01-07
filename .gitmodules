@@ -13,3 +13,6 @@
 [submodule "vendor/assets/raphael"]
 	path = vendor/assets/raphael
 	url = https://github.com/DmitryBaranovskiy/raphael.git
+[submodule "vendor/ZeroClipboard"]
+	path = vendor/ZeroClipboard
+	url = https://github.com/jonrohan/ZeroClipboard.git
