@@ -174,7 +174,7 @@ ActiveRecord::Schema.define(:version => 20130104011229) do
   add_index "servers", ["deleted_at", "host", "port"], :name => "index_servers_on_deleted_at_and_host_and_port"
   add_index "servers", ["party_cloud_id"], :name => "index_servers_on_party_cloud_id", :unique => true
 
-  create_table "servers_users", :id => false, :force => true do |t|
+  create_table "stars", :id => false, :force => true do |t|
     t.integer "user_id"
     t.integer "server_id"
   end
@@ -216,8 +216,8 @@ ActiveRecord::Schema.define(:version => 20130104011229) do
     t.datetime "last_coin_fairy_visit_at"
     t.string   "invitation_token",         :limit => 12
     t.integer  "invited_by_id"
-    t.string   "verification_token",       :limit => 12
     t.boolean  "beta",                                   :default => false
+    t.string   "verification_token",       :limit => 12
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
@@ -235,6 +235,11 @@ ActiveRecord::Schema.define(:version => 20130104011229) do
     t.string   "ip"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "watchers", :id => false, :force => true do |t|
+    t.integer "user_id"
+    t.integer "server_id"
   end
 
   create_table "worlds", :force => true do |t|
