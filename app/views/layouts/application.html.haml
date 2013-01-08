@@ -91,6 +91,7 @@
           %li= link_to 'Pricing', pricing_page_path
           %li= link_to 'Support', support_page_path
           %li= link_to 'About', about_page_path
+          %li= link_to 'Servers', list_servers_path
           %li= link_to 'Developers', 'http://partycloud.com'
           %li= link_to 'Blog', 'http://blog.mutlicorp.com'
 
@@ -212,6 +213,9 @@
 
       :javascript
         var _gaq = _gaq || [];
+        var pluginUrl = 
+         '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+        _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
         _gaq.push(['_setAccount', #{ENV['GOOGLE_ANALYTICS'].to_json}]);
         _gaq.push(['_setDomainName', 'minefold.com']);
         _gaq.push(['_trackPageview']);

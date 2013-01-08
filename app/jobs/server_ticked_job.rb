@@ -19,7 +19,7 @@ class ServerTickedJob < Job
         if player.user.nil?
           kick_player(player.uid, "Link your Minecraft account at minefold.com to play")
         elsif player.user.coins <= 0
-          kick_player(player.uid, "Out of coins! Visit minefold.com to get more")
+          kick_player(player.uid, "Out of time! Visit minefold.com to get more")
         else
           coin_message(player)
           player.user.spend_coins! 1
@@ -30,7 +30,7 @@ class ServerTickedJob < Job
       # Creator pays
       if @server.creator.coins <= 0
         @uids.each do |uid|
-          kick_player(uid, "Out of coins! Visit minefold.com to get more")
+          kick_player(uid, "Out of time! Visit minefold.com to get more")
         end
       else
         @server.creator.spend_coins! [@uids.size, 10].min
@@ -39,12 +39,13 @@ class ServerTickedJob < Job
   end
 
   def coin_message(player)
-    coins = (player.user.coins + 1)
-    if coins % 60 == 0
-      tell_player(player.uid, "#{coins} coins remaining. Visit minefold.com to get more")
+    minutes = (player.user.coins + 1)
+    if minutes % 60 == 0
+      hours = minutes / 60
+      tell_player(player.uid, "#{hours} hours remaining. Visit minefold.com to get more")
 
     elsif player.user.coins == 10
-      tell_player(player.uid, "Only #{coins} coins remaining! Visit minefold.com to get more")
+      tell_player(player.uid, "Only #{minutes} minutes remaining! Visit minefold.com to get more")
     end
 
   end

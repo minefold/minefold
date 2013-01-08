@@ -10,13 +10,14 @@ minecraft = Game.create(
   name: 'Minecraft',
   auth: true,
   routing: true,
-  maps: true
+  maps: true,
+  slug: 'minecraft'
 )
 
 tf2 = Game.new(
-  name: 'Team Fortress 2'
+  name: 'Team Fortress 2',
+  slug: 'team-fortress-2'
 )
-tf2.slug = 'tf2'
 tf2.save!
 
 

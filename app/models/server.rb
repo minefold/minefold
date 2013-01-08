@@ -82,6 +82,19 @@ class Server < ActiveRecord::Base
   def address
     [host, port].compact.join(':')
   end
+  
+  # TODO remove this with new auth stuff
+  before_create :whitelist_creator
+  
+  def whitelist_creator
+    creator_account = creator.accounts.mojang.first
+    
+    creator_uid = creator_account ? creator_account.uid : creator.username
+    
+    settings['whitelist'] ||= creator_uid 
+    settings['ops'] ||= creator_uid 
+  end
+  
 
   after_create :create_party_cloud_server
 

@@ -85,6 +85,7 @@ GEM
     coffee-script-source (1.4.0)
     curb (0.8.3)
     daemons (1.1.9)
+    dalli (2.6.0)
     decent_exposure (2.0.0.rc1)
     devise (2.1.2)
       bcrypt-ruby (~> 3.0)
@@ -158,6 +159,7 @@ GEM
       actionmailer
       activesupport
       curb
+    memcachier (0.0.2)
     mime-types (1.19)
     mini_magick (3.4)
       subexec (~> 0.2.1)
@@ -316,6 +318,7 @@ DEPENDENCIES
   cancan
   carrierwave
   coffee-rails
+  dalli
   decent_exposure (= 2.0.0.rc1)
   devise
   faker
@@ -334,6 +337,7 @@ DEPENDENCIES
   lograge
   machinist
   mailgun-rails
+  memcachier
   mini_magick
   nbtfile
   nokogiri (~> 1.5)

@@ -1,0 +1,25 @@
+%h2 Browse Servers
+
+- start_index = (params[:start_index] || 1).to_i
+- sections = 50
+
+- range = @entries
+
+- divisions = nil
+- while range and (divisions.nil? or divisions.first.size > 1)
+  - divisions = range.each_slice((range.size / sections.to_f).ceil)
+  - range = divisions.find{|div| start_index >= div.first && start_index <= div.last}
+
+  .pagination.pagination-mini
+    %ul
+      - divisions.map(&:minmax).each do |min, max|
+        - if max > min
+          - label = "#{min}-#{max}"
+          - active = (start_index >= min && start_index <= max)
+          %li{class:(active ? "active" : "")}
+            %a{href: list_servers_path + "/#{min}"}= label
+        - else
+          %li
+            %a{href: server_path(min)}= min
+
+

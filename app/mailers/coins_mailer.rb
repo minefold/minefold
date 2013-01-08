@@ -9,14 +9,14 @@ class CoinsMailer < ActionMailer::Base
     @resource = User.find(user_id)
 
     mail to: @resource.email,
-         subject: "Your Minefold coins are low"
+         subject: "Your Minefold time is low"
   end
 
   def no_coins(user_id)
     @resource = User.find(user_id)
 
     mail to: @resource.email,
-         subject: "You have run out of Minefold coins"
+         subject: "You have run out of Minefold time"
   end
 
   def receipt(user_id, charge_id, coin_pack_id)

@@ -15,9 +15,8 @@
         .control-label Game
         .controls
           - @games.each do |game|
-
             %label.radio{for: "server_funpack_id_#{game.default_funpack.id}", style: 'margin-bottom:20px'}
-              %input{type: 'radio', name: 'server[funpack_id]', value: game.default_funpack.id.to_s, id: "server_funpack_id_#{game.default_funpack.id}"}
+              %input{type: 'radio', name: 'server[funpack_id]', value: game.default_funpack.id.to_s, id: "server_funpack_id_#{game.default_funpack.id}", checked:(params[:server] and params[:server][:funpack_id].to_s == game.default_funpack.id.to_s)}
 
               %strong.name{style: 'margin-right:10px'}
                 = game.default_funpack.name
@@ -49,16 +48,14 @@
               Everybody
 
               .help-block.muted
-                You pay 1 coin every minute for each person who is playing. If there are 5 people playing, the server will cost you 5 coins per minute.
-                %span{style: 'color:#666'} No matter how many people are playing, the cost to you is capped at 10 coins per minute.
+                You pay for the time played by any player on your server up to 10 people. For example, if 5 people play on your server for 1 hour each, you'll pay for 5 hours. If 15 people play for one hour each, you'll only pay for 10 hours.
 
             = f.label 'shared_true', class: 'radio' do
               = f.radio_button :shared, true
               Only me
 
               .help-block.muted
-                It will cost you 1 coin per minute to play.
-                %span{style: 'color:#666'} Every player needs a Minefold account with a linked Minecraft account to play.
+                Each player pays for themselves. Every player will need a Minefold account with a linked Minecraft account to play.
 
         .form-actions
           = f.submit 'Create server', class: %w(btn btn-primary)

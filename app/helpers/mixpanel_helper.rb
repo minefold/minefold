@@ -4,6 +4,11 @@ module MixpanelHelper
     js = "mixpanel.track(#{name.to_json}, #{properties.to_json});"
     haml_tag(:script, js.html_safe)
   end
+  
+  def landing_page(type)
+    js = %Q{mixpanel.register_once("landing url": window.location.href, "landing type": "#{type}");}
+    haml_tag(:script, js.html_safe)
+  end
 
   def mixpanel_person
     signed_in? and {
