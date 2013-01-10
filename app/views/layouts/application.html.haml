@@ -7,9 +7,9 @@
     - # TODO Improve titles for SEO
     %title
       - if content_for?(:title)
-        =  yield :title
-        —
-      Minefold
+        = yield :title
+      - else
+        Minefold
 
     %meta{name: 'author', content: 'Mütli Corp <http://mutlicorp.com>'}
     %meta{name: 'description', content: 'Play Minecraft on demand with friends.'}

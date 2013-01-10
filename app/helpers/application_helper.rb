@@ -1,7 +1,9 @@
+# encoding: utf-8
+
 module ApplicationHelper
 
-  def title(page_title)
-    provide(:title, page_title.to_s)
+  def title(page_title, suffix="")
+    provide(:title, "#{page_title} – Minefold #{suffix}")
   end
 
   def desc(meta_description)
