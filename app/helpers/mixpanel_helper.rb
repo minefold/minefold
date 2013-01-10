@@ -1,14 +1,21 @@
 module MixpanelHelper
 
   def track(name, properties={})
-    js = "mixpanel.track(#{name.to_json}, #{properties.to_json});"
+    js "mixpanel.track(#{name.to_json}, #{properties.to_json});"
+  end
+
+  def track_landing_page
+    js %Q{mixpanel.register_once({"landing page": window.location.href});}
+  end
+
+  def track_landing_type(type)
+    js %Q{mixpanel.register_once({"landing type": "#{type}"});}
+  end
+
+  def js(js)
     haml_tag(:script, js.html_safe)
   end
-  
-  def landing_page(type)
-    js = %Q{mixpanel.register_once("landing url": window.location.href, "landing type": "#{type}");}
-    haml_tag(:script, js.html_safe)
-  end
+
 
   def mixpanel_person
     signed_in? and {
