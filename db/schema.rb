@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130104011229) do
+ActiveRecord::Schema.define(:version => 20130113214654) do
 
   create_table "accounts", :force => true do |t|
     t.string   "type"
@@ -180,22 +180,22 @@ ActiveRecord::Schema.define(:version => 20130104011229) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "username",                               :default => ""
-    t.string   "slug",                                   :default => ""
+    t.string   "username",                             :default => ""
+    t.string   "slug",                                 :default => ""
     t.string   "email"
-    t.string   "encrypted_password",                     :default => "",    :null => false
-    t.boolean  "admin",                                  :default => false, :null => false
+    t.string   "encrypted_password",                   :default => "",    :null => false
+    t.boolean  "admin",                                :default => false, :null => false
     t.string   "first_name"
     t.string   "last_name"
     t.string   "locale"
-    t.integer  "timezone",                               :default => 0
+    t.integer  "timezone",                             :default => 0
     t.string   "gender"
-    t.integer  "coins",                                  :default => 0,     :null => false
+    t.integer  "coins",                                :default => 0,     :null => false
     t.string   "customer_id"
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                          :default => 0
+    t.integer  "sign_in_count",                        :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -205,19 +205,18 @@ ActiveRecord::Schema.define(:version => 20130104011229) do
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
     t.string   "authentication_token"
-    t.datetime "created_at",                                                :null => false
-    t.datetime "updated_at",                                                :null => false
+    t.datetime "created_at",                                              :null => false
+    t.datetime "updated_at",                                              :null => false
     t.text     "notifications"
     t.string   "avatar"
-    t.string   "name",                                   :default => ""
+    t.string   "name",                                 :default => ""
     t.string   "distinct_id"
     t.string   "legacy_id"
     t.datetime "deleted_at"
-    t.datetime "last_coin_fairy_visit_at"
-    t.string   "invitation_token",         :limit => 12
+    t.string   "invitation_token",       :limit => 12
     t.integer  "invited_by_id"
-    t.boolean  "beta",                                   :default => false
-    t.string   "verification_token",       :limit => 12
+    t.string   "verification_token",     :limit => 12
+    t.boolean  "beta",                                 :default => false
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
