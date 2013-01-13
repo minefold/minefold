@@ -12,6 +12,16 @@ class Server < ActiveRecord::Base
 
   has_and_belongs_to_many :watchers, class_name: 'User', uniq: true
 
+  has_and_belongs_to_many :watchers,
+    class_name: 'User',
+    join_table: 'watchers',
+    uniq: true
+
+  has_and_belongs_to_many :starrers,
+    class_name: 'User',
+    join_table: 'stars',
+    uniq: true
+
   has_many :memberships, :dependent => :destroy
   has_many :users, :through => :memberships
 
@@ -82,19 +92,19 @@ class Server < ActiveRecord::Base
   def address
     [host, port].compact.join(':')
   end
-  
+
   # TODO remove this with new auth stuff
   before_create :whitelist_creator
-  
+
   def whitelist_creator
     creator_account = creator.accounts.mojang.first
-    
+
     creator_uid = creator_account ? creator_account.uid : creator.username
-    
-    settings['whitelist'] ||= creator_uid 
-    settings['ops'] ||= creator_uid 
+
+    settings['whitelist'] ||= creator_uid
+    settings['ops'] ||= creator_uid
   end
-  
+
 
   after_create :create_party_cloud_server
 
