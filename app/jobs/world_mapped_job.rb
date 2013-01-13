@@ -5,7 +5,7 @@ class WorldMappedJob < Job
     @world = @server.world
   end
 
-  def perform?
+  def performable?
     not @world.nil?
   end
 

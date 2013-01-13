@@ -1,49 +1,29 @@
+require './lib/resque/plugins/heroku'
+require './lib/resque/plugins/librato'
+require './lib/resque/plugins/logging'
+
 class Job
   extend Resque::Plugins::Heroku
+  extend Resque::Plugins::Librato
+  extend Resque::Plugins::Logging
 
   def self.queue
     :low
   end
 
   def self.perform(*args)
-    logger.tagged(name.underscore) do
-      begin
-        logger.info "starting with #{args.inspect}"
-        job = new(*args)
-
-        if job.perform?
-          logger.info "performing"
-          job.perform!
-          logger.info "finished"
-          Librato::Rails.flush
-        else
-          logger.info "skipping"
-        end
-      rescue => e
-        logger.warn e.to_s
-        raise e
-      end
-    end
+    new(*args).perform
   end
 
-  def perform?
+  def performable?
     true
   end
 
-  def perform!
+  def perform
+    perform! if performable?
   end
 
-# private
-
-  def self.logger=(logger)
-    @logger = logger
+  def perform
   end
 
-  def self.logger
-    @logger ||= Rails.logger
-  end
-
-  def logger
-    self.class.logger
-  end
 end
