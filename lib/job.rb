@@ -23,7 +23,4 @@ class Job
     perform! if performable?
   end
 
-  def perform
-  end
-
 end
