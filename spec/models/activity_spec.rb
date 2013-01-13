@@ -5,16 +5,15 @@ describe Activity do
   describe ".publish" do
 
     it "creates an activity" do
-      mock(subject).save
-      stub(described_class).for('a', 'b', 'c') { subject }
-
+      subject.should_receive(:save)
+      described_class.stub(:for).with('a', 'b', 'c') { subject }
       described_class.publish('a', 'b', 'c')
     end
 
     it "passes any args to .for" do
-      stub(subject).save
-      mock(described_class).for('a', 'b', 'c') { subject }
-
+      subject.stub(:save)
+      described_class.should_receive(:for)
+        .with('a', 'b', 'c') { subject }
       described_class.publish('a', 'b', 'c')
     end
 
@@ -45,33 +44,27 @@ describe Activity do
   describe "#publish_to" do
 
     it "adds itself to each interested ActivityStream" do
-      any_instance_of(ActivityStream) do |as|
-        mock(as).add(subject)
-      end
-
-      subject.publish_to(User.new)
+      # stream = stub.should_receive(:add).with(subject)
+      stream = stub(:add => 'tracer')
+      ActivityStream.stub(new: stream)
+      subject.publish_to(stub).should == 'tracer'
     end
 
   end
 
   describe "#publish_to_target" do
     it "adds itself to the target's ActivityStream" do
-      any_instance_of(ActivityStream) do |as|
-        mock(as).add(subject)
-      end
-
-      stub(subject).target { User.new }
-
-      subject.publish_to(User.new)
+      subject.stub(target: stub)
+      subject.should_receive(:publish_to).with(subject.target)
+      subject.publish_to_target
     end
   end
 
   describe "#broadcast" do
     it "publishes itself to each interested object" do
-      user = User.new
-      mock(subject).publish_to(user)
-      stub(subject).interested { [user] }
-
+      user = stub
+      subject.should_receive(:publish_to).with(user)
+      subject.stub(:interested) { [user] }
       subject.broadcast
     end
   end

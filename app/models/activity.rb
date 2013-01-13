@@ -24,8 +24,8 @@ class Activity < ActiveRecord::Base
   end
 
   def publish_to(obj)
-    stream = ActivityStream.new(obj, $redis)
-    stream.add(self)
+    # obj.activity_stream.add(self)
+    ActivityStream.new(obj, $redis).add(self)
   end
 
   def publish_to_target

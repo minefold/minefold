@@ -13,11 +13,11 @@ describe ServerCreatedJob do
     it "sets the server's party_cloud_id" do
       expect {
         subject.perform!
-      }.to change(subject.server, :party_cloud_id).to('abc')
+      }.to change { subject.server.party_cloud_id }.to('abc')
     end
 
     it "saves the record" do
-      mock(subject.server).save!
+      subject.server.should_receive(:save!)
       subject.perform!
     end
 

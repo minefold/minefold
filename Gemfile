@@ -62,8 +62,6 @@ group :development do
 end
 
 group :test do
-  gem 'rr'
-
   gem 'machinist'
   gem 'faker'
   gem 'timecop'
