@@ -2,10 +2,8 @@ Minefold::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # Log to stdout
-  config.logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
-  config.log_level = :warn
-
   config.lograge.enabled = true
+  config.log_level = :info
 
   config.action_mailer.default_url_options = {
     host: 'minefold.com',
@@ -55,7 +53,7 @@ Minefold::Application.configure do
 
   # Use a different cache store in production
   config.cache_store = :dalli_store
-  
+
   # memcached_uri = URI::Generic.build scheme: 'memcached',
   #                                      host: ENV['MEMCACHE_SERVERS']
   #
