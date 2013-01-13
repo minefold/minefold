@@ -107,8 +107,17 @@
             = render partial: server.funpack.game.settings_partial, locals: {f: s}
 
           .form-actions
-            = f.submit 'Save and stop server', name: 'restart', class: %w(btn btn-primary)
-            = f.submit 'Save', class: %w(btn)
+            - if server.state == :up
+              %p.help-block
+                %span.highlight People are playing on this server.
+                If you save and stop, everybody will be kicked. If you just save, the settings they will be applied when they leave.
+
+              %div
+                = f.submit 'Save', class: %w(btn btn-primary)
+                = f.submit 'Save and stop server', name: 'restart', class: %w(btn)
+
+            - else
+              = f.submit 'Save', class: %w(btn btn-primary)
 
 
     / --
