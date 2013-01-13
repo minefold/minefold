@@ -17,8 +17,6 @@
 
 #= require ./helpers
 
-#= require particle_system
-
 #= require_self
 #= require_tree .
 
