@@ -51,6 +51,7 @@ gem 'sitemap_generator'
 gem 'lograge'
 gem 'memcachier'
 gem 'dalli'
+gem 'scrolls'
 
 group :test, :development do
   gem 'rspec-rails'

@@ -1,3 +1,5 @@
+require 'scrolls'
+
 module Resque
   module Plugins
     module Logging
