@@ -57,8 +57,8 @@ class ServersController < ApplicationController
     # TODO Actual error checking here!
     server.update_attributes(params[:server])
 
-    if params[:server][:force].present?
-      PartyCloud.stop_server(sever.party_cloud_id)
+    if params[:restart].present?
+      PartyCloud.stop_server(server.party_cloud_id)
     end
 
     respond_with(server)
