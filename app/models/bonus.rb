@@ -39,7 +39,7 @@ class Bonus < ActiveRecord::Base
 # private
 
   def track!
-    Mixpanel.track_async 'Bonus claimed', distinct_id: user.distinct_id,
+    Mixpanel.async_track 'Bonus claimed', distinct_id: user.distinct_id,
                                           bonus:       self.class.pretty_name,
                                           coins:       coins,
                                           time:        Time.now.to_i
