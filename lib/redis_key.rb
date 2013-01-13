@@ -6,7 +6,7 @@ class RedisKey
 
   def self.key_for(obj)
     case obj
-    when String, Symbol
+    when String, Symbol, RedisKey
       obj.to_s
     when Class
       class_key(obj)

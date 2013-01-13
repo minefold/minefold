@@ -14,6 +14,12 @@ describe RedisKey do
       expect(subject.to_s).to eq("r_spec/mocks/mock:2")
     end
 
+    it "generates composite keys" do
+      foo = described_class.new('foo')
+      subject = described_class.new(foo, :bar)
+      expect(subject.to_s).to eq("foo:bar")
+    end
+
     it "postfixes keys" do
       subject = described_class.new(described_class, :id)
       expect(subject.to_s).to eq("redis_key:id")
