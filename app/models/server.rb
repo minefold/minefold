@@ -1,6 +1,6 @@
-class Server < ActiveRecord::Base
-  include Concerns::Redis
+require './lib/redis_key'
 
+class Server < ActiveRecord::Base
   attr_accessible :name, :description, :funpack_id, :shared, :settings
 
   acts_as_paranoid
@@ -126,7 +126,7 @@ class Server < ActiveRecord::Base
   end
 
   def redis_watchers_key
-    "#{typed_redis_key}:watchers"
+    RedisKey.new(self, :watchers).to_s
   end
 
 

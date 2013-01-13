@@ -1,9 +1,9 @@
+require './lib/redis_key'
+
 class User < ActiveRecord::Base
   extend FriendlyId
   include Concerns::Authentication
   include Concerns::Coins
-  include Concerns::Redis
-
 
   attr_accessible :username, :email, :first_name, :last_name, :name, :avatar,
                   :password, :password_confirmation, :remove_avatar,
