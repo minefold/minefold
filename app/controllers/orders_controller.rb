@@ -20,7 +20,7 @@ class OrdersController < ApplicationController
 
       mixpanel_person_add order.user.distinct_id, 'Spent' => order.total
 
-      Mixpanel.async_person(self.distinct_id, {
+      Mixpanel.async_person(order.user.distinct_id, {
         '$append' => {
           '$transactions' => {
             '$time' => Time.now.utc,
