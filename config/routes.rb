@@ -60,10 +60,6 @@ Minefold::Application.routes.draw do
     get '/', :action => :index
   end
 
-  resources :games, path: '/', only: [:show], constraints: GameConstraint do
-    resources :funpacks, path: '/', only: [:show]
-  end
-
   # Authenticated routes
   as :user do
 
@@ -130,6 +126,10 @@ Minefold::Application.routes.draw do
 
     authenticated do
       root to: 'servers#index', :as => :user_root
+    end
+
+    resources :games, path: '/', only: [:show], constraints: GameConstraint do
+      resources :funpacks, path: '/', only: [:show]
     end
 
     resources :users, path: '/',
