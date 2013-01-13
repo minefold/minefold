@@ -14,13 +14,12 @@
 
 #= require jquery.cookie
 #= require jquery.simple-slider
+#= require s3upload
 
 #= require ./helpers
 
 #= require_self
 #= require_tree .
-
-#= require ./s3upload
 
 
 class window.Application extends Backbone.Router
