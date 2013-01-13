@@ -17,14 +17,8 @@ end
 
 # --
 
-shared_examples "authenticated action" do
-
-    it "authenticates the user" do
-      expect(warden).to be_authenticated(:user)
-      # expect(warden.authenticated?(:user)).to be_true
-
-      # expect(@request.env['action_controller.instance'])
-      #   .to be_a(Devise::FailureApp)
-    end
-
+RSpec::Matchers.define :authenticate_user do
+  match do |actual|
+    actual.redirect? && actual.redirect_url == 'http://test.host/user/sign_in'
+  end
 end
