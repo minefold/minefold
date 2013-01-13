@@ -20,6 +20,15 @@ class OrdersController < ApplicationController
 
       mixpanel_person_add order.user.distinct_id, 'Spent' => order.total
 
+      Mixpanel.async_person(self.distinct_id, {
+        '$append' => {
+          '$transactions' => {
+            '$time' => Time.now.utc,
+            '$amount' => (order.total / 100.0)
+          }
+        }
+      })
+
       # Send a receipt
       CoinsMailer.receipt(
         order.user.id,
