@@ -60,3 +60,14 @@ code {
 #Intercom {
   display: none;
 }
+
+.btn {
+  background-image: none;
+  border: none;
+  @include box-shadow(none);
+  text-shadow: none;
+  font-weight: 600;
+}
+
+
+
