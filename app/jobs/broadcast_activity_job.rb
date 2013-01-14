@@ -6,7 +6,7 @@ class BroadcastActivityJob < Job
     @activity = klass.constantize.find(id)
   end
 
-  def perform!
+  def perform
     activity.broadcast
   end
 

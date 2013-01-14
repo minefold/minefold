@@ -9,7 +9,7 @@ class ServerCreatedJob < Job
     @party_cloud_id = party_cloud_id
   end
 
-  def perform!
+  def perform
     server.party_cloud_id = party_cloud_id
     server.save!
   end

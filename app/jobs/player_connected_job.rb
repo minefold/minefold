@@ -12,7 +12,7 @@ class PlayerConnectedJob < Job
     @account = Accounts::Mojang.find_or_create_by_uid(uid)
   end
 
-  def perform!
+  def perform
     server_session = server.sessions.current
 
     session = server_session.player_sessions.new
@@ -20,7 +20,7 @@ class PlayerConnectedJob < Job
     session.account = account
 
     server_session.save!
-    
+
     if account.user
       Mixpanel.track 'Played',
         distinct_id: account.user.distinct_id,

@@ -10,7 +10,7 @@ class WorldImportedJob < Job
     @pusher_key = pusher_key
   end
 
-  def perform!
+  def perform
     if @result == 'success'
       @server.settings.merge!(@settings)
       @server.save!

@@ -15,7 +15,7 @@ class ServerSettingsChangedJob < Job
     end
   end
 
-  def perform!
+  def perform
     # hack for whitelist_add, whitelist_remove, blacklist_add, blacklist_remove, ops_add, ops_remove
     if key =~ /([a-z]+)_add/
       set = (server.settings[$1] || "").split("\n")

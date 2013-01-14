@@ -9,7 +9,7 @@ class ServerTickedJob < Job
     @timestamp = Time.at(timestamp)
   end
 
-  def perform!
+  def perform
     if @server.shared?
       # Players pay
       # TODO look up game type

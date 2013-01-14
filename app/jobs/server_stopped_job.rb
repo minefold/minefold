@@ -9,7 +9,7 @@ class ServerStoppedJob < Job
     @server = Server.unscoped.find_by_party_cloud_id(party_cloud_id)
   end
 
-  def perform!
+  def perform
     # TODO Add error checking for when the session doesn't exist
     session = server.sessions.current
     session.finish(time)

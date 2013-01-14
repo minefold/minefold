@@ -15,12 +15,4 @@ class Job
     new(*args).perform
   end
 
-  def performable?
-    true
-  end
-
-  def perform
-    perform! if performable?
-  end
-
 end

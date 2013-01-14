@@ -4,7 +4,7 @@ class MixpanelTrackedJob < Job
     @event, @properties = event, properties
   end
 
-  def perform!
+  def perform
     Mixpanel.track(@event, @properties)
   end
 

@@ -12,7 +12,7 @@ class PlayerDisconnectedJob < Job
     @account = Accounts::Mojang.find_or_create_by_uid(uid)
   end
 
-  def perform!
+  def perform
     session = account.sessions.current
     session.finish(time)
     session.save!

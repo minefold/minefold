@@ -6,7 +6,7 @@ class ServerBackedUpJob < Job
     @snapshot_id, @url = snapshot_id, url
   end
 
-  def perform!
+  def perform
     if not @server.world
       @server.world = World.new
     end

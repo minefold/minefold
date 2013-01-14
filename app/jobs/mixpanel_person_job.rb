@@ -4,7 +4,7 @@ class MixpanelPersonJob < Job
     @distinct_id, @options = distinct_id, options
   end
 
-  def perform!
+  def perform
     Mixpanel.person(@distinct_id, @options)
   end
 

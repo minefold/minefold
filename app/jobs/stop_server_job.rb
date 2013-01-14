@@ -3,7 +3,7 @@ class StopServerJob < Job
     @server = Server.unscoped.find(id)
   end
 
-  def perform!
+  def perform
     PartyCloud.stop_server(@server.party_cloud_id)
   end
 

@@ -13,7 +13,7 @@ class LinkMojangAccountJob < Job
     @account = Accounts::Mojang.find_or_create_by_uid(username)
   end
 
-  def perform!
+  def perform
     # No user account found
     if user.nil?
       reply 'Bad code. Please copy and paste the verify address'

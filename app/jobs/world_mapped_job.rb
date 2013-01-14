@@ -5,11 +5,9 @@ class WorldMappedJob < Job
     @world = @server.world
   end
 
-  def performable?
-    not @world.nil?
-  end
-
   def perform!
+    return if @world.nil?
+
     @world.last_mapped_at = Time.at(@timestamp)
     # TODO Actualy sent the nice data from the mapping job.
     @world.map_data = {

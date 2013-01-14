@@ -6,22 +6,21 @@ describe Job do
     expect(described_class.queue).to eq(:low)
   end
 
-  it "performs by default" do
-    expect(subject).to be_performable
-  end
+  describe ".perform" do
 
-  describe "#perform" do
-
-    it "does the dirty work" do
-      subject.stub(:perform!) { 'result' }
-      expect(subject.perform!).to eq('result')
+    it "initializes a new object" do
+      subject.stub(:perform) { 'result' }
+      described_class.stub(new: subject)
+      expect(described_class.perform).to eq('result')
     end
 
-    it "short circuits if the job isn't performable" do
-      subject.stub(:performable?) { false }
-      subject.stub(:perform!) { 'result' }
-
-      expect(subject.perform).to_not eq('result')
+    it "calls #perform on the new instance" do
+      subclass = Class.new(described_class) do
+        def perform
+          'sentinal'
+        end
+      end
+      expect(subclass.perform).to eq('sentinal')
     end
 
   end

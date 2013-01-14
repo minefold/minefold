@@ -17,7 +17,7 @@ class ServerStartedJob < Job
     end
   end
 
-  def perform!
+  def perform
     session = server.sessions.current
 
     session.started_at ||= started_at
