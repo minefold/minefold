@@ -4,7 +4,6 @@ describe ServersController do
 
   let(:server) { Server.make! }
 
-
   describe "PUT #update" do
 
     it "authenticates user" do

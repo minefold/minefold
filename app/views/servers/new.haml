@@ -14,7 +14,7 @@
       .control-group
         .control-label Game
         .controls
-          - @games.each do |game|
+          - GAMES.each do |game|
             %label.radio{for: "server_funpack_id_#{game.default_funpack.id}", style: 'margin-bottom:20px'}
               %input{type: 'radio', name: 'server[funpack_id]', value: game.default_funpack.id.to_s, id: "server_funpack_id_#{game.default_funpack.id}", checked:(params[:server] and params[:server][:funpack_id].to_s == game.default_funpack.id.to_s)}
 

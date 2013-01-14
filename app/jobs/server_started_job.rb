@@ -27,7 +27,7 @@ class ServerStartedJob < Job
 
     session.save!
 
-    if not server.game.routing?
+    if not server.game.routable?
       server.host = host
       server.port = port
       server.save!
@@ -35,7 +35,7 @@ class ServerStartedJob < Job
 
     Mixpanel.track 'Started server',
       distinct_id: server.creator.distinct_id,
-      name: server.name,
+      game: server.game.name,
       shared: server.shared?
   end
 

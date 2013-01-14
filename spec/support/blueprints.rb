@@ -23,13 +23,8 @@ CoinPack.blueprint do
   coins { rand(1000) }
 end
 
-Game.blueprint do
-  name { Faker::Company.name }
-end
-
 Funpack.blueprint do
   name { Faker::Company.name }
-  game
 end
 
 Server.blueprint do
@@ -41,12 +36,6 @@ end
 
 
 # --
-
-
-
-Game.blueprint(:minecraft) do
-  name { 'Minecraft' }
-end
 
 Funpack.blueprint(:minecraft) do
   game(:minecraft)

@@ -8,7 +8,7 @@
 
 %ul.nav.nav-tabs
   %li= link_to 'Activity', server
-  - if server.game.maps?
+  - if server.game.mappable?
     %li= link_to 'Map', [:map, server]
   %li.active= link_to 'Settings', [:edit, server]
 
@@ -30,7 +30,7 @@
             .controls
               = f.text_area :description, class: %w(span6), rows: 6
 
-          - if server.game.routing?
+          - if server.game.routable?
             = f.control_group :address do |f|
               .control-label Server Address
               %p.help-block.server-address= server.address
@@ -104,7 +104,7 @@
       .span7
         = form_for server do |f|
           = f.fields_for :settings, OpenStruct.new(server.settings) do |s|
-            = render partial: server.funpack.game.settings_partial, locals: {f: s}
+            = render partial: server.funpack.game.to_partial_path, locals: {f: s}
 
           .form-actions
             - if server.state == :up

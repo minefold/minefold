@@ -63,7 +63,7 @@ class Server < ActiveRecord::Base
   end
 
   def state
-    if game.routing?
+    if game.routable?
       :shared
     elsif sessions.current? and sessions.current.started_at.nil?
       :starting
@@ -75,7 +75,7 @@ class Server < ActiveRecord::Base
   end
 
   def up?
-    game.routing? or state == :up
+    game.routable? or state == :up
   end
 
   [:starting, :stopped].each do |s|

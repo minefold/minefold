@@ -1,12 +1,5 @@
-class GameConstraint
-  def initialize
-    @game_slugs = Game.all.map(&:slug)
-  end
-
-  def matches?(req)
-    @game_slugs.include?(req.params['game_id'] || req.params['id'])
-  end
-end
+require './lib/games'
+require './lib/static_game_constraint'
 
 Minefold::Application.routes.draw do
 
@@ -128,8 +121,10 @@ Minefold::Application.routes.draw do
       root to: 'servers#index', :as => :user_root
     end
 
-    resources :games, path: '/', only: [:show], constraints: GameConstraint do
-      resources :funpacks, path: '/', only: [:show]
+    constraints StaticGameConstraint.new(GAMES) do
+      resources :games, path: '/', only: [:show] do
+        resources :funpacks, path: '/', only: [:show]
+      end
     end
 
     resources :users, path: '/',

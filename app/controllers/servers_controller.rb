@@ -16,7 +16,6 @@ class ServersController < ApplicationController
 
   def new
     authorize! :create, server
-    @games = Game.all
   end
 
   def create
@@ -44,7 +43,7 @@ class ServersController < ApplicationController
   end
 
   def map
-    not_found unless server.funpack.game.minecraft?
+    not_found unless server.game.mappable?
   end
 
   def edit
@@ -112,7 +111,7 @@ class ServersController < ApplicationController
   private
 
   def set_funpack_params!
-    if params[:game] and (game = Game.find_by_slug(params[:game]))
+    if params[:game] and (game = GAMES.find(params[:game]))
       params[:server] ||= {}
       if params[:funpack] and (funpack = Funpack.find_by_slug(params[:funpack]))
         params[:server][:funpack_id] = funpack.id

@@ -39,12 +39,12 @@
     });
 
 %section.game-list
-  - @featured_games.each do |game, servers_count|
+  - @games.each do |game|
     .game
       = link_to game_path(game) do
         = image_tag "homepage_games/#{game.slug}.png", class: 'north-west-to-south-east'
         %h3= game.name
-        %p= pluralize servers_count, 'server', 'servers'
+        %p= pluralize game.servers_count, 'server', 'servers'
 
   .game.coming-soon
     = image_tag "homepage_games/team-fortress.png", alt: 'Team Fortress', class: 'west-to-east'

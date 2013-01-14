@@ -1,55 +1,56 @@
 require 'spec_helper'
 
 describe ServerStartedJob do
+
+  let(:ts) { Time.now }
+  let(:server) { Server.make! }
+
   context 'game with routing' do
-    let(:game) { Game.make!(routing: true) }
-    let(:funpack) { Funpack.make!(game: game) }
-    let(:server) { Server.make!(funpack: funpack) }
+
+    let(:game) { stub(name: 'Name', :routable? => false) }
+
+    subject {
+      s = ServerStartedJob.new(server.party_cloud_id, '', '', ts.to_i)
+      s.server.stub(game: game)
+      s
+    }
 
     context 'initial start' do
       it 'creates session' do
-        ts = Time.now
-        ServerStartedJob.new(
-          server.party_cloud_id, '', '', ts.to_i
-        ).perform
-
-        server.sessions.current.started_at.to_i.should eq(ts.to_i)
+        subject.perform
+        expect(subject.server.sessions.current.started_at.to_i).to eq(ts.to_i)
       end
     end
 
     context 'second start before first start' do
       it 'sets session to earlier start' do
-        first = Time.now
-        second = Time.now - 60
+        subject.perform
+        earlier = 1.hour.ago
+        job = ServerStartedJob.new(server.party_cloud_id, '', '', earlier.to_i)
+        job.server.stub(game: game)
+        job.perform
 
-        job = ServerStartedJob.new(
-          server.party_cloud_id, '', '', first.to_i
-        ).perform
-
-        job = ServerStartedJob.new(
-          server.party_cloud_id, '', '', second.to_i
-        ).perform
-
-        server.sessions.current.started_at.to_i.should eq(second.to_i)
+        expect(subject.server.sessions.current.started_at.to_i).to eq(earlier.to_i)
       end
     end
   end
 
   context 'game without routing' do
-    let(:game) { Game.make!(routing: false) }
-    let(:funpack) { Funpack.make!(game: game) }
-    let(:server) { Server.make!(funpack: funpack) }
 
-    it 'sets host' do
-      ts = Time.now
+    let(:game) { stub(name: 'Name', :routable? => false) }
 
-      jerb = ServerStartedJob.new(
+    subject {
+      s = ServerStartedJob.new(
         server.party_cloud_id, '1.2.3.4', '1337', ts.to_i
       )
-      jerb.perform
+      s.server.stub(game: game)
+      s
+    }
 
-      jerb.server.host.should eq('1.2.3.4')
-      jerb.server.port.should eq(1337)
+    it 'sets host' do
+      subject.perform
+      expect(subject.server.host).to eq('1.2.3.4')
+      expect(subject.server.port).to eq(1337)
     end
   end
 end

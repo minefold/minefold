@@ -1,3 +1,5 @@
+require './lib/games'
+
 class PagesController < ApplicationController
 
   prepend_before_filter :authenticate_user!, only: [:welcome, :time]
@@ -13,10 +15,7 @@ class PagesController < ApplicationController
   end
 
   def home
-    @featured_games = ['Minecraft'].each_with_object({}) do |name, servers|
-      scope = Game.where(name: name)
-      servers[scope.first] = scope.servers_count
-    end
+    @games = GAMES
   end
 
   def pricing

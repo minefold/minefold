@@ -1,9 +1,12 @@
+require './lib/game'
+require './lib/game_library'
+
 class Funpack < ActiveRecord::Base
   extend FriendlyId
+
   attr_accessible :name, :game, :creator, :info_url, :description, :party_cloud_id, :imports, :slug
 
   belongs_to :creator, class_name: 'User'
-  belongs_to :game
 
   friendly_id :name, :use => :slugged
 
@@ -16,5 +19,8 @@ class Funpack < ActiveRecord::Base
   def default_settings
     {}
   end
+
+  composed_of :game, mapping: [[:game_id, :id]],
+                     constructor: ->(id){ GAMES.fetch(id) }
 
 end

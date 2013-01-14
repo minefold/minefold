@@ -1,3 +1,10 @@
 class GamesController < ApplicationController
-  expose(:game)
+
+  expose(:game) {
+    GAMES.find(params[:id])
+  }
+
+  def show
+  end
+
 end
