@@ -21,10 +21,10 @@
     :javascript
       $(document).ready(function() {
         var world = new Application.World(#{server.world.to_h.to_json}),
-            worldMapView = new Application.WorldMapView({model: world});
+            mapView = new Application.MapView({model: world});
 
-        worldMapView.setElement($('#world-map-view-el'));
-        worldMapView.render();
+        mapView.setElement($('#world-map-view-el'));
+        mapView.render();
       });
 
 - else
