@@ -5,7 +5,7 @@ class WorldMappedJob < Job
     @world = @server.world
   end
 
-  def perform!
+  def perform
     return if @world.nil?
 
     @world.last_mapped_at = Time.at(@timestamp)
