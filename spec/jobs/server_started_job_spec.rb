@@ -11,7 +11,7 @@ describe ServerStartedJob do
         ts = Time.now
         ServerStartedJob.new(
           server.party_cloud_id, '', '', ts.to_i
-        ).perform!
+        ).perform
 
         server.sessions.current.started_at.to_i.should eq(ts.to_i)
       end
@@ -24,11 +24,11 @@ describe ServerStartedJob do
 
         job = ServerStartedJob.new(
           server.party_cloud_id, '', '', first.to_i
-        ).perform!
+        ).perform
 
         job = ServerStartedJob.new(
           server.party_cloud_id, '', '', second.to_i
-        ).perform!
+        ).perform
 
         server.sessions.current.started_at.to_i.should eq(second.to_i)
       end
@@ -42,12 +42,12 @@ describe ServerStartedJob do
 
     it 'sets host' do
       ts = Time.now
-      
+
       jerb = ServerStartedJob.new(
         server.party_cloud_id, '1.2.3.4', '1337', ts.to_i
       )
-      jerb.perform!
-      
+      jerb.perform
+
       jerb.server.host.should eq('1.2.3.4')
       jerb.server.port.should eq(1337)
     end
