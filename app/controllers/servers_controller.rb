@@ -32,7 +32,7 @@ class ServersController < ApplicationController
         funpack: server.funpack.name,
         game: server.game.name
     else
-      @games = Game.all
+      @games = GAMES
       # raise params.inspect
     end
 
