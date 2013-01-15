@@ -103,8 +103,9 @@
 
       .span7
         = form_for server do |f|
-          = f.fields_for :settings, OpenStruct.new(server.settings) do |s|
-            = render partial: server.funpack.game.to_partial_path, locals: {f: s}
+          = server.funpack.settings.to_html(server.settings).html_safe
+          / = f.fields_for :settings, OpenStruct.new(server.settings) do |s|
+          /   = render partial: server.funpack.game.to_partial_path, locals: {f: s}
 
           .form-actions
             - if server.state == :up

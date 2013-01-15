@@ -1,5 +1,6 @@
 require './lib/game'
 require './lib/game_library'
+require 'brock/manifest'
 
 class Funpack < ActiveRecord::Base
   extend FriendlyId
@@ -12,15 +13,18 @@ class Funpack < ActiveRecord::Base
 
   has_many :servers
 
+  composed_of :game, mapping: [[:game_id, :id]],
+                     constructor: ->(id){ GAMES.fetch(id) }
+
+
+  serialize :settings_manifest, JSON
+
   def settings
-    JSON.load(Rails.root.join('config', 'minecraft.json'))
+    Brock::Manifest.new(settings_manifest)
   end
 
   def default_settings
-    {}
+   {}
   end
-
-  composed_of :game, mapping: [[:game_id, :id]],
-                     constructor: ->(id){ GAMES.fetch(id) }
 
 end

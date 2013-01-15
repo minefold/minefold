@@ -51,6 +51,8 @@ gem 'memcachier'
 gem 'dalli'
 gem 'scrolls'
 
+gem 'brock', path: '~/src/brock'
+
 group :test, :development do
   gem 'rspec-rails'
 end

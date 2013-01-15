@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130113214654) do
+ActiveRecord::Schema.define(:version => 20130115050808) do
 
   create_table "accounts", :force => true do |t|
     t.string   "type"
@@ -69,8 +69,9 @@ ActiveRecord::Schema.define(:version => 20130113214654) do
     t.string  "party_cloud_id"
     t.text    "description"
     t.string  "info_url"
-    t.boolean "imports",        :default => false
-    t.string  "slug",           :default => ""
+    t.boolean "imports",           :default => false
+    t.string  "slug",              :default => ""
+    t.text    "settings_manifest"
   end
 
   add_index "funpacks", ["game_id"], :name => "index_funpacks_on_game_id"

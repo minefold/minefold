@@ -30,6 +30,11 @@ GIT
   specs:
     uniquify (0.1.0)
 
+PATH
+  remote: ~/src/brock
+  specs:
+    brock (0.1.0)
+
 GEM
   remote: https://code.stripe.com/
   remote: https://rubygems.org/
@@ -308,6 +313,7 @@ PLATFORMS
 DEPENDENCIES
   autotest-standalone
   bourbon
+  brock!
   bugsnag
   cancan
   carrierwave

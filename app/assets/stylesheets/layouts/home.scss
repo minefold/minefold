@@ -51,23 +51,11 @@
 
       position: relative;
 
-      @include transition(top 0.3s cubic-bezier(0.25, 0.01, 0.25, 1));
-
       img {
         position: absolute;
-        z-index: 0;
         top: 0;
         left: 0;
-
-        max-width: 400%;
-
-        opacity: 0;
-
-        @include transition(
-          opacity 0.3s cubic-bezier(0.25, 0.01, 0.25, 1),
-          top 6s ease-in-out,
-          left 6s ease-in-out
-        );
+        width: 100%;
       }
 
       h3 {
@@ -77,48 +65,21 @@
         color: white;
         line-height: l(2);
         margin-bottom: 0;
-
-        @include transition(color 0.15s cubic-bezier(0.25, 0.01, 0.25, 1));
       }
 
       p {
         position: relative;
-        color: rgba(black, 0.4);
+        color: rgba(black, 0.6);
         font-size: 14px;
         margin: 0;
-
-        @include transition(opacity 0.15s cubic-bezier(0.25, 0.01, 0.25, 1));
       }
-
-      &:hover {
-        top: -1px;
-
-        img {
-          opacity: 1;
-
-          &.north-to-south {
-            top: -100%;
-          }
-
-          &.west-to-east {
-            left: -100%;
-          }
-
-          &.north-west-to-south-east {
-            top: -100%;
-            left: -100%;
-          }
-        }
-
-        p {
-          opacity: 0;
-        }
-      }
-
     }
 
     .game.coming-soon {
       background-color: #CCC;
+      img {
+        opacity: 0.1;
+      }
     }
   }
 

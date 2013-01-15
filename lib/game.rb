@@ -32,10 +32,6 @@ class Game
     funpacks.inject(0) {|sum, fp| sum += fp.servers.count }
   end
 
-  def to_partial_path
-    File.join('games', 'settings', slug)
-  end
-
   def to_param
     slug
   end

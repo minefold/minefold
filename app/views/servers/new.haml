@@ -19,7 +19,7 @@
               %input{type: 'radio', name: 'server[funpack_id]', value: game.default_funpack.id.to_s, id: "server_funpack_id_#{game.default_funpack.id}", checked:(params[:server] and params[:server][:funpack_id].to_s == game.default_funpack.id.to_s)}
 
               %strong.name{style: 'margin-right:10px'}
-                = game.default_funpack.name
+                = game.name
 
             .funpacks{style: 'margin-left: 20px'}
               - game.funpacks.reject {|fp| fp == game.default_funpack }.each do |funpack|

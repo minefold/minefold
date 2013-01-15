@@ -14,6 +14,10 @@ class Minecraft < Game
     true
   end
 
+  def account_provider
+    Accounts::Mojang
+  end
+
   def default_funpack
     @default_funpack ||= Funpack.find(1)
   end
