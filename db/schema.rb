@@ -69,9 +69,9 @@ ActiveRecord::Schema.define(:version => 20130115050808) do
     t.string  "party_cloud_id"
     t.text    "description"
     t.string  "info_url"
-    t.boolean "imports",           :default => false
-    t.string  "slug",              :default => ""
-    t.text    "settings_manifest"
+    t.boolean "imports",         :default => false
+    t.string  "slug",            :default => ""
+    t.text    "settings_schema"
   end
 
   add_index "funpacks", ["game_id"], :name => "index_funpacks_on_game_id"

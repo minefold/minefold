@@ -17,10 +17,10 @@ class Funpack < ActiveRecord::Base
                      constructor: ->(id){ GAMES.fetch(id) }
 
 
-  serialize :settings_manifest, JSON
+  serialize :settings_schema, JSON
 
   def settings
-    Brock::Manifest.new(settings_manifest)
+    Brock::Manifest.new(settings_schema)
   end
 
   def default_settings
