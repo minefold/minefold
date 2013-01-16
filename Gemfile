@@ -51,7 +51,7 @@ gem 'memcachier'
 gem 'dalli'
 gem 'scrolls'
 
-gem 'brock', path: '~/src/brock'
+gem 'brock', github: 'minefold/brock', branch: 'master'
 
 group :test, :development do
   gem 'rspec-rails'

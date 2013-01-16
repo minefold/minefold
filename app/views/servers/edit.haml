@@ -102,10 +102,8 @@
         %strong Gameplay
 
       .span7
-        = form_for server do |f|
+        = form_tag gameplay_server_path(server), :method => :put do |f|
           = server.funpack.settings.to_html(server.settings).html_safe
-          / = f.fields_for :settings, OpenStruct.new(server.settings) do |s|
-          /   = render partial: server.funpack.game.to_partial_path, locals: {f: s}
 
           .form-actions
             - if server.state == :up
@@ -114,11 +112,11 @@
                 If you save and stop, everybody will be kicked. If you just save, the settings they will be applied when they leave.
 
               %div
-                = f.submit 'Save', class: %w(btn btn-primary)
-                = f.submit 'Save and stop server', name: 'restart', class: %w(btn)
+                = submit_tag 'Save', class: %w(btn btn-primary)
+                = submit_tag 'Save and stop server', name: 'restart', class: %w(btn)
 
             - else
-              = f.submit 'Save', class: %w(btn btn-primary)
+              = submit_tag 'Save', class: %w(btn btn-primary)
 
 
     / --

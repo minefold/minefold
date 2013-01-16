@@ -1,6 +1,6 @@
 require './lib/game'
 require './lib/game_library'
-require 'brock/manifest'
+require 'brock'
 
 class Funpack < ActiveRecord::Base
   extend FriendlyId
@@ -16,11 +16,10 @@ class Funpack < ActiveRecord::Base
   composed_of :game, mapping: [[:game_id, :id]],
                      constructor: ->(id){ GAMES.fetch(id) }
 
-
   serialize :settings_schema, JSON
 
   def settings
-    Brock::Manifest.new(settings_schema)
+    Brock::Schema.new(settings_schema)
   end
 
   def default_settings

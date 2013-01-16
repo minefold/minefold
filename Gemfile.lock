@@ -30,8 +30,10 @@ GIT
   specs:
     uniquify (0.1.0)
 
-PATH
-  remote: ~/src/brock
+GIT
+  remote: git://github.com/minefold/brock.git
+  revision: 270d78996fdb8d9d96c56ac35c39f4c6d99e4720
+  branch: master
   specs:
     brock (0.1.1)
 
