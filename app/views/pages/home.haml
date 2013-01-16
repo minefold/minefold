@@ -42,13 +42,14 @@
   - @games.each do |game|
     - if game.published?
       %a.span2.item{href: game_path(game)}
+        = image_tag "homepage_games/#{game.slug}.png"
         - if game.new?
           .label.label-success New!
-        = image_tag "homepage_games/#{game.slug}.png"
         .name= game.name
     - else
       .span2.item.coming-soon
         = image_tag "homepage_games/#{game.slug}.png"
+        .label Coming soon
         .name= game.name
 
 
