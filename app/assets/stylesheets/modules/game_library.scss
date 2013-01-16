@@ -1,0 +1,29 @@
+.game-library {
+  > .item {
+    position: relative;
+
+    &.coming-soon {
+      > img {
+        opacity: 0.4;
+      }
+
+      .name {
+        color: darken(white, 20%);
+      }
+    }
+
+    > .label {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+    }
+
+    > .name {
+      text-align: center;
+      padding: 0 g();
+      font-weight: bold;
+      line-height: l(4);
+      color: $blue;
+    }
+  }
+}

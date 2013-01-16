@@ -38,34 +38,18 @@
       }
     });
 
-%section.game-list
+%section.game-library.row
   - @games.each do |game|
-    .game
-      = link_to game_path(game) do
+    - if game.published?
+      %a.span2.item{href: game_path(game)}
+        - if game.new?
+          .label.label-success New!
         = image_tag "homepage_games/#{game.slug}.png"
-        %h3= game.name
-        %p= pluralize game.servers_count, 'server', 'servers'
-
-  .game.coming-soon
-    = image_tag "homepage_games/counter-strike.png", alt: 'Counter-Strike'
-    %h3 Counter-Strike
-    %p Coming soon!
-
-  .game.coming-soon
-    = image_tag "homepage_games/call-of-duty.png", alt: 'Call of Duty'
-    %h3 Call of Duty
-    %p Coming soon!
-
-  .game.coming-soon
-    = image_tag "homepage_games/battlefield.png", alt: 'Battlefield'
-    %h3 Battlefield
-    %p Coming soon!
-
-  .game.coming-soon
-    = image_tag "homepage_games/dayz.png", alt: 'DayZ'
-    %h3 DayZ
-    %p Coming soon!
-
+        .name= game.name
+    - else
+      .span2.item.coming-soon
+        = image_tag "homepage_games/#{game.slug}.png"
+        .name= game.name
 
 
 %section.feature-list

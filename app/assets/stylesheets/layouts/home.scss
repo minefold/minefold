@@ -1,7 +1,7 @@
 .l-home {
 
   .hero-unit,
-  .game-list,
+  .game-library,
   .feature-list,
   .call-to-action,
   .press {
@@ -27,60 +27,6 @@
     text-align: center;
     color: white;
     font-size: 16px;
-  }
-
-  .game-list {
-    margin-left: - $gw-gutter;
-    @include clearfix;
-
-    .game {
-      position: relative;
-      float: left;
-      width: grid-width(2);
-      min-height: grid-width(2);
-
-      @include box-sizing(border-box);
-      background: $blue;
-      padding: l(1) ($gw-gutter / 2);
-
-      margin-left: $gw-gutter;
-      font-weight: 600;
-      color: white;
-
-      overflow: hidden;
-
-      position: relative;
-
-      img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-      }
-
-      h3 {
-        position: relative;
-        display: block;
-        font-size: 18px;
-        color: white;
-        line-height: l(2);
-        margin-bottom: 0;
-      }
-
-      p {
-        position: relative;
-        color: rgba(black, 0.6);
-        font-size: 14px;
-        margin: 0;
-      }
-    }
-
-    .game.coming-soon {
-      background-color: #CCC;
-      img {
-        opacity: 0.1;
-      }
-    }
   }
 
   .feature-list {
