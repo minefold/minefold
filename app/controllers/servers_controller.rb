@@ -16,6 +16,7 @@ class ServersController < ApplicationController
 
   def new
     authorize! :create, server
+    @games = GAMES.published
   end
 
   def create
@@ -32,8 +33,8 @@ class ServersController < ApplicationController
         funpack: server.funpack.name,
         game: server.game.name
     else
-      @games = GAMES
-      # raise params.inspect
+      # Renders the new action
+      @games = GAMES.published
     end
 
     respond_with(server)
@@ -116,7 +117,7 @@ class ServersController < ApplicationController
       if params[:funpack] and (funpack = Funpack.find_by_slug(params[:funpack]))
         params[:server][:funpack_id] = funpack.id
       else
-        params[:server][:funpack_id] = game.default_funpack.id
+        params[:server][:funpack_id] = game.funpack_id
       end
     end
   end

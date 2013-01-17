@@ -18,4 +18,8 @@ class GameLibrary
     @games.find {|game| game.slug == slug }
   end
 
+  def published
+    @games.select {|game| game.published? }
+  end
+
 end
