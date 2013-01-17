@@ -46,6 +46,8 @@ header {
     background-size: cover;
     width: 40px;
     height: 40px;
+
+    border-radius: 2px;
   }
 
   > h1.name {
@@ -53,7 +55,7 @@ header {
     line-height: l(4);
     font-size: 20px;
     margin: 0;
-    margin-left: g(2);
+    margin-left: g(1);
 
     color: black;
   }
