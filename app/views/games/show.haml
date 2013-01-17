@@ -1,48 +1,40 @@
 - title game.name
-
+- layout :game
 - track 'Viewed landing page', type: 'game', game: game.slug
 - track_landing_type 'game'
 
 .container
-  %ul.breadcrumb
-    %li
-      = link_to 'Home', root_path
-      %span.divider /
-
-    %li.active= game.name
-
-  .page-title
+  .page-header
     %h1= game.name
 
-  .row
-    .span8
-      = image_tag "funpacks/#{game.slug}.png", class: 'img-rounded', alt: 'Minecraft'
-    .span4
-      %a.btn.btn-large.btn-block.btn-success{href: new_server_path(game: game.slug)}
-        Create a #{game.name} server
-      %br
-      %center
-        %p
-          Sign up now and play for #{Bonuses::GettingStarted.coins} minutes <strong>free</strong>!
-
-  .row
-    .span12
-      &nbsp;
+  %ul.breadcrumb
+    %li
+      %a{href: root_path} Home
+      %span.divider /
+    %li.active= game.name
 
   .row
     .span8
       = render partial: game.slug
 
-      %p==<strong>Have your own #{game.name} server up and running in 2 minutes!</strong>
+    .span4
+      - if game.url
+        %a.btn.btn-large.btn-block.btn-primary{href: game.url, target: '_blank'}
+          Get #{game.name}
+        %hr
 
-  .row
-    .span12
-      %h3 Available Funpacks
+      %a.btn.btn-large.btn-block.btn-success{href: new_server_path(game: game.slug)}
+        Start a #{game.name} server
+      %br
+      %center
+        Servers are <strong>free</strong> for #{Bonuses::GettingStarted.coins} minutes.
 
-  - (game.funpacks).each do |fp|
-    .row
-      .span12
-        %h4= link_to fp.name, game_funpack_path(game, fp)
-    .row
-      .span12
-        = markdown fp.description
+      %hr
+
+      %h3 Popular Funpacks
+
+      %ul
+        - game.funpacks.reject {|funpack| game.default_funpack == funpack }.each do |funpack|
+          %li
+            %strong= link_to funpack.name, game_funpack_path(funpack.game, funpack)
+            %p= markdown funpack.description

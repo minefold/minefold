@@ -103,3 +103,22 @@ code {
   background-color: $green;
 }
 
+.carousel-control-list {
+  @include clearfix;
+  margin-left: -5px;
+
+  > .item {
+    display: block;
+    float: left;
+    margin-left: 5px;
+  }
+
+}
+
+.breadcrumb {
+  border-radius: 2px;
+  li {
+    text-shadow: none;
+  }
+}
+

@@ -7,12 +7,14 @@ class Game
   attr_reader :name
   attr_reader :slug
   attr_reader :published_at
+  attr_reader :url
 
   def initialize(params)
     @id = params.fetch(:id)
     @name = params.fetch(:name)
     @slug = params.fetch(:slug)
     @published_at = params[:published_at]
+    @url = params[:url]
   end
 
   def auth?
