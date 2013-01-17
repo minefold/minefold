@@ -66,11 +66,13 @@
     #Intercom
 
     %header
-      .container
-        .navbar
-          .navbar-inner
-            %h1.brand= link_to 'Minefold', root_path
-            .pull-right= render partial: 'shared/nav'
+      .navbar
+        .navbar-inner
+          %a.brand{href: root_path}
+            .logo
+              %img{src: image_path('logo.png')}
+            %h1.name Minefold
+          .pull-right= render partial: 'shared/nav'
 
     .container
       - flash.select {|_,msg| msg.is_a?(String) }.each do |name, msg|
@@ -78,35 +80,30 @@
           %a.close{data: {dismiss: 'alert'}} &#215;
           %div{:id => "flash_#{name}"}= msg
 
-    - if content_for?(:breakout)
-      = yield :breakout
-
-    #app
-      .container= yield
+    #app= yield
 
     %footer
-      .container
-        %ul.unstyled.pull-left
-          %li= link_to 'Pricing', pricing_page_path
-          %li= link_to 'Support', support_page_path
-          %li= link_to 'About', about_page_path
-          %li= link_to 'Servers', list_servers_path
-          %li= link_to 'Developers', 'http://partycloud.com'
-          %li= link_to 'Blog', 'http://blog.mutlicorp.com'
+      %ul.unstyled.pull-left
+        %li= link_to 'Pricing', pricing_page_path
+        %li= link_to 'Support', support_page_path
+        %li= link_to 'About', about_page_path
+        %li= link_to 'Servers', list_servers_path
+        %li= link_to 'Developers', 'http://partycloud.com'
+        %li= link_to 'Blog', 'http://blog.mutlicorp.com'
 
-        %ul.social.unstyled.pull-right
-          %li.twitter= link_to 'Twitter', 'https://twitter.com/minefold'
-          %li.facebook= link_to 'Facebook', 'https://facebook.com/minefold'
+      %ul.social.unstyled.pull-right
+        %li.twitter= link_to 'Twitter', 'https://twitter.com/minefold'
+        %li.facebook= link_to 'Facebook', 'https://facebook.com/minefold'
 
-        %p.copyright
-          &copy;
-          %a{href: 'http://mutlicorp.com'} Mütli Corp.
+      %p.copyright
+        &copy;
+        %a{href: 'http://mutlicorp.com'} Mütli Corp.
 
-          Made for fun in San Francisco. #{link_to 'Privacy', privacy_page_path} & #{link_to 'Terms', terms_page_path}.
+        Made for fun in San Francisco. #{link_to 'Privacy', privacy_page_path} & #{link_to 'Terms', terms_page_path}.
 
-        .mixpanel-badge
-          %a{href: 'https://mixpanel.com/f/partner'}
-            %img{src: '//cdn.mxpnl.com/site_media/images/partner/badge_light.png', alt: 'Mobile Analytics'}
+      .mixpanel-badge
+        %a{href: 'https://mixpanel.com/f/partner'}
+          %img{src: '//cdn.mxpnl.com/site_media/images/partner/badge_light.png', alt: 'Mobile Analytics'}
 
 
     / ---

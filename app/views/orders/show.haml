@@ -1,15 +1,13 @@
 - title 'Thank you!'
 - layout :order
 
-- provide :breakout do
-  .hero-unit
-    #viewport
-      #canvas
+.jumbotron
+  #viewport
+    #canvas
 
-    %h1 Thank you!
-    %p We've sent you a receipt at #{order.user.email}.
-    %a.btn.btn-primary{href: user_root_path} Go back to being awesome
-
+  %h1 Thank you!
+  %p We've sent you a receipt at #{order.user.email}.
+  %a.btn.btn-primary{href: user_root_path} Go back to being awesome
 
 - content_for :tail do
   :javascript

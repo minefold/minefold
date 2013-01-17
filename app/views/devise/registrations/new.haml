@@ -1,66 +1,67 @@
 - title  'Create your account'
 - layout :devise
 
-.row
-  .span8.offset2
-    .page-header
-      %h1 Sign up for Minefold
+.container
+  .row
+    %center.span8.offset2
+      .page-header
+        %h1 Sign up for Minefold
 
-    - if @invited_by
-      - track 'Viewed invitation'
+      - if @invited_by
+        - track 'Viewed invitation'
 
-      .invitation-message.row
-        .avatar.span1
-          = image_tag @invited_by.avatar.medium.url, width: 60
-        .message.span7
-          %p Hi! Thanks for joining me here on Minefold. I run servers for games like Minecraft here. When you sign up you'll get an extra <strong>#{pluralize Bonuses::Referred.coins, 'coin', 'coins'}</strong> because I referred you.
-          .sig= @invited_by.conversational_name
+        .invitation-message.row
+          .avatar.span1
+            = image_tag @invited_by.avatar.medium.url, width: 60
+          .message.span7
+            %p Hi! Thanks for joining me here on Minefold. I run servers for games like Minecraft here. When you sign up you'll get an extra <strong>#{pluralize Bonuses::Referred.coins, 'coin', 'coins'}</strong> because I referred you.
+            .sig= @invited_by.conversational_name
 
-      %hr
+        %hr
 
-.row
-  .span4.offset2
-    .well
-      = form_for resource, as: resource_name, url: registration_path(resource_name) do |f|
+  .row
+    .span4.offset2
+      .well
+        = form_for resource, as: resource_name, url: registration_path(resource_name) do |f|
 
-        = f.control_group :username do
-          = f.label :username, class: 'control-label'
-          .controls
-            = f.text_field :username, autocomplete: 'off', autofocus: true
-          = error_message_for(f.object, :username)
+          = f.control_group :username do
+            = f.label :username, class: 'control-label'
+            .controls
+              = f.text_field :username, autocomplete: 'off', autofocus: true
+            = error_message_for(f.object, :username)
 
-        = f.control_group :email do
-          = f.label :email, class: 'control-label'
-          .controls
-            = f.email_field :email, autocomplete: 'off'
-          = error_message_for(f.object, :email)
+          = f.control_group :email do
+            = f.label :email, class: 'control-label'
+            .controls
+              = f.email_field :email, autocomplete: 'off'
+            = error_message_for(f.object, :email)
 
-        = f.control_group :password do
-          = f.label :password, class: 'control-label'
-          .controls
-            = f.password_field :password, autocomplete: 'off'
+          = f.control_group :password do
+            = f.label :password, class: 'control-label'
+            .controls
+              = f.password_field :password, autocomplete: 'off'
 
-          = error_message_for(f.object, :password)
+            = error_message_for(f.object, :password)
 
 
-        = f.control_group :password_confirmation do
-          = f.label :password_confirmation, class: 'control-label'
-          .controls
-            = f.password_field :password_confirmation, autocomplete: 'off'
+          = f.control_group :password_confirmation do
+            = f.label :password_confirmation, class: 'control-label'
+            .controls
+              = f.password_field :password_confirmation, autocomplete: 'off'
 
-          = error_message_for(f.object, :password_confirmation)
+            = error_message_for(f.object, :password_confirmation)
 
-        = f.submit 'Create your account', class: %w(btn btn-primary)
+          = f.submit 'Create your account', class: %w(btn btn-primary)
 
-  .span4
-    .well.letter
-      %p
-        %strong We're excited you're here.
-        Minefold was created to make it easier to play games with our friends and we can't wait to share what we've built with you.
+    .span4
+      .well.letter
+        %p
+          %strong We're excited you're here.
+          Minefold was created to make it easier to play games with our friends and we can't wait to share what we've built with you.
 
-      %p Before you jump in, we want you to know that the Minefold community is special: it expects everybody to be on their best behavior. Be polite, respect others and you'll have a great time!
+        %p Before you jump in, we want you to know that the Minefold community is special: it expects everybody to be on their best behavior. Be polite, respect others and you'll have a great time!
 
-      %p Lots of love,
+        %p Lots of love,
 
-      = image_tag 'sig.png', class: 'sig'
+        = image_tag 'sig.png', class: 'sig'
 

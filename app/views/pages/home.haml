@@ -5,101 +5,72 @@
 - track_landing_type 'home'
 - track 'Viewed landing page', type: 'home'
 
-- provide :breakout do
-  .hero-unit.jumbo
-    #viewport
-      #canvas
-    %h1 Simple game servers.
-    %h2 Available instantly. Free to start.
+.jumbotron
+  %h1 Simple game servers.
+  %h2 Available instantly. Free to start.
 
-- content_for :tail do
-  :javascript
-    var paper, scaleX, scaleY, w, h, grid;
+.container
+  %section.game-library.row
+    - @games.each do |game|
+      - if game.published?
+        %a.span2.item{href: game_path(game)}
+          = image_tag "homepage_games/#{game.slug}.png"
+          - if game.new?
+            .label.label-success New!
+          .name= game.name
+      - else
+        .span2.item.coming-soon
+          = image_tag "homepage_games/#{game.slug}.png"
+          .label Coming soon
+          .name= game.name
 
-    paper = Raphael('canvas');
+  %section.feature-list
+    .row
+      .feature.span4
+        %h3 Fast setup
+        %p It takes seconds to start playing with your friends. No tech mumbo-jumbo required: just pick your settings and go.
 
-    scaleX = 20;
-    scaleY = 12;
+      .feature.span4
+        %h3 Lag free
+        %p Minefold uses cutting-edge cloud technology to give you the smoothest gaming experience possible.
 
-    w = Math.ceil(paper.width / scaleX);
-    h = Math.ceil(paper.height / scaleY);
+      .feature.span4
+        %h3 Instant community
+        %p Every server gets it's own site. Chat with your friends, browse interactive maps and even brag about your last win.
 
-    grid = new Application.PipesView.Grid(w, h + 1, scaleX, scaleY);
+      .feature.span4
+        %h3 Pay when you play
+        %p You're only charged when you <em>actually</em> play. You can choose to split the cost or cover your friends too.
 
-    every(100, function() {
-      var pt, pipe;
+      .feature.span4
+        %h3 Grief control
+        %p Secure your server so that only your friends can play. Mess up? Rollback your server to an earlier backup.
 
-      pt = new Application.PipesView.Pt(rand(w), 0);
-
-      if(grid.isFree(pt)) {
-        pipe = new Application.PipesView.Pipe(grid, pt);
-        pipe.draw(paper);
-        pipe.grow();
-      }
-    });
-
-%section.game-library.row
-  - @games.each do |game|
-    - if game.published?
-      %a.span2.item{href: game_path(game)}
-        = image_tag "homepage_games/#{game.slug}.png"
-        - if game.new?
-          .label.label-success New!
-        .name= game.name
-    - else
-      .span2.item.coming-soon
-        = image_tag "homepage_games/#{game.slug}.png"
-        .label Coming soon
-        .name= game.name
+      .feature.span4
+        %h3 Friendly support
+        %p We care deeply about your experience. Every employee at Minefold does support and we only hire lovely people!
 
 
-%section.feature-list
-  .row
-    .feature.span4
-      %h3 Fast setup
-      %p It takes seconds to start playing with your friends. No tech mumbo-jumbo required: just pick your settings and go.
+  %section.call-to-action
+    .row
+      .span6.offset3
+        %p
+          Sign up now and play for #{Bonuses::GettingStarted.coins} minutes <strong>free</strong>!
 
-    .feature.span4
-      %h3 Lag free
-      %p Minefold uses cutting-edge cloud technology to give you the smoothest gaming experience possible.
-
-    .feature.span4
-      %h3 Instant community
-      %p Every server gets it's own site. Chat with your friends, browse interactive maps and even brag about your last win.
-
-    .feature.span4
-      %h3 Pay when you play
-      %p You're only charged when you <em>actually</em> play. You can choose to split the cost or cover your friends too.
-
-    .feature.span4
-      %h3 Grief control
-      %p Secure your server so that only your friends can play. Mess up? Rollback your server to an earlier backup.
-
-    .feature.span4
-      %h3 Friendly support
-      %p We care deeply about your experience. Every employee at Minefold does support and we only hire lovely people!
+        %a.btn.btn-large.btn-block.btn-success{href: new_user_registration_path}
+          Sign up now!
 
 
-%section.call-to-action
-  .row
-    .span6.offset3
-      %p
-        Sign up now and play for #{Bonuses::GettingStarted.coins} minutes <strong>free</strong>!
+  %section.press
+    %p As seen on…
 
-      %a.btn.btn-large.btn-block.btn-success{href: new_user_registration_path}
-        Sign up now!
+    .row
+      %a.span2.offset3{href: 'http://techcrunch.com/2012/03/12/minefold-launch', title: 'Y Combinator-Backed Minefold Launches Affordable, On-Demand Platform For Game Hosting'}
+        = image_tag 'techcrunch.png'
 
+      %a.span2{href: 'http://kotaku.com/5846894/minefold-offers-hosted-minecraft-servers-for-you-and-your-friends', title: 'Minefold Offers Hosted Minecraft Servers for You and Your Friends'}
+        = image_tag 'kotaku.png'
 
-%section.press
-  %p As seen on…
-
-  .row
-    %a.span2.offset3{href: 'http://techcrunch.com/2012/03/12/minefold-launch', title: 'Y Combinator-Backed Minefold Launches Affordable, On-Demand Platform For Game Hosting'}
-      = image_tag 'techcrunch.png'
-
-    %a.span2{href: 'http://kotaku.com/5846894/minefold-offers-hosted-minecraft-servers-for-you-and-your-friends', title: 'Minefold Offers Hosted Minecraft Servers for You and Your Friends'}
-      = image_tag 'kotaku.png'
-
-    %a.span2{href: 'http://www.gamasutra.com/view/news/165765/Minefold_launches_with_accessible_Minecraft_server_hosting.php', title: 'Minefold launches with accessible Minecraft server hosting'}
-      = image_tag 'gamasutra.png'
+      %a.span2{href: 'http://www.gamasutra.com/view/news/165765/Minefold_launches_with_accessible_Minecraft_server_hosting.php', title: 'Minefold launches with accessible Minecraft server hosting'}
+        = image_tag 'gamasutra.png'
 

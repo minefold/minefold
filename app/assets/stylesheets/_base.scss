@@ -11,32 +11,49 @@ body {
 }
 
 header {
-  position: relative;
-  z-index: 100;
 
   .navbar {
     margin-top: l(1);
     margin-bottom: l(1);
 
     > .navbar-inner {
-      background: white;
+      background: transparent;
       border: none;
-      box-shadow: 0 1px 4px 0px rgba(black, 0.2);
+      box-shadow: none;
+      border-radius: 0;
+      text-shadow: none;
 
-      .brand {
-        padding-top: 0; padding-bottom: 0;
-        margin-top: 0; margin-bottom: 0;
-
-        a {
-          display: block;
-          font-weight: 600;
-          color: black;
-          font-size: 20px;
-          line-height: l(4);
-        }
-      }
+      padding-left: g(); padding-right: g();
     }
   }
+}
+
+.navbar .brand {
+  @include clearfix;
+  margin: 0;
+  padding: 0;
+
+  > .logo,
+  > .name {
+    float: left;
+  }
+
+  > .logo {
+    background-color: black;
+    width: 40px;
+    height: 40px;
+  }
+
+  > h1.name {
+    display: block;
+    line-height: l(4);
+    font-size: 20px;
+    margin: 0;
+    margin-left: g(2);
+
+    color: black;
+  }
+
 }
 
 a:hover {
@@ -67,5 +84,22 @@ code {
   @include box-shadow(none);
   text-shadow: none;
   font-weight: 600;
-  border-radius: 3px;
+  border-radius: 2px;
 }
+
+.label {
+  text-shadow: none;
+  border-radius: 2px;
+  box-shadow: none;
+}
+
+.label-success {
+  background-color: $green;
+}
+
+.btn-success,
+.btn-success:hover,
+.btn-success:active {
+  background-color: $green;
+}
+

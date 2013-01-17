@@ -1,24 +1,25 @@
 - title 'Change your password'
 
-.page-header
-  %h1 Change your password
+.container
+  .page-header
+    %h1 Change your password
 
-= form_for(:user, as: :user, :url => user_password_path, :method => :put) do |f|
-  = f.hidden_field :reset_password_token
+  = form_for(:user, as: :user, :url => user_password_path, :method => :put) do |f|
+    = f.hidden_field :reset_password_token
 
-  = devise_error_messages!
+    = devise_error_messages!
 
-  .control-group
-    .control-label
-      = f.label :password, 'New password'
-    .controls
-      = f.password_field :password
+    .control-group
+      .control-label
+        = f.label :password, 'New password'
+      .controls
+        = f.password_field :password
 
-  .control-group
-    .control-label
-      = f.label :password, 'Confirm new password'
-    .controls
-      = f.password_field :password_confirmation
+    .control-group
+      .control-label
+        = f.label :password, 'Confirm new password'
+      .controls
+        = f.password_field :password_confirmation
 
-  .form-actions
-    = f.submit 'Change password', class: %w(btn btn-primary)
+    .form-actions
+      = f.submit 'Change password', class: %w(btn btn-primary)

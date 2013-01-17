@@ -3,43 +3,46 @@
 - track 'Viewed landing page', type: 'game', game: game.slug
 - track_landing_type 'game'
 
-%ul.breadcrumb
-  %li
-    = link_to 'Home', root_path
-    %span.divider /
+.container
+  %ul.breadcrumb
+    %li
+      = link_to 'Home', root_path
+      %span.divider /
 
-  %li.active= game.name
+    %li.active= game.name
 
-.page-title
-  %h1= game.name
+  .page-title
+    %h1= game.name
 
-.row
-  .span8
-    = image_tag "funpacks/#{game.slug}.png", class: 'img-rounded', alt: 'Minecraft'
-  .span4
-    %a.btn.btn-large.btn-block.btn-success{href: new_server_path(game: game.slug)}
-      Create a server now!
-    %p
-      Sign up now and play for #{Bonuses::GettingStarted.coins} minutes <strong>free</strong>!
+  .row
+    .span8
+      = image_tag "funpacks/#{game.slug}.png", class: 'img-rounded', alt: 'Minecraft'
+    .span4
+      %a.btn.btn-large.btn-block.btn-success{href: new_server_path(game: game.slug)}
+        Create a #{game.name} server
+      %br
+      %center
+        %p
+          Sign up now and play for #{Bonuses::GettingStarted.coins} minutes <strong>free</strong>!
 
-.row
-  .span12
-    &nbsp;
-
-.row
-  .span8
-    = render partial: game.slug
-
-    %p==<strong>Have your own #{game.name} server up and running in 2 minutes!</strong>
-
-.row
-  .span12
-    %h3 Available Funpacks
-
-- (game.funpacks).each do |fp|
   .row
     .span12
-      %h4= link_to fp.name, game_funpack_path(game, fp)
+      &nbsp;
+
+  .row
+    .span8
+      = render partial: game.slug
+
+      %p==<strong>Have your own #{game.name} server up and running in 2 minutes!</strong>
+
   .row
     .span12
-      = markdown fp.description
+      %h3 Available Funpacks
+
+  - (game.funpacks).each do |fp|
+    .row
+      .span12
+        %h4= link_to fp.name, game_funpack_path(game, fp)
+    .row
+      .span12
+        = markdown fp.description

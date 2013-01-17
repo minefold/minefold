@@ -1,6 +1,6 @@
 .l-home {
 
-  .hero-unit,
+  .jumbotron,
   .game-library,
   .feature-list,
   .call-to-action,
@@ -8,8 +8,8 @@
     margin-bottom: l(4);
   }
 
-  .hero-unit {
-    background-color: desaturate($blue, 20%);
+  .jumbotron {
+    background-color: desaturate($blue, 0%);
 
     h1 {
       color: white;

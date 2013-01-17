@@ -1,13 +1,12 @@
-.hero-unit {
+.jumbotron {
   border: none;
   border-radius: $radius;
   text-align: center;
   background-color: transparent;
 
-  position: relative;
   padding: l(6) 0;
   margin-bottom: l(6);
-  z-index: 0;
+  position: relative;
 
   h1 {
     font-family: $geometric;
@@ -26,16 +25,6 @@
   p {
     color: rgba(black, 0.4);
     font-weight: 500;
-  }
-
-  > * {
-    position: relative;
-    z-index: 1;
-  }
-
-  &.jumbo {
-    margin-top: - (l(6) + 2px);
-    padding-top: (l(6) + 2px) - l(1) + l(6);
   }
 
   #viewport {
