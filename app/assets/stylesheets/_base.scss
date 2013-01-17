@@ -119,6 +119,12 @@ code {
 
 }
 
+.well {
+  border: none;
+  border-radius: 2px;
+  @include box-shadow(none);
+}
+
 .breadcrumb {
   border-radius: 2px;
   li {

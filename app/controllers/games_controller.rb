@@ -5,6 +5,7 @@ class GamesController < ApplicationController
   }
 
   def show
+    @popular_funpacks = game.funpacks.reject {|funpack| game.default_funpack.id == funpack.id }
   end
 
 end
