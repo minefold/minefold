@@ -1,52 +1,30 @@
 - title funpack.name
 
-- game = funpack.game
-
 - track_landing_type 'funpack'
-- track 'Viewed landing page', type: 'funpack', game: game.slug, funpack: funpack.slug
+- track 'Viewed landing page', type: 'funpack', game: funpack.game.slug, funpack: funpack.slug
 
 .container
+  .page-header
+    %h1= funpack.name
+
   %ul.breadcrumb
     %li
       = link_to 'Home', root_path
       %span.divider /
 
     %li
-      = link_to game.name, game_path(game)
+      = link_to funpack.game.name, game_path(funpack.game)
       %span.divider /
 
     %li.active= funpack.name
 
-  .page-title
-    %h1= funpack.name
-
   .row
     .span8
-      = image_tag "funpacks/#{funpack.slug}.png", class: 'img-rounded'
+      .lead= markdown(funpack.description)
 
     .span4
-      %a.btn.btn-large.btn-block.btn-success{href: new_server_path(game: game.slug, funpack:funpack.slug)}
+      %a.btn.btn-large.btn-block.btn-success{href: new_server_path(game: funpack.game.slug, funpack: funpack.slug)}
         Create a server now!
       %p
         %center
           Sign up now and play for #{Bonuses::GettingStarted.coins} minutes <strong>free</strong>!
-
-  .row
-    .span12
-      &nbsp;
-
-  .row
-    .span8
-      .lead
-        = markdown funpack.description
-
-      %p==<strong>Have your own #{funpack.name} server up and running in 2 minutes!</strong>
-
-  .row
-    .span12
-      %h3== Other #{game.name} Funpacks
-
-  - (game.funpacks - [funpack]).each do |fp|
-    .row
-      .span12
-        %h4= link_to "#{fp.name} servers", game_funpack_path(game, fp)
