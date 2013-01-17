@@ -9,6 +9,7 @@ GAMES.push Minecraft.new(
   id: 1,
   name: 'Minecraft',
   slug: 'minecraft',
+  funpack_id: 1,
   published_at: DateTime.new(2011, 4, 1),
   url: 'https://minecraft.net/store'
 )
@@ -17,6 +18,7 @@ GAMES.push TeamFortress2.new(
   id: 2,
   name: 'Team Fortress 2',
   slug: 'team-fortress-2',
+  funpack_id: 4,
   published_at: DateTime.new(2013, 1, 14),
   url: 'http://store.steampowered.com/app/440'
 )

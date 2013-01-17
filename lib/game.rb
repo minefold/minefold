@@ -6,6 +6,8 @@ class Game
   attr_reader :id
   attr_reader :name
   attr_reader :slug
+
+  attr_reader :funpack_id
   attr_reader :published_at
   attr_reader :url
 
@@ -13,6 +15,8 @@ class Game
     @id = params.fetch(:id)
     @name = params.fetch(:name)
     @slug = params.fetch(:slug)
+
+    @funpack_id = params[:funpack_id]
     @published_at = params[:published_at]
     @url = params[:url]
   end
@@ -34,18 +38,10 @@ class Game
   end
 
   def published?
-    !published_at.nil?
+    !(funpack_id.nil? or published_at.nil?)
   end
 
 # --
-
-  def funpacks
-    Funpack.where(game_id: id).all
-  end
-
-  def servers_count
-    funpacks.inject(0) {|sum, fp| sum += fp.servers.count }
-  end
 
   def to_param
     slug
