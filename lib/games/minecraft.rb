@@ -6,6 +6,10 @@ class Minecraft < Game
     true
   end
 
+  def split_billing?
+    true
+  end
+
   def routable?
     true
   end

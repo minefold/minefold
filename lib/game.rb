@@ -25,6 +25,10 @@ class Game
     false
   end
 
+  def split_billing?
+    false
+  end
+
   def routable?
     false
   end

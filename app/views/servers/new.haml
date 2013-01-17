@@ -15,23 +15,45 @@
         .control-label Game
         .controls
           - @games.each do |game|
-            %label.radio{for: "server_funpack_id_#{game.funpack_id}", style: 'margin-bottom:20px'}
-              %input{type: 'radio', name: 'server[funpack_id]', value: game.funpack_id, id: "server_funpack_id_#{game.funpack_id}", checked:(params[:server] and params[:server][:funpack_id].to_s == game.funpack_id.to_s)}
+            .game{data: {'split-billing' => game.split_billing?.to_s}}
+              %label.radio{for: "server_funpack_id_#{game.funpack_id}", style: 'margin-bottom:20px'}
+                %input{type: 'radio', name: 'server[funpack_id]', value: game.funpack_id, id: "server_funpack_id_#{game.funpack_id}", checked:(params[:server] and params[:server][:funpack_id].to_s == game.funpack_id.to_s)}
 
-              %strong.name{style: 'margin-right:10px'}
-                = game.name
+                %strong.name{style: 'margin-right:10px'}
+                  = game.name
 
-            .funpacks{style: 'margin-left: 20px'}
-              - funpacks = Funpack.where(game_id: game.id).reject {|funpack| funpack.id == game.funpack_id }
-              - funpacks.each do |funpack|
-                = f.label "funpack_id_#{funpack.id}", class: 'radio', style: 'margin-bottom:20px' do
-                  = f.radio_button :funpack_id, funpack.id
+              .funpacks{style: 'margin-left: 20px'}
+                - funpacks = Funpack.where(game_id: game.id).reject {|funpack| funpack.id == game.funpack_id }
+                - funpacks.each do |funpack|
+                  = f.label "funpack_id_#{funpack.id}", class: 'radio', style: 'margin-bottom:20px' do
+                    = f.radio_button :funpack_id, funpack.id
 
-                  %strong.name
-                    = funpack.name
-                  .info
-                    = markdown(funpack.description)
-                    = link_to "More information", funpack.info_url, target: '_blank'
+                    %strong.name
+                      = funpack.name
+                    .info
+                      = markdown(funpack.description)
+                      = link_to "More information", funpack.info_url, target: '_blank'
+
+          - content_for :tail do
+            :javascript
+              $(document).ready(function() {
+                $('.game input[type=radio]').change(function() {
+                  var splitBillingAvailable = $(this).parents('.game').data('split-billing'),
+                      splitBillOption = $('label[for=server_shared_true]'),
+                      otherOption = $('label[for=server_shared_false]');
+
+                  if(!splitBillingAvailable) {
+                    splitBillOption.addClass('unavailable')
+                      .find('input').attr('disabled', true);
+
+                    otherOption.find('input').attr('checked', true);
+                  } else {
+                    splitBillOption.removeClass('unavailable')
+                      .find('input').attr('disabled', false);
+                    // otherOption.find('input').attr('disabled', false);
+                  }
+                });
+              });
 
 
           %p.muted
@@ -55,8 +77,25 @@
               = f.radio_button :shared, true
               Only me
 
+              .unavailable-message
+                Billing option unavailable for game.
+
               .help-block.muted
                 Each player pays for themselves. Every player will need a Minefold account with a linked Minecraft account to play.
 
         .form-actions
           = f.submit 'Create server', class: %w(btn btn-primary)
+
+:css
+  .unavailable-message {
+    color: #F34;
+    display: none;
+  }
+  .unavailable .unavailable-message {
+    display: block;
+  }
+  .unavailable .help-block {
+    display: none;
+  }
+
+
