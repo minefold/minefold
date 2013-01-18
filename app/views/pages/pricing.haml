@@ -45,7 +45,7 @@
           key: #{ENV["STRIPE_PUBLISHABLE"].to_json},
           amount: $this.data('amount'),
           name: 'Minefold',
-          description: (formatNumber($this.data('coins')) + " coins"),
+          description: (formatNumber($this.data('coins')) + " minutes"),
           image: $this.data('image'),
           panelLabel: 'Pay',
           token: function(res){
