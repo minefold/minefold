@@ -70,7 +70,14 @@
         .navbar-inner
           %a.brand{href: root_path}
             .logo
-            %h1.name Minefold
+
+          .foo-bar.pull-left
+            - if content_for?(:foo_bar)
+              = yield(:foo_bar)
+            - else
+              %a.brand{href: root_path}
+                %h1.name Minefold
+
           .pull-right= render partial: 'shared/nav'
 
     .container

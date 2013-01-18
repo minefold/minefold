@@ -30,15 +30,12 @@ header {
 
 .navbar .brand {
   @include clearfix;
+  float: left;
   margin: 0;
   padding: 0;
 
-  > .logo,
-  > .name {
-    float: left;
-  }
-
   > .logo {
+
     background-color: $blue;
     background-image: asset-data-url('logo.png');
     background-repeat: no-repeat;
@@ -55,11 +52,14 @@ header {
     line-height: l(4);
     font-size: 20px;
     margin: 0;
-    margin-left: g(1);
-
     color: black;
   }
 
+}
+
+.foo-bar {
+  float: left;
+  margin: 0 g();
 }
 
 a:hover {

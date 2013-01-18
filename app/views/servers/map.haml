@@ -3,37 +3,35 @@
 
 - track_landing_type 'map'
 
-.page-header
-  %h1= link_to server.name, server_path(server)
+- provide :foo_bar do
+  .navbar-text
+    Back to
+    = link_to server.name, server_path(server)
 
-%ul.nav.nav-pills
-  %li= link_to 'Activity', server
-  %li.active= link_to 'Map', [:map, server]
-  - if can? :update, server
-    %li= link_to 'Settings', [:edit, server]
-
+#map-view-el.map-view
 
 - if server.world and server.world.mapped?
-  - provide :breakout do
-    #world-map-view-el.world-map-view
   - content_for :tail do
     = javascript_include_tag '//maps.google.com/maps/api/js?sensor=false'
     :javascript
       $(document).ready(function() {
-        var world = new Application.World(#{server.world.to_h.to_json}),
-            worldMapView = new Application.WorldMapView({model: world});
-
-        worldMapView.setElement($('#world-map-view-el'));
-        worldMapView.render();
+        var map = new Application.World(#{server.world.to_h.to_json}),
+            mapView = new Application.MapView({model: map});
+        mapView.setElement($('#map-view-el'));
+        mapView.render();
       });
 
 - else
-  %p.coming-soon.muted
-    The map for this server hasn't been rendered yet.
+  %center.container{style: 'margin-top: 40px;width:400px'}
+    %p
+      The map for
+      %a{href: server_path(server)}= server.name
+      hasn't been rendered yet.
 
-    - if server.shared?
-      Maps are rendered once a day when nobody is playing.
-    - else
-      Maps are rendered once a day when the server is stopped.
+      - if server.shared?
+        Maps are rendered once a day when nobody is playing.
+      - else
+        Maps are rendered once a day when the server is stopped.
 
-    Render times depend on the size of your world.
+      Render times depend on the size of your world.
+
