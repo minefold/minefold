@@ -22,6 +22,15 @@ private
     raise ActionController::RoutingError.new('Not Found')
   end
 
+  def after_sign_in_path_for(resource)
+    stored_location_for(resource) ||
+      if cookies[:last_viewed_server_id]
+        server_path(cookies[:last_viewed_server_id])
+      else
+        super
+      end
+  end
+
   def after_sign_out_path_for(resource_or_scope)
     new_user_session_path
   end

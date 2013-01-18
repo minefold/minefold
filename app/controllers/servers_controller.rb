@@ -4,6 +4,8 @@ class ServersController < ApplicationController
   prepend_before_filter :authenticate_user!, :except => [:show, :map, :list]
   prepend_before_filter :set_funpack_params!, :only => [:new]
 
+  before_filter :set_last_visited_cookie, :only => :show
+
 # --
 
   expose(:server)
@@ -132,6 +134,14 @@ class ServersController < ApplicationController
 
   def tf2
     $flipper[:tf2]
+  end
+
+  def set_last_visited_cookie
+    cookies[:last_viewed_server_id] = {
+      value: server.id,
+      expires: 1.year.from_now,
+      httponly: true
+    }
   end
 
 end
