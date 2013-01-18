@@ -37,23 +37,30 @@
 
             - content_for :tail do
               :javascript
+                var checkSplitBilling = function($el) {
+                  var available = $el.parents('.game').data('split-billing'),
+                      label = $('label[for=server_shared_true]'),
+                      otherLabel = $('label[for=server_shared_false]');
+
+                  if(!available) {
+                    label.addClass('unavailable')
+                      .find('input').attr('disabled', true);
+
+                    otherLabel.find('input').attr('checked', true);
+                  } else {
+                    label.removeClass('unavailable')
+                      .find('input').attr('disabled', false);
+                  }
+                }
+
                 $(document).ready(function() {
                   $('.game input[type=radio]').change(function() {
-                    var splitBillingAvailable = $(this).parents('.game').data('split-billing'),
-                        splitBillOption = $('label[for=server_shared_true]'),
-                        otherOption = $('label[for=server_shared_false]');
-
-                    if(!splitBillingAvailable) {
-                      splitBillOption.addClass('unavailable')
-                        .find('input').attr('disabled', true);
-
-                      otherOption.find('input').attr('checked', true);
-                    } else {
-                      splitBillOption.removeClass('unavailable')
-                        .find('input').attr('disabled', false);
-                      // otherOption.find('input').attr('disabled', false);
-                    }
+                    checkSplitBilling($(this));
                   });
+
+                  // TODO There's a bug here when submitting the form with errors and it disabling games that do allow split billing.
+                  // It's easily worked around by toggling back-and-forth but the data selector needs to be fixed.
+                  checkSplitBilling($('.game[data-split-billing=true] input[selected]'));
                 });
 
 
