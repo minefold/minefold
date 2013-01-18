@@ -56,23 +56,24 @@
                     = radio_button_tag 'sever', 'foo', false, disabled: true
                     Any player
 
-            = f.control_group :shared do
-              .control-label Who do you want to pay for?
-              .controls.radio
-                = f.label 'shared_false' do
-                  = f.radio_button :shared, false
-                  Everybody
+            - if server.game.split_billing?
+              = f.control_group :shared do
+                .control-label Who do you want to pay for?
+                .controls.radio
+                  = f.label 'shared_false' do
+                    = f.radio_button :shared, false
+                    Everybody
 
-                .help-block.muted
-                  You pay for the time played by any player on your server up to 10 people. For example, if 5 people play on your server for 1 hour each, you'll pay for 5 hours. If 15 people play for one hour each, you'll only pay for 10 hours.
+                  .help-block.muted
+                    You pay for the time played by any player on your server up to 10 people. For example, if 5 people play on your server for 1 hour each, you'll pay for 5 hours. If 15 people play for one hour each, you'll only pay for 10 hours.
 
-              .contols.radio
-                = f.label 'shared_true' do
-                  = f.radio_button :shared, true
-                  Only me
+                .contols.radio
+                  = f.label 'shared_true' do
+                    = f.radio_button :shared, true
+                    Only me
 
-                .help-block.muted
-                  Each player pays for themselves. Every player will need a Minefold account with a linked Minecraft account to play.
+                  .help-block.muted
+                    Each player pays for themselves. Every player will need a Minefold account with a linked Minecraft account to play.
 
 
             .form-actions
@@ -131,30 +132,27 @@
               = render partial: 'upload', locals: {server: server}
 
 
-      / --
+        .form-block.row
+          .form-title.span2
+            %strong Snapshots
 
-
-      .form-block.row
-        .form-title.span2
-          %strong Snapshots
-
-        .span8
-          - if server.world
-            %p
-              Last backup at #{I18n.l server.world.updated_at}
-              &middot;
-              = link_to 'Download archive', party_cloud_world_download_url(server)
-
-            - # TODO Investigate why parent wouldn't have a server.
-            - if server.world.legacy_parent and server.world.legacy_parent.server
-              - parent = server.world.legacy_parent.server
+          .span8
+            - if server.world
               %p
-                Forked from
-                = link_to parent.name, server_path(parent)
-                by #{parent.creator.username}.
+                Last backup at #{I18n.l server.world.updated_at}
+                &middot;
+                = link_to 'Download archive', party_cloud_world_download_url(server)
 
-          - else
-            %p.muted Server doesn't have any snapshots.
+              - # TODO Investigate why parent wouldn't have a server.
+              - if server.world.legacy_parent and server.world.legacy_parent.server
+                - parent = server.world.legacy_parent.server
+                %p
+                  Forked from
+                  = link_to parent.name, server_path(parent)
+                  by #{parent.creator.username}.
+
+            - else
+              %p.muted Server doesn't have any snapshots.
 
       / --
 

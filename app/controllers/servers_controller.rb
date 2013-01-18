@@ -16,7 +16,11 @@ class ServersController < ApplicationController
 
   def new
     authorize! :create, server
-    @games = GAMES.published
+    @games = if tf2.enabled?(current_user)
+      GAMES.playable
+    else
+      GAMES.published
+    end
   end
 
   def create
@@ -34,7 +38,11 @@ class ServersController < ApplicationController
         game: server.game.name
     else
       # Renders the new action
-      @games = GAMES.published
+      @games = if tf2.enabled?(current_user)
+        GAMES.playable
+      else
+        GAMES.published
+      end
     end
 
     respond_with(server)
@@ -121,4 +129,9 @@ class ServersController < ApplicationController
       end
     end
   end
+
+  def tf2
+    $flipper[:tf2]
+  end
+
 end

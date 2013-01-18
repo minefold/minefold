@@ -2,7 +2,6 @@ require 'forwardable'
 
 class GameLibrary
   extend Forwardable
-  include Enumerable
 
   def_delegators :@games, :push, :each, :include?
 
@@ -20,6 +19,10 @@ class GameLibrary
 
   def published
     @games.select {|game| game.published? }
+  end
+
+  def playable
+    @games.reject {|game| game.funpack_id.nil? }
   end
 
 end

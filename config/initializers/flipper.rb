@@ -13,4 +13,4 @@ end
 
 # --
 
-$flipper[:next].enable $flipper.group(:admins)
+$flipper[:tf2].enable $flipper.group(:admins)
