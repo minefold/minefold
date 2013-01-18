@@ -32,7 +32,7 @@ GIT
 
 GIT
   remote: git://github.com/minefold/brock.git
-  revision: 270d78996fdb8d9d96c56ac35c39f4c6d99e4720
+  revision: 357062c6f70ecdc106c030b9b488d425b0fda5cc
   branch: master
   specs:
     brock (0.1.1)
