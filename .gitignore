@@ -1,6 +1,7 @@
 *.cache
 *.log
 *.pid
+*.dump
 
 tmp
 .env*
