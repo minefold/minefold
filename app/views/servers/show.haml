@@ -124,6 +124,10 @@
           %strong= server.creator.username
           is sponsoring this server.
 
+      - if not server.party_cloud_id?
+        .alert.alert-warning
+          = image_tag 'spinner.gif'
+          Creating server
       %dl
         - if server.up?
           %dt Address

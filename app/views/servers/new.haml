@@ -10,7 +10,7 @@
         = f.control_group :name do
           = f.label :name, 'Server Name', class: 'control-label'
           .controls
-            = f.text_field :name, class: 'input-block-level'
+            = f.text_field :name, autocomplete: 'off', class: 'input-block-level'
 
         .control-group
           .control-label Game

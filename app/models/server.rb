@@ -75,7 +75,7 @@ class Server < ActiveRecord::Base
   end
 
   def up?
-    game.routable? or state == :up
+    (game.routable? and party_cloud_id?) or state == :up
   end
 
   [:starting, :stopped].each do |s|
