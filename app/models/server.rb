@@ -116,7 +116,7 @@ class Server < ActiveRecord::Base
 
   def allocate_shared_host!
     if not host?
-      self.host = [self.id.to_s, 'foldserver', 'com'].join('.')
+      self.host = [id, "fun-#{funpack.id}", 'us-east-1', 'foldserver', 'com'].join('.')
       self.save!
     end
   end
