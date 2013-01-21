@@ -15,7 +15,7 @@
             = image_tag @invited_by.avatar.medium.url, width: 60
           .message.span7
             %p Hi! Thanks for joining me here on Minefold. I run servers for games like Minecraft here. When you sign up you'll get an extra <strong>#{pluralize Bonuses::Referred.coins, 'coin', 'coins'}</strong> because I referred you.
-            .sig= @invited_by.conversational_name
+            .sig= PersonalName.new(@invited_by).first
 
         %hr
 

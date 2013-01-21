@@ -73,14 +73,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def name?
-    (super && name.present?) || (first_name? || last_name?)
-  end
-
-  def conversational_name
-    first_name || username
-  end
-
   def minecraft_link_host
     "#{verification_token}.verify.minefold.com"
   end

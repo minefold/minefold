@@ -9,7 +9,7 @@
 
       .identity
         - if current_user.name?
-          %h2.name= current_user.name
+          %h2.name= PersonalName.new(current_user).full
           %h3.username= current_user.username
         - else
           %h2.username= current_user.username

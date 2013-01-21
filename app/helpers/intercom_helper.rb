@@ -13,7 +13,7 @@ module IntercomHelper
 
     if signed_in?
       settings[:email] = current_user.email
-      settings[:name] = current_user.name || current_user.username
+      settings[:name] = PersonalName.new(current_user).full
       settings[:created_at] = current_user.created_at.to_i
       settings[:user_hash] = Digest::SHA1.hexdigest('kczzht6c' + current_user.email)
 
