@@ -21,7 +21,7 @@ class OrdersController < ApplicationController
       mixpanel_person_add order.user.distinct_id, 'Spent' => order.total
 
       # Send a receipt
-      CoinsMailer.receipt(
+      OrderMailer.receipt(
         order.user.id,
         order.charge_id,
         order.coin_pack.id
