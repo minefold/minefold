@@ -22,8 +22,4 @@ class Funpack < ActiveRecord::Base
     Brock::Schema.new(settings_schema)
   end
 
-  def default_settings
-   {}
-  end
-
 end
