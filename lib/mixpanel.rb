@@ -1,4 +1,6 @@
-module Mixpanel
+require 'restclient'
+
+class Mixpanel
 
   # Tracking:
   # https://mixpanel.com/docs/api-documentation/http-specification-insert-data
