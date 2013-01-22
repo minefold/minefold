@@ -96,13 +96,17 @@
 
       %br
 
-      - case server.state
-      - when :stopped
+      - case
+      - when server.idle?
         = button_to 'Start Server', start_server_path(server), class: %w(btn btn-primary btn-block btn-large)
-      - when :starting
-        = button_to 'Starting Server…', start_server_path(server), class: %w(btn btn-primary btn-block btn-large), disabled: true
-      - when :up
+      - when server.starting?
+        = button_to 'Starting server…', start_server_path(server), class: %w(btn btn-primary btn-block btn-large), disabled: true
+
+      - when server.up?
         = button_to 'Stop server', stop_server_path(server), class: %w(btn btn-danger btn-block)
+      - when server.stopping?
+        = button_to 'Stopping server', stop_server_path(server), class: %w(btn btn-danger btn-block), disabled: true
+
 
       .player-list
         - online = PartyCloud.players_online(server.party_cloud_id)
@@ -124,12 +128,8 @@
           %strong= server.creator.username
           is sponsoring this server.
 
-      - if not server.party_cloud_id?
-        .alert.alert-warning
-          = image_tag 'spinner.gif'
-          Creating server
       %dl
-        - if server.up?
+        - if server.game.routable? or server.up?
           %dt Address
           %dd.server-address= server.address
 

@@ -61,29 +61,35 @@ class Server < ActiveRecord::Base
 
   end
 
+  States = {
+    idle: 0,
+    starting: 1,
+    up: 2,
+    stopping: 3
+  }
 
-  def state
-    if game.routable?
-      :shared
-    elsif sessions.current? and sessions.current.started_at.nil?
-      :starting
-    elsif sessions.current? and sessions.current.started_at?
-      :up
-    else
-      :stopped
+  state_machine :initial => :idle do
+
+    States.each do |name, value|
+      state(name, value: value)
+    end
+
+    event :start do
+      transition all => :starting
+    end
+
+    event :started do
+      transition all => :up
+    end
+
+    event :stop do
+      transition all => :stopping
+    end
+
+    event :stopped do
+      transition all => :idle
     end
   end
-
-  def up?
-    (game.routable? and party_cloud_id?) or state == :up
-  end
-
-  [:starting, :stopped].each do |s|
-    define_method("#{s}?") do
-      self.state == s
-    end
-  end
-
 
   def normal?
     not shared?

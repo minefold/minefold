@@ -1,3 +1,5 @@
+# TODO Remove once the queue has been cleared
+
 class ServerCreatedJob < Job
   @queue = :high
 

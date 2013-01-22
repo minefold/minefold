@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130115050808) do
+ActiveRecord::Schema.define(:version => 20130121213406) do
 
   create_table "accounts", :force => true do |t|
     t.string   "type"
@@ -111,6 +111,18 @@ ActiveRecord::Schema.define(:version => 20130115050808) do
   add_index "gifts", ["parent_id"], :name => "index_gifts_on_parent_id"
   add_index "gifts", ["token"], :name => "index_gifts_on_token"
 
+  create_table "maps", :force => true do |t|
+    t.integer  "server_id"
+    t.datetime "queued_at"
+    t.integer  "tile_size"
+    t.integer  "zoom_levels"
+    t.integer  "spawn_x"
+    t.integer  "spawn_y"
+    t.integer  "spawn_z"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
   create_table "memberships", :force => true do |t|
     t.integer  "user_id"
     t.integer  "server_id"
@@ -169,6 +181,7 @@ ActiveRecord::Schema.define(:version => 20130115050808) do
     t.datetime "deleted_at"
     t.float    "score",                :default => 0.0
     t.text     "description"
+    t.integer  "state"
   end
 
   add_index "servers", ["deleted_at", "creator_id"], :name => "index_servers_on_deleted_at_and_creator_id"

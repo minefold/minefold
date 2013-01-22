@@ -30,8 +30,9 @@ class ServerStartedJob < Job
     if not server.game.routable?
       server.host = host
       server.port = port
-      server.save!
     end
+
+    server.started!
 
     Mixpanel.track 'Started server',
       distinct_id: server.creator.distinct_id,

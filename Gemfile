@@ -51,6 +51,7 @@ gem 'memcachier'
 gem 'dalli'
 gem 'scrolls'
 gem 'rest-client'
+gem 'state_machine'
 
 gem 'brock', github: 'minefold/brock', branch: 'master'
 

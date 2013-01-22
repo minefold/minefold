@@ -35,7 +35,7 @@ Funpack.create(
   name: 'Minecraft', creator: chris,
   info_url: 'http://minecraft.net',
   party_cloud_id: '50a976ec7aae5741bb000001',
-  game: GAMES.find('minecraft'),
+  game_id: GAMES.find('minecraft').id,
   imports: true
 )
 
@@ -43,7 +43,7 @@ Funpack.create(name: 'Bukkit Essentials', creator: chris,
   info_url: "http://bukkit.org",
   description: "Bukkit is a community-based project that works on Minecraft server implementation. This pack includes [Essentials](http://dev.bukkit.org/server-mods/essentials), [WorldEdit](http://dev.bukkit.org/server-mods/worldedit), [WorldGuard](http://dev.bukkit.org/server-mods/worldguard) and [LWC](http://dev.bukkit.org/server-mods/lwc).",
   party_cloud_id: '50a976fb7aae5741bb000002',
-  game: GAMES.find('minecraft'),
+  game_id: GAMES.find('minecraft').id,
   imports: true
 )
 
@@ -51,14 +51,13 @@ Funpack.create(name: 'Tekkit', creator: chris,
   info_url: "http://www.technicpack.net/tekkit",
   description: "Tekkit is the multiplayer version of the Technic mod pack. It lets players automate, industrialize and power their worlds.",
   party_cloud_id: '50a977097aae5741bb000003',
-  game: GAMES.find('minecraft'),
+  game_id: GAMES.find('minecraft').id,
   imports: true
 )
 
-Funpack.create(
-  name: 'Team Fortress 2', creator: chris,
+Funpack.create(name: 'Team Fortress 2', creator: chris,
   info_url: 'http://www.teamfortress.com',
   party_cloud_id: '50bec3967aae5797c0000004',
-  game: GAMES.find('team-fortress-2'),
+  game_id: GAMES.find('team-fortress-2').id,
   imports: false
 )

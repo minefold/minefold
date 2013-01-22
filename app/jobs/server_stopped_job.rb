@@ -14,6 +14,8 @@ class ServerStoppedJob < Job
     session = server.sessions.current
     session.finish(time)
     session.save!
+
+    server.stopped!
   end
 
 end

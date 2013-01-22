@@ -81,6 +81,8 @@ class ServersController < ApplicationController
 
     session = server.sessions.create
 
+    server.start!
+
     PartyCloud.start_server(
       server.party_cloud_id,
       server.funpack.party_cloud_id,
@@ -93,6 +95,7 @@ class ServersController < ApplicationController
   def stop
     authorize! :update, server
     PartyCloud.stop_server(server.party_cloud_id)
+    server.stop!
     respond_with(server)
   end
 
