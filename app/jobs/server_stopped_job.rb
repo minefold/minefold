@@ -15,7 +15,12 @@ class ServerStoppedJob < Job
     session.finish(time)
     session.save!
 
-    server.stopped!
+    if server.state.nil?
+      server.state = Server::States[:idle]
+      server.save!
+    else
+      server.stopped!
+    end
   end
 
 end

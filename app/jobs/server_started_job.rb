@@ -32,7 +32,12 @@ class ServerStartedJob < Job
       server.port = port
     end
 
-    server.started!
+    if server.state.nil?
+      server.state = Server::States[:up]
+      server.save!
+    else
+      server.started!
+    end
 
     Mixpanel.track 'Started server',
       distinct_id: server.creator.distinct_id,

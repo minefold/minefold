@@ -81,7 +81,12 @@ class ServersController < ApplicationController
 
     session = server.sessions.create
 
-    server.start!
+    if server.state.nil?
+      server.state = Server::States[:stopping]
+      server.save!
+    else
+      server.start!
+    end
 
     PartyCloud.start_server(
       server.party_cloud_id,
@@ -95,7 +100,14 @@ class ServersController < ApplicationController
   def stop
     authorize! :update, server
     PartyCloud.stop_server(server.party_cloud_id)
-    server.stop!
+
+    if server.state.nil?
+      server.state = Server::States[:stopping]
+      server.save!
+    else
+      server.stop!
+    end
+
     respond_with(server)
   end
 
