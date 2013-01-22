@@ -7,6 +7,8 @@ class Server < ActiveRecord::Base
 
   belongs_to :creator, class_name: 'User', :inverse_of => :created_servers
 
+  validates_presence_of :party_cloud_id
+
   belongs_to :funpack
   validates_presence_of :funpack
 
@@ -103,13 +105,6 @@ class Server < ActiveRecord::Base
 
     settings['whitelist'] ||= creator_uid
     settings['ops'] ||= creator_uid
-  end
-
-
-  after_create :create_party_cloud_server
-
-  def create_party_cloud_server
-    PartyCloud.create_server(id)
   end
 
   after_create :allocate_shared_host!

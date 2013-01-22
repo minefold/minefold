@@ -50,6 +50,7 @@ gem 'lograge'
 gem 'memcachier'
 gem 'dalli'
 gem 'scrolls'
+gem 'rest-client'
 
 gem 'brock', github: 'minefold/brock', branch: 'master'
 

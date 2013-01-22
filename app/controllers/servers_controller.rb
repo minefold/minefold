@@ -31,6 +31,8 @@ class ServersController < ApplicationController
     server.creator = current_user
     server.users << current_user
 
+    server.party_cloud_id ||= PartyCloud::Server.create.id
+
     if server.save
       track 'Created server',
         name: server.name,

@@ -1,7 +1,4 @@
-class PartyCloud
-  def self.create_server(server_id)
-    enqueue 'CreateServerJob', server_id
-  end
+module PartyCloud
 
   def self.start_server(pc_server_id, funpack_id, settings)
     enqueue 'StartServerJob', pc_server_id, funpack_id, settings
