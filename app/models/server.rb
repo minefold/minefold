@@ -12,6 +12,8 @@ class Server < ActiveRecord::Base
   belongs_to :funpack
   validates_presence_of :funpack
 
+  delegate :game, :to => :funpack
+
   has_and_belongs_to_many :watchers, class_name: 'User', uniq: true
 
   has_and_belongs_to_many :watchers,
@@ -59,10 +61,6 @@ class Server < ActiveRecord::Base
 
   end
 
-  # Using a method instead of `has_one :game, :through => :funpack`. This field should be read only.
-  def game
-    funpack.game
-  end
 
   def state
     if game.routable?
