@@ -1,6 +1,9 @@
+require 'state_machine/core'
 require './lib/redis_key'
 
 class Server < ActiveRecord::Base
+  extend StateMachine::MacroMethods
+
   attr_accessible :name, :description, :funpack_id, :shared, :settings
 
   acts_as_paranoid
@@ -67,6 +70,8 @@ class Server < ActiveRecord::Base
     up: 2,
     stopping: 3
   }
+
+  validates_presence_of :state
 
   state_machine :initial => :idle do
 
