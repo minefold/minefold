@@ -10,7 +10,7 @@ class Minecraft < Game
     true
   end
 
-  def routable?
+  def static_addresses?
     true
   end
 

@@ -29,9 +29,12 @@ class Game
     false
   end
 
-  def routable?
+  def static_addresses?
     false
   end
+
+  # TODO Go through the app and remove references to #routable?
+  alias_method :routable?, :static_addresses?
 
   def mappable?
     false

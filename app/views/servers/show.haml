@@ -129,7 +129,8 @@
           is sponsoring this server.
 
       %dl
-        - if server.game.routable? or server.up?
+        - # TODO Get rid of this ugly conditional
+        - if server.game.static_addresses? or (server.up? and server.host?)
           %dt Address
           %dd.server-address= server.address
 

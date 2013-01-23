@@ -1,5 +1,6 @@
 require 'state_machine/core'
 require './lib/redis_key'
+require './lib/server_address'
 
 class Server < ActiveRecord::Base
   extend StateMachine::MacroMethods
@@ -101,7 +102,7 @@ class Server < ActiveRecord::Base
   end
 
   def address
-    [host, port].compact.join(':')
+    ServerAddress.new(self)
   end
 
   # TODO remove this with new auth stuff
@@ -114,15 +115,6 @@ class Server < ActiveRecord::Base
 
     settings['whitelist'] ||= creator_uid
     settings['ops'] ||= creator_uid
-  end
-
-  after_create :allocate_shared_host!
-
-  def allocate_shared_host!
-    if not host?
-      self.host = [id, "fun-#{funpack.id}", 'us-east-1', 'foldserver', 'com'].join('.')
-      self.save!
-    end
   end
 
   def player_uids
