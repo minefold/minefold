@@ -14,9 +14,9 @@ class OrdersController < ApplicationController
 
     if order.valid? and order.fulfill
       # Do all our amazing tracking stuff
-      track 'Paid', 'distinct_id' => order.user.distinct_id,
-                    'coin pack' => order.coin_pack.id,
-                    'amount'      => order.total
+      track order.user.distinct_id, 'Paid',
+        'coin pack' => order.coin_pack.id,
+        'amount'    => order.total
 
       # Send a receipt
       OrderMailer.receipt(

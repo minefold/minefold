@@ -34,7 +34,7 @@ class ServersController < ApplicationController
     server.party_cloud_id ||= PartyCloud::Server.create.id
 
     if server.save
-      track 'Created server',
+      track server.creator.distinct_id, 'Created server',
         name: server.name,
         url: server_url(server),
         shared: server.shared?,
