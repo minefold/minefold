@@ -1,9 +1,6 @@
 footer {
   margin-top: l(12);
-  padding-top: l(2);
-  padding-left: $gw-gutter; padding-right: $gw-gutter;
-
-  padding-bottom: l(3);
+  padding: l() $gw-gutter;
 
   ul {
     @include clearfix;
@@ -31,6 +28,10 @@ footer {
     }
   }
 
+  p {
+    margin-bottom: 0;
+  }
+
   .copyright {
     clear: both;
     font-size: 12px;
@@ -39,6 +40,7 @@ footer {
 
   .mixpanel-badge {
     display: none;
-    margin-top: l(2);
+    margin-top: l();
+    margin-bottom: l();
   }
 }
