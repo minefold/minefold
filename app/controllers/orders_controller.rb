@@ -18,8 +18,6 @@ class OrdersController < ApplicationController
                     'coin pack' => order.coin_pack.id,
                     'amount'      => order.total
 
-      mixpanel_person_add order.user.distinct_id, 'Spent' => order.total
-
       # Send a receipt
       OrderMailer.receipt(
         order.user.id,
@@ -27,7 +25,10 @@ class OrdersController < ApplicationController
         order.coin_pack.id
       ).deliver
 
-      Mixpanel.async_person(order.user.distinct_id, {
+      MixpanelAsync.engage(order.user.distinct_id, {
+        '$set' => {
+          'Spent' => order.total
+        },
         '$append' => {
           '$transactions' => {
             '$time' => Time.now.utc.iso8601,

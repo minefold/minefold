@@ -67,7 +67,7 @@ group :test do
   gem 'machinist'
   gem 'faker'
   gem 'timecop'
-  gem 'fakeweb'
+  gem 'webmock'
   gem 'simplecov'
 
   gem 'autotest-standalone'

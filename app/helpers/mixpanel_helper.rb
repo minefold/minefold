@@ -9,7 +9,7 @@ module MixpanelHelper
   end
 
   def track_landing_type(type)
-    js %Q{mixpanel.register_once({"landing type": "#{type}"});}
+    js %Q{mixpanel.register_once({"landing type": #{type.to_s.to_json}});}
   end
 
   def js(js)

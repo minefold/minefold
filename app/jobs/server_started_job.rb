@@ -34,10 +34,10 @@ class ServerStartedJob < Job
 
     server.started!
 
-    Mixpanel.track 'Started server',
-      distinct_id: server.creator.distinct_id,
+    MixpanelAsync.track(server.creator.distinct_id, 'Started server',
       game: server.game.name,
       shared: server.shared?
+    )
   end
 
 end

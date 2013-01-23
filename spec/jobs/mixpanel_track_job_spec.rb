@@ -2,11 +2,11 @@ require './app/jobs/mixpanel_track_job'
 
 describe MixpanelTrackJob do
 
-  subject { described_class.new('paid', {amount: 5}) }
+  subject { described_class.new('1234', 'paid', {amount: 5}) }
 
   it "#perform" do
     subject.mixpanel.should_receive(:track)
-      .with('paid', {amount: 5})
+      .with('1234', 'paid', {amount: 5})
     subject.perform
   end
 

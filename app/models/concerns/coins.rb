@@ -38,7 +38,7 @@ module Concerns::Coins
 # private
 
   def track_coins(n)
-    Mixpanel.async_person_set(self.distinct_id, coins: n)
+    MixpanelAsync.engage(self.distinct_id, '$set' => {coins: n})
   end
 
   def track_spend(n)

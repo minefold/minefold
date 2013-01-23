@@ -1,6 +1,5 @@
 class GiftsMailer < ActionMailer::Base
   include Resque::Mailer
-  include MixpanelMailerHelpers
 
   add_template_helper ActionView::Helpers::DateHelper
 

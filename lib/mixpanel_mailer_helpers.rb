@@ -1,7 +1,7 @@
 module MixpanelMailerHelpers
 
-  def track(user, event, options={})
-    Mixpanel.async_track(event, options.merge(distinct_id: user.distinct_id))
+  def track(distinct_id, event, properties={})
+    MixpanelAsync.track(distinct_id, event, properties)
   end
 
 end

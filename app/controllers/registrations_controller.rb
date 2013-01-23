@@ -1,7 +1,7 @@
 class RegistrationsController < Devise::RegistrationsController
 
   before_filter :find_invitation, :only => :new
-  after_filter :track_registration_in_mixpanel, :only => :create
+  after_filter :track_signup_in_mixpanel, :only => :create
 
 
 # --
@@ -18,9 +18,8 @@ class RegistrationsController < Devise::RegistrationsController
     end
   end
 
-  def track_registration_in_mixpanel
-    track '$signup', distinct_id: resource.distinct_id,
-                     invited: resource.invited?
+  def track_signup_in_mixpanel
+    track(resource.distinct_id, '$signup', invited: resource.invited?)
   end
 
 end

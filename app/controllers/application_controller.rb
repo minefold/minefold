@@ -77,20 +77,10 @@ private
 
 # --
 
-  def track(event, properties={})
-    properties[:time]        ||= Time.now.to_i
+  def track(distinct_id, event, properties={})
+    properties[:time]        ||= Time.now.utc.to_i
     properties[:ip]          ||= request.ip
-    properties[:distinct_id] ||= current_user.distinct_id if signed_in?
-
-    Mixpanel.async_track(event, properties)
-  end
-
-  def mixpanel_person_set(distinct_id, properties={})
-    Mixpanel.async_person_set(distinct_id, properties)
-  end
-
-  def mixpanel_person_add(distinct_id, properties={})
-    Mixpanel.async_person_add(distinct_id, properties)
+    MixpanelAsync.track(distinct_id, event, properties)
   end
 
   def mixpanel_cookie

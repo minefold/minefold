@@ -1,76 +1,63 @@
+require 'base64'
+require 'json'
 require 'restclient'
 
 class Mixpanel
 
-  # Tracking:
-  # https://mixpanel.com/docs/api-documentation/http-specification-insert-data
+  API_BASE = 'api.mixpanel.com'
 
-  def self.track(event, properties={})
+  attr_reader :token
+
+  def initialize(token=ENV['MIXPANEL'])
+    @token = token
+  end
+
+  def track(distinct_id, event, properties={})
     params = {
       event: event,
       properties: properties.merge(
-        token: ENV['MIXPANEL']
+        distinct_id: distinct_id,
+        token: token
       )
     }
-
-    payload = Base64.strict_encode64(params.to_json)
-
-    RestClient.post('http://api.mixpanel.com/track', data: payload)
+    post '/track', params
   end
 
-  # People:
-  # https://mixpanel.com/docs/people-analytics/people-http-specification-insert-data
-
-  def self.person(distinct_id, properties={})
-    params = {
-      '$distinct_id' => distinct_id,
-      '$token' => ENV['MIXPANEL']
-    }.merge(properties)
-
-    payload = Base64.strict_encode64(params.to_json)
-
-    RestClient.post('http://api.mixpanel.com/engage', data: payload)
+  def engage(distinct_id, properties={})
+    properties.merge!('$distinct_id' => distinct_id, '$token' => token)
+    post '/engage', properties
   end
 
-  # Import:
-  # https://mixpanel.com/docs/api-documentation/importing-events-older-than-31-days
-
-  def self.import(event, properties={})
-    params = {
-      event: event,
-      properties: properties.merge(
-        token: ENV['MIXPANEL']
-      )
-    }
-
-    payload = Base64.strict_encode64(params.to_json)
-
-    RestClient.post('http://api.mixpanel.com/import', data: payload, api_key: ENV['MIXPANEL_KEY'])
-  end
-
-
-# --
-
-
-  def self.async_track(event, properties={})
-    if not Rails.env.test?
-      Resque.enqueue(MixpanelTrackedJob, event, properties)
+  [:set, :add, :append].each do |method|
+    define_method("#{method}_engagement") do |distinct_id, properties={}|
+      engage(distinct_id, "$#{method}" => properties)
     end
   end
 
 
-  def self.async_person(distinct_id, properties={})
-    if not Rails.env.test?
-      Resque.enqueue(MixpanelPersonJob, distinct_id, properties)
+# private
+
+  def enabled?
+    not token.nil?
+  end
+
+  def post(path, data={}, params={})
+    if enabled?
+      response = RestClient.post(
+        mixpanel_url(path).to_s,
+        encode_payload(data),
+        params: params
+      )
+      response == '1'
     end
   end
 
-  def self.async_person_set(distinct_id, properties={})
-    async_person(distinct_id, '$set' => properties)
+  def mixpanel_url(path)
+    URI::HTTP.build(host: API_BASE, path: path)
   end
 
-  def self.async_person_add(distinct_id, properties={})
-    async_person(distinct_id, '$add' => properties)
+  def encode_payload(data)
+    Base64.strict_encode64(JSON.generate(data))
   end
 
 end
