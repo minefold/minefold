@@ -34,6 +34,11 @@ Server.blueprint do
   party_cloud_id { SecureRandom.uuid }
 end
 
+World.blueprint do
+  server
+  last_mapped_at { Time.now }
+end
+
 
 # --
 

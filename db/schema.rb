@@ -111,18 +111,6 @@ ActiveRecord::Schema.define(:version => 20130121213406) do
   add_index "gifts", ["parent_id"], :name => "index_gifts_on_parent_id"
   add_index "gifts", ["token"], :name => "index_gifts_on_token"
 
-  create_table "maps", :force => true do |t|
-    t.integer  "server_id"
-    t.datetime "queued_at"
-    t.integer  "tile_size"
-    t.integer  "zoom_levels"
-    t.integer  "spawn_x"
-    t.integer  "spawn_y"
-    t.integer  "spawn_z"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
   create_table "memberships", :force => true do |t|
     t.integer  "user_id"
     t.integer  "server_id"

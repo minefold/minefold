@@ -53,6 +53,9 @@ Minefold::Application.routes.draw do
     get '/', :action => :index
   end
 
+  # Webhooks
+  post '/hooks/zim/map_deleted' => 'zim_callbacks#map_deleted'
+
   # Authenticated routes
   as :user do
 
