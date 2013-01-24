@@ -44,7 +44,7 @@ class Mixpanel
   def post(path, data={}, params={})
     if enabled?
       RestClient.post(
-        mixpanel_url(path).to_s,
+        (mixpanel_url(path).to_s + "?verbose=true"),
         encode_payload(data),
         params: params
       )
