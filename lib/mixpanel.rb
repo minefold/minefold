@@ -25,7 +25,7 @@ class Mixpanel
 
   def engage(distinct_id, properties={})
     properties.merge!('$distinct_id' => distinct_id, '$token' => token)
-    post '/engage', properties
+    post '/engage?', properties
   end
 
   [:set, :add, :append].each do |method|
