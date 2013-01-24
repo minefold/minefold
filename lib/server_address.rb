@@ -24,7 +24,11 @@ class ServerAddress
     if server.host?
       ip
     else
-      "1.fun-1.us-east-1.foldserver.com"
+      [ server.id,
+        "fun-#{server.funpack.id}",
+        'us-east-1',
+        'foldserver'
+      ].join('.')
     end
   end
 
