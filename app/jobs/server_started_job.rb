@@ -27,7 +27,7 @@ class ServerStartedJob < Job
 
     session.save!
 
-    if not server.game.routable?
+    if not server.game.static_addresses?
       server.host = host
       server.port = port
     end
