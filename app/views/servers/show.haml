@@ -96,16 +96,17 @@
 
       %br
 
-      - case
-      - when server.idle?
-        = button_to 'Start Server', start_server_path(server), class: %w(btn btn-primary btn-block btn-large)
-      - when server.starting?
-        = button_to 'Starting server…', start_server_path(server), class: %w(btn btn-primary btn-block btn-large), disabled: true
+      - if not server.game.static_addresses?
+        - case
+        - when server.idle?
+          = button_to 'Start Server', start_server_path(server), class: %w(btn btn-primary btn-block btn-large)
+        - when server.starting?
+          = button_to 'Starting server…', start_server_path(server), class: %w(btn btn-primary btn-block btn-large), disabled: true
 
-      - when server.up?
-        = button_to 'Stop server', stop_server_path(server), class: %w(btn btn-danger btn-block)
-      - when server.stopping?
-        = button_to 'Stopping server', stop_server_path(server), class: %w(btn btn-danger btn-block), disabled: true
+        - when server.up?
+          = button_to 'Stop server', stop_server_path(server), class: %w(btn btn-danger btn-block)
+        - when server.stopping?
+          = button_to 'Stopping server', stop_server_path(server), class: %w(btn btn-danger btn-block), disabled: true
 
 
       .player-list
