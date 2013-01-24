@@ -6,22 +6,6 @@ module Concerns::Coins
     validates_numericality_of :coins
   end
 
-  def create_customer(card_token)
-    c = Stripe::Customer.create(
-      card: card_token,
-      email: self.email,
-      description: self.id.to_s
-    )
-
-    self.customer_id = c.id
-  end
-
-  def customer
-    if customer_id?
-      Stripe::Customer.retrieve(customer_id)
-    end
-  end
-
   # Atomically increment coins. Doesn't update the model's internal state.
   def increment_coins!(n)
     if self.class.update_counters(self.id, coins: n) == 1
