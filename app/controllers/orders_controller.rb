@@ -26,6 +26,8 @@ class OrdersController < ApplicationController
       currency: 'usd'
     )
 
+    current_user.increment_coins! @coin_pack.coins
+
     # Send a receipt
     OrderMailer.receipt(current_user.id, @charge.id, @coin_pack.id).deliver
 
@@ -36,6 +38,7 @@ class OrdersController < ApplicationController
 
     engage(current_user.distinct_id,
       '$add' => {
+        'Time'  => @coin_pack.coins,
         'Spent' => @charge.amount
       },
       '$append' => {

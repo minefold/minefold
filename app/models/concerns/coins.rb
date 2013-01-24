@@ -8,10 +8,7 @@ module Concerns::Coins
 
   # Atomically increment coins. Doesn't update the model's internal state.
   def increment_coins!(n)
-    if self.class.update_counters(self.id, coins: n) == 1
-      track_coins(n)
-      true
-    end
+    self.class.update_counters(self.id, coins: n) == 1
   end
 
   def spend_coins!(n)
@@ -21,12 +18,9 @@ module Concerns::Coins
 
 # private
 
-  def track_coins(n)
-    MixpanelAsync.engage(self.distinct_id, '$set' => {coins: n})
-  end
-
   def track_spend(n)
-    Librato.increment 'user.coins.spent', by: n, sporadic: true
+    MixpanelAsync.engage(self.distinct_id, '$add' => {'Time' => (-n)})
+    Librato.increment('user.coins.spent', by: n, sporadic: true)
   end
 
 end
