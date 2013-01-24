@@ -5,6 +5,11 @@ class OrdersController < ApplicationController
     # Setup the stripe customer
     if current_user.customer_id?
       @customer = Stripe::Customer.retrieve(current_user.customer_id)
+
+      # Update the customer's card on file
+      @customer.card = params[:stripeToken]
+      @customer.save
+
     else
       @customer = Stripe::Customer.create(
         email: current_user.email,
@@ -12,10 +17,6 @@ class OrdersController < ApplicationController
       )
       current_user.update_attribute :customer_id, @customer.id
     end
-
-    # Update the customer's card on file
-    @customer.card = params[:stripeToken]
-    @customer.save
 
     @coin_pack = CoinPack.find(params[:coin_pack_id])
 
