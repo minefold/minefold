@@ -23,9 +23,5 @@ class Ability
 
     # Comments
     can [:create], Post
-
-    # Orders
-    can [:create], Order
-    can [:read], Order, user_id: user.id
   end
 end

@@ -12,7 +12,7 @@
 
       = form_tag orders_path, method: 'POST', class: %w(coin-pack span3) do |f|
         %input{type: 'hidden', name: 'coin_pack_id', value: pack.id}
-        %input{type: 'hidden', name: 'stripe_token'}
+        %input{type: 'hidden', name: 'stripeToken'}
 
         .price= number_to_currency(pack.cents / 100, precision: 0)
         .coins Play for #{number_with_delimiter(pack.shared_hours)} hours
@@ -39,7 +39,10 @@
         var $this = $(this),
             $form = $this.parents('form');
 
-        mixpanel.track('Clicked Stripe button', {'coin pack': $this.data('id')});
+        var token = function(card) {
+          $form.find('input[name=stripeToken]').val(card.id);
+          $form.submit();
+        }
 
         StripeCheckout.open({
           key: #{ENV["STRIPE_PUBLISHABLE"].to_json},
@@ -48,10 +51,11 @@
           description: (formatNumber($this.data('coins')) + " minutes"),
           image: $this.data('image'),
           panelLabel: 'Pay',
-          token: function(res){
-            $form.find('input[name=stripe_token]').val(res.id);
-            $form.submit();
-          }
+          token: token
+        });
+
+        mixpanel.track('Clicked Stripe button', {
+          'coin pack': $this.data('id')
         });
 
         return false;

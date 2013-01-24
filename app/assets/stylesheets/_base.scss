@@ -93,6 +93,18 @@ code {
   border-radius: 2px;
 }
 
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active {
+  background-color: $blue;
+}
+
+.btn-success,
+.btn-success:hover,
+.btn-success:active {
+  background-color: $green;
+}
+
 .label {
   text-shadow: none;
   border-radius: 2px;
@@ -103,22 +115,15 @@ code {
   background-color: $green;
 }
 
-.btn-success,
-.btn-success:hover,
-.btn-success:active {
-  background-color: $green;
+#{$all-text-inputs} {
+  box-shadow: none;
+  border-radius: 2px;
+  border-color: rgba(black, 0.2);
 }
 
-.carousel-control-list {
-  @include clearfix;
-  margin-left: -5px;
-
-  > .item {
-    display: block;
-    float: left;
-    margin-left: 5px;
-  }
-
+#{$all-text-inputs-focus} {
+  border-color: lighten($blue, 20%);
+  @include box-shadow(0 0 2px 0 lighten($blue, 40%));
 }
 
 .well {
@@ -142,3 +147,12 @@ code {
   }
 
 }
+
+.alert {
+  border: none;
+  border-radius: 0;
+  text-shadow: none;
+  margin-bottom: 0;
+  font-weight: bold;
+}
+

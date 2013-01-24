@@ -19,8 +19,9 @@ class GiftsController < ApplicationController
 
       GiftsMailer.receipt(gift.id).deliver
 
-      track 'Purchased', 'gift' => gift.id,
-                         'existing customer' => gift.parent_id
+      track current_user.distinct_id, 'Purchased',
+        'gift' => gift.id,
+        'existing customer' => gift.parent_id
 
       respond_with(gift, location: xmas_cheers_path(gift))
     else

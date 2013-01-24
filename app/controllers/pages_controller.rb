@@ -19,6 +19,7 @@ class PagesController < ApplicationController
   end
 
   def pricing
+    # flash[:error] = 'Your card was declined'
     @packs = CoinPack.active.all
   end
 
