@@ -11,6 +11,7 @@ class Order
 
 
   attr_reader :user
+  attr_reader :charge
   attr_reader :charge_id
 
   def self.find_from_charge(id)
@@ -80,15 +81,14 @@ class Order
   end
 
   def create_charge
-    charge = Stripe::Charge.create(
+    @charge = Stripe::Charge.create(
       amount: coin_pack.cents,
       currency: 'usd',
       customer: user.customer_id,
       description: coin_pack.description
     )
-
-    @charge_id = charge.id
-    charge
+    @charge_id = @charge.id
+    @charge
   end
 
   def coin_user

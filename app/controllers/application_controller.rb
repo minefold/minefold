@@ -83,6 +83,10 @@ private
     MixpanelAsync.track(distinct_id, event, properties)
   end
 
+  def engage(distinct_id, properties={})
+    MixpanelAsync.engage(distinct_id, properties)
+  end
+
   def mixpanel_cookie
     request.cookies['mp_mixpanel']
   end

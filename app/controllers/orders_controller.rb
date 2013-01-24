@@ -1,50 +1,54 @@
 class OrdersController < ApplicationController
   prepend_before_filter :authenticate_user!
 
-  expose(:order) {
-    Order.find_from_charge(params[:id])
-  }
-
   def create
-    order = Order.new(
-      current_user,
-      params[:coin_pack_id],
-      params[:stripe_token]
+    # Setup the stripe customer
+    if current_user.customer_id?
+      @customer = Stripe::Customer.retrieve(current_user.customer_id)
+    else
+      @customer = Stripe::Customer.create(
+        email: current_user.email,
+        card:  params[:stripeToken]
+      )
+      current_user.update_attribute :customer_id, @customer.id
+    end
+
+    # Update the customer's card on file
+    @customer.card = params[:stripeToken]
+    @customer.save
+
+    @coin_pack = CoinPack.find(params[:coin_pack_id])
+
+    @charge = Stripe::Charge.create(
+      amount: @coin_pack.amount,
+      customer: @customer.id,
+      description: @coin_pack.description,
+      currency: 'usd'
     )
 
-    if order.valid? and order.fulfill
-      # Do all our amazing tracking stuff
-      track order.user.distinct_id, 'Paid',
-        'coin pack' => order.coin_pack.id,
-        'amount'    => order.total
+    # Send a receipt
+    OrderMailer.receipt(current_user.id, @charge.id, @coin_pack.id).deliver
 
-      # Send a receipt
-      OrderMailer.receipt(
-        order.user.id,
-        order.charge_id,
-        order.coin_pack.id
-      ).deliver
+    track(current_user.distinct_id, 'Paid',
+      'coin pack' => @coin_pack.id,
+      'amount'    => @charge.amount
+    )
 
-      MixpanelAsync.engage(order.user.distinct_id, {
-        '$set' => {
-          'Spent' => order.total
-        },
-        '$append' => {
-          '$transactions' => {
-            '$time' => Time.now.utc.iso8601,
-            '$amount' => (order.total / 100.0)
-          }
+    engage(current_user.distinct_id,
+      '$add' => {
+        'Spent' => @charge.amount
+      },
+      '$append' => {
+        '$transactions' => {
+          '$time' => Time.now.utc.iso8601,
+          '$amount' => (@charge.amount / 100.0)
         }
-      })
+      }
+    )
 
-      redirect_to(order)
-    else
-      render nothing: true, :status => :payment_required
-    end
-  end
-
-  def show
-    authorize! :read, order
+  rescue Stripe::CardError => e
+    flash[:error] = e.message
+    redirect_to pricing_page_path
   end
 
 end

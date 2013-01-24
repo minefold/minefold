@@ -6,7 +6,7 @@
     #canvas
 
   %h1 Thank you!
-  %p We've sent you a receipt at #{order.user.email}.
+  %p We've sent you a receipt at #{current_user.email}.
   %a.btn.btn-primary{href: user_root_path} Go back to being awesome
 
 - content_for :tail do

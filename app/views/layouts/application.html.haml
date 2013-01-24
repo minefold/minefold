@@ -80,11 +80,10 @@
 
           .pull-right= render partial: 'shared/nav'
 
-    .container
-      - flash.select {|_,msg| msg.is_a?(String) }.each do |name, msg|
-        %div.alert.alert-block{class: "alert-#{name}"}
-          %a.close{data: {dismiss: 'alert'}} &#215;
-          %div{:id => "flash_#{name}"}= msg
+    - flash.select {|_,msg| msg.is_a?(String) }.each do |name, msg|
+      %div.alert.alert-block{class: "alert-#{name}"}
+        %a.close{data: {dismiss: 'alert'}} &#215;
+        %div{:id => "flash_#{name}"}= msg
 
     #app= yield
 
