@@ -27,6 +27,7 @@ class OrdersController < ApplicationController
     )
 
     current_user.increment_coins! @coin_pack.coins
+    current_user.reload
 
     # Send a receipt
     OrderMailer.receipt(current_user.id, @charge.id, @coin_pack.id).deliver
