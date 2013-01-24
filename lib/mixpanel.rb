@@ -43,12 +43,11 @@ class Mixpanel
 
   def post(path, data={}, params={})
     if enabled?
-      response = RestClient.post(
+      RestClient.post(
         mixpanel_url(path).to_s,
         encode_payload(data),
         params: params
       )
-      response == '1'
     end
   end
 
