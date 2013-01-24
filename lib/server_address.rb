@@ -27,7 +27,7 @@ class ServerAddress
       [ server.id,
         "fun-#{server.funpack.id}",
         'us-east-1',
-        'foldserver'
+        'foldserver.com'
       ].join('.')
     end
   end
