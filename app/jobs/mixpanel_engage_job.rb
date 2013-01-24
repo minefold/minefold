@@ -13,7 +13,11 @@ class MixpanelEngageJob < Job
   end
 
   def perform
-    mixpanel.engage(distinct_id, properties)
+    engaged = mixpanel.engage(distinct_id, properties)
+
+    if not engaged
+      raise "Mixpanel engage job failed"
+    end
   end
 
 end
