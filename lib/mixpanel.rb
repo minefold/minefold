@@ -41,13 +41,10 @@ class Mixpanel
     not token.nil?
   end
 
-  def post(path, data={}, params={})
+  def post(path, data, params={})
     if enabled?
-      RestClient.post(
-        mixpanel_url(path).to_s,
-        data: encode_payload(data),
-        params: params
-      )
+      params[:data] = encode_payload(data)
+      RestClient.post(mixpanel_url(path).to_s, params) == '1'
     end
   end
 

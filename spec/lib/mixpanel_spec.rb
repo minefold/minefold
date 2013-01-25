@@ -48,25 +48,25 @@ describe Mixpanel do
     it "sends events to api.mixpanel.com" do
       subject.stub(:encode_payload).with(foo: 'bar').and_return('abc123')
       stub_request(:post, 'http://api.mixpanel.com/test').
-        with(body: 'abc123')
+        with(body: 'data=abc123')
       subject.post('/test', foo: 'bar')
     end
 
     it "returns true if the response code is 200 and body 1" do
       stub_request(:post, 'http://api.mixpanel.com/test')
         .to_return(status: 200, body: '1')
-      expect(subject.post('/test')).to be_true
+      expect(subject.post('/test', {})).to be_true
     end
 
     it "returns false even if the body isn't 1" do
       stub_request(:post, 'http://api.mixpanel.com/test')
         .to_return(status: 200, body: '0')
-      expect(subject.post('/test')).to be_false
+      expect(subject.post('/test', {})).to be_false
     end
 
     it "short circuits if the token isn't set" do
       subject.stub(:enabled? => false)
-      expect(subject.post('/test')).to be_nil
+      expect(subject.post('/test', {})).to be_nil
     end
 
   end
