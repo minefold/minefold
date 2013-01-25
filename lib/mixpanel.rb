@@ -45,8 +45,8 @@ class Mixpanel
     if enabled?
       RestClient.post(
         mixpanel_url(path).to_s,
-        encode_payload(data),
-        params: params.merge(verbose: true)
+        data: encode_payload(data),
+        params: params
       )
     end
   end
