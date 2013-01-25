@@ -14,10 +14,7 @@ class MixpanelTrackJob < Job
   end
 
   def perform
-    tracked = mixpanel.track(distinct_id, event, properties)
-    if not tracked
-      raise "Mixpanel track job failed"
-    end
+    mixpanel.track(distinct_id, event, properties)
   end
 
 end

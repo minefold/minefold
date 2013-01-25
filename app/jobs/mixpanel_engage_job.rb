@@ -13,17 +13,7 @@ class MixpanelEngageJob < Job
   end
 
   def perform
-    response = mixpanel.engage(distinct_id, properties)
-
-    if response != '1'
-      Bugsnag.notify(RuntimeError.new("MixpanelEngageJob failed"), {
-        :body => response.to_str,
-        :code => response.code,
-        :mixpanel => mixpanel,
-        :distinct_id => distinct_id,
-        :properties => properties
-      })
-    end
+    mixpanel.engage(distinct_id, properties)
   end
 
 end
