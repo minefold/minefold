@@ -25,7 +25,7 @@ class ServerAddress
       ip
     else
       [ server.id,
-        "fun-#{server.funpack.id}",
+        "fun-#{server.funpack_id}",
         'us-east-1',
         'foldserver.com'
       ].join('.')

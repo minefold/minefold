@@ -13,7 +13,7 @@ class MixpanelEngageJob < Job
   end
 
   def perform
-    mixpanel.engage(distinct_id, properties)
+    mixpanel.engage! distinct_id, properties
   end
 
 end

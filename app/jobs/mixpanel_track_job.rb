@@ -14,7 +14,7 @@ class MixpanelTrackJob < Job
   end
 
   def perform
-    mixpanel.track(distinct_id, event, properties)
+    mixpanel.track! distinct_id, event, properties
   end
 
 end

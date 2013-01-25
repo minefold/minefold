@@ -4,6 +4,9 @@ require 'restclient'
 
 class Mixpanel
 
+  class ApiError < StandardError
+  end
+
   API_BASE = 'api.mixpanel.com'
 
   attr_reader :token
@@ -28,9 +31,20 @@ class Mixpanel
     post '/engage', properties
   end
 
+  # Engagement convenience methods
   [:set, :add, :append].each do |method|
     define_method("#{method}_engagement") do |distinct_id, properties={}|
       engage(distinct_id, "$#{method}" => properties)
+    end
+  end
+
+  # Bang methods raise an error
+  [ :track,
+    :engage,
+    :set_engagement, :add_engagement, :append_engagement
+  ].each do |method|
+    define_method("#{method}!") do |*args|
+      send(method, *args) || raise(ApiError)
     end
   end
 

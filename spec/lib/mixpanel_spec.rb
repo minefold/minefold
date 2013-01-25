@@ -23,6 +23,13 @@ describe Mixpanel do
     subject.track('abc', 'paid', amount: 500)
   end
 
+  it "#track! raises errors" do
+    subject.stub(track: false)
+    expect {
+      subject.track!('abc', 'paid', amount: 500)
+    }.to raise_error(Mixpanel::ApiError)
+  end
+
   it "#engage posts engagement metrics" do
     subject.should_receive(:post).with('/engage', {
       '$distinct_id' => '123',

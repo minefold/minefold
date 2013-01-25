@@ -23,14 +23,6 @@ describe Job do
       expect(subclass.perform).to eq('sentinal')
     end
 
-    it "raises an error if #perform is false" do
-      subject.stub(:perform) { false }
-      described_class.stub(new: subject)
-      expect {
-        described_class.perform
-      }.to raise_error(Job::JobFailed)
-    end
-
   end
 
 end
