@@ -14,22 +14,34 @@ class ServerAddress
     end
   end
 
-# private
-
   def ip
     [server.host, server.port].compact.join(':')
   end
 
   def address
-    if server.cname?
-      server.cname
+    if custom?
+      custom
     else
-      [ server.id,
-        "fun-#{server.funpack_id}",
-        'us-east-1',
-        'foldserver.com'
-      ].join('.')
+      default
     end
+  end
+
+# private
+
+  def custom?
+    server.cname? and !(server.cname =~ /(foldserver|minefold)\.com$/)
+  end
+
+  def custom
+    server.cname
+  end
+
+  def default
+    [ server.id,
+      "fun-#{server.funpack_id}",
+      'us-east-1',
+      'foldserver.com'
+    ].join('.')
   end
 
 end

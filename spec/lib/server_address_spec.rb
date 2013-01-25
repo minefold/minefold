@@ -36,12 +36,17 @@ describe ServerAddress do
 
   describe "#address" do
 
-    it "returns the cname if provided" do
-      server.stub(:cname? => true, cname: 'mc.chrislloyd.com.au', port: nil)
+    it "returns the custom name if available" do
+      server.stub(:cname? => true, cname: 'mc.chrislloyd.com.au')
       expect(subject.address).to eq('mc.chrislloyd.com.au')
     end
 
-    it "provides the static address" do
+    it "returns the dynamic address if the custom address is legacy" do
+      server.stub(:cname? => true, cname: '1234.foldserver.com')
+      expect(subject.address).to eq('1.fun-1.us-east-1.foldserver.com')
+    end
+
+    it "provides the default address" do
       expect(subject.address).to eq("1.fun-1.us-east-1.foldserver.com")
     end
 
