@@ -3,7 +3,7 @@ require './lib/server_address'
 describe ServerAddress do
 
   let(:game) { stub(:static_addresses? => false) }
-  let(:server) { stub(id: 1, funpack_id: 1, :host? => false, game: game) }
+  let(:server) { stub(id: 1, funpack_id: 1, :cname? => false, game: game) }
   subject { described_class.new(server) }
 
   describe "#to_s" do
@@ -36,8 +36,8 @@ describe ServerAddress do
 
   describe "#address" do
 
-    it "returns the ip if provided" do
-      server.stub(:host? => true, host: 'mc.chrislloyd.com.au', port: nil)
+    it "returns the cname if provided" do
+      server.stub(:cname? => true, cname: 'mc.chrislloyd.com.au', port: nil)
       expect(subject.address).to eq('mc.chrislloyd.com.au')
     end
 

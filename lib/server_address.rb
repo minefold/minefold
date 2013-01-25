@@ -21,8 +21,8 @@ class ServerAddress
   end
 
   def address
-    if server.host?
-      ip
+    if server.cname?
+      server.cname
     else
       [ server.id,
         "fun-#{server.funpack_id}",
