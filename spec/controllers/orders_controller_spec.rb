@@ -2,34 +2,18 @@ require 'spec_helper'
 
 describe OrdersController do
 
-#   setup do
-#     @coin_pack = CoinPack.make!
-#
-#     @card = Stripe::Token.create(card: {
-#         number: StripeCards[:default],
-#         exp_month: Time.now.month,
-#         exp_year: 1.year.from_now.year,
-#         cvc: 123,
-#         name: Faker::Name.name
-#       })
-#
-#     @charge = Stripe::Charge.create(
-#       amount: @coin_pack.cents,
-#       currency: 'usd',
-#       card: @card.id
-#     )
-#   end
-#
-#
-# # --
-#
-#
-#   test "POST #create unauthenticated" do
-#     post :create
-#     assert_unauthenticated_response
-#   end
-#
-#   test "POST #create with invalid params" do
+  describe "#create" do
+
+    it "authenticates users" do
+      post :create
+      expect(response).to authenticate_user
+    end
+
+  end
+
+
+
+  #   test "POST #create with invalid params" do
 #     user = User.make!
 #
 #     sign_in(user)
