@@ -5,6 +5,7 @@ describe MixpanelEngageJob do
   subject { described_class.new('id', '$set' => {time: 5}) }
 
   it "#perform" do
+    subject.mixpanel.stub(:enabled? => true)
     subject.mixpanel.should_receive(:engage)
       .with('id', '$set' => {time: 5})
     subject.perform

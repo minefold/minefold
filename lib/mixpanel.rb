@@ -44,7 +44,7 @@ class Mixpanel
     :set_engagement, :add_engagement, :append_engagement
   ].each do |method|
     define_method("#{method}!") do |*args|
-      send(method, *args) || raise(ApiError)
+      send(method, *args) || enabled? || raise(ApiError)
     end
   end
 
