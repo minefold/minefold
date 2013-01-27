@@ -16,17 +16,12 @@
 #= require jquery.simple-slider
 #= require s3upload
 
+#= require ./base
 #= require ./helpers
-
-#= require_self
 #= require_tree .
+#= require_self
 
+window.app = new App()
 
-class window.Application extends Backbone.Router
-  routes:
-    '': 'home'
-
-  initialize: ->
-    $.cookie('time_zone', new Date().getTimezoneOffset())
-
-  home: ->
+$(document).ready ->
+  Backbone.history.start()

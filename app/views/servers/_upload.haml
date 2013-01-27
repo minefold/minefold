@@ -43,7 +43,7 @@
 
 - content_for :tail do
   :javascript
-    app.uploadsView = new Application.UploadView({
+    app.uploadsView = new App.UploadView({
       el: $('#uploads'),
       sign_url: '#{sign_server_uploads_path(server.id)}',
       post_upload_url: '#{server_uploads_path(server.id)}',

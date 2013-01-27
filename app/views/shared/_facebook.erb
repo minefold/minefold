@@ -1,0 +1,33 @@
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId: <%= ENV['FACEBOOK_KEY'].to_json.html_safe %>,
+      cookie: true,
+      xfbml: true,
+      logging: <%= Rails.env.development?.to_json.html_safe %>,
+      channelUrl: <%= facebook_channel_url(protocol: '//').to_json.html_safe %>
+    });
+
+    window.app.trigger('fb:init');
+
+    FB.Event.subscribe('auth.authResponseChange', function(response) {
+      if(response.status === 'connected') {
+        app.trigger('fb:connected', response);
+      } else if (response.status === 'not_authorized') {
+        app.trigger('fb:not_authorized', response);
+      } else {
+        app.trigger('fb:'+response.status, response);
+      }
+    });
+  }
+</script>
+
+<script>
+  (function(d){
+    var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement('script'); js.id = id; js.async = true;
+    js.src = "//connect.facebook.net/en_US/all.js";
+    ref.parentNode.insertBefore(js, ref);
+  }(document));
+</script>

@@ -15,8 +15,8 @@
     = javascript_include_tag '//maps.google.com/maps/api/js?sensor=false'
     :javascript
       $(document).ready(function() {
-        var map = new Application.World(#{server.world.to_h.to_json}),
-            mapView = new Application.MapView({model: map});
+        var map = new App.World(#{server.world.to_h.to_json}),
+            mapView = new App.MapView({model: map});
         mapView.setElement($('#map-view-el'));
         mapView.render();
       });

@@ -153,12 +153,10 @@ class Pipe
       @elm.animate {opacity: 0}, @speed * 2, @remove
 
 
-
-
 # --
 
 
-Application.PipesView =
+App.PipesView =
   Pt: Pt
   Grid: Grid
   Pipe: Pipe

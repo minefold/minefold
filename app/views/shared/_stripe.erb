@@ -1,0 +1,4 @@
+<%= javascript_include_tag '//js.stripe.com/v1' %>
+<style>
+  Stripe.setPublishableKey(<%= ENV['STRIPE_PUBLISHABLE'].to_json.html_safe %>);
+</style>

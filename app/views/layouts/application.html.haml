@@ -43,15 +43,7 @@
 
 
     // Mixpanel
-    :javascript
-      (function(c,a){window.mixpanel=a;var b,d,h,e;b=c.createElement("script");b.type="text/javascript";b.async=!0;b.src=("https:"===c.location.protocol?"https:":"http:")+'//api.mixpanel.com/site_media/js/api/mixpanel.2.js';d=c.getElementsByTagName("script")[0];d.parentNode.insertBefore(b,d);a._i=[];a.init=function(b,c,f){function d(a,b){var c=b.split(".");2==c.length&&(a=a[c[0]],b=c[1]);a[b]=function(){a.push([b].concat(Array.prototype.slice.call(arguments,0)))}}var g=a;"undefined"!== typeof f?g=a[f]=[]:f="mixpanel";g.people=g.people||[];h="disable track track_pageview track_links track_forms register register_once unregister identify name_tag set_config people.set people.increment".split(" ");for(e=0;e<h.length;e++)d(g,h[e]);a._i.push([b,c,f])};a.__SV=1.1})(document,window.mixpanel||[]);
-      mixpanel.init(#{ENV['MIXPANEL'].to_json}, {cookie_name: 'mixpanel'});
-      mixpanel.set_config({debug: false});
-
-    - if signed_in?
-      :javascript
-        mixpanel.identify(#{current_user.distinct_id.to_json});
-        mixpanel.people.set(#{mixpanel_person.to_json});
+    = render partial: 'shared/mixpanel'
 
     // Typekit
     %script{type: 'text/javascript', src: '//use.typekit.net/qzl8aqw.js'}
@@ -111,128 +103,23 @@
           %img{src: '//cdn.mxpnl.com/site_media/images/partner/badge_light.png', alt: 'Mobile Analytics'}
 
 
-    / ---
+    - # --
 
-    = javascript_include_tag '//d3dy5gmtp8yhk7.cloudfront.net/1.12/pusher.min.js'
-    = javascript_include_tag 'https://js.stripe.com/v1'
+    = render partial: 'shared/pusher'
+    = render partial: 'shared/stripe'
+    = render partial: 'shared/intercom'
     = javascript_include_tag 'application'
-
-    :javascript
-      window.pusher = new Pusher(#{Pusher.key.to_json});
-
-    :javascript
-      Stripe.setPublishableKey(#{ENV['STRIPE_PUBLISHABLE'].to_json});
-
-    :javascript
-      window.app = new Application();
 
     - if signed_in?
       :javascript
-        window.app.currentUser = new Application.User(#{current_user.to_json});
-
-    :javascript
-      $(function() {
-        Backbone.history.start();
-      });
-
-      window.fbAsyncInit = function() {
-        FB.init({
-          appId: #{ENV['FACEBOOK_KEY'].to_json},
-          cookie: true,
-          xfbml: true,
-          logging: #{(not Rails.env.production?).to_json},
-          channelUrl: #{facebook_channel_url(protocol: '//').to_json}
-        });
-
-        app.trigger('fb:init');
-
-        FB.Event.subscribe('auth.authResponseChange', function(response) {
-          if(response.status === 'connected') {
-            app.trigger('fb:connected', response);
-          } else if (response.status === 'not_authorized') {
-            app.trigger('fb:not_authorized', response);
-          } else {
-            app.trigger('fb:'+response.status, response);
-          }
-        });
-
-        FB.Event.subscribe('edge.create', function(url) {
-          alert('You liked the URL: ' + url);
-        });
-      }
+        window.app.setCurrentUser(#{current_user.to_json});
 
     = yield :tail
 
+    = render partial: 'shared/facebook'
 
-    // Facebook
-    :javascript
-      (function(d){
-         var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-         if (d.getElementById(id)) {return;}
-         js = d.createElement('script'); js.id = id; js.async = true;
-         js.src = "//connect.facebook.net/en_US/all.js";
-         ref.parentNode.insertBefore(js, ref);
-       }(document));
-
-
-    // Intercom
-    - if signed_in?
-      = intercom_script_tag
-
-    - if signed_in?
-      :javascript
-        (function() {
-          function async_load() {
-            var s = document.createElement('script');
-            s.type = 'text/javascript'; s.async = true;
-            s.src = 'https://api.intercom.io/api/js/library.js';
-            var x = document.getElementsByTagName('script')[0];
-            x.parentNode.insertBefore(s, x);
-          }
-          if (window.attachEvent) {
-            window.attachEvent('onload', async_load);
-          } else {
-            window.addEventListener('load', async_load, false);
-          }
-        })();
-
-
-    // Analytics
+    - # Analytics
     - if Rails.env.production?
-      :javascript
-        var _gauges = _gauges || [];
-        (function() {
-          var t   = document.createElement('script');
-          t.type  = 'text/javascript';
-          t.async = true;
-          t.id    = 'gauges-tracker';
-          t.setAttribute('data-site-id', #{ENV['GAUGES'].to_json});
-          t.src = '//secure.gaug.es/track.js';
-          var s = document.getElementsByTagName('script')[0];
-          s.parentNode.insertBefore(t, s);
-        })();
-
-      :javascript
-        var _gaq = _gaq || [];
-        var pluginUrl =
-         '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
-        _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
-        _gaq.push(['_setAccount', #{ENV['GOOGLE_ANALYTICS'].to_json}]);
-        _gaq.push(['_setDomainName', 'minefold.com']);
-        _gaq.push(['_trackPageview']);
-
-        (function() {
-          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
-
-      :javascript
-        (function() {
-          window._pa = window._pa || {};
-          var pa = document.createElement('script'); pa.type = 'text/javascript'; pa.async = true;
-          pa.src = ('https:' == document.location.protocol ? 'https:' : 'http:') + "//tag.perfectaudience.com/serve/50cb844cff7fbe000200053c.js";
-          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(pa, s);
-        })();
-
-    - track_landing_page
+      = render partial: 'shared/gauges'
+      = render partial: 'shared/google_analytics'
+      = render partial: 'shared/perfect_audience'

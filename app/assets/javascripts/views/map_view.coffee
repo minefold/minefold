@@ -1,6 +1,6 @@
 #= require store
 #= require moment
-#= require models/world
+#= require models/map
 
 class MapProjection
   constructor: (@tileSize) ->
@@ -20,8 +20,8 @@ class MapProjection
 # --
 
 # Class renders an interactive Google Map for Worlds hosted on the Party Cloud. The map is only shown if there is a `last_mapped_at` property of the World as some worlds will be unable to be mapped. In that case it shows a waiting screen.
-class Application.MapView extends Backbone.View
-  model: Application.World
+class App.MapView extends Backbone.View
+  model: App.World
 
   @defaults =
     zoom: 5
