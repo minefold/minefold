@@ -7,7 +7,7 @@ class ServerAddress
   end
 
   def to_s
-    if server.game.static_addresses?
+    if server.static_addresses?
       address
     else
       ip

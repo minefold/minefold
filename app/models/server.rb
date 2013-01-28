@@ -17,6 +17,7 @@ class Server < ActiveRecord::Base
   validates_presence_of :funpack
 
   delegate :game, :to => :funpack
+  delegate :static_address?, :to => :game
 
   has_and_belongs_to_many :watchers, class_name: 'User', uniq: true
 

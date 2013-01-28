@@ -3,13 +3,19 @@ require './lib/server_address'
 describe ServerAddress do
 
   let(:game) { stub(:static_addresses? => false) }
-  let(:server) { stub(id: 1, funpack_id: 1, :cname? => false, game: game) }
+  let(:server) { stub(
+    id: 1,
+    funpack_id: 1,
+    :cname? => false,
+    :static_addresses? => false
+  )}
+
   subject { described_class.new(server) }
 
   describe "#to_s" do
 
     it "is the static address if the game is routable" do
-      game.stub(:static_addresses? => true)
+      server.stub(:static_addresses? => true)
       expect(subject.to_s).to eq("1.fun-1.us-east-1.foldserver.com")
     end
 
