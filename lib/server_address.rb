@@ -7,7 +7,7 @@ class ServerAddress
   end
 
   def to_s
-    if server.static_addresses?
+    if server.static_address?
       address
     else
       ip

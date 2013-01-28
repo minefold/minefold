@@ -46,6 +46,10 @@
     }
   }
 
+  #server-control-view-el {
+    margin-bottom: l(2);
+  }
+
   .map-view {
     position: fixed;
     top: 0;
@@ -77,22 +81,5 @@
       line-height: l(3);
     }
   }
-}
-
-// This is a pretty special case. The maps just look so much better full screen.
-.l-map {
-
-  #app > .container {
-//    position: relative;
-//    z-index: 1;
-  }
-
-//  footer {
-//    position: fixed;
-//    bottom: 0;
-//    width: 100%;
-//    z-index: 2;
-//  }
-
 }
 

@@ -8,7 +8,7 @@ describe Game do
     slug: 'slug'
   )}
 
-  [:auth?, :routable?, :mappable?].each do |method|
+  [:auth?, :static_address?, :mappable?].each do |method|
     it "#{method} defaults to false" do
       expect(subject.send(method)).to be(false)
     end

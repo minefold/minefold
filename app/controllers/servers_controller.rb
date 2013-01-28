@@ -1,5 +1,5 @@
 class ServersController < ApplicationController
-  respond_to :html
+  respond_to :html, :js, :json
 
   prepend_before_filter :authenticate_user!, :except => [:show, :map, :list]
   prepend_before_filter :set_funpack_params!, :only => [:new]
@@ -89,16 +89,32 @@ class ServersController < ApplicationController
       server.settings
     )
 
-    respond_with(server)
+    respond_to do |format|
+      format.js { render(json: {
+        state: server.state_name,
+        address: server.address.to_s
+      }) }
+    end
   end
 
   def stop
     authorize! :update, server
     PartyCloud.stop_server(server.party_cloud_id)
 
+    server.host = nil
+    server.port = nil
+    server.save!
+
     server.stop!
 
-    respond_with(server)
+    respond_to do |format|
+      format.js {
+        render(json: {
+          state: server.state_name,
+          address: server.address.to_s
+        })
+      }
+    end
   end
 
 

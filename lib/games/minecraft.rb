@@ -10,7 +10,7 @@ class Minecraft < Game
     true
   end
 
-  def static_addresses?
+  def static_address?
     true
   end
 

@@ -3,6 +3,10 @@
 - track 'Viewed server', name: server.name, url: server_url(server)
 - track_landing_type 'server'
 
+- content_for :tail do
+  :javascript
+    app.server = new App.Server(#{render(server, :format => :json)});
+
 .container
   .page-header
     .actions.pull-right
@@ -96,17 +100,16 @@
 
       %br
 
-      - if not server.game.static_addresses?
-        - case
-        - when server.idle?
-          = button_to 'Start Server', start_server_path(server), class: %w(btn btn-primary btn-block btn-large)
-        - when server.starting?
-          = button_to 'Starting server…', start_server_path(server), class: %w(btn btn-primary btn-block btn-large), disabled: true
+      - if can? :update, server
+        #server-control-view-el
 
-        - when server.up?
-          = button_to 'Stop server', stop_server_path(server), class: %w(btn btn-danger btn-block)
-        - when server.stopping?
-          = button_to 'Stopping server', stop_server_path(server), class: %w(btn btn-danger btn-block), disabled: true
+        - content_for :tail do
+          :javascript
+            app.serverControlView = new App.ServerControlView({
+              model: app.server
+            });
+            app.serverControlView.setElement($('#server-control-view-el'));
+            app.serverControlView.render();
 
 
       .player-list
@@ -130,10 +133,16 @@
           is sponsoring this server.
 
       %dl
-        - # TODO Get rid of this ugly conditional
-        - if server.game.static_addresses? or (server.up? and server.host?)
-          %dt Address
-          %dd.server-address= server.address
+        %dt Address
+        %dd#server-address-view-el.server-address= server.address
+
+        - content_for :tail do
+          :javascript
+            app.serverAddressView = new App.ServerAddressView({
+              model: app.server
+            });
+            app.serverAddressView.setElement($('#server-address-view-el'));
+            app.serverAddressView.render();
 
         %dt Owner
         %dd= server.creator.username

@@ -6,7 +6,7 @@ describe TeamFortress2 do
     id: 1, name: 'Team Fortress 2', slug: 'tf2'
   )}
 
-  [:auth?, :routable?, :mappable?].each do |attr|
+  [:auth?, :static_address?, :mappable?].each do |attr|
     it "##{attr} is false" do
       expect(subject.send(attr)).to be_false
     end

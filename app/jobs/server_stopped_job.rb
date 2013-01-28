@@ -19,6 +19,7 @@ class ServerStoppedJob < Job
 
     Pusher.trigger("server-#{server.id}", 'server:stopped',
       state: server.state_name,
+      address: server.address.to_s,
       stopped_at: stopped_at
     )
   end

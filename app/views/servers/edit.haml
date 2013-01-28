@@ -30,7 +30,7 @@
               .controls
                 = f.text_area :description, class: %w(span6), rows: 6
 
-            - if server.game.routable?
+            - if server.static_address?
               = f.control_group :address do |f|
                 .control-label Server Address
                 %p.help-block.server-address= server.address
