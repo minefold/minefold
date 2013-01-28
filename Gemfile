@@ -52,6 +52,7 @@ gem 'dalli'
 gem 'scrolls'
 gem 'rest-client'
 gem 'state_machine', require: 'state_machine/core'
+gem 'omniauth-steam', require: ['omniauth-openid', 'omniauth-steam']
 
 gem 'brock', github: 'minefold/brock', branch: 'master'
 

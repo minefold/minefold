@@ -45,6 +45,14 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   end
 
+  def steam
+    current_user.accounts << Accounts::Steam.new(uid: auth.uid)
+    current_user.save!
+
+    flash[:notice] = 'Steam account linked.'
+    redirect_to edit_user_registration_path
+  end
+
 private
 
   def auth

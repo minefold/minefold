@@ -188,7 +188,9 @@ Devise.setup do |config|
     fb_omniauth_options[:client_options] = {:ssl => {:ca_file => '/usr/lib/ssl/certs/ca-certificates.crt'}}
   end
 
-  config.omniauth :facebook, ENV["FACEBOOK_KEY"], ENV["FACEBOOK_SECRET"], fb_omniauth_options
+  config.omniauth :facebook, ENV['FACEBOOK_KEY'], ENV['FACEBOOK_SECRET'], fb_omniauth_options
+
+  config.omniauth :steam, ENV['STEAM_KEY']
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

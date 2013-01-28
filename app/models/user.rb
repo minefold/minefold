@@ -22,6 +22,10 @@ class User < ActiveRecord::Base
       where(type: Accounts::Facebook)
     end
 
+    def steam
+      where(type: Accounts::Steam)
+    end
+
     def linked?(type)
       where(type: type).exists?
     end
