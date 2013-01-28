@@ -5,52 +5,40 @@ describe ServerStartedJob do
   let(:ts) { Time.now }
   let(:server) { Server.make! }
 
-  context 'game with routing' do
-
-    let(:game) { stub(name: 'Name', :routable? => false) }
-
-    subject {
-      s = ServerStartedJob.new(server.party_cloud_id, '', '', ts.to_i)
-      s.server.stub(game: game)
-      s
-    }
-
-    context 'initial start' do
-      it 'creates session' do
-        subject.perform
-        expect(subject.server.sessions.current.started_at.to_i).to eq(ts.to_i)
-      end
-    end
-
-    context 'second start before first start' do
-      it 'sets session to earlier start' do
-        subject.perform
-        earlier = 1.hour.ago
-        job = ServerStartedJob.new(server.party_cloud_id, '', '', earlier.to_i)
-        job.server.stub(game: game)
-        job.perform
-
-        expect(subject.server.sessions.current.started_at.to_i).to eq(earlier.to_i)
-      end
-    end
+  before do
+    Pusher.stub(:trigger)
   end
 
-  context 'game without routing' do
+  subject {
+    s = described_class.new(server.party_cloud_id, '1.2.3.4', 1337, ts.to_i)
+    s.server.stub(address: stub, game: stub(name: 'Foo'))
+    s
+  }
 
-    let(:game) { stub(name: 'Name', :routable? => false) }
+  describe "#perform" do
 
-    subject {
-      s = ServerStartedJob.new(
-        server.party_cloud_id, '1.2.3.4', '1337', ts.to_i
-      )
-      s.server.stub(game: game)
-      s
-    }
+    it "creates session" do
+      subject.perform
+      expect(subject.server.sessions.current.started_at.to_i).to eq(ts.to_i)
+    end
 
-    it 'sets host' do
+    it "sets session to earlier start" do
+      subject.perform
+
+      earlier = 1.hour.ago
+      job = subject.dup
+      job.stub(started_at: earlier)
+      job.perform
+
+      expect(subject.server.sessions.current.started_at.to_i).to eq(earlier.to_i)
+    end
+
+    it "sets host" do
       subject.perform
       expect(subject.server.host).to eq('1.2.3.4')
       expect(subject.server.port).to eq(1337)
     end
+
   end
+
 end

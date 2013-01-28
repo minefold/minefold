@@ -21,16 +21,13 @@ class ServerStartedJob < Job
     session = server.sessions.current
 
     session.started_at ||= started_at
-
     # In the case where either jobs have been lost or processed out of order, this just continues any open sessions and moves the started_at time *back* if needed. We don't have to be super precise with ServerSessions, they're just for displaying to users (not billing).
     session.started_at = [session.started_at, started_at].min
-
     session.save!
 
-    if not server.game.static_addresses?
-      server.host = host
-      server.port = port
-    end
+    server.host = host
+    server.port = port
+    server.save!
 
     server.started!
 
