@@ -31,6 +31,12 @@ class ServerStartedJob < Job
 
     server.started!
 
+    Pusher.trigger("server-#{server.id}", 'server:started',
+      state: server.state_name,
+      address: server.address.to_s,
+      started_at: started_at
+    )
+
     MixpanelAsync.track(server.creator.distinct_id, 'Started server',
       game: server.game.name,
       shared: server.shared?
