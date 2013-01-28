@@ -100,7 +100,7 @@
 
       %br
 
-      - if can? :update, server
+      - if not server.static_address? and can?(:update, server)
         #server-control-view-el
 
         - content_for :tail do
