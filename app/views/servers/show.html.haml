@@ -134,7 +134,9 @@
 
       %dl
         %dt Address
-        %dd#server-address-view-el= server.address
+        %dd#server-address-view-el.server-address-view
+          .server-address.pull-left= server.address
+          %a.connect.btn.btn-success.btn-small.pull-right Connect to this server
 
         - content_for :tail do
           :javascript
