@@ -115,15 +115,25 @@ code {
   background-color: $green;
 }
 
-#{$all-text-inputs} {
+#{$all-text-inputs},
+textarea {
   box-shadow: none;
   border-radius: 2px;
   border-color: rgba(black, 0.2);
+  padding: l() g();
+  font-size: 16px;
+  line-height: l(2);
+  color: black;
 }
 
-#{$all-text-inputs-focus} {
+#{$all-text-inputs-focus},
+textarea:focus {
   border-color: lighten($blue, 20%);
   @include box-shadow(0 0 2px 0 lighten($blue, 40%));
+}
+
+.form-actions {
+  border-top: none;
 }
 
 .well {
