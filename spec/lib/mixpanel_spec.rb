@@ -71,9 +71,9 @@ describe Mixpanel do
       expect(subject.post('/test', {})).to be_false
     end
 
-    it "short circuits if the token isn't set" do
+    it "is stubbed if the token isn't set" do
       subject.stub(:enabled? => false)
-      expect(subject.post('/test', {})).to be_nil
+      expect(subject.post('/test', {})).to be_true
     end
 
   end

@@ -44,7 +44,7 @@ class Mixpanel
     :set_engagement, :add_engagement, :append_engagement
   ].each do |method|
     define_method("#{method}!") do |*args|
-      send(method, *args) || enabled? || raise(ApiError)
+      send(method, *args) || raise(ApiError)
     end
   end
 
@@ -59,6 +59,8 @@ class Mixpanel
     if enabled?
       params[:data] = encode_payload(data)
       RestClient.post(mixpanel_url(path).to_s, params) == '1'
+    else
+      true
     end
   end
 
