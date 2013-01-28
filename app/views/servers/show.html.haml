@@ -1,7 +1,8 @@
 - title server.name, "#{server.game.name} Server #{server.id}"
 - layout :servers
-- track 'Viewed server', name: server.name, url: server_url(server)
-- track_landing_type 'server'
+
+= track 'Viewed server', name: server.name, url: server_url(server)
+= track_landing_type 'server'
 
 - content_for :tail do
   :javascript
@@ -62,7 +63,7 @@
   %ul.nav.nav-tabs
     %li.active= link_to 'Activity', server
     - if server.game.mappable?
-      %li= link_to 'Map', [:map, server]
+      %li= link_to 'Map', server_map_path(server)
     - if can? :update, server
       %li= link_to 'Settings', [:edit, server]
 

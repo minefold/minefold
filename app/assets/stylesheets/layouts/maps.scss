@@ -1,0 +1,21 @@
+.l-maps {
+
+  .map-view {
+    position: absolute;
+    top: l(6);
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+
+    // Fixes for Bootstrap and Google Maps
+    label { width: auto; display:inline; }
+    img { max-width: none; }
+  }
+
+  footer {
+    display: none;
+  }
+
+}

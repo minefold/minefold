@@ -9,7 +9,7 @@
   %ul.nav.nav-tabs
     %li= link_to 'Activity', server
     - if server.game.mappable?
-      %li= link_to 'Map', [:map, server]
+      %li= link_to 'Map', server_map_path(server)
     %li.active= link_to 'Settings', [:edit, server]
 
   .row

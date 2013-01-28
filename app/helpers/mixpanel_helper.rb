@@ -1,21 +1,18 @@
 module MixpanelHelper
 
-  def track(name, properties={})
-    js "mixpanel.track(#{name.to_json}, #{properties.to_json});"
+  def track(event, properties={})
+    content_tag :script,
+      "mixpanel.track(#{event.to_json}, #{properties.to_json});".html_safe
   end
 
-  def track_landing_page
-    js %Q{mixpanel.register_once({"landing page": window.location.href});}
+  def register_once(properties={})
+    content_tag :script,
+      "mixpanel.register_once(#{properties.to_json});".html_safe
   end
 
   def track_landing_type(type)
-    js %Q{mixpanel.register_once({"landing type": #{type.to_s.to_json}});}
+    register_once('landing type' => type.to_s)
   end
-
-  def js(js)
-    haml_tag(:script, js.html_safe)
-  end
-
 
   def mixpanel_person
     signed_in? and {

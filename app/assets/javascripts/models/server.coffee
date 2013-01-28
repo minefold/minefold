@@ -30,5 +30,5 @@ class App.Server extends Backbone.Model
   stopped: (data) =>
     @set(data)
 
-  steamConnectLink: ->
+  steamConnectUrl: ->
     "steam://connect/#{@get('address')}"

@@ -50,36 +50,4 @@
     margin-bottom: l(2);
   }
 
-  .map-view {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1;
-
-    > .map {
-      height: 100%;
-      width: 100%;
-
-      label { width: auto; display:inline; }
-      img { max-width: none; }
-    }
-
-    > .map-meta, > .coming-soon {
-      color: lighten(black, 60%);
-      text-align: center;
-    }
-
-    > .map-meta {
-      padding: l() ($gw-gutter / 2);
-    }
-
-    > .coming-soon {
-      padding: l(3) $gw-gutter;
-      font-size: 18px;
-      line-height: l(3);
-    }
-  }
 }
-

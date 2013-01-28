@@ -87,7 +87,6 @@ Minefold::Application.routes.draw do
       end
 
       member do
-        get :map
         post :start
         post :stop
 
@@ -106,13 +105,13 @@ Minefold::Application.routes.draw do
         end
       end
 
-      resources :votes, :only => [:create]
-
-      resources :posts, only: [:create], module: 'servers'
-
-      resources :uploads, only: [:create], module: 'servers' do
-        collection do
-          get :sign
+      scope module: 'servers' do
+        resources :posts, only: [:create]
+        resource :map, only: [:show] do
+          get :embed
+        end
+        resources :uploads, only: [:create] do
+          get :sign, :on => :collection
         end
       end
     end
