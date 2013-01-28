@@ -29,4 +29,16 @@ class World < ActiveRecord::Base
     }
   end
 
+  def zoom_levels
+    map_data['zoom_levels']
+  end
+
+  def tile_size
+    map_data['tile_size']
+  end
+
+  def host
+    "//d14m45jej91i3z.cloudfront.net"
+  end
+
 end

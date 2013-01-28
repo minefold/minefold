@@ -1,3 +1,15 @@
 .server-address {
   font-family: $monospace;
 }
+
+.server-address-view {
+  @include clearfix;
+
+  .connect {
+    display: none;
+  }
+
+  &.is-connectable .connect {
+    display: inline-block;
+  }
+}

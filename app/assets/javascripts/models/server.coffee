@@ -29,3 +29,6 @@ class App.Server extends Backbone.Model
 
   stopped: (data) =>
     @set(data)
+
+  steamConnectUrl: ->
+    "steam://connect/#{@get('address')}"

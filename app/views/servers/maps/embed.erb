@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= server.name %> map</title>
+    <%= javascript_include_tag '//maps.google.com/maps/api/js?sensor=false' %>
+    <%= javascript_include_tag :application %>
+    <style type="text/css">
+      #map-view-el {
+        position: absolute;
+        top: 0; right: 0; bottom: 0; left: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map-view-el"></div>
+    <script>
+      app.map = new App.Map(<%= render(partial: 'servers/maps/map', locals: {map: server.world}, :format => :json).html_safe %>);
+      app.mapView = new App.MapView({model: app.map});
+      $(document).ready(function() {
+        app.mapView.setElement($('#map-view-el'));
+        app.mapView.render();
+      });
+    </script>
+  </body>
+</html>

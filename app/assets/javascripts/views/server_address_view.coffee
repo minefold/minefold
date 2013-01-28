@@ -7,7 +7,17 @@ class App.ServerAddressView extends Backbone.View
     @model.on('change:address', @render)
 
   render: =>
+    address = @$('.server-address')
+    connectBtn = @$('.btn.connect')
+
     if @model.get('address')? and @model.get('address') != ''
-      @$el.removeClass('muted').text(@model.get('address'))
+      @$el.addClass('is-connectable')
+      address.text(@model.get('address'))
+      connectBtn.attr(href: @model.steamConnectUrl())
+
     else
-      @$el.addClass('muted').text("No address")
+      @$el.removeClass('is-connectable')
+      address.text("No address")
+      connectBtn.attr(href: null)
+
+    connectBtn.toggle(@model.get('steamId')?)

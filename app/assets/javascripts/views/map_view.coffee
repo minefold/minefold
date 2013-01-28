@@ -21,7 +21,7 @@ class MapProjection
 
 # Class renders an interactive Google Map for Worlds hosted on the Party Cloud. The map is only shown if there is a `last_mapped_at` property of the World as some worlds will be unable to be mapped. In that case it shows a waiting screen.
 class App.MapView extends Backbone.View
-  model: App.World
+  model: App.Map
 
   @defaults =
     zoom: 5
@@ -49,28 +49,23 @@ class App.MapView extends Backbone.View
 
   initialize: (options) ->
     @options = _.extend(@constructor.defaults, options)
-    @options.zoomLevels = @model.get('map_data').zoom_levels
-
-  render: ->
-    @$el.html @template(@model)
-    @renderMap()
 
   mapKey = ->
     window.location.pathname
 
-  renderMap: =>
-    @map = new google.maps.Map(@$('.map').get(0), @options)
+  render: =>
+    @map = new google.maps.Map(@el, @options)
     @loadViewport()
 
     mapType = new google.maps.ImageMapType(
       getTileUrl: @tileUrl
-      tileSize: new google.maps.Size(@options.tileSize, @options.tileSize)
-      maxZoom: @options.zoomLevels
+      tileSize: new google.maps.Size(@model.get('tileSize'), @model.get('tileSize'))
+      maxZoom: @model.get('zoomLevels')
       minZoom: 0
     )
 
     # Can't add the projection in the constructor
-    mapType.projection = new MapProjection(@options.tileSize)
+    mapType.projection = new MapProjection(@model.get('tileSize'))
     @map.mapTypes.set 'map', mapType
 
     google.maps.event.addListener @map, 'center_changed', @storeViewport
@@ -93,7 +88,8 @@ class App.MapView extends Backbone.View
       @map.setCenter new google.maps.LatLng(viewport.lat, viewport.lng)
 
     else
-      @map.setCenter @worldToLatLng(0, 68, 0)
+      spawn = @model.get('spawn')
+      @map.setCenter @worldToLatLng(spawn.x, spawn.y, spawn.z)
 
 
   tilePath = (tile, zoom) ->
@@ -113,8 +109,8 @@ class App.MapView extends Backbone.View
     path
 
   tileUrl: (tile, zoom) =>
-    timestamp = new Date(@model.get('last_mapped_at')).getTime()
-    "#{@model.mapAssetsUrl()}#{tilePath(tile, zoom)}?#{timestamp}"
+    timestamp = new Date(@model.get('lastMappedAt')).getTime()
+    "#{@model.assetsUrl()}#{tilePath(tile, zoom)}?#{timestamp}"
 
   addMarker: (marker, title, icon) =>
     new google.maps.Marker

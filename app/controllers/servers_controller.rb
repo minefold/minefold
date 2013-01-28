@@ -1,7 +1,7 @@
 class ServersController < ApplicationController
   respond_to :html, :js, :json
 
-  prepend_before_filter :authenticate_user!, :except => [:show, :map, :list]
+  prepend_before_filter :authenticate_user!, :except => [:show, :list]
   prepend_before_filter :set_funpack_params!, :only => [:new]
 
   before_filter :set_last_visited_cookie, :only => :show
@@ -53,10 +53,6 @@ class ServersController < ApplicationController
   end
 
   def show
-  end
-
-  def map
-    not_found unless server.game.mappable?
   end
 
   def edit
