@@ -1,5 +1,11 @@
 - if signed_in?
   %ul.nav
+
+    %li.coins
+      %a{href: time_page_path} #{time_left(current_user.coins)} left
+
+    %li.divider-vertical
+
     %li.servers.dropdown
       %a.dropdown-toggle{href: servers_path, data: {toggle: 'dropdown'}}
         Servers
@@ -20,12 +26,6 @@
           %a{href: new_server_path}
             %i.icon-plus
             Start a new server
-
-
-    %li.divider-vertical
-
-    %li.coins
-      %a{href: time_page_path} #{time_left(current_user.coins)} left
 
     %li.user.dropdown
       %a.dropdown-toggle{href: '#', data: {toggle: 'dropdown'}}
