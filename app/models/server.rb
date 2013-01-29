@@ -107,15 +107,25 @@ class Server < ActiveRecord::Base
   end
 
   # TODO remove this with new auth stuff
-  before_create :whitelist_creator
+  before_create :set_auth
 
-  def whitelist_creator
-    creator_account = creator.accounts.mojang.first
-
-    creator_uid = creator_account ? creator_account.uid : creator.username
-
-    settings['whitelist'] ||= creator_uid
-    settings['ops'] ||= creator_uid
+  def set_auth
+    case game
+    when Minecraft
+      creator_account = creator.accounts.mojang.first
+      creator_uid = if creator_account
+        creator_account.uid
+      else
+        creator.username
+      end
+      settings['whitelist'] ||= creator_uid
+      settings['ops'] ||= creator_uid
+    when TeamFortress2
+      steam_account = creator.accounts.steam.first
+      if steam_account
+        # TODO Waiting on Dave to know what to do here
+      end
+    end
   end
 
   def player_uids

@@ -3,6 +3,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   prepend_before_filter :authenticate_user!
 
+  protect_from_forgery :except => :steam
+
   # Facebook User
   expose(:user) {
     User.find_for_facebook_oauth(auth, current_user)

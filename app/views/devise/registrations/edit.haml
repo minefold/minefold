@@ -78,8 +78,9 @@
 
         .account-list.span6
           - [Accounts::Facebook, Accounts::Mojang, Accounts::Steam].each do |account_klass|
-            - account = account_klass.find_or_initialize_by_user_id(resource.id)
-            = render partial: account.to_partial_path, :locals => {account: account}
+            - if account_klass != Accounts::Steam or $flipper[:tf2].enabled?(current_user)
+              - account = account_klass.find_or_initialize_by_user_id(resource.id)
+              = render(partial: account.to_partial_path, locals: {account: account})
 
 
       .form-block.row#billing
