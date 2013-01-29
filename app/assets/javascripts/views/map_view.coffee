@@ -1,5 +1,4 @@
 #= require store
-#= require moment
 #= require models/map
 
 class MapProjection
@@ -16,116 +15,67 @@ class MapProjection
     lat = point.y * @inverseTileSize
     new google.maps.LatLng(lat, lng)
 
-
 # --
 
-# Class renders an interactive Google Map for Worlds hosted on the Party Cloud. The map is only shown if there is a `last_mapped_at` property of the World as some worlds will be unable to be mapped. In that case it shows a waiting screen.
 class App.MapView extends Backbone.View
   model: App.Map
 
-  @defaults =
+  @defaultMapOptions =
     zoom: 5
     scaleControl: false
     mapTypeControl: false
     streetViewControl: false
-    # scrollwheel: false
-    mapTypeId: 'map'
-    tileSize: 384
-    zoomLevels: 7
-    backgroundColor: '#FFF'
     northDirection: 'upper-right'
 
-
-  template: _.template """
-    <div class="map"></div>
-    <div class="map-meta">
-      Rendered on
-      <strong><%= moment(get('last_mapped_at')).format('dddd MMMM Do YYYY') %></strong>
-      at
-      <strong><%= moment(get('last_mapped_at')).format('h:mma') %></strong>.
-    </div>
-  """
-
-
   initialize: (options) ->
-    @options = _.extend(@constructor.defaults, options)
-
-  mapKey = ->
-    window.location.pathname
+    @mapOptions = _.extend(@constructor.defaultMapOptions, options)
 
   render: =>
-    @map = new google.maps.Map(@el, @options)
-    @loadViewport()
+    @map = new google.maps.Map(@el, @mapOptions)
+
+    viewport = if store.enabled? and payload = store.get(@model.cacheKey())
+      center = new google.maps.LatLng(payload.lat, payload.lng)
+      { zoom: payload.zoom, center: center }
+    else
+      spawn = @model.get('spawn')
+      defaultZoom = @model.get('zoomLevels') - 1
+      { zoom: defaultZoom, center: @worldToLatLng(spawn.x, spawn.y, spawn.z) }
+
+    @map.setCenter(viewport.center)
+    @map.setZoom(viewport.zoom)
+
+    tileSize = new google.maps.Size(
+      @model.get('tileSize'),
+      @model.get('tileSize')
+    )
 
     mapType = new google.maps.ImageMapType(
-      getTileUrl: @tileUrl
-      tileSize: new google.maps.Size(@model.get('tileSize'), @model.get('tileSize'))
+      getTileUrl: @model.tileUrl
+      tileSize: tileSize
       maxZoom: @model.get('zoomLevels')
       minZoom: 0
     )
 
-    # Can't add the projection in the constructor
     mapType.projection = new MapProjection(@model.get('tileSize'))
-    @map.mapTypes.set 'map', mapType
 
-    google.maps.event.addListener @map, 'center_changed', @storeViewport
-    google.maps.event.addListener @map, 'zoom_changed', @storeViewport
-
-  storeViewport: =>
-    center = @map.getCenter()
-
-    payload =
-      zoom: @map.getZoom()
-      lat: center.lat()
-      lng: center.lng()
+    @map.mapTypes.set('map', mapType)
+    @map.setMapTypeId('map')
 
     if store.enabled?
-      store.set mapKey(), payload
+      google.maps.event.addListener(@map, 'center_changed', @persist)
+      google.maps.event.addListener(@map, 'zoom_changed', @persist)
 
-  loadViewport: =>
-    if store.enabled? and viewport = store.get(mapKey())
-      @map.setZoom viewport.zoom
-      @map.setCenter new google.maps.LatLng(viewport.lat, viewport.lng)
-
-    else
-      spawn = @model.get('spawn')
-      @map.setCenter @worldToLatLng(spawn.x, spawn.y, spawn.z)
-
-
-  tilePath = (tile, zoom) ->
-    path = ''
-
-    if tile.x < 0 or tile.x >= Math.pow(2, zoom) or tile.y < 0 or tile.y >= Math.pow(2, zoom)
-      path += '/blank'
-    else if zoom == 0
-      path += '/base'
-    else
-      for z in [(zoom - 1)..0]
-        x = Math.floor(tile.x / Math.pow(2, z)) % 2
-        y = Math.floor(tile.y / Math.pow(2, z)) % 2
-        path += "/#{x + 2*y}"
-
-    path += '.png'
-    path
-
-  tileUrl: (tile, zoom) =>
-    timestamp = new Date(@model.get('lastMappedAt')).getTime()
-    "#{@model.assetsUrl()}#{tilePath(tile, zoom)}?#{timestamp}"
-
-  addMarker: (marker, title, icon) =>
-    new google.maps.Marker
-      position: @worldToLatLng(marker.x, marker.z, marker.y),
-      map: @map,
-      title: marker.title,
-      icon: icon
+  persist: =>
+    store.set @model.cacheKey(),
+      zoom: @map.getZoom()
+      lat: @map.getCenter().lat()
+      lng: @map.getCenter().lng()
 
   worldToLatLng: (x, y, z) =>
-    # the width and height of all the highest-zoom tiles combined,
-    # inverted
+    # The width and height of all the highest-zoom tiles combined, inverted
+    perPixel = 1.0 / (@model.get('tileSize') * Math.pow(2, @model.get('zoomLevels')))
 
-    perPixel = 1.0 / (@options.tileSize * Math.pow(2, @options.zoomLevels))
-
-    switch @options.northDirection
+    switch @mapOptions.northDirection
       when 'upper-left'
         temp = x
         x = -y-1
@@ -138,34 +88,26 @@ class App.MapView extends Backbone.View
         x = y
         y = -temp-1
 
-    # This information about where the center column is may change with
-    # a different drawing implementation -- check it again after any
-    # drawing overhauls!
+    # This information about where the center column is may change with a different drawing implementation - check it again after any drawing overhauls!
 
-    # point (0, 0, 127) is at (0.5, 0.0) of tile (tiles/2 - 1, tiles/2)
-    # so the Y coordinate is at 0.5, and the X is at 0.5 -
-    # ((tileSize / 2) / (tileSize * 2^zoomLevels))
-    # or equivalently, 0.5 - (1 / 2^(zoomLevels + 1))
-    lng = 0.5 - (1.0 / Math.pow(2, @options.zoomLevels + 1))
+    # point (0, 0, 127) is at (0.5, 0.0) of tile (tiles/2 - 1, tiles/2) so the Y coordinate is at 0.5, and the X is at 0.5 - ((tileSize / 2) / (tileSize * 2^zoomLevels)) or equivalently, 0.5 - (1 / 2^(zoomLevels + 1))
+    lng = 0.5 - (1.0 / Math.pow(2, @model.get('zoomLevels') + 1))
     lat = 0.5
 
-    # the following metrics mimic those in
-    # chunk_render in src/iterate.c
-
-    # each block on X axis adds 12px to x and subtracts 6px from y
+    # Each block on X axis adds 12px to x and subtracts 6px from y
     lng += 12 * x * perPixel
     lat -= 6 * x * perPixel
 
-    # each block on Y axis adds 12px to x and adds 6px to y
+    # Each block on Y axis adds 12px to x and adds 6px to y
     lng += 12 * y * perPixel
     lat += 6 * y * perPixel
 
-    # each block down along Z adds 12px to y
+    # Each block down along Z adds 12px to y
     lat += 12 * (128 - z) * perPixel
 
-    # add on 12 px to the X coordinate to center our point
+    # Add on 12 px to the X coordinate to center our point
     lng += 12 * perPixel
 
-    point = new google.maps.LatLng(lat, lng)
+    new google.maps.LatLng(lat, lng)
 
 
