@@ -1,7 +1,4 @@
-class OrderMailer < ActionMailer::Base
-  include Resque::Mailer
-
-  layout 'transactional_email'
+class OrderMailer < TransactionMailer
 
   def receipt(user_id, charge_id, coin_pack_id)
     @user = User.find(user_id)
