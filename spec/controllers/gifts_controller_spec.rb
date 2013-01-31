@@ -4,6 +4,7 @@ describe GiftsController do
 
   describe "GET #index" do
     it "assigns credit packs" do
+      # TODO This can cause random failures when cents are equal
       packs = 3.times.map { CoinPack.make! }.sort_by {|p| p.cents }
       get :index
       assigns(:packs).should eq(packs)

@@ -16,6 +16,8 @@ class WorldMappedJob < Job
       spawn:       @map_data['markers'].find {|m| m['type'] == 'spawn'}
     }
     @world.save!
+
+    MapMailer.rendered(@server.id).deliver
   end
 
 end
