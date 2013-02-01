@@ -1,3 +1,5 @@
+require 'transaction_mailer'
+
 class OrderMailer < TransactionMailer
 
   def receipt(user_id, charge_id, coin_pack_id)
