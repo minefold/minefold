@@ -48,8 +48,17 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def steam
-    current_user.accounts << Accounts::Steam.new(uid: auth.uid)
+    account = Accounts::Steam.new(uid: auth.uid)
+    current_user.accounts << account
     current_user.save!
+
+    # TODO: Fix this with auth support
+    # hack to set admin to existing TF2 servers
+    funpack = Funpack.where(game_id: GAMES.find('team-fortress-2').id).first
+    current_user.created_servers.where(funpack_id: funpack.id).each do |server|
+      server.settings['admins'] = account.steam_id.to_s
+      server.save!
+    end
 
     flash[:notice] = 'Steam account linked.'
     redirect_to edit_user_registration_path

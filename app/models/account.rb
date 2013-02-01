@@ -21,5 +21,4 @@ class Account < ActiveRecord::Base
   def to_partial_path
     File.join('accounts', self.class.name.demodulize.underscore)
   end
-
 end
