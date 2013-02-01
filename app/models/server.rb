@@ -123,7 +123,7 @@ class Server < ActiveRecord::Base
     when TeamFortress2
       steam_account = creator.accounts.steam.first
       if steam_account
-        # TODO Waiting on Dave to know what to do here
+        settings['admins'] = steam_account.steam_id.to_s
       end
     end
   end
