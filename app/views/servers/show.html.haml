@@ -118,7 +118,7 @@
         - server.player_uids.each do |username|
           .player{class: online.include?(username) && "is-online"}
             .avatar
-              = image_tag "https://minotar.net/helm/#{username}/30.png", alt: username, width: 30, height: 30
+              = image_tag "http://d3811j97z0k4bc.cloudfront.net/helm/#{username}/30.png", alt: username, width: 30, height: 30
 
       - if signed_in?
         .alert.alert-info
