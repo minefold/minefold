@@ -16,7 +16,10 @@ class ServerTickedJob < Job
       @players = Accounts::Mojang.where(uid: @uids).all
 
       @players.each do |player|
-        if player.user.coins <= 0
+        if player.user.nil?
+          # if the user has unlinked their account, kick them
+          kick_player(player.uid, "Link your Minecraft account at minefold.com to play")
+        elsif player.user.coins <= 0
           kick_player(player.uid, "Out of time! Visit minefold.com to get more")
         else
           coin_message(player)
