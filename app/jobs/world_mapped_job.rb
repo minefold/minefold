@@ -6,7 +6,7 @@ class WorldMappedJob < Job
   end
 
   def perform
-    return if @world.nil?
+    return if @server.deleted? or @world.nil?
 
     @world.last_mapped_at = Time.at(@timestamp)
     # TODO Actualy sent the nice data from the mapping job.
