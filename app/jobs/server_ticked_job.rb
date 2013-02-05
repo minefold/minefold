@@ -26,12 +26,13 @@ class ServerTickedJob < Job
           player.user.spend_coins! 1
         end
 
-        if player.user.coins == 15
-          TimeMailer.low(player.user.id).deliver
-        elsif player.user.coins == 1
-          TimeMailer.out(player.user.id).deliver
+        if player.user
+          if player.user.coins == 15
+            TimeMailer.low(player.user.id).deliver
+          elsif player.user.coins == 1
+            TimeMailer.out(player.user.id).deliver
+          end
         end
-
       end
 
     else
