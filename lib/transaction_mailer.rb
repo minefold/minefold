@@ -6,7 +6,7 @@ class TransactionMailer < ActionMailer::Base
   layout 'mail/transaction'
 
   self.default from: 'support@minefold.com',
-               reply_to: 'bounces@test.lindsaar.net'
+               reply_to: 'support@minefold.com'
 
   def tag(name)
     headers 'X-Mailgun-Tag' => name.to_s
