@@ -46,8 +46,16 @@ Funpack.blueprint(:minecraft) do
   game(:minecraft)
 end
 
+Funpack.blueprint(:tf2) do
+  game { GAMES.find('team-fortress-2') }
+end
+
 Server.blueprint(:minecraft) do
   funpack(:minecraft)
+end
+
+Server.blueprint(:tf2) do
+  funpack(:tf2)
 end
 
 Server.blueprint(:played) do

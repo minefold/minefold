@@ -159,4 +159,15 @@ class Server < ActiveRecord::Base
     self.watchers << creator
   end
 
+  # TODO refactor, make this extensible
+  before_save :update_name_in_funpacks
+
+  def update_name_in_funpacks
+    if name_changed?
+      case game
+      when TeamFortress2
+        settings['hostname'] = "#{name} (minefold.com)"
+      end
+    end
+  end
 end
