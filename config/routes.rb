@@ -17,6 +17,13 @@ Minefold::Application.routes.draw do
 
 # --
 
+  scope path: 'webhooks', module: 'webhooks' do
+    post '/party_cloud', controller: 'party_cloud', action: 'hook'
+  end
+
+# --
+
+
   # Static Pages
 
   { '/about'   => :about,
