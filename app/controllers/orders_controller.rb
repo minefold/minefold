@@ -42,7 +42,10 @@ class OrdersController < ApplicationController
       '$add' => {
         'Time'  => @coin_pack.coins,
         'Spent' => @charge.amount
-      },
+      }
+    )
+    # Mixpanel Revenue Analytics
+    engage(current_user.distinct_id,
       '$append' => {
         '$transactions' => {
           '$time' => Time.now.utc.iso8601,
