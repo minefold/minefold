@@ -93,6 +93,8 @@ class Server < ActiveRecord::Base
       transition all => :stopping
     end
 
+    before_transition all => :stopping, :do => :clear_host_and_port
+
     event :stopped do
       transition all => :idle
     end
@@ -126,6 +128,10 @@ class Server < ActiveRecord::Base
         settings['admins'] = steam_account.steam_id.to_s
       end
     end
+  end
+
+  def clear_host_and_port
+    self.host, self.port = nil, nil
   end
 
   def player_uids
