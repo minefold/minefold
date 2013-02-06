@@ -1,7 +1,7 @@
-- title "Browse Servers"
+- start_index = (params[:start_index] || 1).to_i
+- title "Browse Servers – #{start_index}"
 %h2 Browse Servers
 
-- start_index = (params[:start_index] || 1).to_i
 - sections = 50
 
 - range = @entries
