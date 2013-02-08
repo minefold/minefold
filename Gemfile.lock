@@ -32,10 +32,10 @@ GIT
 
 GIT
   remote: git://github.com/minefold/brock.git
-  revision: 4bd5ecc85ef1e7deff5653f01e5b20c47af7d4b8
+  revision: 9195ab72eb98ad898d6eabd3e809f7bd1da1b4ac
   branch: master
   specs:
-    brock (0.1.3)
+    brock (0.1.4)
 
 GEM
   remote: https://code.stripe.com/
