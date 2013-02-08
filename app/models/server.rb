@@ -93,7 +93,7 @@ class Server < ActiveRecord::Base
       transition all => :stopping
     end
 
-    before_transition all => :stopping, :do => :clear_host_and_port
+    before_transition all => [:stopping, :idle], :do => :clear_host_and_port
 
     event :stopped do
       transition all => :idle
