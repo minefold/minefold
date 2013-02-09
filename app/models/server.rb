@@ -93,7 +93,7 @@ class Server < ActiveRecord::Base
       transition all => :stopping
     end
 
-    before_transition all => :stopping, :do => :clear_host_and_port
+    before_transition all => [:stopping, :idle], :do => :clear_host_and_port
 
     event :stopped do
       transition all => :idle
@@ -157,17 +157,5 @@ class Server < ActiveRecord::Base
 
   def add_creator_to_watchers
     self.watchers << creator
-  end
-
-  # TODO refactor, make this extensible
-  before_save :update_name_in_funpacks
-
-  def update_name_in_funpacks
-    if name_changed?
-      case game
-      when TeamFortress2
-        settings['hostname'] = "#{name} (minefold.com)"
-      end
-    end
   end
 end

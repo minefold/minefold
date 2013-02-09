@@ -82,7 +82,10 @@ class ServersController < ApplicationController
     PartyCloud.start_server(
       server.party_cloud_id,
       server.funpack.party_cloud_id,
-      server.settings
+      {
+        name: server.name,
+        settings: server.settings
+      }
     )
 
     respond_to do |format|

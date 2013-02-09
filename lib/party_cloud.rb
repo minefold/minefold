@@ -1,7 +1,7 @@
 module PartyCloud
 
-  def self.start_server(pc_server_id, funpack_id, settings)
-    enqueue 'StartServerJob', pc_server_id, funpack_id, settings
+  def self.start_server(pc_server_id, funpack_id, data)
+    enqueue 'StartServerJob', pc_server_id, funpack_id, data
   end
 
   def self.stop_server(pc_server_id)
