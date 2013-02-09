@@ -39,10 +39,8 @@ gem 'friendly_id'
 gem 'librato-rails'
 gem 'paranoia'
 gem 'carrierwave'
-gem 'flipper',
-  github: 'chrislloyd/flipper'
-gem 'flipper-redis',
-  github: 'chrislloyd/flipper-redis'
+gem 'flipper'
+gem 'flipper-redis'
 gem 'sass-rails'
 gem 'bourbon'
 gem 'sitemap_generator'
