@@ -19,6 +19,7 @@ GAMES.push TeamFortress2.new(
   name: 'Team Fortress 2',
   slug: 'team-fortress-2',
   funpack_id: 4,
+  published_at: DateTime.new(2012, 2, 8),
   url: 'http://store.steampowered.com/app/440'
 )
 

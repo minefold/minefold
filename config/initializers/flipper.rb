@@ -15,7 +15,3 @@ Flipper.register(:beta) do |actor|
   actor.respond_to?(:beta?) && actor.beta?
 end
 
-# --
-
-$flipper[:tf2].enable $flipper.group(:admins)
-$flipper[:tf2].enable $flipper.group(:all)

@@ -18,11 +18,7 @@ class ServersController < ApplicationController
 
   def new
     authorize! :create, server
-    @games = if tf2.enabled?(current_user)
-      GAMES.playable
-    else
-      GAMES.published
-    end
+    @games = GAMES.published
   end
 
   def create
@@ -42,11 +38,7 @@ class ServersController < ApplicationController
         game: server.game.name
     else
       # Renders the new action
-      @games = if tf2.enabled?(current_user)
-        GAMES.playable
-      else
-        GAMES.published
-      end
+      @games = GAMES.published
     end
 
     respond_with(server)
@@ -152,10 +144,6 @@ class ServersController < ApplicationController
         params[:server][:funpack_id] = game.funpack_id
       end
     end
-  end
-
-  def tf2
-    $flipper[:tf2]
   end
 
   def set_last_visited_cookie
