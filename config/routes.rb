@@ -60,6 +60,10 @@ Minefold::Application.routes.draw do
     get '/', :action => :index
   end
 
+  resources :stats, only: [] do
+    get :sessions, :on => :collection
+  end
+
   # Webhooks
   post '/hooks/zim/map_deleted' => 'zim_callbacks#map_deleted'
 
