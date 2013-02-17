@@ -46,12 +46,14 @@ header {
     border-radius: $radius;
   }
 
-  > h1.name {
+  > .name {
     display: block;
     line-height: l(4);
-    font-size: 20px;
+    font-size: 18px;
     margin: 0;
-    color: black;
+    color: $blue;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
   }
 
 }
