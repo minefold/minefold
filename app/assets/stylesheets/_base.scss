@@ -63,8 +63,13 @@ header {
   margin: 0 g();
 }
 
-a:hover {
-  text-decoration: none;
+a {
+  color: $blue;
+
+  &:hover {
+    color: $dblue;
+    text-decoration: none;
+  }
 }
 
 h1, h2, h3, h4 {
