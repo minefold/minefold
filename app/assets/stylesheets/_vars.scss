@@ -23,7 +23,7 @@ $gutter: 10px;
 $gw-column: 60px;
 $gw-gutter: 20px;
 
-$radius: 0px;
+$radius: 2px;
 
 @function l($n: 1) {
   @return $n * $line;
