@@ -20,8 +20,6 @@ header {
     padding-bottom: l();
     margin-bottom: 0;
 
-    text-shadow: none;
-
     > .navbar-inner {
       background: transparent;
       border: none;
@@ -39,6 +37,8 @@ header {
   float: left;
   margin: 0;
   padding: 0;
+
+  text-shadow: none;
 
   > .logo {
     background-color: $blue;
