@@ -11,10 +11,16 @@ body {
 }
 
 header {
+  background-color: white;
 
   .navbar {
-    margin-top: l(1);
-    margin-bottom: l(1);
+    margin-top: 0;
+    padding-top: l();
+
+    padding-bottom: l();
+    margin-bottom: 0;
+
+    text-shadow: none;
 
     > .navbar-inner {
       background: transparent;
