@@ -1,19 +1,6 @@
 .l-servers {
   @include app-width(12);
 
-  .page-header {
-    padding-top: 0;
-    padding-bottom: 0;
-
-    h1 {
-      font-size: 28px;
-      font-family: $helvetica;
-      a {
-        color: black;
-      }
-    }
-  }
-
   .user-profile {
     > .avatar {
       margin-bottom: l(1);
@@ -51,3 +38,8 @@
   }
 
 }
+
+.l-settings {
+  @include app-width(8);
+}
+

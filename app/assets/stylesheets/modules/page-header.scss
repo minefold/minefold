@@ -1,5 +1,11 @@
 .page-header {
   border-bottom: none;
+  margin-top: l(2);
+  margin-bottom: l(2);
+
+  > h1 {
+    font-size: 28px;
+  }
 
   > h2 {
     color: rgba(black, 0.4);
