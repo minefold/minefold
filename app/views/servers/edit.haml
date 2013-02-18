@@ -31,22 +31,20 @@
       = form_for server do |f|
         - if server.game.split_billing?
           = f.control_group :shared do
-            .control-label Who do you want to pay for?
-            .controls.radio
-              = f.label 'shared_false' do
+            .controls
+              = f.label 'shared_false', class: 'radio' do
                 = f.radio_button :shared, false
-                Everybody
+                You pay for everyone
 
-              .help-block.muted
-                You pay for the time played by any player on your server up to 10 people. For example, if 5 people play on your server for 1 hour each, you'll pay for 5 hours. If 15 people play for one hour each, you'll only pay for 10 hours.
+                .help-block.muted
+                  You pay for the time played by any player on your server up to 10 people. For example, if 5 people play on your server for 1 hour each, you'll pay for 5 hours. If 15 people play for one hour each, you'll only pay for 10 hours.
 
-            .contols.radio
-              = f.label 'shared_true' do
+              = f.label 'shared_true', class: 'radio' do
                 = f.radio_button :shared, true
-                Only me
+                Cost is split between players
 
-              .help-block.muted
-                Each player pays for themselves. Every player will need a Minefold account with a linked Minecraft account to play.
+                .help-block.muted
+                  Each player pays for themselves. Every player will need a Minefold account with a linked Minecraft account to play.
 
 
         .form-actions
