@@ -1,4 +1,5 @@
 class WorldMappedJob < Job
+
   def initialize(id, timestamp, map_data)
     @server = Server.unscoped.find(id)
     @timestamp, @map_data = timestamp, map_data
@@ -17,7 +18,10 @@ class WorldMappedJob < Job
     }
     @world.save!
 
-    MapMailer.rendered(@server.id).deliver
+    # Only deliver maps on the first render
+    if @world.last_mapped_at_was.nil?
+      MapMailer.rendered(@server.id).deliver
+    end
   end
 
 end
