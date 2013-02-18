@@ -93,37 +93,36 @@
 
   / --
 
+  .row
+    .span2
+      %strong Snapshots
+
+    .span6
+      - if server.world
+        %p
+          Last backup at #{I18n.l server.world.updated_at}
+          &middot;
+          = link_to 'Download archive', party_cloud_world_download_url(server)
+
+        - # TODO Investigate why parent wouldn't have a server.
+        - if server.world.legacy_parent and server.world.legacy_parent.server
+          - parent = server.world.legacy_parent.server
+          %p
+            Forked from
+            = link_to parent.name, server_path(parent)
+            by #{parent.creator.username}.
+
+      - else
+        %p.muted Server doesn't have any snapshots.
+
+    / --
 
   - if server.funpack.imports?
     .row
       .span2
-        %strong Upload
-      .span6
-        .well
-          = render partial: 'upload', locals: {server: server}
+        %strong Import data
+      .span6= render partial: 'upload', locals: {server: server}
 
-
-    .row
-      .span2
-        %strong Snapshots
-
-      .span6
-        - if server.world
-          %p
-            Last backup at #{I18n.l server.world.updated_at}
-            &middot;
-            = link_to 'Download archive', party_cloud_world_download_url(server)
-
-          - # TODO Investigate why parent wouldn't have a server.
-          - if server.world.legacy_parent and server.world.legacy_parent.server
-            - parent = server.world.legacy_parent.server
-            %p
-              Forked from
-              = link_to parent.name, server_path(parent)
-              by #{parent.creator.username}.
-
-        - else
-          %p.muted Server doesn't have any snapshots.
 
   / --
 

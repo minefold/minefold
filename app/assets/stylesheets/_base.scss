@@ -178,3 +178,10 @@ textarea:focus {
   font-weight: bold;
 }
 
+.progress {
+  border-radius: $radius;
+
+  .bar {
+    background: $blue;
+  }
+}
