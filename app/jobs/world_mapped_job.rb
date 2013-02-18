@@ -9,6 +9,8 @@ class WorldMappedJob < Job
   def perform
     return if @server.deleted? or @world.nil?
 
+    last_mapped_at_was = @world.last_mapped_at
+
     @world.last_mapped_at = Time.at(@timestamp)
     # TODO Actualy sent the nice data from the mapping job.
     @world.map_data = {
@@ -18,8 +20,8 @@ class WorldMappedJob < Job
     }
     @world.save!
 
-    # Only deliver maps on the first render
-    if @world.last_mapped_at_was.nil?
+    # Only deliver maps on the first render. Could use AR's dirty tracking for this but it gets reset when save gets called and I want to make sure the email is sent after the map is saved.
+    if last_mapped_at_was.nil?
       MapMailer.rendered(@server.id).deliver
     end
   end
