@@ -102,4 +102,27 @@ class User < ActiveRecord::Base
     self.distinct_id ||= SecureRandom.uuid
   end
 
+# --
+
+  def customer?
+    customer_id?
+  end
+
+  def played?
+    accounts.includes(:sessions).any?
+  end
+
+  def last_played_at
+    session = PlayerSession
+      .joins(:account => :user)
+      .where(users: {id: self.id})
+      .first
+
+    if session
+      session.started_at
+    else
+      nil
+    end
+  end
+
 end
