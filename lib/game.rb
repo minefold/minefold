@@ -45,6 +45,11 @@ class Game
     !(funpack_id.nil? or published_at.nil?)
   end
 
+  # (private, public)
+  def auth_types
+    [AuthTypes::MinecraftWhitelist, AuthTypes::MinecraftBlacklist]
+  end
+
 # --
 
   def to_param
