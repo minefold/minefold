@@ -61,7 +61,7 @@ class ServersController < ApplicationController
       PartyCloud.stop_server(server.party_cloud_id)
     end
 
-    respond_with(server)
+    respond_with(server, location: edit_server_path(server))
   end
 
   def start
