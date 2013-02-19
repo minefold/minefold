@@ -161,7 +161,7 @@ class Server < ActiveRecord::Base
   end
 
   AccessPolicies = {
-    NoopAccessPolicy => 0,
+    PublicAccessPolicy => 0,
     MinecraftWhitelistAccessPolicy => 1,
     MinecraftBlacklistAccessPolicy => 2,
     TeamFortress2PasswordAccessPolicy => 3

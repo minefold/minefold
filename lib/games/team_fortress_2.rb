@@ -3,11 +3,11 @@ require './lib/game'
 class TeamFortress2 < Game
 
   def default_access_policy
-    NoopAccessPolicy
+    PublicAccessPolicy
   end
 
   def available_access_policies
-    [NoopAccessPolicy, TeamFortress2PasswordAccessPolicy]
+    [PublicAccessPolicy, TeamFortress2PasswordAccessPolicy]
   end
 
 end
