@@ -1,6 +1,5 @@
 .control-group#uploads
   .controls
-    %p.help-block.intro-help-block Upload a new world
     %input.upload(type="file" name="uploads[]")
 
     %p.help-block.error-help-block{hidden}
@@ -8,17 +7,17 @@
       %span.reason
 
     %p.help-block.uploading-help-block{hidden}
-      Uploading
+      Uploading…
       %strong.filename
       %span.step
 
     %p.help-block.processing-help-block{hidden}
-      Processing
+      Processing…
       %strong.filename
       %span.step
 
     %p.help-block.success-help-block{hidden}
-      Successfully uploaded
+      Successfully imported
       %span.filename
 
     .progress

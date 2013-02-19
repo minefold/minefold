@@ -1,168 +1,172 @@
 - title server.name
-- layout :servers
-= render partial: 'page_header', locals: {server: server}
+- layout :settings
 
 .container
   .page-header
-    %h1= link_to server.name, server_path(server)
-
-  %ul.nav.nav-tabs
-    %li= link_to 'Activity', server
-    - if server.game.mappable?
-      %li= link_to 'Map', server_map_path(server)
-    %li.active= link_to 'Settings', [:edit, server]
+    %a{href: server_path(server)} &larr; back to #{server.name}
+    %h1
+      Settings for #{server.name}
 
   .row
-    .span10.offset1
-      .form-block.row
-        .form-title.span2
-          %strong General
+    .span2
+      %strong General
 
-        .span8
-          = form_for server do |f|
-            = f.control_group :name do
-              = f.label :name, class: 'control-label'
-              .controls
-                = f.text_field :name, class: %w(span6)
+    .span6
+      = form_for server do |f|
+        = f.control_group :name do
+          = f.label :name, class: 'control-label'
+          .controls
+            = f.text_field :name, class: %w(span6)
 
-            = f.control_group :description do
-              = f.label :description, class: 'control-label'
-              .controls
-                = f.text_area :description, class: %w(span6), rows: 6
+        = f.control_group :description do
+          = f.label :description, class: 'control-label'
+          .controls
+            = f.text_area :description, class: %w(span6), rows: 6
 
-            - if server.static_address?
-              = f.control_group :address do |f|
-                .control-label Server Address
-                %p.help-block.server-address= server.address
-            /
-              .control-group
-                .control-label Who can start the server?
-                %small.help-block.muted
-                  %strong= server.game.name
-                  is
-                  %a{href: 'http://partycloud.com'} Party Cloud
-                  enabled so starting a server is automatic.
+        .form-actions
+          = f.submit 'Save', class: %w(btn btn-primary)
 
-                .controls.radio.row.muted
-                  = f.label 'foo_auto', class: %w(span2) do
-                    = radio_button_tag 'sever', 'foo', 'auto', disabled: true, checked: true
-                    Automatic
+  - if $flipper[:access_controls].enabled?(current_user)
+    .row
+      .span2
+        %strong Access
 
-                  = f.label 'foo_false', class: %w(span2) do
-                    = radio_button_tag 'sever', 'foo', false, disabled: true
-                    Just me
+      .span6
+        = form_for server do |f|
+          = f.control_group :access_policy_id do
+            .controls
+              - server.game.available_access_policies.each do |policy|
+                - policy_index = Server::AccessPolicies[policy]
+                = f.label "access_policy_id_#{policy_index}", class: 'radio' do
+                  = f.radio_button :access_policy_id, policy_index
 
-                  = f.label 'foo_true', class: %w(span2) do
-                    = radio_button_tag 'sever', 'foo', false, disabled: true
-                    Any player
+                  - case
+                  - when policy == PublicAccessPolicy
+                    Anybody can play
 
-            - if server.game.split_billing?
-              = f.control_group :shared do
-                .control-label Who do you want to pay for?
-                .controls.radio
-                  = f.label 'shared_false' do
-                    = f.radio_button :shared, false
-                    Everybody
+                  - when policy == MinecraftWhitelistAccessPolicy
+                    Only whitelist
 
-                  .help-block.muted
-                    You pay for the time played by any player on your server up to 10 people. For example, if 5 people play on your server for 1 hour each, you'll pay for 5 hours. If 15 people play for one hour each, you'll only pay for 10 hours.
+                  - when policy == MinecraftBlacklistAccessPolicy
+                    Anybody can play
 
-                .contols.radio
-                  = f.label 'shared_true' do
-                    = f.radio_button :shared, true
-                    Only me
+                  - when policy == TeamFortress2PasswordAccessPolicy
+                    Set a password and tell that to your friends
 
-                  .help-block.muted
-                    Each player pays for themselves. Every player will need a Minefold account with a linked Minecraft account to play.
+          .form-actions
+            = f.submit 'Save', class: %w(btn btn-primary)
 
 
-            .form-actions
-              = f.submit 'Save', class: %w(btn btn-primary)
+  - if server.game.split_billing?
+    .row
+      .span2
+        %strong Billing
 
-      - content_for :tail do
-        :javascript
-          $(document).ready(function() {
-            $('#server_shared_false').change(function() {
-              $('#pooperooni.shared_false').show();
-              $('#pooperooni.shared_true').hide();
-            });
+      .span6
+        = form_for server do |f|
+          = f.control_group :shared do
+            .controls
+              = f.label 'shared_false', class: 'radio' do
+                = f.radio_button :shared, false
+                You pay for everyone
 
-            $('#server_shared_true').change(function() {
-              $('#pooperooni.shared_true').show();
-              $('#pooperooni.shared_false').hide();
-            });
+                .help-block.muted
+                  You pay for the time played by any player on your server up to 10 people. For example, if 5 people play on your server for 1 hour each, you'll pay for 5 hours. If 15 people play for one hour each, you'll only pay for 10 hours.
 
-          });
+              = f.label 'shared_true', class: 'radio' do
+                = f.radio_button :shared, true
+                Cost is split between players
 
-
-      / --
-
-
-      .form-block.row
-        .form-title.span2
-          %strong Gameplay
-
-        .span7
-          = form_tag gameplay_server_path(server), :method => :put do |f|
-            = server.funpack.settings.to_html(server.settings).html_safe
-
-            .form-actions
-              - if server.state == :up
-                %p.help-block
-                  %span.highlight People are playing on this server.
-                  If you save and stop, everybody will be kicked. If you just save, the settings they will be applied when they leave.
-
-                %div
-                  = submit_tag 'Save', class: %w(btn btn-primary)
-                  = submit_tag 'Save and stop server', name: 'restart', class: %w(btn)
-
-              - else
-                = submit_tag 'Save', class: %w(btn btn-primary)
+                .help-block.muted
+                  Each player pays for themselves. Every player will need a Minefold account with a linked Minecraft account to play.
 
 
-      / --
+          .form-actions
+            = f.submit 'Save', class: %w(btn btn-primary)
+
+  - content_for :tail do
+    :javascript
+      $(document).ready(function() {
+        $('#server_shared_false').change(function() {
+          $('#pooperooni.shared_false').show();
+          $('#pooperooni.shared_true').hide();
+        });
+
+        $('#server_shared_true').change(function() {
+          $('#pooperooni.shared_true').show();
+          $('#pooperooni.shared_false').hide();
+        });
+
+      });
 
 
-      - if server.funpack.imports?
-        .form-block.row
-          .form-title.span2
-            %strong Upload
-          .span8
-            .well
-              = render partial: 'upload', locals: {server: server}
+  / --
 
 
-        .form-block.row
-          .form-title.span2
-            %strong Snapshots
+  .row
+    .span2
+      %strong Gameplay
 
-          .span8
-            - if server.world
-              %p
-                Last backup at #{I18n.l server.world.updated_at}
-                &middot;
-                = link_to 'Download archive', party_cloud_world_download_url(server)
+    .span6
+      = form_tag gameplay_server_path(server), :method => :put do |f|
+        = server.funpack.settings.to_html(server.settings).html_safe
 
-              - # TODO Investigate why parent wouldn't have a server.
-              - if server.world.legacy_parent and server.world.legacy_parent.server
-                - parent = server.world.legacy_parent.server
-                %p
-                  Forked from
-                  = link_to parent.name, server_path(parent)
-                  by #{parent.creator.username}.
+        .form-actions
+          - if server.up?
+            %p.help-block
+              %span.highlight People are playing on this server.
+              If you save and stop, everybody will be kicked. If you just save, the settings they will be applied when they leave.
 
-            - else
-              %p.muted Server doesn't have any snapshots.
+            %div
+              = submit_tag 'Save and resetart server', name: 'restart', class: %w(btn btn-primary)
+              = submit_tag 'Save', class: %w(btn)
 
-      / --
+          - else
+            = submit_tag 'Save', class: %w(btn btn-primary)
 
 
-      - if can? :destroy, server
-        .form-block.row
-          .form-title.span2
-            %strong Danger Zone
+  / --
 
-          .span7
-            %p Destroying a server <strong>immediately stops it</strong> and <strong>destroys all its data</strong>. There is no way to recover a server once it has been destroyed. <span class="highlight">With great power comes great responsibility.</span>
+  .row
+    .span2
+      %strong Snapshots
 
-            = button_to 'Destroy server', server_path(server), method: :delete, class: %w(btn btn-small btn-danger), confirm: 'Are you sure you want to destroy this server?'
+    .span6
+      - if server.world
+        %p
+          Last backup at #{I18n.l server.world.updated_at}
+          &middot;
+          = link_to 'Download archive', party_cloud_world_download_url(server)
+
+        - # TODO Investigate why parent wouldn't have a server.
+        - if server.world.legacy_parent and server.world.legacy_parent.server
+          - parent = server.world.legacy_parent.server
+          %p
+            Forked from
+            = link_to parent.name, server_path(parent)
+            by #{parent.creator.username}.
+
+      - else
+        %p.muted Server doesn't have any snapshots.
+
+    / --
+
+  - if server.funpack.imports?
+    .row
+      .span2
+        %strong Import data
+      .span6= render partial: 'upload', locals: {server: server}
+
+
+  / --
+
+
+  - if can? :destroy, server
+    .row
+      .span2
+        %strong Danger Zone
+
+      .span6
+        %p Destroying a server <strong>immediately stops it</strong> and <strong>destroys all its data</strong>. There is no way to recover a server once it has been destroyed. <span class="highlight">With great power comes great responsibility.</span>
+
+        = button_to 'Destroy server', server_path(server), method: :delete, class: %w(btn btn-small btn-danger), confirm: 'Are you sure you want to destroy this server?'

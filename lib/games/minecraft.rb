@@ -1,4 +1,5 @@
 require './lib/game'
+require './lib/game_access_policy'
 
 class Minecraft < Game
 
@@ -18,8 +19,17 @@ class Minecraft < Game
     true
   end
 
+  # TODO Untested
   def account_provider
     Accounts::Mojang
+  end
+
+  def default_access_policy
+    MinecraftBlacklistAccessPolicy
+  end
+
+  def available_access_policies
+    [MinecraftBlacklistAccessPolicy, MinecraftWhitelistAccessPolicy]
   end
 
 end

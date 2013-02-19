@@ -11,10 +11,14 @@ body {
 }
 
 header {
+  background-color: white;
 
   .navbar {
-    margin-top: l(1);
-    margin-bottom: l(1);
+    margin-top: 0;
+    padding-top: l();
+
+    padding-bottom: l();
+    margin-bottom: 0;
 
     > .navbar-inner {
       background: transparent;
@@ -34,6 +38,8 @@ header {
   margin: 0;
   padding: 0;
 
+  text-shadow: none;
+
   > .logo {
     background-color: $blue;
     background-image: asset-data-url('logo.png');
@@ -51,7 +57,7 @@ header {
     line-height: l(4);
     font-size: 18px;
     margin: 0;
-    color: $blue;
+    color: $brand-darkGray;
     text-transform: uppercase;
     letter-spacing: 0.1em;
   }
@@ -172,3 +178,10 @@ textarea:focus {
   font-weight: bold;
 }
 
+.progress {
+  border-radius: $radius;
+
+  .bar {
+    background: $blue;
+  }
+}

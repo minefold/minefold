@@ -4,11 +4,21 @@ $pictos: "Pictos Custom";
 
 // Colors
 
-$dblue: #258;
+$dblue: #136;
 $blue: #47C;
 $yellow: #FD8;
-$green: #BD6;
-$gray: #E5EAF1;
+$green: #4B5;
+
+$brand-blue: $blue;
+$brand-darkblue: $dblue;
+$brand-yellow: $yellow;
+$brand-green: $green;
+
+$brand-lightGray: darken(white, 20%);
+$brand-darkGray: lighten(black, 20%);
+
+$brand-darken: rgba(black, 0.6);
+$brand-lighten: rgba(black, 0.6);
 
 // --
 

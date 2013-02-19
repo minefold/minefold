@@ -61,7 +61,7 @@ class ServersController < ApplicationController
       PartyCloud.stop_server(server.party_cloud_id)
     end
 
-    respond_with(server)
+    respond_with(server, location: edit_server_path(server))
   end
 
   def start
@@ -74,10 +74,10 @@ class ServersController < ApplicationController
     PartyCloud.start_server(
       server.party_cloud_id,
       server.funpack.party_cloud_id,
-      {
-        name: server.name,
+      { name: server.name,
+        access: server.access_policy.to_hash,
         settings: server.settings
-      }
+      }.to_json
     )
 
     respond_to do |format|

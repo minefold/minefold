@@ -6,6 +6,7 @@ footer {
     @include clearfix;
     margin-left: - $gw-gutter;
     font-weight: 600;
+    margin-bottom: l();
 
     li {
       float: left;
@@ -19,11 +20,11 @@ footer {
 
     &.social {
       > .twitter a {
-        color: lighten($blue, 20%);
+        color: #00aced;
       }
 
       > .facebook a {
-        color: $blue;
+        color: #3B5998;
       }
     }
   }
@@ -35,7 +36,10 @@ footer {
   .copyright {
     clear: both;
     font-size: 12px;
-    color: rgba(black, 0.4);
+    font-family: $lucida-grande;
+    color: #CCC;
+
+    a { color: #CCC; }
   }
 
   .mixpanel-badge {

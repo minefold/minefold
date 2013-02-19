@@ -1,11 +1,13 @@
 require 'state_machine/core'
 require './lib/redis_key'
 require './lib/server_address'
+require './lib/game_access_policy'
 
 class Server < ActiveRecord::Base
   extend StateMachine::MacroMethods
 
   attr_accessible :name, :description, :funpack_id, :shared, :settings
+  attr_accessible :access_policy_id
 
   acts_as_paranoid
 
@@ -158,4 +160,22 @@ class Server < ActiveRecord::Base
   def add_creator_to_watchers
     self.watchers << creator
   end
+
+  AccessPolicies = {
+    PublicAccessPolicy => 0,
+    MinecraftWhitelistAccessPolicy => 1,
+    MinecraftBlacklistAccessPolicy => 2,
+    TeamFortress2PasswordAccessPolicy => 3
+  }
+
+  before_create :set_default_access_policy_id
+
+  def access_policy
+    AccessPolicies.invert[self.access_policy_id].new(self)
+  end
+
+  def set_default_access_policy_id
+    self.access_policy_id = AccessPolicies[self.game.default_access_policy]
+  end
+
 end

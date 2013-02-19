@@ -15,3 +15,6 @@ Flipper.register(:beta) do |actor|
   actor.respond_to?(:beta?) && actor.beta?
 end
 
+# --
+
+$flipper[:access_controls].enable $flipper.group(:admins)

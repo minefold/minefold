@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130127195253) do
+ActiveRecord::Schema.define(:version => 20130219040013) do
 
   create_table "accounts", :force => true do |t|
     t.string   "type"
@@ -171,6 +171,7 @@ ActiveRecord::Schema.define(:version => 20130127195253) do
     t.text     "description"
     t.integer  "state"
     t.string   "cname"
+    t.integer  "access_policy_id"
   end
 
   add_index "servers", ["cname", "deleted_at"], :name => "index_servers_on_cname_and_deleted_at"
