@@ -58,6 +58,14 @@ Funpack.create(name: 'Tekkit', creator: chris,
   imports: true
 )
 
+Funpack.create(name: 'Feed The Beast – Beta Pack A', creator: dave,
+  info_url: 'http://feed-the-beast.com/',
+  party_cloud_id: '512159a67aae57bf17000005',
+  game_id: GAMES.find('minecraft').id,
+  settings_schema: [],
+  imports: true
+)
+
 Funpack.create(name: 'Team Fortress 2', creator: chris,
   info_url: 'http://www.teamfortress.com',
   party_cloud_id: '50bec3967aae5797c0000004',

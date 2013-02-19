@@ -1,32 +1,28 @@
 class ServerSettingsChangedJob < Job
   @queue = :high
 
-  attr_reader :server
-  attr_reader :key, :value
+  attr_reader :server, :transform
 
-  def initialize(server_party_cloud_id, key, value=nil)
+  def initialize(timestamp, server_party_cloud_id, transform)
     @server = Server.unscoped.find_by_party_cloud_id(server_party_cloud_id)
-
-    if value.nil?
-      change = key
-      @key, @value = change['setting'], change['value']
-    else
-      @key, @value = key, value
-    end
+    @transform = transform
   end
 
   def perform
-    # hack for whitelist_add, whitelist_remove, blacklist_add, blacklist_remove, ops_add, ops_remove
-    if key =~ /([a-z]+)_add/
-      set = (server.settings[$1] || "").split("\n")
-      server.settings[$1] = (set | [value]).uniq.join("\n")
+    case
+    when key = transform['add']
+      set = (server.settings[key] || "").split("\n")
+      server.settings[key] = (set | [transform['value']]).uniq.join("\n")
+      
+      puts "add:#{key} #{transform['value']}   =>  #{server.settings[key]}"
+      
 
-    elsif key =~ /([a-z]+)_remove/
-      set = (server.settings[$1] || "").split("\n")
-      server.settings[$1] = (set - [value]).uniq.join("\n")
+    when key = transform['remove']
+      set = (server.settings[key] || "").split("\n")
+      server.settings[key] = (set - [transform['value']]).uniq.join("\n")
 
-    else
-      server.settings[key] = value
+    when key = transform['set']
+      server.settings[key] = transform['value']
     end
 
     server.save!
