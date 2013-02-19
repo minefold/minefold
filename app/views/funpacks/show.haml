@@ -20,7 +20,13 @@
 
   .row
     .span8
-      .lead= markdown(funpack.description)
+      - partial = funpack.slug.gsub('-', '_')
+
+      - if lookup_context.find_all("funpacks/_#{partial}").any?
+        = render partial: partial
+      - else
+        .lead= markdown(funpack.description)
+
 
     .span4
       %a.btn.btn-large.btn-block.btn-success{href: new_server_path(game: funpack.game.slug, funpack: funpack.slug)}
