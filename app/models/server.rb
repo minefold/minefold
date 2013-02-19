@@ -7,6 +7,7 @@ class Server < ActiveRecord::Base
   extend StateMachine::MacroMethods
 
   attr_accessible :name, :description, :funpack_id, :shared, :settings
+  attr_accessible :access_policy_id
 
   acts_as_paranoid
 
