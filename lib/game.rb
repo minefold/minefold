@@ -1,5 +1,6 @@
 # TODO Make this require more specific to speed up tests. All it's used for is 1.day.ago and friends.
 require 'active_support/core_ext'
+require './lib/game_access_policy'
 
 class Game
 
@@ -45,10 +46,10 @@ class Game
     !(funpack_id.nil? or published_at.nil?)
   end
 
-  # (private, public)
-  def auth_types
-    [AuthTypes::MinecraftWhitelist, AuthTypes::MinecraftBlacklist]
+  def available_access_policies
+    []
   end
+
 
 # --
 
