@@ -36,7 +36,5 @@
                 .primary-action.span6
                   %a.name{href: server_path(server)}= server.name
 
-                %ul.nav.nav-pills.span1
-                  %li= link_to 'Settings', edit_server_path(server)
                 %ul.nav.players.pull-right
                   %li== #{PartyCloud.count_players_online(server.party_cloud_id)} / #{server.player_uids.size}
