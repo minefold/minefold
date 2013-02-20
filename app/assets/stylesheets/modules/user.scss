@@ -1,0 +1,31 @@
+.user-profile {
+  > .avatar {
+    margin-bottom: l(1);
+
+    img {
+      display: block;
+    }
+  }
+
+  > .identity {
+    margin-bottom: l(1);
+
+    > h2 {
+      font-size: 18px;
+      line-height: l(2);
+    }
+
+    > h3 {
+      font-size: 16px;
+      color: rgba(black, 0.4);
+      line-height: l(2);
+    }
+  }
+
+  > .info {
+    border-top: 2px solid rgba(black, 0.05);
+    padding: l(1) 0;
+
+    font-size: 12px;
+  }
+}

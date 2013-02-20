@@ -1,26 +1,42 @@
 - title user.username
 
 .container
-  .page-header
-    .row
-      .span1
-        -# = player_avatar_tag player, size: :large
-      .span9
-        %h1
-          %span.username= user.username
-
-        %p
-          Member since
-          = user.created_at.strftime("%B %-d, %Y")
-
   .row
-    .span6
-      %h3 Worlds
+    .span2.offset1.user-profile
+      .avatar
+        = image_tag user.avatar.large.url, class: 'avatar'
 
-      / - player.worlds.each do |world|
-      /   = render partial: 'worlds/card_mini', locals: {world: world}
+      .identity
+        - if user.name?
+          %h2.name= PersonalName.new(user).full
+          %h3.username= user.username
+        - else
+          %h2.username= user.username
 
-      / - if player.user
-      /   .span6
-      /     %h3 Bio
-      /     = markdown(player.user.bio)
+      .info
+        %p
+          Joined on <strong>#{l user.created_at, :format => :date}</strong>
+
+
+    .span8
+      .server-list
+        - if user.servers.empty?
+          .empty
+            %h2== #{user.username} doesn't have any servers
+
+        - else
+
+          - user.servers.sort_by(&:updated_at).reverse.group_by {|s| s.funpack.game }.each do |game, servers|
+            .divider
+              .game.pull-left= game.name
+              .count.pull-right= pluralize user.servers.size, 'server', 'servers'
+
+            - servers.each do |server|
+              .item{class: "is-#{server.state}"}
+                .primary-action.span6
+                  %a.name{href: server_path(server)}= server.name
+
+                %ul.nav.nav-pills.span1
+                  %li= link_to 'Settings', edit_server_path(server)
+                %ul.nav.players.pull-right
+                  %li== #{PartyCloud.count_players_online(server.party_cloud_id)} / #{server.player_uids.size}

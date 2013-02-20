@@ -140,6 +140,16 @@ class Server < ActiveRecord::Base
     (settings['whitelist'] || '').split | (settings['ops'] || '').split
   end
 
+  def player_accounts
+    # TODO should work for other games
+    # need mapping from funpack => account type
+    accounts = Accounts::Mojang.where('uid in (?)', player_uids).all
+
+    player_uids.each_with_object({}) do |uid, h|
+      h[uid] = accounts.find{|a| a.uid == uid }
+    end
+  end
+
   def redis_watchers_key
     RedisKey.new(self, :watchers).to_s
   end

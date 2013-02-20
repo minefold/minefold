@@ -115,9 +115,13 @@
 
       .player-list
         - online = PartyCloud.players_online(server.party_cloud_id)
-        - server.player_uids.each do |username|
+        - server.player_accounts.each do |username, account|
           .player{class: online.include?(username) && "is-online"}
-            .avatar
+            - href = nil
+            - if account and account.user
+              - href = user_path(account.user)
+              
+            %a.avatar(data-toggle="tooltip"){title: username, href: href}
               = image_tag "//d3811j97z0k4bc.cloudfront.net/helm/#{username}/30.png", alt: username, width: 30, height: 30
 
       - if signed_in?
@@ -146,6 +150,8 @@
             });
             app.serverAddressView.setElement($('#server-address-view-el'));
             app.serverAddressView.render();
+            
+            $('.player-list .avatar').tooltip({animation: false})
 
         %dt Owner
         %dd= server.creator.username
