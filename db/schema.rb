@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130219040013) do
+ActiveRecord::Schema.define(:version => 20130221234424) do
 
   create_table "accounts", :force => true do |t|
     t.string   "type"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20130219040013) do
   end
 
   add_index "accounts", ["type"], :name => "index_players_on_game_id"
+  add_index "accounts", ["uid"], :name => "index_accounts_on_uid"
   add_index "accounts", ["user_id"], :name => "index_players_on_user_id"
 
   create_table "activities", :force => true do |t|
@@ -63,15 +64,16 @@ ActiveRecord::Schema.define(:version => 20130219040013) do
   end
 
   create_table "funpacks", :force => true do |t|
-    t.string  "name"
-    t.integer "game_id"
-    t.integer "creator_id"
-    t.string  "party_cloud_id"
-    t.text    "description"
-    t.string  "info_url"
-    t.boolean "imports",         :default => false
-    t.string  "slug",            :default => ""
-    t.text    "settings_schema"
+    t.string   "name"
+    t.integer  "game_id"
+    t.integer  "creator_id"
+    t.string   "party_cloud_id"
+    t.text     "description"
+    t.string   "info_url"
+    t.boolean  "imports",         :default => false
+    t.string   "slug",            :default => ""
+    t.text     "settings_schema"
+    t.datetime "published_at"
   end
 
   add_index "funpacks", ["game_id"], :name => "index_funpacks_on_game_id"

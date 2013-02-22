@@ -5,7 +5,7 @@ require 'brock'
 class Funpack < ActiveRecord::Base
   extend FriendlyId
 
-  attr_accessible :name, :game, :creator, :info_url, :description, :party_cloud_id, :imports, :slug, :game_id, :settings_schema
+  attr_accessible :name, :game, :creator, :info_url, :description, :party_cloud_id, :imports, :slug, :game_id, :settings_schema, :published_at
 
   belongs_to :creator, class_name: 'User'
 
