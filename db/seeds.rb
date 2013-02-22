@@ -61,6 +61,16 @@ Funpack.create(name: 'Tekkit', creator: chris,
   published_at: Time.now
 )
 
+Funpack.create(name: 'Tekkit Lite', creator: dave,
+  info_url: "http://www.technicpack.net/tekkit-lite/",
+  description: "Tekkit Lite includes most of the mods from Tekkit Classic and adds a load more.",
+  party_cloud_id: '5126be367aae5712a4000007',
+  settings_schema: [],
+  game_id: GAMES.find('minecraft').id,
+  imports: true,
+  published_at: nil
+)
+
 Funpack.create(name: 'Feed The Beast – Direwolf20', creator: dave,
   info_url: 'http://feed-the-beast.com/',
   party_cloud_id: '512159a67aae57bf17000005',

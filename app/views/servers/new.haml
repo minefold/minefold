@@ -15,7 +15,7 @@
         .control-group
           .control-label Game
           .controls
-            - @games.each do |game|
+            - games.each do |game|
               .game{data: {'split-billing' => game.split_billing?.to_s}}
                 %label.radio{for: "server_funpack_id_#{game.funpack_id}", style: 'margin-bottom:20px'}
                   %input{type: 'radio', name: 'server[funpack_id]', value: game.funpack_id, id: "server_funpack_id_#{game.funpack_id}", checked:(params[:server] and params[:server][:funpack_id].to_s == game.funpack_id.to_s)}
@@ -24,13 +24,13 @@
                     = game.name
 
                 .funpacks{style: 'margin-left: 20px'}
-                  - funpacks = Funpack.where(game_id: game.id).reject {|funpack| funpack.id == game.funpack_id }
-                  - funpacks.each do |funpack|
+                  - funpacks.select{|fp| fp.game_id == game.id}.reject{|funpack| funpack.id == game.funpack_id }.each do |funpack|
                     = f.label "funpack_id_#{funpack.id}", class: 'radio', style: 'margin-bottom:20px' do
                       = f.radio_button :funpack_id, funpack.id
 
                       %strong.name
                         = funpack.name
+                        = "(Unpublished)" unless funpack.published?
                       .info
                         = markdown(funpack.description)
                         = link_to "More information", funpack.info_url, target: '_blank'

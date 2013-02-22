@@ -9,6 +9,14 @@ class ServersController < ApplicationController
 # --
 
   expose(:server)
+  expose(:games) { GAMES.published }
+  expose(:funpacks) {
+    if $flipper[:unpublished_funpacks].enabled?(current_user)
+      Funpack.all
+    else
+      Funpack.published
+    end
+  }
 
 # --
 
@@ -18,7 +26,6 @@ class ServersController < ApplicationController
 
   def new
     authorize! :create, server
-    @games = GAMES.published
   end
 
   def create
@@ -36,9 +43,6 @@ class ServersController < ApplicationController
         shared: server.shared?,
         funpack: server.funpack.name,
         game: server.game.name
-    else
-      # Renders the new action
-      @games = GAMES.published
     end
 
     respond_with(server)

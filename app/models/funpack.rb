@@ -4,6 +4,8 @@ require 'brock'
 
 class Funpack < ActiveRecord::Base
   extend FriendlyId
+  
+  scope :published, where('published_at is not ?', nil)
 
   attr_accessible :name, :game, :creator, :info_url, :description, :party_cloud_id, :imports, :slug, :game_id, :settings_schema, :published_at
 
@@ -20,6 +22,10 @@ class Funpack < ActiveRecord::Base
 
   def settings
     Brock::Schema.new(settings_schema)
+  end
+  
+  def published?
+    !published_at.nil?
   end
 
 end
