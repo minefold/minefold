@@ -54,6 +54,8 @@ gem 'omniauth-steam', require: ['omniauth-openid', 'omniauth-steam']
 
 gem 'brock', github: 'minefold/brock', branch: 'master'
 
+gem 'net-scp', '1.0.4' # latest net-scp yanked http://stackoverflow.com/questions/15033607/heroku-push-rejected-ruby-version-changed-detected-could-not-find-net-scp-1-0
+
 group :test, :development do
   gem 'rspec-rails'
 end

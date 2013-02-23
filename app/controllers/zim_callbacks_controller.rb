@@ -1,13 +1,17 @@
 class ZimCallbacksController < ApplicationController
   respond_to :json
-  
+
   skip_before_filter  :verify_authenticity_token
 
   def map_deleted
     data = JSON.parse(request.body.read)
 
-    if @server = Server.unscoped.find_by_id(data['id'])
-      @server.world.destroy if @server.world
+    pg_id = Integer(data['id']) rescue nil
+
+    if pg_id
+      if @server = Server.unscoped.find_by_id(pg_id)
+        @server.world.destroy if @server.world
+      end
     end
 
     render nothing: true, :status => :ok
