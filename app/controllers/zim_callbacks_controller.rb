@@ -6,7 +6,7 @@ class ZimCallbacksController < ApplicationController
   def map_deleted
     data = JSON.parse(request.body.read)
 
-    if @server = Server.unscoped.find(data['id'])
+    if @server = Server.unscoped.find_by_id(data['id'])
       @server.world.destroy if @server.world
     end
 
