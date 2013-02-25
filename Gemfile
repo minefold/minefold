@@ -1,7 +1,7 @@
 source 'https://code.stripe.com'
 source 'https://rubygems.org'
 
-ruby '1.9.3'
+ruby '2.0.0'
 
 gem 'thin'
 gem 'rails', '>= 3.2.11'
