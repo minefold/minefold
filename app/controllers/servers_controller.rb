@@ -12,9 +12,9 @@ class ServersController < ApplicationController
   expose(:games) { GAMES.published }
   expose(:funpacks) {
     if $flipper[:unpublished_funpacks].enabled?(current_user)
-      Funpack.all
+      Funpack.order(:name).all
     else
-      Funpack.published
+      Funpack.order(:name).published
     end
   }
 
@@ -60,7 +60,7 @@ class ServersController < ApplicationController
 
     # TODO Actual error checking here!
     server.update_attributes(params[:server])
-    
+
     respond_with(server, location: edit_server_path(server))
   end
 

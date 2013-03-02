@@ -9,8 +9,7 @@ gem 'rake'
 # Explicitly requiring Nokogiri *before* pg stops the stupid dylib load errors on Mountain Lion: https://github.com/sparklemotion/nokogiri/issues/742
 # Can't question our commitment to Sparkle Motion!
 gem 'nokogiri', '~> 1.5'
-gem 'html-pipeline',
-  github: 'chrislloyd/html-pipeline'
+gem 'html-pipeline'
 gem 'pg'
 gem 'rack-www'
 gem 'devise'
@@ -53,6 +52,9 @@ gem 'state_machine', require: 'state_machine/core'
 gem 'omniauth-steam', require: ['omniauth-openid', 'omniauth-steam']
 
 gem 'brock', github: 'minefold/brock', branch: 'master'
+
+# latest net-scp yanked http://stackoverflow.com/questions/15033607/heroku-push-rejected-ruby-version-changed-detected-could-not-find-net-scp-1-0
+# gem 'net-scp', '1.0.4'
 
 group :test, :development do
   gem 'rspec-rails'
