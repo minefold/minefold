@@ -1,11 +1,3 @@
-@include font-face(minecraft, font-path('minecraft'));
-
-@mixin app-width($w: 12) {
-  #app > .container {
-    width: grid-width($w);
-  }
-}
-
 body {
   background-color: transparent;
 }
