@@ -1,8 +1,9 @@
 class Webhooks::PartyCloudController < ApplicationController
+  protect_from_forgery :except => :process
 
-  protect_from_forgery :except => :hook
+  def create
+    Librato.increment('webhook.party_cloud.total')
 
-  def hook
     event = JSON.parse(request.body.read, symbolize_names: true)
     type, data = event[:type], event[:data]
 
@@ -11,6 +12,8 @@ class Webhooks::PartyCloudController < ApplicationController
       funpack_updated(event, data)
     end
   end
+
+# --
 
   def funpack_updated(event, data)
     funpack = Funpack.find_by_party_cloud_id(data[:id])

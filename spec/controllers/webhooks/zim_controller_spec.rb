@@ -7,7 +7,7 @@ def raw_post(action, params, body)
   response
 end
 
-describe ZimCallbacksController do
+describe Webhooks::ZimController do
   let(:server) { Server.make!(world: World.make!) }
 
   describe "POST #map_deleted" do
@@ -22,4 +22,5 @@ describe ZimCallbacksController do
       assigns(:server).reload.world.should be_nil
     end
   end
+
 end

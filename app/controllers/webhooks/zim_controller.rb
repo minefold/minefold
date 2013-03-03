@@ -1,9 +1,9 @@
-class ZimCallbacksController < ApplicationController
-  respond_to :json
+class Webhooks::ZimController < ApplicationController
+  protect_from_forgery :except => :process
 
-  skip_before_filter  :verify_authenticity_token
+  def create
+    Librato.increment('webhook.zim.total')
 
-  def map_deleted
     data = JSON.parse(request.body.read)
 
     pg_id = Integer(data['id']) rescue nil
@@ -16,4 +16,5 @@ class ZimCallbacksController < ApplicationController
 
     render nothing: true, :status => :ok
   end
+
 end

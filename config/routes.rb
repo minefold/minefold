@@ -17,9 +17,15 @@ Minefold::Application.routes.draw do
 
 # --
 
+  # Webhooks
   scope path: 'webhooks', module: 'webhooks' do
-    post '/party_cloud', controller: 'party_cloud', action: 'hook'
+    post '/party_cloud', controller: 'party_cloud', action: 'create'
+    post '/zim', controller: 'zim', action: 'create'
+    post '/mailgun', controller: 'mailgun', action: 'create'
   end
+
+  # Legacy Zim callback
+  post '/hooks/zim/map_deleted' => 'webhooks/zim#create'
 
 # --
 
@@ -63,9 +69,6 @@ Minefold::Application.routes.draw do
   resources :stats, only: [] do
     get :sessions, :on => :collection
   end
-
-  # Webhooks
-  post '/hooks/zim/map_deleted' => 'zim_callbacks#map_deleted'
 
   # Authenticated routes
   as :user do
