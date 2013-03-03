@@ -9,20 +9,20 @@
   }
 
   .jumbotron {
-    background-color: desaturate($blue, 0%);
+    background-color: desaturate($brand-blue, 0%);
 
     h1 {
       color: white;
     }
 
     h2 {
-      color: $dblue;
+      color: $brand-darkBlue;
     }
   }
 
   .announcement {
     display: block;
-    background-color: desaturate($green, 10%);
+    background-color: desaturate($brand-green, 10%);
     padding: l() $gw-gutter;
     text-align: center;
     color: white;

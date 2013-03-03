@@ -1,7 +1,7 @@
 .l-pricing {
 
   .jumbotron {
-    background-color: $green;
+    background-color: $brand-green;
 
     h1 {
       color: white;
@@ -70,13 +70,13 @@
       // Colors
 
       &:nth-child(1) {
-        color: $green;
-        .savings { background-color: lighten($green, 45%); }
+        color: $brand-green;
+        .savings { background-color: lighten($brand-green, 45%); }
       }
 
       &:nth-child(2) {
-        color: $blue;
-        .savings { background-color: lighten($blue, 55%); }
+        color: $brand-blue;
+        .savings { background-color: lighten($brand-blue, 55%); }
       }
 
       &:nth-child(3) {
@@ -88,7 +88,7 @@
 
 
     h3 {
-      color: $blue;
+      color: $brand-blue;
       margin-bottom: l(2);
     }
 

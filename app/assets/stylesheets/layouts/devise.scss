@@ -11,8 +11,8 @@
       font-size: 18px;
       line-height: l(2);
 
-      color: $blue;
-      background-color: lighten($blue, 58%);
+      color: $brand-blue;
+      background-color: lighten($brand-blue, 58%);
       padding: l(1) $gw-gutter;
 
       @include box-sizing(border-box);
@@ -22,7 +22,7 @@
       }
 
       &:before, &:after {
-        color: $blue;
+        color: $brand-blue;
         font-size: 48px;
         line-height: l(3);
         position: absolute;
@@ -47,7 +47,7 @@
 
     color: rgba(black, 0.8);
 
-    background-color: lighten($yellow, 40%);
+    background-color: lighten($brand-yellow, 40%);
     background-image: url(image-path('letter.png'));
 
     box-shadow: 0 l(.5) l(1) 0 rgba(black, 0.1),
