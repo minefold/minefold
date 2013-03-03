@@ -69,6 +69,10 @@ class Webhooks::MailgunController < ApplicationController
     if not secure?(ENV['MAILGUN_API_KEY'], params.fetch(:token), params.fetch(:timestamp), params.fetch(:signature))
       render nothing: true, status: 403
     end
+
+    # In place of Rails 4.0 strong params
+  rescue KeyError
+    render nothing: true, status: 403
   end
 
   def secure?(api_key, token, timestamp, signature)
