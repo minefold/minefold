@@ -19,9 +19,10 @@ Minefold::Application.routes.draw do
 
   # Webhooks
   scope path: 'webhooks', module: 'webhooks' do
-    post '/party_cloud', controller: 'party_cloud', action: 'create'
-    post '/zim', controller: 'zim', action: 'create'
-    post '/mailgun', controller: 'mailgun', action: 'create'
+    post 'mailgun' => 'mailgun#create'
+    post 'party_cloud' => 'party_cloud#create'
+    post 'stripe' => 'stripe#create'
+    post 'zim' => 'zim#create'
   end
 
   # Legacy Zim callback
