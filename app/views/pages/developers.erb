@@ -1,0 +1,71 @@
+<% title 'Developers' %>
+<% layout :page %>
+
+<div class="container">
+
+  <h1>Minefold Developer API</h1>
+
+  <div class="alert">
+    This specification is under construction. Please contact <a href="mailto:team@minefold.com">team@minefold.com</a> with any feedback you may have.
+  </div>
+
+  <section>
+    <h2>Users</h2>
+
+    <pre><code>$ curl https://api.minefold.com/users/3</code></pre>
+
+    <pre class="response-headers"><code>HTTP/1.1 200 OK</code></pre>
+
+    <pre class="response-body"><code>
+      {
+        "id": 3,
+        "username": "chrislloyd",
+        "created": "2011-07-15T08:16:58+00:00",
+        "updated": "2013-03-06T01:20:59+00:00"
+      }
+    </code></pre>
+  </section>
+
+  <hr/>
+
+  <section>
+    <h2>Servers</h2>
+
+    <pre><code>$ curl https://api.minefold.com/servers/27</code></pre>
+
+    <pre class="response-headers"><code>HTTP/1.1 200 OK</code></pre>
+
+    <pre class="response-body"><code>
+      {
+        "id": 27,
+        "name": "minebnb",
+        "creatorId": 3,
+        "funpackId": 1,
+        "url":  "https://api.minefold.com/servers/27",
+        "state": "up",
+        "serverUrl": "27.fun-1.us-east-1.foldserver.com",
+        "ip": "127.0.0.1",
+        "port": 25565,
+        "setings": {
+          "allow-nether": false,
+          "difficulty": "1",
+          "enable-command-block": false,
+          "gamemode": "0",
+          "generate-structures": true,
+          "level-seed": "",
+          "level-type": "DEFAULT",
+          "ops": "chrislloyd",
+          "pvp": true,
+          "spawn-animals": true,
+          "spawn-monsters": true,
+          "spawn-npcs": true,
+          "whitelist": "chrislloyd\nwhatupdave"
+        },
+        "created": "2011-09-24T07:18:23+00:00",
+        "updated": "2013-03-04T00:13:18+00:00"
+      }
+    </code></pre>
+  </section>
+
+
+</div>

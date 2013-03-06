@@ -7,6 +7,9 @@ class PagesController < ApplicationController
   def about
   end
 
+  def developers
+  end
+
   def time
     @small_coin_pack = CoinPack.active.first
   end
