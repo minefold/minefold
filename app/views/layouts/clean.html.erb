@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Minefold</title>
+  <%= stylesheet_link_tag 'clean' %>
+</head>
+<body class="l-clean">
+  <%= render partial: 'shared/header/global' %>
+
+  <%= yield %>
+
+  <%= render partial: 'shared/footer' %>
+</body>
+</html>

@@ -1,16 +1,35 @@
 .page-header {
+  // BOOTSTRAP RESET
+  margin: 0;
   border-bottom: none;
-  margin-top: l(2);
-  margin-bottom: l(2);
+
+  margin-top: l(-4);
+  padding-top: l(2);
+  padding-bottom: l(2);
+
+  @include font-smoothing(antialiased);
 
   > h1 {
-    font-size: 28px;
+    font-size: 36px;
+    margin-top: l(2);
+    margin-bottom: l(2);
+    line-height: l(4);
   }
 
-  > h2 {
-    color: rgba(black, 0.4);
-    font-family: $helvetica;
-    font-weight: 400;
-    font-size: 24px;
+  > p {
+    color: $brand-lightGray;
+    font: 400 20px/#{l(2)} $helvetica;
+    margin-bottom: 0;
+  }
+
+  &.multiline * {
+    &:first-child {
+      margin-top: l(0);
+      margin-bottom: l(0);
+    }
+    &:last-child {
+      margin-top: l(1);
+      margin-bottom: l(1);
+    }
   }
 }

@@ -1,21 +1,34 @@
+@import 'vars';
 footer {
-  margin-top: l(12);
-  padding: l() $gw-gutter;
+  padding-top: l(2);
+  padding-bottom: l(8);
+
+  color: darken($brand-bg, 20%);
+  font: 12px $lucida-grande;
+
+  text-align: center;
+
+  a {
+    color: darken($brand-bg, 40%);
+
+    &:hover {
+      color: black;
+    }
+  }
 
   ul {
     @include clearfix;
-    margin-left: - $gw-gutter;
-    font-weight: 600;
-    margin-bottom: l();
+    list-style-type: none;
+    float: left;
+    margin-left: g(-.5);
 
     li {
       float: left;
-      margin-left: $gw-gutter;
-      line-height: l(2);
-
-      &:first-child {
-        margin-left: 0;
-      }
+    }
+    li a {
+      padding-left: g(.5);
+      padding-right: g(.5);
+      display: block;
     }
 
     &.social {
@@ -29,22 +42,9 @@ footer {
     }
   }
 
-  p {
-    margin-bottom: 0;
-  }
-
   .copyright {
-    clear: both;
-    font-size: 12px;
-    font-family: $lucida-grande;
-    color: #CCC;
-
-    a { color: #CCC; }
-  }
-
-  .mixpanel-badge {
-    display: none;
-    margin-top: l();
-    margin-bottom: l();
+    float: right;
+    margin-bottom: 0;
+    font-weight: 500;
   }
 }

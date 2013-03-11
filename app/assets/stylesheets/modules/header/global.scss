@@ -1,0 +1,29 @@
+.header-global {
+  background-color: white;
+
+  padding-bottom: l(12);
+  margin-bottom: l(-12);
+
+  line-height: l(4);
+
+  > .header-global-inner {
+    @include container;
+    @include clearfix;
+    padding-top: l(1);
+    padding-bottom: l(1);
+  }
+
+  .header-brand {
+    float: left;
+    margin-right: g();
+  }
+
+  .header-info {
+    float: left;
+  }
+
+  .header-nav {
+    float: right;
+    margin-right: g(-1);
+  }
+}

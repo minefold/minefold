@@ -6,7 +6,7 @@
   %h1 Pay when you play
   %h2 Your first #{pluralize Bonuses::GettingStarted.coins, 'minute', 'minutes'} are free.
 
-.container
+%article.page.box
   .coin-pack-list.row
     - @packs.each_with_index do |pack, i|
 

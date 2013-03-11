@@ -4,15 +4,9 @@
 = track 'Viewed landing page', type: 'game', game: game.slug
 = track_landing_type 'game'
 
-.container
-  .page-header
+%article.page.box
+  %header.page-header
     %h1= game.name
-
-  %ul.breadcrumb
-    %li
-      %a{href: root_path} Home
-      %span.divider /
-    %li.active= game.name
 
   .row
     .span8
@@ -51,13 +45,13 @@
   .game-library.row
     - GAMES.each do |game|
       - if game.published?
-        %a.span2.item{href: game_path(game)}
+        %a.item.game.span2{href: game_path(game)}
           = image_tag "homepage_games/#{game.slug}.png"
           - if game.new?
             .label.label-success New!
           .name= game.name
       - else
-        .span2.item.coming-soon
+        .game.item.coming-soon.span2
           = image_tag "homepage_games/#{game.slug}.png"
           .label Coming soon
           .name= game.name

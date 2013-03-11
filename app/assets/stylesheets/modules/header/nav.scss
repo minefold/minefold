@@ -1,0 +1,71 @@
+@import 'modules/avatar';
+
+.header-nav {
+  ul {
+    list-style-type: none;
+
+    li {
+      float: left;
+
+      line-height: l(4);
+      font-size: 16px;
+
+      a {
+        padding: 0 g(1);
+      }
+
+      &.divider {
+        width: 1px;
+        background-color: $brand-bg;
+        display: block;
+        height: l(4);
+        margin-left: g();
+        margin-right: g();
+      }
+    }
+  }
+
+  .user {
+    @include clearfix;
+
+    .avatar {
+      float: left;
+    }
+  }
+
+  .dropdown {
+    .dropdown-toggle {
+      // RESET
+      padding-left: 0;
+      padding-right: g();
+    }
+
+    .caret {
+      margin-top: l(1.8);
+      border-top-color: $brand-lightGray;
+    }
+
+    .dropdown-menu {
+      border: none;
+      box-shadow: 0 0 0 1px rgba(black, 0.2);
+      border-radius: $radius;
+      li {
+        display: block;
+        width: 100%;
+        a {
+          display: block;
+        }
+
+        a:hover {
+          background: $brand-blue;
+        }
+      }
+
+      li.divider {
+        height: 1px;
+        background-color: transparent;
+        border: none;
+      }
+    }
+  }
+}

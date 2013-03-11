@@ -1,0 +1,75 @@
+<nav class="header-nav">
+  <ul role="navigation">
+    <% if signed_in? %>
+      <li class="time">
+        <a href="<%= time_page_path %>">
+          <%= time_left(current_user.coins) %> left
+        </a>
+      </li>
+
+      <li class="divider"></li>
+
+      <li class="server dropdown">
+        <a class="dropdown-toggle" href="<%= servers_path %>" data-toggle="dropdown">
+          Servers
+          <b class="caret"></b>
+        </a>
+
+        <ul class="dropdown-menu pull-right">
+          <% current_user.created_servers.order(:updated_at).reverse_order.limit(10).each do |server| %>
+            <li class="server">
+              <a href="<%= server_path(server) %>"><%= server.name %></a>
+            </li>
+          <% end %>
+
+          <% if current_user.created_servers.count > 10 %>
+            <li class="more-servers">
+              <a href="<%= servers_path %>">More&helip;</a>
+            </li>
+          <% end %>
+
+          <li class="divider"></li>
+
+          <li>
+            <a href="<%= new_server_path %>">
+              <i class="icon-plus"></i>
+              Start a new server
+            </a>
+          </li>
+        </ul>
+
+      </li>
+
+      <li class="user dropdown">
+        <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+          <%= medium_avatar(current_user) %>
+          <b class="caret"></b>
+        </a>
+
+        <ul class="dropdown-menu pull-right">
+          <li>
+            <%= link_to 'Settings', edit_user_registration_path %>
+          </li>
+          <li>
+            <%= link_to 'Get more time', time_page_path %>
+          </li>
+          <li>
+            <%= link_to 'Sign out', destroy_user_session_path, :method => :delete %>
+          </li>
+        </ul>
+      </li>
+
+    <% else %>
+      <li class="pricing">
+        <%= link_to 'Pricing', pricing_page_path %>
+      </li>
+      <li class="sign-up">
+        <%= link_to 'Sign up', new_user_registration_path %>
+      </li>
+      <li class="divider"></li>
+      <li class="sign-in">
+        <%= link_to 'Sign in', new_user_session_path %>
+      </li>
+    <% end %>
+  </ul>
+</nav>

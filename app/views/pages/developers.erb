@@ -1,16 +1,23 @@
 <% title 'Developers' %>
-<% layout :page %>
 
-<div class="container">
+<article class="page box">
+  <header class="page-header">
+    <h1>Developers</h1>
+  </header>
 
-  <h1>Minefold Developer API</h1>
+  <div class="row">
+
+    <div class="span9">
 
   <div class="alert">
     This specification is under construction. Please contact <a href="mailto:team@minefold.com">team@minefold.com</a> with any feedback you may have.
   </div>
 
+  <br>
+  <br>
+
   <section>
-    <h2>Users</h2>
+    <h3>Users</h3>
 
     <pre><code>$ curl https://api.minefold.com/users/3</code></pre>
 
@@ -29,7 +36,7 @@
   <hr/>
 
   <section>
-    <h2>Servers</h2>
+    <h3>Servers</h3>
 
     <pre><code>$ curl https://api.minefold.com/servers/27</code></pre>
 
@@ -37,10 +44,11 @@
 
     <pre class="response-body"><code>
       {
-        "id": 27,
+        "id": "27",
         "name": "minebnb",
-        "creatorId": 3,
-        "funpackId": 1,
+        "creatorId": "3",
+        "creatorUrl": "https://api.minefold.com/users/3",
+        "funpackId": "1",
         "url":  "https://api.minefold.com/servers/27",
         "state": "up",
         "serverUrl": "27.fun-1.us-east-1.foldserver.com",
@@ -67,5 +75,8 @@
     </code></pre>
   </section>
 
+  </div>
+  </div>
 
-</div>
+
+</article>

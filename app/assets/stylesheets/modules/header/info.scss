@@ -1,0 +1,9 @@
+.header-info {
+  color: $brand-darkGray;
+
+  h1 {
+    font: 600 18px/#{l(4)} #{$futura};
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+}

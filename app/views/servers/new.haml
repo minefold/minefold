@@ -1,11 +1,11 @@
 - title 'Create a new server'
 
-.container
+%article.page.box
+  .page-header
+    %h1 Create a new server
+
   .row
     .span8.offset2
-      .page-header
-        %h1 Create a new server
-
       = form_for server, html: { class: 'form-horizontal' } do |f|
         = f.control_group :name do
           = f.label :name, 'Server Name', class: 'control-label'
@@ -30,7 +30,9 @@
 
                       %strong.name
                         = funpack.name
-                        = "(Unpublished)" unless funpack.published?
+                      - if not funpack.published?
+                        .label Unpublished
+
                       .info
                         = markdown(funpack.description)
                         = link_to "More information", funpack.info_url, target: '_blank'

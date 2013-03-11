@@ -1,35 +1,30 @@
 - title  'About Minefold'
-- layout :page
 
-.container
-  .page-header
-    %h1 About Us
-    %h2 We make it simple to play games together.
+.jumbotron
+  = image_tag 'about/337500_10151249413684052_16318186_o.jpg', width: '100%'
 
-  = image_tag 'about/office.jpg', width: 620, height: 134
+%article.page.box
+  %header.page-header.multiline
+    %h1 About Minefold
+    %p We make playing games together simple.
 
-  %hr
+  %section.page-section.pull-left
+    %p Minefold is built by <a href="http://mutlicorp.com">Mütli Corp</a>, a small company in San Francisco, California. We care about making it simple for everybody to have fun with their friends. We believe that if we do an excellent job at helping gamers connect with their friends the world will be a better place.
 
-  .row
-    .span5
-      %p Minefold is built by <a href="http://mutlicorp.com">Mütli Corp</a>, a small company in San Francisco, California. We care about making it simple for everybody to have fun with their friends. We believe that if we do an excellent job at helping gamers connect with their friends the world will be a better place.
+  %aside.page-aside.pull-right
+    %img{src: 'http://maps.googleapis.com/maps/api/staticmap?center=270+Linden+St+San+Francisco&zoom=13&size=300x160&sensor=false'}
 
-    .span3
-      %p
-        %img{src: 'http://maps.googleapis.com/maps/api/staticmap?center=270+Linden+St+San+Francisco&zoom=13&size=240x120&sensor=false'}
+    %p
+      270 Linden St, Unit 101
+      %br
+      San Francisco, 94102
+      %br
+      California
 
-      %p
-        270 Linden St, Unit 101
-        %br
-        San Francisco, 94102
-        %br
-        California
+    %p
+      = mail_to 'team@minefold.com'
 
-      %p
-        = mail_to 'team@minefold.com'
-
-      %p
-        %a.twitter{href: 'https://twitter.com/minefold'} Twitter
-        &middot;
-        %a.facebook{href: 'https://facebook.com/minefold'} Facebook
-
+    %p
+      %a.twitter{href: 'https://twitter.com/minefold'} Twitter
+      &middot;
+      %a.facebook{href: 'https://facebook.com/minefold'} Facebook

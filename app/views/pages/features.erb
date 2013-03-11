@@ -1,0 +1,257 @@
+<% title 'Features' %>
+<% layout :features %>
+
+<div class="jumbotron">
+  <h1>Features</h1>
+</div>
+
+<ul>
+  <li>Fully managed</li>
+  <li>Ready to play in 30s</li>
+  <li>Super reliable / cutting edge network infrastructure and hardware</li>
+  <li>Mini communities (and maps with Minecraft)</li>
+  <li>Parental controls</li>
+  <li>Safe data, rollback</li>
+  <li>API for developers</li>
+  <li>We don't over-sell resources</li>
+</ul>
+
+
+- title 'Pricing'
+- layout :pricing
+= track 'Viewed pricing'
+
+.jumbotron
+  .definition
+    Servers are powered by
+    = image_tag 'bolt.svg', width: 24, height: 40
+    bolts.
+    One bolt costs
+    25¢
+    per hour.
+
+.container
+  .row
+    .span6
+      - content_for :tail do
+        :javascript
+          var margin = {top: 20, right: 20, bottom: 30, left: 50},
+              width = 960 - margin.left - margin.right,
+              height = 500 - margin.top - margin.bottom;
+
+          // var parseDate = d3.time.format("%d-%b-%y").parse;
+
+          var x = d3.scale.linear()
+              .range([0, width]);
+
+          var y = d3.scale.linear()
+              .range([height, 0]);
+
+          var xAxis = d3.svg.axis()
+              .scale(x)
+              .orient("bottom");
+
+          var yAxis = d3.svg.axis()
+              .scale(y)
+              .orient("left");
+
+          var line = d3.svg.line()
+              .x(function(d) { return x(d.date); })
+              .y(function(d) { return y(d.close); });
+
+          var svg = d3.select("body").append("svg")
+              .attr("width", width + margin.left + margin.right)
+              .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+          var data = [
+              {hours: 1, percent: 30},
+              {hours: 2, percent: 20}
+            ];
+
+            x.domain(d3.extent(data, function(d) { return d.hours; }));
+            y.domain(d3.extent(data, function(d) { return d.percent; }));
+
+            svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis);
+
+            svg.append("g")
+                .attr("class", "y axis")
+                .call(yAxis)
+              .append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 6)
+                .attr("dy", ".71em")
+                .style("text-anchor", "end")
+                .text("Price ($)");
+
+            svg.append("path")
+                .datum(data)
+                .attr("class", "line")
+                .attr("d", line);
+          // });
+
+
+    .span6
+      %h2 By the hour saves you money.
+      %p We've collected millions of hours of server data and found that over 83% are run for less than 10 hours a week. Why pay pay for a monthly subscription for something you only use on Friday nights?
+
+%hr
+
+.container
+  .row
+    .span4
+      %h2 Honest prices, no surprises
+      %p We don't want you to be surprised
+
+    .span8
+    %form.row
+      .span2
+        %label Hours per week
+        #hours-display
+        %input#hours{type: 'range', min: 1, max: 24}
+      .span2
+        %label Maximum people playing
+        #players-display
+        %input#players{type: 'range', min: 1, max: 50}
+      .span2
+        %h3
+          %span#output
+          \/ week
+
+
+- content_for :tail do
+  :javascript
+    $('#hours').change(function(e) {
+      var val = $(e.target).val();
+
+      $('#hours-display').text(val);
+      calc();
+    });
+
+    $('#players').change(function(e) {
+      var val = $(e.target).val();
+
+      $('#players-display').text(val);
+      calc();
+    });
+
+
+    function calc() {
+      var hours = $('#hours').val(),
+          players = $('#players').val();
+      var rate;
+      if(players <= 10) {
+        rate = 50;
+      } else if(players <= 20) {
+        rate = 100;
+      } else if(players <= 50) {
+        rate = 150;
+      }
+
+      var cost = hours * rate;
+
+      $('#output').text("$" + (cost/ 100));
+
+    }
+
+
+%hr
+
+.points-mini.container
+  .row
+    .point.span3.offset3
+      %h3 1 hour free
+      %p We want you to be 100% certain that Minefold is right for you so when you sign up you'll get $1 free credit. Start a server, invite your friends and blow me down if you don't find it amazing!
+
+    .point.span3
+      %h3 Pre-pay
+      %p There are not contracts to sign or monthly subscriptions. Just load money into your account and we'll deduct from that as you run your servers.
+
+  .row
+    .point.span3.offset3
+      %h3 Spending Controls
+      %p Using our proprietry technology we shut down empty servers when nobody is playing on them. You can also always force stop it from our console.
+
+    .point.span3
+      %h3 You're only charged when people are playing
+
+    .point.span3
+      %h3 256 bit secuity
+      %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sodales lacus sed risus lacinia vel convallis neque aliquet. Aenean hendrerit leo at lacus iaculis in egestas tellus laoreet.
+
+
+
+.power-ups
+  .container
+
+    %center
+      %h2 Power-up
+
+    %table
+      %thead
+        %tr
+          %td{colspan: 2}
+          - Funpack.all.sort_by {|funpack| funpack.game.name }.each do |funpack|
+            %td= funpack.name
+
+      %tbody
+        %tr
+          %td
+            .price
+              .magnitude 25¢
+              .units per hour
+          %td
+            .bolt
+              = image_tag 'bolt.svg', width: 24, height: 40
+              1 bolt
+
+          - Funpack.count.times.each do
+            %td
+              10
+              %br
+              %i.muted players
+
+        %tr
+          %td
+            .price
+              .magnitude 50¢
+              .units per hour
+
+          %td
+            .bolt
+              .icon
+                = image_tag 'bolt.svg', width: 24, height: 40
+                = image_tag 'bolt.svg', width: 24, height: 40
+              2 bolts
+
+          - Funpack.count.times.each do
+            %td
+              20
+              %br
+              %i.muted players
+
+        %tr
+          %td
+            .price
+              .magnitude 75¢
+              .units per hour
+
+          %td
+            .bolt
+              .icon
+                = image_tag 'bolt.svg', width: 24, height: 40
+                = image_tag 'bolt.svg', width: 24, height: 40
+                = image_tag 'bolt.svg', width: 24, height: 40
+              3 bolts
+
+          - Funpack.count.times.each do
+            %td
+              50
+              %br
+              %i.muted players
+
+    %center Still not enough? Email us.

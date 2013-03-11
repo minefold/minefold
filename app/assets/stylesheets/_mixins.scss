@@ -1,7 +1,24 @@
 @include font-face(minecraft, font-path('minecraft'));
 
+// TODO Remove
 @mixin app-width($w: 12) {
   #app > .container {
     width: grid-width($w);
   }
+}
+
+@mixin font-smoothing($type) {
+  -webkit-font-smoothing: $type;
+}
+
+@mixin container($container-width: $width) {
+  width: $container-width;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@mixin box() {
+  background-color: white;
+  border-radius: $radius;
+  box-shadow: 0 0 3px 0 rgba(black, 0.2);
 }

@@ -1,36 +1,38 @@
 - title  'Help Center'
-- layout :support
+- layout :page
 = track "Viewed help"
 - intercom_activator '.ActivateIntercom'
 
-.container
-  .page-header
-    %h1 Help Center
-    %h2 Fast answers to your questions.
+%article.page.box
+  %header.page-header.multiline
+    %h1 Help & Support
+    %p Fast answers to your questions.
 
-  .support-faq.row#support-getting-started
-    %h2.name.span3 Getting Started
+  / %aside.page-aside.pull-left
+  /   %h2.name.span3 Getting Started
 
-    .items.span7
-      .item
-        %h3.question Do you have to have Minecraft?
-        .answer
-          %p Yes, you need a paid copy of Minecraft for the PC or Mac before you can play on Minefold servers. You can buy it from #{link_to 'http://minecraft.net/store', 'http://minecraft.net/store'}.
+  %section.page-section.pull-left
+    / .items.span7
+    %h2 Getting Started
+    .item
+      %h3.question Do you have to have Minecraft?
+      .answer
+        %p Yes, you need a paid copy of Minecraft for the PC or Mac before you can play on Minefold servers. You can buy it from #{link_to 'http://minecraft.net/store', 'http://minecraft.net/store'}.
 
-      .item
-        %h3.question Do you have to pay for Minecraft?
-        .answer
-          %p Yes. You can't play multiplayer with the demo of Minecraft.
+    .item
+      %h3.question Do you have to pay for Minecraft?
+      .answer
+        %p Yes. You can't play multiplayer with the demo of Minecraft.
 
-      .item
-        %h3.question How do I link my Minecraft account?
-        .answer
-          %p Visit your <a href="/settings">settings page</a> where you will find an option to link your Minecraft account.
+    .item
+      %h3.question How do I link my Minecraft account?
+      .answer
+        %p Visit your <a href="/settings">settings page</a> where you will find an option to link your Minecraft account.
 
-      .item
-        %h3.question “End of Stream” errors
-        .answer
-          %p There are a lots of causes of “end of stream” errors like running a modified client or a pre-release version of Minecraft. A good test is to see if you can connect to another (non-Minefold) server like <code>mc-lc.com</code>. If you can't then the problem is likely with your client. If you can connect to other servers please contact support.
+    .item
+      %h3.question “End of Stream” errors
+      .answer
+        %p There are a lots of causes of “end of stream” errors like running a modified client or a pre-release version of Minecraft. A good test is to see if you can connect to another (non-Minefold) server like <code>mc-lc.com</code>. If you can't then the problem is likely with your client. If you can connect to other servers please contact support.
 
 
   .support-faq.row#support-servers

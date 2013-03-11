@@ -8,8 +8,8 @@
   :javascript
     app.server = new App.Server(#{render(server, :format => :json)});
 
-.container
-  .page-header
+%article.page.box
+  %header.page-header
     .actions.pull-right
       - if signed_in?
         %ul.unstyled
@@ -120,7 +120,7 @@
             - href = nil
             - if account and account.user
               - href = user_path(account.user)
-              
+
             %a.avatar(data-toggle="tooltip"){title: username, href: href}
               = image_tag "//d3811j97z0k4bc.cloudfront.net/helm/#{username}/30.png", alt: username, width: 30, height: 30
 
@@ -150,7 +150,7 @@
             });
             app.serverAddressView.setElement($('#server-address-view-el'));
             app.serverAddressView.render();
-            
+
             $('.player-list .avatar').tooltip({animation: false})
 
         %dt Owner

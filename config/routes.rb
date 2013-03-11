@@ -28,6 +28,10 @@ Minefold::Application.routes.draw do
   # Legacy Zim callback
   post '/hooks/zim/map_deleted' => 'webhooks/zim#create'
 
+  get '/404' => 'errors#not_found'
+  get '/500' => 'errors#server_error'
+
+
 # --
 
 

@@ -3,11 +3,11 @@
 
 <%= track_landing_type :map %>
 
-<% provide(:foo_bar) do %>
-  <div class="navbar-text">
+<% provide(:header) do %>
+ <!--  <div class="navbar-text"> -->
     Back to
     <%= link_to(server.name, server_path(server)) %>
-  </div>
+ <!--  </div> -->
 <% end %>
 
 <div id="map-view-el" class="map-view"></div>

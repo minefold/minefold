@@ -1,4 +1,5 @@
 $geometric: "futura-pt-1","futura-pt-2", "Century Gothic", "Tw Cen MT", "Futura LT", Futura, "URW Gothic L", $helvetica;
+$futura: $geometric;
 $monospace: Consolas, "Bitstream Vera Sans Mono", "Andale Mono", Monaco, "DejaVu Sans Mono", "Lucida Console", monospace;
 $pictos: "Pictos Custom";
 
@@ -8,6 +9,8 @@ $brand-blue: #47C;
 $brand-darkBlue: #136;
 $brand-yellow: #FD8;
 $brand-green: #4B5;
+
+$brand-bg: #f4f6f8;
 
 $brand-lightGray: darken(white, 20%);
 $brand-darkGray: lighten(black, 20%);
@@ -34,6 +37,8 @@ $gw-column: 60px;
 $gw-gutter: 20px;
 
 $radius: 2px;
+
+$width: grid-width($ncols);
 
 @function l($n: 1) {
   @return $n * $line;

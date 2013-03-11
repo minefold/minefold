@@ -1,0 +1,30 @@
+.page {
+  @include clearfix;
+  padding: l(4) g(4);
+
+  color: $brand-darkGray;
+  font: 16px/#{l(2.5)} $helvetica;
+
+  &.box {
+    @include box;
+
+    .jumbotron + & {
+      margin-top: l(-4 - 2);
+      // Positions the page on top of the jumbotron
+      position: relative;
+    }
+
+    .jumbotron + &.overlap {
+      margin-top: l(- (12 + 4));
+    }
+  }
+
+  .page-section {
+    @include box-sizing(border-box);
+    width: grid-width(8);
+  }
+
+  .page-aside {
+    width: grid-width(4);
+  }
+}

@@ -1,0 +1,17 @@
+@import 'modules/header',
+        'modules/footer',
+        'modules/error_block';
+
+.l-clean {
+  background-color: white;
+}
+
+.l-clean .header-global {
+  border-bottom: 1px solid rgba(black, 0.1);
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.l-clean footer {
+  border-top: 1px solid rgba(black, 0.1);
+}

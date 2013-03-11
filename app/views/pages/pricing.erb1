@@ -1,0 +1,84 @@
+<% title 'Pricing' %>
+<% layout :pricing %>
+<%= track 'View pricing' %>
+
+<script src="https://raw.github.com/EightMedia/hammer.js/master/dist/jquery.hammer.js"></script>
+
+<center>
+<div class="definition">
+  Servers are powered by
+  <span class="product-image"></span>
+  <span class="product">Bolts</span>.
+
+  One Bolt costs
+  <span class="price">25¢</span>
+  <span class="frequency">per hour</span>.
+</div>
+</center>
+
+<div class="container">
+<div class="estimator">
+
+
+  Playing
+  <select id="poop" data-value="tangle.game">
+    <% Funpack.all.each do |funpack| %>
+      <option><%= funpack.name %></option>
+    <% end %>
+  </select>
+  with
+  <span id="makeshithappen"> people</span>
+  for
+  <input type="range" min="1" step="1" data-value="tangle.hours" /><span data-text="tangle.hours"></span> hours
+  will cost
+  <strong>$<span data-text="tangle:amount < .game .people .hours .rate"></span></strong>.
+
+  <br>
+  <br>
+  <br>
+  <input type="range" min="0" max="5" step="0.05" data-value="tangle.rate"/> $<span data-text="tangle.rate"/>
+</div>
+</div>
+<style>
+#makeshithappen {
+  cursor: ew-resize;
+}
+</style>
+
+<% content_for :tail do %><script>
+
+var dragging = false;
+
+function dragStart(e) {
+  e.preventDefault();
+  dragging = e.target;
+  console.log(dragging);
+}
+
+function dragFinish(e) {
+  if (dragging) {
+    e.preventDefault();
+    dragging = false;
+    console.log('up');
+  }
+}
+
+function drag(e) {
+  console.log(e);
+}
+
+// $('#makeshithappen').on('mousedown touch', dragStart);
+// $(document).on('mouseup release', dragFinish);
+
+function stop(e) { e.preventDefault(); };
+
+$('#makeshithappen').on('mousedown dragstart', stop).on('drag', drag);
+
+
+
+</script><% end %>
+
+
+
+
+
