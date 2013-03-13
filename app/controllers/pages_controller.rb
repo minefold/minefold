@@ -10,6 +10,9 @@ class PagesController < ApplicationController
   def developers
   end
 
+  def features
+  end
+
   def time
     @small_coin_pack = CoinPack.active.first
   end

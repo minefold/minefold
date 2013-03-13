@@ -7,16 +7,6 @@
 
   &.box {
     @include box;
-
-    .jumbotron + & {
-      margin-top: l(-4 - 2);
-      // Positions the page on top of the jumbotron
-      position: relative;
-    }
-
-    .jumbotron + &.overlap {
-      margin-top: l(- (12 + 4));
-    }
   }
 
   .page-section {
@@ -25,6 +15,43 @@
   }
 
   .page-aside {
+    @include pull-right;
     width: grid-width(4);
+    margin-left: $gw-gutter;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @include font-smoothing(antialiased);
+  }
+
+  h2 {
+    color: $brand-darkGray;
+    text-transform: uppercase;
+    font-size: 20px;
+    line-height: l(3);
+    margin-top: l(2);
+    margin-bottom: l(1);
+    letter-spacing: 0.1em;
+    font-weight: 600;
+  }
+
+  h3 {
+    color: $brand-darkGray;
+    font-size: 20px;
+    line-height: l(3);
+    margin-bottom: l(1);
+  }
+
+}
+
+.page.page-narrow {
+  width: grid-width(10);
+
+  .page-section {
+    width: grid-width(7);
+  }
+
+  .page-aside {
+    width: grid-width(3);
   }
 }

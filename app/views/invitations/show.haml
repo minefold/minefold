@@ -1,8 +1,8 @@
 - title 'Your invitation page'
 - layout :invitations
 
-.container
-  .jumbotron
+%article.page.box
+  .page-header
     %h1 Invite your friends!
 
     %p For every friend who joins Minefold, we'll give you #{pluralize Bonuses::ReferredFriend.coins, 'minute', 'minutes'} and your friend #{pluralize Bonuses::Referred.coins, 'minute', 'minutes'} bonus (up to a limit of #{pluralize Bonuses::ReferredFriend.coin_limit, 'minute', 'minutes'})!

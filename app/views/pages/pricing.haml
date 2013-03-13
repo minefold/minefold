@@ -3,8 +3,9 @@
 = track 'Viewed pricing'
 
 .jumbotron
-  %h1 Pay when you play
-  %h2 Your first #{pluralize Bonuses::GettingStarted.coins, 'minute', 'minutes'} are free.
+  .jumbotron-inner
+    %h1 Pay when you play
+    %h2 Your first #{pluralize Bonuses::GettingStarted.coins, 'minute', 'minutes'} are free.
 
 %article.page.box
   .coin-pack-list.row

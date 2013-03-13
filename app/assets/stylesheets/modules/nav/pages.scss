@@ -1,0 +1,24 @@
+.nav-pages {
+  > ul {
+    list-style-type: none;
+
+    > li {
+      > a {
+        display: block;
+        line-height: l(2);
+        padding: l(1) g();
+      }
+    }
+
+    > li.active {
+      > a {
+        color: $brand-darkBlue;
+        font-weight: 600;
+      }
+    }
+
+    > li:last-child > a {
+      border-bottom: 0;
+    }
+  }
+}

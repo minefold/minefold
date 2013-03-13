@@ -1,10 +1,10 @@
 - title  'Sign in'
 - layout :auth
 
-.container
+%article.page.box.narrow
   .row
-    .span3.offset4
-      %center.page-header
+    .span4.offset4
+      %header.page-header
         %h1 Sign in
 
       = form_for :user, as: :user, url: session_path(:user), class: %w(form-horizontal) do |f|

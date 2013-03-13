@@ -1,28 +1,41 @@
 .jumbotron {
-  text-align: center;
-  margin-bottom: l(4);
+  position: relative;
+  background-color: $brand-bg;
 
   @include font-smoothing(antialiased);
 
-  h1 {
-    // RESET
-    margin: 0;
+  .jumbotron-cover {
+    position: absolute;
+    z-index: 0;
+  }
 
-    padding-top: l(4);
-    font: 600 64px/#{l(8)} #{$geometric};
-    padding-bottom: l(4);
+  .jumbotron-inner {
+    @include container;
+    position: relative;
+    z-index: 1;
+
+    padding-top: l(6);
+    padding-bottom: l(6);
+  }
+
+  h1 {
+    color: $brand-blue;
+    font: 600 36px/#{l(4)} #{$geometric};
   }
 
   h2 {
+    font-size: 24px;
+  }
+
+  p {
     // RESET
     margin-top: 0; margin-bottom: 0;
 
-    color: $brand-darken;
-    font: 500 28px/#{l(3)} $geometric;
+    color: $brand-lighten;
+    font: 400 20px/#{l(3)} $geometric;
   }
+}
 
-  h1 + h2 {
-    margin-top: l(-2);
-    padding-bottom: l(4);
-  }
+.jumbotron.jumbotron-narrow .jumbotron-inner {
+  width: grid-width(10);
 }

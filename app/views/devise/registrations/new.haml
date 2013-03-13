@@ -1,16 +1,15 @@
 - title  'Create your account'
 - layout :devise
 
-%article.page
+%article.page.box
   %center.page-header
     %h1 Sign up for Minefold
 
-  - @invited_by = User.first
   - if @invited_by
     = track 'Viewed invitation'
 
     .invitation-message.row
-      .avatar.span1
+      .avatar.span1.offset2
         = image_tag @invited_by.avatar.medium.url, width: 60, class: 'img-circle'
       .message.span7
         %p Hi! Thanks for joining me here on Minefold. I run servers for games like Minecraft here. When you sign up you'll get an extra <strong>#{pluralize Bonuses::Referred.coins, 'coin', 'coins'}</strong> because I referred you.

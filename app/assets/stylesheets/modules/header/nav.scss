@@ -6,9 +6,7 @@
 
     li {
       float: left;
-
-      line-height: l(4);
-      font-size: 16px;
+      font: 400 14px/#{l(4)} $helvetica;
 
       a {
         padding: 0 g(1);

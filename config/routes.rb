@@ -39,6 +39,7 @@ Minefold::Application.routes.draw do
 
   { '/about'   => :about,
     '/developers' => :developers,
+    '/features' => :features,
     '/time'    => :time,
     '/home'    => :home,
     '/pricing' => :pricing,

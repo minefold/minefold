@@ -20,5 +20,12 @@
 @mixin box() {
   background-color: white;
   border-radius: $radius;
-  box-shadow: 0 0 3px 0 rgba(black, 0.2);
+}
+
+@mixin pull-left() {
+  float: left;
+}
+
+@mixin pull-right() {
+  float: right;
 }
