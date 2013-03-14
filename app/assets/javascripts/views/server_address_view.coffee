@@ -10,32 +10,23 @@ class App.ServerAddressView extends Backbone.View
     @model.on('change:address', @render)
 
   render: =>
-    address = @$('.server-address').popover()
     connectBtn = @$('.btn.connect')
+    address = @$('.server-address')
         
-    if @model.get('address')? and @model.get('address') != ''
+    if address.val()? and address.val() != ''
+      address.popover()
       @$el.addClass('is-connectable')
       address.text(@model.get('address'))
       connectBtn.attr(href: @model.steamConnectUrl())
+      connectBtn.show()
 
     else
       @$el.removeClass('is-connectable')
-      address.text("No address")
-      connectBtn.attr(href: null)
+      address.val("No address")
+      connectBtn.hide()
 
-    connectBtn.toggle(@model.get('steamId')?)
+    if !@model.get('steamId')?
+      connectBtn.hide()
 
   click: =>
     @$('.server-address').select()
-    
-  selectText: (element) ->
-      if document.body.createTextRange # ie
-          range = document.body.createTextRange()
-          range.moveToElementText(element)
-          range.select()
-      else if window.getSelection # moz, opera, webkit
-          selection = window.getSelection()
-          range = document.createRange()
-          range.selectNodeContents(element)
-          selection.removeAllRanges()
-          selection.addRange(range)
