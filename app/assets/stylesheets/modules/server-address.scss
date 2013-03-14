@@ -1,5 +1,12 @@
-.server-address {
+input.server-address {
   font-family: $monospace;
+  width: 280px;
+  margin-left: -10px;
+  font-size: 12px;
+}
+
+.server-address:hover {
+  cursor: pointer;
 }
 
 .server-address-view {

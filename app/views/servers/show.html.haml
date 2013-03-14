@@ -139,19 +139,7 @@
 
       %dl
         %dt Address
-        %dd#server-address-view-el.server-address-view
-          .server-address.pull-left= server.address
-          %a.connect.btn.btn-success.btn-small.pull-right Connect to this server
-
-        - content_for :tail do
-          :javascript
-            app.serverAddressView = new App.ServerAddressView({
-              model: app.server
-            });
-            app.serverAddressView.setElement($('#server-address-view-el'));
-            app.serverAddressView.render();
-            
-            $('.player-list .avatar').tooltip({animation: false})
+        %dd#server-address-view-el.server-address-view= render partial: 'server_address', locals: {server: server}
 
         %dt Owner
         %dd= server.creator.username
