@@ -16,7 +16,7 @@ class App.ServerAddressView extends Backbone.View
     if address.val()? and address.val() != ''
       address.popover()
       @$el.addClass('is-connectable')
-      address.text(@model.get('address'))
+      address.val(@model.get('address'))
       connectBtn.attr(href: @model.steamConnectUrl())
       connectBtn.show()
 
