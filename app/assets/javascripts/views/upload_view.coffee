@@ -4,7 +4,8 @@ class App.UploadView extends Backbone.View
   @maxFileSize: 1 * 1024 * 1024 * 1024 # 1 Gb
 
   events:
-    'change input.upload': 'change'
+    'change input.upload':    'upload'
+    'click input#url-submit': 'urlEntered'
 
   initialize: ({@sign_url, @post_upload_url, @pusher_chan, @progress_factor}) ->
     channel = window.pusher.subscribe(@pusher_chan)
@@ -14,16 +15,16 @@ class App.UploadView extends Backbone.View
     channel.bind 'success', =>
       @$('.help-block').hide()
       @$('.progress').addClass('progress-success')
-      @$('.progress .bar').css(width: "100%")
+      @$('.progress .bar').css(width: "100%").addClass('bar-success')
       @$('.success-help-block').show()
-      window.location.reload()
+      $(window).off 'beforeunload', unloadMsg
 
     channel.bind 'error', @error
 
   render: ->
     @$('.progress').hide()
 
-  change: ->
+  upload: ->
     filename = @$('input[type=file]').val()
 
     new S3Upload
@@ -31,14 +32,21 @@ class App.UploadView extends Backbone.View
       file_dom_selector: 'input.upload'
       s3_sign_put_url: @sign_url
       onProgress: @progress
-      onFinishS3Put: @complete
+      onFinishS3Put: @uploadComplete
       onError: @error
 
-    @start(filename)
+    @start()
+  
+  urlEntered: ->
+    url = @$('input#url').val()
+    @start()
+    @progress(50)
+    @uploadComplete(url)
 
   unloadMsg = -> 'Your upload will be lost.'
 
-  start: (filename) =>
+  start: () =>
+    @$('.upload-controls').hide()
     @$('.help-block').hide()
     @$('input[type=file]').hide()
     @$('.uploading-help-block').show()
@@ -52,6 +60,7 @@ class App.UploadView extends Backbone.View
     false
 
   error: (msg) =>
+    @$('upload-controls').show()
     @$('input[type=file]').show()
     @$('.help-block').hide()
     @$('.error-help-block .reason').text(msg)
@@ -63,10 +72,9 @@ class App.UploadView extends Backbone.View
 
     @trigger 'error'
 
-  complete: (url) =>
+  uploadComplete: (url) =>
     @$('.help-block').hide()
     @$('.processing-help-block').show()
-    $(window).off 'beforeunload', unloadMsg
 
     $.ajax
       type: 'POST'

@@ -129,7 +129,7 @@
 
   .row
     .span2
-      %strong Snapshots
+      %strong Backups
 
     .span6
       - if server.world
@@ -147,18 +147,11 @@
             by #{parent.creator.username}.
 
       - else
-        %p.muted Server doesn't have any snapshots.
+        %p.muted Server doesn't have any backups.
 
-    / --
-
-  - if server.funpack.imports?
-    .row
+    - if server.funpack.imports?
       .span2
-        %strong Import data
       .span6= render partial: 'upload', locals: {server: server}
-
-
-  / --
 
 
   - if can? :destroy, server

@@ -1,27 +1,38 @@
 .control-group#uploads
-  .controls
+  .upload-controls
+    %label.control-label
+      %strong Zip Url
+
+    .input-append
+      %input#url.span5(type="text" name="uploadsurl[]" placeholder="http://example.com/minecraft.zip")
+      %input#url-submit.btn(type="button" value="Go")
+      
+      
+    %label.control-label
+      %strong Upload Zip File
+  
     %input.upload(type="file" name="uploads[]")
 
-    %p.help-block.error-help-block{hidden}
-      There was a problem with the file.
-      %span.reason
+  %p.help-block.error-help-block{hidden}
+    There was a problem with the file.
+    %span.reason
 
-    %p.help-block.uploading-help-block{hidden}
-      Uploading…
-      %strong.filename
-      %span.step
+  %p.help-block.uploading-help-block{hidden}
+    Uploading…
+    %strong.filename
+    %span.step
 
-    %p.help-block.processing-help-block{hidden}
-      Processing…
-      %strong.filename
-      %span.step
+  %p.help-block.processing-help-block{hidden}
+    Processing…
+    %strong.filename
+    %span.step
 
-    %p.help-block.success-help-block{hidden}
-      Successfully imported
-      %span.filename
+  %p.help-block.success-help-block{hidden}
+    %strong Successfully imported
+    %span.filename
 
-    .progress
-      .bar{style: 'width:0%'}
+  .progress
+    .bar{style: 'width:0%'}
 
   .help-block
     - case os
