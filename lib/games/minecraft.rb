@@ -25,7 +25,7 @@ class Minecraft < Game
   end
 
   def default_access_policy
-    MinecraftBlacklistAccessPolicy
+    MinecraftWhitelistAccessPolicy
   end
 
   def available_access_policies
