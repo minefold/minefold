@@ -33,7 +33,7 @@ class MinecraftWhitelistAccessPolicy < GameAccessPolicy
   end
 
   def data
-    @server.settings['whitelist'].split("\r\n")
+    (@server.settings['whitelist'] || '').split("\r\n")
   end
 
 end
@@ -45,7 +45,7 @@ class MinecraftBlacklistAccessPolicy < GameAccessPolicy
   end
 
   def data
-    @server.settings['blacklist'].split("\r\n")
+    (@server.settings['blacklist'] || '').split("\r\n")
   end
 
 end
