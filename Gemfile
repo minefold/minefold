@@ -51,6 +51,9 @@ gem 'rest-client'
 gem 'state_machine', require: 'state_machine/core'
 gem 'omniauth-steam', require: ['omniauth-openid', 'omniauth-steam']
 
+gem 'activerecord-postgres-hstore'
+gem 'postgres_ext'
+
 gem 'brock', github: 'minefold/brock', branch: 'master'
 
 group :test, :development do

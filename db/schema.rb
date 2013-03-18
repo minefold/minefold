@@ -11,7 +11,9 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130221234424) do
+ActiveRecord::Schema.define(:version => 20130317211731) do
+
+  add_extension "hstore"
 
   create_table "accounts", :force => true do |t|
     t.string   "type"
@@ -113,6 +115,12 @@ ActiveRecord::Schema.define(:version => 20130221234424) do
   add_index "gifts", ["parent_id"], :name => "index_gifts_on_parent_id"
   add_index "gifts", ["token"], :name => "index_gifts_on_token"
 
+  create_table "maps", :force => true do |t|
+    t.integer  "server_id"
+    t.datetime "rendered_at"
+    t.hstore   "data"
+  end
+
   create_table "memberships", :force => true do |t|
     t.integer  "user_id"
     t.integer  "server_id"
@@ -131,6 +139,9 @@ ActiveRecord::Schema.define(:version => 20130221234424) do
     t.datetime "ended_at"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
+    t.string   "nick"
+    t.integer  "user_id"
+    t.integer  "server_id"
   end
 
   create_table "posts", :force => true do |t|
@@ -150,6 +161,9 @@ ActiveRecord::Schema.define(:version => 20130221234424) do
     t.datetime "ended_at"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "user_id"
+    t.inet     "ip"
+    t.integer  "port"
   end
 
   add_index "server_sessions", ["server_id"], :name => "index_sessions_on_server_id"
@@ -180,6 +194,11 @@ ActiveRecord::Schema.define(:version => 20130221234424) do
   add_index "servers", ["deleted_at", "creator_id"], :name => "index_servers_on_deleted_at_and_creator_id"
   add_index "servers", ["deleted_at", "host", "port"], :name => "index_servers_on_deleted_at_and_host_and_port"
   add_index "servers", ["party_cloud_id"], :name => "index_servers_on_party_cloud_id", :unique => true
+
+  create_table "snapshots", :force => true do |t|
+    t.integer "server_id"
+    t.string  "party_cloud_id"
+  end
 
   create_table "stars", :id => false, :force => true do |t|
     t.integer "user_id"
@@ -222,8 +241,8 @@ ActiveRecord::Schema.define(:version => 20130221234424) do
     t.datetime "deleted_at"
     t.string   "invitation_token",       :limit => 12
     t.integer  "invited_by_id"
-    t.string   "verification_token",     :limit => 12
     t.boolean  "beta",                                 :default => false
+    t.string   "verification_token",     :limit => 12
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
