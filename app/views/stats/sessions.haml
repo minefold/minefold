@@ -1,5 +1,5 @@
 
-#container(style="width: 800px; height: 400px; margin: 0 auto")
+#container(style="width: 1024px; height: 400px; margin: 0 auto")
 
 - content_for :tail do
   %script{src: '//cdnjs.cloudflare.com/ajax/libs/highcharts/2.3.5/highcharts.js'}
@@ -31,7 +31,7 @@
                 },
                 plotOptions: {
                     column: {
-                        pointPadding: 0.2,
+                        pointPadding: 0,
                         borderWidth: 0
                     }
                 },
@@ -43,3 +43,12 @@
         });
 
     });
+
+.container
+  %table
+    %tr
+      %th Mean
+      %td= "%.02f" % @mean
+    %tr
+      %th Standard Deviation
+      %td= "%.02f" % @stdev

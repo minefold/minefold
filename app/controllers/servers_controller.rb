@@ -51,6 +51,9 @@ class ServersController < ApplicationController
   def show
   end
 
+  def logs
+  end
+
   def edit
     authorize! :update, server
   end

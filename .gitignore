@@ -14,3 +14,5 @@ dump
 coverage
 
 app/views/pages/playground.haml
+.dev
+.prod

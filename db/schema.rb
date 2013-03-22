@@ -241,8 +241,8 @@ ActiveRecord::Schema.define(:version => 20130317211731) do
     t.datetime "deleted_at"
     t.string   "invitation_token",       :limit => 12
     t.integer  "invited_by_id"
-    t.boolean  "beta",                                 :default => false
     t.string   "verification_token",     :limit => 12
+    t.boolean  "beta",                                 :default => false
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

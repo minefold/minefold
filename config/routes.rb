@@ -105,6 +105,7 @@ Minefold::Application.routes.draw do
       member do
         post :start
         post :stop
+        get :logs
 
         controller 'servers/watchers' do
           post 'watch', :action => :create
