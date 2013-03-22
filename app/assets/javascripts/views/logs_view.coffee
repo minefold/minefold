@@ -55,8 +55,11 @@ class App.LogsView extends Backbone.View
   transferCanceled: (e) => console.log 'canceled', e
 
   toLogFmt: (o) =>
-    window.o = o
-    ts = "<span class=\"ts\">#{Date.parse(o.ts).toString('yyyy-MM-dd hh:mm:ss')}</span>"
+    tsDate = Date.parse(o.ts)
+    if tsDate
+      ts = "<span class=\"ts\">#{tsDate.toString('yyyy-MM-dd hh:mm:ss')}</span>"
+    else
+      ts = ''
     delete o.ts
     
     event = o.event
