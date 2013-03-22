@@ -26,7 +26,7 @@ class App.LogsView extends Backbone.View
     onError = (e) =>
       @code.text('Connection Error')
     
-    @stream "http://Wn8Go8bmurXos5XZyuhJ:@#{@endpoint}/servers/1/logs", onChunk, onError
+    @stream "//#{@endpoint}/servers/1/logs", onChunk, onError
 
 
   stream: (url, onChunk, onError) =>
