@@ -8,7 +8,11 @@
   %script(src="//cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js")
 
   :javascript
-    app.logsView = new App.LogsView({u: '#{current_user.authentication_token}', endpoint: '#{ENV['MINEFOLD_API']}'});
+    app.logsView = new App.LogsView({
+      serverId: '#{server.id}',
+      u: '#{current_user.authentication_token}', 
+      endpoint: '#{ENV['MINEFOLD_API']}'
+    });
     app.logsView.setElement($('#logs'));
     app.logsView.render();
 
