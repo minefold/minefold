@@ -1,14 +1,15 @@
-class AddToNewslettersJob < Job
+class AddToMailingListJob < Job
   @queue = :low
 
-  attr_reader :user
+  attr_reader :user, :list
 
-  def initialize(user_id)
+  def initialize(user_id, list)
     @user = User.unscoped.find(user_id)
+    @list = list
   end
 
   def perform
-    add_to_mailgun_list('newsletters', user.email, user.name || user.username)
+    add_to_mailgun_list(list, user.email, user.name || user.username)
   end
 
   def add_to_mailgun_list(list, email, name)

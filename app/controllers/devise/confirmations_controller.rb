@@ -20,7 +20,7 @@ class Devise::ConfirmationsController < DeviseController
     self.resource = resource_class.confirm_by_token(params[:confirmation_token])
 
     if resource.errors.empty?
-      Resque.enqueue(AddToNewslettersJob, self.resource.id)
+      Resque.enqueue(AddToMailingListJob, self.resource.id, 'newsletters')
 
       set_flash_message(:notice, :confirmed) if is_navigational_format?
       sign_in(resource_name, resource)
