@@ -9,7 +9,7 @@ class AddToMailingListJob < Job
   end
 
   def perform
-    add_to_mailgun_list(list, user.email, user.name || user.username)
+    add_to_mailgun_list(list, user.email, (u.name.blank? ? u.username : u.name))
   end
 
   def add_to_mailgun_list(list, email, name)
