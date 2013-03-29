@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_mixpanel_distinct_id
   before_filter :set_invitation_token
   before_filter :set_timezone
+  before_filter :warn_unconfirmed
 
   before_bugsnag_notify :add_user_info_to_bugsnag
 
@@ -72,6 +73,12 @@ private
   def set_timezone
     min = (request.cookies["time_zone"] || 0).to_i
     Time.zone = ActiveSupport::TimeZone[-min.minutes]
+  end
+
+  def warn_unconfirmed
+    if !current_user.confirmed?
+      flash[:notice] = "A message with a confirmation link has been sent to your email address. Please open the link to activate your account. <a href=\"/user/confirmation/new\">Resend confirmation</a>".html_safe
+    end
   end
 
 
