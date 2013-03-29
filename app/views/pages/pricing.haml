@@ -17,6 +17,7 @@
         %input{type: 'hidden', name: 'coin_pack_id', value: pack.id}
         %input{type: 'hidden', name: 'stripeToken'}
 
+        .old-price= number_to_currency(pack.cents / 0.80 / 100, precision: 0)
         .price= number_to_currency(pack.cents / 100, precision: 0)
         .coins Play for #{number_with_delimiter(pack.shared_hours)} hours
 
