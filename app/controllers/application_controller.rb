@@ -76,7 +76,7 @@ private
   end
 
   def warn_unconfirmed
-    if !current_user.confirmed?
+    if current_user and !current_user.confirmed?
       flash[:notice] = "A message with a confirmation link has been sent to your email address. Please open the link to activate your account. <a href=\"/user/confirmation/new\">Resend confirmation</a>".html_safe
     end
   end
