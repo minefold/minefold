@@ -2,10 +2,18 @@
 
   .jumbotron {
     background-color: $brand-green;
+    margin-bottom: 0px;
 
     h1 {
       color: white;
     }
+  }
+  
+  .salotron {
+    background-color: $brand-yellow;
+    text-align: center;
+    padding: $gw-gutter 0;
+    margin-bottom: $gw-gutter;
   }
 
   .coin-pack-list {
