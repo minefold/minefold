@@ -24,7 +24,9 @@ CoinPack.blueprint do
 end
 
 Funpack.blueprint do
+  game { GAMES.find('team-fortress-2') }
   name { Faker::Company.name }
+  settings_schema { {} }
 end
 
 Server.blueprint do
@@ -37,6 +39,9 @@ end
 World.blueprint do
   server
   last_mapped_at { Time.now }
+end
+
+Bonuses::ReferredFriend.blueprint do
 end
 
 

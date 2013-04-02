@@ -51,7 +51,7 @@ gem 'rest-client'
 gem 'state_machine', require: 'state_machine/core'
 gem 'omniauth-steam', require: ['omniauth-openid', 'omniauth-steam']
 
-gem 'activerecord-postgres-hstore'
+gem 'activerecord-postgres-hstore', git: 'git://github.com/softa/activerecord-postgres-hstore.git'
 gem 'postgres_ext'
 
 gem 'brock', github: 'minefold/brock', branch: 'master'

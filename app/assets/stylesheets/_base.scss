@@ -181,3 +181,7 @@ textarea:focus {
     background-color: #5eb95e;
   }
 }
+
+.wide {
+  width: grid-width(8);
+}

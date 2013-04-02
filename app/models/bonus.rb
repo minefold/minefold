@@ -17,7 +17,6 @@ class Bonus < ActiveRecord::Base
     name.demodulize.underscore.humanize
   end
 
-
   def validate_claimable?
     errors.add(:base, 'Not claimable') unless claimable?
   end
@@ -35,6 +34,11 @@ class Bonus < ActiveRecord::Base
     track!
   end
 
+  def description
+    ''
+  end
+
+  serialize :data, ActiveRecord::Coders::Hstore
 
 # private
 

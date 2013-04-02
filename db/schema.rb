@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130317211731) do
+ActiveRecord::Schema.define(:version => 20130331005526) do
 
   add_extension "hstore"
 
@@ -44,6 +44,9 @@ ActiveRecord::Schema.define(:version => 20130317211731) do
     t.integer  "user_id",    :null => false
     t.datetime "created_at", :null => false
     t.integer  "coins"
+    t.integer  "state"
+    t.hstore   "data"
+    t.datetime "updated_at", :null => false
   end
 
   add_index "bonuses", ["type", "user_id"], :name => "index_bonus_claims_on_bonus_type_and_user_id"

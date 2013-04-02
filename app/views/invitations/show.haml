@@ -9,6 +9,14 @@
 
   %center
 
+    = form_for(:referral, :url => invitations_path, :method => :post) do |f|
+      .control-group
+        .controls
+          = f.text_area :emails, placeholder: 'Email addresses. One on each line', class: 'wide', rows: 3
+
+        = f.submit 'Send invitations', class: %w(btn btn-primary)
+
+
     %p
       %a.btn.btn-info.btn-large.btn-twitter{href: "https://twitter.com/share?url=#{URI.encode(url_for(only_path: false))}", target: '_blank', data: {icon: 'T'}} Tweet on Twitter
       %a.btn.btn-primary.btn-large.btn-facebook#share-on-facebook-btn{style: 'margin-left:10px', data: {icon: 'F'}} Share on Facebook
@@ -23,6 +31,9 @@
 
     %pre
       %code= url_for(only_path: false)
+
+    %p
+      = link_to 'View your referral status', bonus_account_path
 
   - content_for :tail do
     :javascript

@@ -1,0 +1,23 @@
+- title 'Your invitation page'
+- layout :invitations
+
+.container
+  .jumbotron
+    %h1 Bonuses Claimed
+
+  %table.table
+    %thead
+      %tr
+        %th Bonus Type
+        %th
+        %th Updated
+        %th Earned
+
+    %tbody
+      - for bonus in current_user.bonuses.order('created_at desc')
+        %tr
+          %td= bonus.class.pretty_name
+          %td= bonus.description
+          %td== #{time_ago_in_words bonus.created_at} ago
+          %td== #{bonus.coins} minutes
+

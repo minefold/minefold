@@ -79,9 +79,15 @@ Minefold::Application.routes.draw do
     get '/settings' => 'devise/registrations#edit', :as => :edit_user_registration
 
     get '/i/:invitation_token' => 'invitations#show', :as => :invitation
+    
+    resources :invitations, only: [:create]
 
     resources :accounts do
       get :link_mojang, :on => :collection
+    end
+
+    resource :account, only:[] do
+      get :bonus
     end
 
     resources :gifts do

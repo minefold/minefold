@@ -17,7 +17,7 @@ describe Webhooks::ZimController do
         date: Time.now.to_i
       }
 
-      raw_post :map_deleted, {}, payload.to_json
+      raw_post :create, {}, payload.to_json
 
       assigns(:server).reload.world.should be_nil
     end
