@@ -10,9 +10,13 @@ json.(map,
 )
 
 json.spawn do
-  spawn = map.map_data['spawn']
-
-  json.x spawn['x']
-  json.y spawn['y']
-  json.z spawn['z']
+  if spawn = map.map_data['spawn']
+    json.x spawn['x']
+    json.y spawn['y']
+    json.z spawn['z']
+  else
+    json.x 0
+    json.y 0
+    json.z 0
+  end
 end
