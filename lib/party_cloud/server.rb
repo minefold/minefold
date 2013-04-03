@@ -31,7 +31,8 @@ module PartyCloud
         region:  '71519ec0-1515-42b9-b2f6-a24c151a6247',
         name:    name
       )
-      new(JSON.parse(response)['id'])
+      payload = JSON.parse(response)
+      new(payload['legacy_id'] || payload['id'])
     end
 
     def initialize(id)
