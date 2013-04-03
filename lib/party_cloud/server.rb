@@ -27,7 +27,6 @@ module PartyCloud
       url = "http://#{ENV['PARTY_CLOUD_TOKEN']}@api.partycloud.com/servers"
       response = RestClient.post(url,
         funpack: legacy_funpack_mapping[funpack.party_cloud_id],
-        funpack: '9ed10c25-60ed-4375-8170-29f9365216a0',
         region:  '71519ec0-1515-42b9-b2f6-a24c151a6247',
         name:    name
       )
