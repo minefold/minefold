@@ -13,8 +13,6 @@ class Server < ActiveRecord::Base
 
   belongs_to :creator, class_name: 'User', :inverse_of => :created_servers
 
-  validates_presence_of :party_cloud_id
-
   belongs_to :funpack
   validates_presence_of :funpack
 
