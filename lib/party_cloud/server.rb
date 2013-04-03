@@ -31,7 +31,7 @@ module PartyCloud
         name:    name
       )
       payload = JSON.parse(response)
-      new(payload['legacy_id'] || payload['id'])
+      new(payload['legacyId'] || payload['id'])
     end
 
     def initialize(id)
