@@ -34,9 +34,10 @@ class ServersController < ApplicationController
     server.creator = current_user
     server.users << current_user
 
-    server.party_cloud_id ||= PartyCloud::Server.create.id
-
     if server.save
+      server.party_cloud_id ||= PartyCloud::Server.create(server.funpack, server.name).id
+      server.save
+
       track server.creator.distinct_id, 'Created server',
         name: server.name,
         url: server_url(server),
