@@ -1,37 +1,60 @@
-- title 'Pricing'
+- title 'Plans'
 - layout :pricing
 = track 'Viewed pricing'
 
 .jumbotron
-  %h1 Pay when you play
+  %h1 Subscription Plans
   %h2 Your first #{pluralize Bonuses::GettingStarted.coins, 'minute', 'minutes'} are free.
 
 .salotron
-  %h2 SALE! 20% off until April 20th
+  %h2 SALE! $2.00 off until April 20th
 
 .container
-  .coin-pack-list.row
-    - @packs.each_with_index do |pack, i|
+  %table.table
+    %thead
+      %tr
+        %th
+        %th Minecraft
+        %th Team Fortress 2
 
-      = form_tag orders_path, method: 'POST', class: %w(coin-pack span3) do |f|
-        %input{type: 'hidden', name: 'coin_pack_id', value: pack.id}
+    %tbody
+      %tr
+        %th Bronze
+        %td 10 players
+        %td 24 players
+
+      %tr
+        %th Silver
+        %td 25 players
+        %td 32 players
+
+      %tr
+        %th Gold
+        %td 50 players
+        %td
+
+  .coin-pack-list.row
+    - Plan.all.each_with_index do |plan, i|
+
+      = form_tag subscriptions_path, method: 'POST', class: %w(coin-pack span3) do |f|
+        %input{type: 'hidden', name: 'plan_id', value: plan.id}
         %input{type: 'hidden', name: 'stripeToken'}
         %input{type: 'hidden', name: 'last4'}
 
-        .old-price= number_to_currency(pack.cents / 0.80 / 100, precision: 0)
-        .price= number_to_currency(pack.cents / 100, precision: 0)
-        .coins Play for #{number_with_delimiter(pack.shared_hours)} hours
-
-        .nopa
-          - if i != 0
-            .savings
-              You save
-              - p = @packs.first
-              #{number_to_percentage(100 * (1 - (pack.cents / pack.coins.to_f) / (p.cents / p.coins.to_f)), precision: 0)}!
-
+        .old-price= number_to_currency(plan.cents / 100.0, precision: 2)
+        .price= number_to_currency((plan.cents - 200) / 100.0, precision: 2)
 
         - if signed_in?
-          %a.btn.btn-block.btn-large.btn-stripe{href: '#', data: {id: pack.id, amount: pack.cents, coins: pack.coins, image: image_path("coin_packs/#{i+1}.png")}} Buy #{time_left(pack.coins)}
+          - current_plan = current_user.active_subscription? && current_user.subscription.plan
+          - if plan != current_plan
+            %a.btn.btn-block.btn-large.btn-stripe{href: '#', data: {id: plan.id, name: plan.name, amount: plan.cents, bolts: plan.bolts, image: image_path("coin_packs/#{i+1}.png")}}
+              - if current_plan && plan.cents < current_plan.cents
+                Down to #{plan.name} Plan
+              - else
+                Up to #{plan.name} Plan
+
+          - else
+            %p.btn.btn-block.btn-large Current Plan
         - else
           %a.btn.btn-block.btn-large{href: new_user_registration_path} Sign up now!
 
@@ -54,9 +77,9 @@
           key: #{ENV["STRIPE_PUBLISHABLE"].to_json},
           amount: $this.data('amount'),
           name: 'Minefold',
-          description: (formatNumber($this.data('coins')) + " minutes"),
+          description: ($this.data('name') + " plan"),
           image: $this.data('image'),
-          panelLabel: 'Pay',
+          panelLabel: 'Subscribe',
           token: token
         });
 
@@ -69,18 +92,18 @@
 
   %hr.large
 
-  .row
-    %center.q-and-a.span6.offset3
-      %h3 Quick answers to common questions
-
-      %h4#friends Can I pay for my friends?
-      %p Yes! You can choose to pay for yourself or everybody who plays on your server.
-
-      %h4 Will that be expensive if 100 people play on my server?
-      %p No! When you pay for your friends, we cap the cost at <span class="highlight">10 people per minute</span>. If you have 100 people playing on your server it costs you the same as 10 people.
-
-      %h4#slots How many people can play on my server?
-      %p Unlimited. Minefold's custom built hosting platform dynamically allocates resources to servers. This means that they're lag-free no matter how many of your friends are playing.
+  / .row
+  /   %center.q-and-a.span6.offset3
+  /     %h3 Quick answers to common questions
+  /
+  /     %h4#friends Can I pay for my friends?
+  /     %p Yes! You can choose to pay for yourself or everybody who plays on your server.
+  /
+  /     %h4 Will that be expensive if 100 people play on my server?
+  /     %p No! When you pay for your friends, we cap the cost at <span class="highlight">10 people per minute</span>. If you have 100 people playing on your server it costs you the same as 10 people.
+  /
+  /     %h4#slots How many people can play on my server?
+  /     %p Unlimited. Minefold's custom built hosting platform dynamically allocates resources to servers. This means that they're lag-free no matter how many of your friends are playing.
 
   %hr.large
 

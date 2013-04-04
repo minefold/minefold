@@ -44,6 +44,13 @@ end
 Bonuses::ReferredFriend.blueprint do
 end
 
+Plan.blueprint do
+  name      { 'Silver' }
+  cents     { 50 + rand(950) }
+  bolts     { rand(10) }
+  stripe_id { "plan_#{rand(1000)}" }
+end
+
 
 # --
 
@@ -67,3 +74,4 @@ Server.blueprint(:played) do
   party_cloud_id { SecureRandom.uuid }
   world { World.make!(party_cloud_id: SecureRandom.uuid) }
 end
+

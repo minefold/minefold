@@ -1,0 +1,19 @@
+Thanks for using Minefold! This is a receipt for your recent payment on your Minefold subscription.
+
+Order Receipt
+=============
+
+Mütli Corp.
+270 Linden St, Suite 101
+San Francisco California 94102
+USA
+
+Email: support@minefold.com
+
+Date: <%= Time.at(@subscription.current_period_start) %>
+<% if @card[:name] %>Cardholder Name: <%= @card[:name] %><% end %>
+Payment method: <%= @card[:type] %> XXXX-XXXX-XXXX-<%= @card[:last4] %>
+Total Charged: <%= number_to_currency(@subscription.plan.amount / 100) %> <%= @subscription.plan.currency %>
+Plan: <%= @plan.name %>
+
+If you have any questions about this charge, please email: support+<%= @user.id %>@minefold.com

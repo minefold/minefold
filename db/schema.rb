@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130331005526) do
+ActiveRecord::Schema.define(:version => 20130403223124) do
 
   add_extension "hstore"
 
@@ -135,6 +135,15 @@ ActiveRecord::Schema.define(:version => 20130331005526) do
   add_index "memberships", ["server_id"], :name => "index_memberships_on_server_id"
   add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
 
+  create_table "plans", :force => true do |t|
+    t.string   "stripe_id"
+    t.string   "name"
+    t.integer  "cents"
+    t.integer  "bolts"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "player_sessions", :force => true do |t|
     t.integer  "server_session_id"
     t.integer  "account_id"
@@ -208,6 +217,13 @@ ActiveRecord::Schema.define(:version => 20130331005526) do
     t.integer "server_id"
   end
 
+  create_table "subscriptions", :force => true do |t|
+    t.integer  "plan_id"
+    t.datetime "expires_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "users", :force => true do |t|
     t.string   "username",                             :default => ""
     t.string   "slug",                                 :default => ""
@@ -246,6 +262,7 @@ ActiveRecord::Schema.define(:version => 20130331005526) do
     t.integer  "invited_by_id"
     t.string   "verification_token",     :limit => 12
     t.boolean  "beta",                                 :default => false
+    t.integer  "subscription_id"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

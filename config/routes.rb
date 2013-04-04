@@ -38,6 +38,7 @@ Minefold::Application.routes.draw do
     '/time'    => :time,
     '/home'    => :home,
     '/pricing' => :pricing,
+    '/plans'   => :plans,
     '/privacy' => :privacy,
     '/help'    => :support,
     '/terms'   => :terms
@@ -101,6 +102,9 @@ Minefold::Application.routes.draw do
     match '/redeem' => redirect('/gifts/redeem')
 
     resources :orders, only: [:create, :show]
+    resources :subscriptions, only: [:create, :show] do
+      get :thank_you, :on => :collection
+    end
 
     resources :servers, path_names: {edit: 'settings'} do
       collection do

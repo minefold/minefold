@@ -1,0 +1,49 @@
+- title 'Thank you!'
+- layout :order
+
+.jumbotron
+  #viewport
+    #canvas
+
+  %h1 Thank you!
+  %p We've sent you a receipt at #{current_user.email}.
+  %a.btn.btn-primary{href: user_root_path} Go back to being awesome
+
+- content_for :tail do
+  :javascript
+    var coin, canvas, sprites;
+
+    jQuery.easing.easeInQuad=  function (x, t, b, c, d) {
+      return c*(t/=d)*t + b;
+    }
+
+    sprites = ['coin', 'heart', 'creeper', 'dave'];
+
+    coin = $('<div></div').addClass('coin');
+    canvas = $('#canvas');
+
+    $(document).ready(function() {
+      var height = canvas.parents('.hero-unit').outerHeight(true);
+
+      every(300, function() {
+        var r = Math.random(),
+            sprite = sprites[(0 < r && r <= 0.05) ? 3 : (0.05 < r && r <= 0.15) ? 2 : (0.15 < r && r <= 0.4) ? 1 : 0],
+            opacity = ((sprite === 'dave') ? 1 : r )
+            scale = 'scale(' + ((sprite === 'dave') ? 2 : (0.5 + r / 2)) + ')',
+            rotate = 'rotate('+ Math.round(360 * r) + 'deg)',
+            transform = [scale, rotate].join(' ');
+
+        var clone = coin.clone().addClass("is-"+sprite);
+
+        clone.css({top: -60, left: rand(window.innerWidth), opacity: opacity})
+          .css('transform', transform)
+          .appendTo(canvas)
+          .animate({top: height}, {
+            duration: 6000,
+            easing: 'easeInQuad',
+            complete: function() {
+              $(this).remove();
+            }
+          });
+      });
+    });

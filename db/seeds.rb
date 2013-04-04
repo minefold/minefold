@@ -28,6 +28,10 @@ dave.skip_confirmation!
 
 dave.save!
 
+# Plans
+Plan.create(stripe_id: 'bronze', name: 'Bronze', cents: 1499, bolts: 1)
+Plan.create(stripe_id: 'silver', name: 'Silver', cents: 2499, bolts: 2)
+Plan.create(stripe_id: 'gold',   name: 'Gold',   cents: 4999, bolts: 3)
 
 # Funpacks
 

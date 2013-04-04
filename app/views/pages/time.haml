@@ -3,15 +3,22 @@
 
 .jumbotron
   %h1 Get more server time
-  %h2 You currently have #{time_left(current_user.coins)}.
+  %h2 You have #{prepaid_time_left(current_user.coins)} left.
+  - if current_user.active_subscription?
+    %h2 You are on the #{current_user.subscription.plan.name} plan.
 
 .container
   .bonus-list
+    %a.bonus{href: plans_page_path}
+      .row
+        .description.span5
+          %h3.name Upgrade subscription
+
     %a.bonus{href: pricing_page_path}
       .row
         .description.span5
-          %h3.name Buy time
-          .muted They say time is money.
+          %h3.name Buy prepaid time
+          .muted Until April 20th!
         .reward.span3
           %h3.coins= time_left @small_coin_pack.coins
           .conditions or more
