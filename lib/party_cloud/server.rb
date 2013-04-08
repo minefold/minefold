@@ -25,13 +25,25 @@ module PartyCloud
 
     def self.create(funpack, name)
       url = "https://#{ENV['PARTY_CLOUD_TOKEN']}@son-of-tron.herokuapp.com/servers"
-      response = RestClient.post(url,
-        funpack: legacy_funpack_mapping[funpack.party_cloud_id],
-        region:  '71519ec0-1515-42b9-b2f6-a24c151a6247',
-        name:    name
-      )
-      payload = JSON.parse(response)
-      new(payload['legacyId'] || payload['id'])
+      begin
+        response = RestClient.post(url,
+          funpack: legacy_funpack_mapping[funpack.party_cloud_id],
+          region:  '71519ec0-1515-42b9-b2f6-a24c151a6247',
+          name:    name
+        )
+        payload = JSON.parse(response)
+        new(payload['legacyId'] || payload['id'])
+      rescue RestClient::ServerBrokeConnection
+        # retry 5 times...
+
+        @retries ||= 0
+        if @retries < 5
+          @retries += 1
+          retry
+        else
+          raise
+        end
+      end
     end
 
     def initialize(id)
