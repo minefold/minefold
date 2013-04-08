@@ -9,11 +9,16 @@ describe PartyCloud::Server do
   describe "#create" do
 
     it "calls out and stuff" do
+      funpack = stub(:funpack, party_cloud_id: '50a976ec7aae5741bb000001')
+      
       RestClient.stub(:post)
-        .with('http://foo:bar@api.partycloud.com/servers', '')
-        .and_return(JSON.generate({id: 'foo', created_at: Time.now}))
+        .with('https://foo:bar@son-of-tron.herokuapp.com/servers', 
+          funpack: '9ed10c25-60ed-4375-8170-29f9365216a0',
+          region:  '71519ec0-1515-42b9-b2f6-a24c151a6247',
+          name:    'sup'
+        ).and_return(JSON.generate({id: 'foo', created_at: Time.now}))
 
-      expect(described_class.create.id).to eq('foo')
+      expect(described_class.create(funpack, 'sup').id).to eq('foo')
     end
 
   end

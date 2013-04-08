@@ -11,6 +11,7 @@ gem 'rake'
 gem 'nokogiri', '~> 1.5'
 gem 'html-pipeline'
 gem 'pg'
+gem 'postgres_ext'
 gem 'rack-www'
 gem 'devise'
 gem 'uniquify',

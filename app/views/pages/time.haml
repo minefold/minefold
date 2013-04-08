@@ -9,10 +9,11 @@
 
 .container
   .bonus-list
-    %a.bonus{href: plans_page_path}
-      .row
-        .description.span5
-          %h3.name Upgrade subscription
+    - if $flipper[:subscriptions].enabled?(current_user)
+      %a.bonus{href: plans_page_path}
+        .row
+          .description.span5
+            %h3.name Upgrade subscription
 
     %a.bonus{href: pricing_page_path}
       .row

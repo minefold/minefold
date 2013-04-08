@@ -8,6 +8,7 @@ class Funpack < ActiveRecord::Base
   scope :published, where('published_at is not ?', nil)
 
   attr_accessible :name, :game, :creator, :info_url, :description, :party_cloud_id, :imports, :slug, :game_id, :settings_schema, :published_at
+  attr_accessible :bolt_allocations
 
   belongs_to :creator, class_name: 'User'
 

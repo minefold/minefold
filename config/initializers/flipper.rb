@@ -19,3 +19,4 @@ end
 
 $flipper[:access_controls].enable $flipper.group(:admins)
 $flipper[:unpublished_funpacks].enable $flipper.group(:admins)
+$flipper[:subscriptions].enable $flipper.group(:admins)
