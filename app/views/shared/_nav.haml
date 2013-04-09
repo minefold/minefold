@@ -1,8 +1,13 @@
 - if signed_in?
   %ul.nav
 
-    %li.coins
-      %a{href: time_page_path} #{time_left(current_user.coins)} left
+    - if !current_user.active_subscription?
+      %li.coins
+        %a{href: time_page_path} #{time_left(current_user.coins)} left
+
+    - else
+      %li.coins
+        %a{href: plans_page_path} #{current_user.subscription.plan.name} plan
 
     %li.divider-vertical
 

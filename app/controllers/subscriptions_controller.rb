@@ -3,10 +3,8 @@ class SubscriptionsController < ApplicationController
 
   def create
     @plan = Plan.find(params[:plan_id])
-    
+
     @subscription = current_user.subscribe!(@plan, params[:stripeToken], params[:last4])
-    
-    SubscriptionMailer.receipt(current_user.id, @subscription.id, @plan.id).deliver
 
     track(current_user.distinct_id, 'Paid',
       'plan'   => @plan.id,
@@ -27,7 +25,7 @@ class SubscriptionsController < ApplicationController
         }
       }
     )
-    
+
     redirect_to thank_you_subscriptions_path
 
   rescue Stripe::CardError => e

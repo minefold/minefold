@@ -41,8 +41,8 @@
         %input{type: 'hidden', name: 'stripeToken'}
         %input{type: 'hidden', name: 'last4'}
 
-        .old-price= number_to_currency(plan.cents / 100.0, precision: 2)
-        .price= number_to_currency((plan.cents - 200) / 100.0, precision: 2)
+        .old-price= number_to_currency((plan.cents + 200) / 100.0, precision: 2)
+        .price= number_to_currency((plan.cents) / 100.0, precision: 2)
 
         - if signed_in?
           - current_plan = current_user.active_subscription? && current_user.subscription.plan
