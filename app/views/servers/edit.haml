@@ -57,7 +57,7 @@
             = f.submit 'Save', class: %w(btn btn-primary)
 
 
-  - if server.game.split_billing?
+  - if current_user.coins > 0 && server.game.split_billing?
     .row
       .span2
         %strong Billing

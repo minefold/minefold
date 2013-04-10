@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130405195702) do
+ActiveRecord::Schema.define(:version => 20130410050943) do
 
   add_extension "hstore"
 
@@ -75,11 +75,12 @@ ActiveRecord::Schema.define(:version => 20130405195702) do
     t.string   "party_cloud_id"
     t.text     "description"
     t.string   "info_url"
-    t.boolean  "imports",          :default => false
-    t.string   "slug",             :default => ""
+    t.boolean  "imports",            :default => false
+    t.string   "slug",               :default => ""
     t.text     "settings_schema"
     t.datetime "published_at"
-    t.integer  "bolt_allocations", :default => [512, 1024, 2048], :array => true
+    t.integer  "bolt_allocations",   :default => [512, 1024, 2048], :array => true
+    t.integer  "player_allocations", :default => [10, 25, 50],      :array => true
   end
 
   add_index "funpacks", ["game_id"], :name => "index_funpacks_on_game_id"

@@ -3,7 +3,8 @@
 
 .jumbotron
   %h1 Get more server time
-  %h2 You have #{prepaid_time_left(current_user.coins)} left.
+  - if current_user.coins > 0
+    %h2 You have #{prepaid_time_left(current_user.coins)} left.
   - if current_user.active_subscription?
     %h2 You are on the #{current_user.subscription.plan.name} plan.
 

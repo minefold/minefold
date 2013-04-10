@@ -4,11 +4,12 @@ require 'brock'
 
 class Funpack < ActiveRecord::Base
   extend FriendlyId
-  
+
   scope :published, where('published_at is not ?', nil)
 
   attr_accessible :name, :game, :creator, :info_url, :description, :party_cloud_id, :imports, :slug, :game_id, :settings_schema, :published_at
   attr_accessible :bolt_allocations
+  attr_accessible :player_allocations
 
   belongs_to :creator, class_name: 'User'
 
@@ -22,9 +23,10 @@ class Funpack < ActiveRecord::Base
   serialize :settings_schema, JSON
 
   def settings
-    Brock::Schema.new(settings_schema)
+    filtered = settings_schema.reject{|f| f['name'] == 'max-players' }
+    Brock::Schema.new(filtered)
   end
-  
+
   def published?
     !published_at.nil?
   end

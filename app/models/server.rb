@@ -5,6 +5,7 @@ require './lib/game_access_policy'
 
 class Server < ActiveRecord::Base
   extend StateMachine::MacroMethods
+  include Concerns::MaxPlayers
 
   attr_accessible :name, :description, :funpack_id, :shared, :settings
   attr_accessible :access_policy_id

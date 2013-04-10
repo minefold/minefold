@@ -4,7 +4,6 @@
 
 .jumbotron
   %h1 Subscription Plans
-  %h2 Your first #{pluralize Bonuses::GettingStarted.coins, 'minute', 'minutes'} are free.
 
 .salotron
   %h2 SALE! $2.00 off until April 20th
@@ -89,21 +88,6 @@
 
         return false;
       });
-
-  %hr.large
-
-  / .row
-  /   %center.q-and-a.span6.offset3
-  /     %h3 Quick answers to common questions
-  /
-  /     %h4#friends Can I pay for my friends?
-  /     %p Yes! You can choose to pay for yourself or everybody who plays on your server.
-  /
-  /     %h4 Will that be expensive if 100 people play on my server?
-  /     %p No! When you pay for your friends, we cap the cost at <span class="highlight">10 people per minute</span>. If you have 100 people playing on your server it costs you the same as 10 people.
-  /
-  /     %h4#slots How many people can play on my server?
-  /     %p Unlimited. Minefold's custom built hosting platform dynamically allocates resources to servers. This means that they're lag-free no matter how many of your friends are playing.
 
   %hr.large
 
