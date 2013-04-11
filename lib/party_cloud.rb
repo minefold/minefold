@@ -20,6 +20,16 @@ module PartyCloud
     enqueue 'TellPlayerJob', pc_server_id, player_uid, msg
   end
 
+  def self.running_server_allocations(pc_server_ids)
+    pc_server_ids.each_with_object({}) do |id, h|
+      if $redis.get("server:#{id}:state") == 'up'
+        if alloc = $redis.get("server:#{id}:ram_alloc")
+          h[id] = alloc.to_i
+        end
+      end
+    end
+  end
+
   def self.players_online(pc_server_id)
     $redis.smembers("server:#{pc_server_id}:players")
   end

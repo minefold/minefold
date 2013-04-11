@@ -5,43 +5,40 @@ class ServerTickedJob < Job
 
   def initialize(party_cloud_id, uids, timestamp)
     @server = Server.unscoped.find_by_party_cloud_id(party_cloud_id)
+    @creator = @server.creator
     @uids = uids
     @timestamp = Time.at(timestamp)
   end
 
   def perform
-    if @server.shared?
+    if @creator.active_subscription?
+      # TODO record something?
+
+    elsif @server.shared?
       shared_server_tick
     else
       normal_server_tick
     end
   end
-  
+
   def normal_server_tick
     # Creator pays
-    creator = @server.creator
-    
-    if creator.active_subscription?
-      # TODO record something?
-    
-    elsif creator.coins <= 0
+    if @creator.coins <= 0
       @uids.each do |uid|
         kick_player(uid, "Out of time! Visit minefold.com to get more")
       end
     else
-      creator.spend_coins! [@uids.size, 10].min
+      @creator.spend_coins! [@uids.size, 10].min
     end
 
-    if creator.coins == 15
-      TimeMailer.low(creator.id).deliver
-    elsif creator.coins == 1
-      TimeMailer.out(creator.id).deliver
+    if @creator.coins == 15
+      TimeMailer.low(@creator.id).deliver
+    elsif @creator.coins == 1
+      TimeMailer.out(@creator.id).deliver
     end
   end
-  
+
   def shared_server_tick
-    # Players pay
-    # TODO look up game type
     @players = Accounts::Mojang.where(uid: @uids).all
 
     @players.each do |player|
