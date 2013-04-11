@@ -8,6 +8,7 @@ class SubscriptionMailer < TransactionMailer
     @subscription = @customer.subscription
     @charge = Stripe::Charge.retrieve(charge_id)
 
+    tag 'subscription#receipt'
     mail to: @user.email,
          subject: "[Minefold] Payment Receipt"
   end
