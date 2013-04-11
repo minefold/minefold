@@ -6,8 +6,11 @@ describe Webhooks::StripeController do
   describe "ping" do
     it "increments in librato" do
       Librato.should_receive(:increment).with('stripe.ping.total')
+      Stripe::Event.should_receive(:retrieve).with('evt_1') do
+        { type: 'ping' }
+      end
 
-      raw_post :create, {}, { type: 'ping' }.to_json
+      raw_post :create, {}, { id: 'evt_1' }.to_json
     end
   end
 
@@ -19,18 +22,32 @@ describe Webhooks::StripeController do
         stub(:mail)
       }
       User.should_receive(:find_by_customer_id).with(user.customer_id) { user }
-
-      payload = {
-        type: 'charge.succeeded',
-        data: {
-          object: {
-            id: 'ch_1',
-            object: 'charge',
-            customer: user.customer_id
-          },
+      Stripe::Event.should_receive(:retrieve).with('evt_1') do
+        {
+          type: 'charge.succeeded',
+          data: {
+            object: {
+              id: 'ch_1',
+              object: 'charge',
+              customer: user.customer_id
+            },
+          }
         }
-      }
-      raw_post :create, {}, payload.to_json
+      end
+
+      raw_post :create, {}, {id: 'evt_1'}.to_json
+    end
+  end
+  
+  describe "unhandled.type" do
+    let(:user) { User.make(customer_id: 'cus_1234') }
+
+    it "ignores" do
+      Stripe::Event.should_receive(:retrieve).with('evt_1') do
+        { type: 'unhandled.type' }
+      end
+
+      raw_post :create, {}, {id: 'evt_1'}.to_json
     end
   end
 
