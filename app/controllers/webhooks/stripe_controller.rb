@@ -1,12 +1,15 @@
 class Webhooks::StripeController < ApplicationController
-  protect_from_forgery :except => :process
+  skip_before_filter :verify_authenticity_token
 
   def create
     Librato.increment('webhook.stripe.total')
 
-    event = JSON.parse(request.body.read, symbolize_names: true)
+    data = JSON.parse(request.body.read, symbolize_names: true)
     
     p event
+    
+    # validate stripe event
+    event = Stripe::Event.retrieve(data['id'])
     
     method = event[:type].gsub('.', '_')
     self.send method, event
@@ -20,6 +23,7 @@ class Webhooks::StripeController < ApplicationController
   
   def charge_succeeded(event)
     charge = event[:data][:object]
+    if Stripe::Charge.retrieve(charge)
     user = User.find_by_customer_id(charge[:customer])
     SubscriptionMailer.receipt(user.id, charge[:id])
   end
