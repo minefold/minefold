@@ -5,26 +5,29 @@ class Webhooks::StripeController < ApplicationController
     Librato.increment('webhook.stripe.total')
 
     data = JSON.parse(request.body.read)
-    
+
     p data
-    
+
     # validate stripe event
     event = Stripe::Event.retrieve(data['id'])
-    
+
     method = event[:type].gsub('.', '_')
+
+    Scrolls.log(stripe_event: event[:id], type: event[:type])
+
     self.send method, event
 
     render nothing: true, status: 200
   end
-  
+
   def ping(event)
     Librato.increment('stripe.ping.total')
   end
-  
+
   def charge_succeeded(event)
     charge = event[:data][:object]
     user = User.find_by_customer_id(charge[:customer])
-    SubscriptionMailer.receipt(user.id, charge[:id])
+    SubscriptionMailer.receipt(user.id, charge[:id]).deliver
   end
 
   def method_missing(meth, *args, &block)
