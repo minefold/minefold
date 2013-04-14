@@ -13,7 +13,7 @@ Email: support@minefold.com
 Date: <%= Time.at(@subscription.current_period_start) %>
 <% if @card[:name] %>Cardholder Name: <%= @card[:name] %><% end %>
 Payment method: <%= @card[:type] %> XXXX-XXXX-XXXX-<%= @card[:last4] %>
-Total Charged: <%= number_to_currency(@charge.amount / 100) %> <%= @charge.currency %>
+Total Charged: <%= number_to_currency(@charge.amount / 100.0) %> <%= @charge.currency %>
 Plan: <%= @subscription.plan.name %>
 
 If you have any questions about this charge, please email: support+<%= @user.id %>@minefold.com
