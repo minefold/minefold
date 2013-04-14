@@ -4,7 +4,7 @@ class SubscriptionsController < ApplicationController
   def create
     @plan = Plan.find(params[:plan_id])
 
-    @subscription = current_user.subscribe!(@plan, params[:stripeToken], params[:last4])
+    @subscription = current_user.subscribe!(@plan, params[:stripeToken], params[:last4], params[:tradein])
 
     track(current_user.distinct_id, 'Paid',
       'plan'   => @plan.id,

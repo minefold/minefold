@@ -1,0 +1,148 @@
+.l-plans {
+
+  .jumbotron {
+    background-color: $brand-green;
+    margin-bottom: 0px;
+
+    h1 {
+      color: white;
+    }
+  }
+  
+  .salotron {
+    background-color: $brand-yellow;
+    text-align: center;
+    padding: $gw-gutter 0;
+    margin-bottom: $gw-gutter;
+  }
+
+  .plan-list {
+    width: grid-width(12);
+    margin: 0 auto;
+    padding-left: -$gw-gutter;
+    
+    .info { margin-left: 0 };
+
+    .old-price {
+      font-size: 26px;
+      font-family: $geometric;
+      line-height: l(4);
+      padding: 0;
+      text-decoration: line-through;
+    }
+    
+    .price {
+      font-size: 36px;
+      font-family: $geometric;
+      font-weight: 600;
+      line-height: l(4);
+      padding: 0;
+    }
+    
+    .coin-pack {
+      position: relative;
+      text-align: center;
+
+      &:first-child {
+        margin-left: 0;
+      }
+
+      > .coins {
+        font-weight: 600;
+        font-size: 18px;
+        margin-bottom: l();
+      }
+
+      > .doobieloob {
+        margin-bottom: l(1);
+
+        > .poopedoop {
+          font-size: 13px;
+          color: rgba(black, 0.8);
+
+          &.boo {
+            font-size: 16px;
+          }
+        }
+
+        > .herptastic {
+          font-size: 11px;
+          line-height: l();
+          color: rgba(black, 0.4);
+          margin-bottom: l(1);
+        }
+
+      }
+
+      > .nopa {
+        margin-bottom: l(3);
+        height: l(2);
+
+        .savings {
+          @include inline-block;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+      }
+
+      // Colors
+
+      &:nth-child(2) {
+        color: $brand-green;
+        .savings { background-color: lighten($brand-green, 45%); }
+      }
+
+      &:nth-child(3) {
+        color: $brand-blue;
+        .savings { background-color: lighten($brand-blue, 55%); }
+      }
+
+      &:nth-child(4) {
+        color: $red;
+        .savings { background-color: lighten($red, 35%); }
+      }
+    }
+  }
+
+
+    h3 {
+      color: $brand-blue;
+      margin-bottom: l(2);
+    }
+
+    .testimonials {
+      h2 {
+        font-size: 24px;
+        line-height: l(4);
+        margin-top: 0;
+        margin-bottom: l(4);
+      }
+
+      .testimonial {
+        @include clearfix;
+        margin-bottom: l(2);
+        font-size: 16px;
+        line-height: l(2);
+
+        q {
+          display: block;
+        }
+
+        cite, cite a {
+          display: block;
+          font-size: 14px;
+          color: rgba(black, 0.4);
+        }
+      }
+    }
+
+    .q-and-a {
+      color: rgba(black, 0.6);
+      h4 {
+        color: black;
+        line-height: l(2);
+        margin-bottom: l(1);
+      }
+    }
+//  }
+}

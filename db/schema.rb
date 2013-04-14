@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130410050943) do
+ActiveRecord::Schema.define(:version => 20130414004755) do
 
   add_extension "hstore"
 
@@ -222,8 +222,9 @@ ActiveRecord::Schema.define(:version => 20130410050943) do
   create_table "subscriptions", :force => true do |t|
     t.integer  "plan_id"
     t.datetime "expires_at"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+    t.integer  "discount",   :default => 0, :null => false
   end
 
   create_table "users", :force => true do |t|
