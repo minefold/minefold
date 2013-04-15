@@ -9,11 +9,12 @@
       %input#url-submit.btn(type="button" value="Go")
       
     %hr
-    
+
     %label.control-label
       %strong Upload Zip File
-  
-    %input.upload(type="file" name="uploads[]")
+
+    %input.upload.file-uploads(type="file" name="uploads[]")
+    %p.ie{hidden} Your browser does not support file uploads. Why not try the <a href="http://www.google.com/chrome/" target="_blank">Chrome browser</a>
 
   %p.help-block.error-help-block{hidden}
     There was a problem with the file.
@@ -36,7 +37,7 @@
   .progress
     .bar{style: 'width:0%'}
 
-  .help-block
+  .help-block.file-uploads
     - case os
     - when :win
       %ol

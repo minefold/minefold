@@ -23,6 +23,9 @@ class App.UploadView extends Backbone.View
 
   render: ->
     @$('.progress').hide()
+    if $.browser.msie && $.browser.version < 10
+      @$('.file-uploads').hide()
+      @$('.ie').show()
 
   upload: (e)->
     filename = $(e.target).val()
