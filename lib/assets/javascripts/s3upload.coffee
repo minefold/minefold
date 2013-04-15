@@ -79,8 +79,8 @@ class window.S3Upload
 				else
 					this_s3upload.onError 'Upload error: ' + xhr.status
 
-			xhr.onerror = ->
-				this_s3upload.onError 'XHR error.'
+			xhr.onerror = (err) ->
+				this_s3upload.onError 'XHR error: ' + err
 
 			xhr.upload.onprogress = (e) ->
 				if e.lengthComputable
