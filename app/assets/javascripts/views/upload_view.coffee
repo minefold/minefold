@@ -24,8 +24,8 @@ class App.UploadView extends Backbone.View
   render: ->
     @$('.progress').hide()
 
-  upload: ->
-    filename = @$('input[type=file]').val()
+  upload: (e)->
+    filename = $(e.target).val()
 
     new S3Upload
       s3_object_name: filename
@@ -39,9 +39,13 @@ class App.UploadView extends Backbone.View
   
   urlEntered: ->
     url = @$('input#url').val()
-    @start()
-    @progress(50)
-    @uploadComplete(url)
+    if !url.match(/\//)
+      @$('input#url').parent().addClass('error')
+      
+    else
+      @start()
+      @progress(50)
+      @uploadComplete(url)
 
   unloadMsg = -> 'Your upload will be lost.'
 
