@@ -2,13 +2,10 @@ body {
   background-color: transparent;
 }
 
-a {
+a,
+a:hover {
   color: $brand-blue;
-
-  &:hover {
-    color: $brand-darkBlue;
-    text-decoration: none;
-  }
+  text-decoration: none;
 }
 
 h1, h2, h3, h4 {
