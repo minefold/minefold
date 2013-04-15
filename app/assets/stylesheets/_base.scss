@@ -2,65 +2,6 @@ body {
   background-color: transparent;
 }
 
-header {
-  background-color: white;
-
-  .navbar {
-    margin-top: 0;
-    padding-top: l();
-
-    padding-bottom: l();
-    margin-bottom: 0;
-
-    > .navbar-inner {
-      background: transparent;
-      border: none;
-      box-shadow: none;
-      border-radius: 0;
-      text-shadow: none;
-
-      padding-left: g(); padding-right: g();
-    }
-  }
-}
-
-.navbar .brand {
-  @include clearfix;
-  float: left;
-  margin: 0;
-  padding: 0;
-
-  text-shadow: none;
-
-  > .logo {
-    background-color: $brand-blue;
-    background-image: asset-data-url('logo.png');
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
-    background-size: cover;
-    width: 40px;
-    height: 40px;
-
-    border-radius: $radius;
-  }
-
-  > .name {
-    display: block;
-    line-height: l(4);
-    font-size: 18px;
-    margin: 0;
-    color: $brand-darkGray;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-
-}
-
-.foo-bar {
-  float: left;
-  margin: 0 g();
-}
-
 a {
   color: $brand-blue;
 
@@ -176,7 +117,7 @@ textarea:focus {
   .bar {
     background: $brand-blue;
   }
-  
+
   .bar-success {
     background-color: #5eb95e;
   }

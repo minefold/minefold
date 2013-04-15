@@ -51,20 +51,10 @@
     #fb-root
     #Intercom
 
-    %header
-      .navbar
-        .navbar-inner
-          %a.brand{href: root_path}
-            .logo
-
-          .foo-bar.pull-left
-            - if content_for?(:foo_bar)
-              = yield(:foo_bar)
-            - else
-              %a.brand{href: root_path}
-                %h1.name Minefold
-
-          .pull-right= render partial: 'shared/nav'
+    .navbar
+      .navbar-inner
+        %h1.brand= link_to 'Minefold', root_path
+        %nav= render partial: 'shared/nav'
 
     - flash.select {|_,msg| msg.is_a?(String) }.each do |name, msg|
       %div.alert.alert-block{class: "alert-#{name}"}
