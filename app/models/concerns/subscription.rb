@@ -11,7 +11,10 @@ module Concerns::Subscription
 
   def ensure_stripe_customer!(stripe_token, last4)
     if customer_id?
-      Stripe::Customer.retrieve(customer_id)
+      c = Stripe::Customer.retrieve(customer_id)
+      c.card = stripe_token
+      c.save
+      c
 
     else
       customer = Stripe::Customer.create(
@@ -55,7 +58,6 @@ module Concerns::Subscription
 
     stripe_sub = customer.update_subscription(
       plan: plan.stripe_id,
-      card: stripe_token,
       coupon: coupon_id
     )
 
