@@ -34,13 +34,7 @@
 
     = csrf_meta_tags
 
-    :javascript
-      var _errs=["50d507f21eebec26540000ec"];(function(a,b){a.onerror=function(){_errs.push(arguments)};
-      var d=function(){var a=b.createElement("script"),c=b.getElementsByTagName("script")[0];
-      a.src="//d15qhc0lu1ghnk.cloudfront.net/beacon.js";a.async=!0;
-      c.parentNode.insertBefore(a,c)};a.addEventListener?a.addEventListener("load",d,!1):
-      a.attachEvent("onload",d)})(window,document);
-
+    %script{src: '//d2wy8f7a9ursnm.cloudfront.net/bugsnag-1.0.6.min.js',  data: {apikey: '3e70e9ec8cbba1a9eeb8b8fc83251a6f'}}
 
     // Mixpanel
     = render partial: 'shared/mixpanel'
