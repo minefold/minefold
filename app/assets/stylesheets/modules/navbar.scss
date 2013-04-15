@@ -1,11 +1,13 @@
 .navbar {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  // Bootstrap reset
+  margin-bottom: 0;
 
+  padding-top: 10px;
+  padding-bottom: 10px;
 
   .navbar-inner {
     // Bootstrap reset
-    background: white;
+    background: transparent;
     border: none;
     box-shadow: none;
     border-radius: 0;
@@ -22,6 +24,7 @@
     // Bootstrap reset
     margin: 0;
     padding: 0;
+    text-shadow: none;
 
     // Name
     a {
@@ -55,6 +58,11 @@
     // Bootstrap reset
     .nav {
       margin-right: 0;
+
+      a {
+        color: rgba(black, 0.6);
+        text-shadow: none;
+      }
     }
   }
 }
