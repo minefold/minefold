@@ -8,4 +8,9 @@ module Concerns::MaxPlayers
   def set_max_players
     self.settings['max-players'] = creator.max_players(funpack)
   end
+
+  def max_players
+    creator.max_players(funpack)
+  end
+
 end

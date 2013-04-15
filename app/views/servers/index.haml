@@ -3,7 +3,36 @@
 
 .container
   .row
-    .span2.offset1.user-profile
+    .span8.offset1
+      .server-list
+        - if @created_servers.empty?
+          .empty
+            %h2 You don't have any servers. Create a new server to start the party!
+
+        - else
+
+          - @created_servers.each do |server|
+            .item{class: "is-#{server.state}"}
+              %a.primary-action{href: server_path(server)}
+                %h2.name
+                  = server.name
+                .player-counts
+                  .current.player-count{data: {:toggle => :tooltip, title: 'Online players'}}= PartyCloud.count_players_online(server.party_cloud_id)
+                  .max.player-count{data: {:toggle => :tooltip, title: 'Max players'}}= server.max_players
+              %nav.meta{role: 'navigation'}
+                %ul
+                  %li.funpack= link_to server.funpack.name, game_funpack_path(server.game, server.funpack)
+                  %li.settings= link_to 'Settings', edit_server_path(server)
+                  %li.server-address= ServerAddress.new(server)
+
+      - content_for :tail do
+        :javascript
+          $('.player-counts .player-count').tooltip();
+
+      %br
+      = link_to 'Create a new server', new_server_path, class: %w(btn btn-primary)
+
+    .span2.user-profile
       .avatar
         = image_tag current_user.avatar.large.url, class: 'avatar'
 
@@ -17,32 +46,3 @@
       .info
         %p
           Joined on <strong>#{l current_user.created_at, :format => :date}</strong>
-
-
-    .span8
-      .server-list
-        - if @servers.empty?
-          .empty
-            %h2 You don't have any servers. Create a new server to start the party!
-
-        - else
-
-          - @servers.each do |game, servers|
-            .divider
-              .game.pull-left= game.name
-              .count.pull-right= pluralize servers.size, 'server', 'servers'
-
-            - servers.each do |server|
-              .item{class: "is-#{server.state}"}
-                .primary-action.span6
-                  %a.name{href: server_path(server)}= server.name
-
-                %ul.nav.nav-pills.span1
-                  %li= link_to 'Settings', edit_server_path(server)
-                %ul.nav.players.pull-right
-                  %li== #{PartyCloud.count_players_online(server.party_cloud_id)} / #{server.player_uids.size}
-
-
-        .new
-          = link_to 'Create a new server', new_server_path, class: %w(btn btn-primary)
-
