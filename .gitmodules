@@ -1,18 +1,9 @@
 [submodule "vendor/assets/jquery.cookie"]
 	path = vendor/assets/jquery.cookie
 	url = git://github.com/carhartl/jquery-cookie.git
-[submodule "vendor/assets/jquery-simple-slider"]
-	path = vendor/assets/jquery-simple-slider
-	url = https://github.com/loopj/jquery-simple-slider.git
-[submodule "vendor/assets/moment"]
-	path = vendor/assets/moment
-	url = https://github.com/timrwood/moment.git
 [submodule "vendor/assets/store.js"]
 	path = vendor/assets/store.js
 	url = https://github.com/marcuswestin/store.js.git
-[submodule "vendor/assets/raphael"]
-	path = vendor/assets/raphael
-	url = https://github.com/DmitryBaranovskiy/raphael.git
 [submodule "vendor/ZeroClipboard"]
 	path = vendor/ZeroClipboard
 	url = https://github.com/jonrohan/ZeroClipboard.git

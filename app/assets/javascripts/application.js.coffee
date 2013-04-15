@@ -13,7 +13,6 @@
 #= require bootstrap
 
 #= require jquery.cookie
-#= require jquery.simple-slider
 #= require s3upload
 
 #= require ./base

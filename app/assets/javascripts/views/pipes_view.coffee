@@ -1,5 +1,3 @@
-#= require 'raphael'
-
 # Picks a random key from an object whose values are weights
 weightedRandom = (weights) ->
   vals = _.keys(weights)
