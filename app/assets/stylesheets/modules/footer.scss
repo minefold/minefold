@@ -1,12 +1,12 @@
 footer {
-  margin-top: l(12);
-  padding: l() $gw-gutter;
+  margin: 60px auto;
+  width: 940px;
 
   ul {
+    margin-bottom: 0;
+
     @include clearfix;
-    margin-left: - $gw-gutter;
-    font-weight: 600;
-    margin-bottom: l();
+    margin-left: -10px;
 
     li {
       float: left;
