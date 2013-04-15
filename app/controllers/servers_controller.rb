@@ -21,7 +21,7 @@ class ServersController < ApplicationController
 # --
 
   def index
-    @servers = current_user.created_servers.group_by {|s| s.funpack.game }
+    @created_servers = current_user.created_servers
   end
 
   def new

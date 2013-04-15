@@ -1,0 +1,85 @@
+.server-list {
+  > .item {
+    border: 2px solid rgba(black, 0.1);
+    border-radius: 2*$radius;
+    margin-bottom: 10px;
+
+    > .primary-action {
+      @include clearfix;
+      padding: 10px;
+      display: block;
+
+      > .name {
+        float: left;
+      }
+
+      > .player-counts {
+        float: right;
+      }
+
+      > .name {
+        float: left;
+        font: bold 16px/30px $helvetica;
+        margin: 0;
+      }
+
+      > .player-counts {
+        background-color: white;
+        @include clearfix;
+        @include inline-block;
+
+        border: 2px solid rgba(black, 0.2);
+        border-radius: $radius;
+
+        > .player-count {
+          padding: 3px 10px;
+          font: bold 12px/20px $helvetica;
+          color: rgba(black, 0.6);
+        }
+
+        > .player-count.current {
+          float: left;
+        }
+
+        > .player-count.max {
+          float: right;
+          border-left: 2px solid rgba(black, 0.1);
+        }
+      }
+    }
+
+    > .meta {
+      clear: both;
+      background-color: rgba(black, 0.05);
+
+      > ul {
+        @include clearfix;
+        margin: 0;
+        list-style-type: none;
+
+        > li {
+          float: left;
+          font-size: 12px;
+          line-height: 20px;
+
+          &:first-child {
+            border-left: none;
+          }
+
+          > a, &.server-address {
+            display: block;
+            padding: 5px 10px;
+          }
+
+          > a {
+            font-weight: bold;
+          }
+
+          &.server-address {
+            font-family: $monospace;
+          }
+        }
+      }
+    }
+  }
+}
