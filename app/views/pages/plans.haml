@@ -3,8 +3,14 @@
 = track 'Viewed pricing'
 
 - tradein_coins = 0
-- if signed_in? && current_user.coins >= (40 * 60)
-  - tradein_coins = current_user.coins
+- current_discount = 0
+
+- if signed_in?
+  - if current_user.coins >= (40 * 60)
+    - tradein_coins = current_user.coins
+  - if subscription = current_user.subscription
+    - current_discount = subscription.discount
+
 - tradein = tradein_coins > 0
 - tradein_discount = [5, tradein_coins / 40 / 60].min
 
@@ -63,7 +69,7 @@
           .old-price= number_to_currency((plan.discounted_cents(intro: true)) / 100.0, precision: 2)
           .price= number_to_currency((plan.discounted_cents(intro: true, tradein: tradein_coins)) / 100.0, precision: 2)
         - else
-          .price= number_to_currency((plan.discounted_cents(intro: true)) / 100.0, precision: 2)
+          .price= number_to_currency((plan.discounted_cents(intro: true, discount: current_discount)) / 100.0, precision: 2)
 
 
         - if signed_in?
@@ -111,11 +117,11 @@
           $form.find('input[name=tradein]').val(coins > 0);
           $form.submit();
         }
-        
+
         var amount = $this.data('amount');
         amount -= 100; // sale
         amount -= discount * 100;
-        
+
         var description = $this.data('name') + " plan";
         if (hours > 0) {
           description += " with trade in of "+ hours+ " hours";
