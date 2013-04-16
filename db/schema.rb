@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130416013252) do
+ActiveRecord::Schema.define(:version => 20130416233135) do
 
   add_extension "hstore"
 
@@ -86,6 +86,8 @@ ActiveRecord::Schema.define(:version => 20130416013252) do
     t.boolean  "persistent",               :default => false,             :null => false
     t.integer  "default_access_policy_id"
     t.integer  "access_policy_ids",                                                       :array => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "funpacks", ["game_id"], :name => "index_funpacks_on_game_id"
