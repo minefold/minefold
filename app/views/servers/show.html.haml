@@ -1,4 +1,4 @@
-- title server.name, "#{server.game.name} Server #{server.id}"
+- title server.name, "#{server.funpack.name} Server #{server.id}"
 - layout :servers
 
 = track 'Viewed server', name: server.name, url: server_url(server)
@@ -62,7 +62,7 @@
 
   %ul.nav.nav-tabs
     %li.active= link_to 'Activity', server
-    - if server.game.mappable?
+    - if server.funpack.maps?
       %li= link_to 'Map', server_map_path(server)
     - if can? :update, server
       %li= link_to 'Settings', [:edit, server]
@@ -101,7 +101,7 @@
 
       %br
 
-      - if not server.static_address? and can?(:update, server)
+      - if server.persistent? and can?(:update, server)
         #server-control-view-el
 
         - content_for :tail do
@@ -139,9 +139,6 @@
         %dd= server.creator.username
 
         %dt Game
-        %dd= server.funpack.game.name
-
-        %dt Funpack
         %dd= server.funpack.name
 
         %dt Created

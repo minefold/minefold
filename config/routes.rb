@@ -1,6 +1,3 @@
-require './lib/games'
-require './lib/static_game_constraint'
-
 Minefold::Application.routes.draw do
 
 # Constraints
@@ -80,7 +77,7 @@ Minefold::Application.routes.draw do
     get '/settings' => 'devise/registrations#edit', :as => :edit_user_registration
 
     get '/i/:invitation_token' => 'invitations#show', :as => :invitation
-    
+
     resources :invitations, only: [:create]
 
     resources :accounts do
@@ -154,11 +151,7 @@ Minefold::Application.routes.draw do
       root to: 'servers#index', :as => :user_root
     end
 
-    constraints StaticGameConstraint.new(GAMES) do
-      resources :games, path: '/', only: [:show] do
-        resources :funpacks, path: '/', only: [:show]
-      end
-    end
+    resources :funpacks, path: '/', only: [:show]
 
     resources :users, path: '/',
                       only: [:show, :update] do

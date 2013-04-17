@@ -1,7 +1,7 @@
 require 'state_machine/core'
 require './lib/redis_key'
 require './lib/server_address'
-require './lib/game_access_policy'
+# require './lib/game_access_policy'
 
 class Server < ActiveRecord::Base
   extend StateMachine::MacroMethods
@@ -16,9 +16,6 @@ class Server < ActiveRecord::Base
 
   belongs_to :funpack
   validates_presence_of :funpack
-
-  delegate :game, :to => :funpack
-  delegate :static_address?, :to => :game
 
   has_and_belongs_to_many :watchers, class_name: 'User', uniq: true
 
@@ -36,6 +33,7 @@ class Server < ActiveRecord::Base
   has_many :users, :through => :memberships
 
   validates_presence_of :name
+  validates_length_of :name, in: 2...255
 
   def initialize(*args, &blk)
     super
@@ -66,6 +64,8 @@ class Server < ActiveRecord::Base
     end
 
   end
+
+  delegate :persistent?, :to => :funpack
 
   States = {
     idle: 0,
@@ -101,35 +101,11 @@ class Server < ActiveRecord::Base
     end
   end
 
-  def normal?
-    not shared?
-  end
-
   def address
     ServerAddress.new(self)
   end
 
-  # TODO remove this with new auth stuff
-  before_create :set_auth
-
-  def set_auth
-    case game
-    when Minecraft
-      creator_account = creator.accounts.mojang.first
-      creator_uid = if creator_account
-        creator_account.uid
-      else
-        creator.username
-      end
-      settings['whitelist'] ||= creator_uid
-      settings['ops'] ||= creator_uid
-    when TeamFortress2
-      steam_account = creator.accounts.steam.first
-      if steam_account
-        settings['admins'] = steam_account.steam_id.to_s
-      end
-    end
-  end
+  # TODO
 
   def clear_host_and_port
     self.host, self.port = nil, nil
@@ -153,38 +129,16 @@ class Server < ActiveRecord::Base
     RedisKey.new(self, :watchers).to_s
   end
 
-
   def activity_stream
     @activity_stream ||= ActivityStream.new(self, $redis)
   end
 
-  after_create :create_activity
-
-  def create_activity
-    Activities::CreatedServer.publish(self)
+  def available_access_policies
+    funpack.access_policies
   end
-
-  after_create :add_creator_to_watchers
-
-  def add_creator_to_watchers
-    self.watchers << creator
-  end
-
-  AccessPolicies = {
-    PublicAccessPolicy => 0,
-    MinecraftWhitelistAccessPolicy => 1,
-    MinecraftBlacklistAccessPolicy => 2,
-    TeamFortress2PasswordAccessPolicy => 3
-  }
-
-  before_create :set_default_access_policy_id
 
   def access_policy
-    AccessPolicies.invert[self.access_policy_id].new(self)
-  end
-
-  def set_default_access_policy_id
-    self.access_policy_id = AccessPolicies[self.game.default_access_policy]
+    funpack.access_policies.fetch(self.access_policy_id).new(self)
   end
 
 end

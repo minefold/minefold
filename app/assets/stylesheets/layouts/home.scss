@@ -1,7 +1,14 @@
 .l-home {
 
+  .navbar {
+    background-color: $brand-blue;
+    .navbar-inner .brand a {
+      color: white;
+    }
+  }
+
   .jumbotron,
-  .game-library,
+  .funpack-library,
   .feature-list,
   .call-to-action,
   .press {
@@ -9,7 +16,7 @@
   }
 
   .jumbotron {
-    background-color: desaturate($brand-blue, 0%);
+    background-color: $brand-blue;
 
     h1 {
       color: white;

@@ -31,7 +31,7 @@ class ServerStartedJob < Job
     server.save!
 
     server.started!
-    
+
     enforce_bolts! if @creator.active_subscription?
 
     Pusher.trigger("server-#{server.id}", 'server:started',
@@ -41,14 +41,13 @@ class ServerStartedJob < Job
     )
 
     MixpanelAsync.track(server.creator.distinct_id, 'Started server',
-      game: server.game.name,
-      shared: server.shared?
+      funpack: server.funpack.name
     )
   end
-  
+
   def enforce_bolts!
     servers = @creator.created_servers
-    
+
     allocations = PartyCloud.running_server_allocations(servers.map(&:party_cloud_id))
 
     running_bolts = allocations.inject(0) do |bolts, (server_pc_id, allocation)|
@@ -56,10 +55,10 @@ class ServerStartedJob < Job
       bolt_index = s.funpack.bolt_allocations.index(allocation)
       bolts + bolt_index + 1
     end
-    
+
     if running_bolts > @creator.subscription.plan.bolts
-      running_servers = servers.select{|s| 
-        allocations.keys.include?(s.party_cloud_id) 
+      running_servers = servers.select{|s|
+        allocations.keys.include?(s.party_cloud_id)
       }.sort_by{|s| s.sessions.current.started_at }
 
       Scrolls.log(
@@ -68,7 +67,7 @@ class ServerStartedJob < Job
         oldest_server: running_servers.first.id,
         action: 'stopping'
       )
-      
+
       Resque.enqueue StopServerJob, running_servers.first.id
     end
   end

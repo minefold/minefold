@@ -21,9 +21,9 @@
                   .max.player-count{data: {:toggle => :tooltip, title: 'Max players'}}= server.max_players
               %nav.meta{role: 'navigation'}
                 %ul
-                  %li.funpack= link_to server.funpack.name, game_funpack_path(server.game, server.funpack)
+                  %li.funpack= link_to server.funpack.name, funpack_path(server.funpack)
                   %li.settings= link_to 'Settings', edit_server_path(server)
-                  %li.server-address= ServerAddress.new(server)
+                  %li.server-address= server.address
 
       - content_for :tail do
         :javascript

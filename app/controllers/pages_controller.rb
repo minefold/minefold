@@ -1,5 +1,3 @@
-require './lib/games'
-
 class PagesController < ApplicationController
 
   prepend_before_filter :authenticate_user!, only: [:welcome, :time]
@@ -18,7 +16,7 @@ class PagesController < ApplicationController
   end
 
   def home
-    @games = GAMES
+    @funpacks = Funpack.published.order(:name)
   end
 
   def pricing

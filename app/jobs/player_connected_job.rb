@@ -24,9 +24,7 @@ class PlayerConnectedJob < Job
     if account.user
       MixpanelAsync.track(account.user.distinct_id, 'Played',
         server: server.name,
-        funpack: server.funpack.name,
-        game: server.funpack.game.name,
-        shared: server.shared?
+        funpack: server.funpack.name
       )
     end
   end

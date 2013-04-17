@@ -1,21 +1,18 @@
 class ServerAddress
 
   attr_reader :server
+  attr_reader :funpack
 
   def initialize(server)
     @server = server
   end
 
   def to_s
-    if server.static_address?
+    if server.persistent?
       address
     else
       ip
     end
-  end
-
-  def ip
-    [server.host, server.port].compact.join(':')
   end
 
   def address
@@ -24,6 +21,10 @@ class ServerAddress
     else
       default
     end
+  end
+
+  def ip
+    [server.host, server.port].compact.join(':')
   end
 
 # private

@@ -1,0 +1,99 @@
+.funpack-picker {
+  @include clearfix;
+  overflow: scroll-x;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-left: -20px;
+
+  h2 {
+    margin: 0;
+    font-size: 14px;
+    color: black;
+    display: none;
+    font-weight: normal;
+    text-transform: uppercase;
+  }
+
+  .item {
+    @include box-sizing(border-box);
+    @include transition(border-color 300ms ease);
+
+    float: left;
+    width: 60px + 20px + 60px;
+    height: 60px + 20px + 60px;
+
+    margin-left: 20px;
+    margin-bottom: 10px;
+    padding: 10px;
+    overflow: hidden;
+
+    border-radius: 3px;
+    border: 2px solid rgba(black, 0.05);
+
+    cursor: pointer;
+
+    &:hover {
+      border: 2px solid rgba(black, 0.2);
+
+      img {
+        margin-top: -65px;
+        opacity: 0;
+      }
+
+      .name {
+        color: black;
+      }
+
+      .description {
+        opacity: 1;
+      }
+    }
+
+    &.active {
+      background-color: $brand-green;
+
+      .name {
+        color: rgba(white, 0.9);
+      }
+
+      .description {
+        color: rgba(white, 0.6);
+      }
+
+      &:hover {
+        .name {
+          color: white;
+        }
+      }
+    }
+
+    img {
+      @include box-sizing(border-box);
+      border-radius: 3px;
+      width: 60px;
+      margin: 0 auto;
+      display: block;
+      margin-bottom: 5px;
+
+      @include transition(opacity 300ms ease, margin-top 300ms ease);
+    }
+
+    .name {
+      text-align: center;
+      padding-bottom: 5px;
+      color: rgba(black, 0.6);
+    }
+
+    .description {
+      opacity: 0;
+
+      color: rgba(black, 0.6);
+      font-size: 11px;
+      line-height: 15px;
+
+      @include transition(opacity 300ms ease);
+    }
+
+  }
+}
+

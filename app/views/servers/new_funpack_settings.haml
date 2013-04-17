@@ -2,4 +2,4 @@
 - f = default_form_builder.new(:server, server, self, {}, Proc.new)
 
 = f.fields_for :settings, OpenStruct.new(server.settings) do |s|
-  = render partial: @funpack.game.settings_partial, locals: {f: s}
+  = render partial: @funpack.settings_partial, locals: {f: s}

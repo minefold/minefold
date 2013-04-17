@@ -1,6 +1,13 @@
-.game-library {
+.funpack-library {
+  @include clearfix;
+  margin-left: -10px;
+
   > .item {
+    float: left;
     position: relative;
+    width: 60px + 20px + 60px;
+    margin-left: 10px;
+    margin-right: 10px;
 
     &.coming-soon {
       > img {
@@ -19,11 +26,9 @@
     }
 
     > .name {
+      padding-top: 5px;
+      padding-bottom: 5px;
       text-align: center;
-      padding: 0 g();
-      font-weight: bold;
-      line-height: l(4);
-      color: $brand-blue;
     }
   }
 }

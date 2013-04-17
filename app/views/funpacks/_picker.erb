@@ -1,0 +1,13 @@
+<div class="funpack-picker">
+  <% picker.each do |funpack| %>
+    <a class="item funpack" data-id="<%= funpack.id %>">
+      <%= image_tag funpack_image_path(funpack) %>
+      <div class="name">
+        <%= funpack.name %>
+      </div>
+      <div class="description">
+        <%= funpack.description %>
+      </div>
+    </a>
+  <% end %>
+</div>

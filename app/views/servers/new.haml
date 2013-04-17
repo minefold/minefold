@@ -1,109 +1,37 @@
 - title 'Create a new server'
 
 .container
-  .row
-    .span8.offset2
-      .page-header
-        %h1 Create a new server
+  = form_for server, html: { class: 'form-horizontal' } do |f|
+    = f.hidden_field :funpack_id
 
-      = form_for server, html: { class: 'form-horizontal' } do |f|
-        = f.control_group :name do
-          = f.label :name, 'Server Name', class: 'control-label'
-          .controls
-            = f.text_field :name, autocomplete: 'off', class: 'input-block-level'
+    %h3 Step 1: Pick a game
+    = render partial: 'funpacks/picker', object: funpacks
 
-        .control-group
-          .control-label Game
-          .controls
-            - games.each do |game|
-              .game{data: {'split-billing' => game.split_billing?.to_s}}
-                %label.radio{for: "server_funpack_id_#{game.funpack_id}", style: 'margin-bottom:20px'}
-                  %input{type: 'radio', name: 'server[funpack_id]', value: game.funpack_id, id: "server_funpack_id_#{game.funpack_id}", checked:(params[:server] and params[:server][:funpack_id].to_s == game.funpack_id.to_s)}
+    %h3 Step 2: Name your server
+    = f.control_group :name do
+      = f.text_field :name, autocomplete: 'off', class: ['input-large', 'input-block-level'], maxlength: 254
 
-                  %strong.name{style: 'margin-right:10px'}
-                    = game.name
+    %br
 
-                .funpacks{style: 'margin-left: 20px'}
-                  - funpacks.select{|fp| fp.game_id == game.id}.reject{|funpack| funpack.id == game.funpack_id }.each do |funpack|
-                    = f.label "funpack_id_#{funpack.id}", class: 'radio', style: 'margin-bottom:20px' do
-                      = f.radio_button :funpack_id, funpack.id
+    = f.submit 'Start your server', class: %w(btn btn-primary btn-large), disabled: true
 
-                      %strong.name
-                        = funpack.name
-                        = "(Unpublished)" unless funpack.published?
-                      .info
-                        = markdown(funpack.description)
-                        = link_to "More information", funpack.info_url, target: '_blank'
+- content_for :tail do
+  :javascript
+    $(document).ready(function() {
+      var form = $('#new_server');
 
-            - content_for :tail do
-              :javascript
-                var checkSplitBilling = function($el) {
-                  var available = $el.parents('.game').data('split-billing'),
-                      label = $('label[for=server_shared_true]'),
-                      otherLabel = $('label[for=server_shared_false]');
+      // Set the funpack id when the picker changes
+      $('.funpack-picker').on('changed', function(e, id) {
+        form.find('#server_funpack_id').val(id);
+      }).trigger('change', form.find('#server_funpack_id').val());
 
-                  if(!available) {
-                    label.addClass('unavailable')
-                      .find('input').attr('disabled', true);
+      var validateForm = function(serverForm) {
+        var funpack = serverForm.find('#server_funpack_id').val(),
+            name = serverForm.find('#server_name').val();
+        return (funpack !== '') && (name !== '') && (name.length >= 2) && (name.length <= 255);
+      }
 
-                    otherLabel.find('input').attr('checked', true);
-                  } else {
-                    label.removeClass('unavailable')
-                      .find('input').attr('disabled', false);
-                  }
-                }
-
-                $(document).ready(function() {
-                  $('.game input[type=radio]').change(function() {
-                    checkSplitBilling($(this));
-                  });
-
-                  // TODO There's a bug here when submitting the form with errors and it disabling games that do allow split billing.
-                  // It's easily worked around by toggling back-and-forth but the data selector needs to be fixed.
-                  checkSplitBilling($('.game[data-split-billing=true] input[selected]'));
-                });
-
-
-            %p.muted
-              Do you have a custom server or want other mods? Have your say by
-              %a{href: "https://docs.google.com/a/minefold.com/spreadsheet/viewform?formkey=dEhlY3dZU0hDaVpEbWI3ZFE3V3lYRVE6MQ#gid=0", target: '_blank'} filling out our quick poll.
-
-
-          = f.control_group :shared do
-            = f.label 'shared_false', class: 'control-label' do
-              Pay for?
-
-            .controls
-              = f.label 'shared_false', class: 'radio' do
-                = f.radio_button :shared, false
-                Everybody
-
-                .help-block.muted
-                  You pay for the time played by any player on your server up to 10 people. For example, if 5 people play on your server for 1 hour each, you'll pay for 5 hours. If 15 people play for one hour each, you'll only pay for 10 hours.
-
-              = f.label 'shared_true', class: 'radio' do
-                = f.radio_button :shared, true
-                Only me
-
-                .unavailable-message
-                  Billing option unavailable for game.
-
-                .help-block.muted
-                  Each player pays for themselves. Every player will need a Minefold account with a linked Minecraft account to play.
-
-          .form-actions
-            = f.submit 'Create server', class: %w(btn btn-primary)
-
-  :css
-    .unavailable-message {
-      color: #F34;
-      display: none;
-    }
-    .unavailable .unavailable-message {
-      display: block;
-    }
-    .unavailable .help-block {
-      display: none;
-    }
-
-
+      form.on('change keyup', function(e) {
+        form.find('input[type=submit]').attr('disabled', !validateForm(form));
+      });
+    });
