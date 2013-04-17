@@ -75,8 +75,8 @@ ActiveRecord::Schema.define(:version => 20130416233135) do
     t.string   "party_cloud_id"
     t.text     "description"
     t.string   "info_url"
-    t.boolean  "imports",            :default => false
-    t.string   "slug",               :default => ""
+    t.boolean  "imports",                  :default => false
+    t.string   "slug",                     :default => ""
     t.text     "settings_schema"
     t.datetime "published_at"
     t.integer  "bolt_allocations",         :default => [512, 1024, 2048],                 :array => true
