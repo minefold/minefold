@@ -10,20 +10,21 @@
 
 .container
   .bonus-list
-    - if $flipper[:subscriptions].enabled?(current_user)
+    - if enabled?(:subscriptions)
       %a.bonus{href: plans_page_path}
         .row
           .description.span5
             %h3.name Upgrade subscription
 
-    %a.bonus{href: pricing_page_path}
-      .row
-        .description.span5
-          %h3.name Buy prepaid time
-          .muted Until April 20th!
-        .reward.span3
-          %h3.coins= time_left @small_coin_pack.coins
-          .conditions or more
+    - if enabled?(:prepaid)
+      %a.bonus{href: pricing_page_path}
+        .row
+          .description.span5
+            %h3.name Buy prepaid time
+            .muted Until April 20th!
+          .reward.span3
+            %h3.coins= time_left @small_coin_pack.coins
+            .conditions or more
 
     %a.bonus{href: url_for(:controller => :invitations, :action => :show, invitation_token: current_user.invitation_token)}
       .row

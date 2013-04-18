@@ -9,6 +9,5 @@ test:
   host: localhost
   adapter: postgresql
   database: minefold_test
-  username: postgres
   pool: 5
   timeout: 5000

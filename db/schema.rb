@@ -270,8 +270,8 @@ ActiveRecord::Schema.define(:version => 20130416233135) do
     t.datetime "deleted_at"
     t.string   "invitation_token",       :limit => 12
     t.integer  "invited_by_id"
-    t.string   "verification_token",     :limit => 12
     t.boolean  "beta",                                 :default => false
+    t.string   "verification_token",     :limit => 12
     t.integer  "subscription_id"
   end
 
