@@ -1,14 +1,4 @@
 form {
-  .label {
-    text-shadow: none;
-    border-radius: 2px;
-    box-shadow: none;
-  }
-
-  .label-success {
-    background-color: $brand-green;
-  }
-
   #{$all-text-inputs},
   textarea {
     box-shadow: none;

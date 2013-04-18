@@ -4,4 +4,8 @@ module FunpacksHelper
     "funpacks/#{funpack.slug}.png"
   end
 
+  def funpack_public_template(funpack)
+    File.join('funpacks', 'public', funpack.slug.gsub('-', '_'))
+  end
+
 end

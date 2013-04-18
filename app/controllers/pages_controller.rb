@@ -16,7 +16,7 @@ class PagesController < ApplicationController
   end
 
   def home
-    @funpacks = Funpack.published.order(:name)
+    @funpacks = Funpack.order(:published_at, :name).limit(6)
   end
 
   def pricing

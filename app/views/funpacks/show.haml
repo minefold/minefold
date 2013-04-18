@@ -16,12 +16,7 @@
 
   .row
     .span8
-      - partial = funpack.slug.gsub('-', '_')
-      - if lookup_context.find_all("funpacks/_#{partial}").any?
-        = render partial: partial
-      - else
-        .lead= markdown(funpack.description)
-
+      = render partial: funpack_public_template(funpack)
 
     .span4
       %a.btn.btn-large.btn-block.btn-success{href: new_server_path(funpack: funpack.slug)}

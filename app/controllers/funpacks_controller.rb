@@ -1,3 +1,7 @@
 class FunpacksController < ApplicationController
-  expose(:funpack)
+
+  expose(:funpack) {
+    Funpack.published.find(params[:id])
+  }
+
 end

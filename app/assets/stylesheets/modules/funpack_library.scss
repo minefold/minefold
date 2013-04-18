@@ -1,6 +1,7 @@
 .funpack-library {
   @include clearfix;
   margin-left: -10px;
+  margin-right: -10px;
 
   > .item {
     float: left;

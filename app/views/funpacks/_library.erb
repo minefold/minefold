@@ -1,18 +1,18 @@
 <div class="funpack-library">
   <% library.each do |funpack| %>
     <% if funpack.published? %>
-      <a href="<%= funpack_path(funpack) %>" class="item">
+      <a href="<%= funpack_path(funpack) %>" class="item funpack">
         <%= image_tag funpack_image_path(funpack) %>
-        <% if funpack.new? %>
+        <% if funpack.recent? %>
           <div class="label label-success">New!</div>
         <% end %>
         <div class="name"><%= funpack.name %></div>
       </a>
     <% else %>
-      <div class="item coming-soon">
+      <div class="item funpack coming-soon">
         <%= image_tag funpack_image_path(funpack) %>
         <div class="label">Coming soon</div>
-        <div class="name"><%= fupack.name %></div>
+        <div class="name"><%= funpack.name %></div>
       </div>
     <% end %>
   <% end %>

@@ -8,13 +8,14 @@ class Funpack < ActiveRecord::Base
   scope :published, -> { where('published_at is not ?', nil) }
 
   attr_accessible :name,
+                  :slug,
                   :creator,
                   :info_url,
                   :description,
                   :party_cloud_id,
                   :imports,
-                  :slug,
-                  :game_id,
+                  :persistent,
+                  :maps,
                   :settings_schema,
                   :published_at,
                   :bolt_allocations,
@@ -35,8 +36,8 @@ class Funpack < ActiveRecord::Base
     !published_at.nil?
   end
 
-  def new?
-    published_at >= 2.weeks.ago
+  def recent?
+    published_at > 2.weeks.ago
   end
 
   AccessPolicies = {
