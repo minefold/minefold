@@ -3,7 +3,6 @@ class RegistrationsController < Devise::RegistrationsController
   before_filter :find_invitation, :only => :new
   after_filter :track_signup_in_mixpanel, :only => :create
 
-
 # --
 
   def after_sign_up_path_for(resource)

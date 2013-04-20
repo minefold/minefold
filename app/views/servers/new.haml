@@ -68,28 +68,28 @@
               Do you have a custom server or want other mods? Have your say by
               %a{href: "https://docs.google.com/a/minefold.com/spreadsheet/viewform?formkey=dEhlY3dZU0hDaVpEbWI3ZFE3V3lYRVE6MQ#gid=0", target: '_blank'} filling out our quick poll.
 
+          - unless enabled? :subscriptions
+            = f.control_group :shared do
+              = f.label 'shared_false', class: 'control-label' do
+                Pay for?
 
-          = f.control_group :shared do
-            = f.label 'shared_false', class: 'control-label' do
-              Pay for?
+              .controls
+                = f.label 'shared_false', class: 'radio' do
+                  = f.radio_button :shared, false
+                  Everybody
 
-            .controls
-              = f.label 'shared_false', class: 'radio' do
-                = f.radio_button :shared, false
-                Everybody
+                  .help-block.muted
+                    You pay for the time played by any player on your server up to 10 people. For example, if 5 people play on your server for 1 hour each, you'll pay for 5 hours. If 15 people play for one hour each, you'll only pay for 10 hours.
 
-                .help-block.muted
-                  You pay for the time played by any player on your server up to 10 people. For example, if 5 people play on your server for 1 hour each, you'll pay for 5 hours. If 15 people play for one hour each, you'll only pay for 10 hours.
+                = f.label 'shared_true', class: 'radio' do
+                  = f.radio_button :shared, true
+                  Only me
 
-              = f.label 'shared_true', class: 'radio' do
-                = f.radio_button :shared, true
-                Only me
+                  .unavailable-message
+                    Billing option unavailable for game.
 
-                .unavailable-message
-                  Billing option unavailable for game.
-
-                .help-block.muted
-                  Each player pays for themselves. Every player will need a Minefold account with a linked Minecraft account to play.
+                  .help-block.muted
+                    Each player pays for themselves. Every player will need a Minefold account with a linked Minecraft account to play.
 
           .form-actions
             = f.submit 'Create server', class: %w(btn btn-primary)

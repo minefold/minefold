@@ -47,6 +47,8 @@
                   = f.label :username, class: 'control-label'
                   .controls
                     = f.text_field :username, placeholder: 'Username'
+                  = error_message_for(f.object, :username)
+                  
                   = f.label :first_name, 'Name', class: 'control-label'
                   .controls
                     = f.text_field :first_name, placeholder: 'First name', class: %w(span2)

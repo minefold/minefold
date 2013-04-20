@@ -19,9 +19,7 @@ class UsersController < Devise::RegistrationsController
 
   def update
     authorize! :update, user
-
-    user.update_attributes!(params[:user])
-
+    user.save
     respond_with(user, location: edit_user_registration_path)
   end
 
