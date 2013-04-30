@@ -23,35 +23,42 @@
 
         %tbody
           %tr
-            %th Minecraft
+            %th= link_to 'Minecraft', game_path(:minecraft)
             %td 10 players
             %td 25 players
             %td 50 players
             %td
 
           %tr
-            %th Team Fortress 2
+            %th= link_to 'Team Fortress 2', game_path('team-fortress-2')
             %td 12 players
             %td 24 players
-            %td 
-            %td 
-          
+            %td 32 players
+            %td
+
           - if @on_sale
             %tr
-              %th Regular
+              %th.old-price Regular
               - @plans.each_with_index do |plan, i|
-                %td.old-price{class:"#{plan.name.downcase}"}= number_to_currency((plan.cents) / 100.0, precision: 2)
+                %td.old-price{class:"#{plan.name.downcase}"}
+                  = number_to_currency((plan.cents) / 100.0, precision: 2)
+                  %span.period
+                    \/ month
               %td
-          
+
           %tr
-            %th 
+            %th.price
               - if @on_sale
                 Sale
             - @plans.each_with_index do |plan, i|
-              %td.price{class:"#{plan.name.downcase}"}= number_to_currency((plan.discounted_cents(discount: @current_discount, tradein: @tradein_coins)) / 100.0, precision: 2)
+              %td.price{class:"#{plan.name.downcase}"}
+                = number_to_currency((plan.discounted_cents(discount: @current_discount, tradein: @tradein_coins)) / 100.0, precision: 2)
+                %span.period
+                  \/ month
+
             %td
-            
-          
+
+
           %tr
             %td
             - @plans.each_with_index do |plan, i|
@@ -62,7 +69,7 @@
                     %input{type: 'hidden', name: 'stripeToken'}
                     %input{type: 'hidden', name: 'last4'}
                     %input{type: 'hidden', name: 'tradein' }
-                
+
                     - current_plan = current_user.active_subscription? && current_user.subscription.plan
                     - if plan == current_plan
                       %p.btn.btn-block.btn-large Current Plan
@@ -82,7 +89,11 @@
                 - else
                   %a.btn.btn-block.btn-large{href: new_user_registration_path} Sign up now!
             %td
-            
+
+  %p.quote
+    One subscription gets you #{Funpack.count} different games!
+    Play Minecraft on Wednesday, Feed The Beast on Thursday and Team Fortress 2 on Friday night
+
   %hr.small.hidden
 
   - content_for :tail do
@@ -95,9 +106,9 @@
         var coins = $this.data('coins');
         var hours = Math.round(Number(coins/60));
         var discount = 0;
-        
+
         console.log(coins, discount)
-        
+
         if (coins > 0) {
           discount += #{@tradein_discount};
           if (!confirm('Trade in ' + hours + ' hours for an additional $' + discount + ' discount?')) {

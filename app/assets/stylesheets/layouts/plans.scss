@@ -8,10 +8,10 @@
       color: white;
     }
   }
-  
+
   table.plans {
     margin-top: $gw-gutter;
-    
+
     tbody {
       th {
         text-align: right;
@@ -19,38 +19,39 @@
       td {
         text-align: center;
       }
-      td.old-price {
-        line-height: 40px;
-      }
-      td.price {
-        line-height: 56px;
-      }
     }
   }
-  
+
   .salotron {
     background-color: $brand-yellow;
     text-align: center;
     padding: $gw-gutter 0;
     margin-bottom: $gw-gutter;
   }
-  
+
+  .price {
+    line-height: 40px;
+  }
+
   .old-price {
-    font-size: 26px;
+    line-height: 30px;
+  }
+
+  td.price, td.old-price {
+    .period {
+      font-size: 16px;
+    }
     font-family: $geometric;
-    line-height: l(4);
-    padding: 0;
+  }
+  td.old-price {
+    font-size: 18px;
     text-decoration: line-through;
   }
-  
-  .price {
-    font-size: 36px;
-    font-family: $geometric;
+  td.price {
+    font-size: 26px;
     font-weight: 600;
-    line-height: l(4);
-    padding: 0;
   }
-  
+
   .price.bronze, .old-price.bronze {
     color: $brand-green;
   }
@@ -60,7 +61,12 @@
   .price.gold, .old-price.gold {
     color: $red;
   }
-  
+
+  .quote {
+    text-align: center;
+    font-size: 18px;
+  }
+
 
 
   h3 {
@@ -103,3 +109,4 @@
     }
   }
 }
+

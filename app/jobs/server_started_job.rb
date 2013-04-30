@@ -8,17 +8,21 @@ class ServerStartedJob < Job
 
   def initialize(party_cloud_id, host, port, timestamp=nil)
     @server = Server.unscoped.find_by_party_cloud_id(party_cloud_id)
-    @creator = @server.creator
-    @host, @port = host, port
+    if @server
+      @creator = @server.creator
+      @host, @port = host, port
 
-    @started_at = if timestamp.nil?
-      Time.now
-    else
-      Time.at(timestamp)
+      @started_at = if timestamp.nil?
+        Time.now
+      else
+        Time.at(timestamp)
+      end
     end
   end
 
   def perform
+    return unless @server
+
     session = server.sessions.current
 
     session.started_at ||= started_at
@@ -31,7 +35,7 @@ class ServerStartedJob < Job
     server.save!
 
     server.started!
-    
+
     enforce_bolts! if @creator.active_subscription?
 
     Pusher.trigger("server-#{server.id}", 'server:started',
@@ -45,10 +49,10 @@ class ServerStartedJob < Job
       shared: server.shared?
     )
   end
-  
+
   def enforce_bolts!
     servers = @creator.created_servers
-    
+
     allocations = PartyCloud.running_server_allocations(servers.map(&:party_cloud_id))
 
     running_bolts = allocations.inject(0) do |bolts, (server_pc_id, allocation)|
@@ -56,10 +60,10 @@ class ServerStartedJob < Job
       bolt_index = s.funpack.bolt_allocations.index(allocation)
       bolts + bolt_index + 1
     end
-    
+
     if running_bolts > @creator.subscription.plan.bolts
-      running_servers = servers.select{|s| 
-        allocations.keys.include?(s.party_cloud_id) 
+      running_servers = servers.select{|s|
+        allocations.keys.include?(s.party_cloud_id)
       }.sort_by{|s| s.sessions.current.started_at }
 
       Scrolls.log(
@@ -68,7 +72,7 @@ class ServerStartedJob < Job
         oldest_server: running_servers.first.id,
         action: 'stopping'
       )
-      
+
       Resque.enqueue StopServerJob, running_servers.first.id
     end
   end
