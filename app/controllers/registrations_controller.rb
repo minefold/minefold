@@ -6,6 +6,7 @@ class RegistrationsController < Devise::RegistrationsController
 # --
 
   def after_sign_up_path_for(resource)
+    flash[:signed_up] = true
     user_root_path(event: 'welcome') # welcome param triggers conversion tracking
   end
 
