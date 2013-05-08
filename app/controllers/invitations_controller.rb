@@ -23,6 +23,8 @@ class InvitationsController < ApplicationController
           email: email
         )
       end
+
+      InvitationsMailer.invitation(current_user.id, email).deliver
     end
 
     flash[:success] = "Invitations sent!"
