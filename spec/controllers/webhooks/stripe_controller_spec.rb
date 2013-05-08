@@ -18,9 +18,12 @@ describe Webhooks::StripeController do
     let(:user) { User.make(customer_id: 'cus_1234') }
 
     it "sends email" do
+      mail = stub(:mail)
       SubscriptionMailer.should_receive(:receipt).with(user.id, 'ch_1') {
-        stub(:mail)
+        mail
       }
+      mail.should_receive(:deliver)
+
       User.should_receive(:find_by_customer_id).with(user.customer_id) { user }
       Stripe::Event.should_receive(:retrieve).with('evt_1') do
         {
@@ -38,7 +41,7 @@ describe Webhooks::StripeController do
       raw_post :create, {}, {id: 'evt_1'}.to_json
     end
   end
-  
+
   describe "unhandled.type" do
     let(:user) { User.make(customer_id: 'cus_1234') }
 

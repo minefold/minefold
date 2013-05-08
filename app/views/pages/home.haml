@@ -76,9 +76,11 @@
 
 - content_for :tail do
   :javascript
-    Abba('Sign Up Button')
-      .control('Control', { weight: 1 })
-      .variant('Position: Top', { weight: 1 }, function(){
-        $('.call-to-action').prependTo('.container');
-      })
-      .start();
+    $(function(){
+      Abba('Sign Up Button')
+        .control('Control', { weight: 1 })
+        .variant('Position: Top', { weight: 1 }, function(){
+          $('.call-to-action').prependTo('.container');
+        })
+        .start();
+    });

@@ -1,9 +1,13 @@
 class Bonuses::ReferredFriend < Bonus
   extend StateMachine::MacroMethods
 
+  self.coins = 60
+
+  belongs_to :friend, class_name: 'User'
+
   States = {
     sent:            0,  # email sent. This won't happen for tweets etc
-    signed_up:       1,
+    signed_up:       1,  # from here on in, friend should be set
     confirmed_email: 2,
     played:          3,  # Has actually played on a server with a linked account
     paying:          4   # Is currently a paying customer
@@ -41,12 +45,19 @@ class Bonuses::ReferredFriend < Bonus
     end
   end
 
-  self.coins = 60
-
-  LIMIT = 16
-
-  def self.coin_limit
-    coins * LIMIT
+  def coins
+    case States.invert[state]
+    when :sent
+      0
+    when :signed_up
+      0
+    when :confirmed_email
+      60
+    when :played
+      120
+    when :paying
+      240
+    end
   end
 
   def email
@@ -62,7 +73,22 @@ class Bonuses::ReferredFriend < Bonus
     self.class.where(user_id: user.id).count < LIMIT
   end
 
+  def friend_link
+    %Q{<a href="/#{friend.username}">#{friend.username}</a>}
+  end
+
   def description
-    'Sent to ' + email
+    case States.invert[state]
+    when :sent
+      'Sent to ' + email
+    when :signed_up
+      "#{friend_link} (Signed up, unconfirmed)".html_safe
+    when :confirmed_email
+      "#{friend_link} (Signed up)".html_safe
+    when :played
+      "#{friend_link} (Played on servers)".html_safe
+    when :paying
+      "#{friend_link} (Paying customer)".html_safe
+    end
   end
 end

@@ -1,9 +1,7 @@
 class Bonus < ActiveRecord::Base
+  belongs_to :user
 
   class_attribute :coins
-  self.coins = 0
-
-  belongs_to :user
 
   validate :validate_claimable?
 
@@ -26,7 +24,7 @@ class Bonus < ActiveRecord::Base
   end
 
   def coins
-    self.class.coins
+    self.coins
   end
 
   def give!

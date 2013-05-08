@@ -22,8 +22,7 @@
           .muted Spread the love to your friends and family.
 
         .reward.span3
-          %h3.coins= time_left Bonuses::ReferredFriend.coin_limit
-          .conditions #{time_left Bonuses::ReferredFriend.coins} per friend
+          %h3.coins #{time_left Bonuses::ReferredFriend.coins} per friend
 
 
     %a.bonus.bonus-mini{href: edit_user_registration_path(anchor: 'accounts'), class: ('is-done' unless Bonuses::LinkedFacebookAccount.new(user: current_user).claimable?)}

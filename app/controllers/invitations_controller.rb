@@ -14,7 +14,7 @@ class InvitationsController < ApplicationController
 
   def create
     current_referrals = current_user.bonuses
-    
+
     for email in params[:referral][:emails].split.select{|e| e =~ /.+@.+\..+/ }
       referral = Bonuses::ReferredFriend.where("data -> 'email' = ?", email).first
       if referral.nil?
@@ -24,12 +24,12 @@ class InvitationsController < ApplicationController
         )
       end
     end
-    
+
     flash[:success] = "Invitations sent!"
-    
+
     redirect_to url_for(
-      :controller => :invitations, 
-      :action => :show, 
+      :controller => :invitations,
+      :action => :show,
       invitation_token: current_user.invitation_token
     )
   end
