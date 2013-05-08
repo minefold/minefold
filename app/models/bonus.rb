@@ -24,7 +24,7 @@ class Bonus < ActiveRecord::Base
   end
 
   def coins
-    self.class.coins  
+    self.class.coins
   end
 
   def give!

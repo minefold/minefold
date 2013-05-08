@@ -43,6 +43,10 @@ class Bonuses::ReferredFriend < Bonus
     event :not_paying do
       transition :paying => :confirmed_email
     end
+
+    after_transition any => :confirmed_email do |bonus, transition|
+      bonus.user.increment_coins!(60)
+    end
   end
 
   def coins
@@ -53,10 +57,6 @@ class Bonuses::ReferredFriend < Bonus
       0
     when :confirmed_email
       60
-    when :played
-      120
-    when :paying
-      240
     end
   end
 

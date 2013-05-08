@@ -23,4 +23,9 @@ class UsersController < Devise::RegistrationsController
     respond_with(user, location: edit_user_registration_path)
   end
 
+  def resend_confirmation
+    current_user.resend_confirmation_token
+    redirect_to :back
+  end
+
 end

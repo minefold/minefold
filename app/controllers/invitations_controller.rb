@@ -29,11 +29,7 @@ class InvitationsController < ApplicationController
 
     flash[:success] = "Invitations sent!"
 
-    redirect_to url_for(
-      :controller => :invitations,
-      :action => :show,
-      invitation_token: current_user.invitation_token
-    )
+    redirect_to bonus_account_path
   end
 
 end
