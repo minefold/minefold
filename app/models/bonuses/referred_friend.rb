@@ -70,7 +70,7 @@ class Bonuses::ReferredFriend < Bonus
   end
 
   def claimable?
-    self.class.where(user_id: user.id).count < LIMIT
+    true
   end
 
   def friend_link
