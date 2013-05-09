@@ -24,10 +24,32 @@
           Get #{game.name}
         %hr
 
-      %a.btn.btn-large.btn-block.btn-success{href: new_server_path(game: game.slug)}
-        Start a #{game.name} server
+      - if signed_in?
+        %a.btn.btn-large.btn-block.btn-success{href: new_server_path(game: game.slug)}
+          Start a #{game.name} server
 
       - if not signed_in?
+        .control
+          %a.btn.btn-large.btn-block.btn-success{href: new_server_path(game: game.slug)}
+            Start a #{game.name} server
+
+        .variant
+          %a.btn.btn-large.btn-block.btn-success{href: new_user_registration_path(game: game.slug)}
+            Start a #{game.name} server
+
+        - content_for :tail do
+          :javascript
+            $(function(){
+              Abba('Sign Up Button')
+                .control('Control', { weight: 1 })
+                .variant('Position: Top', { weight: 1 }, function(){
+                  $('.control').hide();
+                  $('.variant').show();
+                })
+                .start();
+            });
+
+
         %br
         %center
           %p Servers are <strong>free</strong> for #{Bonuses::GettingStarted.coins} minutes.
