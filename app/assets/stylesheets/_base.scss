@@ -22,58 +22,6 @@ code {
   display: none;
 }
 
-.btn {
-  background-image: none;
-  border: none;
-  box-shadow: none;
-  text-shadow: none;
-  font-weight: 600;
-  border-radius: 2px;
-}
-
-.btn-primary,
-.btn-primary:hover,
-.btn-primary:active {
-  background-color: $brand-blue;
-}
-
-.btn-success,
-.btn-success:hover,
-.btn-success:active {
-  background-color: $brand-green;
-}
-
-.label {
-  text-shadow: none;
-  border-radius: 2px;
-  box-shadow: none;
-}
-
-.label-success {
-  background-color: $brand-green;
-}
-
-#{$all-text-inputs},
-textarea {
-  box-shadow: none;
-  border-radius: 2px;
-  border-color: rgba(black, 0.2);
-  padding: l() g();
-  font-size: 16px;
-  line-height: l(2);
-  color: black;
-}
-
-#{$all-text-inputs-focus},
-textarea:focus {
-  border-color: lighten($brand-blue, 20%);
-  box-shadow: 0 0 2px 0 lighten($brand-blue, 40%);
-}
-
-.form-actions {
-  border-top: none;
-}
-
 .well {
   border: none;
   border-radius: 2px;

@@ -5,7 +5,9 @@
 @import 'bourbon';
 @import 'vars', 'mixins';
 
-@import 'base';
+@import 'base',
+        'base/btn',
+        'base/form';
 
 @import 'layouts/devise',
         'layouts/error',
@@ -24,13 +26,16 @@
 @import 'modules/account_list',
         'modules/activity_stream',
         'modules/footer',
-        'modules/game_library',
+        'modules/funpack_library',
+        'modules/funpack_picker',
         'modules/jumbotron',
+        'modules/label',
         'modules/nav',
         'modules/navbar',
         'modules/page-header',
         'modules/player_list',
         'modules/progressmeter',
+        'modules/server_header',
         'modules/server-address',
         'modules/server_list',
         'modules/slider',

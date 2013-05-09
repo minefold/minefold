@@ -1,4 +1,4 @@
-- title "#{server.name} Server logs", "#{server.game.name} Server #{server.id}"
+- title "#{server.name} Server logs", "#{server.funpack.name} Server #{server.id}"
 - layout :servers
 
 = track 'Viewed server', name: server.name, url: server_url(server)
@@ -10,7 +10,7 @@
   :javascript
     app.logsView = new App.LogsView({
       serverId: '#{server.id}',
-      u: '#{current_user.authentication_token}', 
+      u: '#{current_user.authentication_token}',
       endpoint: '#{ENV['MINEFOLD_API']}'
     });
     app.logsView.setElement($('#logs'));
@@ -19,7 +19,7 @@
 .container
   .page-header
     %h1= link_to server.name, server_path(server)
-    
+
     :css
       #logs {
         height: 600px;
@@ -32,7 +32,7 @@
         background-color: #000;
         color: #fff;
       }
-      
+
       #logs .ts {
         color: rgb(129, 129, 129);
       }
@@ -48,7 +48,7 @@
       #logs .event.stopping {
         color: rgb(209, 52, 52);
       }
-    
+
     #logs
       %pre
         %code= "Loading..."

@@ -63,11 +63,6 @@
       &:nth-child(#{$i}):before {
         content: "#{$i}";
       }
-
-      &.previous:nth-child(#{$i}):before {
-        content: "t";
-        font-family: $pictos;
-      }
     }
 
     // Line

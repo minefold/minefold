@@ -1,0 +1,34 @@
+form {
+  #{$all-text-inputs},
+  textarea {
+    box-shadow: none;
+    border-radius: 2px;
+    border-color: rgba(black, 0.2);
+    border-width: 2px;
+    padding: 5px 10px;
+    font-size: 16px;
+    line-height: 20px;
+    color: black;
+
+    &.input-large {
+      padding: 18px 8px;
+      font-size: 24px;
+      line-height: 40px;
+    }
+
+    &.input-block-level {
+      display: block;
+      width: 100%;
+    }
+  }
+
+  #{$all-text-inputs-focus},
+  textarea:focus {
+    border-color: lighten($brand-blue, 20%);
+    box-shadow: 0 0 2px 0 lighten($brand-blue, 40%);
+  }
+
+  .form-actions {
+    border-top: none;
+  }
+}

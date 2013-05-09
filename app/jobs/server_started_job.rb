@@ -45,8 +45,7 @@ class ServerStartedJob < Job
     )
 
     MixpanelAsync.track(server.creator.distinct_id, 'Started server',
-      game: server.game.name,
-      shared: server.shared?
+      funpack: server.funpack.name
     )
   end
 

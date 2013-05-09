@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 
 ruby '2.0.0'
 
-gem 'thin'
+gem 'puma'
 gem 'rails', '>= 3.2.11'
 gem 'rake'
 # Explicitly requiring Nokogiri *before* pg stops the stupid dylib load errors on Mountain Lion: https://github.com/sparklemotion/nokogiri/issues/742

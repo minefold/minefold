@@ -9,12 +9,16 @@ class ServersController < ApplicationController
 # --
 
   expose(:server)
-  expose(:games) { GAMES.published }
   expose(:funpacks) {
     if $flipper[:unpublished_funpacks].enabled?(current_user)
       Funpack.order(:name).all
     else
       Funpack.order(:name).published
+    end
+  }
+  expose(:funpack) {
+    if params[:funpack]
+      Funpack.find(params[:funpack])
     end
   }
 
@@ -25,25 +29,44 @@ class ServersController < ApplicationController
   end
 
   def new
+    server.funpack ||= funpack
     authorize! :create, server
   end
 
   def create
     authorize! :create, server
 
+    # Set the creator
     server.creator = current_user
     server.users << current_user
 
+    # The access access policy to whatever the funpack defaults to
+    server.access_policy_id = server.funpack.default_access_policy_id
+
+    # Server owners automatically watch the server
+    server.watchers << server.creator
+
+    Activities::CreatedServer.publish(server)
+
     if server.save
-      server.party_cloud_id ||= PartyCloud::Server.create(server.funpack, server.name).id
+      # TODO Move this out to a Job so it can be repeated. Show a spinner where the address should be and something like "acquiring server".
+      # server.party_cloud_id ||= PartyCloud::Server.create(server.funpack, server.name).id
       server.save
+
+      # Analytics.track(
+      #   user_id: server.creator.distinct_id,
+      #   event:   'Created server',
+      #   properties: {
+      #     name:    server.name,
+      #     url:     server_url(server),
+      #     funpack: server.funpack.name
+      #   }
+      # )
 
       track server.creator.distinct_id, 'Created server',
         name: server.name,
         url: server_url(server),
-        shared: server.shared?,
-        funpack: server.funpack.name,
-        game: server.game.name
+        funpack: server.funpack.name
     end
 
     respond_with(server)
@@ -140,14 +163,14 @@ class ServersController < ApplicationController
   private
 
   def set_funpack_params!
-    if params[:game] and (game = GAMES.find(params[:game]))
-      params[:server] ||= {}
-      if params[:funpack] and (funpack = Funpack.find_by_slug(params[:funpack]))
-        params[:server][:funpack_id] = funpack.id
-      else
-        params[:server][:funpack_id] = game.funpack_id
-      end
-    end
+    # if params[:game] and (game = GAMES.find(params[:game]))
+    #   params[:server] ||= {}
+    #   if params[:funpack] and (funpack = Funpack.find_by_slug(params[:funpack]))
+    #     params[:server][:funpack_id] = funpack.id
+    #   else
+    #     params[:server][:funpack_id] = game.funpack_id
+    #   end
+    # end
   end
 
   def set_last_visited_cookie

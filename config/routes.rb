@@ -1,6 +1,3 @@
-require './lib/games'
-require './lib/static_game_constraint'
-
 Minefold::Application.routes.draw do
 
 # Constraints
@@ -72,6 +69,9 @@ Minefold::Application.routes.draw do
   resources :stats, only: [] do
     get :sessions, :on => :collection
   end
+
+  resources :funpacks, path: '/games', only: [:show]
+
 
   # Authenticated routes
   as :user do
@@ -153,12 +153,6 @@ Minefold::Application.routes.draw do
 
     authenticated do
       root to: 'servers#index', :as => :user_root
-    end
-
-    constraints StaticGameConstraint.new(GAMES) do
-      resources :games, path: '/', only: [:show] do
-        resources :funpacks, path: '/', only: [:show]
-      end
     end
 
     resources :users, path: '/',

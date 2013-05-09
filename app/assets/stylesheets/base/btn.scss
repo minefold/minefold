@@ -1,0 +1,24 @@
+.btn {
+  background-image: none;
+  border: none;
+  box-shadow: none;
+  text-shadow: none;
+  font-weight: 600;
+  border-radius: 2px;
+}
+
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active {
+  background-color: $brand-blue;
+
+  &:disabled {
+    background-color: rgba(black, 0.2);
+  }
+}
+
+.btn-success,
+.btn-success:hover,
+.btn-success:active {
+  background-color: $brand-green;
+}

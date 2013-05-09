@@ -26,7 +26,7 @@
 
         - else
 
-          - user.servers.sort_by(&:updated_at).reverse.group_by {|s| s.funpack.game }.each do |game, servers|
+          - user.servers.sort_by(&:updated_at).reverse.group_by {|s| s.funpack }.each do |game, servers|
             .divider
               .game.pull-left= game.name
               .count.pull-right= pluralize user.servers.size, 'server', 'servers'

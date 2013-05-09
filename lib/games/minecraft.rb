@@ -15,7 +15,7 @@ class Minecraft < Game
     true
   end
 
-  def mappable?
+  def maps?
     true
   end
 

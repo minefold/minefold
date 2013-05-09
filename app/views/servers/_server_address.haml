@@ -1,6 +1,6 @@
 - copy_cmd = os == :mac ? 'Cmd-C' : 'Ctrl-C'
 
-%input.server-address.copy-paste(type="text" readonly data-trigger="click" data-toggle="popover" data-placement="bottom" data-content="Press #{copy_cmd} to copy then Ctrl-V to paste into #{server.game.name}" title="Copy and Paste"){value: server.address}
+%input.server-address.copy-paste(type="text" readonly data-trigger="click" data-toggle="popover" data-placement="bottom" data-content="Press #{copy_cmd} to copy then Ctrl-V to paste into #{server.funpack.name}" title="Copy and Paste"){value: server.address}
 
 %a.connect.btn.btn-success.btn-small.pull-right Connect to this server
 
@@ -11,5 +11,5 @@
     });
     app.serverAddressView.setElement($('#server-address-view-el'));
     app.serverAddressView.render();
-  
+
     $('.player-list .avatar').tooltip({animation: false})

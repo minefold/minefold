@@ -28,14 +28,15 @@
 
     // Name
     a {
+      display: block;
       text-transform: uppercase;
-      color: #333;
+      color: $brand-darkBlue;
       font: bold 18px/40px #{$futura};
       letter-spacing: 0.1em;
     }
 
     // Logo
-    &:before {
+    a:before {
       content: "";
       display: block;
       background-color: $brand-blue;
@@ -54,14 +55,19 @@
 
   nav {
     float: right;
+    font-weight: 500;
 
     // Bootstrap reset
     .nav {
       margin-right: 0;
 
       a {
-        color: rgba(black, 0.6);
+        color: $brand-darkBlue;
         text-shadow: none;
+      }
+
+      .divider-vertical {
+        border-color: rgba(black, 0.1);
       }
     }
   }

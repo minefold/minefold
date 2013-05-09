@@ -1,0 +1,39 @@
+.server-header {
+  @include clearfix;
+  @include container;
+
+  h1 {
+    float: left;
+  }
+
+  nav {
+    float: right;
+  }
+
+  h1 {
+    font-size: 24px;
+    font-weight: normal;
+
+    > .divider {
+      @include inline-block;
+      color: rgba(black, 0.4);
+    }
+  }
+
+  nav {
+    ol {
+      li {
+        float: left;
+        list-style-type: none;
+        border: 2px solid #CCC;
+        padding: 5px 10px;
+        border-radius: 3px;
+      }
+    }
+  }
+
+}
+
+.server-meta {
+  @include container;
+}

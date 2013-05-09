@@ -1,7 +1,7 @@
 - title funpack.name
 
 = track_landing_type 'funpack'
-= track 'Viewed landing page', type: 'funpack', game: funpack.game.slug, funpack: funpack.slug
+= track 'Viewed landing page', type: 'funpack', funpack: funpack.slug
 
 .container
   .page-header
@@ -12,25 +12,39 @@
       = link_to 'Home', root_path
       %span.divider /
 
-    %li
-      = link_to funpack.game.name, game_path(funpack.game)
-      %span.divider /
-
-    %li.active= funpack.name
+    %li.active= link_to funpack.name, funpack_path(funpack)
 
   .row
     .span8
-      - partial = funpack.slug.gsub('-', '_')
+      = render partial: funpack_public_template(funpack)
 
-      - if lookup_context.find_all("funpacks/_#{partial}").any?
-        = render partial: partial
-      - else
-        .lead= markdown(funpack.description)
+    - if signed_in?
+      .span4
+        %a.btn.btn-large.btn-block.btn-success{href: new_server_path(funpack: funpack.slug)}
+          Start a #{funpack.name} server
+
+    - if not signed_in?
+      .span4
+        .ab-control
+          %a.btn.btn-large.btn-block.btn-success{href: new_server_path(funpack: funpack.slug)}
+            Start a #{funpack.name} server
+        .ab-variant
+          %a.btn.btn-large.btn-block.btn-success{href: new_user_registration_path(funpack: funpack.slug)}
+            Start a #{funpack.name} server
+
+        - content_for :tail do
+          :javascript
+            $(function(){
+              Abba('Funpack create button')
+                .control()
+                .variant('Sign up page', {}, function(){
+                  $('.control').hide();
+                  $('.variant').show();
+                })
+                .start();
+            });
 
 
-    .span4
-      %a.btn.btn-large.btn-block.btn-success{href: new_server_path(game: funpack.game.slug, funpack: funpack.slug)}
-        Start a #{funpack.name} server
-      %p
-        %center
-          Sign up now and play for #{Bonuses::GettingStarted.coins} minutes <strong>free</strong>!
+        %p
+          %center
+            Sign up now and play for #{Bonuses::GettingStarted.coins} minutes <strong>free</strong>!

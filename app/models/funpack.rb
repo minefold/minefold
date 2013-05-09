@@ -1,24 +1,29 @@
-require './lib/game'
-require './lib/game_library'
 require 'brock'
+require 'access_policies'
 
 class Funpack < ActiveRecord::Base
   extend FriendlyId
+  friendly_id :name, :use => :slugged
 
-  scope :published, where('published_at is not ?', nil)
+  scope :published, -> { where('published_at is not ?', nil) }
 
-  attr_accessible :name, :game, :creator, :info_url, :description, :party_cloud_id, :imports, :slug, :game_id, :settings_schema, :published_at
-  attr_accessible :bolt_allocations
-  attr_accessible :player_allocations
+  attr_accessible :name,
+                  :slug,
+                  :creator,
+                  :info_url,
+                  :description,
+                  :party_cloud_id,
+                  :imports,
+                  :persistent,
+                  :maps,
+                  :settings_schema,
+                  :published_at,
+                  :bolt_allocations,
+                  :player_allocations
 
   belongs_to :creator, class_name: 'User'
 
-  friendly_id :name, :use => :slugged
-
   has_many :servers
-
-  composed_of :game, mapping: [[:game_id, :id]],
-                     constructor: ->(id){ GAMES.fetch(id) }
 
   serialize :settings_schema, JSON
 
@@ -29,6 +34,21 @@ class Funpack < ActiveRecord::Base
 
   def published?
     !published_at.nil?
+  end
+
+  def recent?
+    published_at > 2.weeks.ago
+  end
+
+  AccessPolicies = {
+    0 => PublicAccessPolicy,
+    1 => MinecraftWhitelistAccessPolicy,
+    2 => MinecraftBlacklistAccessPolicy,
+    3 => TeamFortress2PasswordAccessPolicy
+  }
+
+  def access_policies
+    AccessPolicies.slice(*access_policy_ids)
   end
 
 end
