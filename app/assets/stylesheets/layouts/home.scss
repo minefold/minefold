@@ -1,8 +1,9 @@
 .l-home {
 
   .navbar {
-    background-color: $brand-blue;
-    .navbar-inner .brand a {
+    background-color: $blue;
+    .navbar-inner .brand a,
+    .navbar-inner .nav a {
       color: white;
     }
   }
