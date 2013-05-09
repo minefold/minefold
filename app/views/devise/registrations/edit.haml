@@ -47,6 +47,8 @@
                   = f.label :username, class: 'control-label'
                   .controls
                     = f.text_field :username, placeholder: 'Username'
+                  = error_message_for(f.object, :username)
+                  
                   = f.label :first_name, 'Name', class: 'control-label'
                   .controls
                     = f.text_field :first_name, placeholder: 'First name', class: %w(span2)
@@ -87,28 +89,17 @@
         .form-title.span2
           %strong Billing
 
-        - if $flipper[:subscriptions].enabled?(current_user)
-          .span6
-            - if current_user.coins > 0
-              %p You have #{prepaid_time_left(current_user.coins)} left.
-              
-            - if current_user.active_subscription?
-              %p You are on the #{current_user.subscription.plan.name} plan.
-              %p Next billing date is #{current_user.subscription.expires_at.strftime('%b %d, %Y')}
+        .span6
+          - if current_user.coins > 0
+            %p You have #{prepaid_time_left(current_user.coins)} left.
             
-            %p
-              %a.btn.btn-small.btn-success.buy-coins{href: plans_page_path} View Plans
+          - if current_user.active_subscription?
+            %p You are on the #{current_user.subscription.plan.name} plan.
+            %p Next billing date is #{current_user.subscription.expires_at.strftime('%b %d, %Y')}
+          
+          %p
+            %a.btn.btn-small.btn-success.buy-coins{href: plans_page_path} View Plans
             
-
-        - else
-          .span6
-            %p
-              You have #{pluralize current_user.coins, 'minute', 'minutes'} left to play.
-
-            %p
-              %a.btn.btn-small.btn-success.buy-coins{href: time_page_path} Get more time
-            %br
-
       .form-block.row#password
         .form-title.span2
           %strong Password

@@ -4,6 +4,8 @@
 .container
   .jumbotron
     %h1 Bonuses Claimed
+    = link_to 'Get More Bonuses', time_page_path, class: 'btn btn-large'
+
 
   %table.table
     %thead
@@ -18,6 +20,8 @@
         %tr
           %td= bonus.class.pretty_name
           %td= bonus.description
-          %td== #{time_ago_in_words bonus.created_at} ago
-          %td== #{bonus.coins} minutes
+          %td #{time_ago_in_words bonus.created_at} ago
+          %td
+            - if bonus.coins > 0
+              #{bonus.coins} minutes
 

@@ -45,6 +45,8 @@ class ServerTickedJob < Job
       if player.user.nil?
         # if the user has unlinked their account, kick them
         kick_player(player.uid, "Link your Minecraft account at minefold.com to play")
+      elsif player.user.active_subscription?
+        # don't do anything
       elsif player.user.coins <= 0
         kick_player(player.uid, "Out of time! Visit minefold.com to get more")
       else
@@ -52,7 +54,7 @@ class ServerTickedJob < Job
         player.user.spend_coins! 1
       end
 
-      if player.user
+      if player.user && !player.user.active_subscription?
         if player.user.coins == 15
           TimeMailer.low(player.user.id).deliver
         elsif player.user.coins == 1

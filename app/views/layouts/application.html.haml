@@ -35,6 +35,7 @@
     = csrf_meta_tags
 
     %script{src: '//d2wy8f7a9ursnm.cloudfront.net/bugsnag-1.0.6.min.js',  data: {apikey: '3e70e9ec8cbba1a9eeb8b8fc83251a6f'}}
+    %script{src: ENV['ABBA_URL'] }
 
     // Mixpanel
     = render partial: 'shared/mixpanel'
@@ -65,7 +66,7 @@
 
     %footer
       %ul.unstyled.pull-left
-        %li= link_to 'Pricing', pricing_page_path
+        %li= link_to 'Pricing', plans_page_path
         %li= link_to 'Support', support_page_path
         %li= link_to 'About', about_page_path
         %li= link_to 'Servers', list_servers_path
@@ -101,6 +102,9 @@
     = yield :tail
 
     = render partial: 'shared/facebook'
+
+    - if flash[:signed_up]
+      = render partial: 'users/signed_up'
 
     - # Analytics
     - if Rails.env.production?

@@ -15,7 +15,10 @@ Flipper.register(:beta) do |actor|
   actor.respond_to?(:beta?) && actor.beta?
 end
 
+Flipper.register(:recent_users) do |actor|
+  actor.created_at > Time.parse('2013-04-16')
+end
+
 # --
 
 $flipper[:unpublished_funpacks].enable $flipper.group(:admins)
-$flipper[:subscriptions].enable $flipper.group(:admins)

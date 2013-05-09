@@ -75,6 +75,7 @@ Minefold::Application.routes.draw do
 
     # Devise overrides
     get '/settings' => 'devise/registrations#edit', :as => :edit_user_registration
+    get '/resend_confirmation' => 'users#resend_confirmation', :as => :resend_confirmation
 
     get '/i/:invitation_token' => 'invitations#show', :as => :invitation
 

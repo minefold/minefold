@@ -52,14 +52,19 @@ module Concerns::Subscription
   def subscribe!(plan, stripe_token, last4, tradein = false)
     customer = ensure_stripe_customer!(stripe_token, last4)
 
-    discount = plan.discount_cents(intro: true, tradein: tradein ? self.coins : 0)
-    coupon_id = "INTRO#{discount}OFF"
-    create_coupon(coupon_id, discount)
+    discount = plan.discount_cents(tradein: tradein ? self.coins : 0)
 
-    stripe_sub = customer.update_subscription(
+    update = {
       plan: plan.stripe_id,
-      coupon: coupon_id
-    )
+    }
+    
+    if discount > 0
+      coupon_id = "INTRO#{discount}OFF"
+      create_coupon(coupon_id, discount)
+      update.merge!(coupon: coupon_id)
+    end
+    
+    stripe_sub = customer.update_subscription(update)
 
     if subscription
       self.subscription.update_attributes(plan: plan, expires_at: Time.at(stripe_sub.current_period_end), discount: discount)

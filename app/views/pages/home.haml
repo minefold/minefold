@@ -63,3 +63,13 @@
       %a.span2{href: 'http://www.gamasutra.com/view/news/165765/Minefold_launches_with_accessible_Minecraft_server_hosting.php', title: 'Minefold launches with accessible Minecraft server hosting'}
         = image_tag 'gamasutra.png'
 
+- content_for :tail do
+  :javascript
+    $(function(){
+      Abba('Sign Up Button')
+        .control('Control', { weight: 1 })
+        .variant('Position: Top', { weight: 1 }, function(){
+          $('.call-to-action').prependTo('.container');
+        })
+        .start();
+    });

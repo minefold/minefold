@@ -2,95 +2,97 @@
 - layout :plans
 = track 'Viewed pricing'
 
-- tradein_coins = 0
-- current_discount = 0
-
-- if signed_in?
-  - if current_user.coins >= (40 * 60)
-    - tradein_coins = current_user.coins
-  - if subscription = current_user.subscription
-    - current_discount = subscription.discount
-
-- tradein = tradein_coins > 0
-- tradein_discount = [5, tradein_coins / 40 / 60].min
-
 .jumbotron
   %h1 Subscription Plans
 
-.salotron
-  %h2 SALE! $1.00 off until April 20th
-  - if tradein
-    %h3 Trade in your current Minefold time for a further $#{tradein_discount} discount
+- if @tradein
+  .salotron
+    %h3 Trade in your current Minefold time for a further $#{@tradein_discount} discount
 
 .container
   .row
-    .offset2.span8
-      %table.table
+    .offset1.span10
+      %table.table.plans
         %thead
           %tr
-            %th{style: 'width: 33%'}
-            %th{style: 'width: 33%'} Minecraft
-            %th{style: 'width: 33%'} Team Fortress 2
+            %th{style: 'width: 15%'}
+            %th{style: 'width: 20%;text-align:center'} Bronze
+            %th{style: 'width: 20%;text-align:center'} Silver
+            %th{style: 'width: 20%;text-align:center'} Gold
+            %th{style: 'width: 10%'}
 
         %tbody
           %tr
-            %th Bronze
+            %th= link_to 'Minecraft', game_path(:minecraft)
             %td 10 players
-            %td 24 players
-
-          %tr
-            %th Silver
             %td 25 players
-            %td 32 players
-
-          %tr
-            %th Gold
             %td 50 players
             %td
 
-  .plan-list.row
-    .info.span3
-      .old-price Regular
-      - if tradein
-        .old-price Sale
-        .price With trade in
-      - else
-        .price Sale
+          %tr
+            %th= link_to 'Team Fortress 2', game_path('team-fortress-2')
+            %td 12 players
+            %td 24 players
+            %td 32 players
+            %td
 
-    - Plan.all.each_with_index do |plan, i|
-      = form_tag subscriptions_path, method: 'POST', class: %w(coin-pack span3) do |f|
-        %input{type: 'hidden', name: 'plan_id', value: plan.id}
-        %input{type: 'hidden', name: 'stripeToken'}
-        %input{type: 'hidden', name: 'last4'}
-        %input{type: 'hidden', name: 'tradein' }
+          - if @on_sale
+            %tr
+              %th.old-price Regular
+              - @plans.each_with_index do |plan, i|
+                %td.old-price{class:"#{plan.name.downcase}"}
+                  = number_to_currency((plan.cents) / 100.0, precision: 2)
+                  %span.period
+                    \/ month
+              %td
 
-        .old-price= number_to_currency((plan.cents) / 100.0, precision: 2)
-        - if tradein
-          .old-price= number_to_currency((plan.discounted_cents(intro: true)) / 100.0, precision: 2)
-          .price= number_to_currency((plan.discounted_cents(intro: true, tradein: tradein_coins)) / 100.0, precision: 2)
-        - else
-          .price= number_to_currency((plan.discounted_cents(intro: true, discount: current_discount)) / 100.0, precision: 2)
+          %tr
+            %th.price
+              - if @on_sale
+                Sale
+            - @plans.each_with_index do |plan, i|
+              %td.price{class:"#{plan.name.downcase}"}
+                = number_to_currency((plan.discounted_cents(discount: @current_discount, tradein: @tradein_coins)) / 100.0, precision: 2)
+                %span.period
+                  \/ month
+
+            %td
 
 
-        - if signed_in?
-          - current_plan = current_user.active_subscription? && current_user.subscription.plan
-          - if plan != current_plan
-            %a.btn.btn-block.btn-large.btn-stripe{href: '#', data: {id: plan.id, name: plan.name, amount: plan.cents, coins: tradein_coins, bolts: plan.bolts, image: image_path("coin_packs/#{i+1}.png")}}
-              - if current_plan && plan.cents < current_plan.cents
-                Downgrade to #{plan.name}
-              - else
-                Upgrade to #{plan.name}
+          %tr
+            %td
+            - @plans.each_with_index do |plan, i|
+              %td
+                - if signed_in?
+                  = form_tag subscriptions_path, method: 'POST', class: %w(coin-pack) do |f|
+                    %input{type: 'hidden', name: 'plan_id', value: plan.id}
+                    %input{type: 'hidden', name: 'stripeToken'}
+                    %input{type: 'hidden', name: 'last4'}
+                    %input{type: 'hidden', name: 'tradein' }
 
-            - if tradein
-              %a.btn-block.btn-small.btn-stripe{href: '#', data: {id: plan.id, name: plan.name, amount: plan.cents, coins: 0, bolts: plan.bolts, image: image_path("coin_packs/#{i+1}.png")}}
-                - if !current_plan || plan.cents < current_plan.cents
-                  Upgrade to #{plan.name}
-                with no trade in
+                    - current_plan = current_user.active_subscription? && current_user.subscription.plan
+                    - if plan == current_plan
+                      %p.btn.btn-block.btn-large Current Plan
+                    - else
+                      %a.btn.btn-block.btn-large.btn-stripe{href: '#', data: {id: plan.id, name: plan.name, amount: plan.cents, coins: @tradein_coins, bolts: plan.bolts, image: image_path("coin_packs/#{i+1}.png")}}
+                        - if current_plan && plan.cents < current_plan.cents
+                          Downgrade to #{plan.name}
+                        - else
+                          Upgrade to #{plan.name}
 
-          - else
-            %p.btn.btn-block.btn-large Current Plan
-        - else
-          %a.btn.btn-block.btn-large{href: new_user_registration_path} Sign up now!
+                      - if @tradein
+                        %a.btn-block.btn-small.btn-stripe{href: '#', data: {id: plan.id, name: plan.name, amount: plan.cents, coins: 0, bolts: plan.bolts, image: image_path("coin_packs/#{i+1}.png")}}
+                          - if !current_plan || plan.cents < current_plan.cents
+                            Upgrade to #{plan.name}
+                          with no trade in
+
+                - else
+                  %a.btn.btn-block.btn-large{href: new_user_registration_path} Sign up now!
+            %td
+
+  %p.quote
+    One subscription gets you #{Funpack.count} different games!
+    Play Minecraft on Wednesday, Feed The Beast on Thursday and Team Fortress 2 on Friday night
 
   %hr.small.hidden
 
@@ -103,9 +105,12 @@
 
         var coins = $this.data('coins');
         var hours = Math.round(Number(coins/60));
-        var discount = #{tradein_discount};
+        var discount = 0;
+
+        console.log(coins, discount)
 
         if (coins > 0) {
+          discount += #{@tradein_discount};
           if (!confirm('Trade in ' + hours + ' hours for an additional $' + discount + ' discount?')) {
             return;
           }
@@ -119,7 +124,6 @@
         }
 
         var amount = $this.data('amount');
-        amount -= 100; // sale
         amount -= discount * 100;
 
         var description = $this.data('name') + " plan";

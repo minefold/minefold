@@ -17,8 +17,7 @@ describe Subscription do
 
         end_timestamp = (Time.now + 1.month).to_i
         customer.should_receive(:update_subscription).with(
-          plan: plan.stripe_id,
-          card: 'tok_1234'
+          plan: plan.stripe_id
         ) { stub(:subscription, current_period_end: end_timestamp ) }
 
         subject.subscribe! plan, 'tok_1234', '4242'
@@ -27,26 +26,27 @@ describe Subscription do
         subject.subscription.expires_at.should == Time.at(end_timestamp)
       end
     end
+  end
 
-    context 'with a stripe customer' do
-      before { subject.customer_id = 'cus_1' }
+  context 'with a stripe customer' do
+    before { subject.customer_id = 'cus_1' }
 
-      it 'updates the customer and subscription' do
-        Timecop.freeze(Time.now) do
-          customer = stub(:customer, id: 'cus_1')
-          Stripe::Customer.should_receive(:retrieve).with('cus_1') {
-            customer
-          }
+    it 'updates the customer and subscription' do
+      Timecop.freeze(Time.now) do
+        customer = stub(:customer, id: 'cus_1')
+        Stripe::Customer.should_receive(:retrieve).with('cus_1') {
+          customer
+        }
+        customer.should_receive(:card=).with('tok_1234')
+        customer.should_receive(:save)
 
-          customer.should_receive(:update_subscription).with(
-            plan: plan.stripe_id,
-            card: 'tok_1234'
-          ) { stub(:subscription, current_period_end: (Time.now + 1.month).to_i ) }
+        customer.should_receive(:update_subscription).with(
+          plan: plan.stripe_id
+        ) { stub(:subscription, current_period_end: (Time.now + 1.month).to_i ) }
 
-          subject.subscribe! plan, 'tok_1234', '4242'
+        subject.subscribe! plan, 'tok_1234', '4242'
 
-          subject.subscription.created_at.should == Time.now
-        end
+        subject.subscription.created_at.should == Time.now
       end
     end
   end

@@ -24,7 +24,7 @@ module PartyCloud
     end
 
     def self.create(funpack, name)
-      url = "https://#{ENV['PARTY_CLOUD_TOKEN']}@son-of-tron.herokuapp.com/servers"
+      url = "#{ENV['TRON_URL']}/servers"
       begin
         response = RestClient.post(url,
           funpack: legacy_funpack_mapping[funpack.party_cloud_id],

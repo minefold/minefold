@@ -19,9 +19,24 @@ class PagesController < ApplicationController
     @funpacks = Funpack.order(:published_at, :name).limit(6)
   end
 
-  def pricing
-    # flash[:error] = 'Your card was declined'
-    @packs = CoinPack.active.all
+  def plans
+    @plans = Plan.all
+    @tradein_coins = 0
+    @current_discount = 0
+
+    if signed_in?
+      if current_user.coins >= (40 * 60)
+        @tradein_coins = current_user.coins
+      end
+      if subscription = current_user.subscription
+        @current_discount = subscription.discount
+      end
+    end
+
+    @tradein = @tradein_coins > 0
+    @tradein_discount = [5, @tradein_coins / 40 / 60].min
+    
+    @on_sale = @tradein || @current_discount > 0
   end
 
   def privacy

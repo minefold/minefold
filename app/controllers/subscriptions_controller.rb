@@ -30,7 +30,7 @@ class SubscriptionsController < ApplicationController
 
   rescue Stripe::CardError => e
     flash[:error] = e.message
-    redirect_to pricing_page_path
+    redirect_to plans_page_path
   end
 
 end

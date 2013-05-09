@@ -8,17 +8,21 @@ class ServerStartedJob < Job
 
   def initialize(party_cloud_id, host, port, timestamp=nil)
     @server = Server.unscoped.find_by_party_cloud_id(party_cloud_id)
-    @creator = @server.creator
-    @host, @port = host, port
+    if @server
+      @creator = @server.creator
+      @host, @port = host, port
 
-    @started_at = if timestamp.nil?
-      Time.now
-    else
-      Time.at(timestamp)
+      @started_at = if timestamp.nil?
+        Time.now
+      else
+        Time.at(timestamp)
+      end
     end
   end
 
   def perform
+    return unless @server
+
     session = server.sessions.current
 
     session.started_at ||= started_at

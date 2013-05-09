@@ -19,10 +19,13 @@ class UsersController < Devise::RegistrationsController
 
   def update
     authorize! :update, user
-
-    user.update_attributes!(params[:user])
-
+    user.save
     respond_with(user, location: edit_user_registration_path)
+  end
+
+  def resend_confirmation
+    current_user.resend_confirmation_token
+    redirect_to :back
   end
 
 end
