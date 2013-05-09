@@ -106,6 +106,9 @@
     - if flash[:signed_up]
       = render partial: 'users/signed_up'
 
+    - if flash[:signed_in]
+      = render partial: 'users/signed_in'
+
     - # Analytics
     - if Rails.env.production?
       = render partial: 'shared/gauges'

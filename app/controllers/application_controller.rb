@@ -24,6 +24,7 @@ private
   end
 
   def after_sign_in_path_for(resource)
+    flash[:signed_in] = true
     stored_location_for(resource) ||
       if cookies[:last_viewed_server_id]
         server_path(cookies[:last_viewed_server_id])
