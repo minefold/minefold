@@ -1,5 +1,8 @@
 .dashboard {
   @include container;
   width: grid-width(6);
-  margin-top: 60px;
+  border-radius: $radius;
+
+  padding: 20px;
+  background-color: white;
 }
