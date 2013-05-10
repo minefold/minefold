@@ -17,20 +17,20 @@
   }
 
   .jumbotron {
-    background-color: $brand-blue;
+    background-color: $blue;
 
     h1 {
       color: white;
     }
 
     h2 {
-      color: $brand-darkBlue;
+      color: darken($blue, 20%);
     }
   }
 
   .announcement {
     display: block;
-    background-color: desaturate($brand-green, 10%);
+    background-color: desaturate($green, 10%);
     padding: l() $gw-gutter;
     text-align: center;
     color: white;
@@ -43,11 +43,11 @@
     .feature {
       font-size: 16px;
       line-height: l(3);
-      color: $brand-darken;
+      color: rgba(black, 0.6);
       margin-bottom: l(4);
 
       h3 {
-        color: $brand-darkGray;
+        color: lighten(black, 20%);
         font-size: 24px;
         font-weight: 400;
       }

@@ -4,7 +4,7 @@ body {
 
 a,
 a:hover {
-  color: $brand-blue;
+  color: $blue;
   text-decoration: none;
 }
 
@@ -19,7 +19,7 @@ code.big {
 }
 
 .highlight {
-  background-color: lighten($brand-yellow, 30%);
+  background-color: lighten($yellow, 30%);
 }
 
 #Intercom {
@@ -60,7 +60,7 @@ code.big {
   border-radius: $radius;
 
   .bar {
-    background: $brand-blue;
+    background: $blue;
   }
 
   .bar-success {

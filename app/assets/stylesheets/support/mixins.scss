@@ -13,3 +13,15 @@
   padding-left: 10px;
   padding-right: 10px;
 }
+
+@mixin pull-right {
+  float: right;
+}
+
+@mixin pull-left {
+  float: left;
+}
+
+@mixin anti-aliasing() {
+  -webkit-font-smoothing: antialiased;
+}

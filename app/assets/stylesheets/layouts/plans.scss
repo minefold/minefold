@@ -1,7 +1,7 @@
 .l-plans {
 
   .jumbotron {
-    background-color: $brand-green;
+    background-color: $green;
     margin-bottom: 0px;
 
     h1 {
@@ -23,7 +23,7 @@
   }
 
   .salotron {
-    background-color: $brand-yellow;
+    background-color: $yellow;
     text-align: center;
     padding: $gw-gutter 0;
     margin-bottom: $gw-gutter;
@@ -41,7 +41,7 @@
     .period {
       font-size: 16px;
     }
-    font-family: $geometric;
+    font-family: $heading;
   }
   td.old-price {
     font-size: 18px;
@@ -53,10 +53,10 @@
   }
 
   .price.bronze, .old-price.bronze {
-    color: $brand-green;
+    color: $green;
   }
   .price.silver, .old-price.silver {
-    color: $brand-blue;
+    color: $blue;
   }
   .price.gold, .old-price.gold {
     color: $red;
@@ -70,7 +70,7 @@
 
 
   h3 {
-    color: $brand-blue;
+    color: $blue;
     margin-bottom: l(2);
   }
 

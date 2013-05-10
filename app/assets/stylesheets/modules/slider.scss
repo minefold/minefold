@@ -1,13 +1,13 @@
 .slider {
 
   > .dragger {
-    background-color: $brand-blue;
+    background-color: $blue;
     width: 24px;
     height: 24px;
 
     border-radius: 12px;
     &:hover {
-      background-color: darken($brand-blue, 20%);
+      background-color: darken($blue, 20%);
     }
   }
 

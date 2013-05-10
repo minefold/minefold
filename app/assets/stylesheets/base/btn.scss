@@ -10,7 +10,7 @@
 .btn-primary,
 .btn-primary:hover,
 .btn-primary:active {
-  background-color: $brand-blue;
+  background-color: $blue;
 
   &:disabled {
     background-color: rgba(black, 0.2);
@@ -20,7 +20,7 @@
 .btn-success,
 .btn-success:hover,
 .btn-success:active {
-  background-color: $brand-green;
+  background-color: $green;
 }
 
 .btn-red,
