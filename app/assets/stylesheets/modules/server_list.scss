@@ -1,12 +1,11 @@
 .server-list {
   > .item {
-    border: 2px solid rgba(black, 0.1);
     border-radius: 2*$radius;
     margin-bottom: 10px;
 
     > .primary-action {
       @include clearfix;
-      padding: 10px;
+      padding: 0 10px;
       display: block;
 
       > .name {
@@ -24,15 +23,11 @@
       }
 
       > .player-counts {
-        background-color: white;
         @include clearfix;
         @include inline-block;
 
-        border: 2px solid rgba(black, 0.2);
-        border-radius: $radius;
-
         > .player-count {
-          padding: 3px 10px;
+          padding: 5px 10px;
           font: bold 12px/20px $helvetica;
           color: rgba(black, 0.6);
         }
@@ -43,14 +38,14 @@
 
         > .player-count.max {
           float: right;
-          border-left: 2px solid rgba(black, 0.1);
+          border-left: 2px solid $gray;
         }
       }
     }
 
     > .meta {
       clear: both;
-      background-color: rgba(black, 0.05);
+      border-top: 2px solid $gray;
 
       > ul {
         @include clearfix;
@@ -59,7 +54,7 @@
 
         > li {
           float: left;
-          font-size: 12px;
+          font-size: 14px;
           line-height: 20px;
 
           &:first-child {
@@ -67,12 +62,9 @@
           }
 
           > a, &.server-address {
+            color: lighten($blue, 20%);
             display: block;
             padding: 5px 10px;
-          }
-
-          > a {
-            font-weight: bold;
           }
 
           &.server-address {
