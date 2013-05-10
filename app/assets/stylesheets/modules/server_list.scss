@@ -1,7 +1,6 @@
 .server-list {
   > .item {
-    border-radius: 2*$radius;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 
     > .primary-action {
       @include clearfix;
@@ -18,7 +17,8 @@
 
       > .name {
         float: left;
-        font: bold 16px/30px $helvetica;
+        font-size: 18px;
+        line-height: 30px;
         margin: 0;
       }
 
@@ -28,8 +28,7 @@
 
         > .player-count {
           padding: 5px 10px;
-          font: bold 12px/20px $helvetica;
-          color: rgba(black, 0.6);
+          line-height: 20px;
         }
 
         > .player-count.current {
@@ -61,13 +60,18 @@
             border-left: none;
           }
 
+          &.settings {
+            float: right;
+          }
+
           > a, &.server-address {
-            color: lighten($blue, 20%);
+            color: #333;
             display: block;
             padding: 5px 10px;
           }
 
           &.server-address {
+            font-size: 13px;
             font-family: $monospace;
           }
         }

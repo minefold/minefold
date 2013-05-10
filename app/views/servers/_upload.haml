@@ -7,7 +7,7 @@
       .control-group
         %input#url.span5(type="text" name="uploadsurl[]" placeholder="http://example.com/minecraft.zip")
       %input#url-submit.btn(type="button" value="Go")
-      
+
     %hr
 
     %label.control-label
@@ -56,11 +56,11 @@
 
 - content_for :tail do
   :javascript
-    app.uploadsView = new App.UploadView({
+    uploadsView = new UploadView({
       el: $('#uploads'),
       sign_url: '#{sign_server_uploads_path(server.id)}',
       post_upload_url: '#{server_uploads_path(server.id)}',
       pusher_chan: 'upload-#{server.id}',
       progress_factor: 0.9
     });
-    app.uploadsView.render();
+    uploadsView.render();

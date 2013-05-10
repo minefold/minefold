@@ -6,10 +6,10 @@
 
 - content_for :tail do
   :javascript
-    app.serverAddressView = new App.ServerAddressView({
+    var serverAddressView = new ServerAddressView({
+      el: $('#server-address-view-el'),
       model: app.server
     });
-    app.serverAddressView.setElement($('#server-address-view-el'));
-    app.serverAddressView.render();
+    serverAddressView.render();
 
     $('.player-list .avatar').tooltip({animation: false})
