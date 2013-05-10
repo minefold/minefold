@@ -1,0 +1,5 @@
+.dashboard {
+  @include container;
+  width: grid-width(6);
+  margin-top: 60px;
+}
