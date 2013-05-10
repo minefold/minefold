@@ -1,6 +1,9 @@
 form {
   #{$all-text-inputs},
   textarea {
+    // Bootstrap reset
+    @include transition(none);
+
     box-shadow: none;
     border-radius: 2px;
     border-color: rgba(black, 0.2);
@@ -25,7 +28,7 @@ form {
   #{$all-text-inputs-focus},
   textarea:focus {
     border-color: lighten($blue, 20%);
-    box-shadow: 0 0 2px 0 lighten($blue, 40%);
+    box-shadow: none;
   }
 
   .form-actions {
