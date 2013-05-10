@@ -50,7 +50,8 @@ class ServersController < ApplicationController
 
     if server.save
       # TODO Move this out to a Job so it can be repeated. Show a spinner where the address should be and something like "acquiring server".
-      # server.party_cloud_id ||= PartyCloud::Server.create(server.funpack, server.name).id
+
+      server.party_cloud_id ||= PartyCloud::Server.create(server.funpack, server.name).id
       server.save
 
       # Analytics.track(
