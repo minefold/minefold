@@ -1,1 +1,1 @@
-class App.User extends Backbone.Model
+class window.User extends Backbone.Model

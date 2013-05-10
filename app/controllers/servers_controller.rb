@@ -148,7 +148,7 @@ class ServersController < ApplicationController
 
     server.destroy
 
-    redirect_to(servers_path, notice: "Server \"#{server.name}\" was destroyed.")
+    redirect_to(dashboard_path, notice: "Server \"#{server.name}\" was destroyed.")
   end
 
   def list

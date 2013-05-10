@@ -1,24 +1,24 @@
-class App.LogsView extends Backbone.View
+class window.LogsView extends Backbone.View
   initialize: (options) ->
     @user = options.u
     @serverId = options.serverId
     @endpoint = options.endpoint
-    
+
   render: =>
     @code = $('pre code', @el)
     @chunkIndex = 0
 
     @streamLogs()
-    
+
   streamLogs: () =>
     @stream "//#{@endpoint}/servers/#{@serverId}/logs", @onChunk, @reconnect, @reconnect
 
   onChunk: (chunk) =>
     if @chunkIndex == 0
       @code.text('')
-    
+
     fmtLines = @parseChunk(chunk)
-    
+
     @code.append(fmtLines.join('\n') + '\n')
     @$el.scrollTop(@el.scrollHeight);
     @chunkIndex += 1
@@ -27,9 +27,9 @@ class App.LogsView extends Backbone.View
     lines = chunk.split('\n')
     objs = _.map lines, (line) ->
       $.parseJSON line
-      
+
     objs = _.select objs, (o) -> o
-      
+
     _.map objs, (o) => @toLogFmt(o)
 
   stream: (url, onChunk) =>
@@ -37,27 +37,27 @@ class App.LogsView extends Backbone.View
     @onChunk = onChunk
     @prevIndex = 0
     @connect()
-    
+
   connect: () =>
     @req = new XMLHttpRequest()
     @req.withCredentials = true
-    
+
     @req.addEventListener("progress", @updateProgress, false)
     @req.addEventListener("load", @reconnect, false)
     @req.addEventListener("error", @reconnect, false)
 
     @req.open('GET', @url, true, @user)
     @req.send()
-    
+
   reconnect: () =>
     delay 1000, () => @connect()
-    
+
   updateProgress: (e) =>
     if e.position > @prevIndex
       chunk = @req.responseText.substring(@prevIndex, e.position)
       @prevIndex = e.position
       @onChunk(chunk)
-    
+
 
   toLogFmt: (o) =>
     tsDate = Date.parse(o.ts)
@@ -66,10 +66,10 @@ class App.LogsView extends Backbone.View
     else
       ts = ''
     delete o.ts
-    
+
     event = o.event
     delete o.event
-    
+
     if event == 'chat'
       "#{ts} &lt;#{o.nick}&gt; #{o.msg}"
     else if event == 'info'
@@ -78,5 +78,5 @@ class App.LogsView extends Backbone.View
     else
       parts = _.keys(o).map (key) ->
         "#{key}=#{o[key]}"
-      
+
       "#{ts} <span class=\"event #{event}\">#{event}</span> #{parts.join(' ')}"

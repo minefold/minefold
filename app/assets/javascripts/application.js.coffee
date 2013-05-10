@@ -20,7 +20,13 @@
 #= require_tree .
 #= require_self
 
-window.app = new App()
+class window.Application
+  _.extend @prototype, Backbone.Events
 
-$(document).ready ->
-  Backbone.history.start()
+  initialize: ->
+    $.cookie('time_zone', new Date().getTimezoneOffset())
+
+  setCurrentUser: (data) ->
+    @current_user = new User(data)
+
+window.app = new Application()

@@ -1,6 +1,6 @@
 #= require store
 
-class App.Map extends Backbone.Model
+class window.Map extends Backbone.Model
 
   cacheKey: =>
     ['map', @get('id')].join('/')

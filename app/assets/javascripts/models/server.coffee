@@ -1,9 +1,4 @@
-class App.Server extends Backbone.Model
-
-  initialize: ->
-    @channel = pusher.subscribe("server-#{@get('id')}")
-    @channel.bind('server:started', @started)
-    @channel.bind('server:stopped', @stopped)
+class window.Server extends Backbone.Model
 
   url: ->
     ['/servers', @get('id'), arguments...].join('/')
@@ -16,7 +11,7 @@ class App.Server extends Backbone.Model
       success: (data) => @set(data)
     )
 
-  started: (data) =>
+  onStarted: (data) =>
     @set(data)
 
   stop: =>
@@ -27,7 +22,7 @@ class App.Server extends Backbone.Model
       success: (data) => @set(data)
     )
 
-  stopped: (data) =>
+  onStopped: (data) =>
     @set(data)
 
   steamConnectUrl: ->

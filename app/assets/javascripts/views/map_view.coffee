@@ -17,8 +17,8 @@ class MapProjection
 
 # --
 
-class App.MapView extends Backbone.View
-  model: App.Map
+class window.MapView extends Backbone.View
+  model: Map
 
   @defaultMapOptions =
     zoom: 5

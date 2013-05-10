@@ -1,7 +1,7 @@
 #= require models/server
 
-class App.ServerControlView extends Backbone.View
-  model: App.Server
+class window.ServerControlView extends Backbone.View
+  model: window.Server
 
   initialize: ->
     @model.on('change:state', @render)

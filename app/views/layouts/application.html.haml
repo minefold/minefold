@@ -47,6 +47,17 @@
 
     = yield :head
 
+    = render partial: 'shared/pusher'
+    = render partial: 'shared/stripe'
+    = render partial: 'shared/intercom'
+    = javascript_include_tag 'application'
+
+    - if signed_in?
+      :javascript
+        window.app.setCurrentUser(#{current_user.to_json});
+
+    = render partial: 'shared/facebook'
+
 
   %body{class: @layouts}
     #fb-root
@@ -90,18 +101,7 @@
 
     - # --
 
-    = render partial: 'shared/pusher'
-    = render partial: 'shared/stripe'
-    = render partial: 'shared/intercom'
-    = javascript_include_tag 'application'
-
-    - if signed_in?
-      :javascript
-        window.app.setCurrentUser(#{current_user.to_json});
-
     = yield :tail
-
-    = render partial: 'shared/facebook'
 
     - if flash[:signed_up]
       = render partial: 'users/signed_up'

@@ -44,7 +44,7 @@
 
     $(document).ready(function() {
       var channelName = #{current_user.private_channel_key.to_json};
-      var channel = app.pusher.subscribe(channelName);
+      var channel = pusher.subscribe(channelName);
       channel.bind('verified', onVerify);
       channel.bind('alreadyVerified', onAlreadyVerified);
     });
