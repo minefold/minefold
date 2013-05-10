@@ -1,5 +1,7 @@
 class RegistrationsController < Devise::RegistrationsController
 
+  expose(:funpack) { Funpack.find_by_slug(params[:funpack]) if params[:funpack] }
+
   before_filter :find_invitation, :only => :new
   after_filter :track_signup_in_mixpanel, :only => :create
 

@@ -5,7 +5,17 @@
   .row
     %center.span8.offset2
       .page-header
-        %h1 Sign up for Minefold
+        - if funpack
+          .ab-control
+            %h1 Sign up for Minefold
+
+          .ab-variant
+            %h1 Sign up and start a #{funpack.name} server
+
+          = ab_test('Sign up page copy', 'Include funpack name')
+
+        - else
+          %h1 Sign up for Minefold
 
       - if @invited_by
         = track 'Viewed invitation'
