@@ -1,0 +1,42 @@
+<div class="server-list">
+  <% if list.empty? %>
+    <div class="empty">
+      <h2>You don't have any servers. Create a new server to start the party!</h2>
+    </div>
+  <% else %>
+    <% list.each do |server| %>
+      <div class="item">
+        <a class="primary-action" href="<%= server_path(server) %>">
+          <h2 class="name"><%= server.name %></h2>
+          <div class="player-counts">
+            <div class="player-count current" data-toggle="tooltip" title="Online players">
+              <%= PartyCloud.count_players_online(server.party_cloud_id) %>
+            </div>
+            <div class="player-count max" data-toggle="tooltip" title="Max players">
+              <%= server.max_players %>
+            </div>
+          </div>
+        </a>
+        <nav class="meta">
+          <ul>
+            <li class="funpack">
+              <%= link_to server.funpack.name, funpack_path(server.funpack) %>
+            </li>
+            <li class="settings">
+              <%= link_to 'Settings', edit_server_path(server) %>
+            </li>
+            <li class="server-address">
+              <%= server.address %>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+<% content_for(:tail) do %>
+  <script>
+    $('.player-counts .player-count').tooltip();
+  </script>
+<% end %>

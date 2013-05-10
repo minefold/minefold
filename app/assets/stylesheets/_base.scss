@@ -1,9 +1,15 @@
 body {
+  margin: 0;
+  font-family: $body;
+  font-size: 16px;
+  line-height: 20px;
+  color: #333;
   background-color: transparent;
 }
 
 a,
-a:hover {
+a:hover,
+a:focus {
   color: $blue;
   text-decoration: none;
 }

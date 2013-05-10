@@ -155,7 +155,7 @@ Minefold::Application.routes.draw do
     end
 
     authenticated do
-      root to: 'servers#index', :as => :user_root
+      root to: 'dashboard#index', :as => :user_root
     end
 
     resources :users, path: '/',

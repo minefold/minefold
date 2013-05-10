@@ -19,22 +19,4 @@
 
 
     .span8
-      .server-list
-        - if user.servers.empty?
-          .empty
-            %h2== #{user.username} doesn't have any servers
-
-        - else
-
-          - user.servers.sort_by(&:updated_at).reverse.group_by {|s| s.funpack }.each do |game, servers|
-            .divider
-              .game.pull-left= game.name
-              .count.pull-right= pluralize user.servers.size, 'server', 'servers'
-
-            - servers.each do |server|
-              .item{class: "is-#{server.state}"}
-                .primary-action.span6
-                  %a.name{href: server_path(server)}= server.name
-
-                %ul.nav.players.pull-right
-                  %li== #{PartyCloud.count_players_online(server.party_cloud_id)} / #{server.player_uids.size}
+      = render partial: 'servers/list', object: user.servers
