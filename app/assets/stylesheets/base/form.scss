@@ -24,8 +24,8 @@ form {
 
   #{$all-text-inputs-focus},
   textarea:focus {
-    border-color: lighten($brand-blue, 20%);
-    box-shadow: 0 0 2px 0 lighten($brand-blue, 40%);
+    border-color: lighten($blue, 20%);
+    box-shadow: 0 0 2px 0 lighten($blue, 40%);
   }
 
   .form-actions {

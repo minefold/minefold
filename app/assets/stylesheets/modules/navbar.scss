@@ -30,8 +30,8 @@
     a {
       display: block;
       text-transform: uppercase;
-      color: $brand-darkBlue;
-      font: bold 18px/40px #{$futura};
+      color: darken($blue, 20%);
+      font: bold 18px/40px #{$heading};
       letter-spacing: 0.1em;
     }
 
@@ -39,7 +39,7 @@
     a:before {
       content: "";
       display: block;
-      background-color: $brand-blue;
+      background-color: $blue;
       background-image: asset-data-url('logo.png');
       background-repeat: no-repeat;
       background-position: 50% 50%;
@@ -62,7 +62,7 @@
       margin-right: 0;
 
       a {
-        color: $brand-darkBlue;
+        color: darken($blue, 20%);
         text-shadow: none;
       }
 

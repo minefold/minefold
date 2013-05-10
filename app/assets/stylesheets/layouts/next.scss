@@ -25,7 +25,7 @@
       color: white;
       font-weight: 600;
       font-size: 24px;
-      font-family: $geometric;
+      font-family: $heading;
 
       background-image: url(image-path('logo-small.png'));
       background-repeat: no-repeat;
@@ -70,11 +70,11 @@
       }
 
       .play-container a {
-        background: $brand-blue;
+        background: $blue;
       }
 
       .watching-container a {
-        background: $brand-green;
+        background: $green;
       }
 
       .is-on a {
@@ -83,7 +83,7 @@
 
       .js-social-count {
         padding: 10px 15px;
-        background: rgba($brand-green, 0.5);
+        background: rgba($green, 0.5);
         line-height: 20px;
         margin: 0;
         color: white;
@@ -122,7 +122,7 @@
 //    background-size: cover;
 
     .header-hero-inner {
-      font-family: $geometric;
+      font-family: $heading;
       padding: l(12) 0;
       margin: 0 auto;
       text-align: center;

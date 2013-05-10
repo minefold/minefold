@@ -35,27 +35,27 @@
     }
 
     &.previous a {
-      color: $brand-blue;
+      color: $blue;
     }
 
     &.active a {
-      color: $brand-green;
+      color: $green;
     }
 
     &.previous:before {
-      background-color: $brand-blue;
+      background-color: $blue;
     }
 
     &.active:before {
-      background-color: $brand-green;
+      background-color: $green;
     }
 
     &.previous:after {
-      border-color: $brand-blue;
+      border-color: $blue;
     }
 
     &.active:after {
-      border-color: $brand-green;
+      border-color: $green;
     }
 
     // Inner text

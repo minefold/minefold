@@ -1,16 +1,16 @@
 .l-pricing {
 
   .jumbotron {
-    background-color: $brand-green;
+    background-color: $green;
     margin-bottom: 0px;
 
     h1 {
       color: white;
     }
   }
-  
+
   .salotron {
-    background-color: $brand-yellow;
+    background-color: $yellow;
     text-align: center;
     padding: $gw-gutter 0;
     margin-bottom: $gw-gutter;
@@ -31,7 +31,7 @@
 
       > .price {
         font-size: 36px;
-        font-family: $geometric;
+        font-family: $heading;
         font-weight: 600;
         line-height: l(4);
         padding: 0;
@@ -39,7 +39,7 @@
 
       > .old-price {
         font-size: 26px;
-        font-family: $geometric;
+        font-family: $heading;
         line-height: l(4);
         padding: 0;
         text-decoration: line-through;
@@ -86,13 +86,13 @@
       // Colors
 
       &:nth-child(1) {
-        color: $brand-green;
-        .savings { background-color: lighten($brand-green, 45%); }
+        color: $green;
+        .savings { background-color: lighten($green, 45%); }
       }
 
       &:nth-child(2) {
-        color: $brand-blue;
-        .savings { background-color: lighten($brand-blue, 55%); }
+        color: $blue;
+        .savings { background-color: lighten($blue, 55%); }
       }
 
       &:nth-child(3) {
@@ -104,7 +104,7 @@
 
 
     h3 {
-      color: $brand-blue;
+      color: $blue;
       margin-bottom: l(2);
     }
 
