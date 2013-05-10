@@ -32,18 +32,7 @@
           %a.btn.btn-large.btn-block.btn-success{href: new_user_registration_path(funpack: funpack.slug)}
             Start a #{funpack.name} server
 
-        - content_for :tail do
-          :javascript
-            $(function(){
-              Abba('Funpack create button')
-                .control()
-                .variant('Sign up page', {}, function(){
-                  $('.ab-control').hide();
-                  $('.ab-variant').show();
-                })
-                .start();
-            });
-
+        = ab_test('Funpack create button', 'Sign up page')
 
         %p
           %center
