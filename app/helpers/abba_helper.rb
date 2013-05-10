@@ -5,12 +5,11 @@ module AbbaHelper
   def ab_test(name, variant)
     js = <<-EOF
       Abba('#{name}')
-        .control()
-        .variant('#{variant}', {}, function(){
-          $('.ab-control').hide();
+        .control('Control', {}, function(){
+          $('.ab-control').show();
+        }).variant('#{variant}', {}, function(){
           $('.ab-variant').show();
-        })
-        .start();
+        }).start();
     EOF
 
     content_for :tail do
