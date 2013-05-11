@@ -6,13 +6,7 @@
     %center.span8.offset2
       .page-header
         - if funpack
-          .ab-control
-            %h1 Sign up for Minefold
-
-          .ab-variant
-            %h1 Sign up and start a #{funpack.name} server
-
-          = ab_test('Sign up page copy', 'Include funpack name')
+          %h1 Sign up and start a #{funpack.name} server
 
         - else
           %h1 Sign up for Minefold

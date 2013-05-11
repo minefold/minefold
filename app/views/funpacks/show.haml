@@ -25,14 +25,8 @@
 
     - if not signed_in?
       .span4
-        .ab-control
-          %a.btn.btn-large.btn-block.btn-success{href: new_server_path(funpack: funpack.slug)}
-            Start a #{funpack.name} server
-        .ab-variant
-          %a.btn.btn-large.btn-block.btn-success{href: new_user_registration_path(funpack: funpack.slug)}
-            Start a #{funpack.name} server
-
-        = ab_test('Funpack create button', 'Sign up page')
+        %a.btn.btn-large.btn-block.btn-success{href: new_user_registration_path(funpack: funpack.slug)}
+          Start a #{funpack.name} server
 
         %p
           %center
