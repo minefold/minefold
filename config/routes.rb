@@ -34,7 +34,6 @@ Minefold::Application.routes.draw do
     '/developers' => :developers,
     '/time'    => :time,
     '/home'    => :home,
-    '/pricing' => :pricing,
     '/plans'   => :plans,
     '/privacy' => :privacy,
     '/help'    => :support,
@@ -42,6 +41,8 @@ Minefold::Application.routes.draw do
   }.each do |url, name|
     get url, controller: 'pages', action: name, as: "#{name}_page"
   end
+
+  match '/pricing' => redirect('/plans')
 
   # redirect sitemap requests to cloudfront
   match "/sitemap*path" => redirect {|p, req|

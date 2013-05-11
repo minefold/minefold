@@ -5,7 +5,7 @@ module AnalyticsHelper
   end
 
   def analytics_profile(user)
-    {
+    base = {
       id: user.id,
       created_at: user.created_at,
       email: user.email,
@@ -24,6 +24,15 @@ module AnalyticsHelper
       lastPlayed: user.last_played_at,
       serverCount: user.created_servers.count
     }
+
+    if server = user.created_servers.last
+      base.merge!(
+        lastServerFunpackSlug: server.funpack.slug,
+        lastServerFunpackName: server.funpack.name,
+      )
+    end
+
+    base
   end
 
 end
