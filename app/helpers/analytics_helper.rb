@@ -29,6 +29,8 @@ module AnalyticsHelper
       base.merge!(
         lastServerFunpackSlug: server.funpack.slug,
         lastServerFunpackName: server.funpack.name,
+        lastServerName: server.name,
+        lastServerAddress: server.address.to_s
       )
     end
 
