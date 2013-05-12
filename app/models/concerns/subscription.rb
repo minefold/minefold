@@ -57,19 +57,26 @@ module Concerns::Subscription
     update = {
       plan: plan.stripe_id,
     }
-    
+
     if discount > 0
       coupon_id = "INTRO#{discount}OFF"
       create_coupon(coupon_id, discount)
       update.merge!(coupon: coupon_id)
     end
-    
+
     stripe_sub = customer.update_subscription(update)
 
+    attributes = {
+      plan: plan,
+      expires_at: Time.at(stripe_sub.current_period_end),
+      discount: discount,
+      last4: last4,
+    }
+
     if subscription
-      self.subscription.update_attributes(plan: plan, expires_at: Time.at(stripe_sub.current_period_end), discount: discount)
+      self.subscription.update_attributes(attributes)
     else
-      self.subscription = Subscription.new(plan: plan, expires_at: Time.at(stripe_sub.current_period_end), discount: discount)
+      self.subscription = Subscription.new(attributes)
       self.save!
     end
 
@@ -84,5 +91,10 @@ module Concerns::Subscription
     end
 
     self.subscription
+  end
+
+  def update_card!(stripe_token, last4)
+    ensure_stripe_customer!(stripe_token, last4)
+    self.subscription.update_attribute :last4, last4
   end
 end

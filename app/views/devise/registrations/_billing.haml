@@ -1,0 +1,45 @@
+%p
+  %a.btn.btn-small.btn-success.buy-coins{href: plans_page_path} View Plans
+
+- if current_user.coins > 0
+  %p You have #{prepaid_time_left(current_user.coins)} left.
+
+- if current_user.active_subscription?
+  %p You are on the #{current_user.subscription.plan.name} plan.
+  %p Next billing date is #{current_user.subscription.expires_at.strftime('%b %d, %Y')}
+  - if current_user.subscription.last4
+    %p Stored card: xxxx-xxxx-xxxx-#{current_user.subscription.last4}
+
+  = form_tag update_subscription_path, method: 'PUT', class: %w(coin-pack) do |f|
+    %input{type: 'hidden', name: 'stripeToken'}
+    %input{type: 'hidden', name: 'last4'}
+    %p
+      %a.btn.btn-small.btn-warning.btn-stripe{href: '#update-card'} Update Card
+
+- if current_user.active_subscription?
+  %p
+    %a.btn.btn-small.btn-danger.ActivateIntercom{href: plans_page_path} Cancel Plan
+
+- content_for :tail do
+  = javascript_include_tag "https://checkout.stripe.com/v2/checkout.js"
+  :javascript
+    $('.btn-stripe').click(function(){
+      var $this = $(this),
+          $form = $this.parents('form');
+
+      var token = function(res) {
+        $form.find('input[name=stripeToken]').val(res.id);
+        $form.find('input[name=last4]').val(res.card.last4);
+        $form.submit();
+      }
+
+      StripeCheckout.open({
+        key: #{ENV["STRIPE_PUBLISHABLE"].to_json},
+        name: 'Update card info',
+        image: '#{image_path("coin_packs/2.png")}',
+        panelLabel: 'Save',
+        token: token
+      });
+
+      return false;
+    });

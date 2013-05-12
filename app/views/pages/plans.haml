@@ -107,8 +107,6 @@
         var hours = Math.round(Number(coins/60));
         var discount = 0;
 
-        console.log(coins, discount)
-
         if (coins > 0) {
           discount += #{@tradein_discount};
           if (!confirm('Trade in ' + hours + ' hours for an additional $' + discount + ' discount?')) {

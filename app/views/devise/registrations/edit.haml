@@ -91,18 +91,7 @@
           %strong Billing
 
         .span6
-          - if current_user.coins > 0
-            %p You have #{prepaid_time_left(current_user.coins)} left.
-
-          - if current_user.active_subscription?
-            %p You are on the #{current_user.subscription.plan.name} plan.
-            %p Next billing date is #{current_user.subscription.expires_at.strftime('%b %d, %Y')}
-
-          %p
-            %a.btn.btn-small.btn-success.buy-coins{href: plans_page_path} View Plans
-
-          %p
-            %a.btn.btn-small.btn-danger.ActivateIntercom{href: plans_page_path} Cancel Plan
+          = render partial: 'billing'
 
       .form-block.row#password
         .form-title.span2

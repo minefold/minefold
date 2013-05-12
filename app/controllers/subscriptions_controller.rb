@@ -33,4 +33,10 @@ class SubscriptionsController < ApplicationController
     redirect_to plans_page_path
   end
 
+  def update
+    current_user.update_card!(params[:stripeToken], params[:last4])
+
+    redirect_to edit_user_registration_path
+  end
+
 end

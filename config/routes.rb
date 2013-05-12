@@ -107,6 +107,7 @@ Minefold::Application.routes.draw do
     resources :subscriptions, only: [:create, :show] do
       get :thank_you, :on => :collection
     end
+    put '/subscription' => 'subscriptions#update', :as => :update_subscription
 
     resources :servers, path_names: {edit: 'settings'} do
       collection do
