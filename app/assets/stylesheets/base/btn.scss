@@ -22,3 +22,9 @@
 .btn-success:active {
   background-color: $brand-green;
 }
+
+.btn-red,
+.btn-red:hover,
+.btn-red:active {
+  background-color: $red;
+}
