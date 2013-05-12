@@ -30,11 +30,11 @@ class World < ActiveRecord::Base
   end
 
   def zoom_levels
-    map_data['zoom_levels']
+    map_data && map_data['zoom_levels'] || 8
   end
 
   def tile_size
-    map_data['tile_size']
+    map_data && map_data['tile_size'] || 256
   end
 
   def host
