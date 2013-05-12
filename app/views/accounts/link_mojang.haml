@@ -11,7 +11,7 @@
   %p
     Open Minecraft, click “Multiplayer” then “Direct Connect” and enter the following server address:
     %br
-    %code.highlight= address
+    %code.highlight= current_user.minecraft_link_host
 
 = render partial: 'funpacks/getting_started/minecraft_connect', locals: { address: current_user.minecraft_link_host }
 
