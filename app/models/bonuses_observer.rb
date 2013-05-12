@@ -36,7 +36,9 @@ class BonusesObserver < ActiveRecord::Observer
         Bonuses::Referred.claim!(user)
 
         if invite = invitor.bonuses.where(friend_id: user.id).first
-          invite.confirmed_email!
+          if invite.can_confirmed_email?
+            invite.confirmed_email!
+          end
         end
       end
     end
