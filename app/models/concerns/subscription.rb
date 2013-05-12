@@ -97,4 +97,8 @@ module Concerns::Subscription
     ensure_stripe_customer!(stripe_token, last4)
     self.subscription.update_attribute :last4, last4
   end
+
+  def payment_succeeded!
+    self.subscription.update_attribute :expires_at, 1.month.from_now + 3.days
+  end
 end

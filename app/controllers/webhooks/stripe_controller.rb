@@ -27,6 +27,7 @@ class Webhooks::StripeController < ApplicationController
   def charge_succeeded(event)
     charge = event[:data][:object]
     user = User.find_by_customer_id(charge[:customer])
+    user.charge_succeeded!
     SubscriptionMailer.receipt(user.id, charge[:id]).deliver
   end
 
