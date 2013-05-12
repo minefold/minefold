@@ -28,7 +28,7 @@ class BonusesObserver < ActiveRecord::Observer
   end
 
   # update the referral state when the user goes through stages (confirmed, played, paid etc)
-  def before_save(user)
+  def after_save(user)
     if user.confirmed_at_changed?
       Bonuses::ConfirmedEmail.claim!(user)
 
