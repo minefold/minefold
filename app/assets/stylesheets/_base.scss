@@ -14,6 +14,10 @@ code {
   background-color: transparent;
 }
 
+code.big {
+  font-size: 18px;
+}
+
 .highlight {
   background-color: lighten($brand-yellow, 30%);
 }

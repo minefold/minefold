@@ -66,6 +66,7 @@ class Server < ActiveRecord::Base
   end
 
   delegate :persistent?, :to => :funpack
+  delegate :auto_start?, :to => :funpack
 
   States = {
     idle: 0,

@@ -4,142 +4,52 @@
 = track 'Viewed server', name: server.name, url: server_url(server)
 = track_landing_type 'server'
 
-- content_for :tail do
-  :javascript
-    app.server = new App.Server(#{render(server, :format => :json)});
-
 .container
-  .page-header
-    .actions.pull-right
-      - if signed_in?
-        %ul.unstyled
-          %li.js-toggler-container.js-social-container.watching-container{class: ('is-on' if current_user.watching.include?(server))}
-            = link_to watch_server_path(server), :method => :post, remote: true, class: %w(btn btn-small ignoring js-toggler-target) do
-              %i.icon-eye-open
-              Watch
-            = link_to unwatch_server_path(server), :method => :post, remote: true, class: %w(btn btn-small js-toggler-target watching) do
-              %i.icon-eye-close
-              Unwatch
+  = render partial: 'header'
 
-            %span.label.js-social-count= server.watchers.count
+  - if !server.sessions.any? and server.funpack.instructions?
 
-    %h1= link_to server.name, server_path(server)
+    %ul.nav.nav-tabs.ab-control
+      %li.active= link_to 'Activity', server
+      - if server.funpack.maps?
+        %li= link_to 'Map', server_map_path(server)
+      - if can? :update, server
+        %li= link_to 'Settings', [:edit, server]
 
-  :css
-    .js-toggle-container .js-toggler-target {
-      margin-right: 5px;
-    }
-    .watching-container:not(.is-on) .watching {
-      display: none;
-    }
-    .watching-container.is-on .ignoring {
-      display: none;
-    }
+    .row.ab-control
+      .span8
+        = render partial: 'activity'
 
-  - content_for :tail do
-    :javascript
-      var togglerContainer = $('.js-toggler-container'),
-          socialContainer = $('.js-social-container');
+      .span4
+        = render partial: 'sidebar'
 
-      var togglerTarget = togglerContainer.find('.js-toggler-target');
+    %ul.nav.nav-tabs.ab-variant
+      %li.active= link_to 'Getting Started', server
+      - if can? :update, server
+        %li= link_to 'Settings', [:edit, server]
 
-      togglerTarget.on('ajax:before', function() {
-        togglerTarget.addClass('disabled');
-      });
+    .row.ab-variant
+      .span8
+        = render partial: "funpacks/getting_started/#{server.funpack.slug}"
 
-      togglerTarget.on('ajax:complete', function() {
-        togglerTarget.removeClass('disabled');
-      });
+    = ab_test 'New server page', 'Show getting started'
 
-      togglerTarget.on('ajax:success', function(_, data) {
-        togglerContainer.toggleClass('is-on');
-      });
+  - else
 
-      togglerTarget.on('ajax:success', function(_, data) {
-        socialContainer.find('.js-social-count').text(data.count);
-      })
+    - content_for :tail do
+      :javascript
+        Abba('New server page', { persist: true }).complete()
 
+    %ul.nav.nav-tabs
+      %li.active= link_to 'Activity', server
+      - if server.funpack.maps?
+        %li= link_to 'Map', server_map_path(server)
+      - if can? :update, server
+        %li= link_to 'Settings', [:edit, server]
 
-  %ul.nav.nav-tabs
-    %li.active= link_to 'Activity', server
-    - if server.funpack.maps?
-      %li= link_to 'Map', server_map_path(server)
-    - if can? :update, server
-      %li= link_to 'Settings', [:edit, server]
+    .row
+      .span8
+        = render partial: 'activity'
 
-  .row
-    .span8
-      - if signed_in?
-        .pull-left{style: 'margin-right: 20px'}
-          = image_tag current_user.avatar.medium.url, width: 40, height: 40
-
-        .pull-left{style: 'margin-bottom: 20px'}
-          = form_for [server, Post.new], :method => :post do |f|
-            .control-group
-              = f.text_area :body, rows: 2, placeholder: 'Write a post', class: 'span7'
-            = f.submit 'Write post', class: %w(btn btn-small)
-
-      .activity-stream
-        = render partial: server.activity_stream.page(0), :as => :activity
-
-    .span4
-      - if server.description?
-        .server-description
-          = markdown(server.description)
-
-        - if can?(:update, server)
-          %p
-            (
-            %a{href: edit_server_path(server)}> Edit description
-            )
-
-      - else
-        .server-description.muted No description for this server.
-        - if can?(:update, server)
-          %p
-            %a{href: edit_server_path(server)} Add a description
-
-      %br
-
-      - if server.persistent? and can?(:update, server)
-        #server-control-view-el
-
-        - content_for :tail do
-          :javascript
-            app.serverControlView = new App.ServerControlView({
-              model: app.server
-            });
-            app.serverControlView.setElement($('#server-control-view-el'));
-            app.serverControlView.render();
-
-
-      .player-list
-        - online = PartyCloud.players_online(server.party_cloud_id)
-        - server.player_accounts.each do |username, account|
-          .player{class: online.include?(username) && "is-online"}
-            - href = nil
-            - if account and account.user
-              - href = user_path(account.user)
-
-            %a.avatar(data-toggle="tooltip"){title: username, href: href}
-              = image_tag "//d3811j97z0k4bc.cloudfront.net/helm/#{username}/30.png", alt: username, width: 30, height: 30
-
-      - if signed_in?
-        .alert.alert-info
-          = link_to invitation_path(current_user.invitation_token) do
-            Invite a friend to play here an earn an extra
-            %strong= time_left Bonuses::Referred.coins
-            each.
-
-      %dl
-        %dt Address
-        %dd#server-address-view-el.server-address-view= render partial: 'server_address', locals: {server: server}
-
-        %dt Owner
-        %dd= server.creator.username
-
-        %dt Game
-        %dd= server.funpack.name
-
-        %dt Created
-        %dd= l server.created_at, :format => :date
+      .span4
+        = render partial: 'sidebar'

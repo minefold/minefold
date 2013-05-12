@@ -1,0 +1,12 @@
+- if signed_in?
+  .pull-left{style: 'margin-right: 20px'}
+    = image_tag current_user.avatar.medium.url, width: 40, height: 40
+
+  .pull-left{style: 'margin-bottom: 20px'}
+    = form_for [server, Post.new], :method => :post do |f|
+      .control-group
+        = f.text_area :body, rows: 2, placeholder: 'Write a post', class: 'span7'
+      = f.submit 'Write post', class: %w(btn btn-small)
+
+.activity-stream
+  = render partial: server.activity_stream.page(0), :as => :activity

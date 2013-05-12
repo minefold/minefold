@@ -1,0 +1,33 @@
+:css
+  .link-host-instructions {
+    position: relative;
+    margin-bottom: -15px;
+    margin-top: 40px;
+  }
+  .host {
+    position: absolute;
+    font-family: minecraft;
+    -webkit-font-smoothing: none;
+    top: 140px;
+    left: 165px;
+    display: block;
+
+    padding: 0 5px;
+
+    color: white;
+
+    font-size: 8px;
+
+    width: 200px;
+    height: 20px;
+    line-height: 20px;
+  }
+
+  code.host {
+    font-family: minecraft !important;
+    -webkit-font-smoothing: none;
+  }
+
+.link-host-instructions
+  = image_tag 'verify.png', width: 530, height: 280
+  .host= address

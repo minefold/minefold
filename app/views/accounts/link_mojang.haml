@@ -11,11 +11,9 @@
   %p
     Open Minecraft, click “Multiplayer” then “Direct Connect” and enter the following server address:
     %br
-    %code.highlight= current_user.minecraft_link_host
+    %code.highlight= address
 
-.link-host-instructions
-  = image_tag 'verify.png', width: 530, height: 280
-  .host= current_user.minecraft_link_host
+= render partial: 'funpacks/getting_started/minecraft_connect', locals: { address: current_user.minecraft_link_host }
 
 :css
   .minecraft-link-state {
@@ -64,35 +62,6 @@
   .minecraft-link-state.is-already-linked .state-icon {
     background-color: #d31;
     background-image: url('/assets/icons/warning.png');
-  }
-
-  .link-host-instructions {
-    position: relative;
-    margin-bottom: -15px;
-    margin-top: 40px;
-  }
-  .host {
-    position: absolute;
-    font-family: minecraft;
-    -webkit-font-smoothing: none;
-    top: 140px;
-    left: 165px;
-    display: block;
-
-    padding: 0 5px;
-
-    color: white;
-
-    font-size: 8px;
-
-    width: 200px;
-    height: 20px;
-    line-height: 20px;
-  }
-
-  code.host {
-    font-family: minecraft !important;
-    -webkit-font-smoothing: none;
   }
 
 :javascript

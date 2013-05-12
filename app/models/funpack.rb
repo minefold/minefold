@@ -40,6 +40,14 @@ class Funpack < ActiveRecord::Base
     published_at > 2.weeks.ago
   end
 
+  def instructions?
+    ['minecraft', 'bukkit-essentials'].include?(slug)
+  end
+
+  def auto_start?
+    !(['team-fortress-2'].include?(slug))
+  end
+
   AccessPolicies = {
     0 => PublicAccessPolicy,
     1 => MinecraftWhitelistAccessPolicy,
