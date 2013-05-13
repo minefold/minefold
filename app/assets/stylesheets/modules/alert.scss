@@ -1,0 +1,25 @@
+.alert {
+  border: none;
+  border-radius: 0;
+  text-shadow: none;
+  margin-bottom: 0;
+  padding: 0;
+
+  color: white;
+  background-color: black;
+
+  .alert-inner {
+    @include container;
+    padding: 10px 0;
+  }
+
+  a.close {
+    opacity: 1;
+    text-shadow: none;
+    top: inherit;
+    right: inherit;
+
+    color: white;
+  }
+
+}
