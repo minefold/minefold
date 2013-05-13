@@ -93,14 +93,6 @@ Minefold::Application.routes.draw do
       get :bonus
     end
 
-    resources :gifts do
-      get :cheers, :on => :member
-      get :certificate, :on => :member
-
-      get :redeem, :on => :collection
-      post :redeem, :action => :redeem_action, :on => :collection
-    end
-
     match '/redeem' => redirect('/gifts/redeem')
 
     resources :orders, only: [:create, :show]
