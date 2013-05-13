@@ -1,0 +1,47 @@
+.bonus-list {
+  > .item {
+    @include clearfix;
+    display: block;
+    padding: 20px;
+    border-bottom: 2px solid $gray;
+    color: $blue;
+
+    font-size: 18px;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    > .name {
+      float: left;
+    }
+
+    > .reward {
+      float: right;
+    }
+
+    &.mini {
+      font-size: 14px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+
+    &[data-done] {
+      color: #CCC;
+
+      .name {
+        text-decoration: line-through;
+      }
+
+      .name:before {
+        content: "\F164";
+        @include inline-block;
+        font-family: $icon;
+        font-size: inherit;
+        line-height: 1;
+        margin-right: 10px;
+        color: $cyan;
+      }
+    }
+  }
+}
