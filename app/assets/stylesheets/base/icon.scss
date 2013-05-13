@@ -1,0 +1,22 @@
+[data-icon] {
+  @include inline-block;
+  font-family: $icon;
+  font-size: 16px;
+  line-height: 1;
+
+  &:before {
+    content:attr(data-icon);
+  }
+
+  &.large {
+    font-size:32px;
+  }
+
+  &.huge {
+    font-size:64px;
+  }
+
+  &.natural {
+    font-size:inherit;
+  }
+}
