@@ -1,0 +1,50 @@
+.page {
+  @include container;
+  width: grid-width(8);
+  padding: 20px;
+  background-color: white;
+  border-radius: $radius;
+
+  hr {
+    margin-left: -20px;
+    margin-right: -20px;
+  }
+}
+
+.edgeless-page {
+  padding: 0;
+}
+
+.typographic-page {
+
+  &, li {
+    line-height: 30px;
+  }
+
+  h1 {
+    font-size: 61px;
+    line-height: 90px;
+    margin-top: 30px;
+    margin-bottom: 60px;
+  }
+
+  h2 {
+    font-size: 31px;
+    line-height: 60px;
+    margin-bottom: 30px;
+  }
+
+  h3 {
+    font-size: 22px;
+    line-height: 30px;
+    margin-top: 30px;
+    margin-bottom: 0px;
+  }
+
+  p,
+  ul,
+  ol {
+    margin-top: 0px;
+    margin-bottom: 30px;
+  }
+}
