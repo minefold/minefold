@@ -1,113 +1,83 @@
 - title 'Settings'
 - intercom_activator '.ActivateIntercom'
 
-.container
-  .row
-    .span8.offset2
+.page-header.center
+  %h1 Account Settings
 
-      .page-header
-        %h1 Settings
+.page.account-settings
+  = form_for resource, :method => :put, :html => {:multipart => true, class: 'account-avatar-upload'} do |f|
+    = f.hidden_field :avatar_cache
+    = image_tag current_user.avatar.medium.url, width: 60, height: 60, id: 'avatar_preview'
 
-      .form-block.row#profile
-        .form-title.span2
-          %strong Profile
+    = f.file_field :avatar, style: 'display:none'
+    = f.label :avatar, 'Change'
 
-        .span6
-          .row
-            .span1
-              = form_for resource, :method => :put, :html => {:multipart => true} do |f|
-                = f.hidden_field :avatar_cache
-                = image_tag current_user.avatar.medium.url, width: 60, height: 60, id: 'avatar_preview'
+    :javascript
+      $('#user_avatar').change(function() {
+        $(this).parent('form').submit();
+      });
 
-                = f.file_field :avatar, style: 'display:none'
-                = f.label :avatar, 'Change'
+      $('#avatar_preview').click(function() {
+        $('#user_avatar').click();
+      });
 
-                // TODO Hack!
-                :css
-                  label[for=user_avatar] {
-                    margin-top: 5px;
-                    text-align: center;
-                    font-size: 12px;
-                    color: #CCC;
-                  }
+  = form_for resource, :method => :put do |f|
+    .control-group
+      = f.label :username, class: 'control-label'
+      .controls
+        = f.text_field :username, placeholder: 'Username'
+      = error_message_for(f.object, :username)
 
-                - content_for :tail do
-                  :javascript
-                    $('#user_avatar').change(function() {
-                      $(this).parent('form').submit();
-                    });
+      = f.label :first_name, 'Name', class: 'control-label'
+      .controls
+        = f.text_field :first_name, placeholder: 'First name', class: %w(span2)
+        = f.text_field :last_name, placeholder: 'Last name', class: %w(span2)
 
-                    $('#avatar_preview').click(function() {
-                      $('#user_avatar').click();
-                    });
+      = f.label :email, class: 'control-label'
+      .controls
+        = f.email_field :email, placeholder: 'Email', class: %w(span4)
+        - if not f.object.confirmed?
+          %p.help-block
+            %span.highlight #{f.object.email} is unconfirmed
+            &middot;
+            - # TODO This is a hack and not very nice
+            = link_to 'Resend confirmation', user_confirmation_path(user: {email: f.object.email}), method: 'POST'
 
+        - if f.object.pending_reconfirmation?
+          %p.help-block
+            %span.highlight  #{f.object.unconfirmed_email} is unconfirmed
+            &middot;
+            - # TODO This is a hack and not very nice
+            = link_to 'Resend confirmation', user_confirmation_path(user: {email: f.object.unconfirmed_email}), method: 'POST'
 
-            .span5
-              = form_for resource, :method => :put do |f|
-                .control-group
-                  = f.label :username, class: 'control-label'
-                  .controls
-                    = f.text_field :username, placeholder: 'Username'
-                  = error_message_for(f.object, :username)
+    = f.submit 'Update profile', class: %w(btn btn-primary)
 
-                  = f.label :first_name, 'Name', class: 'control-label'
-                  .controls
-                    = f.text_field :first_name, placeholder: 'First name', class: %w(span2)
-                    = f.text_field :last_name, placeholder: 'Last name', class: %w(span2)
+  %hr
 
-                  = f.label :email, class: 'control-label'
-                  .controls
-                    = f.email_field :email, placeholder: 'Email', class: %w(span4)
-                    - if not f.object.confirmed?
-                      %p.help-block
-                        %span.highlight #{f.object.email} is unconfirmed
-                        &middot;
-                        - # TODO This is a hack and not very nice
-                        = link_to 'Resend confirmation', user_confirmation_path(user: {email: f.object.email}), method: 'POST'
+  .account-list
+    - [Accounts::Facebook, Accounts::Steam].each do |account_klass|
+      - account = account_klass.find_or_initialize_by_user_id(resource.id)
+      = render(partial: account.to_partial_path, locals: {account: account})
 
-                    - if f.object.pending_reconfirmation?
-                      %p.help-block
-                        %span.highlight  #{f.object.unconfirmed_email} is unconfirmed
-                        &middot;
-                        - # TODO This is a hack and not very nice
-                        = link_to 'Resend confirmation', user_confirmation_path(user: {email: f.object.unconfirmed_email}), method: 'POST'
+  %hr
 
-                = f.submit 'Save', class: %w(btn btn-primary)
+  = render partial: 'billing'
 
+  %p
+    %a.btn.btn-success.buy-coins{href: plans_page_path} Subscription plans
 
-      .form-block.row#accounts
-        .form-title.span2
-          %strong Accounts
+  %hr
 
-        .account-list.span6
-          - [Accounts::Facebook, Accounts::Mojang, Accounts::Steam].each do |account_klass|
-            - if account_klass != Accounts::Steam or $flipper[:tf2].enabled?(current_user)
-              - account = account_klass.find_or_initialize_by_user_id(resource.id)
-              = render(partial: account.to_partial_path, locals: {account: account})
+  = form_for resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }, class: %w(form-horizontal) do |f|
 
+    .control-group
+      .controls
+        = f.password_field :current_password, placeholder: 'Current password'
 
-      .form-block.row#billing
-        .form-title.span2
-          %strong Billing
+      .controls
+        = f.password_field :password, placeholder: 'New password'
 
-        .span6
-          = render partial: 'billing'
+      .controls
+        = f.password_field :password_confirmation, placeholder: 'Confirm new password'
 
-      .form-block.row#password
-        .form-title.span2
-          %strong Password
-
-        .span6
-          = form_for resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }, class: %w(form-horizontal) do |f|
-
-            .control-group
-              .controls
-                = f.password_field :current_password, placeholder: 'Current password'
-
-              .controls
-                = f.password_field :password, placeholder: 'New password'
-
-              .controls
-                = f.password_field :password_confirmation, placeholder: 'Confirm new password'
-
-            = f.submit 'Save', class: %w(btn btn-primary)
+    = f.submit 'Update password', class: 'btn'

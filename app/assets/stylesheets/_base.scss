@@ -4,7 +4,7 @@ body {
   font-size: 16px;
   line-height: 20px;
   color: #333;
-  background-color: transparent;
+  background-color: $gray;
 }
 
 a,
@@ -20,8 +20,13 @@ code {
   background-color: transparent;
 }
 
+// TODO Grumble
 code.big {
   font-size: 18px;
+}
+
+hr {
+  border-color: $gray;
 }
 
 .highlight {
@@ -51,29 +56,4 @@ code.big {
     text-transform: uppercase;
     font-size: 12px;
   }
-
-}
-
-.alert {
-  border: none;
-  border-radius: 0;
-  text-shadow: none;
-  margin-bottom: 0;
-  font-weight: bold;
-}
-
-.progress {
-  border-radius: $radius;
-
-  .bar {
-    background: $blue;
-  }
-
-  .bar-success {
-    background-color: #5eb95e;
-  }
-}
-
-.wide {
-  width: grid-width(8);
 }

@@ -17,10 +17,27 @@
       </a>
     <% end %>
 
-    <a class="item" href="<% url_for(:controller => :invitations, :action => :show, invitation_token: current_user.invitation_token) %>">
+    <a class="item" href="/i/<%= current_user.invitation_token %>">
       <div class="name">Refer your friends to Minefold</div>
       <div class="reward">
         + <%= time_left Bonuses::ReferredFriend.coins %> per friend
+      </div>
+      <div class="bonus-referrals-list">
+        <ul class="unstyled">
+          <% current_user.bonuses.friend_referrals.each do |bonus| %>
+            <li>
+              <%= bonus.class.pretty_name %>
+              &mdash;
+              <%= bonus.description %>
+              &mdash;
+              <%= time_ago_in_words(bonus.created_at) %>
+              <% if bonus.coins > 0 %>
+                &mdash;
+                + <%= time_left bonus.coins %>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
       </div>
     </a>
 
@@ -36,6 +53,22 @@
         <div class="name">Link your Facebook account</div>
         <div class="reward">
           + <%= time_left Bonuses::LinkedFacebookAccount.coins %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if Bonuses::LinkedSteamAccount.new(user: current_user).claimable? %>
+      <a class="item mini" href="<%= edit_user_registration_path(anchor: 'accounts') %>">
+        <div class="name">Link your Steam account</div>
+        <div class="reward">
+          + <%= time_left Bonuses::LinkedSteamAccount.coins %>
+        </div>
+      </a>
+    <% else %>
+      <div class="item mini" data-done>
+        <div class="name">Link your Steam account</div>
+        <div class="reward">
+          + <%= time_left Bonuses::LinkedSteamAccount.coins %>
         </div>
       </div>
     <% end %>

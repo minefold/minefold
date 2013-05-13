@@ -1,0 +1,33 @@
+.progressbar {
+  @include box-sizing(border-box);
+  overflow: hidden;
+  height: 10px;
+  border-radius: 20px;
+
+//  border: 1px solid rgba(black, 0.1);
+  background-color: rgba(black, 0.1);
+  padding: 2px;
+
+  .bar {
+    @include box-sizing(border-box);
+    height: 100%;
+    background-color: $blue;
+    padding-left: 4px;
+    padding-right: 4px;
+
+    overflow: hidden;
+
+    font-size: 12px;
+    color: white;
+
+    border-radius: 20px;
+  }
+
+  .bar.low {
+    background-color: $orange;
+  }
+
+  .bar.warning {
+    background-color: $red;
+  }
+}

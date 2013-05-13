@@ -1,5 +1,5 @@
 - if account.linked?
-  .account.is-linked[account]
+  .item[account]{data: {linked: true}}
     .profile-image
     .details
       .name Steam
@@ -10,7 +10,7 @@
         = link_to 'Unlink account', account_path(account), :method => :delete, class: 'account-list-unlink'
 
 - else
-  .account.is-unlinked[account]
+  .item[account]
     .profile-image
     .details
       .name Steam

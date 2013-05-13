@@ -49,7 +49,11 @@ class User < ActiveRecord::Base
   has_many :servers, through: :memberships
 
 
-  has_many :bonuses
+  has_many :bonuses do
+    def friend_referrals
+      where(type: Bonuses::ReferredFriend).order(:created_at).reverse_order
+    end
+  end
 
   belongs_to :invited_by, class_name: self.name
 
