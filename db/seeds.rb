@@ -1,9 +1,3 @@
-# Coin Packs
-
-CoinPack.create(cents: 1_500, coins: 7_500)
-CoinPack.create(cents: 3_000, coins: 20_000)
-CoinPack.create(cents: 6_000, coins: 60_000)
-
 # Users
 
 chris = User.new(
