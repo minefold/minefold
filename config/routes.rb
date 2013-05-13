@@ -89,9 +89,7 @@ Minefold::Application.routes.draw do
       get :link_mojang, :on => :collection
     end
 
-    resource :account, only:[] do
-      get :bonus
-    end
+    get '/more-time' => 'bonuses#index', :as => :bonuses
 
     match '/redeem' => redirect('/gifts/redeem')
 
