@@ -1,6 +1,9 @@
 // Font-sizes
 // {12, 14, 18, 20, 24, 36, 48, 64, 72, 96}px
 
+@include font-face(Batch, 'batch', normal, $asset-pipeline: true);
+@include font-face(Minecraft, 'minecraft', normal, $asset-pipeline: true);
+
 $heading: "futura-pt-1", "futura-pt-2",
           "Century Gothic",
           "Tw Cen MT",
@@ -19,3 +22,7 @@ $code: Consolas,
        "DejaVu Sans Mono",
        "Lucida Console",
        monospace;
+
+$minecraft: Minecraft, $code;
+
+$icon: Batch;
