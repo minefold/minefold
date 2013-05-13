@@ -1,80 +1,63 @@
 .server-list {
+
   > .item {
-    margin-bottom: 20px;
+    padding: 20px;
+    padding-bottom: 18px;
+    border-bottom: 2px solid $gray;
 
-    > .primary-action {
-      @include clearfix;
-      padding: 0 10px;
-      display: block;
+    @include clearfix;
+    display: block;
 
-      > .name {
-        float: left;
-      }
+    > .name {
+      float: left;
+    }
 
-      > .player-counts {
-        float: right;
-      }
+    > .player-counts {
+      float: right;
+    }
 
-      > .name {
-        float: left;
-        font-size: 18px;
-        line-height: 30px;
-        margin: 0;
-      }
+    > .name {
+      float: left;
+      font-size: 18px;
 
-      > .player-counts {
-        @include clearfix;
-        @include inline-block;
-
-        > .player-count {
-          padding: 5px 10px;
-          line-height: 20px;
-        }
-
-        > .player-count.current {
-          float: left;
-        }
-
-        > .player-count.max {
-          float: right;
-          border-left: 2px solid $gray;
-        }
-      }
+      font-weight: normal;
+      line-height: 20px;
+      margin: 0;
     }
 
     > .meta {
-      clear: both;
-      border-top: 2px solid $gray;
+      display: block;
+      clear: left;
+      font-size: 14px;
 
-      > ul {
-        @include clearfix;
-        margin: 0;
-        list-style-type: none;
+      .server-address {
+        font-family: $monospace;
+        font-size: 85%;
+      }
+    }
 
-        > li {
-          float: left;
-          font-size: 14px;
-          line-height: 20px;
+    > .player-counts {
+      @include clearfix;
+      @include inline-block;
+      margin-top: 5px;
+      margin-bottom: 5px;
 
-          &:first-child {
-            border-left: none;
-          }
+      > .player-count {
+        padding: 5px 10px;
+        font-size: 12px;
+        line-height: 20px;
+        font-weight: bold;
+        color: rgba(black, 0.6);
+        background-color: $gray;
+      }
 
-          &.settings {
-            float: right;
-          }
+      > .player-count.current {
+        float: left;
+      }
 
-          > a, &.server-address {
-            color: #333;
-            display: block;
-            padding: 5px 10px;
-          }
-
-          &.server-address {
-            font-size: 13px;
-            font-family: $monospace;
-          }
-        }
+      > .player-count.max {
+        float: right;
+        margin-left: 2px;
       }
     }
   }
