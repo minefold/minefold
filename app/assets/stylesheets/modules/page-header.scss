@@ -1,10 +1,15 @@
 .page-header {
   border-bottom: none;
-  margin-top: l(2);
-  margin-bottom: l(2);
+  padding: 0;
+
+  margin-top: 40px;
+  margin-bottom: 40px;
 
   > h1 {
+    font-family: $heading;
     font-size: 28px;
+    line-height: 40px;
+    margin: 0;
   }
 
   > h2 {
