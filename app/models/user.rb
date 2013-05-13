@@ -126,4 +126,21 @@ class User < ActiveRecord::Base
     end
   end
 
+  validates_numericality_of :total_trial_time
+
+  def trial_time_left
+    coins
+  end
+
+  def extend_trial!(minutes)
+    self.class.update_counters(self.id,
+      coins: minutes,
+      total_trial_time: minutes
+    ) == 1
+  end
+
+  def trial?
+    !active_subscription?
+  end
+
 end
