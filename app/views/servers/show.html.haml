@@ -4,6 +4,11 @@
 = track 'Viewed server', name: server.name, url: server_url(server)
 = track_landing_type 'server'
 
+- if flash[:abba_complete]
+  - content_for :tail do
+    :javascript
+      Abba('Sign up url', { persist: true }).complete()
+
 .container
   = render partial: 'header'
 

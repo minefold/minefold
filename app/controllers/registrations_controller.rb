@@ -7,9 +7,28 @@ class RegistrationsController < Devise::RegistrationsController
 
 # --
 
-  def after_sign_up_path_for(resource)
+  def after_sign_up_path_for(user)
     flash[:signed_up] = true
-    user_root_path(event: 'welcome') # welcome param triggers conversion tracking
+
+    attrs = {
+      event: 'welcome'
+    }
+    attrs[:funpack] = funpack.slug if funpack
+
+    # a/b test
+    groups = {
+      'Control' => user_root_path(attrs),
+      'New Server' => new_server_path(attrs)
+    }
+
+    group = groups.keys[user.id % groups.size]
+
+    flash[:abba_group] = group
+
+    url = groups[group]
+    puts "----- #{groups.inspect}"
+    puts "----- #{url.inspect}"
+    url
   end
 
 # --

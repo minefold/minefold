@@ -57,7 +57,7 @@
         %h1.brand= link_to 'Minefold', root_path
         %nav= render partial: 'shared/nav'
 
-    - flash.select {|_,msg| msg.is_a?(String) }.each do |name, msg|
+    - flash.select {|key,_| [:error, :notice, :success].include? key }.each do |name, msg|
       %div.alert.alert-block{class: "alert-#{name}"}
         %a.close{data: {dismiss: 'alert'}} &#215;
         %div{:id => "flash_#{name}"}= msg
@@ -108,6 +108,10 @@
 
     - if flash[:signed_in]
       = render partial: 'users/signed_in'
+
+    - if flash[:abba_group]
+      :javascript
+        Abba('Sign up url').start('#{flash[:abba_group]}')
 
     - # Analytics
     - if Rails.env.production?

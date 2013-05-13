@@ -27,6 +27,8 @@
     .span4.offset2
       .well
         = form_for resource, as: resource_name, url: registration_path(resource_name) do |f|
+          - if funpack
+            = hidden_field_tag :funpack, funpack.slug
 
           = f.control_group :username do
             = f.label :username, class: 'control-label'

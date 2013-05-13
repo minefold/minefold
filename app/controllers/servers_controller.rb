@@ -64,6 +64,8 @@ class ServersController < ApplicationController
       #   }
       # )
 
+      flash[:abba_complete] = true
+
       track server.creator.distinct_id, 'Created server',
         name: server.name,
         url: server_url(server),
