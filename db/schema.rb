@@ -284,6 +284,7 @@ ActiveRecord::Schema.define(:version => 20130522184434) do
     t.boolean  "beta",                                 :default => false
     t.string   "verification_token",     :limit => 12
     t.integer  "subscription_id"
+    t.integer  "total_trial_time",                     :default => 0,     :null => false
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
