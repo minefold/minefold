@@ -82,14 +82,11 @@
         %h1.brand= link_to 'Minefold', root_path
         %nav= render partial: 'shared/nav'
 
-<<<<<<< HEAD
     - flash.select {|key,_| [:error, :notice, :success].include? key }.each do |name, msg|
       %div.alert.alert-block{class: "alert-#{name}"}
         %a.close{data: {dismiss: 'alert'}} &#215;
         %div{:id => "flash_#{name}"}= msg
 
-=======
->>>>>>> New way of doing alerts in HTML.
     #app= yield
 
     %footer

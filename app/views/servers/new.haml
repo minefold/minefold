@@ -1,17 +1,19 @@
 - title 'Create a new server'
 
-.container
+.page-header.center
+  %h1 Create a server
+
+.page
   = form_for server, html: { class: 'form-horizontal' } do |f|
     = f.hidden_field :funpack_id
 
-    %h3 Step 1: Pick a game
-    = render partial: 'funpacks/picker', object: funpacks
+    = f.label :name, 'Choose a name for your server'
 
-    %h3 Step 2: Name your server
     = f.control_group :name do
       = f.text_field :name, autocomplete: 'off', class: ['input-large', 'input-block-level'], maxlength: 254
 
-    %br
+    = f.label :game, 'Choose a game'
+    = render partial: 'funpacks/picker', object: funpacks
 
     = f.submit 'Start your server', class: %w(btn btn-primary btn-large), disabled: true
 

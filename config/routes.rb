@@ -82,8 +82,7 @@ Minefold::Application.routes.draw do
     get '/resend_confirmation' => 'users#resend_confirmation', :as => :resend_confirmation
 
     get '/i/:invitation_token' => 'invitations#show', :as => :invitation
-
-    resources :invitations, only: [:create]
+    post '/invitations' => 'invitations#create'
 
     resources :accounts do
       get :link_mojang, :on => :collection

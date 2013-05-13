@@ -3,145 +3,113 @@
 = track "Viewed help"
 - intercom_activator '.ActivateIntercom'
 
-.container
-  .page-header
-    %h1 Help Center
-    %h2 Fast answers to your questions.
+.page-header.center
+  %h1 Help & Support
 
-  .support-faq.row#support-getting-started
-    %h2.name.span3 Getting Started
+.page.typographic-page
+  %h2#support-getting-started Getting Started
 
-    .items.span7
-      .item
-        %h3.question Do you have to have Minecraft?
-        .answer
-          %p Yes, you need a paid copy of Minecraft for the PC or Mac before you can play on Minefold servers. You can buy it from #{link_to 'http://minecraft.net/store', 'http://minecraft.net/store'}.
+  .question
+    %h3 Do you have to have Minecraft?
+  .answer
+    %p Yes, you need a paid copy of Minecraft for the PC or Mac before you can play on Minefold servers. You can buy it from #{link_to 'http://minecraft.net/store', 'http://minecraft.net/store'}.
 
-      .item
-        %h3.question Do you have to pay for Minecraft?
-        .answer
-          %p Yes. You can't play multiplayer with the demo of Minecraft.
+  .question
+    %h3 Do you have to pay for Minecraft?
+  .answer
+    %p Yes. You can't play multiplayer with the demo of Minecraft.
 
-      .item
-        %h3.question How do I link my Minecraft account?
-        .answer
-          %p Visit your <a href="/settings">settings page</a> where you will find an option to link your Minecraft account.
+  .question
+    %h3 “End of Stream” errors
+  .answer
+    %p There are a lots of causes of “end of stream” errors like running a modified client or a pre-release version of Minecraft. A good test is to see if you can connect to another (non-Minefold) server like <code>mc-lc.com</code>. If you can't then the problem is likely with your client. If you can connect to other servers please contact support.
 
-      .item
-        %h3.question “End of Stream” errors
-        .answer
-          %p There are a lots of causes of “end of stream” errors like running a modified client or a pre-release version of Minecraft. A good test is to see if you can connect to another (non-Minefold) server like <code>mc-lc.com</code>. If you can't then the problem is likely with your client. If you can connect to other servers please contact support.
+  %h2#support-servers Servers
 
+  .question
+    %h3 How do I upload a world to Minefold?
+  .answer
+    %p First create your server. On the settings page you will find instructions on how to upload your world.
 
-  .support-faq.row#support-servers
-    %h2.name.span3 Servers
+  .question
+    %h3 Where are our servers located?
+  .answer
+    %p Our servers are located in North Virginia. We've found this is the best location to provide the best service for the majority of our users. More locations are coming soon.
 
-    .items.span7
-      .item
-        %h3.question How do I upload a world to Minefold?
-        .answer
-          %p First create your server. On the settings page you will find instructions on how to upload your world.
+  .question
+    %h3 Experiencing lag?
+  .answer
+    %p Please #{link_to 'contact support', '#contact'}. We hate lag and want to kill it.
 
-      .item
-        %h3.question Can I run a cracked server?
-        .answer
-          %p No. Please support Mojang by #{link_to 'buying the full copy of Minecraft', 'http://minecraft.net/store'}.
+  %h2#support-billing Billing
 
-      .item
-        %h3.question Can you make my server run in offline mode?
-        .answer
-          %p No. Love Minecraft? Support Mojang and <a target="_blank" href="http://minecraft.net/store">buy a copy!</a>
+  .question
+    %h3 My child stole my coin card to pay for coins
+  .answer
+    %p Please #{link_to 'contact support', '#contact'}. You may be eligable for a refund.
 
-      .item
-        %h3.question Public servers?
-        .answer
-          %p No. All servers are whitelisted to help prevent griefing. You have to individually approve anybody who wants to play.
-
-      .item
-        %h3.question Where are our servers located?
-        .answer
-          %p Our servers are located in North Virginia. We've found this is the best location to provide the best service for the majority of our users. More locations are coming soon.
-
-      .item
-        %h3.question Experiencing lag?
-        .answer
-          %p Please #{link_to 'contact support', '#contact'}. We hate lag and want to kill it.
-
-  .support-faq.row#support-billing
-    %h2.name.span3 Billing
-
-    .items.span7
-      .item
-        %h3.question My child stole my coin card to pay for coins
-        .answer
-          %p Please #{link_to 'contact support', '#contact'}. You may be eligable for a refund.
-
-      .item
-        %h3.question Do you accept PayPal?
-        .answer
-          %p No.
+  .question
+    %h3 Do you accept PayPal?
+  .answer
+    %p No.
 
 
-  .support-faq.row#support-minecraft
-    %h2.name.span3 Minecraft
+  %h2#support-minecraft Minecraft
 
-    .items.span7
-      .item
-        %h3.question You've started playing, what happens now?
-        .answer
-          %p Minecraft is all about exploration and creativity. You can do anything! It's a good idea to build a small house so that you can survive the first night. For more detailed help, there is a #{link_to 'series of videos', '//minecraft.net/game/howtoplay'} on the official Minecraft website.
+  .question
+    %h3 Can I run a cracked / offline server?
+  .answer
+    %p No. Please support Mojang by #{link_to 'buying the full copy of Minecraft', 'http://minecraft.net/store'}.
 
-      .item
-        %h3.question Blocks keep reappearing / can't build around spawn
-        .answer
-          %p This happens if you dig too close to where you spawned. Minecraft does this to ensure the area doesn't get “griefed”. Sometimes people do nasty things like placing a big lava pool there so other players die as soon as they join. Ouch!
+  .question
+    %h3 You've started playing, what happens now?
+  .answer
+    %p Minecraft is all about exploration and creativity. You can do anything! It's a good idea to build a small house so that you can survive the first night. For more detailed help, there is a #{link_to 'series of videos', '//minecraft.net/game/howtoplay'} on the official Minecraft website.
 
-      .item
-        %h3.question Missing big chunks of the world
-        .answer
-          %p Chunk errors can happen sometimes but they don't affect your world. You can simply walk around them and everything should be fine. You can try and fix them by either waiting it out or disconnecting and reconnecting to the world. You can also try killing your player by typing <code>t</code> and entering the <code>/kill</code> command. Only do this as a last resort!
+  .question
+    %h3 Blocks keep reappearing / can't build around spawn
+  .answer
+    %p This happens if you dig too close to where you spawned. Minecraft does this to ensure the area doesn't get “griefed”. Sometimes people do nasty things like placing a big lava pool there so other players die as soon as they join. Ouch!
 
-      .item
-        %h3.question What commands can you use in the game?
-        .answer
-          %p Minecraft Wiki has a <a href="http://www.minecraftwiki.net/wiki/SMP_Server_commands">comprehensive list</a> of all the commands you can use in the game.
+  .question
+    %h3 Missing big chunks of the world
+  .answer
+    %p Chunk errors can happen sometimes but they don't affect your world. You can simply walk around them and everything should be fine. You can try and fix them by either waiting it out or disconnecting and reconnecting to the world. You can also try killing your player by typing <code>t</code> and entering the <code>/kill</code> command. Only do this as a last resort!
 
-      .item
-        %h3.question Changing the spawn point
-        .answer
-          %p Vanilla Minecraft lets you change the spawn point individually by crafting a bed and sleeping in it.
+  .question
+    %h3 What commands can you use in the game?
+  .answer
+    %p Minecraft Wiki has a <a href="http://www.minecraftwiki.net/wiki/SMP_Server_commands">comprehensive list</a> of all the commands you can use in the game.
 
-      .item
-        %h3.question My map hasn't updated
-        .answer
-          %p The maps can take a while to render, especially on large worlds. We run tens of thousands of servers so sometimes rendering a map can take up to two days. If your map still hasn't updated after two days, please contact support and include the name of your server.
+  .question
+    %h3 Changing the spawn point
+  .answer
+    %p Vanilla Minecraft lets you change the spawn point individually by crafting a bed and sleeping in it.
+
+  .question
+    %h3 My map hasn't updated
+  .answer
+    %p The maps can take a while to render, especially on large worlds. We run tens of thousands of servers so sometimes rendering a map can take up to two days. If your map still hasn't updated after two days, please contact support and include the name of your server.
 
 
-  .support-contact#contact
 
-    %h2 Need help with something else? You can…
+.page-header.center
+  %h1 Need help with something else?
 
-    .row
-      .twitter.span5
-        .row
-          .span1
-            %a{href: 'https://twitter.com/minefold', title: 'Minefold on Twitter'}
-              = image_tag 'https://twitter.com/images/resources/twitter-bird-white-on-blue.png', width: 60, height: 60
+.page
+  .support-contacts-list
+    .item.twitter
+      %a.icon{href: 'https://twitter.com/minefold', title: 'Minefold on Twitter'}
+        %img{src: 'https://twitter.com/images/resources/twitter-bird-white-on-blue.png', width: 60, height: 60}
 
-          .span4
-            %p
-              %strong Get fast answers on Twitter.
-              For speedy answers, please tweet quick questions to <a href="https://twitter.com/minefold" title="Minefold on Twitter">@minefold</a> on Twitter.
+      %p Get speedy answers by following and tweeting <a href="https://twitter.com/minefold" title="Minefold on Twitter">@minefold</a> on Twitter.
 
-            %a.btn.btn-primary.twitter-mention-button{href: 'https://twitter.com/intent/tweet?screen_name=minefold', data: {lang: 'en'}, target: '_blank'} Tweet @minefold
+      %a.btn.btn-primary.twitter-mention-button{href: 'https://twitter.com/intent/tweet?screen_name=minefold', data: {lang: 'en'}, target: '_blank'} Tweet @minefold
 
-      - if signed_in?
-        .intercom.span5
-          .row
-            .span1
-              .support-icon{data: {icon: 'h'}}
-            .span4
-              %p
-                %strong Contact support.
-                For in-depth questions, please file a support ticket. Our friendly support folks will get in touch.
-              %a.btn.btn-primary.ActivateIntercom File a support ticket
+    - if signed_in?
+      .item.intercom
+        %a.icon.ActivateIntercom.large{href: '#', data: {icon: '&#xF003;'.html_safe}}
+
+        %p
+          For longer questions, file a support ticket. Our friendly support team will be in touch.
+        %a.btn.btn-danger.ActivateIntercom File a support ticket

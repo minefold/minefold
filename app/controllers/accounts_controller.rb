@@ -20,10 +20,4 @@ class AccountsController < ApplicationController
     redirect_to edit_user_registration_path
   end
 
-# --
-
-  def link_mojang
-    render layout: nil
-  end
-
 end

@@ -52,6 +52,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     current_user.accounts << account
     current_user.save!
 
+    Bonuses::LinkedSteamAccount.claim!(current_user)
+
     # TODO: Fix this with auth support
     # hack to set admin to existing TF2 servers
     funpack = Funpack.where(slug: 'team-fortress-2').first

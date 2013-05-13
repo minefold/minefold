@@ -3,6 +3,10 @@ class Bonus < ActiveRecord::Base
 
   class_attribute :coins
 
+  def self.minutes
+    coins
+  end
+
   validate :validate_claimable?
 
   after_create :give!
@@ -28,7 +32,7 @@ class Bonus < ActiveRecord::Base
   end
 
   def give!
-    user.increment_coins!(coins)
+    user.extend_trial!(coins)
     track!
   end
 

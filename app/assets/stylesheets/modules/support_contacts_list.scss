@@ -1,0 +1,29 @@
+.support-contacts-list {
+  @include clearfix;
+
+  > .item {
+    float: left;
+    width: 50%;
+    text-align: center;
+
+    > .icon {
+      display: block;
+      width: 60px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 20px;
+
+      border-radius: $radius;
+      overflow: hidden;
+
+      background-color: $gray;
+
+      line-height: 60px;
+    }
+
+    &.intercom .icon {
+      color: white;
+      background-color: $red;
+    }
+  }
+}
