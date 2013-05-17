@@ -9,14 +9,15 @@
   }
 
   &.large {
-    font-size:32px;
+    font-size: 32px;
   }
 
   &.huge {
-    font-size:64px;
+    font-size: 64px;
   }
+}
 
-  &.natural {
-    font-size:inherit;
-  }
+[data-icon].natural,
+span[data-icon] {
+  font-size:inherit;
 }

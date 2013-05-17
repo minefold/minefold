@@ -1,13 +1,14 @@
 <% title 'Servers' %>
 <% layout :servers %>
 
-<div class="page-header center">
-  <h1>Servers</h1>
-</div>
+<div class="page">
+  <div class="page-header center">
+    <h1>Servers</h1>
+  </div>
 
-<div class="dashboard">
   <%= render(partial: 'servers/list', object: @created_servers) %>
 
-  <br />
-  <%= link_to 'Create a new server', new_server_path, class: %w(btn btn-large btn-block btn-primary) %>
+  <div class="page-section">
+    <%= link_to 'Create a new server', new_server_path, class: %w(btn btn-large btn-block btn-primary) %>
+  </div>
 </div>

@@ -1,15 +1,16 @@
 require 'transaction_mailer'
 
 class InvitationsMailer < TransactionMailer
-  def invitation(user_id, email)
-    @user = User.find(user_id)
+  include TimeHelper
 
-    @friendly_name = PersonalName.new(@user).full
-
+  def invitation(invitation_id)
+    @invitation = Invitation.find(invitation_id)
+    @sender_name = PersonalName.new(@invitation.sender).full
 
     tag 'invitations#invitation'
-    mail to: email,
-         subject: "#{@friendly_name} invited you to check out Minefold",
-         from: "#{@friendly_name} via #{ActionMailer::Base.default[:from]}"
+    mail to: @invitation.email,
+         subject: "#{@sender_name} invited you to check out Minefold",
+         from: "#{@sender_name} via #{ActionMailer::Base.default[:from]}"
   end
+
 end

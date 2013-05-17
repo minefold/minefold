@@ -1,91 +1,102 @@
 - title server.name
 - layout :settings
 
-.page-header.center
-  %h1 Server settings
-  %a{href: server_path(server)} &larr; back to #{server.name}
-
 .page
-  = form_for server do |f|
-    = f.control_group :name do
-      = f.label :name, class: 'control-label'
-      .controls
-        = f.text_field :name, class: %w(span6)
+  = render partial: 'header'
+  = render partial: 'nav', locals: {active: 'admin'}
 
-    = f.control_group :description do
-      = f.label :description, class: 'control-label'
-      .controls
-        = f.text_area :description, class: %w(span6), rows: 6
+  .page-section
+    = form_for server do |f|
+      = f.control_group :name do
+        = f.label :name, class: 'control-label'
+        .controls
+          = f.text_field :name, class: %w(input-block-level input-large)
 
-    = f.submit 'Update details', class: %w(btn)
+      = f.control_group :description do
+        = f.label :description, class: 'control-label'
+        .controls
+          = f.text_area :description, class: %w(input-block-level), rows: 6
 
-  %hr
+      = f.submit 'Update server details', class: %w(btn)
 
-  = form_for server do |f|
-    = f.control_group :access_policy_id do
-      .controls
-        - server.available_access_policies.each do |id, policy|
-          = f.label "access_policy_id_#{id}", class: 'radio' do
-            = f.radio_button :access_policy_id, id
+  .page-section
+    = form_for server do |f|
+      = f.control_group :access_policy_id do
+        .controls
+          - server.available_access_policies.each do |id, policy|
+            = f.label "access_policy_id_#{id}", class: 'radio' do
+              = f.radio_button :access_policy_id, id
 
-            - case
-            - when policy == PublicAccessPolicy
-              %strong Public
-              %br
-              Anybody can play
+              - case
+              - when policy == PublicAccessPolicy
+                %strong Public
+                %br
+                Anybody can play
 
-            - when policy == MinecraftWhitelistAccessPolicy
-              %strong Friends only
-              %br
-              Only friends you have added to the whitelist can play.
+              - when policy == MinecraftWhitelistAccessPolicy
+                %strong Friends only
+                %br
+                Only friends you have added to the whitelist can play.
 
-            - when policy == MinecraftBlacklistAccessPolicy
-              %strong Public
-              %br
-              Anybody can play. You can ban abusive players with the blacklist.
+              - when policy == MinecraftBlacklistAccessPolicy
+                %strong Public
+                %br
+                Anybody can play. You can ban abusive players with the blacklist.
 
-            - when policy == TeamFortress2PasswordAccessPolicy
-              Set a password and tell that to your friends
+              - when policy == TeamFortress2PasswordAccessPolicy
+                Set a password and tell that to your friends
 
-    .form-actions
-      = f.submit 'Update server access', class: %w(btn)
+      .form-actions
+        = f.submit 'Update server access', class: %w(btn)
 
 
-  %hr
+  .page-section
+    = form_tag gameplay_server_path(server), :method => :put do |f|
+      .gameplay-settings
+        = server.funpack.settings.to_html(server.settings).html_safe
 
-  = form_tag gameplay_server_path(server), :method => :put do |f|
-    .gameplay-settings
-      = server.funpack.settings.to_html(server.settings).html_safe
+      .form-actions
+        - if server.up?
+          %p.help-block
+            %span.highlight People are playing on this server.
+            If you save and stop, everybody will be kicked. If you just save, the settings they will be applied when they leave.
 
-    .form-actions
-      - if server.up?
-        %p.help-block
-          %span.highlight People are playing on this server.
-          If you save and stop, everybody will be kicked. If you just save, the settings they will be applied when they leave.
+          %div
+            = submit_tag 'Update game and restart server', name: 'restart', class: %w(btn btn-primary)
+            = submit_tag 'Update game settings', class: %w(btn)
 
-        %div
-          = submit_tag 'Update game and restart server', name: 'restart', class: %w(btn btn-primary)
+        - else
           = submit_tag 'Update game settings', class: %w(btn)
 
-      - else
-        = submit_tag 'Update game settings', class: %w(btn)
-
   - if server.funpack.persistent?
-    %hr
-    - if server.world
-      %p
-        Last backup at #{I18n.l server.world.updated_at}
-        &middot;
-        = link_to 'Download archive', party_cloud_world_download_url(server)
+    .page-section
+      - if server.world
+        %p
+          Last backup at #{I18n.l server.world.updated_at}
+          &middot;
+          = link_to 'Download archive', party_cloud_world_download_url(server)
 
-    - else
-      %p There are no backups yet for this server.
+      - else
+        %p There are no backups yet for this server.
 
     - if server.funpack.imports?
-      %hr
-      = render partial: 'upload', locals: {server: server}
+      .page-section
+        = render partial: 'upload', locals: {server: server}
 
+  .page-box
+    #logs-view-el.logs-view
 
-  %hr
-  %p Destroying a server <strong>immediately shuts it down</strong> and <strong>permanently destroys all its data</strong>. There is <em>no way to recover a server</em> once it has been destroyed.
-  = button_to 'Destroy server', server_path(server), method: :delete, class: %w(btn btn-danger), confirm: 'Are you sure you want to destroy this server?'
+  %script(src="//cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js")
+  :javascript
+    logsView = new LogsView({
+      el: $('#logs-view-el'),
+      serverId: '27',
+      u: '6cUemWfzxAReFfPCnKjs',
+      endpoint: 'api.minefold.com'
+    });
+    console.log(logsView)
+    logsView.render();
+
+  .page-section
+    %p Destroying a server <strong>immediately shuts it down</strong> and <strong>permanently destroys all its data</strong>. There is <em>no way to recover a server</em> once it has been destroyed.
+    = button_to 'Destroy server', server_path(server), method: :delete, class: %w(btn btn-danger), confirm: 'Are you sure you want to destroy this server?'

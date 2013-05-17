@@ -1,64 +1,56 @@
 - title 'Your invitation page'
-- layout :invitations
+
+.page-header.center
+  %h1 Invite your friends
 
 .page
-  .jumbotron
-    %h1 Invite your friends!
+  %p For every friend who you get to join Minefold, we'll give you both an extra #{time_left Bonuses::ReferredFriend.mins} of bonus server time. It's a win-win situation!
 
-    %p For every friend who joins Minefold, we'll give you #{pluralize Bonuses::ReferredFriend.coins, 'minute', 'minutes'} and your friend #{pluralize Bonuses::Referred.coins, 'minute', 'minutes'} bonus!
+  %hr
 
   %center
+    %a.btn.btn-info.btn-large.btn-twitter{href: "https://twitter.com/share?url=#{URI.encode(url_for(only_path: false))}", target: '_blank'} Tweet on Twitter
 
-    = form_for(:referral, :url => invitations_path, :method => :post) do |f|
-      .control-group
-        .controls
-          = f.text_area :emails, placeholder: 'Email addresses. One on each line', class: 'wide', rows: 3
+    %a.btn.btn-primary.btn-large.btn-facebook#share-on-facebook-btn{style: 'margin-left:10px', data: {link: invitation_url(utm_source: 'fb'), picture: URI.join(root_url, image_path('facebook_share.png')), name: 'Minefold', caption: 'Simple Minecraft servers', description: "Available instantly, free to get started. Join me there and we'll both get an extra #{Bonuses::Referred.coins} minutes to play together!"}} Share on Facebook
 
-        = f.submit 'Send invitations', class: %w(btn btn-primary)
+  %hr
 
+  %p Sending a personal email is a lovely way to welcome someone to Minefold.
 
-    %p
-      %a.btn.btn-info.btn-large.btn-twitter{href: "https://twitter.com/share?url=#{URI.encode(url_for(only_path: false))}", target: '_blank', data: {icon: 'T'}} Tweet on Twitter
-      %a.btn.btn-primary.btn-large.btn-facebook#share-on-facebook-btn{style: 'margin-left:10px', data: {icon: 'F'}} Share on Facebook
+  = form_for(:invitation, url: invitations_path, :method => :post) do |f|
+    .control-group
+      .control-label
+        = f.label :emails
+      .controls
+        %textarea.input-block-level#invitation_emails{name: 'invitation[emails]', rows: 3, placeholder: 'One per line, please'}
 
-    %p Emebed this code into your forum signature:
+    .control-group
+      .control-label
+        = f.label :message, 'Your message'
+      .controls
+        %textarea.input-block-level#invitation_message{name: "invitation[message]", rows: 3} Hi! I found this website called Minefold that your run your own game servers. If you sign up there too we'll both get an extra hour to run our servers!
 
-    %pre
-      %code
-        [url=#{url_for(only_path: false)}]Minefold: Simple game servers. Sign up now and get an extra #{pluralize Bonuses::Referred.coins, 'minute', 'minutes'}![/url]
+    = f.submit 'Send invitation emails', class: %w(btn btn-success)
 
-    %p or share a link to this page with them:
+  %hr
 
-    %pre
-      %code= url_for(only_path: false)
+  %p If you're a member of a forum (like <a href="http://minecraftforum.net">Minecraft Forum</a>) you can put this <a href="http://www.bbcode.org">BBCode</a> snippet in your signature to help get referrals from your friends there.
 
-    %p
-      = link_to 'View your referral status', bonus_account_path
+  %button.btn.btn-small.btn-clipboard.pull-right{'data-clipboard-text' => "[url=#{url_for(only_path: false)}]Minefold: Simple game servers. Sign up now and we'll both get an extra #{time_left(Bonuses::Referred.mins)} to run our servers![/url]"} Copy to clipboard
 
-  - content_for :tail do
-    :javascript
-      app.on('fb:init', function() {
+  %pre
+    %code
+      [url=#{url_for(only_path: false)}]Minefold: Simple game servers. Sign up now and we'll both get an extra #{time_left(Bonuses::Referred.mins)} to run our servers![/url]
 
-        var obj = {
-          method: 'feed',
-          link: #{invitation_url(utm_source: 'fb').to_json},
-          picture: "https:#{image_path('facebook_share.png')}",
+  %hr
 
-          name: 'Minefold',
-          caption: 'Simple Minecraft servers',
-          description: "Available instantly, free to get started. Join me there and we'll both get an extra #{Bonuses::Referred.coins} minutes to play together!",
-          ref: 'invitation'
-        };
+  %p You can always just share a link to this page.
 
-        function callback(response) {
-          mixpanel.track('shared', {
-            platform: 'facebook',
-            url: window.location.href,
-            'post id': response.post_id
-          });
-        }
+  %button.btn.btn-small.btn-clipboard.pull-right{'data-clipboard-text' => url_for(only_path: false)} Copy to clipboard
 
-        $('#share-on-facebook-btn').click(function() {
-          FB.ui(obj, callback);
-        });
-      });
+  %pre
+    %code= url_for(only_path: false)
+
+  %hr
+
+  %a.btn{href: bonuses_path} Check who as accepted your invitation

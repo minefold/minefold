@@ -1,0 +1,33 @@
+.logs-view {
+  @include box-sizing(border-box);
+
+  color: rgba(white, 0.9);
+  background-color: darken($blue, 35%);
+
+  white-space: pre;
+  font-size: 11px;
+  line-height: 15px;
+  font-family: $monospace;
+  padding: 10px 20px;
+
+  overflow-y: visible;
+  overflow-x: hidden;
+
+  .ts {
+    color: rgba(white, 0.4);
+  }
+
+  .event {
+    width: 4em;
+    color: $blue;
+    font-weight: 600;
+
+    &.started {
+      color: $green;
+    }
+
+    &.stopping {
+      color: $red;
+    }
+  }
+}

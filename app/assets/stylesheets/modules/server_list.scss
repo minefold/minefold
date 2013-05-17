@@ -1,9 +1,11 @@
 .server-list {
 
-  > .item {
+  > a.item {
     padding: 20px;
-    padding-bottom: 18px;
-    border-bottom: 2px solid $gray;
+    background-color: white;
+    padding-bottom: 20px - 2px;
+    margin-bottom: 2px;
+
 
     @include clearfix;
     display: block;
@@ -30,10 +32,8 @@
       clear: left;
       font-size: 14px;
 
-      .server-address {
-        font-family: $monospace;
-        font-size: 85%;
-      }
+      color: $lightBlue;
+
     }
 
     > .player-counts {

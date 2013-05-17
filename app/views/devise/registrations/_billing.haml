@@ -1,7 +1,4 @@
-%p
-  %a.btn.btn-success.buy-coins{href: plans_page_path} View Plans
-
-- if current_user.coins > 0
+- if current_user.trial?
   %p You have #{prepaid_time_left(current_user.coins)} left.
 
 - if current_user.active_subscription?
@@ -16,7 +13,6 @@
     %p
       %a.btn.btn-small.btn-warning.btn-stripe{href: '#update-card'} Update Card
 
-- if current_user.active_subscription?
   %p
     %a.btn.btn-small.btn-danger.ActivateIntercom{href: plans_page_path} Cancel Plan
 

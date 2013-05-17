@@ -1,16 +1,16 @@
 - title  'About Minefold'
 - layout :page
 
-.page-header.center
-  %h1 About Minefold
+.page
+  .page-header
+    %h1 About Minefold
 
-  %p
-    %a.twitter{href: 'https://twitter.com/minefold'} Twitter
-    &middot;
-    %a.facebook{href: 'https://facebook.com/minefold'} Facebook
+    %p
+      %a.twitter{href: 'https://twitter.com/minefold'} Twitter
+      &middot;
+      %a.facebook{href: 'https://facebook.com/minefold'} Facebook
 
-.page.edgeless-page
   = image_tag 'about/office.jpg', width: 620, height: 134
 
-.page.typographic-page
-  Minefold is built by <a href="http://mutlicorp.com">Mütli Corp</a>, a small company in San Francisco, California. We believe that if we do an excellent job at helping gamers connect with their friends the world will be a better place. We care about creating simple, reliable tools.
+  .page-section
+    %p Minefold is built by <a href="http://mutlicorp.com">Mütli Corp</a>, a small company in San Francisco, California. We believe that if we do an excellent job at helping gamers connect with their friends the world will be a better place. We care about creating simple, reliable tools.

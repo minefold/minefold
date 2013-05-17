@@ -19,7 +19,10 @@ class Funpack < ActiveRecord::Base
                   :settings_schema,
                   :published_at,
                   :bolt_allocations,
-                  :player_allocations
+                  :player_allocations,
+                  :access_policy_ids,
+                  :default_access_policy_id,
+                  :persistent
 
   belongs_to :creator, class_name: 'User'
 

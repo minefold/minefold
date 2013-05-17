@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130512222659) do
+ActiveRecord::Schema.define(:version => 20130514033411) do
 
   add_extension "hstore"
 
@@ -127,6 +127,16 @@ ActiveRecord::Schema.define(:version => 20130512222659) do
   add_index "gifts", ["coin_pack_id"], :name => "index_gifts_on_coin_pack_id"
   add_index "gifts", ["parent_id"], :name => "index_gifts_on_parent_id"
   add_index "gifts", ["token"], :name => "index_gifts_on_token"
+
+  create_table "invitations", :force => true do |t|
+    t.integer  "state",      :default => 0, :null => false
+    t.integer  "sender_id",                 :null => false
+    t.integer  "friend_id"
+    t.string   "email"
+    t.text     "message"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
 
   create_table "maps", :force => true do |t|
     t.integer  "server_id"

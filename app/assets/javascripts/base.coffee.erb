@@ -1,0 +1,58 @@
+# Makes the Funpack Pickers behave like a checkbox. Just bind to the `changed' event and you should be good to go.
+$(document).ready ->
+  funpackPicker = $('.funpack-picker')
+
+  funpackPicker.find('.item').click (e) ->
+    item = $(this)
+    item.siblings().removeClass('active')
+    item.addClass('active')
+
+    funpackPicker.trigger('changed', this)
+
+  funpackPicker.on 'change', (e, id) ->
+    funpackPicker.find(".item[data-id=#{id}]").click()
+
+# Update card button on the account settings page
+$(document).ready ->
+  $('.btn-stripe').click (e) ->
+    e.preventDefault()
+    $this = $(this)
+    $form = $this.parents('form')
+
+    token = (res) ->
+      $form.find('input[name=stripeToken]').val(res.id)
+      $form.find('input[name=last4]').val(res.card.last4)
+      $form.submit()
+
+    StripeCheckout.open(
+      name: 'Update card info'
+      panelLabel: 'Save'
+      token: token
+    )
+
+# Shares Minefold on Facebook on the invitation page
+$(document).ready ->
+  app.on 'fb:init', ->
+    $('#share-on-facebook-btn').click (e) ->
+      e.preventDefault()
+      $this = $(this)
+
+      callback = (response) ->
+        mixpanel.track 'shared',
+          platform: 'facebook'
+          url: $this.data('href')
+          'post id': response.post_id
+
+      FB.ui({
+        method:      'feed'
+        ref:         'invitation'
+        link:        $this.data('href')
+        picture:     $this.data('picture')
+        name:        $this.data('name')
+        caption:     $this.data('caption')
+        description: $this.data('description')
+      }, callback)
+
+$(document).ready ->
+  ZeroClipboard.setMoviePath(<%= asset_path('ZeroClipboard.swf').to_json %>)
+  clip = new ZeroClipboard.Client(".btn-clipboard")

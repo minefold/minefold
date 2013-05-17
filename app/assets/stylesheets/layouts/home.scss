@@ -1,12 +1,17 @@
 .l-home {
 
-  .navbar {
+  .navbar,
+  .jumbotron {
     background-color: $blue;
+  }
+
+  .navbar {
     .navbar-inner .brand a,
     .navbar-inner .nav a {
       color: white;
     }
-    .navbar-inner .divider-vertical {
+    .navbar-inner .divider-vertical,
+    .navbar-inner .divider-horizontal {
       border-color: rgba(white, 0.1);
     }
   }
@@ -20,14 +25,12 @@
   }
 
   .jumbotron {
-    background-color: $blue;
-
     h1 {
       color: white;
     }
 
     h2 {
-      color: darken($blue, 20%);
+      color: $darkBlue;
     }
   }
 
