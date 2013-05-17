@@ -5,16 +5,16 @@
       %li.nav-trial-time
         %p
           = time_left current_user.trial_time_left
-          left to try out Minefold
+          of trial time left
 
-        %hr
-        / .progressbar
-        /   .bar{style: 'width:100%'}
+        / %hr.divider-horizontal
+        .progressbar
+          .bar{style: 'width:100%'}
 
         %p
           = link_to 'Upgrade to a plan', plans_page_path
           or
-          = link_to 'earn bonus time', bonuses_path
+          = link_to 'score free time', bonuses_path
 
       %li.divider-vertical
 

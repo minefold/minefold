@@ -1,7 +1,13 @@
-Hi there,
+Hi!
 
-Your friend <%= @friendly_name %> wants you to try Minefold! Minefold lets you create your own game servers for Minecraft and Team Fortress 2 for you and your friends.
+Your friend <%= @friendly_name %> wants you to join them on Minefold!
 
-Plus, you'll both get <%= pluralize Bonuses::ReferredFriend.coins, 'minute', 'minutes' %> of extra free time if you get started through this email.
+<% if @invitation.message? %>
+  "<%= @invitation.message %>"
+<% end %>
 
-To accept follow this link: <%= invitation_url(only_path: false, invitation_token: @user.invitation_token) %>
+Minefold lets you run your own servers for games like Minecraft and Team Fortress 2. When you sign up, both of you <%= @sender_name %> will get <%= pluralize(Bonuses::ReferredFriend.mins, 'min', 'mins') %> extra server time.
+
+To sign up, just follow this link:
+
+  <%= invitation_url(only_path: false, invitation_token: @invitation.sender.invitation_token) %>

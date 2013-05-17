@@ -13,23 +13,21 @@ class InvitationsController < ApplicationController
   end
 
   def create
-    current_referrals = current_user.bonuses
+    emails = params[:invitation][:emails].split.select{|e| e =~ /.+@.+\..+/ }
 
-    for email in params[:referral][:emails].split.select{|e| e =~ /.+@.+\..+/ }
-      referral = Bonuses::ReferredFriend.where("data -> 'email' = ?", email).first
-      if referral.nil?
-        referral = Bonuses::ReferredFriend.create(
-          user: current_user,
-          email: email
-        )
-      end
-
-      InvitationsMailer.invitation(current_user.id, email).deliver
+    emails.each do |email|
+      invitation = Invitation.new(
+        sender:  current_user,
+        email:   email,
+        message: params[:invitation][:message]
+      )
+      invitation.save!
+      InvitationsMailer.invitation(invitation.id).deliver
     end
 
-    flash[:success] = "Invitations sent!"
+    flash[:alert] = :invitations_sent
 
-    redirect_to bonus_account_path
+    redirect_to bonuses_path
   end
 
 end

@@ -32,8 +32,20 @@
   background-color: $green;
 }
 
-.btn-red,
-.btn-red:hover,
-.btn-red:active {
+.btn-danger,
+.btn-danger:hover,
+.btn-danger:active {
   background-color: $red;
+}
+
+.btn-twitter,
+.btn-twitter:hover,
+.btn-twitter:active {
+  background-color: #00aced;
+}
+
+.btn-facebook,
+.btn-facebook:hover,
+.btn-facebook:active {
+  background-color: #3B5998;
 }

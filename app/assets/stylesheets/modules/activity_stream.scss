@@ -1,38 +1,33 @@
 .activity-stream {
-
-  .activity {
+  > .activity {
     @include clearfix;
+    padding: 10px 20px;
+    background-color: white;
+    padding-bottom: 10px - 1px;
+    margin-bottom: 1px;
 
-    padding-bottom: l(1);
-    border-bottom: 1px solid rgba(black, 0.05);
-    margin-bottom: l(1);
-
-    .image {
-      float: left;
-      margin-right: $gw-gutter;
+    &:last-child {
+      padding-bottom: 10px;
+      margin-bottom: 0;
     }
 
-    .main {
+    > .image {
       float: left;
-      width: grid-width(8) - 40px - $gw-gutter;
+      margin-right: 10px;
+    }
 
-      .info {
+    > .main {
+      > .info {
         @include clearfix;
 
-        .date {
+        > .date {
           float: right;
-          font-size: 11px;
+          font-size: 12px;
           color: darken(white, 20%);
         }
 
-        .actor {
+        > .actor {
           font-weight: 600;
-        }
-
-        + .body {
-
-          margin-top: l(.5);
-
         }
       }
     }

@@ -1,12 +1,38 @@
-input.server-address {
-  font-family: $monospace;
-  width: 280px;
-  margin-left: -10px;
-  font-size: 12px;
-}
+.server-address {
 
-.server-address:hover {
-  cursor: pointer;
+  input {
+
+  }
+
+  &.large {
+    font-size: 18px;
+  }
+
+  &.huge {
+    font-size: 28px;
+  }
+
+  label {
+    margin-bottom: 0;
+
+
+    text-transform: uppercase;
+    font-size: 12px;
+    line-height: 20px;
+    color: rgba(black, 0.4);
+  }
+
+  input {
+    border: none;
+    margin-bottom: 0;
+    padding: 0;
+    line-height: 20px;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    font-family: $monospace;
+    font-weight: 600;
+  }
 }
 
 .server-address-view {

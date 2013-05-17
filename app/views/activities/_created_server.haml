@@ -1,10 +1,9 @@
 .activity[activity]
-  .image{style: "margin-left:20px"}
+  .image
     = image_tag activity.actor.avatar.small.url, width: 20, height: 20
 
   .main
     .info
       %span.actor= activity.actor.username
-      created the server
-      %span.target= link_to activity.target.name, activity.target
+      created this server.
       .date= l activity.created_at

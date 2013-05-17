@@ -8,6 +8,10 @@
   color: white;
   background-color: black;
 
+  &.alert-error {
+    color: $darkOrange;
+  }
+
   .alert-inner {
     @include container;
     padding: 10px 0;

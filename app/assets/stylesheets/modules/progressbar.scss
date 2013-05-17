@@ -4,14 +4,13 @@
   height: 10px;
   border-radius: 20px;
 
-//  border: 1px solid rgba(black, 0.1);
   background-color: rgba(black, 0.1);
   padding: 2px;
 
   .bar {
     @include box-sizing(border-box);
     height: 100%;
-    background-color: $blue;
+    background-color: $lightBlue;
     padding-left: 4px;
     padding-right: 4px;
 

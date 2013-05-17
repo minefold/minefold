@@ -8,7 +8,6 @@ chris = User.new(
 chris.password, chris.password_confirmation = 'password'
 chris.admin = true
 chris.skip_confirmation!
-
 chris.save!
 
 dave = User.new(
@@ -19,13 +18,30 @@ dave = User.new(
 dave.password, dave.password_confirmation = 'password'
 dave.admin = true
 dave.skip_confirmation!
-
 dave.save!
 
+
 # Plans
-bronze = Plan.create(stripe_id: 'bronze', name: 'Bronze', cents: 1499, bolts: 1)
-silver = Plan.create(stripe_id: 'silver', name: 'Silver', cents: 2499, bolts: 2)
-gold   = Plan.create(stripe_id: 'gold',   name: 'Gold',   cents: 4999, bolts: 3)
+bronze = Plan.create(
+  stripe_id: 'bronze',
+  name: 'Bronze',
+  cents: 1499,
+  bolts: 1
+)
+
+silver = Plan.create(
+  stripe_id: 'silver',
+  name: 'Silver',
+  cents: 2499,
+  bolts: 2
+)
+
+gold = Plan.create(
+  stripe_id: 'gold',
+  name: 'Gold',
+  cents: 4999,
+  bolts: 3
+)
 
 # allocations
 default_allocations = [
@@ -47,31 +63,40 @@ Funpack.create(name: 'Team Fortress 2', creator: chris,
   settings_schema: [],
   imports: false,
   published_at: Time.now
-).tap{|fp|
+).tap {|fp|
   tf2_allocations.each do |a|
     fp.plan_allocations.create(a)
   end
 }
 
 Funpack.create(
-  name: 'Minecraft', creator: chris,
-  info_url: 'http://minecraft.net',
-  party_cloud_id: '50a976ec7aae5741bb000001',
-  settings_schema: [],
+  access_policy_ids: [1,2],
+  creator: chris,
+  default_access_policy_id: 2,
   imports: true,
-  published_at: Time.now
-).tap{|fp|
+  info_url: 'http://minecraft.net',
+  maps: true,
+  name: 'Minecraft',
+  party_cloud_id: '50a976ec7aae5741bb000001',
+  persistent: true,
+  published_at: Time.now,
+  settings_schema: [],
+).tap {|fp|
   default_allocations.each do |a|
     fp.plan_allocations.create(a)
   end
 }
 
-Funpack.create(name: 'Bukkit Essentials', creator: chris,
+Funpack.create(name: 'Bukkit Essentials',
+  access_policy_ids: [1,2],
+  creator: dave,
+  default_access_policy_id: 2,
+  description: "A modified version of the Minecraft server.",
+  imports: true,
   info_url: "http://bukkit.org",
-  description: "Bukkit is a community-based project that works on Minecraft server implementation. This pack includes [Essentials](http://dev.bukkit.org/server-mods/essentials), [WorldEdit](http://dev.bukkit.org/server-mods/worldedit), [WorldGuard](http://dev.bukkit.org/server-mods/worldguard) and [LWC](http://dev.bukkit.org/server-mods/lwc).",
+  maps: true,
   party_cloud_id: '50a976fb7aae5741bb000002',
   settings_schema: [],
-  imports: true,
   published_at: Time.now
 ).tap{|fp|
   default_allocations.each do |a|
@@ -120,6 +145,7 @@ Funpack.create(name: 'Tekkit Lite', creator: dave,
   end
 }
 
-Funpack.create(name: 'Counter Strike: GO', creator: chris,
+Funpack.create(name: 'Counter Strike: GO',
+  creator: chris,
   info_url: 'http://counter-strike.net'
 )

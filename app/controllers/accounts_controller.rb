@@ -16,7 +16,8 @@ class AccountsController < ApplicationController
 
     # TODO Check if the user is playing on a server that uses this account type and kick them if they are.
 
-    flash[:notice] = 'Account unlinked'
+    flash[:alert] = :account_unlinked
+
     redirect_to edit_user_registration_path
   end
 

@@ -3,8 +3,11 @@
     @include clearfix;
     display: block;
     padding: 20px;
-    border-bottom: 2px solid $gray;
+    padding-bottom: 20px - 2px;
+    margin-bottom: 2px;
+
     color: $blue;
+    background-color: white;
 
     font-size: 18px;
 
@@ -20,6 +23,12 @@
       float: right;
     }
 
+    &.bonus-details {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      background-color: $gray;
+    }
+
     &.mini {
       font-size: 14px;
       padding-top: 10px;
@@ -29,11 +38,11 @@
     &[data-done] {
       color: #CCC;
 
-      .name {
+      > .name {
         text-decoration: line-through;
       }
 
-      .name:before {
+      > .name:before {
         content: "\F164";
         @include inline-block;
         font-family: $icon;

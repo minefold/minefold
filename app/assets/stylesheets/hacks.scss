@@ -1,9 +1,8 @@
-.dashboard .server-list {
-  margin-top: -20px;
-  margin-left: -20px;
-  margin-right: -20px;
-}
-
 .account-list .item {
   width: grid-width(4) - 20px;
+}
+
+.funpack-picker {
+  margin-left: -20px;
+  width: grid-width(8) + 20px;
 }

@@ -20,7 +20,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     # Signed in, linked a previously linked Facebook account
     elsif signed_in? && user
-      flash[:error] = 'Facebook account already linked.'
+      flash[:alert] = :facebook_linked
       redirect_to edit_user_registration_path
 
     # Signed in, linking Facebook account
@@ -28,11 +28,12 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       current_user.accounts << Accounts::Facebook.new(uid: auth.uid)
       current_user.update_from_facebook_auth(auth)
 
-      Bonuses::LinkedFacebookAccount.claim!(current_user)
+      Bonuses::LinkedFacebookAccount.give_to(current_user)
 
       current_user.save
 
-      flash[:notice] = 'Facebook account linked.'
+      flash[:alert] = :account_linked
+
       redirect_to edit_user_registration_path
 
     # Signed out, signing up
@@ -43,7 +44,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
       session['devise.facebook_data'] = auth
       redirect_to new_user_registration_path
-
     end
   end
 
@@ -52,7 +52,9 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     current_user.accounts << account
     current_user.save!
 
-    Bonuses::LinkedSteamAccount.claim!(current_user)
+    Bonuses::LinkedSteamAccount.give_to(current_user)
+
+    flash[:alert] = :account_linked
 
     # TODO: Fix this with auth support
     # hack to set admin to existing TF2 servers
@@ -62,7 +64,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       server.save!
     end
 
-    flash[:notice] = 'Steam account linked.'
     redirect_to edit_user_registration_path
   end
 

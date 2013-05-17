@@ -9,7 +9,8 @@
     .navbar-inner .brand a:before {
       background-color: lighten($blue, 10%);
     }
-    .navbar-inner .divider-vertical {
+    .navbar-inner .divider-vertical,
+    .navbar-inner .divider-horizontal {
       border-color: rgba(white, 0.1);
     }
   }

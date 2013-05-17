@@ -14,6 +14,7 @@
 
 #= require jquery.cookie
 #= require s3upload
+#= require zero-clipboard
 
 #= require ./base
 #= require ./helpers

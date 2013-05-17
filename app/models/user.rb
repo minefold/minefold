@@ -51,7 +51,9 @@ class User < ActiveRecord::Base
 
   has_many :bonuses do
     def friend_referrals
-      where(type: Bonuses::ReferredFriend).order(:created_at).reverse_order
+      where(type: [Bonuses::ReferredFriend, Bonuses::Referred]).
+      order(:created_at).
+      reverse_order
     end
   end
 
@@ -137,7 +139,7 @@ class User < ActiveRecord::Base
   end
 
   def extend_trial!(minutes)
-    self.class.update_counters(self.id,
+    self.class.update_counters(id,
       coins: minutes,
       total_trial_time: minutes
     ) == 1

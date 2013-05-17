@@ -1,0 +1,25 @@
+.stats-tabs {
+  list-style-type: none;
+  margin: 0;
+  margin-bottom: 2px;
+
+  display: table;
+  width: 100%;
+
+  > .stat {
+    display: table-cell;
+    padding: 10px 20px;
+    text-align: center;
+
+    background: rgba(white, 0.4);
+    font-size: 18px;
+    font-weight: 600;
+
+    span {
+      display: block;
+      color: rgba(black, 0.4);
+      font-size: 14px;
+      font-weight: 400;
+    }
+  }
+}

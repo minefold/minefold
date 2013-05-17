@@ -1,13 +1,15 @@
-.l-servers {
-  @include app-width(12);
+.page-nav {
+  ul {
+    @include clearfix;
+    list-style-type: none;
+    margin-bottom: 0;
 
-  #server-control-view-el {
-    margin-bottom: l(2);
+    li {
+      float: left;
+
+      a {
+        display: block;
+      }
+    }
   }
-
 }
-
-.l-settings {
-  @include app-width(8);
-}
-

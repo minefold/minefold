@@ -26,7 +26,8 @@ module Minefold
 
     # Activate observers that should always be running.
     config.active_record.observers = [
-      :bonuses_observer
+      :user_bonuses_observer,
+      :user_invitations_observer
     ]
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.

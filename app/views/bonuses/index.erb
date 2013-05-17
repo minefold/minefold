@@ -1,11 +1,11 @@
 <% title 'Get more time' %>
 
-<div class="page-header center">
-  <h1>Get more time</h1>
-  <p>Complete simple tasks to earn additional server time.</p>
-</div>
+<div class="page">
+  <div class="page-header">
+    <h1>Get more time</h1>
+    <p>Complete simple tasks to earn additional server time.</p>
+  </div>
 
-<div class="page edgeless-page">
   <div class="bonus-list">
     <% if current_user.active_subscription? %>
       <div class="item" data-done>
@@ -22,24 +22,29 @@
       <div class="reward">
         + <%= time_left Bonuses::ReferredFriend.coins %> per friend
       </div>
-      <div class="bonus-referrals-list">
-        <ul class="unstyled">
-          <% current_user.bonuses.friend_referrals.each do |bonus| %>
-            <li>
-              <%= bonus.class.pretty_name %>
-              &mdash;
-              <%= bonus.description %>
-              &mdash;
-              <%= time_ago_in_words(bonus.created_at) %>
-              <% if bonus.coins > 0 %>
-                &mdash;
-                + <%= time_left bonus.coins %>
-              <% end %>
-            </li>
-          <% end %>
-        </ul>
-      </div>
     </a>
+
+    <% if @invitations.any? %>
+      <div class="item bonus-details">
+        <div class="invitation-list">
+          <% @invitations.each do |invitation| %>
+            <div class="item">
+              <span class="state"><%= invitation.state_name %></span>
+              <span class="name">
+                <% if invitation.friend_id? %>
+                  <%= link_to invitation.friend.username, user_path(invitation.friend) %>
+                <% else %>
+                  <%= mail_to invitation.email %>
+                <% end %>
+              </span>
+              <% if invitation.confirmed? %>
+                <span class="bonus">+ <%= time_left Bonuses::ReferredFriend.mins %></span>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
 
     <% if Bonuses::LinkedFacebookAccount.new(user: current_user).claimable? %>
       <a class="item mini" href="<%= edit_user_registration_path(anchor: 'accounts') %>">

@@ -141,4 +141,8 @@ class Server < ActiveRecord::Base
     funpack.access_policies.fetch(self.access_policy_id).new(self)
   end
 
+  def playable?
+    persistent? || up?
+  end
+
 end
