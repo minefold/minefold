@@ -1,6 +1,11 @@
-.page > .server-header {
-  padding: 0 20px;
-  text-align: left;
+.server-header {
+  margin: 40px 20px;
+
+  h1 {
+    font-size: 28px;
+    line-height: 40px;
+    margin: 0;
+  }
 
   > h1 > a,
   > a {
