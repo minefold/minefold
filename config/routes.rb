@@ -71,7 +71,7 @@ Minefold::Application.routes.draw do
     get :sessions, :on => :collection
   end
 
-  resources :funpacks, path: '/games', only: [:show]
+  resources :funpacks, path: 'games'
 
 
   # Authenticated routes

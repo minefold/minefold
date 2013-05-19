@@ -1,0 +1,30 @@
+<% title "Edit #{funpack.name}" %>
+
+<div class="page">
+  <div class="page-header">
+    <h1><%= funpack.name %></h1>
+  </div>
+
+  <div class="page-section">
+    <%= form_for funpack do |f| %>
+      <%= f.control_group :name do %>
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+      <% end %>
+
+      <%= f.control_group :info_url do %>
+        <%= f.label :info_url %>
+        <%= f.url_field :info_url %>
+      <% end %>
+
+      <%= f.control_group :description do %>
+        <%= f.label :description %>
+        <%= f.text_area :description, rows: 6, class: 'input-block-level' %>
+      <% end %>
+
+      <div class="form-actions">
+        <%= f.submit class: %w(btn btn-primary) %>
+      </div>
+    <% end %>
+  </div>
+</div>
