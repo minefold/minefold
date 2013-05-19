@@ -1,29 +1,5 @@
 .l-plans {
 
-  .navbar {
-    background-color: lighten($blue, 10%);
-    .navbar-inner .brand a,
-    .navbar-inner .nav a {
-      color: white;
-    }
-    .navbar-inner .brand a:before {
-      background-color: lighten($blue, 10%);
-    }
-    .navbar-inner .divider-vertical,
-    .navbar-inner .divider-horizontal {
-      border-color: rgba(white, 0.1);
-    }
-  }
-
-  .jumbotron {
-    background-color: lighten($blue, 10%);
-    margin-bottom: 0px;
-
-    h1 {
-      color: white;
-    }
-  }
-
   table.plans {
     margin-top: $gw-gutter;
 

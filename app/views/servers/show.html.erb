@@ -17,7 +17,6 @@
 
 <div class="page">
   <%= render partial: 'header', locals: {active: 'home'} %>
-  <%= render partial: 'nav' %>
 
   <% if false %>
     <div class="page-section">
@@ -42,34 +41,17 @@
     </script>
   <% end %>
 
-  <div class="page-section">
- <!--    <% if can?(:edit, server) %>
-      <div class="server-controls pull-right">
-        <% if server.playable? %>
-          <a class="btn">Restart</a>
-        <% elsif server.starting? %>
-          Starting…
-        <% else %>
-          <a class="btn btn-success">Start server</a>
-        <% end %>
-      </div>
-    <% end %> -->
-
-    <div class="server-address">
-      <label>Server Address</label>
-      <% if server.playable? %>
-        <input type="text" value="<%= server.address %>" />
-      <% else %>
-        (No address yet)
-      <% end %>
-    </div>
+  <div class="server-controls" data-state="<%= control_state(server) %>">
+    <!-- TODO: Don't know how to connect to this address? -->
+    <!-- TODO: Steam connect button -->
+    <% if server.playable? %>
+      <input type="text" id="server-<%= server.id %>-address" value="<%= server.address %>" />
+    <% elsif server.starting? %>
+      Server is starting
+    <% else %>
+      <a class="btn btn-block btn-primary btn-large">Start this server</a>
+    <% end %>
   </div>
-
-  <% if server.description? %>
-    <div class="page-section">
-      <%= markdown(server.description) %>
-    </div>
-  <% end %>
 
   <ul class="stats-tabs">
     <li class="stat">0 <span>players now</span></li>
@@ -78,76 +60,23 @@
     <li class="stat">0 <span>player hours</span></li>
   </ul>
 
- <!--  <div class="page-section">
-    <%= form_for [server, Post.new], :method => :post do |f| %>
+  <% if server.description? %>
+    <div class="page-section">
+      <%= markdown(server.description) %>
+    </div>
+  <% end %>
+
+  <div class="page-section">
+    <%= form_for :post, url: server_posts_path(server), :method => :post do |f| %>
       <div class="control-group">
         <%= f.text_area :body, rows: 2, placeholder: "Leave a note", class: "input-block-level" %>
       </div>
       <%= f.submit 'Post your note', class: %w(btn) %>
     <% end %>
-  </div> -->
+  </div>
 
   <div class="activity-stream">
     <%= render partial: server.activity_stream.page(0), :as => :activity %>
   </div>
 
 </div>
-
-<!-- / .row
-/   .span8
-/     - if signed_in?
-/       .pull-left{style: 'margin-right: 20px'}
-/         = image_tag current_user.avatar.medium.url, width: 40, height: 40
-/
-/       .pull-left{style: 'margin-bottom: 20px'}
-/         = form_for [server, Post.new], :method => :post do |f|
-/           .control-group
-/             = f.text_area :body, rows: 2, placeholder: 'Write a post', class: 'span7'
-/           = f.submit 'Write post', class: %w(btn btn-small)
-/
-/     .activity-stream
-/       = render partial: server.activity_stream.page(0), :as => :activity
-/
-/
-/ - if !server.sessions.any? and server.funpack.instructions?
-/   = render partial: "funpacks/getting_started/#{server.funpack.slug}"
-/   %hr
-/
-/   .row.ab-control
-/     .span8
-/       = render partial: 'activity'
-/
-/     .span4
-/       = render partial: 'sidebar'
-/
-/
-/   %ul.nav.nav-tabs.ab-variant
-/     %li.active= link_to 'Getting Started', server
-/     - if can? :update, server
-/       %li= link_to 'Settings', [:edit, server]
-/
-/   .row.ab-variant
-/     .span8
-/       = render partial: "funpacks/getting_started/#{server.funpack.slug}"
-/
-/   = ab_test 'New server page', 'Show getting started'
-/
-/ - else
-/
-/   - content_for :tail do
-/     :javascript
-/       Abba('New server page', { persist: true }).complete()
-/
-/   %ul.nav.nav-tabs
-/     %li.active= link_to 'Activity', server
-/     - if server.funpack.maps?
-/       %li= link_to 'Map', server_map_path(server)
-/     - if can? :update, server
-/       %li= link_to 'Settings', [:edit, server]
-/
-/   .row
-/     .span8
-/       = render partial: 'activity'
-/
-/     .span4
-/       = render partial: 'sidebar' -->

@@ -1,105 +1,95 @@
-.navbar {
+.navbar-new {
+
+  .navbar-new-inner {
+    @include clearfix;
+    @include container;
+    padding-left: 0;
+    padding-right: 0;
+    width: grid-width(12) + 10px + 10px;
+
+    .brand {
+      float: left;
+    }
+
+    .menu {
+      float: right;
+    }
+
+    .trial-meter {
+      float: right;
+      line-height: 10px;
+    }
+  }
+
   // Bootstrap reset
+//  .menu {
+//    margin-right: 0;
+//    float: right;
+//
+//    @include clearfix;
+//    list-style-type: none;
+//
+//    > li {
+//      float: left;
+//
+//      > a {
+//        padding: 10px;
+//        color: darken($blue, 20%);
+//        text-shadow: none;
+//      }
+//    }
+//
+//
+//    .nav-trial-time {
+//      width: grid-width(3);
+//      text-align: center;
+//
+//      a {
+//        color: lighten($blue, 20%);
+//      }
+//
+//      p {
+//        font-size: 11px;
+//        line-height: 10px;
+//        margin-bottom: 0;
+//      }
+//
+//      hr {
+//        margin-top: 9px;
+//        margin-bottom: 9px;
+//      }
+//
+//      .progressbar {
+//        margin-top: 5px;
+//        margin-bottom: 5px;
+//      }
+//    }
+//
+//    .divider-vertical {
+//      height: 60px;
+//      margin-top: -10px;
+//      margin-bottom: -10px;
+//      border-color: $gray;
+//    }
+//  }
+
+}
+.menu {
+  @include horizontal-list;
   margin-bottom: 0;
 
-  padding-top: 10px;
-  padding-bottom: 10px;
-  background-color: white;
-
-  .navbar-inner {
-    // Bootstrap reset
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    border-radius: 0;
-    text-shadow: none;
-
-    margin-left: auto;
-    padding-left: 0;
-    width: 960px - 10px - 10px;
-    padding-right: 0;
-    margin-right: auto;
+  > li > a {
+    padding: 10px;
+    line-height: 40px;
   }
+}
 
-  .brand {
-    // Bootstrap reset
-    margin: 0;
-    padding: 0;
-    text-shadow: none;
-
-    // Name
-    a {
-      display: block;
-      text-transform: uppercase;
-      color: darken($blue, 20%);
-      font: bold 18px/40px #{$heading};
-      letter-spacing: 0.1em;
-    }
-
-    // Logo
-    a:before {
-      content: "";
-      display: block;
-      background-color: $blue;
-      background-image: asset-data-url('logo.png');
-      background-repeat: no-repeat;
-      background-position: 50% 50%;
-      background-size: cover;
-      width: 40px;
-      height: 40px;
-      border-radius: 3px;
-
-      float: left;
-      margin-right: 10px;
-    }
+.trial-meter {
+  margin-top: 20px;
+  font-size: 12px;
+  text-align: right;
+  p {
+    line-height: 10px;
+    margin-bottom: 0;
   }
-
-  nav {
-    float: right;
-    font-weight: 500;
-
-    // Bootstrap reset
-    .nav {
-      margin-right: 0;
-
-      a {
-        color: darken($blue, 20%);
-        text-shadow: none;
-      }
-
-
-      .nav-trial-time {
-        width: grid-width(3);
-        text-align: center;
-
-        a {
-          color: lighten($blue, 20%);
-        }
-
-        p {
-          font-size: 11px;
-          line-height: 10px;
-          margin-bottom: 0;
-        }
-
-        hr {
-          margin-top: 9px;
-          margin-bottom: 9px;
-        }
-
-        .progressbar {
-          margin-top: 5px;
-          margin-bottom: 5px;
-        }
-      }
-
-      .divider-vertical {
-        height: 60px;
-        margin-top: -10px;
-        margin-bottom: -10px;
-        border-color: $gray;
-      }
-    }
-  }
-
 }

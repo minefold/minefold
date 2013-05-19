@@ -1,39 +1,23 @@
-.server-header {
-  @include clearfix;
-  @include container;
+.page > .server-header {
+  padding: 0 20px;
+  text-align: left;
 
-  h1 {
-    float: left;
+  > h1 > a,
+  > a {
+    color: black;
   }
 
-  nav {
+  .server-header-toolbar {
     float: right;
-  }
+    line-height: 40px;
 
-  h1 {
-    font-size: 24px;
-    font-weight: normal;
+    > ul {
+      @include horizontal-list;
 
-    > .divider {
-      @include inline-block;
-      color: rgba(black, 0.4);
-    }
-  }
-
-  nav {
-    ol {
-      li {
-        float: left;
-        list-style-type: none;
-        border: 2px solid #CCC;
-        padding: 5px 10px;
-        border-radius: 3px;
+      > li > a {
+        font-size: 32px;
+        line-height: 40px;
       }
     }
   }
-
-}
-
-.server-meta {
-  @include container;
 }

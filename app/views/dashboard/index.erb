@@ -6,9 +6,9 @@
     <h1>Servers</h1>
   </div>
 
-  <%= render(partial: 'servers/list', object: @created_servers) %>
+  <%= render(partial: 'servers/list', object: @servers) %>
 
-  <div class="page-section">
+  <div class="page-box">
     <%= link_to 'Create a new server', new_server_path, class: %w(btn btn-large btn-block btn-primary) %>
   </div>
 </div>

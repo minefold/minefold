@@ -14,14 +14,23 @@
   padding-right: 10px;
 }
 
-@mixin pull-right {
-  float: right;
-}
+@mixin horizontal-list {
+  @include clearfix;
+  list-style-type: none;
+  margin-left: 0;
+  margin-bottom: 0;
 
-@mixin pull-left {
-  float: left;
+  > li {
+    float: left;
+
+    a {
+      display: block;
+    }
+  }
 }
 
 @mixin anti-aliasing() {
   -webkit-font-smoothing: antialiased;
 }
+
+

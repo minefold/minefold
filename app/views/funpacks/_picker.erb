@@ -1,21 +1,19 @@
 <div class="funpack-picker">
   <% picker.each do |funpack| %>
-    <a class="item funpack" data-id="<%= funpack.id %>" data-name="<%= funpack.name %>" data-slug="<% funpack.slug %>">
+    <div class="item funpack" data-id="<%= funpack.id %>" data-name="<%= funpack.name %>" data-slug="<% funpack.slug %>">
       <div class="image">
         <%= image_tag funpack_image_path(funpack) %>
       </div>
 
-      <div class="name">
-        <%= funpack.name %>
-      </div>
-
-      <div class="card">
-        <div class="description">
-          <%= funpack.description %>
+      <div class="main">
+        <div class="name">
+          <%= funpack.name %>
         </div>
 
-        <div class="tick huge" data-icon="&#xF164;"></div>
+        <div class="description">
+          <%= markdown funpack.description %>
+        </div>
       </div>
-    </a>
+    </div>
   <% end %>
 </div>

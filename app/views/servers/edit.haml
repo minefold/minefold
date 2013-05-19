@@ -3,7 +3,6 @@
 
 .page
   = render partial: 'header'
-  = render partial: 'nav', locals: {active: 'admin'}
 
   .page-section
     = form_for server do |f|
@@ -94,7 +93,6 @@
       u: '6cUemWfzxAReFfPCnKjs',
       endpoint: 'api.minefold.com'
     });
-    console.log(logsView)
     logsView.render();
 
   .page-section

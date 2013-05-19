@@ -52,7 +52,6 @@ class window.LogsView extends Backbone.View
     delay 1000, () => @connect()
 
   updateProgress: (e) =>
-    console.log('progress')
     if e.position > @prevIndex
       chunk = @req.responseText.substring(@prevIndex, e.position)
       @prevIndex = e.position

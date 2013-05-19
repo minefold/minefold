@@ -7,7 +7,7 @@ textarea {
   @include transition(none);
 
   box-shadow: none;
-  border-radius: 2px;
+  border-radius: $radius;
   border-color: rgba(black, 0.2);
   border-width: 2px;
   padding: 5px 10px;

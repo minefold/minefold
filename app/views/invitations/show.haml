@@ -1,56 +1,54 @@
 - title 'Your invitation page'
 
-.page-header.center
-  %h1 Invite your friends
-
 .page
-  %p For every friend who you get to join Minefold, we'll give you both an extra #{time_left Bonuses::ReferredFriend.mins} of bonus server time. It's a win-win situation!
+  .page-header
+    %h1 Invite your friends to play
 
-  %hr
+  .page-section
+    %p For every friend who you get to join Minefold, we'll give you both an extra #{time_left Bonuses::ReferredFriend.mins} of bonus time. It's a win-win situation!
 
-  %center
-    %a.btn.btn-info.btn-large.btn-twitter{href: "https://twitter.com/share?url=#{URI.encode(url_for(only_path: false))}", target: '_blank'} Tweet on Twitter
+    %br
 
-    %a.btn.btn-primary.btn-large.btn-facebook#share-on-facebook-btn{style: 'margin-left:10px', data: {link: invitation_url(utm_source: 'fb'), picture: URI.join(root_url, image_path('facebook_share.png')), name: 'Minefold', caption: 'Simple Minecraft servers', description: "Available instantly, free to get started. Join me there and we'll both get an extra #{Bonuses::Referred.coins} minutes to play together!"}} Share on Facebook
+    %center
+      %a.btn.btn-info.btn-large.btn-twitter{href: "https://twitter.com/share?url=#{URI.encode(url_for(only_path: false))}", target: '_blank'} Tweet on Twitter
 
-  %hr
+      %a.btn.btn-primary.btn-large.btn-facebook#share-on-facebook-btn{style: 'margin-left:10px', data: {link: invitation_url(utm_source: 'fb'), picture: URI.join(root_url, image_path('facebook_share.png')), name: 'Minefold', caption: 'Simple Minecraft servers', description: "Available instantly, free to get started. Join me there and we'll both get an extra #{Bonuses::Referred.coins} minutes to play together!"}} Share on Facebook
 
-  %p Sending a personal email is a lovely way to welcome someone to Minefold.
+  .page-section
+    %p Sending a personal email is a lovely way to welcome someone to Minefold.
 
-  = form_for(:invitation, url: invitations_path, :method => :post) do |f|
-    .control-group
-      .control-label
-        = f.label :emails
-      .controls
-        %textarea.input-block-level#invitation_emails{name: 'invitation[emails]', rows: 3, placeholder: 'One per line, please'}
+    = form_for(:invitation, url: invitations_path, :method => :post) do |f|
+      .control-group
+        .control-label
+          = f.label :emails
+        .controls
+          %textarea.input-block-level#invitation_emails{name: 'invitation[emails]', rows: 3, placeholder: 'One per line, please'}
 
-    .control-group
-      .control-label
-        = f.label :message, 'Your message'
-      .controls
-        %textarea.input-block-level#invitation_message{name: "invitation[message]", rows: 3} Hi! I found this website called Minefold that your run your own game servers. If you sign up there too we'll both get an extra hour to run our servers!
+      .control-group
+        .control-label
+          = f.label :message, 'Your message'
+        .controls
+          %textarea.input-block-level#invitation_message{name: "invitation[message]", rows: 3} Hi! I found this website called Minefold that your run your own game servers. If you sign up there too we'll both get an extra hour to run our servers!
 
-    = f.submit 'Send invitation emails', class: %w(btn btn-success)
+      = f.submit 'Send invitation emails', class: %w(btn btn-success)
 
-  %hr
+  .page-section
+    %p If you're a member of a forum (like <a href="http://minecraftforum.net">Minecraft Forum</a>) you can put this <a href="http://www.bbcode.org">BBCode</a> snippet in your signature to help get referrals from your friends there.
 
-  %p If you're a member of a forum (like <a href="http://minecraftforum.net">Minecraft Forum</a>) you can put this <a href="http://www.bbcode.org">BBCode</a> snippet in your signature to help get referrals from your friends there.
+    %button.btn.btn-small.btn-clipboard.pull-right{'data-clipboard-text' => "[url=#{url_for(only_path: false)}]Minefold: Simple game servers. Sign up now and we'll both get an extra #{time_left(Bonuses::Referred.mins)} to run our servers![/url]"} Copy to clipboard
 
-  %button.btn.btn-small.btn-clipboard.pull-right{'data-clipboard-text' => "[url=#{url_for(only_path: false)}]Minefold: Simple game servers. Sign up now and we'll both get an extra #{time_left(Bonuses::Referred.mins)} to run our servers![/url]"} Copy to clipboard
+    %pre
+      %code
+        [url=#{url_for(only_path: false)}]Minefold: Simple game servers. Sign up now and we'll both get an extra #{time_left(Bonuses::Referred.mins)} to run our servers![/url]
 
-  %pre
-    %code
-      [url=#{url_for(only_path: false)}]Minefold: Simple game servers. Sign up now and we'll both get an extra #{time_left(Bonuses::Referred.mins)} to run our servers![/url]
+    %br
 
-  %hr
+    %p You can always just share a link to this page.
 
-  %p You can always just share a link to this page.
+    %button.btn.btn-small.btn-clipboard.pull-right{'data-clipboard-text' => url_for(only_path: false)} Copy to clipboard
 
-  %button.btn.btn-small.btn-clipboard.pull-right{'data-clipboard-text' => url_for(only_path: false)} Copy to clipboard
+    %pre
+      %code= url_for(only_path: false)
 
-  %pre
-    %code= url_for(only_path: false)
-
-  %hr
-
-  %a.btn{href: bonuses_path} Check who as accepted your invitation
+  .page-section
+    %a.btn{href: bonuses_path} Check who as accepted your invitation

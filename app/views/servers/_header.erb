@@ -1,6 +1,12 @@
-<div class="page-header center">
+<div class="page-header server-header">
+  <nav class="server-header-toolbar">
+    <ul>
+      <li class="settings"><a href="<%= edit_server_path(server) %>" data-icon="&#xF06B;"></a></li>
+    </ul>
+  </nav>
+
   <h1>
     <%= link_to server.name, server_path(server) %>
   </h1>
-  <small><%= server.funpack.name %></small>
+  <%= link_to server.funpack.name, funpack_path(server.funpack) %>
 </div>
