@@ -17,7 +17,8 @@
         'layouts/order',
         'layouts/plans';
 
-@import 'modules/account_list',
+@import 'modules/abba',
+        'modules/account_list',
         'modules/account_settings',
         'modules/activity_stream',
         'modules/alert',
@@ -42,6 +43,6 @@
         'modules/support_contacts_list',
         'modules/user',
         'modules/table',
-        'modules/abba';
+        'modules/trial_meter';
 
 @import 'hacks.scss';

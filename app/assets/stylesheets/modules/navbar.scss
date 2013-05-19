@@ -17,63 +17,10 @@
 
     .trial-meter {
       float: right;
-      line-height: 10px;
     }
   }
-
-  // Bootstrap reset
-//  .menu {
-//    margin-right: 0;
-//    float: right;
-//
-//    @include clearfix;
-//    list-style-type: none;
-//
-//    > li {
-//      float: left;
-//
-//      > a {
-//        padding: 10px;
-//        color: darken($blue, 20%);
-//        text-shadow: none;
-//      }
-//    }
-//
-//
-//    .nav-trial-time {
-//      width: grid-width(3);
-//      text-align: center;
-//
-//      a {
-//        color: lighten($blue, 20%);
-//      }
-//
-//      p {
-//        font-size: 11px;
-//        line-height: 10px;
-//        margin-bottom: 0;
-//      }
-//
-//      hr {
-//        margin-top: 9px;
-//        margin-bottom: 9px;
-//      }
-//
-//      .progressbar {
-//        margin-top: 5px;
-//        margin-bottom: 5px;
-//      }
-//    }
-//
-//    .divider-vertical {
-//      height: 60px;
-//      margin-top: -10px;
-//      margin-bottom: -10px;
-//      border-color: $gray;
-//    }
-//  }
-
 }
+
 .menu {
   @include horizontal-list;
   margin-bottom: 0;
@@ -81,15 +28,5 @@
   > li > a {
     padding: 10px;
     line-height: 40px;
-  }
-}
-
-.trial-meter {
-  margin-top: 20px;
-  font-size: 12px;
-  text-align: right;
-  p {
-    line-height: 10px;
-    margin-bottom: 0;
   }
 }

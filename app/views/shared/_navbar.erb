@@ -32,15 +32,5 @@
 <% end %>
 
 <% if signed_in? %>
-  <div class="trial-meter">
-    <p>
-      <%= time_left current_user.trial_time_left %>
-      of trial time left
-    </p>
-    <p>
-      <%= link_to 'Upgrade to a plan', plans_page_path %>
-      or
-      <%= link_to 'score free time', bonuses_path %>
-    </p>
-  </div>
+  <%= render partial: 'shared/navbar/trial_meter' %>
 <% end %>
