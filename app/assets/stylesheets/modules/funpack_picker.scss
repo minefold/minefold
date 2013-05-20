@@ -1,6 +1,7 @@
 .funpack-picker {
   .item {
     @include clearfix;
+    margin-top: -2px;
     padding: 18px;
     cursor: pointer;
     background-color: white;
@@ -48,14 +49,13 @@
     }
 
     &:hover {
-      > .image > .tick {
-        display: block;
-        opacity: 0.5;
-      }
+      position: relative;
+      border-color: $lightBlue;
     }
 
     &.active,
     &.active:hover {
+      position: relative;
       border-color: $lightBlue;
 
       > .image > .tick {
@@ -64,14 +64,8 @@
       }
     }
 
-    // These rules make the borders overlap nicely. They're somewhat magic.
-
-    & + .item {
-      border-top-width: 0;
-    }
-
-    & + .item.active {
-      margin-top: -2px;
+    & + .item.active,
+    &:hover + .item.active {
       border-top-width: 2px;
     }
   }

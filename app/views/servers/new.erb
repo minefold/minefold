@@ -13,7 +13,7 @@
         <%= f.text_field :name, autocomplete: 'off', class: ['input-large', 'input-block-level'], maxlength: 254 %>
       <% end %>
 
-      <%= f.label :funpack_id, 'Server game' %>
+      <%= f.label :funpack_id, 'Game' %>
       <%= f.hidden_field :funpack_id %>
       <%= render partial: 'funpacks/picker', object: funpacks %>
 
