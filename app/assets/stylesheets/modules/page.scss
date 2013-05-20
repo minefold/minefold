@@ -1,7 +1,7 @@
 .page {
   @include container;
   @include box-sizing(border-box);
-  width: grid-width(8);
+  width: grid-width(8) + 20px + 20px;
   border-radius: $radius;
   padding: 0;
 
