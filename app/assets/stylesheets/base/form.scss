@@ -1,6 +1,3 @@
-form {
-}
-
 #{$all-text-inputs},
 textarea {
   // Bootstrap reset
@@ -29,7 +26,7 @@ textarea {
 
 #{$all-text-inputs-focus},
 textarea:focus {
-  border-color: lighten($blue, 20%);
+  border-color: $lightBlue;
   box-shadow: none;
 }
 
