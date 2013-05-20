@@ -29,8 +29,6 @@
   }
 }
 
-@mixin anti-aliasing() {
-  -webkit-font-smoothing: antialiased;
+@mixin font-smoothing($smoothing) {
+  -webkit-font-smoothing: $smoothing;
 }
-
-
