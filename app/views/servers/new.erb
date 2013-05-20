@@ -6,18 +6,20 @@
   </div>
 
   <div class="page-section">
-    <%= form_for server, html: { class: 'form-horizontal' } do |f| %>
-      <%= f.hidden_field :funpack_id %>
-
-      <%= f.label :name, 'Choose a name for your server' %>
+    <%= form_for server do |f| %>
+      <%= f.label :name, 'Server name' %>
 
       <%= f.control_group :name do %>
         <%= f.text_field :name, autocomplete: 'off', class: ['input-large', 'input-block-level'], maxlength: 254 %>
       <% end %>
 
+      <%= f.label :funpack_id, 'Server game' %>
+      <%= f.hidden_field :funpack_id %>
       <%= render partial: 'funpacks/picker', object: funpacks %>
 
-      <%= f.submit 'Start your server', class: %w(btn btn-primary btn-large), disabled: true %>
+      <div class="form-actions">
+        <%= f.submit 'Create server', class: %w(btn btn-primary btn-large), disabled: true %>
+      </div>
     <% end %>
   </div>
 </div>
@@ -30,26 +32,32 @@
         funpackIdField = form.find('input#server_funpack_id');
 
     var validateForm = function() {
+      // Get values
       var funpackId = funpackIdField.val(),
           name = nameField.val();
-      return (funpackId !== '') && (name !== '') && (name.length >= 2) && (name.length <= 255);
+
+      // Test
+      var funpackPresent = funpackId !== '',
+          namePresent = name !== '',
+          nameNotTooLong = name.length <= 255;
+
+      // Combine
+      var valid = funpackPresent && namePresent && nameNotTooLong;
+
+      form.find('input[type=submit]').attr('disabled', !valid);
     }
 
     // Set the funpack id hidden field when the picker changes
     picker.on('changed', function(e, el) {
       var $el = $(el);
       funpackIdField.val($el.data('id'));
-
-      // TODO This is putting style into the JS. Not very pretty :(
-      form.find('input[type=submit]').val("Start your " + $el.data('name') + " server");
+      validateForm();
     });
 
     // Set the picker from the funpack id initially
     picker.trigger('change', funpackIdField.val());
 
     // Validate the form when it changes
-    form.on('change keyup', function(e) {
-      form.find('input[type=submit]').attr('disabled', !validateForm());
-    });
+    form.on('change keyup', validateForm);
   });
 </script>
