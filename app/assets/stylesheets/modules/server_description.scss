@@ -1,0 +1,13 @@
+.server-description {
+  @include clearfix;
+  padding: 20px;
+  margin-bottom: 2px;
+  background-color: white;
+
+  font-size: 18px;
+  line-height: 30px;
+
+  :last-child {
+    margin-bottom: 0;
+  }
+}

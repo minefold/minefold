@@ -46,7 +46,7 @@ class ServersController < ApplicationController
     # Server owners automatically watch the server
     server.watchers << server.creator
 
-    Activities::CreatedServer.publish(server)
+    Activities::Created.publish(server)
 
     if server.save
       # TODO Move this out to a Job so it can be repeated. Show a spinner where the address should be and something like "acquiring server".
@@ -96,8 +96,6 @@ class ServersController < ApplicationController
 
   def start
     authorize! :update, server
-
-    session = server.sessions.create
 
     server.start!
 

@@ -18,6 +18,7 @@ class MapProjection
 # --
 
 class window.MapView extends Backbone.View
+  className: 'map-view'
   model: Map
 
   @defaultMapOptions =
@@ -30,7 +31,7 @@ class window.MapView extends Backbone.View
   initialize: (options) ->
     @mapOptions = _.extend(@constructor.defaultMapOptions, options)
 
-  render: =>
+  render: ->
     @map = new google.maps.Map(@el, @mapOptions)
 
     viewport = if store.enabled? and payload = store.get(@model.cacheKey())

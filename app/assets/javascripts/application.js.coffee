@@ -16,6 +16,8 @@
 #= require s3upload
 #= require zero-clipboard
 
+#= require ./config
+
 #= require ./base
 #= require ./helpers
 #= require_tree .
@@ -28,6 +30,6 @@ class window.Application
     $.cookie('time_zone', new Date().getTimezoneOffset())
 
   setCurrentUser: (data) ->
-    @current_user = new User(data)
+    @currentUser = new User(data)
 
 window.app = new Application()

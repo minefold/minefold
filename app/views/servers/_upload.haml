@@ -52,14 +52,14 @@
         %li Open up your terminal and navigate to your local world save folder: <code>cd ~/.minecraft/saves</code>
         %li Zip up the world you want with something like <code>zip -r world.zip MyWorld</code>
 
-/ :javascript
-/   $(document).ready(function() {
-/     uploadsView = new UploadView({
-/       el: $('#uploads'),
-/       sign_url: '#{sign_server_uploads_path(server.id)}',
-/       post_upload_url: '#{server_uploads_path(server.id)}',
-/       pusher_chan: 'upload-#{server.id}',
-/       progress_factor: 0.9
-/     });
-/     uploadsView.render();
-/   });
+:javascript
+  $(document).ready(function() {
+    uploadsView = new UploadView({
+      el: $('#uploads'),
+      sign_url: '#{sign_server_uploads_path(server.id)}',
+      post_upload_url: '#{server_uploads_path(server.id)}',
+      pusher_chan: 'upload-#{server.id}',
+      progress_factor: 0.9
+    });
+    uploadsView.render();
+  });

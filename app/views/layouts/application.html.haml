@@ -55,6 +55,9 @@
     - if signed_in?
       :javascript
         window.app.setCurrentUser(#{current_user.to_json});
+        if (window.pusher) {
+          channel = pusher.subscribe("private-user-"+app.currentUser.get('id'))
+        }
 
     = render partial: 'shared/facebook'
 

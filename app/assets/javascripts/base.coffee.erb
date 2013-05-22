@@ -52,7 +52,3 @@ $(document).ready ->
         caption:     $this.data('caption')
         description: $this.data('description')
       }, callback)
-
-$(document).ready ->
-  ZeroClipboard.setMoviePath(<%= asset_path('ZeroClipboard.swf').to_json %>)
-  clip = new ZeroClipboard.Client(".btn-clipboard")

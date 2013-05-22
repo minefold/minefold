@@ -141,8 +141,24 @@ class Server < ActiveRecord::Base
     funpack.access_policies.fetch(self.access_policy_id).new(self)
   end
 
+  def routing?
+    persistent?
+  end
+
+  def display_state
+    if routing?
+      :up
+    else
+      state_name
+    end
+  end
+
   def playable?
     persistent? || up?
+  end
+
+  def channel_name
+    "server-#{id}"
   end
 
 end

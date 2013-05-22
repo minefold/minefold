@@ -236,6 +236,14 @@ ActiveRecord::Schema.define(:version => 20130522184434) do
   add_index "servers", ["deleted_at", "host", "port"], :name => "index_servers_on_deleted_at_and_host_and_port"
   add_index "servers", ["party_cloud_id"], :name => "index_servers_on_party_cloud_id", :unique => true
 
+  create_table "shots", :force => true do |t|
+    t.integer  "uploader_id", :null => false
+    t.integer  "server_id"
+    t.string   "file",        :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
   create_table "snapshots", :force => true do |t|
     t.integer "server_id"
     t.string  "party_cloud_id"

@@ -55,6 +55,8 @@ gem 'omniauth-steam', require: ['omniauth-openid', 'omniauth-steam']
 gem 'activerecord-postgres-hstore', git: 'git://github.com/softa/activerecord-postgres-hstore.git'
 gem 'postgres_ext'
 
+gem 'eco'
+
 gem 'brock', github: 'minefold/brock', branch: 'master'
 
 group :test, :development do

@@ -1,0 +1,14 @@
+<div class="activity activity-shot" id="activity-999">
+  <div class="meta">
+    <div class="avatar">
+      <%= image_tag activity.actor.avatar.small.url, width: 20, height: 20 %>
+    </div>
+    <div class="actor">
+      <%= link_to current_user.username, user_path(current_user) %>
+    </div>
+    <div class="date"><%= l Time.now %></div>
+  </div>
+  <div class="subject">
+    <%= image_tag activity.subject.file.stream.url %>
+  </div>
+</div>

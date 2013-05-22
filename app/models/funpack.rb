@@ -60,4 +60,8 @@ class Funpack < ActiveRecord::Base
     AccessPolicies.slice(*access_policy_ids)
   end
 
+  def default_access_policy
+    AccessPolicies[default_access_policy_id]
+  end
+
 end

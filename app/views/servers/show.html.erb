@@ -5,10 +5,18 @@
 <%= track_landing_type 'server' %>
 
 <script>
-  app.server = new Server(<%= render(server, :format => :json) %>);
-  var channel = pusher.subscribe("server-" + app.server.get('id'));
-  channel.bind('server:started', app.server.onStarted);
-  channel.bind('server:stopped', app.server.onStopped);
+  var server = new Server(<%= ServerSerializer.new(server).to_json.html_safe %>);
+
+  app.server = server;
+
+  // TODO Proper nil/undefined check
+  if (window.pusher) {
+    var channel = pusher.subscribe(<%= server.channel_name.to_json.html_safe %>);
+    channel.bind('changed', function(payload) {
+      server.set(payload);
+    });
+  }
+
 </script>
 
 <% if flash[:abba_complete] %>
@@ -18,52 +26,31 @@
 <div class="page">
   <%= render partial: 'header', locals: {active: 'home'} %>
 
-  <% if false %>
-    <div class="page-section">
-      <a class="btn btn-large btn-block btn-primary" href="<%= edit_server_path(server) %>">Change gameplay settings</a>
-      <br />
-      <%= render partial: "funpacks/getting_started/minecraft" %>
-    </div>
-  <% end %>
-
-  <% if false %>
-    <%= javascript_include_tag '//maps.google.com/maps/api/js?sensor=false' %>
-    <div class="page-box map-view" id="map-view-el"></div>
-    <script>
-      app.map = new App.Map({"id":12934,"serverId":12934,"host":"//d14m45jej91i3z.cloudfront.net","zoomLevels":7,"tileSize":384,"lastMappedAt":"2012-12-05T10:35:24+00:00","createdAt":"2012-11-27T23:04:55+00:00","updatedAt":"2012-12-05T10:35:44+00:00","spawn":{"x":0,"y":66,"z":0}});
-    </script>
-    <script>
-      app.mapView = new App.MapView({model: app.map});
-      $(document).ready(function() {
-        app.mapView.setElement($('#map-view-el'));
-        app.mapView.render();
-      });
-    </script>
-  <% end %>
-
-  <div class="server-controls" data-state="<%= control_state(server) %>">
-    <!-- TODO: Don't know how to connect to this address? -->
-    <!-- TODO: Steam connect button -->
-    <% if server.playable? %>
-      <input type="text" id="server-<%= server.id %>-address" value="<%= server.address %>" />
-    <% elsif server.starting? %>
-      Server is starting
-    <% else %>
-      <a class="btn btn-block btn-primary btn-large">Start this server</a>
-    <% end %>
-  </div>
-
-  <ul class="stats-tabs">
-    <li class="stat">0 <span>players now</span></li>
-    <li class="stat">0 <span>players ever</span></li>
-    <li class="stat">0 <span>server hours</span></li>
-    <li class="stat">0 <span>player hours</span></li>
-  </ul>
+  <div id="server-control-view-el"></div>
+  <script>
+    var view = new ServerControlView({model: app.server});
+    $(document).ready(function(){
+      $('#server-control-view-el').append(view.el);
+      view.render();
+    });
+  </script>
 
   <% if server.description? %>
-    <div class="page-section">
+    <div class="server-description">
       <%= markdown(server.description) %>
     </div>
+  <% end %>
+
+  <% if server.persistent? and server.world %>
+    <div id="map-view-el" class="map-view"></div>
+    <%= javascript_include_tag '//maps.google.com/maps/api/js?sensor=false' %>
+    <script>
+      var map = new Map(<%= MapSerializer.new(server).to_json.html_safe %>);
+      $(document).ready(function() {
+        var view = new MapView({model: map, el: $('#map-view-el')});
+        view.render();
+      });
+    </script>
   <% end %>
 
   <div class="page-section">
@@ -78,5 +65,4 @@
   <div class="activity-stream">
     <%= render partial: server.activity_stream.page(0), :as => :activity %>
   </div>
-
 </div>

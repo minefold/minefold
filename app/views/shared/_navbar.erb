@@ -31,6 +31,6 @@
   </ul>
 <% end %>
 
-<% if signed_in? %>
+<% if signed_in? and current_user.trial? %>
   <%= render partial: 'shared/navbar/trial_meter' %>
 <% end %>
