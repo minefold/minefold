@@ -1,16 +1,6 @@
 require 'spec_helper'
 
 describe Server do
-  describe "#add_creator_to_watchers" do
-    let(:creator) { User.make! }
-    let(:server) { Server.make!(creator: creator) }
-
-    it "is called on create" do
-      expect(server.watchers).to include(creator)
-    end
-
-  end
-
   describe "#set_max_players" do
     let(:plan) { Plan.make!(bolts: 2) }
     let(:creator) { User.make!(subscription: Subscription.new(plan: plan, expires_at: Time.now + 30.days)) }

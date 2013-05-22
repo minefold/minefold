@@ -24,7 +24,6 @@ CoinPack.blueprint do
 end
 
 Funpack.blueprint do
-  game { GAMES.find('team-fortress-2') }
   name { Faker::Company.name }
   settings_schema { {} }
 end
@@ -51,6 +50,12 @@ Plan.blueprint do
   stripe_id { "plan_#{rand(1000)}" }
 end
 
+Subscription.blueprint do
+  plan
+  expires_at { Time.now }
+  discount { 0 }
+  last4 { '4242' }
+end
 
 # --
 
@@ -59,7 +64,6 @@ Funpack.blueprint(:minecraft) do
 end
 
 Funpack.blueprint(:tf2) do
-  game { GAMES.find('team-fortress-2') }
 end
 
 Server.blueprint(:minecraft) do

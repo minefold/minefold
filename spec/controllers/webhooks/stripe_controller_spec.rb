@@ -15,7 +15,8 @@ describe Webhooks::StripeController do
   end
 
   describe "charge.succeeded" do
-    let(:user) { User.make(customer_id: 'cus_1234') }
+    let(:subscription) { Subscription.make }
+    let(:user) { User.make(customer_id: 'cus_1234', subscription: subscription) }
 
     it "sends email" do
       mail = stub(:mail)

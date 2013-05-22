@@ -6,7 +6,7 @@ describe ServerAddress do
     id: 1,
     funpack_id: 1,
     :cname? => false,
-    :static_address? => false
+    :persistent? => false
   )}
 
   subject { described_class.new(server) }
@@ -14,7 +14,7 @@ describe ServerAddress do
   describe "#to_s" do
 
     it "is the static address if the game is routable" do
-      server.stub(:static_address? => true)
+      server.stub(:persistent? => true)
       expect(subject.to_s).to eq("1.fun-1.us-east-1.foldserver.com")
     end
 
