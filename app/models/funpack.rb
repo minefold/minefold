@@ -19,11 +19,13 @@ class Funpack < ActiveRecord::Base
                   :settings_schema,
                   :published_at,
                   :bolt_allocations,
-                  :player_allocations
+                  :player_allocations,
+                  :plan_allocations
 
   belongs_to :creator, class_name: 'User'
 
   has_many :servers
+  has_many :plan_allocations
 
   serialize :settings_schema, JSON
 
