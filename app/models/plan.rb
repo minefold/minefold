@@ -17,6 +17,10 @@ class Plan < ActiveRecord::Base
         discount += 100 * [(options[:tradein] / 60 / 40), 5].min
       end
     end
-    discount
+    if cents - discount < 5
+      discount = 0
+    else
+      discount
+    end
   end
 end

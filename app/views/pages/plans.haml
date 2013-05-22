@@ -11,29 +11,37 @@
 
 .container
   .row
+    %br
+    %p.quote
+      One subscription gets you #{@funpacks.size} different games!
+      %br
+      Play Minecraft on Wednesday, Feed The Beast on Thursday and Team Fortress 2 on Friday night.
+
     .offset1.span10
       %table.table.plans
         %thead
           %tr
-            %th{style: 'width: 15%'}
-            %th{style: 'width: 20%;text-align:center'} Bronze
-            %th{style: 'width: 20%;text-align:center'} Silver
-            %th{style: 'width: 20%;text-align:center'} Gold
-            %th{style: 'width: 10%'}
+            %th{style: 'width: 20%'}
+            - @plans.each do |plan|
+              %th{style: 'width: 20%;text-align:center'}= plan.name
+            %th{style: 'width: 5%'}
 
         %tbody
-          %tr
-            %th= link_to 'Minecraft', funpack_path(:minecraft)
-            %td 10 players
-            %td 25 players
-            %td 50 players
-            %td
+          - @funpacks.each do |funpack|
+            %tr
+              %th= link_to funpack.name, funpack_path(funpack.slug)
+              - @plans.each_with_index do |plan, i|
+                %td
+                  - players = funpack.player_allocations[i]
+                  = players == 0 ? "–" : "#{players} players"
+              %td
 
           %tr
-            %th= link_to 'Team Fortress 2', funpack_path('team-fortress-2')
-            %td 24 players
-            %td 32 players
-            %td 32 players
+            %th Map Rendering
+            %td –
+            %td Daily
+            %td Daily
+            %td Daily
             %td
 
           - if @on_sale
@@ -42,8 +50,6 @@
               - @plans.each_with_index do |plan, i|
                 %td.old-price{class:"#{plan.name.downcase}"}
                   = number_to_currency((plan.cents) / 100.0, precision: 2)
-                  %span.period
-                    \/ month
               %td
 
           %tr
@@ -53,8 +59,8 @@
             - @plans.each_with_index do |plan, i|
               %td.price{class:"#{plan.name.downcase}"}
                 = number_to_currency((plan.discounted_cents(discount: @current_discount, tradein: @tradein_coins)) / 100.0, precision: 2)
-                %span.period
-                  \/ month
+                .period
+                  per month
 
             %td
 
@@ -89,10 +95,6 @@
                 - else
                   %a.btn.btn-block.btn-large{href: new_user_registration_path} Sign up now!
             %td
-
-  %p.quote
-    One subscription gets you #{Funpack.count} different games!
-    Play Minecraft on Wednesday, Feed The Beast on Thursday and Team Fortress 2 on Friday night
 
   %hr.small.hidden
 
@@ -187,6 +189,7 @@
             %cite
               %a{href: 'https://twitter.com/EvilKimau'} Claire Blackshaw
 
+      .span6
         .testimonial.row
           .span1
             = image_tag 'twavatars/iWaffles.jpeg', width: 60
@@ -195,18 +198,6 @@
               “#{link_to '@minefold', 'https://twitter.com/minefold'} Pretty neat service you guys have there. It's an awesome twist on server based gaming :)”
             %cite
               %a{href: 'https://twitter.com/iWaffles'} Matt Gardner
-
-
-      .span6
-
-        .testimonial.row
-          .span1
-            = image_tag 'twavatars/kevinelliott.jpeg', width: 60
-          .span5
-            %q{cite: 'https://twitter.com/kevinelliott/status/255585383906172928'}
-              “#{link_to '@minefold', 'https://twitter.com/minefold'} Awesome service! How are you spawning MC servers? Virtual machines for each world? Pretty wild.”
-            %cite
-              %a{href: 'https://twitter.com/kevinelliott.jpeg'} Kevin Elliott
 
         .testimonial.row
           .span1
@@ -226,14 +217,6 @@
             %cite
               %a{href: 'https://twitter.com/marcocarag'} Marco Carag
 
-        .testimonial.row
-          .span1
-            = image_tag 'twavatars/qrush.jpeg', width: 60
-          .span5
-            %q{cite: 'https://twitter.com/qrush/status/117244523083595776'}
-              “Wow, pay by the hour Minecraft with chat, live maps, and more.”
-            %cite
-              %a{href: 'https://twitter.com/qrush/status/117244523083595776'} Nick Quaranto
 
   %center
     %a.btn.btn-small.btn-primary{href: 'https://twitter.com/minefold'} Spread the warm & fuzzies on Twitter too!

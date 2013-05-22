@@ -29,6 +29,7 @@ dave.skip_confirmation!
 dave.save!
 
 # Plans
+Plan.create(stripe_id: 'intro', name: 'Intro', cents: 499, bolts: 1)
 Plan.create(stripe_id: 'bronze', name: 'Bronze', cents: 1499, bolts: 1)
 Plan.create(stripe_id: 'silver', name: 'Silver', cents: 2499, bolts: 2)
 Plan.create(stripe_id: 'gold',   name: 'Gold',   cents: 4999, bolts: 3)
@@ -40,6 +41,7 @@ Funpack.create(
   info_url: 'http://minecraft.net',
   party_cloud_id: '50a976ec7aae5741bb000001',
   settings_schema: [],
+  player_allocations: [3, 10, 25, 50],
   imports: true,
   published_at: Time.now
 )
@@ -49,6 +51,7 @@ Funpack.create(name: 'Bukkit Essentials', creator: chris,
   description: "Bukkit is a community-based project that works on Minecraft server implementation. This pack includes [Essentials](http://dev.bukkit.org/server-mods/essentials), [WorldEdit](http://dev.bukkit.org/server-mods/worldedit), [WorldGuard](http://dev.bukkit.org/server-mods/worldguard) and [LWC](http://dev.bukkit.org/server-mods/lwc).",
   party_cloud_id: '50a976fb7aae5741bb000002',
   settings_schema: [],
+  player_allocations: [0, 10, 25, 50],
   imports: true,
   published_at: Time.now
 )
@@ -58,6 +61,7 @@ Funpack.create(name: 'Tekkit', creator: chris,
   description: "Tekkit is the multiplayer version of the Technic mod pack. It lets players automate, industrialize and power their worlds.",
   party_cloud_id: '50a977097aae5741bb000003',
   settings_schema: [],
+  player_allocations: [0, 10, 25, 50],
   imports: true,
   published_at: Time.now
 )
@@ -66,6 +70,7 @@ Funpack.create(name: 'Feed The Beast – Direwolf20', creator: dave,
   info_url: 'http://feed-the-beast.com/',
   party_cloud_id: '512159a67aae57bf17000005',
   settings_schema: [],
+  player_allocations: [0, 10, 25, 50],
   imports: true,
   persistent: true,
   maps: true,
@@ -76,6 +81,7 @@ Funpack.create(name: 'Team Fortress 2', creator: chris,
   info_url: 'http://teamfortress.com',
   party_cloud_id: '50bec3967aae5797c0000004',
   settings_schema: [],
+  player_allocations: [4, 24, 32, 32],
   imports: false,
   published_at: Time.now
 )
@@ -85,6 +91,7 @@ Funpack.create(name: 'Tekkit Lite', creator: dave,
   description: "Tekkit Lite includes most of the mods from Tekkit Classic and adds a load more.",
   party_cloud_id: '5126be367aae5712a4000007',
   settings_schema: [],
+  player_allocations: [0, 10, 25, 50],
   imports: true,
   persistent: true,
   maps: true
