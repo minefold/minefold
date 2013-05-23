@@ -3,7 +3,7 @@
     <span class="server-state"><%= @server.get('state') %></span>
     <span class="connection-help">
       <!-- TODO This route should be  -->
-      <a href="<%= Routes.supportPagePath() %>">Need help connecting?</a>
+      <a href="/help">Need help connecting?</a>
     </span>
   </div>
 
