@@ -53,14 +53,16 @@
     </script>
   <% end %>
 
-  <div class="page-section">
-    <%= form_for :post, url: server_posts_path(server), :method => :post do |f| %>
-      <div class="control-group">
-        <%= f.text_area :body, rows: 2, placeholder: "Leave a note", class: "input-block-level" %>
-      </div>
-      <%= f.submit 'Post your note', class: %w(btn) %>
-    <% end %>
-  </div>
+  <% if signed_in? %>
+    <div class="page-section">
+      <%= form_for :post, url: server_posts_path(server), :method => :post do |f| %>
+        <div class="control-group">
+          <%= f.text_area :body, rows: 2, placeholder: "Leave a note", class: "input-block-level" %>
+        </div>
+        <%= f.submit 'Post your note', class: %w(btn) %>
+      <% end %>
+    </div>
+  <% end %>
 
   <div class="activity-stream">
     <%= render partial: server.activity_stream.page(0), :as => :activity %>
