@@ -82,19 +82,6 @@
       .page-section
         = render partial: 'upload', locals: {server: server}
 
-  .page-box
-    #logs-view-el.logs-view
-
-  %script(src="//cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js")
-  :javascript
-    logsView = new LogsView({
-      el: $('#logs-view-el'),
-      serverId: '27',
-      u: '6cUemWfzxAReFfPCnKjs',
-      endpoint: 'api.minefold.com'
-    });
-    logsView.render();
-
   .page-section
     %p Destroying a server <strong>immediately shuts it down</strong> and <strong>permanently destroys all its data</strong>. There is <em>no way to recover a server</em> once it has been destroyed.
     = button_to 'Destroy server', server_path(server), method: :delete, class: %w(btn btn-danger), confirm: 'Are you sure you want to destroy this server?'
