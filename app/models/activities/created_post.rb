@@ -1,0 +1,1 @@
+Activities::CreatedPost = Activities::Post
