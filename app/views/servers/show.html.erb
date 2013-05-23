@@ -43,7 +43,7 @@
 
   <% if server.persistent? and server.world %>
     <div id="map-view-el" class="map-view"></div>
-    <%= javascript_include_tag '//maps.google.com/maps/api/js?sensor=false' %>
+    <%= javascript_include_tag '//maps.googleapis.com/maps/api/js?sensor=false' %>
     <script>
       var map = new Map(<%= MapSerializer.new(server).to_json.html_safe %>);
       $(document).ready(function() {
