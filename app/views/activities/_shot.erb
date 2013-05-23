@@ -4,7 +4,7 @@
       <%= image_tag activity.actor.avatar.small.url, width: 20, height: 20 %>
     </div>
     <div class="actor">
-      <%= link_to current_user.username, user_path(current_user) %>
+      <%= link_to activity.actor.username, user_path(activity.actor) %>
     </div>
     <div class="date"><%= l Time.now %></div>
   </div>
