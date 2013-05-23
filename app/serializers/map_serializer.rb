@@ -5,7 +5,7 @@ class MapSerializer < Serializer
     o[:object] = 'map'
     o[:server_id] = object.id
     o[:host] = "//d14m45jej91i3z.cloudfront.net"
-    o[:zoom_level] = 7
+    o[:zoom_levels] = 7
     o[:tileSize] = 384
 
     # TODO Legacy
