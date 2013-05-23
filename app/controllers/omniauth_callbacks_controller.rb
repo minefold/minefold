@@ -20,7 +20,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     # Signed in, linked a previously linked Facebook account
     elsif signed_in? && user
-      flash[:alert] = :facebook_linked
+      flash[:alert] = :account_linked
       redirect_to edit_user_registration_path
 
     # Signed in, linking Facebook account
