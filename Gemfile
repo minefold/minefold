@@ -52,7 +52,8 @@ gem 'rest-client'
 gem 'state_machine', require: 'state_machine/core'
 gem 'omniauth-steam', require: ['omniauth-openid', 'omniauth-steam']
 
-gem 'activerecord-postgres-hstore', git: 'git://github.com/softa/activerecord-postgres-hstore.git'
+gem 'activerecord-postgres-hstore',
+  github: 'softa/activerecord-postgres-hstore'
 gem 'postgres_ext'
 
 gem 'eco'
