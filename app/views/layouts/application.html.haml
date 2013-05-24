@@ -122,6 +122,6 @@
     - if signed_in?
       :javascript
         analytics.identify(
-          #{current_user.id.to_s.to_json},
+          #{current_user.id.to_json},
           #{AnalyticsProfile.new(current_user).to_json.html_safe}
         );
