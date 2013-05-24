@@ -29,7 +29,6 @@ gem 'redis-namespace'
 gem 'resque',
   require: ['resque', 'resque/server']
 gem 'resque_mailer'
-gem 'intercom'
 gem 'mailgun-rails'
 gem 'jbuilder'
 gem 'fog'
