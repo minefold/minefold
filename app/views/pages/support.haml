@@ -110,8 +110,8 @@
 
     - if signed_in?
       .item.intercom
-        %a.icon.ActivateIntercom.large{href: '#', data: {icon: '&#xF003;'.html_safe}}
+        %a.icon.large{href: '#', data: {icon: '&#xF152;'.html_safe}}
 
         %p
-          For longer questions, file a support ticket. Our friendly support team will be in touch.
-        %a.btn.btn-danger.ActivateIntercom File a support ticket
+          For longer questions, please send an email to our friendly support team.
+        = mail_to 'support@minefold.com', 'Email support', class: %(btn btn-danger)
