@@ -64,7 +64,6 @@
 
   %body{class: @layouts}
     #fb-root
-    #Intercom
 
     - if flash[:alert].is_a?(Symbol)
       = render partial: File.join('alerts', flash[:alert].to_s)
@@ -124,9 +123,5 @@
       :javascript
         analytics.identify(
           #{current_user.id.to_s.to_json},
-          #{AnalyticsProfile.new(current_user).to_json.html_safe},
-          {
-            Intercom: {
-              userHash: #{OpenSSL::HMAC.hexdigest("sha256", "d4080acfd4d6455b05e221cf5900ea9ff0970566", current_user.id.to_s).to_json}
-            }
-          });
+          #{AnalyticsProfile.new(current_user).to_json.html_safe}
+        );
