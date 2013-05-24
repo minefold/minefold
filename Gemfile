@@ -57,6 +57,7 @@ gem 'activerecord-postgres-hstore',
 gem 'postgres_ext'
 
 gem 'eco'
+gem 'analytics-ruby'
 
 gem 'brock', github: 'minefold/brock', branch: 'master'
 

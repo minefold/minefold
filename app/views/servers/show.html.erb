@@ -1,8 +1,9 @@
-<% title server.name, "#{server.funpack.name} Server #{server.id}" %>
-<% layout :servers %>
-
-<%= track 'Viewed server', name: server.name, url: server_url(server) %>
-<%= track_landing_type 'server' %>
+<% title "#{server.name} (#{server.funpack.name})" %>
+<script>
+  analytics.track('Viewed server', {
+    funpack: <%= server.funpack.name.to_json %>
+  });
+</script>
 
 <script>
   var server = new Server(<%= ServerSerializer.new(server).to_json.html_safe %>);

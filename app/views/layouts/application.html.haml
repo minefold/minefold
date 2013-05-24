@@ -37,8 +37,9 @@
     %script{src: '//d2wy8f7a9ursnm.cloudfront.net/bugsnag-1.0.6.min.js',  data: {apikey: '3e70e9ec8cbba1a9eeb8b8fc83251a6f'}}
     %script{src: ENV['ABBA_URL'] }
 
-    // Mixpanel
-    = render partial: 'shared/mixpanel'
+    :javascript
+      var analytics=analytics||[];(function(){var e=["identify","track","trackLink","trackForm","trackClick","trackSubmit","page","pageview","ab","alias","ready","group"],t=function(e){return function(){analytics.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var n=0;n<e.length;n++)analytics[e[n]]=t(e[n])})(),analytics.load=function(e){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src=("https:"===document.location.protocol?"https://":"http://")+"d2dq2ahtl5zl1z.cloudfront.net/analytics.js/v1/"+e+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n)};
+      analytics.load(#{ENV["SEGMENT_KEY"].to_json.html_safe});
 
     // Typekit
     %script{type: 'text/javascript', src: '//use.typekit.net/qzl8aqw.js'}
@@ -49,7 +50,6 @@
 
     = render partial: 'shared/pusher'
     = render partial: 'shared/stripe'
-    = render partial: 'shared/intercom'
     = javascript_include_tag 'application'
 
     - if signed_in?
@@ -120,9 +120,13 @@
         Abba('Sign up url').start('#{flash[:abba_group]}')
 
     - # Analytics
-    - if Rails.env.production?
-      = render partial: 'shared/gauges'
-      = render partial: 'shared/google_analytics'
-      = render partial: 'shared/perfect_audience'
-      = render partial: 'shared/hittail'
-    = render partial: 'shared/customer_io'
+    - if signed_in?
+      :javascript
+        analytics.identify(
+          #{current_user.id.to_s.to_json},
+          #{AnalyticsProfile.new(current_user).to_json.html_safe},
+          {
+            Intercom: {
+              userHash: #{OpenSSL::HMAC.hexdigest("sha256", "d4080acfd4d6455b05e221cf5900ea9ff0970566", current_user.id.to_s).to_json}
+            }
+          });

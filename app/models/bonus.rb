@@ -50,10 +50,13 @@ class Bonus < ActiveRecord::Base
 
   # TODO Move to controller (mostly to get the request IP so we can get good location information in Mixpanel).
   def track!
-    MixpanelAsync.track(user.distinct_id, 'Bonus claimed',
-      bonus: self.class.pretty_name,
-      coins: coins,
-      time:  Time.now.to_i
+    Analytics.track(
+      user_id: user.id,
+      event: 'Bonus claimed',
+      properties: {
+        bonuse: self.class.pretty_name,
+        mins: coins
+      }
     )
   end
 

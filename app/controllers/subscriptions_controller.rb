@@ -6,26 +6,6 @@ class SubscriptionsController < ApplicationController
 
     @subscription = current_user.subscribe!(@plan, params[:stripeToken], params[:last4], params[:tradein])
 
-    track(current_user.distinct_id, 'Paid',
-      'plan'   => @plan.id,
-      'amount' => @subscription.plan.cents
-    )
-    engage(current_user.distinct_id,
-      '$add' => {
-        'Spent' => @subscription.plan.cents
-      }
-    )
-
-    # Mixpanel Revenue Analytics
-    engage(current_user.distinct_id,
-      '$append' => {
-        '$transactions' => {
-          '$time' => Time.now.utc.iso8601,
-          '$amount' => (@subscription.plan.cents / 100.0)
-        }
-      }
-    )
-
     redirect_to thank_you_subscriptions_path
 
   rescue Stripe::CardError => e

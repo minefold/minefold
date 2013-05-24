@@ -2,36 +2,50 @@ class Webhooks::StripeController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
   def create
-    Librato.increment('webhook.stripe.total')
-
+    # Validate Stripe event
     data = JSON.parse(request.body.read)
-
-    p data
-
-    # validate stripe event
     event = Stripe::Event.retrieve(data['id'])
 
-    method = event[:type].gsub('.', '_')
-
+    Librato.increment('webhook.stripe.total')
     Scrolls.log(stripe_event: event[:id], type: event[:type])
 
-    self.send method, event
+    case event[:type]
+    when 'charge.succeeded'
+      charge_succeeded(event)
+    end
 
     render nothing: true, status: 200
   end
+
+# --
 
   def ping(event)
     Librato.increment('stripe.ping.total')
   end
 
-  def charge_succeeded(event)
-    charge = event[:data][:object]
-    user = User.find_by_customer_id(charge[:customer])
-    user.charge_succeeded!
-    SubscriptionMailer.receipt(user.id, charge[:id]).deliver
+  def customer_subscription_created(event)
+    Librato.increment('stripe.customer_subscription_created.total')
   end
 
-  def method_missing(meth, *args, &block)
-    # ignore stripe events we're not handling
+  def charge_succeeded(event)
+    Librato.increment('stripe.charge_succeeded.total')
+
+    charge = event[:data][:object]
+
+    user = User.find_by_customer_id(charge[:customer])
+    user.charge_succeeded!
+
+    SubscriptionMailer.receipt(user.id, charge[:id]).deliver
+
+    revenue = charge[:amount] / 100
+
+    Analytics.track(
+      user_id: user.id,
+      event: 'Paid',
+      properties: {
+        revenue: revenue
+      }
+    )
   end
+
 end

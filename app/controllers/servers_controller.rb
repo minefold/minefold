@@ -2,7 +2,6 @@ class ServersController < ApplicationController
   respond_to :html, :js, :json
 
   prepend_before_filter :authenticate_user!, :except => [:show, :list]
-  prepend_before_filter :set_funpack_params!, :only => [:new]
 
   before_filter :set_last_visited_cookie, :only => :show
 
@@ -51,25 +50,18 @@ class ServersController < ApplicationController
     if server.save
       # TODO Move this out to a Job so it can be repeated. Show a spinner where the address should be and something like "acquiring server".
 
+      Analytics.track(
+        user_id: server.creator_id,
+        event: 'Created server',
+        properties: {
+          funpack: server.funpack.name
+        }
+      )
+
       server.party_cloud_id ||= PartyCloud::Server.create(server.funpack, server.name).id
       server.save
 
-      # Analytics.track(
-      #   user_id: server.creator.distinct_id,
-      #   event:   'Created server',
-      #   properties: {
-      #     name:    server.name,
-      #     url:     server_url(server),
-      #     funpack: server.funpack.name
-      #   }
-      # )
-
       flash[:abba_complete] = true
-
-      track server.creator.distinct_id, 'Created server',
-        name: server.name,
-        url: server_url(server),
-        funpack: server.funpack.name
     end
 
     respond_with(server)
@@ -162,17 +154,6 @@ class ServersController < ApplicationController
   end
 
   private
-
-  def set_funpack_params!
-    # if params[:game] and (game = GAMES.find(params[:game]))
-    #   params[:server] ||= {}
-    #   if params[:funpack] and (funpack = Funpack.find_by_slug(params[:funpack]))
-    #     params[:server][:funpack_id] = funpack.id
-    #   else
-    #     params[:server][:funpack_id] = game.funpack_id
-    #   end
-    # end
-  end
 
   def set_last_visited_cookie
     cookies[:last_viewed_server_id] = {

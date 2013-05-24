@@ -10,7 +10,8 @@
       %h1 Sign up for Minefold
 
   - if @invited_by
-    = track 'Viewed invitation'
+    :javascript
+      analytics.track('Viewed invitation');
 
     .invitation-message.row
       .avatar.span1

@@ -1,9 +1,7 @@
 - title 'Simple game servers'
 - layout :home
-
-= track 'Viewed homepage'
-= track_landing_type 'home'
-= track 'Viewed landing page', type: 'home'
+:javascript
+  analytics.track('Viewed homepage');
 
 .jumbotron
   %h1 Simple game servers

@@ -2,8 +2,8 @@
 
 module ApplicationHelper
 
-  def title(page_title, suffix="")
-    provide(:title, "#{page_title} – Minefold #{suffix}")
+  def title(page_title)
+    provide(:title, "#{page_title} - Minefold")
   end
 
   def desc(meta_description)

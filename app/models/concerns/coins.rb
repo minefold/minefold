@@ -19,7 +19,6 @@ module Concerns::Coins
 # private
 
   def track_spend(n)
-    MixpanelAsync.engage(self.distinct_id, '$add' => {'Time' => (-n)})
     Librato.increment('user.coins.spent', by: n, sporadic: true)
   end
 

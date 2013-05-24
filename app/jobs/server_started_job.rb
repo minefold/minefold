@@ -44,8 +44,12 @@ class ServerStartedJob < Job
       started_at: started_at
     )
 
-    MixpanelAsync.track(server.creator.distinct_id, 'Started server',
-      funpack: server.funpack.name
+    Analytics.track(
+      user_id: server.creator_id,
+      event: 'Server started',
+      properties: {
+        funpack: server.funpack.name
+      }
     )
   end
 
