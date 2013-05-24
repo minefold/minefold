@@ -27,16 +27,18 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def track_signup
-    Analytics.track(
-      user_id: resource.id,
-      event: '$signup',
-      properties: {
-        invited: resource.invited?
-      }
-    )
+    if resource.persisted?
+      Analytics.track(
+        user_id: resource.id,
+        event: '$signup',
+        properties: {
+          invited: resource.invited?
+        }
+      )
 
-    # Writes out analytics.identify
-    flash[:signed_up] = true
+      # Writes out analytics.identify
+      flash[:signed_up] = true
+    end
   end
 
 end
