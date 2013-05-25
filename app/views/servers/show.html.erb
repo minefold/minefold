@@ -55,7 +55,7 @@
   <% end %>
 
   <% if signed_in? %>
-    <div class="page-section">
+    <div class="page-section new-activity">
       <%= form_for :post, url: server_posts_path(server), :method => :post do |f| %>
         <div class="control-group">
           <%= f.text_area :body, rows: 2, placeholder: "Leave a note", class: "input-block-level" %>

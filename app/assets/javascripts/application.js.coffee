@@ -32,4 +32,7 @@ class window.Application
   setCurrentUser: (data) ->
     @currentUser = new User(data)
 
+  isSignedIn: ->
+    @currentUser?
+
 window.app = new Application()
