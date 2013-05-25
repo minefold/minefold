@@ -46,7 +46,7 @@ class ServerStartedJob < Job
 
     Analytics.track(
       user_id: server.creator_id,
-      event: 'Server started',
+      event: 'Started server',
       properties: {
         funpack: server.funpack.name
       }
