@@ -16,4 +16,8 @@ class AccessPolicy
     { name: label, data: data }
   end
 
+  def private?
+    not public?
+  end
+
 end

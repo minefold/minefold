@@ -1,44 +1,28 @@
 .server-list {
-
-  > a.item {
+  > .item {
     padding: 20px;
     background-color: white;
-    padding-bottom: 20px - 2px;
     margin-bottom: 2px;
 
+    > .primary-action {
+      display: block;
+      margin-bottom: 10px;
 
-    @include clearfix;
-    display: block;
-
-    > .name {
-      float: left;
+      > .name {
+        font-size: 18px;
+        line-height: 30px;
+        margin: 0;
+      }
     }
 
-    > .player-counts {
+    > .secondary-action {
+      @include horizontal-list;
       float: right;
     }
 
-    > .name {
-      float: left;
-      font-size: 18px;
-
-      font-weight: normal;
-      line-height: 20px;
-      margin: 0;
-    }
-
-    > .meta {
-      display: block;
-      clear: left;
-      color: rgba(black, 0.6);
-      font-size: 14px;
-    }
-
-    > .player-counts {
+    .secondary-action > .player-counts {
       @include clearfix;
       @include inline-block;
-      margin-top: 5px;
-      margin-bottom: 5px;
 
       > .player-count {
         padding: 5px 10px;

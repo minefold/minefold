@@ -6,6 +6,10 @@ class PublicAccessPolicy < AccessPolicy
     'all'
   end
 
+  def public?
+    true
+  end
+
 end
 
 class MinecraftWhitelistAccessPolicy < AccessPolicy
@@ -16,6 +20,10 @@ class MinecraftWhitelistAccessPolicy < AccessPolicy
 
   def data
     (@server.settings['whitelist'] || '').split("\r\n")
+  end
+
+  def public?
+    false
   end
 
 end
@@ -30,6 +38,10 @@ class MinecraftBlacklistAccessPolicy < AccessPolicy
     (@server.settings['blacklist'] || '').split("\r\n")
   end
 
+  def public?
+    true
+  end
+
 end
 
 class TeamFortress2PasswordAccessPolicy < AccessPolicy
@@ -40,6 +52,10 @@ class TeamFortress2PasswordAccessPolicy < AccessPolicy
 
   def data
     @server.settings['sv_password']
+  end
+
+  def public?
+    false
   end
 
 end

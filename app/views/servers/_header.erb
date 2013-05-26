@@ -1,5 +1,5 @@
 <div class="server-header">
-  <nav class="server-header-toolbar">
+  <nav class="actions">
     <ul>
       <% if signed_in? and can?(:edit, server) %>
         <li class="settings"><a href="<%= edit_server_path(server) %>" data-icon="&#xF06B;"></a></li>
@@ -11,12 +11,5 @@
     <%= link_to server.name, server_path(server) %>
   </h1>
 
-  <ul class="tag-list">
-    <li class="tag">
-      <%= link_to server.funpack.name, funpack_path(server.funpack) %>
-    </li>
-    <li class="tag">
-      <%= server.access_policy.label %>
-    </li>
-  </ul>
+  <%= render partial: 'tags', :locals => {server: server} %>
 </div>
