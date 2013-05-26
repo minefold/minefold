@@ -9,9 +9,11 @@ class Funpack < ActiveRecord::Base
 
   attr_accessible :name,
                   :slug,
+                  :access_policy_ids,
                   :creator,
                   :info_url,
                   :description,
+                  :default_access_policy_id,
                   :party_cloud_id,
                   :imports,
                   :persistent,

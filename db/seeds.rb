@@ -88,6 +88,7 @@ Funpack.create(name: 'Bukkit Essentials',
   info_url: "http://bukkit.org",
   maps: true,
   party_cloud_id: '50a976fb7aae5741bb000002',
+  persistent: true,
   settings_schema: [],
   published_at: Time.now
 ).tap{|fp|
@@ -96,12 +97,17 @@ Funpack.create(name: 'Bukkit Essentials',
   end
 }
 
-Funpack.create(name: 'Tekkit', creator: chris,
-  info_url: "http://www.technicpack.net/tekkit",
+Funpack.create(name: 'Tekkit',
+  access_policy_ids: [1,2],
+  creator: chris,
+  default_access_policy_id: 2,
   description: "Tekkit is the multiplayer version of the Technic mod pack. It lets players automate, industrialize and power their worlds.",
+  imports: true,
+  info_url: "http://www.technicpack.net/tekkit",
+  maps: true,
   party_cloud_id: '50a977097aae5741bb000003',
   settings_schema: [],
-  imports: true,
+  persistent: true,
   published_at: Time.now
 ).tap{|fp|
   mc_plugin_allocations.each do |a|
@@ -109,11 +115,14 @@ Funpack.create(name: 'Tekkit', creator: chris,
   end
 }
 
-Funpack.create(name: 'Feed The Beast – Direwolf20', creator: dave,
+Funpack.create(name: 'Feed The Beast – Direwolf20',
+  access_policy_ids: [1,2],
+  creator: dave,
+  default_access_policy_id: 2,
+  imports: true,
   info_url: 'http://feed-the-beast.com/',
   party_cloud_id: '512159a67aae57bf17000005',
   settings_schema: [],
-  imports: true,
   persistent: true,
   maps: true,
   published_at: Time.now
@@ -123,13 +132,16 @@ Funpack.create(name: 'Feed The Beast – Direwolf20', creator: dave,
   end
 }
 
-Funpack.create(name: 'Tekkit Lite', creator: dave,
+Funpack.create(name: 'Tekkit Lite',
+  access_policy_ids: [1,2],
+  creator: dave,
+  default_access_policy_id: 2,
+  imports: true,
   info_url: "http://www.technicpack.net/tekkit-lite/",
+  persistent: true,
   description: "Tekkit Lite includes most of the mods from Tekkit Classic and adds a load more.",
   party_cloud_id: '5126be367aae5712a4000007',
   settings_schema: [],
-  imports: true,
-  persistent: true,
   maps: true
 ).tap{|fp|
   mc_plugin_allocations.each do |a|
