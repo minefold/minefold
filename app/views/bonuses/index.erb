@@ -1,0 +1,92 @@
+<% title 'Get more time' %>
+
+<div class="page">
+  <div class="page-header">
+    <h1>Get more time</h1>
+    <p>Complete simple tasks to earn additional server time.</p>
+  </div>
+
+  <div class="bonus-list">
+    <% if current_user.active_subscription? %>
+      <div class="item" data-done>
+        <div class="name">Purchase a subscription</div>
+      </div>
+    <% else %>
+      <a class="item" href="<%= plans_page_path %>">
+        <div class="name">Purchase a subscription</div>
+      </a>
+    <% end %>
+
+    <a class="item" href="/i/<%= current_user.invitation_token %>">
+      <div class="name">Refer your friends to Minefold</div>
+      <div class="reward">
+        + <%= time_left Bonuses::ReferredFriend.coins %> per friend
+      </div>
+    </a>
+
+    <% if @invitations.any? %>
+      <div class="item bonus-details">
+        <div class="invitation-list">
+          <% @invitations.each do |invitation| %>
+            <div class="item">
+              <span class="state"><%= invitation.state_name %></span>
+              <span class="name">
+                <% if invitation.friend_id? %>
+                  <%= link_to invitation.friend.username, user_path(invitation.friend) %>
+                <% else %>
+                  <%= mail_to invitation.email %>
+                <% end %>
+              </span>
+              <% if invitation.confirmed? %>
+                <span class="bonus">+ <%= time_left Bonuses::ReferredFriend.mins %></span>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if Bonuses::LinkedFacebookAccount.new(user: current_user).claimable? %>
+      <a class="item mini" href="<%= edit_user_registration_path(anchor: 'accounts') %>">
+        <div class="name">Link your Facebook account</div>
+        <div class="reward">
+          + <%= time_left Bonuses::LinkedFacebookAccount.coins %>
+        </div>
+      </a>
+    <% else %>
+      <div class="item mini" data-done>
+        <div class="name">Link your Facebook account</div>
+        <div class="reward">
+          + <%= time_left Bonuses::LinkedFacebookAccount.coins %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if Bonuses::LinkedSteamAccount.new(user: current_user).claimable? %>
+      <a class="item mini" href="<%= edit_user_registration_path(anchor: 'accounts') %>">
+        <div class="name">Link your Steam account</div>
+        <div class="reward">
+          + <%= time_left Bonuses::LinkedSteamAccount.coins %>
+        </div>
+      </a>
+    <% else %>
+      <div class="item mini" data-done>
+        <div class="name">Link your Steam account</div>
+        <div class="reward">
+          + <%= time_left Bonuses::LinkedSteamAccount.coins %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if current_user.confirmed? %>
+      <div class="item mini" data-done>
+    <% else %>
+      <div class="item mini">
+    <% end %>
+        <div class="name">Confirm your email address</div>
+        <div class="reward">
+          + <%= time_left Bonuses::GettingStarted.coins %>
+        </div>
+    </div>
+  </div>
+</div>

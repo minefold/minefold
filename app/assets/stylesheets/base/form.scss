@@ -1,34 +1,43 @@
-form {
-  #{$all-text-inputs},
-  textarea {
-    box-shadow: none;
-    border-radius: 2px;
-    border-color: rgba(black, 0.2);
-    border-width: 2px;
-    padding: 5px 10px;
-    font-size: 16px;
-    line-height: 20px;
-    color: black;
+#{$all-text-inputs},
+textarea {
+  // Bootstrap reset
+  @include transition(none);
 
-    &.input-large {
-      padding: 18px 8px;
-      font-size: 24px;
-      line-height: 40px;
-    }
+  box-shadow: none;
+  border-radius: $radius;
+  border-color: rgba(black, 0.2);
+  border-width: 2px;
+  padding: 5px 10px;
+  font-size: 16px;
+  line-height: 20px;
+  color: black;
 
-    &.input-block-level {
-      display: block;
-      width: 100%;
-    }
+  &.input-large {
+    padding: 18px 8px;
+    font-size: 24px;
+    line-height: 40px;
   }
 
-  #{$all-text-inputs-focus},
-  textarea:focus {
-    border-color: lighten($brand-blue, 20%);
-    box-shadow: 0 0 2px 0 lighten($brand-blue, 40%);
+  &.input-block-level {
+    display: block;
+    width: 100%;
   }
+}
 
-  .form-actions {
-    border-top: none;
-  }
+#{$all-text-inputs-focus},
+textarea:focus {
+  border-color: $lightBlue;
+  box-shadow: none;
+}
+
+label {
+  font-size: 16px;
+}
+
+.form-actions {
+  border-top: none;
+  background-color: transparent;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 0;
 }

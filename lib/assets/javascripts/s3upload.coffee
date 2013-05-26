@@ -10,13 +10,10 @@ class window.S3Upload
 	file_dom_selector: '#file_upload'
 
 	onFinishS3Put: (public_url) ->
-		console.log 'base.onFinishS3Put()', public_url
 
 	onProgress: (percent, status) ->
-		console.log 'base.onProgress()', percent, status
 
 	onError: (status) ->
-		console.log 'base.onError()', status
 
 	# Don't override these
 
@@ -67,7 +64,7 @@ class window.S3Upload
 	# parameter has been signed and is accessible for upload.
 	uploadToS3: (file, url, public_url) ->
 		this_s3upload = this
-		
+
 		xhr = @createCORSRequest 'PUT', url
 		if !xhr
 			@onError 'CORS not supported'

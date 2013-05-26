@@ -6,8 +6,14 @@ class Post < ActiveRecord::Base
 
   after_create :create_activity
 
+  # TODO Implement this validation
+  #      Remove previously empty posts
+  #      Show client-side error
+  # validates :body, presence: true,
+  #                  length: {minimum: 1}
+
   def create_activity
-    Activities::CreatedPost.publish(self)
+    Activities::Post.publish(self)
   end
 
 end

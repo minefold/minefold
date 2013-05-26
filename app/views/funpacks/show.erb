@@ -1,0 +1,51 @@
+<% title funpack.name %>
+
+<div class="container">
+  <div class="page-header">
+    <h1><%= funpack.name %></h1>
+  </div>
+
+  <ul class="breadcrumb">
+    <li>
+      <%= link_to 'Home', root_path %>
+      <span class="divider">/</span>
+    </li>
+    <li class="active">
+      <%= link_to funpack.name, funpack_path(funpack) %>
+    </li>
+  </ul>
+
+  <div class="row">
+    <div class="span8">
+      <%= render partial: funpack_public_template(funpack) %>
+    </div>
+
+    <div class="span4">
+      <% if signed_in? %>
+        <a class="btn btn-large btn-block btn-success" href="<%= new_server_path(funpack: funpack.slug) %>">
+          Start a <%= funpack.name %> server
+        </a>
+      <% else %>
+        <a class="btn btn-large btn-block btn-success" href="<%= new_user_registration_path %>">
+          Start a <%= funpack.name %> server
+        </a>
+
+        <br/>
+
+        <p>
+          Sign up now and play for <%= Bonuses::GettingStarted.mins %> minutes <strong>free</strong>!
+        </p>
+      <% end %>
+
+      <br/>
+
+      <div class="creator">
+        This funpack is managed by
+        <div class="image pull-left" style="margin-right:10px">
+          <%= image_tag funpack.creator.avatar.large.url, width: 40, height: 40, alt: funpack.creator.username %>
+        </div>
+        <%= link_to funpack.creator.username, user_path(funpack.creator) %>
+      </div>
+    </div>
+  </div>
+</div>

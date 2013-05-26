@@ -1,34 +1,20 @@
 #= require models/server
 
-class App.ServerControlView extends Backbone.View
-  model: App.Server
+class window.ServerControlView extends Backbone.View
+  model: window.Server
+  className: 'server-control'
+
+  events:
+    '.btn.btn-block': 'start'
 
   initialize: ->
-    @model.on('change:state', @render)
+    @listenTo @model, 'change', @render
 
   render: =>
-    btn = switch @model.get('state')
-      when 'idle' then @startBtn()
-      when 'starting' then @startingBtn()
-      when 'up' then @stopBtn()
-      when 'stopping' then @startBtn()
+    @$el
+      .attr('data-state', @model.get('state'))
+      .html JST['templates/server_control_view'](server: @model)
 
-    @$el.html(btn)
+  start: (e) ->
+    $(e.target).attr('disabled', true)
 
-
-  startBtn: ->
-    $('<a></a>')
-      .addClass('btn btn-block btn-primary btn-large')
-      .text('Start server')
-      .click(@model.start)
-
-  startingBtn: ->
-    $('<a></a>')
-      .addClass('btn btn-block btn-primary btn-large disabled')
-      .text('Starting server...')
-
-  stopBtn: ->
-    $('<a></a>')
-      .addClass('btn btn-block btn-danger btn-large')
-      .text("Stop server")
-      .click(@model.stop)

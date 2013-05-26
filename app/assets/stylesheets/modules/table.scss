@@ -22,8 +22,8 @@
     cursor: pointer;
 
     &:hover, &.hover {
-      background: lighten($brand-blue, 55%);
-      color: darken($brand-blue, 0%);
+      background: lighten($blue, 55%);
+      color: darken($blue, 0%);
     }
   }
 
@@ -45,7 +45,7 @@
   }
 
   .normal.is-active, .shared.is-active {
-    background-color: $brand-green;
+    background-color: $green;
     color: white;
     small {
       color: rgba(white, 0.6);
@@ -57,7 +57,7 @@
   }
 
   tbody td.normal.is-active, tbody td.shared.is-active {
-    border-top-color: darken($brand-green, 5%);
+    border-top-color: darken($green, 5%);
   }
 
   &.is-shared-disabled {

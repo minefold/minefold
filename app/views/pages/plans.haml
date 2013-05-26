@@ -1,6 +1,7 @@
 - title 'Plans'
 - layout :plans
-= track 'Viewed pricing'
+:javascript
+  analytics.track('Viewed plans');
 
 .jumbotron
   %h1 Subscription Plans
@@ -141,7 +142,7 @@
           token: token
         });
 
-        mixpanel.track('Clicked Stripe button', {
+        analytics.track('Clicked Stripe button', {
           'coin pack': $this.data('id')
         });
 

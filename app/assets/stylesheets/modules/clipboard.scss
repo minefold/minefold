@@ -1,0 +1,22 @@
+[data-clipboard-text] {
+  border: none;
+  background-color: transparent;
+  height: inherit;
+  padding: 0;
+
+  cursor: pointer;
+
+  color: white;
+  font-size: 16px;
+  line-height: 20px;
+  @include font-smoothing(antialiased);
+
+  &.is-copied:before {
+    content: "\F05E";
+  }
+
+  &:before {
+    font-family: $icon;
+    content: "\F05D";
+  }
+}

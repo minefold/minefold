@@ -1,74 +1,44 @@
-.navbar {
-  // Bootstrap reset
+.navbar-new {
+  position: relative;
+  background-color: white;
+  box-shadow: 0 2px 0 rgba(black, 0.1);
+
+  .navbar-new-inner {
+    @include clearfix;
+    @include container;
+    padding-left: 0;
+    padding-right: 0;
+    width: grid-width(12) + 10px + 10px;
+
+    .brand {
+      float: left;
+    }
+
+    .menu {
+      float: right;
+    }
+
+    .trial-meter {
+      float: right;
+    }
+  }
+}
+
+.menu {
+  @include horizontal-list;
   margin-bottom: 0;
 
-  padding-top: 10px;
-  padding-bottom: 10px;
-
-  .navbar-inner {
-    // Bootstrap reset
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    border-radius: 0;
-    text-shadow: none;
-
-    margin-left: auto;
-    padding-left: 10px;
-    width: 960px - 10px - 10px;
-    padding-right: 10px;
-    margin-right: auto;
+  > li > a {
+    padding: 10px;
+    line-height: 40px;
   }
 
-  .brand {
-    // Bootstrap reset
-    margin: 0;
-    padding: 0;
-    text-shadow: none;
-
-    // Name
-    a {
-      display: block;
-      text-transform: uppercase;
-      color: $brand-darkBlue;
-      font: bold 18px/40px #{$futura};
-      letter-spacing: 0.1em;
-    }
-
-    // Logo
-    a:before {
-      content: "";
-      display: block;
-      background-color: $brand-blue;
-      background-image: asset-data-url('logo.png');
-      background-repeat: no-repeat;
-      background-position: 50% 50%;
-      background-size: cover;
-      width: 40px;
-      height: 40px;
-      border-radius: 3px;
-
-      float: left;
-      margin-right: 10px;
-    }
-  }
-
-  nav {
-    float: right;
-    font-weight: 500;
-
-    // Bootstrap reset
-    .nav {
-      margin-right: 0;
-
-      a {
-        color: $brand-darkBlue;
-        text-shadow: none;
-      }
-
-      .divider-vertical {
-        border-color: rgba(black, 0.1);
-      }
-    }
+  > .sign-up a {
+    margin-top: 10px;
+    padding-top: 0;
+    margin-bottom: 10px;
+    padding-bottom: 0;
+    font-weight: normal;
+    font-size: inherit;
   }
 }

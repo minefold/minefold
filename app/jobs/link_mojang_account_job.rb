@@ -31,7 +31,7 @@ class LinkMojangAccountJob < Job
       account.user = user
       account.save!
 
-      Bonuses::LinkedMojangAccount.claim!(user)
+      Bonuses::LinkedMojangAccount.give_to(user)
 
       reply "Linked account #{account.uid}. Visit minefold.com to play!"
     end

@@ -1,9 +1,3 @@
-# Coin Packs
-
-CoinPack.create(cents: 1_500, coins: 7_500)
-CoinPack.create(cents: 3_000, coins: 20_000)
-CoinPack.create(cents: 6_000, coins: 60_000)
-
 # Users
 
 chris = User.new(
@@ -14,7 +8,6 @@ chris = User.new(
 chris.password, chris.password_confirmation = 'password'
 chris.admin = true
 chris.skip_confirmation!
-
 chris.save!
 
 dave = User.new(
@@ -25,8 +18,8 @@ dave = User.new(
 dave.password, dave.password_confirmation = 'password'
 dave.admin = true
 dave.skip_confirmation!
-
 dave.save!
+
 
 # Plans
 micro  = Plan.create(stripe_id: 'micro',  name: 'Micro',  cents: 499,  bolts: 1)
@@ -62,33 +55,40 @@ Funpack.create(name: 'Team Fortress 2', creator: chris,
   settings_schema: [],
   imports: false,
   published_at: Time.now
-).tap{|fp|
+).tap {|fp|
   tf2_allocations.each do |a|
     fp.plan_allocations.create(a)
   end
 }
 
 Funpack.create(
-  name: 'Minecraft', creator: chris,
-  info_url: 'http://minecraft.net',
-  party_cloud_id: '50a976ec7aae5741bb000001',
-  settings_schema: [],
-  player_allocations: [3, 10, 25, 50],
+  access_policy_ids: [1,2],
+  creator: chris,
+  default_access_policy_id: 2,
   imports: true,
-  published_at: Time.now
+  info_url: 'http://minecraft.net',
+  maps: true,
+  name: 'Minecraft',
+  party_cloud_id: '50a976ec7aae5741bb000001',
+  persistent: true,
+  published_at: Time.now,
+  settings_schema: []
 ).tap{|fp|
   mc_allocations.each do |a|
     fp.plan_allocations.create(a)
   end
 }
 
-Funpack.create(name: 'Bukkit Essentials', creator: chris,
+Funpack.create(name: 'Bukkit Essentials',
+  access_policy_ids: [1,2],
+  creator: dave,
+  default_access_policy_id: 2,
+  description: "A modified version of the Minecraft server.",
+  imports: true,
   info_url: "http://bukkit.org",
-  description: "Bukkit is a community-based project that works on Minecraft server implementation. This pack includes [Essentials](http://dev.bukkit.org/server-mods/essentials), [WorldEdit](http://dev.bukkit.org/server-mods/worldedit), [WorldGuard](http://dev.bukkit.org/server-mods/worldguard) and [LWC](http://dev.bukkit.org/server-mods/lwc).",
+  maps: true,
   party_cloud_id: '50a976fb7aae5741bb000002',
   settings_schema: [],
-  player_allocations: [0, 10, 25, 50],
-  imports: true,
   published_at: Time.now
 ).tap{|fp|
   mc_plugin_allocations.each do |a|
@@ -101,7 +101,6 @@ Funpack.create(name: 'Tekkit', creator: chris,
   description: "Tekkit is the multiplayer version of the Technic mod pack. It lets players automate, industrialize and power their worlds.",
   party_cloud_id: '50a977097aae5741bb000003',
   settings_schema: [],
-  player_allocations: [0, 10, 25, 50],
   imports: true,
   published_at: Time.now
 ).tap{|fp|
@@ -114,19 +113,21 @@ Funpack.create(name: 'Feed The Beast – Direwolf20', creator: dave,
   info_url: 'http://feed-the-beast.com/',
   party_cloud_id: '512159a67aae57bf17000005',
   settings_schema: [],
-  player_allocations: [0, 10, 25, 50],
   imports: true,
   persistent: true,
   maps: true,
   published_at: Time.now
-)
+).tap{|fp|
+  mc_plugin_allocations.each do |a|
+    fp.plan_allocations.create(a)
+  end
+}
 
 Funpack.create(name: 'Tekkit Lite', creator: dave,
   info_url: "http://www.technicpack.net/tekkit-lite/",
   description: "Tekkit Lite includes most of the mods from Tekkit Classic and adds a load more.",
   party_cloud_id: '5126be367aae5712a4000007',
   settings_schema: [],
-  player_allocations: [0, 10, 25, 50],
   imports: true,
   persistent: true,
   maps: true
@@ -136,6 +137,7 @@ Funpack.create(name: 'Tekkit Lite', creator: dave,
   end
 }
 
-Funpack.create(name: 'Counter Strike: GO', creator: chris,
+Funpack.create(name: 'Counter Strike: GO',
+  creator: chris,
   info_url: 'http://counter-strike.net'
 )

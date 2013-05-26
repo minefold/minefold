@@ -1,5 +1,5 @@
 !!!
-%html{lang: 'en', dir: 'ltr'}
+%html{lang: 'en', dir: 'ltr', data: {clipboardSwf: asset_path('ZeroClipboard.swf')}}
   %head{prefix: fb_head_prefix}
     %meta{charset: 'utf-8'}
     = stylesheet_link_tag 'application', media: 'all'
@@ -37,8 +37,9 @@
     %script{src: '//d2wy8f7a9ursnm.cloudfront.net/bugsnag-1.0.6.min.js',  data: {apikey: '3e70e9ec8cbba1a9eeb8b8fc83251a6f'}}
     %script{src: ENV['ABBA_URL'] }
 
-    // Mixpanel
-    = render partial: 'shared/mixpanel'
+    :javascript
+      var analytics=analytics||[];(function(){var e=["identify","track","trackLink","trackForm","trackClick","trackSubmit","page","pageview","ab","alias","ready","group"],t=function(e){return function(){analytics.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var n=0;n<e.length;n++)analytics[e[n]]=t(e[n])})(),analytics.load=function(e){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src=("https:"===document.location.protocol?"https://":"http://")+"d2dq2ahtl5zl1z.cloudfront.net/analytics.js/v1/"+e+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n)};
+      analytics.load(#{ENV["SEGMENT_KEY"].to_json.html_safe});
 
     // Typekit
     %script{type: 'text/javascript', src: '//use.typekit.net/qzl8aqw.js'}
@@ -47,41 +48,56 @@
 
     = yield :head
 
+    = render partial: 'shared/pusher'
+    = render partial: 'shared/stripe'
+    = javascript_include_tag 'application'
+
+    - if signed_in?
+      :javascript
+        window.app.setCurrentUser(#{current_user.to_json});
+        if (window.pusher) {
+          channel = pusher.subscribe("private-user-"+app.currentUser.get('id'))
+        }
+
+    = render partial: 'shared/facebook'
+
 
   %body{class: @layouts}
     #fb-root
-    #Intercom
 
-    .navbar
-      .navbar-inner
+    - if flash[:alert].is_a?(Symbol)
+      = render partial: File.join('alerts', flash[:alert].to_s)
+    - else
+      - [:alert, :notice, :error].each do |type|
+        - if flash.key?(type)
+          .alert{class: "alert-#{type}"}
+            .alert-inner
+              %a.close{data: {dismiss: 'alert'}} &#215;
+              = flash[type]
+
+
+    .navbar-new
+      .navbar-new-inner
         %h1.brand= link_to 'Minefold', root_path
-        %nav= render partial: 'shared/nav'
-
-    - flash.select {|key,_| [:error, :notice, :success].include? key }.each do |name, msg|
-      %div.alert.alert-block{class: "alert-#{name}"}
-        %a.close{data: {dismiss: 'alert'}} &#215;
-        %div{:id => "flash_#{name}"}= msg
+        = render partial: 'shared/navbar'
 
     #app= yield
 
     %footer
-      %ul.unstyled.pull-left
-        %li= link_to 'Pricing', plans_page_path
+      %ul
+        %li= link_to 'Plans & Pricing', plans_page_path
         %li= link_to 'Support', support_page_path
         %li= link_to 'About', about_page_path
         %li= link_to 'Servers', list_servers_path
         %li= link_to 'Developers', developers_page_path
         %li= link_to 'Blog', 'http://blog.minefold.com'
-
-      %ul.social.unstyled.pull-right
         %li.twitter= link_to 'Twitter', 'https://twitter.com/minefold'
         %li.facebook= link_to 'Facebook', 'https://facebook.com/minefold'
 
       %p.copyright
         &copy;
         %a{href: 'http://mutlicorp.com'} Mütli Corp.
-
-        Made for fun in San Francisco. #{link_to 'Privacy', privacy_page_path} & #{link_to 'Terms', terms_page_path}.
+        #{link_to 'Privacy', privacy_page_path} & #{link_to 'Terms', terms_page_path}.
 
       .mixpanel-badge
         %a{href: 'https://mixpanel.com/f/partner'}
@@ -90,18 +106,7 @@
 
     - # --
 
-    = render partial: 'shared/pusher'
-    = render partial: 'shared/stripe'
-    = render partial: 'shared/intercom'
-    = javascript_include_tag 'application'
-
-    - if signed_in?
-      :javascript
-        window.app.setCurrentUser(#{current_user.to_json});
-
     = yield :tail
-
-    = render partial: 'shared/facebook'
 
     - if flash[:signed_up]
       = render partial: 'users/signed_up'
@@ -114,9 +119,9 @@
         Abba('Sign up url').start('#{flash[:abba_group]}')
 
     - # Analytics
-    - if Rails.env.production?
-      = render partial: 'shared/gauges'
-      = render partial: 'shared/google_analytics'
-      = render partial: 'shared/perfect_audience'
-      = render partial: 'shared/hittail'
-    = render partial: 'shared/customer_io'
+    - if signed_in?
+      :javascript
+        analytics.identify(
+          #{current_user.id.to_json},
+          #{AnalyticsProfile.new(current_user).to_json.html_safe}
+        );

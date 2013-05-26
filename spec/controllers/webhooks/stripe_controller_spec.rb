@@ -18,6 +18,8 @@ describe Webhooks::StripeController do
     let(:subscription) { Subscription.make }
     let(:user) { User.make(customer_id: 'cus_1234', subscription: subscription) }
 
+    before { Librato.should_receive(:increment).with('stripe.charge_succeeded.total') }
+
     it "sends email" do
       mail = stub(:mail)
       SubscriptionMailer.should_receive(:receipt).with(user.id, 'ch_1') {
@@ -33,7 +35,8 @@ describe Webhooks::StripeController do
             object: {
               id: 'ch_1',
               object: 'charge',
-              customer: user.customer_id
+              customer: user.customer_id,
+              amount: 1499
             },
           }
         }

@@ -1,7 +1,5 @@
-<% title "#{server.name} Map", "#{server.funpack.name} Server #{server.id}" %>
+<% title "#{server.name} Map (#{server.funpack.name})" %>
 <% layout :maps %>
-
-<%= track_landing_type :map %>
 
 <% provide(:foo_bar) do %>
   <div class="navbar-text">
@@ -16,13 +14,14 @@
   <% content_for :tail do %>
     <%= javascript_include_tag '//maps.google.com/maps/api/js?sensor=false' %>
     <script>
-      app.map = new App.Map(<%= render(partial: 'servers/maps/map', locals: {map: server.world}, :format => :json).html_safe %>);
-    </script>
-    <script>
-    app.mapView = new App.MapView({model: app.map});
+      var map = new Map(<%= render(partial: 'servers/maps/map', locals: {map: server.world}, :format => :json).html_safe %>);
+
       $(document).ready(function() {
-        app.mapView.setElement($('#map-view-el'));
-        app.mapView.render();
+        var view = new MapView({
+          model: map,
+          el: $('#map-view-el')
+        });
+        view.render();
       });
     </script>
   <% end %>

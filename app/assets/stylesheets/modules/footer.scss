@@ -1,50 +1,46 @@
 footer {
-  margin: 60px auto;
-  width: 940px;
+  margin-top: 20px;
+  padding-bottom: 60px;
+  text-align: center;
 
-  ul {
-    margin-bottom: 0;
+  color: rgba(black, 0.4);
+  font-weight: 600;
+  text-shadow: 0 1px 0 white;
 
-    @include clearfix;
-    margin-left: -10px;
+  a {
+    color: rgba(black, 0.4);
+  }
 
-    li {
-      float: left;
-      margin-left: $gw-gutter;
-      line-height: l(2);
-
-      &:first-child {
-        margin-left: 0;
-      }
-    }
-
-    &.social {
-      > .twitter a {
-        color: #00aced;
-      }
-
-      > .facebook a {
-        color: #3B5998;
-      }
-    }
+  a:hover {
+    color: rgba(black, 0.6);
   }
 
   p {
     margin-bottom: 0;
   }
 
-  .copyright {
-    clear: both;
-    font-size: 12px;
-    font-family: $lucida-grande;
-    color: #CCC;
+  ul {
+    @include clearfix;
+    margin-left: -10px;
+    font-size: 14px;
 
-    a { color: #CCC; }
+    li {
+      @include inline-block;
+      margin-left: 10px;
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
   }
 
-  .mixpanel-badge {
+  > .copyright {
+    clear: both;
+    font-size: 12px;
+  }
+
+  > .mixpanel-badge {
     display: none;
-    margin-top: l();
-    margin-bottom: l();
+    margin-top: 20px;
   }
 }

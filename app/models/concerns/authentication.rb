@@ -43,11 +43,6 @@ module Concerns::Authentication
 
     def new_with_session(params, session)
       super.tap do |user|
-        # Mixpanel
-        if session['distinct_id'].present?
-          user.distinct_id = session['distinct_id']
-        end
-
         # Invitations
         if session['invitation_token'].present?
           invited_by = User.find_by_invitation_token(session['invitation_token'])

@@ -1,0 +1,105 @@
+.page {
+  @include container;
+  @include box-sizing(border-box);
+  width: grid-width(8) + 20px + 20px;
+  border-radius: $radius;
+  padding: 0;
+
+  hr {
+    margin-left: -20px;
+    margin-right: -20px;
+  }
+
+  > .page-header {
+    border-bottom: none;
+    padding: 0;
+
+    margin-top: 40px;
+    margin-bottom: 40px;
+    text-align: center;
+
+    > h1 {
+      font-family: $heading;
+      font-size: 28px;
+      line-height: 40px;
+      margin: 0;
+    }
+
+    > h2 {
+      font-size: 24px;
+      color: rgba(black, 0.4);
+    }
+  }
+
+  > .page-nav {
+    > ul {
+      @include horizontal-list;
+      margin-left: -2px;
+
+      > li {
+        margin-left: 2px;
+        > a {
+          padding: 10px 20px;
+          background-color: rgba(white, 0.4);
+
+          [data-icon] {
+            color: rgba(black, 0.2);
+          }
+        }
+
+        &.active > a {
+          background-color: white;
+        }
+      }
+    }
+  }
+
+  > .page-box,
+  > .page-section {
+    @include clearfix;
+    margin-bottom: 2px;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  > .page-section {
+    padding: 20px;
+    background-color: white;
+  }
+}
+
+.typographic-page {
+
+  &, li {
+    line-height: 30px;
+  }
+
+  h1 {
+    font-size: 61px;
+    line-height: 90px;
+    margin-top: 30px;
+    margin-bottom: 60px;
+  }
+
+  h2 {
+    font-size: 31px;
+    line-height: 60px;
+    margin-bottom: 30px;
+  }
+
+  h3 {
+    font-size: 22px;
+    line-height: 30px;
+    margin-top: 30px;
+    margin-bottom: 0px;
+  }
+
+  p,
+  ul,
+  ol {
+    margin-top: 0px;
+    margin-bottom: 30px;
+  }
+}

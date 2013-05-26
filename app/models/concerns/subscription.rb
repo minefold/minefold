@@ -6,7 +6,7 @@ module Concerns::Subscription
   end
 
   def active_subscription?
-    subscription and subscription.expires_at > Time.now
+    subscription && subscription.expires_at.future?
   end
 
   def ensure_stripe_customer!(stripe_token, last4)

@@ -1,6 +1,6 @@
 #= require s3upload
 
-class App.UploadView extends Backbone.View
+class window.UploadView extends Backbone.View
   @maxFileSize: 1 * 1024 * 1024 * 1024 # 1 Gb
 
   events:
@@ -39,12 +39,12 @@ class App.UploadView extends Backbone.View
       onError: @error
 
     @start()
-  
+
   urlEntered: ->
     url = @$('input#url').val()
     if !url.match(/\//)
       @$('input#url').parent().addClass('error')
-      
+
     else
       @start()
       @progress(50)

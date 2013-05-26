@@ -1,35 +1,36 @@
 - title  'Sign in'
 - layout :auth
 
-.container
-  .row
-    .span3.offset4
-      %center.page-header
-        %h1 Sign in
+.page
+  .page-header
+    %h1 Sign in
 
-      = form_for :user, as: :user, url: session_path(:user), class: %w(form-horizontal) do |f|
+  .page-section
+    = form_for :user, as: :user, url: session_path(:user), class: %w(form-horizontal) do |f|
 
-        .control-group
-          = f.label :email_or_username, class: 'control-label'
-          .controls
-            = f.text_field :email_or_username
+      .control-group
+        = f.label :email_or_username, class: 'control-label'
+        .controls
+          = f.text_field :email_or_username, class: %w(input-block-level input-large)
 
-        .control-group
-          = f.label :password, class: 'control-label'
-          .controls
-            = f.password_field :password
-
-          .help-block
+      .control-group
+        .control-label
+          .pull-right
             = link_to 'Forgot your password?', new_user_password_path
+          = f.label :password
+
+        .controls
+          = f.password_field :password, class: %w(input-block-level input-large)
+
+      .control-group.pull-right.checkbox
+        .controls
+          = f.label :remember_me, class: 'checkbox' do
+            = f.check_box :remember_me
+            Remember me
+
+      = f.submit 'Sign in', class: %w(btn btn-primary)
 
 
-        .pull-left
-          = f.submit 'Sign in', class: %w(btn btn-primary)
+    %hr
 
-        .control-group.pull-left.checkbox
-          .controls
-            = f.label :remember_me, class: 'checkbox' do
-              = f.check_box :remember_me
-              Remember me
-
-      = link_to "Sign in using Facebook", user_omniauth_authorize_path(:facebook), class: %w(btn btn-small)
+    = link_to "Sign in using Facebook", user_omniauth_authorize_path(:facebook), class: %w(btn btn-small)

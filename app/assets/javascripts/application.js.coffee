@@ -14,13 +14,25 @@
 
 #= require jquery.cookie
 #= require s3upload
+#= require zero-clipboard
+
+#= require ./config
 
 #= require ./base
 #= require ./helpers
 #= require_tree .
 #= require_self
 
-window.app = new App()
+class window.Application
+  _.extend @prototype, Backbone.Events
 
-$(document).ready ->
-  Backbone.history.start()
+  initialize: ->
+    $.cookie('time_zone', new Date().getTimezoneOffset())
+
+  setCurrentUser: (data) ->
+    @currentUser = new User(data)
+
+  isSignedIn: ->
+    @currentUser?
+
+window.app = new Application()

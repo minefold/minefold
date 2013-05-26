@@ -1,0 +1,36 @@
+<% if @server.get('state') is "up": %>
+  <div class="meta">
+    <span class="server-state"><%= @server.get('state') %></span>
+    <span class="connection-help">
+      <!-- TODO This route should be  -->
+      <a href="/help">Need help connecting?</a>
+    </span>
+  </div>
+
+  <ul class="address-tools">
+    <% if server.get('steam_id')?: %>
+      <li>
+        <a data-icon="&#xF02E;" href="steam://connect/<= server.address >"></a>
+      </li>
+    <% end %>
+    <li>
+      <span data-clipboard-text="<%= @server.get('address') %>"></span>
+    </li>
+  </ul>
+
+  <input type="text" id="server-<%= @server.get('id') %>-address" value="<%= @server.get('address') %>" readonly />
+
+  <script>
+    $('#server-<%= server.id %>-address').click(function() {
+      $(this).select();
+    })
+  </script>
+
+<% else if @server.get('state') is "starting" : %>
+  Server is starting…
+
+<% else: %>
+  <a href="/servers/<%= server.id %>/start" class="btn btn-block btn-primary btn-large" data-method="post" data-remote="true" rel="nofollow">
+    Start this server
+  </a>
+<% end %>

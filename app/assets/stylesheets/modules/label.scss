@@ -3,7 +3,9 @@
   border-radius: 2px;
   box-shadow: none;
 
+  background-color: black;
+
   &.label-success {
-    background-color: $brand-green;
+    background-color: $green;
   }
 }

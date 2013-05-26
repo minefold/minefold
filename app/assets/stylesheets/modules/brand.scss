@@ -1,0 +1,36 @@
+.brand {
+  // Bootstrap reset
+  margin: 0;
+  text-shadow: none;
+
+  // Name
+  a {
+    display: block;
+    text-transform: uppercase;
+    color: black;
+    font-weight: 600;
+    font-size: 18px;
+    font-family: $heading;
+    letter-spacing: 0.1em;
+
+    padding: 10px;
+  }
+
+  // Logo
+  a:before {
+    content: "";
+    display: block;
+    background-color: $blue;
+    background-image: asset-data-url('logo.png');
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: cover;
+    width: 40px;
+    height: 40px;
+    border-radius: $radius;
+
+    float: left;
+
+    margin-right: 10px;
+  }
+}

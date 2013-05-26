@@ -1,63 +1,61 @@
 - title  'Create your account'
 - layout :devise
 
-.container
+.page
+  .page-header
+    - if funpack
+      %h1 Sign up and start a #{funpack.name} server
+
+    - else
+      %h1 Sign up for Minefold
+
+  - if @invited_by
+    :javascript
+      analytics.track('Viewed invitation');
+
+    .invitation-message.row
+      .avatar.span1
+        = image_tag @invited_by.avatar.medium.url, width: 60
+      .message.span7
+        %p Hi! Thanks for joining me here on Minefold. I run servers for games like Minecraft here. When you sign up you'll get <strong>#{pluralize Bonuses::Referred.coins, 'free minute', 'free minutes'}</strong> because I referred you.
+        .sig= PersonalName.new(@invited_by).first
+
+    %hr
+
   .row
-    %center.span8.offset2
-      .page-header
+    .span4
+      = form_for resource, as: resource_name, url: registration_path(resource_name) do |f|
         - if funpack
-          %h1 Sign up and start a #{funpack.name} server
+          = hidden_field_tag :funpack, funpack.slug
 
-        - else
-          %h1 Sign up for Minefold
+        = f.control_group :username do
+          = f.label :username, class: 'control-label'
+          .controls
+            = f.text_field :username, autocomplete: 'off', autofocus: true
+          = error_message_for(f.object, :username)
 
-      - if @invited_by
-        = track 'Viewed invitation'
+        = f.control_group :email do
+          = f.label :email, class: 'control-label'
+          .controls
+            = f.email_field :email, autocomplete: 'off'
+          = error_message_for(f.object, :email)
 
-        .invitation-message.row
-          .avatar.span1
-            = image_tag @invited_by.avatar.medium.url, width: 60
-          .message.span7
-            %p Hi! Thanks for joining me here on Minefold. I run servers for games like Minecraft here. When you sign up you'll get <strong>#{pluralize Bonuses::Referred.coins, 'free minute', 'free minutes'}</strong> because I referred you.
-            .sig= PersonalName.new(@invited_by).first
+        = f.control_group :password do
+          = f.label :password, class: 'control-label'
+          .controls
+            = f.password_field :password, autocomplete: 'off'
 
-        %hr
-
-  .row
-    .span4.offset2
-      .well
-        = form_for resource, as: resource_name, url: registration_path(resource_name) do |f|
-          - if funpack
-            = hidden_field_tag :funpack, funpack.slug
-
-          = f.control_group :username do
-            = f.label :username, class: 'control-label'
-            .controls
-              = f.text_field :username, autocomplete: 'off', autofocus: true
-            = error_message_for(f.object, :username)
-
-          = f.control_group :email do
-            = f.label :email, class: 'control-label'
-            .controls
-              = f.email_field :email, autocomplete: 'off'
-            = error_message_for(f.object, :email)
-
-          = f.control_group :password do
-            = f.label :password, class: 'control-label'
-            .controls
-              = f.password_field :password, autocomplete: 'off'
-
-            = error_message_for(f.object, :password)
+          = error_message_for(f.object, :password)
 
 
-          = f.control_group :password_confirmation do
-            = f.label :password_confirmation, class: 'control-label'
-            .controls
-              = f.password_field :password_confirmation, autocomplete: 'off'
+        = f.control_group :password_confirmation do
+          = f.label :password_confirmation, class: 'control-label'
+          .controls
+            = f.password_field :password_confirmation, autocomplete: 'off'
 
-            = error_message_for(f.object, :password_confirmation)
+          = error_message_for(f.object, :password_confirmation)
 
-          = f.submit 'Create your account', class: %w(btn btn-primary)
+        = f.submit 'Create your account', class: %w(btn btn-primary)
 
     .span4
       .well.letter

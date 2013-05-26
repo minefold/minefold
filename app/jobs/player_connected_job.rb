@@ -22,9 +22,13 @@ class PlayerConnectedJob < Job
     server_session.save!
 
     if account.user
-      MixpanelAsync.track(account.user.distinct_id, 'Played',
-        server: server.name,
-        funpack: server.funpack.name
+      Analytics.track(
+        user_id: account.user.id,
+        event: 'Played',
+        properties: {
+          server: server.name,
+          funpack: server.funpack.name
+        }
       )
     end
   end

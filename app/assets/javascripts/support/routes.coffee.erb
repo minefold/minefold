@@ -1,0 +1,13 @@
+window.Routes ||= {}
+
+<% Rails.application.routes.named_routes.to_a.each do |name, route| %>
+<% route_name = name.to_s.camelize.sub(/^(.)/) {|c| c.downcase } %>
+Routes.<%= route_name %>Path = (params={}) ->
+  <% parts = route.parts %>
+  <% hash = parts.each_with_object({}) {|p, h| h[p] = ":#{p}" } %>
+  path = <%= route.path.spec.to_s.gsub(/\(\.:format\)$/, ':format').to_json %>
+  <% parts.each do |part| %>
+  path = path.replace(<%= ":#{part}".to_json %>, params.<%= part %> || '')
+  <% end %>
+  path
+<% end %>

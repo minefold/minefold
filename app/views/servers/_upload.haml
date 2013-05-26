@@ -1,19 +1,15 @@
 .control-group#uploads
   .upload-controls
-    %label.control-label
-      %strong Zip Url
+    %label{for: "url"} Zip Url
 
     .input-append
       .control-group
         %input#url.span5(type="text" name="uploadsurl[]" placeholder="http://example.com/minecraft.zip")
-      %input#url-submit.btn(type="button" value="Go")
-      
-    %hr
+        %input#url-submit.btn(type="button" value="Go")
 
-    %label.control-label
-      %strong Upload Zip File
+    %label{for: 'file'} Upload Zip File
 
-    %input.upload.file-uploads(type="file" name="uploads[]")
+    %input.upload.file-uploads#file(type="file" name="uploads[]")
     %p.ie{hidden} Your browser does not support file uploads. Why not try the <a href="http://www.google.com/chrome/" target="_blank">Chrome browser</a>
 
   %p.help-block.error-help-block{hidden}
@@ -34,8 +30,10 @@
     %strong Successfully imported
     %span.filename
 
-  .progress
-    .bar{style: 'width:0%'}
+  .progressbar{hidden: true}
+    .bar
+
+  %br
 
   .help-block.file-uploads
     - case os
@@ -54,13 +52,14 @@
         %li Open up your terminal and navigate to your local world save folder: <code>cd ~/.minecraft/saves</code>
         %li Zip up the world you want with something like <code>zip -r world.zip MyWorld</code>
 
-- content_for :tail do
-  :javascript
-    app.uploadsView = new App.UploadView({
+:javascript
+  $(document).ready(function() {
+    uploadsView = new UploadView({
       el: $('#uploads'),
       sign_url: '#{sign_server_uploads_path(server.id)}',
       post_upload_url: '#{server_uploads_path(server.id)}',
       pusher_chan: 'upload-#{server.id}',
       progress_factor: 0.9
     });
-    app.uploadsView.render();
+    uploadsView.render();
+  });

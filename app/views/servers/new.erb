@@ -1,0 +1,63 @@
+<% title 'Create a new server' %>
+
+<div class="page">
+  <div class="page-header">
+    <h1>Create a server</h1>
+  </div>
+
+  <div class="page-section">
+    <%= form_for server do |f| %>
+      <%= f.label :name, 'Server name' %>
+
+      <%= f.control_group :name do %>
+        <%= f.text_field :name, autocomplete: 'off', class: ['input-large', 'input-block-level'], maxlength: 254 %>
+      <% end %>
+
+      <%= f.label :funpack_id, 'Game' %>
+      <%= f.hidden_field :funpack_id %>
+      <%= render partial: 'funpacks/picker', object: funpacks %>
+
+      <div class="form-actions">
+        <%= f.submit 'Create server', class: %w(btn btn-primary btn-large), disabled: true %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    var form = $('#new_server'),
+        picker = $('.funpack-picker'),
+        nameField = form.find('#server_name')
+        funpackIdField = form.find('input#server_funpack_id');
+
+    var validateForm = function() {
+      // Get values
+      var funpackId = funpackIdField.val(),
+          name = nameField.val();
+
+      // Test
+      var funpackPresent = funpackId !== '',
+          namePresent = name !== '',
+          nameNotTooLong = name.length <= 255;
+
+      // Combine
+      var valid = funpackPresent && namePresent && nameNotTooLong;
+
+      form.find('input[type=submit]').attr('disabled', !valid);
+    }
+
+    // Set the funpack id hidden field when the picker changes
+    picker.on('changed', function(e, el) {
+      var $el = $(el);
+      funpackIdField.val($el.data('id'));
+      validateForm();
+    });
+
+    // Set the picker from the funpack id initially
+    picker.trigger('change', funpackIdField.val());
+
+    // Validate the form when it changes
+    form.on('change keyup', validateForm);
+  });
+</script>

@@ -1,35 +1,16 @@
 - title  'About Minefold'
 - layout :page
 
-.container
+.page
   .page-header
-    %h1 About Us
-    %h2 We make it simple to play games together.
+    %h1 About
 
-  = image_tag 'about/office.jpg', width: 620, height: 134
+    %p
+      %a.twitter{href: 'https://twitter.com/minefold'} Twitter
+      &middot;
+      %a.facebook{href: 'https://facebook.com/minefold'} Facebook
 
-  %hr
+  = image_tag 'about/office.jpg', width: 660
 
-  .row
-    .span5
-      %p Minefold is built by <a href="http://mutlicorp.com">Mütli Corp</a>, a small company in San Francisco, California. We care about making it simple for everybody to have fun with their friends. We believe that if we do an excellent job at helping gamers connect with their friends the world will be a better place.
-
-    .span3
-      %p
-        %img{src: 'http://maps.googleapis.com/maps/api/staticmap?center=270+Linden+St+San+Francisco&zoom=13&size=240x120&sensor=false'}
-
-      %p
-        270 Linden St, Unit 101
-        %br
-        San Francisco, 94102
-        %br
-        California
-
-      %p
-        = mail_to 'team@minefold.com'
-
-      %p
-        %a.twitter{href: 'https://twitter.com/minefold'} Twitter
-        &middot;
-        %a.facebook{href: 'https://facebook.com/minefold'} Facebook
-
+  .page-section
+    %p Minefold is built by <a href="http://mutlicorp.com">Mütli Corp</a>, a small company in San Francisco, California. We believe that if we do an excellent job at helping gamers connect with their friends the world will be a better place. We care about creating simple, reliable tools.

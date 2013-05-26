@@ -1,0 +1,57 @@
+<% title "Edit #{funpack.name}" %>
+
+<div class="page">
+  <div class="page-header">
+    <h1><%= funpack.name %></h1>
+  </div>
+
+  <div class="page-section">
+    <dl class="pull-right">
+      <dt>Creator</dt>
+      <dd><%= funpack.creator.username %></dd>
+      <dt>Imports</dt>
+      <dd><%= funpack.imports? %></dd>
+      <dt>Persistent</dt>
+      <dd><%= funpack.persistent? %></dd>
+      <dt>Maps</dt>
+      <dd><%= funpack.maps? %></dd>
+      <dt>Steam ID</dt>
+      <dd><%= funpack.steam_id || '-' %></dd>
+      <dt>Published</dt>
+      <dd><%= funpack.published_at || '-' %></dd>
+      <dt>Bolt Allocations</dt>
+      <dd><%= funpack.bolt_allocations %></dd>
+      <dt>Player Allocations</dt>
+      <dd><%= funpack.player_allocations %></dd>
+      <dt>Access Policies</dt>
+      <% funpack.access_policies.values.each do |policy| %>
+        <dd>
+          <span class="label<% if funpack.default_access_policy == policy %> label-success<% end %>">
+            <%= policy.name %>
+          </span>
+        </dd>
+      <% end %>
+
+    </dl>
+    <%= form_for funpack do |f| %>
+      <%= f.control_group :name do %>
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+      <% end %>
+
+      <%= f.control_group :info_url do %>
+        <%= f.label :info_url %>
+        <%= f.url_field :info_url %>
+      <% end %>
+
+      <%= f.control_group :description do %>
+        <%= f.label :description %>
+        <%= f.text_area :description, rows: 6 %>
+      <% end %>
+
+      <div class="form-actions">
+        <%= f.submit class: %w(btn btn-primary) %>
+      </div>
+    <% end %>
+  </div>
+</div>

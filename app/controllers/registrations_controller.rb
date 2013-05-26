@@ -1,34 +1,21 @@
 class RegistrationsController < Devise::RegistrationsController
 
-  expose(:funpack) { Funpack.find_by_slug(params[:funpack]) if params[:funpack] }
+  expose(:funpack) do
+    if params[:funpack]
+      Funpack.find_by_slug(params[:funpack])
+    end
+  end
 
   before_filter :find_invitation, :only => :new
-  after_filter :track_signup_in_mixpanel, :only => :create
+  after_filter :track_signup, :only => :create
 
 # --
 
   def after_sign_up_path_for(user)
-    flash[:signed_up] = true
-
-    attrs = {
-      event: 'welcome'
-    }
-    attrs[:funpack] = funpack.slug if funpack
-
-    # a/b test
-    groups = {
-      'Control' => user_root_path(attrs),
-      'New Server' => new_server_path(attrs)
-    }
-
-    group = groups.keys[user.id % groups.size]
-
-    flash[:abba_group] = group
-
-    url = groups[group]
-    puts "----- #{groups.inspect}"
-    puts "----- #{url.inspect}"
-    url
+    new_server_path(
+      event: 'welcome',
+      funpack: funpack && funpack.slug
+    )
   end
 
 # --
@@ -39,8 +26,19 @@ class RegistrationsController < Devise::RegistrationsController
     end
   end
 
-  def track_signup_in_mixpanel
-    track(resource.distinct_id, '$signup', invited: resource.invited?)
+  def track_signup
+    if resource.persisted?
+      Analytics.track(
+        user_id: resource.id,
+        event: '$signup',
+        properties: {
+          invited: resource.invited?
+        }
+      )
+
+      # Writes out analytics.identify
+      flash[:signed_up] = true
+    end
   end
 
 end

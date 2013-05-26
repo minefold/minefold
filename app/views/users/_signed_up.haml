@@ -1,2 +1,3 @@
-/ :javascript
-/   Abba('Funpack create button', { persist: true }).complete()
+- if signed_in?
+  :javascript
+    analytics.alias(#{current_user.id.to_json});

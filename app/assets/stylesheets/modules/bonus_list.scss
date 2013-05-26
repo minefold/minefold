@@ -1,0 +1,56 @@
+.bonus-list {
+  > .item {
+    @include clearfix;
+    display: block;
+    padding: 20px;
+    padding-bottom: 20px - 2px;
+    margin-bottom: 2px;
+
+    color: $blue;
+    background-color: white;
+
+    font-size: 18px;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    > .name {
+      float: left;
+    }
+
+    > .reward {
+      float: right;
+    }
+
+    &.bonus-details {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      background-color: $gray;
+    }
+
+    &.mini {
+      font-size: 14px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+
+    &[data-done] {
+      color: darken($gray, 20%);
+
+      > .name {
+        text-decoration: line-through;
+      }
+
+      > .name:before {
+        content: "\F164";
+        @include inline-block;
+        font-family: $icon;
+        font-size: inherit;
+        line-height: 1;
+        margin-right: 10px;
+        color: $green;
+      }
+    }
+  }
+}

@@ -16,7 +16,7 @@ module Minefold
     # -- all .rb files in that directory are automatically loaded.
 
     # Custom directories with classes and modules you want to be autoloadable.
-    %w(lib app/jobs).each do |path|
+    %w(lib app/jobs app/serializers).each do |path|
       config.autoload_paths << config.root.join(path)
     end
 
@@ -26,7 +26,9 @@ module Minefold
 
     # Activate observers that should always be running.
     config.active_record.observers = [
-      :bonuses_observer
+      :user_bonuses_observer,
+      :user_invitations_observer,
+      :server_observer
     ]
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.

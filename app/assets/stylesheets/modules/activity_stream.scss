@@ -1,39 +1,52 @@
 .activity-stream {
 
-  .activity {
+  > .activity {
     @include clearfix;
+    background-color: rgba(white, 0.6);
+    position: relative;
+    margin-bottom: 1px;
+    padding-left: 20px;
+    padding-right: 20px;
 
-    padding-bottom: l(1);
-    border-bottom: 1px solid rgba(black, 0.05);
-    margin-bottom: l(1);
+    > .meta {
+      @include clearfix;
+      padding: 5px 0;
+      font-size: 12px;
+      > .avatar,
+      > .actor,
+      > .caption {
+        float: left;
+        margin-right: 10px;
+      }
 
-    .image {
-      float: left;
-      margin-right: $gw-gutter;
+      > .actor {
+        font-weight: 600;
+      }
+
+      > .date {
+        @include transition(opacity 300ms ease);
+        opacity: 0;
+        float: right;
+        color: rgba(black, 0.4);
+      }
     }
 
-    .main {
-      float: left;
-      width: grid-width(8) - 40px - $gw-gutter;
 
-      .info {
-        @include clearfix;
+    &:hover > .meta > .date {
+      opacity: 1;
+    }
 
-        .date {
-          float: right;
-          font-size: 11px;
-          color: darken(white, 20%);
-        }
+    > .subject {
+      margin-left: 30px;
+      margin-right: 50px;
+      margin-bottom: 20px;
+    }
+  }
 
-        .actor {
-          font-weight: 600;
-        }
-
-        + .body {
-
-          margin-top: l(.5);
-
-        }
+  > .activity-post {
+    > .subject {
+      > p:last-child {
+        margin-bottom: 0;
       }
     }
   }

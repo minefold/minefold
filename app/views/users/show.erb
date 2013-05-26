@@ -1,0 +1,21 @@
+<% title user.username %>
+
+<div class="page">
+  <div class="page-header">
+    <div class="avatar">
+      <%= image_tag user.avatar.large.url %>
+    </div>
+    <br />
+    <h1><%= user.username %></h1>
+    <p>Joined on <%=l user.created_at, :format => :date %></p>
+  </div>
+
+  <ul class="stats-tabs">
+    <li class="stat"><%= user.servers.count %> <span>servers</span></li>
+    <% seconds = Time.now.to_i - user.created_at.to_i %>
+    <% days = seconds / (60 * 60 * 24) %>
+    <li class="stat"><%= days %> <span>days here</span></li>
+  </ul>
+
+  <%= render partial: 'servers/list', object: user.servers %>
+</div>

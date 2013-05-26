@@ -71,7 +71,7 @@ Minefold::Application.routes.draw do
     get :sessions, :on => :collection
   end
 
-  resources :funpacks, path: '/games', only: [:show]
+  resources :funpacks, path: 'games'
 
 
   # Authenticated routes
@@ -82,24 +82,13 @@ Minefold::Application.routes.draw do
     get '/resend_confirmation' => 'users#resend_confirmation', :as => :resend_confirmation
 
     get '/i/:invitation_token' => 'invitations#show', :as => :invitation
-
-    resources :invitations, only: [:create]
+    post '/invitations' => 'invitations#create'
 
     resources :accounts do
       get :link_mojang, :on => :collection
     end
 
-    resource :account, only:[] do
-      get :bonus
-    end
-
-    resources :gifts do
-      get :cheers, :on => :member
-      get :certificate, :on => :member
-
-      get :redeem, :on => :collection
-      post :redeem, :action => :redeem_action, :on => :collection
-    end
+    get '/more-time' => 'bonuses#index', :as => :bonuses
 
     match '/redeem' => redirect('/gifts/redeem')
 
@@ -155,7 +144,8 @@ Minefold::Application.routes.draw do
     end
 
     authenticated do
-      root to: 'servers#index', :as => :user_root
+      get '/dashboard' => 'dashboard#index', :as => :user_root
+      get '/dashboard' => 'dashboard#index', :as => :dashboard
     end
 
     resources :users, path: '/',

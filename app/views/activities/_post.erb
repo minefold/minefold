@@ -1,0 +1,14 @@
+<div class="activity activity-post" id="activity-<%= activity.id %>">
+  <div class="meta">
+    <div class="avatar">
+      <%= image_tag activity.actor.avatar.small.url, width: 20, height: 20 %>
+    </div>
+    <div class="actor">
+      <%= link_to activity.actor.username, user_path(activity.actor) %>
+    </div>
+    <div class="date"><%= l activity.created_at %></div>
+  </div>
+  <div class="subject">
+    <%= markdown(activity.subject.body) %>
+  </div>
+</div>

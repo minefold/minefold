@@ -49,7 +49,13 @@ class User < ActiveRecord::Base
   has_many :servers, through: :memberships
 
 
-  has_many :bonuses
+  has_many :bonuses do
+    def friend_referrals
+      where(type: [Bonuses::ReferredFriend, Bonuses::Referred]).
+      order(:created_at).
+      reverse_order
+    end
+  end
 
   belongs_to :invited_by, class_name: self.name
 
@@ -124,6 +130,23 @@ class User < ActiveRecord::Base
     else
       nil
     end
+  end
+
+  validates_numericality_of :total_trial_time
+
+  def trial_time_left
+    coins
+  end
+
+  def extend_trial!(minutes)
+    self.class.update_counters(id,
+      coins: minutes,
+      total_trial_time: minutes
+    ) == 1
+  end
+
+  def trial?
+    !active_subscription?
   end
 
 end

@@ -1,10 +1,16 @@
 body {
-  background-color: transparent;
+  margin: 0;
+  font-family: $body;
+  font-size: 16px;
+  line-height: 20px;
+  color: #333;
+  background-color: $gray;
 }
 
 a,
-a:hover {
-  color: $brand-blue;
+a:hover,
+a:focus {
+  color: $blue;
   text-decoration: none;
 }
 
@@ -14,16 +20,24 @@ code {
   background-color: transparent;
 }
 
+// TODO Grumble
 code.big {
   font-size: 18px;
 }
 
-.highlight {
-  background-color: lighten($brand-yellow, 30%);
+pre {
+  border: none;
+  background-color: $gray;
+  border-radius: $radius;
+  box-shadow: inset 0 2px 0 rgba(black, 0.1);
 }
 
-#Intercom {
-  display: none;
+hr {
+  border-color: $gray;
+}
+
+.highlight {
+  background-color: lighten($yellow, 30%);
 }
 
 .well {
@@ -45,29 +59,4 @@ code.big {
     text-transform: uppercase;
     font-size: 12px;
   }
-
-}
-
-.alert {
-  border: none;
-  border-radius: 0;
-  text-shadow: none;
-  margin-bottom: 0;
-  font-weight: bold;
-}
-
-.progress {
-  border-radius: $radius;
-
-  .bar {
-    background: $brand-blue;
-  }
-
-  .bar-success {
-    background-color: #5eb95e;
-  }
-}
-
-.wide {
-  width: grid-width(8);
 }

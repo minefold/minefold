@@ -1,8 +1,8 @@
 #= require models/server
 
-class App.ServerAddressView extends Backbone.View
-  model: App.Server
-  
+class window.ServerAddressView extends Backbone.View
+  model: Server
+
   events:
     'click input.server-address': 'click'
 
@@ -12,7 +12,7 @@ class App.ServerAddressView extends Backbone.View
   render: =>
     connectBtn = @$('.btn.connect')
     address = @$('.server-address')
-        
+
     if address.val()? and address.val() != ''
       address.popover()
       @$el.addClass('is-connectable')

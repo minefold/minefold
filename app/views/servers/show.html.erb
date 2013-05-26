@@ -1,0 +1,71 @@
+<% title "#{server.name} (#{server.funpack.name})" %>
+<script>
+  analytics.track('Viewed server', {
+    funpack: <%= server.funpack.name.to_json %>
+  });
+</script>
+
+<script>
+  var server = new Server(<%= ServerSerializer.new(server).to_json.html_safe %>);
+
+  app.server = server;
+
+  // TODO Proper nil/undefined check
+  if (window.pusher) {
+    var channel = pusher.subscribe(<%= server.channel_name.to_json.html_safe %>);
+    channel.bind('changed', function(payload) {
+      server.set(payload);
+    });
+  }
+
+</script>
+
+<% if flash[:abba_complete] %>
+  <script>Abba('Sign up url', { persist: true }).complete()</script>
+<% end %>
+
+<div class="page">
+  <%= render partial: 'header', locals: {active: 'home'} %>
+
+  <div id="server-control-view-el"></div>
+  <script>
+    var view = new ServerControlView({model: app.server});
+    $(document).ready(function(){
+      $('#server-control-view-el').append(view.el);
+      view.render();
+    });
+  </script>
+
+  <% if server.description? %>
+    <div class="server-description">
+      <%= markdown(server.description) %>
+    </div>
+  <% end %>
+
+  <% if server.persistent? and server.world %>
+    <div id="map-view-el" class="map-view"></div>
+    <%= javascript_include_tag '//maps.googleapis.com/maps/api/js?sensor=false' %>
+    <script>
+      var map = new Map(<%= MapSerializer.new(server).to_json.html_safe %>);
+      $(document).ready(function() {
+        var view = new MapView({model: map, el: $('#map-view-el')});
+        view.render();
+      });
+    </script>
+  <% end %>
+
+  <% if signed_in? %>
+    <div class="page-section new-activity">
+      <%= form_for :post, url: server_posts_path(server), :method => :post do |f| %>
+        <div class="control-group">
+          <%= f.text_area :body, rows: 2, placeholder: "Leave a note", class: "input-block-level" %>
+        </div>
+        <%= f.submit 'Post your note', class: %w(btn) %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="activity-stream">
+    <%= render partial: server.activity_stream.page(0), :as => :activity %>
+  </div>
+</div>
