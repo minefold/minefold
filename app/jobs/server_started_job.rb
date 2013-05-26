@@ -54,10 +54,16 @@ class ServerStartedJob < Job
 
     allocations = PartyCloud.running_server_allocations(servers.map(&:party_cloud_id))
 
-    running_bolts = allocations.inject(0) do |bolts, (server_pc_id, allocation)|
+    # we don't know how many 'bolts' are running in partycloud, but we know how much
+    # ram each server has. We can work backwards from that
+
+    running_bolts = allocations.inject(0) do |bolts, (server_pc_id, ram_allocated)|
       s = servers.find{|s| s.party_cloud_id == server_pc_id }
-      bolt_index = s.funpack.bolt_allocations.index(allocation)
-      bolts + bolt_index + 1
+
+      # find the closest allocation. Round up?
+      allocation = s.funpack.plan_allocations.sort_by(&:ram).select{|pa| pa.ram <= ram_allocated }.last
+
+      bolts + allocation.plan.bolts
     end
 
     if running_bolts > @creator.subscription.plan.bolts

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130512222659) do
+ActiveRecord::Schema.define(:version => 20130522184434) do
 
   add_extension "hstore"
 
@@ -144,6 +144,15 @@ ActiveRecord::Schema.define(:version => 20130512222659) do
 
   add_index "memberships", ["server_id"], :name => "index_memberships_on_server_id"
   add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
+
+  create_table "plan_allocations", :force => true do |t|
+    t.integer  "plan_id"
+    t.integer  "funpack_id"
+    t.integer  "ram"
+    t.integer  "players"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "plans", :force => true do |t|
     t.string   "stripe_id"

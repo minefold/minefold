@@ -29,12 +29,44 @@ dave.skip_confirmation!
 dave.save!
 
 # Plans
-Plan.create(stripe_id: 'intro', name: 'Intro', cents: 499, bolts: 1)
-Plan.create(stripe_id: 'bronze', name: 'Bronze', cents: 1499, bolts: 1)
-Plan.create(stripe_id: 'silver', name: 'Silver', cents: 2499, bolts: 2)
-Plan.create(stripe_id: 'gold',   name: 'Gold',   cents: 4999, bolts: 3)
+micro  = Plan.create(stripe_id: 'micro',  name: 'Micro',  cents: 499,  bolts: 1)
+bronze = Plan.create(stripe_id: 'bronze', name: 'Bronze', cents: 1499, bolts: 1)
+silver = Plan.create(stripe_id: 'silver', name: 'Silver', cents: 2499, bolts: 2)
+gold   = Plan.create(stripe_id: 'gold',   name: 'Gold',   cents: 4999, bolts: 3)
+
+# allocations
+mc_allocations = [
+  { plan: micro,  ram: 512,  players: 3 },
+  { plan: bronze, ram: 512,  players: 10 },
+  { plan: silver, ram: 1024, players: 25 },
+  { plan: gold,   ram: 2048, players: 50 },
+]
+
+mc_plugin_allocations = [
+  { plan: bronze, ram: 512,  players: 10 },
+  { plan: silver, ram: 1024, players: 25 },
+  { plan: gold,   ram: 2048, players: 50 },
+]
+
+tf2_allocations = [
+  { plan: micro,  ram: 512,  players: 4 },
+  { plan: bronze, ram: 512,  players: 24 },
+  { plan: silver, ram: 1024, players: 32 },
+  { plan: gold,   ram: 1024, players: 32 },
+]
 
 # Funpacks
+Funpack.create(name: 'Team Fortress 2', creator: chris,
+  info_url: 'http://teamfortress.com',
+  party_cloud_id: '50bec3967aae5797c0000004',
+  settings_schema: [],
+  imports: false,
+  published_at: Time.now
+).tap{|fp|
+  tf2_allocations.each do |a|
+    fp.plan_allocations.create(a)
+  end
+}
 
 Funpack.create(
   name: 'Minecraft', creator: chris,
@@ -44,7 +76,11 @@ Funpack.create(
   player_allocations: [3, 10, 25, 50],
   imports: true,
   published_at: Time.now
-)
+).tap{|fp|
+  mc_allocations.each do |a|
+    fp.plan_allocations.create(a)
+  end
+}
 
 Funpack.create(name: 'Bukkit Essentials', creator: chris,
   info_url: "http://bukkit.org",
@@ -54,7 +90,11 @@ Funpack.create(name: 'Bukkit Essentials', creator: chris,
   player_allocations: [0, 10, 25, 50],
   imports: true,
   published_at: Time.now
-)
+).tap{|fp|
+  mc_plugin_allocations.each do |a|
+    fp.plan_allocations.create(a)
+  end
+}
 
 Funpack.create(name: 'Tekkit', creator: chris,
   info_url: "http://www.technicpack.net/tekkit",
@@ -64,7 +104,11 @@ Funpack.create(name: 'Tekkit', creator: chris,
   player_allocations: [0, 10, 25, 50],
   imports: true,
   published_at: Time.now
-)
+).tap{|fp|
+  mc_plugin_allocations.each do |a|
+    fp.plan_allocations.create(a)
+  end
+}
 
 Funpack.create(name: 'Feed The Beast – Direwolf20', creator: dave,
   info_url: 'http://feed-the-beast.com/',
@@ -77,15 +121,6 @@ Funpack.create(name: 'Feed The Beast – Direwolf20', creator: dave,
   published_at: Time.now
 )
 
-Funpack.create(name: 'Team Fortress 2', creator: chris,
-  info_url: 'http://teamfortress.com',
-  party_cloud_id: '50bec3967aae5797c0000004',
-  settings_schema: [],
-  player_allocations: [4, 24, 32, 32],
-  imports: false,
-  published_at: Time.now
-)
-
 Funpack.create(name: 'Tekkit Lite', creator: dave,
   info_url: "http://www.technicpack.net/tekkit-lite/",
   description: "Tekkit Lite includes most of the mods from Tekkit Classic and adds a load more.",
@@ -95,7 +130,11 @@ Funpack.create(name: 'Tekkit Lite', creator: dave,
   imports: true,
   persistent: true,
   maps: true
-)
+).tap{|fp|
+  mc_plugin_allocations.each do |a|
+    fp.plan_allocations.create(a)
+  end
+}
 
 Funpack.create(name: 'Counter Strike: GO', creator: chris,
   info_url: 'http://counter-strike.net'

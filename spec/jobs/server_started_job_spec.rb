@@ -16,7 +16,6 @@ describe ServerStartedJob do
   }
 
   describe "#perform" do
-
     it "creates session" do
       subject.perform
       expect(subject.server.sessions.current.started_at.to_i).to eq(ts.to_i)

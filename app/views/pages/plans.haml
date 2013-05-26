@@ -32,8 +32,8 @@
               %th= link_to funpack.name, funpack_path(funpack.slug)
               - @plans.each_with_index do |plan, i|
                 %td
-                  - players = funpack.player_allocations[i]
-                  = players == 0 ? "–" : "#{players} players"
+                  - allocation = funpack.plan_allocations.where(plan_id: plan.id).first
+                  = allocation ? "#{allocation.players} players" : "–"
               %td
 
           %tr

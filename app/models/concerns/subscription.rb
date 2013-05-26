@@ -33,7 +33,13 @@ module Concerns::Subscription
   end
 
   def max_players(funpack)
-    funpack.player_allocations[bolts - 1]
+    allocation = if active_subscription?
+      funpack.plan_allocations.where(plan_id: subscription.plan.id).first
+    else
+      funpack.plan_allocations.order(:players).first
+    end
+
+    allocation ? allocation.players : 0
   end
 
   def create_coupon(id, amount_off)

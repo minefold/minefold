@@ -21,7 +21,7 @@ class PagesController < ApplicationController
 
   def plans
     @plans = Plan.all
-    @funpacks = Funpack.published.order('name').all.sort_by{|fp| -fp.player_allocations.first}
+    @funpacks = Funpack.published.order('name').all
     @tradein_coins = 0
     @current_discount = 0
 
