@@ -9,13 +9,13 @@ class Webhooks::HelpScoutController < ApplicationController
   def create
     data = JSON.parse(request.body.read)
     email = data['customer']['email']
-    @user = User.where(email: email).first
+    @user = User.find_by_email(email)
 
-    unless @user
+    if @user
+      render
+    else
       render :status => :not_found, :nothing => true
     end
-
-    render
   end
 
   def verify_webhook
