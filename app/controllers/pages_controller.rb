@@ -21,7 +21,17 @@ class PagesController < ApplicationController
 
   def plans
     @plans = Plan.all
-    @funpacks = Funpack.published.order('name').all
+    @funpacks = Funpack.published.order('name').all.sort_by do |fp|
+      case fp.slug
+      when 'team-fortress-2'
+        '0'
+      when 'minecraft'
+        '1'
+      else
+        fp.slug
+      end
+    end
+
     @tradein_coins = 0
     @current_discount = 0
 
