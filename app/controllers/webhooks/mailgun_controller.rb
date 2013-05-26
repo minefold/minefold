@@ -1,8 +1,7 @@
 require 'openssl'
 
 class Webhooks::MailgunController < ApplicationController
-  protect_from_forgery :except => :process
-
+  skip_before_filter :verify_authenticity_token
   before_filter :verify_webhook
 
   def create
