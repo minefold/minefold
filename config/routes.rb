@@ -16,6 +16,7 @@ Minefold::Application.routes.draw do
 
   # Webhooks
   scope path: 'webhooks', module: 'webhooks' do
+    post 'help_scout' => 'help_scout#create'
     post 'mailgun' => 'mailgun#create'
     post 'party_cloud' => 'party_cloud#create'
     post 'stripe' => 'stripe#create'
