@@ -1,5 +1,5 @@
 class Webhooks::PartyCloudController < ApplicationController
-  protect_from_forgery :except => :process
+  skip_before_filter :verify_authenticity_token
 
   def create
     Librato.increment('webhook.party_cloud.total')

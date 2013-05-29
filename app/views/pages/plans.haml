@@ -99,55 +99,54 @@
 
   %hr.small.hidden
 
-  - content_for :tail do
-    = javascript_include_tag "https://checkout.stripe.com/v2/checkout.js"
-    :javascript
-      $('.btn-stripe').click(function(){
-        var $this = $(this),
-            $form = $this.parents('form');
+  = javascript_include_tag "https://checkout.stripe.com/v2/checkout.js"
+  :javascript
+    $('.btn-stripe').click(function(){
+      var $this = $(this),
+          $form = $this.parents('form');
 
-        var coins = $this.data('coins');
-        var hours = Math.round(Number(coins/60));
-        var discount = 0;
+      var coins = $this.data('coins');
+      var hours = Math.round(Number(coins/60));
+      var discount = 0;
 
-        if (coins > 0) {
-          discount += #{@tradein_discount};
-          if (!confirm('Trade in ' + hours + ' hours for an additional $' + discount + ' discount?')) {
-            return;
-          }
+      if (coins > 0) {
+        discount += #{@tradein_discount};
+        if (!confirm('Trade in ' + hours + ' hours for an additional $' + discount + ' discount?')) {
+          return;
         }
+      }
 
-        var token = function(res) {
-          $form.find('input[name=stripeToken]').val(res.id);
-          $form.find('input[name=last4]').val(res.card.last4);
-          $form.find('input[name=tradein]').val(coins > 0);
-          $form.submit();
-        }
+      var token = function(res) {
+        $form.find('input[name=stripeToken]').val(res.id);
+        $form.find('input[name=last4]').val(res.card.last4);
+        $form.find('input[name=tradein]').val(coins > 0);
+        $form.submit();
+      }
 
-        var amount = $this.data('amount');
-        amount -= discount * 100;
+      var amount = $this.data('amount');
+      amount -= discount * 100;
 
-        var description = $this.data('name') + " plan";
-        if (hours > 0) {
-          description += " with trade in of "+ hours+ " hours";
-        }
+      var description = $this.data('name') + " plan";
+      if (hours > 0) {
+        description += " with trade in of "+ hours+ " hours";
+      }
 
-        StripeCheckout.open({
-          key: #{ENV["STRIPE_PUBLISHABLE"].to_json},
-          amount: amount,
-          name: 'Minefold',
-          description: description,
-          image: $this.data('image'),
-          panelLabel: 'Subscribe',
-          token: token
-        });
-
-        analytics.track('Clicked Stripe button', {
-          'coin pack': $this.data('id')
-        });
-
-        return false;
+      StripeCheckout.open({
+        key: #{ENV["STRIPE_PUBLISHABLE"].to_json},
+        amount: amount,
+        name: 'Minefold',
+        description: description,
+        image: $this.data('image'),
+        panelLabel: 'Subscribe',
+        token: token
       });
+
+      analytics.track('Clicked Stripe button', {
+        'coin pack': $this.data('id')
+      });
+
+      return false;
+    });
 
   %hr.large
 

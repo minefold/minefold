@@ -1,0 +1,13 @@
+<ul class="tag-list">
+  <li class="tag">
+    <%= link_to server.funpack.name, funpack_path(server.funpack) %>
+  </li>
+
+  <% if server.access_policy.private? %>
+    <li class="tag">
+      <span data-icon="&#xF0C2;" class="natural"></span>
+      Private
+    </li>
+  <% end %>
+
+</ul>

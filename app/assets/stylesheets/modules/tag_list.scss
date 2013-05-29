@@ -2,17 +2,21 @@
   @include horizontal-list;
   margin-left: -5px;
 
-
-  li {
+  > .tag {
+    @include box-sizing(border-box);
     margin-left: 5px;
     font-size: 12px;
     padding: 0 5px;
-    background-color: desaturate(lighten($blue, 50%), 60%);
-    color: desaturate(lighten($blue, 20%), 60%);
+    color: rgba(black, 0.6);
     border-radius: $radius;
+    box-shadow: 0 0 0 2px rgba(black, 0.05);
 
     a {
       color: $blue;
+    }
+
+    [data-icon] {
+      color: rgba(black, 0.2);
     }
   }
 }

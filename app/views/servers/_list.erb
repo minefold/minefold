@@ -1,24 +1,29 @@
 <div class="server-list">
   <% list.each do |server| %>
-    <a class="item primary-action" href="<%= server_path(server) %>">
-      <h2 class="name"><%= server.name %></h2>
-      <div class="player-counts">
-        <div class="player-count current" data-toggle="tooltip" title="Online players">
-          <%= PartyCloud.count_players_online(server.party_cloud_id) %>
-        </div>
-        <div class="player-count max" data-toggle="tooltip" title="Max players">
-          <%= server.max_players %>
-        </div>
-      </div>
+    <div class="item">
+      <ul class="secondary-action">
+        <li class="player-counts">
+          <div class="player-count current" data-toggle="tooltip" title="Online players">
+            <%= PartyCloud.count_players_online(server.party_cloud_id) %>
+          </div>
+          <div class="player-count max" data-toggle="tooltip" title="Max players">
+            <%= server.max_players %>
+          </div>
+        </li>
+
+      </ul>
+
+      <a class="primary-action" href="<%= server_path(server) %>">
+        <h2 class="name"><%= server.name %></h2>
+      </a>
+
       <div class="meta">
-        <span class="game"><%= server.funpack.name %></span>
+        <%= render partial: 'servers/tags', :locals => {server: server} %>
       </div>
-    </a>
+    </div>
   <% end %>
 </div>
 
-<% content_for(:tail) do %>
-  <script>
-    $('.player-counts .player-count').tooltip();
-  </script>
-<% end %>
+<script>
+  $('.player-counts .player-count').tooltip();
+</script>
