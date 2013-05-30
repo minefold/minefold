@@ -299,8 +299,8 @@ ActiveRecord::Schema.define(:version => 20130522184434) do
     t.datetime "deleted_at"
     t.string   "invitation_token",       :limit => 12
     t.integer  "invited_by_id"
-    t.boolean  "beta",                                 :default => false
     t.string   "verification_token",     :limit => 12
+    t.boolean  "beta",                                 :default => false
     t.integer  "subscription_id"
     t.integer  "total_trial_time",                     :default => 0,     :null => false
   end

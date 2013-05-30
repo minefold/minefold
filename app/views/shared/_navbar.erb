@@ -1,5 +1,10 @@
 <% if signed_in? %>
   <ul class="menu">
+    <% if current_user.active_subscription? %>
+    <li class="nav-subscription">
+      <%= link_to "#{current_user.subscription.plan.name} Plan", plans_page_path %>
+    </li>
+    <% end %>
     <li class="nav-servers">
       <%= link_to 'Servers', dashboard_path %>
     </li>
@@ -33,4 +38,8 @@
 
 <% if signed_in? and current_user.trial? %>
   <%= render partial: 'shared/navbar/trial_meter' %>
+<% end %>
+
+<% if signed_in? and current_user.subscription %>
+  <%= render partial: 'shared/navbar/subscription_meter' %>
 <% end %>

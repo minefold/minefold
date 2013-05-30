@@ -14,7 +14,7 @@
       %a.btn.btn-small.btn-warning.btn-stripe{href: '#update-card'} Update Card
 
   %p
-    = mail_to 'support@minefold.com', 'Cancel Plan', class: %w(btn btn-small btn-danger)
+    = mail_to "support@minefold.com?subject=Cancel Plan", 'Cancel Plan', class: %w(btn btn-small btn-danger)
 
 = javascript_include_tag "https://checkout.stripe.com/v2/checkout.js"
 :javascript

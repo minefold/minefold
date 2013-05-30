@@ -23,4 +23,8 @@ class Plan < ActiveRecord::Base
       discount
     end
   end
+
+  def maps?
+    stripe_id != 'micro'
+  end
 end

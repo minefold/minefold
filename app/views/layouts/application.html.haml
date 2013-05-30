@@ -78,7 +78,7 @@
 
     .navbar-new
       .navbar-new-inner
-        %h1.brand= link_to 'Minefold', root_path
+        %h1.brand= link_to 'Minefold', signed_in? ? dashboard_path : root_path
         = render partial: 'shared/navbar'
 
     #app= yield

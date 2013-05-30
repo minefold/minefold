@@ -16,7 +16,7 @@ class ServerBackedUpJob < Job
     @server.world.save!
 
     # Map persistant servers once a day
-    if @server.world.needs_map?
+    if @server.creator.has_maps? and @server.world.needs_map?
       @server.world.map_queued_at = Time.now
       @server.world.save!
 

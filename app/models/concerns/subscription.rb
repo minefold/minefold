@@ -32,6 +32,10 @@ module Concerns::Subscription
     active_subscription? ? subscription.plan.bolts : 1
   end
 
+  def has_maps?
+    trial? || (active_subscription? && subscription.maps?)
+  end
+
   def max_players(funpack)
     allocation = if active_subscription?
       funpack.plan_allocations.where(plan_id: subscription.plan.id).first

@@ -4,7 +4,8 @@
   analytics.track('Viewed plans');
 
 .jumbotron
-  %h1 Subscription Plans
+  %h1 Plans & Pricing
+  %h2 #{@funpacks.size} games with one monthly subscription
 
 - if @tradein
   .salotron
@@ -12,12 +13,6 @@
 
 .container
   .row
-    %br
-    %p.quote
-      One subscription gets you #{@funpacks.size} different games!
-      %br
-      Play Minecraft on Wednesday, Feed The Beast on Thursday and Team Fortress 2 on Friday night.
-
     .offset1.span10
       %table.table.plans
         %thead
