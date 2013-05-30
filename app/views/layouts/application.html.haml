@@ -125,3 +125,6 @@
           #{current_user.id.to_json},
           #{AnalyticsProfile.new(current_user).to_json.html_safe}
         );
+        analytics.ready(function(){
+          window.mixpanel.register_once({'landing page': window.location.href });
+        });

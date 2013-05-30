@@ -1,9 +1,12 @@
 <% title "#{server.name} (#{server.funpack.name})" %>
 <script>
   analytics.track('Viewed server', {
-    funpack: <%= server.funpack.name.to_json %>
+    funpack: <%= server.funpack.name.to_json.html_safe %>
   });
 </script>
+
+<%= landing_page :server, funpack: server.funpack.name %>
+
 
 <script>
   var server = new Server(<%= ServerSerializer.new(server).to_json.html_safe %>);

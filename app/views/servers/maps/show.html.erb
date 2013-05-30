@@ -1,6 +1,8 @@
 <% title "#{server.name} Map (#{server.funpack.name})" %>
 <% layout :maps %>
 
+<%= landing_page :map, funpack: server.funpack.name %>
+
 <% provide(:foo_bar) do %>
   <div class="navbar-text">
     Back to

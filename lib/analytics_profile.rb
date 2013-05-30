@@ -7,6 +7,10 @@ class AnalyticsProfile
   end
 
   def profile
+    basics.merge(subscription)
+  end
+
+  def basics
     { created: user.created_at,
       email: user.email,
 
@@ -22,6 +26,14 @@ class AnalyticsProfile
 
       trialTimeLeft: user.coins
     }
+  end
+
+  def subscription
+    if user.active_subscription?
+      { plan: user.subscription.plan.stripe_id }
+    else
+      {}
+    end
   end
 
   def to_json
