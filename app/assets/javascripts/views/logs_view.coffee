@@ -25,7 +25,8 @@ class window.LogsView extends Backbone.View
   parseChunk: (chunk) =>
     lines = chunk.split('\n')
     objs = _.map lines, (line) ->
-      $.parseJSON line
+      try
+        $.parseJSON line
 
     objs = _.select objs, (o) -> o
 
