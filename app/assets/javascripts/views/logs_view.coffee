@@ -10,7 +10,7 @@ class window.LogsView extends Backbone.View
     @streamLogs()
 
   streamLogs: () =>
-    @stream "//#{@endpoint}/servers/#{@serverId}/logs", @onChunk, @reconnect, @reconnect
+    @stream "#{@endpoint}/servers/legacy-#{@serverId}/logs", @onChunk, @reconnect, @reconnect
 
   onChunk: (chunk) =>
     if @chunkIndex == 0
@@ -18,7 +18,7 @@ class window.LogsView extends Backbone.View
 
     fmtLines = @parseChunk(chunk)
 
-    @$el.append(fmtLines.join('\n') + '\n')
+    @$el.append('<div class="line">' + fmtLines.join('</div><div>') + '</div>')
     @$el.scrollTop(@el.scrollHeight);
     @chunkIndex += 1
 
@@ -39,13 +39,16 @@ class window.LogsView extends Backbone.View
 
   connect: () =>
     @req = new XMLHttpRequest()
-    @req.withCredentials = true
 
     @req.addEventListener("progress", @updateProgress, false)
     @req.addEventListener("load", @reconnect, false)
     @req.addEventListener("error", @reconnect, false)
 
     @req.open('GET', @url, true, @user)
+
+    auth = "Basic " + Base64.encode("minefold:logs")
+    @req.setRequestHeader("Authorization", auth);
+
     @req.send()
 
   reconnect: () =>

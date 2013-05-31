@@ -1,0 +1,54 @@
+- title server.name
+- layout :settings
+
+- content_for :tail do
+  %script(src="//cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js")
+
+  :javascript
+    logsView = new LogsView({
+      el: $('#logs'),
+      serverId: #{server.party_cloud_id.to_json},
+      u: 'minefold',
+      endpoint: #{ENV['LOG_STREAM_API'].to_json}
+    });
+    logsView.render();
+
+.container
+  .page-header
+    %h1= link_to server.name, server_path(server)
+
+    :css
+      #logs {
+        height: 600px;
+        overflow: scroll;
+      }
+
+      #logs,
+      #logs pre,
+      #logs pre code {
+        background-color: #000;
+        color: #fff;
+        font-family: Consolas, "Liberation Mono", Courier, monospace;
+        font-size: 12px;
+        line-height: 16px;
+      }
+
+      #logs .ts {
+        color: rgb(129, 129, 129);
+      }
+
+      #logs .event {
+        width: 4em;
+        color: yellow;
+      }
+
+      #logs .event.started {
+        color: rgb(41, 197, 60);
+      }
+      #logs .event.stopping {
+        color: rgb(209, 52, 52);
+      }
+
+    #logs
+      %pre
+        %code= "Loading..."
