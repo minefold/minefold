@@ -26,8 +26,13 @@ module PartyCloud
     def self.create(funpack, name)
       url = "#{ENV['TRON_URL']}/servers"
       begin
+        # map to legacy id until funpack is updated in the database
+        funpack_pc_id = funpack.party_cloud_id.include?('-') ?
+          funpack.party_cloud_id :
+          legacy_funpack_mapping[funpack.party_cloud_id]
+
         response = RestClient.post(url,
-          funpack: legacy_funpack_mapping[funpack.party_cloud_id],
+          funpack: funpack_pc_id,
           region:  '71519ec0-1515-42b9-b2f6-a24c151a6247',
           name:    name
         )
