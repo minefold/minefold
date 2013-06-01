@@ -2,7 +2,12 @@
   <nav class="actions">
     <ul>
       <% if signed_in? and can?(:edit, server) %>
-        <li class="settings"><a href="<%= edit_server_path(server) %>" data-icon="&#xF06B;"></a></li>
+        <li class="settings">
+          <a href="<%= edit_server_path(server) %>">
+            <span data-icon="&#xF06B;"></span>
+            Settings
+          </a>
+        </li>
       <% end %>
     </ul>
   </nav>
