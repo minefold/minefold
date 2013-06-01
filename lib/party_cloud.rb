@@ -30,8 +30,13 @@ module PartyCloud
     end
   end
 
-  def self.players_online(pc_server_ids)
-    $redis.sunion(Array(pc_server_ids).map{|pc_server_id| "server:#{pc_server_id}:players"})
+  def self.players_online(*pc_server_ids)
+    pc_server_ids = pc_server_ids.flatten
+    if pc_server_ids.size == 0
+      []
+    else
+      $redis.sunion(pc_server_ids.map{|pc_server_id| "server:#{pc_server_id}:players"})
+    end
   end
 
   def self.count_players_online(pc_server_id)
