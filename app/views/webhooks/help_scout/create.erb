@@ -1,2 +1,7 @@
 <h4><%= link_to @user.username, user_url(@user)%></h4>
 <p class="muted">User since <%=l @user.created_at %></p>
+<ul>
+  <% AnalyticsProfile.new(@user).profile.each do |key, value| %>
+  <li><%= key.to_s.titleize %>: <%= value %></li>
+  <% end %>
+</ul>
