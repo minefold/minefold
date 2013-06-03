@@ -3,16 +3,19 @@ require 'hmac-sha1'
 
 class Webhooks::HelpScoutController < ApplicationController
   skip_before_filter :verify_authenticity_token
-  before_filter :verify_webhook
+  # before_filter :verify_webhook
   layout nil
 
   def create
-    data = JSON.parse(request.body.read)
-    email = data['customer']['email']
+    # data = JSON.parse(request.body.read)
+    # email = data['customer']['email']
+    email = 'dave@minefold.com'
     @user = User.find_by_email(email)
 
     if @user
-      render
+      render json: {
+        html: render_to_string(layout: nil)
+      }
     else
       render :status => :not_found, :nothing => true
     end
