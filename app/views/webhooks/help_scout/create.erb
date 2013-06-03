@@ -1,5 +1,11 @@
 <h4><%= link_to @user.username, user_url(@user)%></h4>
 <p class="muted">User since <%=l @user.created_at %></p>
+<% if @user.customer? %>
+<p>
+  <a href="https://manage.stripe.com/customers/<%= @user.customer_id %>">Stripe <%= @user.customer_id %></a>
+</p>
+<% end %>
+<p>
 <ul>
   <% AnalyticsProfile.new(@user).profile.each do |key, value| %>
   <li><%= key.to_s.titleize %>: <%= value %></li>
