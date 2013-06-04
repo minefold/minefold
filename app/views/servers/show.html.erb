@@ -27,6 +27,12 @@
   <script>Abba('Sign up url', { persist: true }).complete()</script>
 <% end %>
 
+<% if flash[:created_server] %>
+  <script>
+    analytics.track('Created server', <%= { funpack: server.funpack.name }.to_json.html_safe %>)
+  </script>
+<% end %>
+
 <div class="page">
   <%= render partial: 'header', locals: {active: 'home'} %>
 

@@ -1,3 +1,7 @@
 - if signed_in?
   :javascript
     analytics.alias(#{current_user.id.to_json});
+    analytics.track('$signup', {
+      'invited': #{current_user.invited?}
+    });
+
