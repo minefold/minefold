@@ -40,7 +40,7 @@ module Concerns::Subscription
     allocation = if active_subscription?
       funpack.plan_allocations.where(plan_id: subscription.plan.id).first
     else
-      funpack.plan_allocations.order(:players).first
+      funpack.plan_allocations.order(:players).last
     end
 
     allocation ? allocation.players : 0
