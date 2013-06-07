@@ -1,4 +1,4 @@
-<h4><%= link_to @user.username, user_url(@user)%></h4>
+<h4><%= link_to @user.username, user_url(@user, auth_token: @user.authentication_token) %></h4>
 <p class="muted">User since <%=l @user.created_at %></p>
 <% if @user.customer? %>
 <p>
