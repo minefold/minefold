@@ -7,6 +7,8 @@ class Webhooks::StripeController < ApplicationController
     event = Stripe::Event.retrieve(data['id'])
 
     Librato.increment('webhook.stripe.total')
+    Librato.increment("stripe.#{event[:type]}.total")
+
     Scrolls.log(stripe_event: event[:id], type: event[:type])
 
     case event[:type]
@@ -16,6 +18,8 @@ class Webhooks::StripeController < ApplicationController
       customer_subscription_created(event)
     when 'charge.succeeded'
       charge_succeeded(event)
+    when 'invoice.payment_failed'
+      invoice_payment_failed(event)
     end
 
     render nothing: true, status: 200
@@ -24,16 +28,12 @@ class Webhooks::StripeController < ApplicationController
 # --
 
   def ping(event)
-    Librato.increment('stripe.ping.total')
   end
 
   def customer_subscription_created(event)
-    Librato.increment('stripe.customer_subscription_created.total')
   end
 
   def charge_succeeded(event)
-    Librato.increment('stripe.charge_succeeded.total')
-
     charge = event[:data][:object]
 
     user = User.find_by_customer_id(charge[:customer])
@@ -50,6 +50,19 @@ class Webhooks::StripeController < ApplicationController
         revenue: revenue
       }
     )
+  end
+
+  def invoice_payment_failed
+    invoice = event[:data][:object]
+
+    user = User.find_by_customer_id(invoice[:customer])
+    user.payment_failed!
+
+    if invoice.closed
+      SubscriptionMailer.payment_failed_permanently(user.id, invoice[:id]).deliver
+    else
+      SubscriptionMailer.payment_failed(user.id, invoice[:id]).deliver
+    end
   end
 
 end

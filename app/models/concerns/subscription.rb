@@ -111,4 +111,7 @@ module Concerns::Subscription
   def charge_succeeded!
     self.subscription.update_attribute :expires_at, 1.month.from_now + 3.days
   end
+
+  def payment_failed!
+  end
 end
