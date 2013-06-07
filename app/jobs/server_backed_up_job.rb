@@ -20,11 +20,7 @@ class ServerBackedUpJob < Job
       @server.world.map_queued_at = Time.now
       @server.world.save!
 
-      Resque.push 'maps', class: 'MapWorldJob', args: [
-        @server.id,
-        @url,
-        @server.settings['seed']
-      ]
+      Atlas.map_server @server.id, @url
     end
   end
 

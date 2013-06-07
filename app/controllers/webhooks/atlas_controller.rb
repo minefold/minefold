@@ -23,7 +23,7 @@ class Webhooks::AtlasController < ApplicationController
     world.map_data = {
       zoom_levels: data[:map_data][:zoom_levels],
       tile_size:   data[:map_data][:tile_size],
-      spawn:       data[:map_data][:markers].find {|m| m[:type] == 'spawn'}
+      spawn:       (data[:map_data][:markers] || []).find {|m| m[:type] == 'spawn'}
     }
     world.save!
 
