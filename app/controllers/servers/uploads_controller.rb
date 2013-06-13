@@ -40,7 +40,7 @@ class Servers::UploadsController < ApplicationController
     expires = Time.now.to_i + 100 # PUT request to S3 must start within 100 seconds
 
     key = "minefold-#{Rails.env}/uploads/#{objectName}"
-    s3_url = "http://s3.amazonaws.com/"
+    s3_url = "//s3.amazonaws.com/"
     url = "#{s3_url}#{key}"
 
     amzHeaders = "x-amz-acl:public-read" # set the public read permission on the uploaded file

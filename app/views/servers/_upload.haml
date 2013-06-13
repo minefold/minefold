@@ -56,8 +56,8 @@
   $(document).ready(function() {
     uploadsView = new UploadView({
       el: $('#uploads'),
-      sign_url: '#{sign_server_uploads_path(server.id)}',
-      post_upload_url: '#{server_uploads_path(server.id)}',
+      sign_url: '#{sign_server_uploads_url(server.id)}',
+      post_upload_url: '#{server_uploads_url(server.id)}',
       pusher_chan: 'upload-#{server.id}',
       progress_factor: 0.9
     });
