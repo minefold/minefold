@@ -14,15 +14,15 @@ class window.UploadView extends Backbone.View
 
     channel.bind 'success', =>
       @$('.help-block').hide()
-      @$('.progress').addClass('progress-success')
-      @$('.progress .bar').css(width: "100%").addClass('bar-success')
+      @$('.progressbar').addClass('progress-success')
+      @$('.progressbar .bar').css(width: "100%").addClass('bar-success')
       @$('.success-help-block').show()
       $(window).off 'beforeunload', unloadMsg
 
     channel.bind 'error', @error
 
   render: ->
-    @$('.progress').hide()
+    @$('.progressbar').hide()
     if $.browser.msie && $.browser.version < 10
       @$('.file-uploads').hide()
       @$('.ie').show()
@@ -57,13 +57,13 @@ class window.UploadView extends Backbone.View
     @$('.help-block').hide()
     @$('input[type=file]').hide()
     @$('.uploading-help-block').show()
-    @$('.progress').show().removeClass('progress-danger')
+    @$('.progressbar').show().removeClass('progress-danger')
 
     $(window).on 'beforeunload', unloadMsg
     @trigger 'start'
 
   progress: (progress, info) =>
-    @$('.progress .bar').css(width: "#{progress * @progress_factor}%")
+    @$('.progressbar .bar').css(width: "#{progress * @progress_factor}%")
     false
 
   error: (msg) =>
@@ -72,8 +72,8 @@ class window.UploadView extends Backbone.View
     @$('.help-block').hide()
     @$('.error-help-block .reason').text(msg)
     @$('.error-help-block').show()
-    @$('.progress').addClass('progress-danger')
-    @$('.progress .bar').css(width: "100%")
+    @$('.progressbar').addClass('progress-danger')
+    @$('.progressbar .bar').css(width: "100%")
 
     $(window).off 'beforeunload', unloadMsg
 
