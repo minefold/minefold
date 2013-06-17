@@ -14,11 +14,11 @@
   <body>
     <div id="map-view-el"></div>
     <script>
-      app.map = new App.Map(<%= render(partial: 'servers/maps/map', locals: {map: server.world}, :format => :json).html_safe %>);
-      app.mapView = new App.MapView({model: app.map});
+      var map = new Map(<%= render(partial: 'servers/maps/map', locals: {map: server.world}, :format => :json).html_safe %>);
+      var mapView = new MapView({model: map});
       $(document).ready(function() {
-        app.mapView.setElement($('#map-view-el'));
-        app.mapView.render();
+        mapView.setElement($('#map-view-el'));
+        mapView.render();
       });
     </script>
   </body>
