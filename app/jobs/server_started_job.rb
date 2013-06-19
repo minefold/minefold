@@ -73,7 +73,7 @@ class ServerStartedJob < Job
     if running_bolts > @creator.subscription.plan.bolts
       running_servers = servers.select{|s|
         allocations.keys.include?(s.party_cloud_id)
-      }.sort_by{|s| s.sessions.current.started_at }
+      }.sort_by{|s| s.sessions.current ? s.sessions.current.started_at : s.updated_at }
 
       Scrolls.log(
         bolts_allowed: @creator.subscription.plan.bolts,

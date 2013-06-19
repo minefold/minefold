@@ -3,9 +3,11 @@
 class CompactSnapshotsJob < Job
   @queue = :low
 
-  def perform(server_id)
-    server = Server.unscoped.find(server_id)
+  def initialize(server_id)
+    @server = Server.unscoped.find(server_id)
+  end
 
-    PartyCloud::Server.new(server.party_cloud_id).compact_snapshots!
+  def perform(server_id)
+    PartyCloud::Server.new(@server.party_cloud_id).compact_snapshots!
   end
 end
