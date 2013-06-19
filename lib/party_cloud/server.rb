@@ -33,5 +33,36 @@ module PartyCloud
       @id = id
     end
 
+    def delete_all_snapshots!
+      begin
+        RestClient.delete("#{ENV['TRON_URL']}/servers/legacy-#{id}/snapshots")
+      rescue RestClient::ServerBrokeConnection
+        # retry 5 times...
+
+        @retries ||= 0
+        if @retries < 5
+          @retries += 1
+          retry
+        else
+          raise
+        end
+      end
+    end
+
+    def compact_snapshots!
+      begin
+        RestClient.post("#{ENV['TRON_URL']}/servers/legacy-#{id}/snapshots/compact", {})
+      rescue RestClient::ServerBrokeConnection
+        # retry 5 times...
+
+        @retries ||= 0
+        if @retries < 5
+          @retries += 1
+          retry
+        else
+          raise
+        end
+      end
+    end
   end
 end

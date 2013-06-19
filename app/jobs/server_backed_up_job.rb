@@ -22,6 +22,8 @@ class ServerBackedUpJob < Job
 
       Atlas.map_server @server.id, @url
     end
+
+    PartyCloud::Server.new(@server.party_cloud_id).compact_snapshots!
   end
 
 end
