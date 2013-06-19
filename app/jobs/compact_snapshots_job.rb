@@ -7,7 +7,7 @@ class CompactSnapshotsJob < Job
     @server = Server.unscoped.find(server_id)
   end
 
-  def perform(server_id)
+  def perform
     PartyCloud::Server.new(@server.party_cloud_id).compact_snapshots!
   end
 end
