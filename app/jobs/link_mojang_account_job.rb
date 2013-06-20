@@ -38,7 +38,7 @@ class LinkMojangAccountJob < Job
   end
 
   def reply(message)
-    $redis.publish(
+    $party_cloud_redis.publish(
       "players:verification_request:#{@token}",
       message
     )
