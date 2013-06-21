@@ -18,7 +18,7 @@ class SubscriptionMailer < TransactionMailer
     @customer = Stripe::Customer.retrieve(@user.customer_id)
     @card = @customer.active_card
     @subscription = @customer.subscription
-    @invoice = Stripe::Charge.retrieve(invoice_id)
+    @invoice = Stripe::Invoice.retrieve(invoice_id)
 
     tag 'subscription#failed'
     mail to: @user.email,
@@ -30,7 +30,7 @@ class SubscriptionMailer < TransactionMailer
     @customer = Stripe::Customer.retrieve(@user.customer_id)
     @card = @customer.active_card
     @subscription = @customer.subscription
-    @invoice = Stripe::Charge.retrieve(invoice_id)
+    @invoice = Stripe::Invoice.retrieve(invoice_id)
 
     tag 'subscription#failed'
     mail to: @user.email,
