@@ -52,7 +52,7 @@ class Webhooks::StripeController < ApplicationController
     )
   end
 
-  def invoice_payment_failed
+  def invoice_payment_failed(event)
     invoice = event[:data][:object]
 
     user = User.find_by_customer_id(invoice[:customer])
