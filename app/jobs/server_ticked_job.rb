@@ -14,14 +14,12 @@ class ServerTickedJob < Job
     if @creator.active_subscription?
       # TODO record something?
 
-    elsif @server.shared?
-      shared_server_tick
     else
-      normal_server_tick
+      coin_server_tick
     end
   end
 
-  def normal_server_tick
+  def coin_server_tick
     # Creator pays
     if @creator.coins <= 0
       @uids.each do |uid|
@@ -35,32 +33,6 @@ class ServerTickedJob < Job
       TimeMailer.low(@creator.id).deliver
     elsif @creator.coins == 1
       TimeMailer.out(@creator.id).deliver
-    end
-  end
-
-  def shared_server_tick
-    @players = Accounts::Mojang.where(uid: @uids).all
-
-    @players.each do |player|
-      if player.user.nil?
-        # if the user has unlinked their account, kick them
-        kick_player(player.uid, "Link your Minecraft account at minefold.com to play")
-      elsif player.user.active_subscription?
-        # don't do anything
-      elsif player.user.coins <= 0
-        kick_player(player.uid, "Out of time! Visit minefold.com to get more")
-      else
-        coin_message(player)
-        player.user.spend_coins! 1
-      end
-
-      if player.user && !player.user.active_subscription?
-        if player.user.coins == 15
-          TimeMailer.low(player.user.id).deliver
-        elsif player.user.coins == 1
-          TimeMailer.out(player.user.id).deliver
-        end
-      end
     end
   end
 
