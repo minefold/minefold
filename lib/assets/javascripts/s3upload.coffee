@@ -75,11 +75,12 @@ class window.S3Upload
           this_s3upload.onFinishS3Put public_url
         else
           this_s3upload.onError 'Upload error: ' + JSON.stringify(err)
-          throw "Upload error: XHR error" + JSON.stringify(err) + JSON.stringify(xhr)
+          throw "Upload error: Upload error" + JSON.stringify(err) + JSON.stringify(xhr)
 
 
       xhr.onerror = (err) ->
         this_s3upload.onError 'XHR error: ' + JSON.stringify(err)
+        throw "XHR error: xhr error" + JSON.stringify(err) + JSON.stringify(xhr)
 
       xhr.upload.onprogress = (e) ->
         if e.lengthComputable
