@@ -50,6 +50,7 @@ gem 'scrolls'
 gem 'rest-client'
 gem 'state_machine', require: 'state_machine/core'
 gem 'omniauth-steam', require: ['omniauth-openid', 'omniauth-steam']
+gem 'newrelic_rpm'
 
 gem 'activerecord-postgres-hstore',
   github: 'softa/activerecord-postgres-hstore'

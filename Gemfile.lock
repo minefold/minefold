@@ -183,6 +183,7 @@ GEM
     net-scp (1.1.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.6.7)
+    newrelic_rpm (3.6.4.122)
     nokogiri (1.5.9)
     oauth2 (0.8.1)
       faraday (~> 0.8)
@@ -366,6 +367,7 @@ DEPENDENCIES
   memcachier
   mini_magick
   nbtfile
+  newrelic_rpm
   nokogiri (~> 1.5)
   omniauth-facebook
   omniauth-steam
