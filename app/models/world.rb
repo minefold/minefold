@@ -14,12 +14,16 @@ class World < ActiveRecord::Base
 
   alias_method :mapped?, :map?
 
-  def skip_map?
+  def recently_mapped?
     map_queued_at and map_queued_at.today?
   end
 
+  def map_in_progress?
+    map_queued_at and (last_mapped_at.nil? || map_queued_at > last_mapped_at)
+  end
+
   def needs_map?
-    not skip_map?
+    not (recently_mapped? or map_in_progress?)
   end
 
   def to_h

@@ -17,6 +17,7 @@ class ServerTickedJob < Job
     else
       coin_server_tick
     end
+    Server.increment_counter :minutes_played, @server.id
   end
 
   def coin_server_tick
