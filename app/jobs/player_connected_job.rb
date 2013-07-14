@@ -32,5 +32,4 @@ class PlayerConnectedJob < Job
       )
     end
   end
-
 end
