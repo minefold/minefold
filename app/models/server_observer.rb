@@ -4,7 +4,7 @@ class ServerObserver < ActiveRecord::Observer
     Resque.enqueue(PusherJob, server.channel_name, 'changed',
       ServerSerializer.new(server).payload
     )
-    cache_server_info
+    cache_server_info(server)
   end
 
   def cache_server_info(server)
