@@ -19,7 +19,8 @@ class World < ActiveRecord::Base
   end
 
   def map_in_progress?
-    map_queued_at and (last_mapped_at.nil? || map_queued_at > last_mapped_at)
+    map_queued_at and map_queued_at > 3.days.ago and
+      (last_mapped_at.nil? || map_queued_at > last_mapped_at)
   end
 
   def needs_map?
