@@ -36,6 +36,8 @@
 <div class="page">
   <%= render partial: 'header', locals: {active: 'home'} %>
 
+  <%= render 'social_buttons' %>
+
   <div id="server-control-view-el"></div>
   <script>
     var view = new ServerControlView({model: app.server});
