@@ -1,0 +1,13 @@
+- url = server_url(server)
+- twitter = "Play on my Minecraft server – #{server.name}"
+
+.social-buttons
+  %a.fb-like{data: {href: url,
+                layout: 'button_count'}}
+    Like
+
+  %a.twitter-share-button{href: 'https://twitter.com/share', data: {lang: 'en',
+                                                                     dnt: 'true',
+                                                                   count: 'horizontal',
+                                                                    text: twitter}}
+    Tweet
