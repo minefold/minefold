@@ -29,7 +29,7 @@
         <div class="invitation-list">
           <% @invitations.each do |invitation| %>
             <div class="item">
-              <span class="state"><%= invitation.state_name %></span>
+              <span class="state"><%= invitation.display_state_name %></span>
               <span class="name">
                 <% if invitation.friend_id? %>
                   <%= link_to invitation.friend.username, user_path(invitation.friend) %>

@@ -38,5 +38,13 @@ class Invitation < ActiveRecord::Base
     Bonuses::ReferredFriend.give_to(sender)
     Bonuses::Referred.give_to(friend)
   end
+  
+  def display_state_name
+    if state_name == 'accepted'
+      'waiting for email confirmation'
+    else
+      state_name
+    end
+  end
 
 end
