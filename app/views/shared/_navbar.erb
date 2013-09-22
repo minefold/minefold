@@ -2,7 +2,7 @@
   <ul class="menu">
     <% if current_user.active_subscription? %>
     <li class="nav-subscription">
-      <%= link_to "#{current_user.subscription.plan.name} Plan", plans_page_path %>
+      <%= "#{current_user.subscription.plan.name} Plan" %>
     </li>
     <% end %>
     <li class="nav-servers">
@@ -17,19 +17,12 @@
       <ul class="dropdown-menu pull-right">
         <li><%= link_to 'Profile', user_path(current_user) %></li>
         <li><%= link_to 'Settings', edit_user_registration_path %></li>
-        <li><%= link_to 'Get more time', bonuses_path %></li>
         <li><%= link_to 'Sign out', destroy_user_session_path, :method => :delete %></li>
       </ul>
     </li>
   </ul>
 <% else %>
   <ul class="menu">
-    <li class="pricing">
-      <%= link_to 'Plans & Pricing', plans_page_path %>
-    </li>
-    <li class="sign-up">
-      <%= link_to 'Sign up', new_user_registration_path, class: %w(btn btn-success) %>
-    </li>
     <li class="sign-in">
       <%= link_to 'Sign in', new_user_session_path %>
     </li>

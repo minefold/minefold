@@ -41,24 +41,24 @@
       }
     }
   }
+}
 
-  .well.letter {
-    padding: l(2) $gw-gutter;
+.well.letter {
+  padding: l(2) $gw-gutter;
 
-    color: rgba(black, 0.8);
+  color: rgba(black, 0.8);
 
-    background-color: lighten($yellow, 40%);
-    background-image: url(image-path('letter.png'));
+  background-color: lighten($yellow, 40%);
+  background-image: url(image-path('letter.png'));
 
-    box-shadow: 0 l(.5) l(1) 0 rgba(black, 0.1),
-                0 0 1px rgba(black, 0.2);
+  box-shadow: 0 l(.5) l(1) 0 rgba(black, 0.1),
+              0 0 1px rgba(black, 0.2);
 
-    p {
-      margin-bottom: l(2);
-    }
+  p {
+    margin-bottom: l(2);
+  }
 
-    > .sig {
-      margin-left: $gw-gutter / 2;
-    }
+  > .sig {
+    margin-left: $gw-gutter / 2;
   }
 }

@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_invitation_token
   before_filter :set_timezone
   before_filter :warn_unconfirmed
+  before_filter :show_shutdown_message
 
   before_bugsnag_notify :add_user_info_to_bugsnag
 
@@ -56,6 +57,10 @@ private
     if signed_in? and not current_user.confirmed?
       flash[:salert] = :unconfirmed
     end
+  end
+
+  def show_shutdown_message
+    flash[:notice] = "Minefold is shutting down on #{Date.parse(ENV['SHUTDOWN']).to_s(:short)} – <a href=\"http://blog.minefold.com\" target=\"_blank\">Read More</a>".html_safe
   end
 
 end

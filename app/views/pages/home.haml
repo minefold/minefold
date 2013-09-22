@@ -10,55 +10,17 @@
   %h2 Available instantly. Free to start.
 
 .container
-  %section
-    = render partial: 'funpacks/library', object: @funpacks
-
-  %section.feature-list
-    .row
-      .feature.span4
-        %h3 Fast setup
-        %p It takes seconds to start playing with your friends. No tech mumbo-jumbo required: just pick your settings and go.
-
-      .feature.span4
-        %h3 Lag free
-        %p Minefold uses cutting-edge cloud technology to give you the smoothest gaming experience possible.
-
-      .feature.span4
-        %h3 Instant community
-        %p Every server gets its own site. Chat with your friends, browse interactive maps and even brag about your last win.
-
-      .feature.span4
-        %h3 Simple billing
-        %p One plan lets you run servers for any game we support. Play Minecraft on Wednesday, Feed The Beast on Thursday and Team Fortress 2 on Friday night!
-
-      .feature.span4
-        %h3 Grief control
-        %p Secure your server so that only your friends can play. Mess up? Rollback your server to an earlier backup.
-
-      .feature.span4
-        %h3 Friendly support
-        %p We care deeply about your experience. Every employee at Minefold does support and we only hire lovely people!
-
-
-  %section.call-to-action
-    .row
-      .span6.offset3
+  .row
+    .span4.offset4
+      .well.letter
         %p
-          Sign up now and play for #{Bonuses::GettingStarted.coins} minutes <strong>free</strong>!
+          %strong Minefold is shutting down.
+          We want to thank the thousands of people who had fun on Minefold servers. We’d also like to thank all the people who have supported us along the way. We’re sorry that we didn’t live up to your expectations and hope you understand.
 
-        %a.btn.btn-large.btn-block.btn-success{href: new_user_registration_path}
-          Sign up now!
+        %p
+          You can read more about this on our blog:
+          %a(href="http://blog.minefold.com/" target="_blank") http://blog.minefold.com/
 
+        %p Sincerely,
 
-  %section.press
-    %p As seen on…
-
-    .row
-      %a.span2.offset3{href: 'http://techcrunch.com/2012/03/12/minefold-launch', title: 'Y Combinator-Backed Minefold Launches Affordable, On-Demand Platform For Game Hosting'}
-        = image_tag 'techcrunch.png'
-
-      %a.span2{href: 'http://kotaku.com/5846894/minefold-offers-hosted-minecraft-servers-for-you-and-your-friends', title: 'Minefold Offers Hosted Minecraft Servers for You and Your Friends'}
-        = image_tag 'kotaku.png'
-
-      %a.span2{href: 'http://www.gamasutra.com/view/news/165765/Minefold_launches_with_accessible_Minecraft_server_hosting.php', title: 'Minefold launches with accessible Minecraft server hosting'}
-        = image_tag 'gamasutra.png'
+        = image_tag 'sig.png', class: 'sig'

@@ -3,7 +3,4 @@
     <strong><%= PartyCloud.players_online(current_user.created_servers.map(&:party_cloud_id)).size %></strong>
     players online
   </div>
-  <div>
-    <%= link_to 'Upgrade', plans_page_path %> to allow more players
-  </div>
 </div>

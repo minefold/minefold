@@ -3,69 +3,19 @@
 
 .page
   .page-header
-    - if funpack
-      %h1 Sign up and start a #{funpack.name} server
-
-    - else
-      %h1 Sign up for Minefold
-
-  - if @invited_by
-    :javascript
-      analytics.track('Viewed invitation');
-
-    .invitation-message.row
-      .avatar.span1
-        = image_tag @invited_by.avatar.medium.url, width: 60
-      .message.span7
-        %p Hi! Thanks for joining me here on Minefold. I run servers for games like Minecraft here. When you sign up you'll get <strong>#{pluralize Bonuses::Referred.coins, 'free minute', 'free minutes'}</strong> because I referred you.
-        .sig= PersonalName.new(@invited_by).first
-
-    %hr
 
   .row
-    .span4
-      = form_for resource, as: resource_name, url: registration_path(resource_name) do |f|
-        - if funpack
-          = hidden_field_tag :funpack, funpack.slug
+    .span2
 
-        = f.control_group :username do
-          = f.label :username, class: 'control-label'
-          .controls
-            = f.text_field :username, autocomplete: 'off', autofocus: true
-          = error_message_for(f.object, :username)
-
-        = f.control_group :email do
-          = f.label :email, class: 'control-label'
-          .controls
-            = f.email_field :email, autocomplete: 'off'
-          = error_message_for(f.object, :email)
-
-        = f.control_group :password do
-          = f.label :password, class: 'control-label'
-          .controls
-            = f.password_field :password, autocomplete: 'off'
-
-          = error_message_for(f.object, :password)
-
-
-        = f.control_group :password_confirmation do
-          = f.label :password_confirmation, class: 'control-label'
-          .controls
-            = f.password_field :password_confirmation, autocomplete: 'off'
-
-          = error_message_for(f.object, :password_confirmation)
-
-        = f.submit 'Create your account', class: %w(btn btn-primary)
-
-    .span4
+    .span5
       .well.letter
         %p
-          %strong We're excited you're here.
-          Minefold was created to make it easier to play games with our friends and we can't wait to share what we've built with you.
+          %strong Minefold is shutting down.
+          We want to thank the thousands of people who had fun on Minefold servers. We’d also like to thank all the people who have supported us along the way. We’re sorry that we didn’t live up to your expectations and hope you understand.
 
-        %p Before you jump in, we want you to know that the Minefold community is special: it expects everybody to be on their best behavior. Be polite, respect others and you'll have a great time!
+        %p You can read more about this on our blog: #{link_to 'http://blog.minefold.com/'}
 
-        %p Lots of love,
+        %p Sincerely,
 
         = image_tag 'sig.png', class: 'sig'
 

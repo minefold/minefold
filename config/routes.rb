@@ -1,4 +1,5 @@
 Minefold::Application.routes.draw do
+  mount MailPreview       => 'mail_view' if Rails.env.development?
 
 # Constraints
 
@@ -36,15 +37,12 @@ Minefold::Application.routes.draw do
     '/developers' => :developers,
     '/time'    => :time,
     '/home'    => :home,
-    '/plans'   => :plans,
     '/privacy' => :privacy,
     '/help'    => :support,
     '/terms'   => :terms
   }.each do |url, name|
     get url, controller: 'pages', action: name, as: "#{name}_page"
   end
-
-  match '/pricing' => redirect('/plans')
 
   # redirect sitemap requests to cloudfront
   match "/sitemap*path" => redirect {|p, req|
@@ -57,8 +55,7 @@ Minefold::Application.routes.draw do
 
   devise_for :user, controllers: {
                       omniauth_callbacks: 'omniauth_callbacks',
-                      registrations: 'registrations'
-                    }
+                    }, :skip => [:registrations]
 
   # Christmas Promotion
   get '/xmas' => 'gifts#index', :as => :xmas_promo

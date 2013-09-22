@@ -12,6 +12,15 @@
     color: $darkOrange;
   }
 
+  &.alert-notice {
+    background-color: $red;
+  }
+
+  a {
+    color: white;
+    text-decoration: underline;
+  }
+
   .alert-inner {
     @include container;
     padding: 10px 0;
