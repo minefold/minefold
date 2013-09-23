@@ -3,9 +3,7 @@
 
 - if current_user.active_subscription?
   %p You are on the #{current_user.subscription.plan.name} plan.
-  %p Next billing date is #{current_user.subscription.expires_at.strftime('%b %d, %Y')}
-  - if current_user.subscription.last4
-    %p Stored card: xxxx-xxxx-xxxx-#{current_user.subscription.last4}
+  %p Your subscription ends on #{current_user.subscription.expires_at.strftime('%b %d, %Y')}
 
   = form_tag update_subscription_path, method: 'PUT', class: %w(coin-pack) do |f|
     %input{type: 'hidden', name: 'stripeToken'}
