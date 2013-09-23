@@ -23,24 +23,6 @@
     </div>
 
     <div class="span4">
-      <% if signed_in? %>
-        <a class="btn btn-large btn-block btn-success" href="<%= new_server_path(funpack: funpack.slug) %>">
-          Start a <%= funpack.name %> server
-        </a>
-      <% else %>
-        <a class="btn btn-large btn-block btn-success" href="<%= new_user_registration_path %>">
-          Start a <%= funpack.name %> server
-        </a>
-
-        <br/>
-
-        <p>
-          Sign up now and play for <%= Bonuses::GettingStarted.mins %> minutes <strong>free</strong>!
-        </p>
-      <% end %>
-
-      <br/>
-
       <div class="creator">
         This funpack is managed by
         <div class="image pull-left" style="margin-right:10px">
