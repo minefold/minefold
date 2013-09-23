@@ -67,7 +67,6 @@ end
 
 group :development do
   gem 'quiet_assets'
-  gem 'mail_view'
 end
 
 group :test do
