@@ -11,3 +11,9 @@
   <li><%= key.to_s.titleize %>: <%= value %></li>
   <% end %>
 </ul>
+<ul>
+  <% @user.created_servers.order(:name).each do |s| %>
+  <li><%= link_to s.name, server_path(s) %> – <%= link_to 'Download', party_cloud_world_download_url(s)%></li>
+  <% end %>
+</ul>
+</p>
