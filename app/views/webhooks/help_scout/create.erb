@@ -13,7 +13,7 @@
 </ul>
 <ul>
   <% @user.created_servers.order(:name).each do |s| %>
-  <li><%= link_to s.name, server_path(s) %> – <%= link_to 'Download', party_cloud_world_download_url(s)%></li>
+  <li><%= link_to s.name, server_url(s) %> – <%= link_to 'Download', party_cloud_world_download_url(s)%></li>
   <% end %>
 </ul>
 </p>
